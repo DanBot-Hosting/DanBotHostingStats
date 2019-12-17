@@ -1,0 +1,27 @@
+{
+  "name": "servermontior",
+  "version": "1.0.0",
+  "description": "A software that runs a local web server to show system info, E.G: CPU Graph, Memory Graph along with more helpful info. Good for anyone who has multiple servers/computers like me and needs some way to monitor them from a single or multiple computers. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielpmc/ServerMonitor.git"
+  },
+  "author": "danielpmc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielpmc/ServerMonitor/issues"
+  },
+  "homepage": "https://github.com/danielpmc/ServerMonitor#readme",
+  "dependencies": {
+    "body-parser": "latest",
+    "ejs": "^3.0.1",
+    "express": "latest",
+    "helmet": "^3.21.2",
+    "http": "latest",
+    "socket.io": "latest"
+  }
+}
