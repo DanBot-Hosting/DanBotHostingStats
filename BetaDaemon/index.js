@@ -19,6 +19,7 @@ var package = require("./package.json");
 var config = require("./config.json");
 var { get } = require('superagent')
 var chalk = require('chalk');
+var moment = require("moment");
 
 server.listen(PORT, function () {
     console.log(PORT + " listening...");
@@ -31,12 +32,22 @@ server.listen(PORT, function () {
         process.exit();
     } else {
         //Panel ip has been set. Ping the panel and see if its alive.
-        ping(config.panelip, config.panelport /* optional */)
-       .then(time => console.log(chalk.green(`Panel is online! Response time: ${time}ms`)))
-       .catch(() => console.log(chalk.red(`Failed to ping the panel. Please check if the panel is running!`)) + process.exit())
- 
+        ping(config.panelip, config.panelport)
+            .then(time => console.log(chalk.green(`Panel is online! Response time: ${time}ms`)))
+            .catch(() => console.log(chalk.red(`Failed to ping the panel. Please check if the panel is running!`)) + process.exit())
     }
 });
+
+if (config.panelping == true) {
+    //User requested to ping the panel every x ms
+    setInterval(async () => {
+    var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
+    ping(config.panelip, config.panelport)
+        .then(time => console.log(chalk.white(`[${timestamp}]  Panel Pinger:  ` + chalk.green(`Response time: ${time}ms`))))
+        .catch(() => console.log(chalk.white(`[${timestamp}]  Panel Pinger:  ` + chalk.red(`Failed to ping the panel. Please check if the panel is running! `) + chalk.white("Will continue to ping panel."))))
+    }, config.panelms)
+}
+
 
 app.get('/', async function (req, res) {
 
@@ -161,7 +172,13 @@ app.get('/', async function (req, res) {
                             //Because Panel doesn't give response to Daemon it thinks it timed out.
                             //But really it didn't data was still sent. 
                             //So ignore this error.
-                        } else {
+                        } else if (error == "Error: read ECONNRESET") {
+                            //Do nothing because panel went down. Program will still continue to try and send data.
+                            //So ignore this error.
+                        } else if (error == "Error: connect ECONNREFUSED " + config.panelip + ":" + config.panelport) {
+                            //Do nothing because panel went down. Program will still continue to try and send data.
+                            //So ignore this error.
+                        }else {
                             //Log the error in red and exit process
                             console.log(chalk.red("ERROR! " + error))
                             process.exit();
@@ -209,7 +226,13 @@ app.get('/', async function (req, res) {
                         //Because Panel doesn't give response to Daemon it thinks it timed out.
                         //But really it didn't data was still sent. 
                         //So ignore this error.
-                    } else {
+                    } else if (error == "Error: read ECONNRESET") {
+                        //Do nothing because panel went down. Program will still continue to try and send data.
+                        //So ignore this error.
+                    } else if (error == "Error: connect ECONNREFUSED " + config.panelip + ":" + config.panelport) {
+                        //Do nothing because panel went down. Program will still continue to try and send data.
+                        //So ignore this error.
+                    }else {
                         //Log the error in red and exit process
                         console.log(chalk.red("ERROR! " + error))
                         process.exit();
@@ -268,7 +291,13 @@ app.get('/', async function (req, res) {
                             //Because Panel doesn't give response to Daemon it thinks it timed out.
                             //But really it didn't data was still sent. 
                             //So ignore this error.
-                        } else {
+                        } else if (error == "Error: read ECONNRESET") {
+                            //Do nothing because panel went down. Program will still continue to try and send data.
+                            //So ignore this error.
+                        } else if (error == "Error: ETIMEDOUT") {
+                            //Do nothing because panel went down. Program will still continue to try and send data.
+                            //So ignore this error.
+                        }else {
                             //Log the error in red and exit process
                             console.log(chalk.red("ERROR! " + error))
                             process.exit();
@@ -312,7 +341,17 @@ app.get('/', async function (req, res) {
                     //Error checking.
                     if (error == "undefined") {
                         //No errors = Do nothing :D
-                    } else {
+                    } else if (error == "Error: ESOCKETTIMEDOUT") {
+                        //Because Panel doesn't give response to Daemon it thinks it timed out.
+                        //But really it didn't data was still sent. 
+                        //So ignore this error.
+                    } else if (error == "Error: read ECONNRESET") {
+                        //Do nothing because panel went down. Program will still continue to try and send data.
+                        //So ignore this error.
+                    } else if (error == "Error: ETIMEDOUT") {
+                        //Do nothing because panel went down. Program will still continue to try and send data.
+                        //So ignore this error.
+                    }else {
                         //Log the error in red and exit process
                         console.log(chalk.red("ERROR! " + error))
                         process.exit();

@@ -2,6 +2,8 @@
     "panelip": "192.168.0.3", 
     "panelport": "80",
     "debug": true,
+    "panelping": true,
+    "panelms": 5000,
 
     "Discord": false,
     "DiscordWebhook": "HOE",
