@@ -1,0 +1,11 @@
+.git
+
+Panel/node_modules
+Panel/package-lock.json
+Panel/data
+
+Daemon/node_modules
+Daemon/package-lock.json
+
+BetaDaemon/node_modules
+BetaDaemon/package-lock.json

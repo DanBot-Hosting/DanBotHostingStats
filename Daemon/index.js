@@ -16,15 +16,13 @@ var os = require("os");
 var pretty = require('prettysize');
 var ping = require('node-http-ping');
 var package = require("./package.json");
+var config = require("./config.json");
 
 server.listen(PORT, function () {
     console.log(PORT + " listening...");
     ping('0.0.0.0', 2001)
  
 });
-setInterval(async () => {
-if (Date.now() <= 1500) return console.log("its been 1.5seconds)")
-},1600)
 
 app.get('/', async function (req, res) {
 
@@ -43,6 +41,8 @@ app.get('/', async function (req, res) {
         var nettx = pretty(netdata[0].tx_bytes);
         var osdata = await si.osInfo();
         var bios = await si.bios();
+        var ipadd = await si.networkInterfaces();
+        var ip = ipadd.ip4
 
         //OS UPTIME
         var uptime = os.uptime();
@@ -59,16 +59,23 @@ app.get('/', async function (req, res) {
         var Version = package.version;
 
         //Fetch time that data was sent. (Used panel sided to check if server has gone offline)
-        var datatime = Date.now() 
+        var datatime = Date.now();
+    
+console.log(cpudata)
 
+        console.log(cpudata.brand)
+        //console.log("http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname + "&cpuman= " + cpudata.manufacturer + "&cpubrand= " + cpudata.brand + "&cpuload= " + Math.ceil(cpu[1] * 100) / 10 + "&cpuspeed=" + cpudata.speed + "GHz" + "&memused=" + ramused + "&memtotal=" + ramtotal + "&diskused=" + diskused + "&disktotal=" + disktotal + "&netrx=" + netrx + "&nettx=" + nettx + "&osplatform=" + osdata.platform + "&oslogofile=" + osdata.logofile + "&osrelease=" + osdata.release + "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay + "&biosvendor=" + bios.vendor + "&biosversion=" + bios.version + "&biosdate=" + bios.releaseDate + "&servermonitorversion=" + Version + "&datatime=" + datatime)
     request({
-        uri: "http://192.168.0.43:80/data?servername=" + os.hostname + "&cpuman= " + cpudata.manufacturer + "&cpubrand= " + cpudata.brand + "&cpuload= " + Math.ceil(cpu[1] * 100) / 10 + "&cpuspeed=" + cpudata.speed + "GHz" + "&memused=" + ramused + "&memtotal=" + ramtotal + "&diskused=" + diskused + "&disktotal=" + disktotal + "&netrx=" + netrx + "&nettx=" + nettx + "&osplatform=" + osdata.platform + "&oslogofile=" + osdata.logofile + "&osrelease=" + osdata.release + "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay + "&biosvendor=" + bios.vendor + "&biosversion=" + bios.version + "&biosdate=" + bios.releaseDate + "&servermonitorversion=" + Version + "&datatime=" + datatime,
+        uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname + "&cpuman=" + cpudata.manufacturer + "&cpuload=" + Math.ceil(cpu[1] * 100) / 10 + "&cpuspeed=" + cpudata.speed + "GHz" + "&memused=" + ramused + "&memtotal=" + ramtotal + "&diskused=" + diskused + "&disktotal=" + disktotal + "&netrx=" + netrx + "&nettx=" + nettx + "&osplatform=" + osdata.platform + "&oslogofile=" + osdata.logofile + "&osrelease=" + osdata.release + "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay + "&biosvendor=" + bios.vendor + "&biosversion=" + bios.version + "&biosdate=" + bios.releaseDate + "&servermonitorversion=" + Version + "&datatime=" + datatime,
         method: "GET",
         timeout: 10000,
         followRedirect: true,
         maxRedirects: 10
     }, function (error, response, body) {
         res.send(body);
+        console.log(body)
+        console.log(response)
+        console.log(error)
     });
 }, 2500);   
 
