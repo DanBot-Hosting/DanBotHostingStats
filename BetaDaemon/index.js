@@ -68,6 +68,9 @@ app.get('/', async function (req, res) {
         //Fetch time that data was sent. (Used panel sided to check if server has gone offline)
         var datatime = Date.now();
 
+        //Testing Area
+        console.log(memdata)
+
         //Different errors
         function discordchecker() { 
             if (config.Discord == true) {
@@ -128,9 +131,27 @@ app.get('/', async function (req, res) {
             process.exit();
         }
 
-        //console.log("http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname + "&cpuman= " + cpudata.manufacturer + "&cpubrand= " + cpudata.brand + "&cpuload= " + Math.ceil(cpu[1] * 100) / 10 + "&cpuspeed=" + cpudata.speed + "GHz" + "&memused=" + ramused + "&memtotal=" + ramtotal + "&diskused=" + diskused + "&disktotal=" + disktotal + "&netrx=" + netrx + "&nettx=" + nettx + "&osplatform=" + osdata.platform + "&oslogofile=" + osdata.logofile + "&osrelease=" + osdata.release + "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay + "&biosvendor=" + bios.vendor + "&biosversion=" + bios.version + "&biosdate=" + bios.releaseDate + "&servermonitorversion=" + Version + "&datatime=" + datatime)
     request({
-        uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname + "&cpu=" + cpumain + "&cpuload=" + Math.ceil(cpu[1] * 100) / 10 + "&cputhreads=" + cputhreads + "&cpucores=" + cpucores + "&memused=" + ramused + "&memtotal=" + ramtotal + "&diskused=" + diskused + "&disktotal=" + disktotal + "&netrx=" + netrx + "&nettx=" + nettx + "&osplatform=" + osdata.platform + "&oslogofile=" + osdata.logofile + "&osrelease=" + osdata.release + "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay + "&biosvendor=" + bios.vendor + "&biosversion=" + bios.version + "&biosdate=" + bios.releaseDate + "&servermonitorversion=" + Version + "&datatime=" + datatime,
+        uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
+          "&cpu=" + cpumain +                                                                            //CPU make and brand.
+          "&cpuload=" + Math.ceil(cpu[1] * 100) / 10 +                                                   //CPU load but doesn't work on windows :(
+          "&cputhreads=" + cputhreads +                                                                  //CPU threads.
+          "&cpucores=" + cpucores +                                                                      //CPU cores
+          "&memused=" + ramused +                                                                        //Ram used (Auto to MB, GB, TB)
+          "&memtotal=" + ramtotal +                                                                      //Ram total (Auto to MB, GB, TB)
+          "&diskused=" + diskused +                                                                      //Disk used (Auto to MB, GB, TB)
+          "&disktotal=" + disktotal +                                                                    //Disk total (Auto to MB, GB, TB)
+          "&netrx=" + netrx +                                                                            //Network received (Auto to MB, GB, TB)
+          "&nettx=" + nettx +                                                                            //Network transmited (Auto to MB, GB, TB)
+          "&osplatform=" + osdata.platform +                                                             //OS platform (win32 or linux)
+          "&oslogofile=" + osdata.logofile +                                                             //OS logofile (Linux example: Debian/Ubuntu | Windows example: Windows)
+          "&osrelease=" + osdata.release +                                                               //OS release (Linux example: 9 | Windows example: 10.0.18362)
+          "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay +                                     //OS uptime (Day/Days, Hours/Hour, Minutes/Minute, Seconds/Second)
+          "&biosvendor=" + bios.vendor +                                                                 //Bios vendor (Example: Dell Inc)
+          "&biosversion=" + bios.version +                                                               //Bios version (Example: A22.00)
+          "&biosdate=" + bios.releaseDate +                                                              //Bios release date (Example: 2018-11-29)
+          "&servermonitorversion=" + Version +                                                           //ServerMonitor version (Example: 1.0.1)
+          "&datatime=" + datatime,                                                                       //Date and time (Example: 1578594094569)
         method: "GET",
         timeout: 10000,
         followRedirect: true,
