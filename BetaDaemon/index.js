@@ -66,24 +66,37 @@ app.get('/', async function (req, res) {
         //Fetch time that data was sent. (Used panel sided to check if server has gone offline)
         var datatime = Date.now();
 
+        //Different errors
+        function discordwebhookurl() { 
+            if (config.Discord == true) {
+                if (config.DiscordWebhook == " ")
+            }
+        }
+
         //Find system OS if windows and else linux (No MacOS support yet, Sorry Apple fans)
         if (osdata.platform == "win32") {
             if (config.debug == true) {
+
                 //Logs that ServerMonitor has found the OS: Windows.
                 console.log("Found OS: " + os.platform)
+
             } else {
+
                 //If debug is disabled.
+
             }
 
-            console.log('Ew windows.')
         } else if (osdata.platform == "linux") {
             if (config.debug == true) {
+
                 //Logs most things
+
             } else {
+
                 //If debug is disabled.
+
             }
 
-            console.log('Well hello there linux :)')
         } else {
             console.log("Your running a unsupported OS. :(")
             process.exit();
