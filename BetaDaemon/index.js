@@ -17,6 +17,8 @@ var pretty = require('prettysize');
 var ping = require('node-http-ping');
 var package = require("./package.json");
 var config = require("./config.json");
+var { get } = require('superagent')
+var chalk = require('chalk');
 
 server.listen(PORT, function () {
     console.log(PORT + " listening...");
@@ -67,9 +69,30 @@ app.get('/', async function (req, res) {
         var datatime = Date.now();
 
         //Different errors
-        function discordwebhookurl() { 
+        function discordchecker() { 
             if (config.Discord == true) {
-                if (config.DiscordWebhook == " ")
+                if (config.DiscordWebhook == " ") {
+                    console.log(chalk.red("Error: Discord webhooks are enabled but no url is valid. Please enter a valid url or go into the config file and change `Discord: true` to `Discord: false`"));
+                } else {
+                    //Discord is enabled and webhook has a input. Check for discord webhook link.
+                    var WebhookURL = ["https://discordapp.com/api/webhooks/", "https://canary.discordapp.com/api/webhooks/"]
+                    if (WebhookURL.some(link => config.DiscordWebhook.includes(link))) {
+                        //Webhook config has discord link. Check if link is valid.
+                        get(config.DiscordWebhook).end((response) => {
+                            console.log("Valid link")
+
+                            if (response.body.type == "1") {
+                                console.log(chalk.green("Url valid"))
+                            } else {
+                                console.log(chalk.red("URL invalid."))
+                            }
+                        })
+
+                    } else {
+                        //Post in console that there is no valid discord link.
+                        console.log(chalk.red("Error: Discord webhooks are enabled but the text entered in the config is not a valid discord link."));
+                    }
+                }
             }
         }
 
@@ -79,6 +102,9 @@ app.get('/', async function (req, res) {
 
                 //Logs that ServerMonitor has found the OS: Windows.
                 console.log("Found OS: " + os.platform)
+
+                //Call discordchecker function.
+                discordchecker();
 
             } else {
 

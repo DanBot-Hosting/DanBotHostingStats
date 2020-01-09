@@ -10,12 +10,14 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "latest",
+    "chalk": "^3.0.0",
     "express": "latest",
     "http": "latest",
     "node-http-ping": "^0.3.1",
     "prettysize": "^2.0.0",
     "request": "^2.88.0",
     "socket.io": "latest",
+    "superagent": "^5.2.1",
     "systeminformation": "^4.16.0"
   }
 }
