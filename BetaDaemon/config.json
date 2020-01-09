@@ -1,5 +1,5 @@
 {
-    "panelip": "192.168.0.3",
+    "panelip": "192.168.0.3", 
     "panelport": "80",
     "debug": true,
 
