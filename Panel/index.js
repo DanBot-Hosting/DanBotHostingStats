@@ -41,12 +41,14 @@ app.engine('hbs', hbs({
   partialsDir: '/views/partials'
 }));
 
+//Import data
+var data = fs.readFileSync('./data/DESKTOP-4GLHDVM.json', 'utf8');
+var data1 = JSON.parse(data);
 
 //Routes
 app.get("/", (req, res) => {
-  var test = require("./data/DESKTOP-4GLHDVM.json");
   res.render('index',  { layout: false,
-    info: test
+    info: data1
 });
 });
 
