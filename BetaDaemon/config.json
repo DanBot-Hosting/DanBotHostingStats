@@ -4,5 +4,10 @@
     "debug": true,
 
     "Discord": true,
-    "DiscordWebhook": "HOE"
+    "DiscordWebhook": "HOE",
+
+    "SystemIPs": [
+        "192.168.1.175",
+        "173.249.33.82"
+    ]
 }

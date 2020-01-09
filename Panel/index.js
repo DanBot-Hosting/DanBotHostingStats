@@ -11,9 +11,9 @@ var PORT = 80;
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
 var fs = require("fs");
+var hbs = require('express-handlebars');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -32,34 +32,22 @@ app.get('/data', function (req, res) {
 
 });
 
-//Main website stuff
-var path = require('path');
-var helmet = require("helmet");
-
 //View engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(helmet());
-
-//Set path for static assets
-app.use(express.static(path.join(__dirname, 'public')));
-
-//Render template.
-const dataDir = path.resolve(`${process.cwd()}${path.sep}website`);
-const templateDir = path.resolve(`${dataDir}${path.sep}templates`);
-const renderTemplate = (res, req, template, data = {}) => {
-  res.render(path.resolve(`${templateDir}${path.sep}${template}`))
-};
+app.set('view engine', 'hbs');
+app.engine('hbs', hbs({
+  extname: 'hbs',
+  defaultView: 'default',
+  layoutsDir: '/views/pages',
+  partialsDir: '/views/partials'
+}));
 
 
-var test = require("./data/Server-01.json");
 //Routes
 app.get("/", (req, res) => {
-  renderTemplate(res, req, "index.ejs", {
-    test: {
-      cpuman: test.cpuman
-    }
-  });
+  var test = require("./data/DESKTOP-4GLHDVM.json");
+  res.render('index',  { layout: false,
+    info: test
+});
 });
 
 //Catch 404 and forward to error handler
