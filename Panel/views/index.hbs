@@ -20,14 +20,29 @@
             }
         </style>
     </head>
-    <body>
-        <div class="container">
-            <div class="large">
-                {{ info.servername }}
-            </div>
-            <div class="small">
-                {{ info.osplatform }} {{info.oslogofile}} {{info.osrelease}} | {{ info.memtotal }} RAM | {{ info.cpuload }}% CPU Load | Uptime {{ info.osuptime }}
-            </div>
-        </div>
-    </body>
+
 </html>
+  <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col col-10"><h3>{{info.servername}} Statistics.</h3>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> {{info.cpu}} (Cores: {{info.cpucores}}, Threads: {{info.cputhreads}})</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> {{info.cpuload}}%</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> {{info.memused}} / {{info.memtotal}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>OS Boot Drive (Used/Total):</strong> {{info.diskused}} / {{info.disktotal}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> {{info.netrx}} <strong>Tx:</strong> {{info.nettx}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> {{info.osuptime}}</div>
+        </div>
+    </div>
+  
