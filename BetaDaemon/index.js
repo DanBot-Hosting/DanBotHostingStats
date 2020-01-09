@@ -33,6 +33,8 @@ app.get('/', async function (req, res) {
         var memdata = await si.mem();
         var ramused = pretty(memdata.used);
         var ramtotal = pretty(memdata.total);
+        var swapused = pretty(memdata.swapused);
+        var swaptotal = pretty(memdata.swaptotal);
         var diskdata = await si.fsSize();
         var diskused = pretty(diskdata[0].used);
         var disktotal = pretty(diskdata[0].size);
@@ -41,12 +43,11 @@ app.get('/', async function (req, res) {
         var nettx = pretty(netdata[0].tx_bytes);
         var osdata = await si.osInfo();
         var bios = await si.bios();
-        var ipadd = await si.networkInterfaces();
-        var ip = ipadd.ip4
+        var docker = await si.dockerInfo();
 
         //CPU data.
+        var cl = await si.currentLoad();
         var cpudata = await si.cpu();
-        var cpu = os.loadavg();
         var cputhreads = cpudata.cores;
         var cpucores = cpudata.physicalCores;
         var cpumain = os.cpus().length > 0 ? os.cpus()[0].model : 'Uh oh. You dont have a cpu?';
@@ -67,9 +68,6 @@ app.get('/', async function (req, res) {
 
         //Fetch time that data was sent. (Used panel sided to check if server has gone offline)
         var datatime = Date.now();
-
-        //Testing Area
-        console.log(memdata)
 
         //Different errors
         function discordchecker() { 
@@ -104,7 +102,7 @@ app.get('/', async function (req, res) {
             if (config.debug == true) {
 
                 //Logs that ServerMonitor has found the OS: Windows.
-                console.log("Found OS: " + os.platform)
+                //console.log("Found OS: " + os.platform)
 
                 //Call discordchecker function.
                 discordchecker();
@@ -131,34 +129,73 @@ app.get('/', async function (req, res) {
             process.exit();
         }
 
-    request({
-        uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
-          "&cpu=" + cpumain +                                                                            //CPU make and brand.
-          "&cpuload=" + Math.ceil(cpu[1] * 100) / 10 +                                                   //CPU load but doesn't work on windows :(
-          "&cputhreads=" + cputhreads +                                                                  //CPU threads.
-          "&cpucores=" + cpucores +                                                                      //CPU cores
-          "&memused=" + ramused +                                                                        //Ram used (Auto to MB, GB, TB)
-          "&memtotal=" + ramtotal +                                                                      //Ram total (Auto to MB, GB, TB)
-          "&diskused=" + diskused +                                                                      //Disk used (Auto to MB, GB, TB)
-          "&disktotal=" + disktotal +                                                                    //Disk total (Auto to MB, GB, TB)
-          "&netrx=" + netrx +                                                                            //Network received (Auto to MB, GB, TB)
-          "&nettx=" + nettx +                                                                            //Network transmited (Auto to MB, GB, TB)
-          "&osplatform=" + osdata.platform +                                                             //OS platform (win32 or linux)
-          "&oslogofile=" + osdata.logofile +                                                             //OS logofile (Linux example: Debian/Ubuntu | Windows example: Windows)
-          "&osrelease=" + osdata.release +                                                               //OS release (Linux example: 9 | Windows example: 10.0.18362)
-          "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay +                                     //OS uptime (Day/Days, Hours/Hour, Minutes/Minute, Seconds/Second)
-          "&biosvendor=" + bios.vendor +                                                                 //Bios vendor (Example: Dell Inc)
-          "&biosversion=" + bios.version +                                                               //Bios version (Example: A22.00)
-          "&biosdate=" + bios.releaseDate +                                                              //Bios release date (Example: 2018-11-29)
-          "&servermonitorversion=" + Version +                                                           //ServerMonitor version (Example: 1.0.1)
-          "&datatime=" + datatime,                                                                       //Date and time (Example: 1578594094569)
-        method: "GET",
-        timeout: 10000,
-        followRedirect: true,
-        maxRedirects: 10
-    }, function (error, response, body) {
-        res.send(body);
-    });
+        if (config.Docker == true) {
+            request({
+                uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
+                  "&cpu=" + cpumain +                                                                            //CPU make and brand.
+                  "&cpuload=" + cl.currentload.toFixed(2) +                                                      //CPU load but doesn't work on windows :(
+                  "&cputhreads=" + cputhreads +                                                                  //CPU threads.
+                  "&cpucores=" + cpucores +                                                                      //CPU cores
+                  "&memused=" + ramused +                                                                        //Ram used (Auto to MB, GB, TB)
+                  "&memtotal=" + ramtotal +                                                                      //Ram total (Auto to MB, GB, TB)
+                  "&swapused=" + swapused +                                                                      //Swap used (Auto to MB, GB, TB)
+                  "&swaptotal=" + swaptotal +                                                                    //Swap total (Auto to MB, GB, TB)
+                  "&diskused=" + diskused +                                                                      //Disk used (Auto to MB, GB, TB)
+                  "&disktotal=" + disktotal +                                                                    //Disk total (Auto to MB, GB, TB)
+                  "&netrx=" + netrx +                                                                            //Network received (Auto to MB, GB, TB)
+                  "&nettx=" + nettx +                                                                            //Network transmited (Auto to MB, GB, TB)
+                  "&osplatform=" + osdata.platform +                                                             //OS platform (win32 or linux)
+                  "&oslogofile=" + osdata.logofile +                                                             //OS logofile (Linux example: Debian/Ubuntu | Windows example: Windows)
+                  "&osrelease=" + osdata.release +                                                               //OS release (Linux example: 9 | Windows example: 10.0.18362)
+                  "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay +                                     //OS uptime (Day/Days, Hours/Hour, Minutes/Minute, Seconds/Second)
+                  "&biosvendor=" + bios.vendor +                                                                 //Bios vendor (Example: Dell Inc)
+                  "&biosversion=" + bios.version +                                                               //Bios version (Example: A22.00)
+                  "&biosdate=" + bios.releaseDate +                                                              //Bios release date (Example: 2018-11-29)
+                  "&servermonitorversion=" + Version +                                                           //ServerMonitor version (Example: 1.0.1)
+                  "&datatime=" + datatime +                                                                      //Date and time (Example: 1578594094569)
+                  "&dockercontainers=" + docker.containers +                                                     //Number of docker containers
+                  "&dockercontainersrunning=" + docker.containersRunning +                                       //Number of running docker containers
+                  "&dockercontainerspaused=" + docker.containersPaused +                                         //Number of paused docker containers
+                  "&dockercontainersstopped=" + docker.containersStopped,                                        //Number of stopped docker containers
+                method: "GET",
+                timeout: 10000,
+                followRedirect: true,
+                maxRedirects: 10
+            }, function (error, response, body) {
+                res.send(body);
+            });
+        } else {
+            request({
+                uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
+                  "&cpu=" + cpumain +                                                                            //CPU make and brand.
+                  "&cpuload=" + cl.currentload.toFixed(2) +                                                      //CPU load but doesn't work on windows :(
+                  "&cputhreads=" + cputhreads +                                                                  //CPU threads.
+                  "&cpucores=" + cpucores +                                                                      //CPU cores
+                  "&memused=" + ramused +                                                                        //Ram used (Auto to MB, GB, TB)
+                  "&memtotal=" + ramtotal +                                                                      //Ram total (Auto to MB, GB, TB)
+                  "&swapused=" + swapused +                                                                      //Swap used (Auto to MB, GB, TB)
+                  "&swaptotal=" + swaptotal +                                                                    //Swap total (Auto to MB, GB, TB)
+                  "&diskused=" + diskused +                                                                      //Disk used (Auto to MB, GB, TB)
+                  "&disktotal=" + disktotal +                                                                    //Disk total (Auto to MB, GB, TB)
+                  "&netrx=" + netrx +                                                                            //Network received (Auto to MB, GB, TB)
+                  "&nettx=" + nettx +                                                                            //Network transmited (Auto to MB, GB, TB)
+                  "&osplatform=" + osdata.platform +                                                             //OS platform (win32 or linux)
+                  "&oslogofile=" + osdata.logofile +                                                             //OS logofile (Linux example: Debian/Ubuntu | Windows example: Windows)
+                  "&osrelease=" + osdata.release +                                                               //OS release (Linux example: 9 | Windows example: 10.0.18362)
+                  "&osuptime=" + dDisplay + hDisplay + mDisplay + sDisplay +                                     //OS uptime (Day/Days, Hours/Hour, Minutes/Minute, Seconds/Second)
+                  "&biosvendor=" + bios.vendor +                                                                 //Bios vendor (Example: Dell Inc)
+                  "&biosversion=" + bios.version +                                                               //Bios version (Example: A22.00)
+                  "&biosdate=" + bios.releaseDate +                                                              //Bios release date (Example: 2018-11-29)
+                  "&servermonitorversion=" + Version +                                                           //ServerMonitor version (Example: 1.0.1)
+                  "&datatime=" + datatime,                                                                       //Date and time (Example: 1578594094569)
+                method: "GET",
+                timeout: 10000,
+                followRedirect: true,
+                maxRedirects: 10
+            }, function (error, response, body) {
+                res.send(body);
+            });
+        }
 }, 2500);   
 
 });
