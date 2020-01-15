@@ -18,6 +18,7 @@
   "homepage": "https://github.com/danielpmc/ServerMonitor#readme",
   "dependencies": {
     "body-parser": "latest",
+    "chalk": "^3.0.0",
     "ejs": "^3.0.1",
     "express": "latest",
     "express-handlebars": "^3.1.0",

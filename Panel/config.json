@@ -1,0 +1,17 @@
+{
+    "ListeningPort": 80,
+
+    "Servers": {
+        "NumberOfServers": 2,
+        "One": "Server-01",
+        "Two": "DESKTOP-4GLHDVM",
+        "Three": " ",
+        "Four": " ",
+        "Five": " ",
+        "Six": " ",
+        "Seven": " ",
+        "Eight": " ",
+        "Nine": " ",
+        "Ten": " "
+    }
+}

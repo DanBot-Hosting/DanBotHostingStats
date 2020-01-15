@@ -22,6 +22,7 @@ var chalk = require('chalk');
 var moment = require("moment");
 
 server.listen(PORT, function () {
+    console.log(chalk.blueBright("The servers hostname is: " + chalk.green(os.hostname) + ", Please put this in the config file"))
     console.log(PORT + " listening...");
     ping('0.0.0.0', 2001)
 
