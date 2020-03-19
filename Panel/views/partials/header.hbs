@@ -1,0 +1,21 @@
+    <div class="navbar navbar-default">
+		<div class="container-fluid">
+				  <div id="header" style="display:flex; align-items:center; justify-content:space-around;">
+					    <div id="group1">
+        					<a href="/"><h1>{{{title}}}</h1></a>
+					  	</div>
+					  	<div id="group2">
+							<div class="btn-toolbar">
+								{{#unless user }}
+								<a href="/users/login" class="btn btn-default">Login</a>
+								<a href="/users/signup" class="btn btn-default">Signup</a>
+								{{else}}
+								<a href="/users/profile" class="btn btn-default">
+										<img style="max-height:30px;" src="{{ user.local.avatarURL }}" onError="this.onerror=null; this.src='../images/novatar.png'"/>
+										{{{ user.local.username }}}</a>
+								{{/unless}}
+							</div>
+					    </div>
+				  </div>
+		</div>
+    </div>

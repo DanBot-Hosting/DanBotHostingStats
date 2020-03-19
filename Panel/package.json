@@ -1,5 +1,5 @@
 {
-  "name": "servermonitor",
+  "name": "servermontior",
   "version": "1.0.0",
   "description": "A software that runs a local web server to show system info, E.G: CPU Graph, Memory Graph along with more helpful info. Good for anyone who has multiple servers/computers like me and needs some way to monitor them from a single or multiple computers. ",
   "main": "index.js",
@@ -22,6 +22,7 @@
     "ejs": "^3.0.1",
     "express": "latest",
     "express-handlebars": "^3.1.0",
+    "hbs": "^4.1.0",
     "helmet": "^3.21.2",
     "http": "latest",
     "socket.io": "latest"
