@@ -21,11 +21,10 @@
             }
         </style>
     </head>
-{{> header}}
 </html>
   <div class="container">
         <div class="row justify-content-md-center">
-          <div class="col col-10"><h3>Node 1 Stats</h3>
+          <a href="https://stats.danbot.xyz/Node1"><h3>Node 1 Stats</h3></a>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> {{Node1Data.cpu}} (Cores: {{Node1Data.cpucores}}, Threads: {{Node1Data.cputhreads}})</div>
@@ -45,9 +44,12 @@
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> {{Node1Data.osuptime}}</div>
         </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> {{Node1Data.updatetime}}</div>
+        </div>
 
         <div class="row justify-content-md-center">
-          <div class="col col-10"><h3>Node 2 Stats</h3>
+          <a href="https://stats.danbot.xyz/Node2"><h3>Node 2 Stats</h3></a>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> {{Node2Data.cpu}} (Cores: {{Node2Data.cpucores}}, Threads: {{Node2Data.cputhreads}})</div>
@@ -67,9 +69,12 @@
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> {{Node2Data.osuptime}}</div>
         </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> {{Node2Data.updatetime}}</div>
+        </div>
 
         <div class="row justify-content-md-center">
-          <div class="col col-10"><h3>Node 3 Stats</h3>
+          <a href="https://stats.danbot.xyz/Node3"><h3>Node 3 Stats</h3></a>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> {{Node3Data.cpu}} (Cores: {{Node3Data.cpucores}}, Threads: {{Node3Data.cputhreads}})</div>
@@ -89,9 +94,12 @@
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> {{Node3Data.osuptime}}</div>
         </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> {{Node3Data.updatetime}}</div>
+        </div>
 
         <div class="row justify-content-md-center">
-          <div class="col col-10"><h3>Node 4 Stats</h3>
+          <a href="https://stats.danbot.xyz/Node4"><h3>Node 4 Stats</h3></a>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> {{Node4Data.cpu}} (Cores: {{Node4Data.cpucores}}, Threads: {{Node4Data.cputhreads}})</div>
@@ -110,6 +118,34 @@
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> {{Node4Data.osuptime}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> {{Node4Data.updatetime}}</div>
+        </div>
+
+        <div class="row justify-content-md-center">
+          <a href="https://stats.danbot.xyz/Node5"><h3>Node 5 Stats (Private)</h3></a>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> {{Node5Data.cpu}} (Cores: {{Node5Data.cpucores}}, Threads: {{Node5Data.cputhreads}})</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> {{Node5Data.cpuload}}%</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> {{Node5Data.memused}} / {{Node5Data.memtotal}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> {{Node5Data.diskused}} / {{Node5Data.disktotal}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> {{Node5Data.netrx}} <strong>Tx:</strong> {{Node5Data.nettx}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> {{Node5Data.osuptime}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> {{Node5Data.updatetime}}</div>
         </div>
     </div>
   

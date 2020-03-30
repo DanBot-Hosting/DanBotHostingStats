@@ -130,6 +130,7 @@ app.get('/', async function (req, res) {
                     console.log(chalk.red("You enabled docker in the config but your system does not have docker installed. Please disable this!"));
                     process.exit();
                 } else {
+                    var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
                     request({
                         uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
                           "&cpu=" + cpumain +                                                                            //CPU make and brand.
@@ -156,7 +157,8 @@ app.get('/', async function (req, res) {
                           "&dockercontainers=" + docker.containers +                                                     //Number of docker containers
                           "&dockercontainersrunning=" + docker.containersRunning +                                       //Number of running docker containers
                           "&dockercontainerspaused=" + docker.containersPaused +                                         //Number of paused docker containers
-                          "&dockercontainersstopped=" + docker.containersStopped,                                        //Number of stopped docker containers
+                          "&dockercontainersstopped=" + docker.containersStopped +                                       //Number of stopped docker containers
+                          "&updatetime= " + timestamp,                                                                   //Last time the node sent data to the panel
                         method: "GET",
                         timeout: 5000,
                         followRedirect: true,
@@ -188,6 +190,7 @@ app.get('/', async function (req, res) {
                     });
                 }
             } else {
+                var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
                 request({
                     uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
                       "&cpu=" + cpumain +                                                                            //CPU make and brand.
@@ -210,7 +213,7 @@ app.get('/', async function (req, res) {
                       "&biosversion=" + bios.version +                                                               //Bios version (Example: A22.00)
                       "&biosdate=" + bios.releaseDate +                                                              //Bios release date (Example: 2018-11-29)
                       "&servermonitorversion=" + Version +                                                           //ServerMonitor version (Example: 1.0.1)
-                      "&datatime=" + datatime,                                                                       //Date and time (Example: 1578594094569)
+                      "&updatetime= " + timestamp,                                                                   //Last time the node sent data to the panel                                                                      //Date and time (Example: 1578594094569)
                     method: "GET",
                     timeout: 5000,
                     followRedirect: true,
@@ -249,6 +252,7 @@ app.get('/', async function (req, res) {
                     console.log(chalk.red("You enabled docker in the config but your system does not have docker installed. Please disable this!"));
                     process.exit();
                 } else {
+                    var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
                     request({
                         uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
                           "&cpu=" + cpudata.manufacturer + " " + cpudata.brand +                                         //CPU make and brand.
@@ -275,7 +279,8 @@ app.get('/', async function (req, res) {
                           "&dockercontainers=" + docker.containers +                                                     //Number of docker containers
                           "&dockercontainersrunning=" + docker.containersRunning +                                       //Number of running docker containers
                           "&dockercontainerspaused=" + docker.containersPaused +                                         //Number of paused docker containers
-                          "&dockercontainersstopped=" + docker.containersStopped,                                        //Number of stopped docker containers
+                          "&dockercontainersstopped=" + docker.containersStopped +                                       //Number of stopped docker containers
+                          "&updatetime= " + timestamp,                                                                   //Last time the node sent data to the panel
                         method: "GET",
                         timeout: 5000,
                         followRedirect: true,
@@ -307,6 +312,7 @@ app.get('/', async function (req, res) {
                     });
                 }
             } else {
+                var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
                 request({
                     uri: "http://" + config.panelip + ":" + config.panelport + "/data?servername=" + os.hostname +   //OS hostname for saving data panel sided.
                       "&cpu=" + cpudata.manufacturer + " " + cpudata.brand +                                         //CPU make and brand.
@@ -329,7 +335,7 @@ app.get('/', async function (req, res) {
                       "&biosversion=" + bios.version +                                                               //Bios version (Example: A22.00)
                       "&biosdate=" + bios.releaseDate +                                                              //Bios release date (Example: 2018-11-29)
                       "&servermonitorversion=" + Version +                                                           //ServerMonitor version (Example: 1.0.1)
-                      "&datatime=" + datatime,                                                                       //Date and time (Example: 1578594094569)
+                      "&updatetime= " + timestamp,                                                                   //Last time the node sent data to the panel
                     method: "GET",
                     timeout: 5000,
                     followRedirect: true,

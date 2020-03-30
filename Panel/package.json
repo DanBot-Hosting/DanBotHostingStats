@@ -19,12 +19,14 @@
   "dependencies": {
     "body-parser": "latest",
     "chalk": "^3.0.0",
+    "discord.js": "^11.6.3",
     "ejs": "^3.0.1",
     "express": "latest",
     "express-handlebars": "^3.1.0",
     "hbs": "^4.1.0",
     "helmet": "^3.21.2",
     "http": "latest",
+    "moment": "^2.24.0",
     "socket.io": "latest"
   }
 }
