@@ -109,7 +109,7 @@ exports.run = async (client, message) => {
             channel.send(`\`${collected2.first().content.trim()}`+"` is not a Valid Email!");
             setTimeout(() => {
                 channel.delete();
-            }, 3000);
+            }, 10000);
             return false;
         }
         collected2.first().delete();
@@ -121,7 +121,10 @@ exports.run = async (client, message) => {
             console.log(user)
 
             if (user == "Error: User already exists! (Or Email/Username is existing already)") {
-                msg.edit("ERROR: A user with that email/username already exists.", null).then(channel.delete())
+                msg.edit("ERROR: A user with that email/username already exists.", null)
+                setTimeout(function () {
+                    channel.delete();
+                }, 10000);
                 return false;
             }
                 msg.edit("Hello! You created an new account, Heres the login information", {
