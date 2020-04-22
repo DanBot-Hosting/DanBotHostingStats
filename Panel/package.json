@@ -27,6 +27,8 @@
     "helmet": "^3.21.2",
     "http": "latest",
     "moment": "^2.24.0",
-    "socket.io": "latest"
+    "nodeactyl-beta": "0.0.10",
+    "socket.io": "latest",
+    "validator": "^13.0.0"
   }
 }

@@ -17,6 +17,9 @@ global.fs = require("fs");
 const hbs = require('hbs');
 global.chalk = require('chalk');
 
+//Discord Bot
+//require('./bot/discord/index.js')
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -24,9 +27,18 @@ server.listen(PORT, function () {
     console.log(chalk.green("Listening on port " + PORT));
 });
 
+app.get('/data', function (req, res) {
+    //console.log(req.query);
 
+    //Write data to JSON file after checking the servers Hostname.
+    var data = JSON.stringify(req.query);
+    fs.writeFileSync('data/' + req.query.servername + '.json', data);
+
+});
 
 //Discord bot
+var node = require('nodeactyl-beta');
+global.DanBotHosting = node.Application;
 global.Discord = require("discord.js");
 const client = new Discord.Client()
 global.fs = require("fs");
@@ -61,19 +73,13 @@ client.on('message', message => {
     }  
 })
 
+//Logging into pterodactyl using Nodeactyl
+DanBotHosting.login(config.Pterodactyl.hosturl, config.Pterodactyl.apikey, (logged_in) => {
+  console.log("Nodeactyl logged in? " + logged_in);
+});
+
 //Bot login
 client.login(config.DiscordBot.Token);
-
-
-
-app.get('/data', function (req, res) {
-    //console.log(req.query);
-
-    //Write data to JSON file after checking the servers Hostname.
-    var data = JSON.stringify(req.query);
-    fs.writeFileSync('data/' + req.query.servername + '.json', data);
-
-});
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
