@@ -1,5 +1,26 @@
 module.exports = (client, guild, files) => {
-    const timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
-    console.log(chalk.yellow("[" + timestamp + "] Discord bot logged in!"));
-    client.user.setActivity("over DanBot Hosting", { type: "WATCHING" }); 
+    console.log(chalk.magenta('[DISCORD] ') + chalk.green("Bot logged in!"));
+
+//Auto Activities List
+const activities = [
+    {
+        "text": "over DanBot Hosting",
+        "type": "WATCHING"
+    },
+    {
+        "text": "DanBot FM",
+        "type": "LISTENING"
+    }
+];
+setInterval(() => {
+    const activity = activities[Math.floor(Math.random() * activities.length)];
+    client.user.setActivity(activity.text, { type: activity.type }); 
+}, 30000); 
+
+global.invites = {};
+client.guilds.forEach(g => {
+    g.fetchInvites().then(guildInvites => {
+      invites[g.id] = guildInvites;
+    });
+  });
 };

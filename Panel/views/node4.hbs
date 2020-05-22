@@ -25,7 +25,7 @@
   <div class="container">
       <a href="https://stats.danbot.xyz">All host stats</a>
         <div class="row justify-content-md-center">
-          <div class="col col-10"><h3>Node 4 Stats</h3>
+          <div class="col col-10"><h3>Node 4 Stats (Private, Home dedi)</h3>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> {{Node4Data.cpu}} (Cores: {{Node4Data.cpucores}}, Threads: {{Node4Data.cputhreads}})</div>
@@ -44,6 +44,9 @@
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> {{Node4Data.osuptime}}</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> {{Node4DataSpeed.ping}}, <strong>Download:</strong> {{Node4DataSpeed.download}}, <strong>Upload: </strong>{{Node4DataSpeed.upload}}</div>
         </div>
 
     </div>

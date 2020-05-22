@@ -16,33 +16,27 @@ var bodyParser = require('body-parser');
 global.fs = require("fs");
 const hbs = require('hbs');
 global.chalk = require('chalk');
+const nodemailer = require('nodemailer');
+let transport = nodemailer.createTransport({
+  host: config.Email.Host,
+  port: config.Email.Port,
+  auth: {
+     user: config.Email.User,
+     pass: config.Email.Password
+  }
+});
+
 
 //Discord Bot
-//require('./bot/discord/index.js')
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-server.listen(PORT, function () {
-    console.log(chalk.green("Listening on port " + PORT));
-});
-
-app.get('/data', function (req, res) {
-    //console.log(req.query);
-
-    //Write data to JSON file after checking the servers Hostname.
-    var data = JSON.stringify(req.query);
-    fs.writeFileSync('data/' + req.query.servername + '.json', data);
-
-});
-
-//Discord bot
 var node = require('nodeactyl-beta');
 global.DanBotHosting = node.Application;
+global.DanBotHostingClient = node.Client;
 global.Discord = require("discord.js");
 const client = new Discord.Client()
 global.fs = require("fs");
 global.moment = require("moment");
+let db = require("quick.db");
+global.userData = new db.table("userData")
 
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
@@ -54,32 +48,52 @@ fs.readdir('./bot/discord/events/', (err, files) => {
     });
   }); 
 
-//Command handler
-client.on('message', message => {
-
-    const prefix = config.DiscordBot.Prefix;
-    if (message.content.indexOf(prefix) !== 0) return;
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const commandargs = message.content.split(' ').slice(1).join(' ');
-    const command = args.shift().toLowerCase();
-    console.log(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`);
-        try {
-            let commandFile = require(`./bot/discord/commands/${command}.js`);
-            commandFile.run(client, message, args);
-        } catch (err) {
-                if (err instanceof Error && err.code === "MODULE_NOT_FOUND") {
-                    return console.log(err)
-             }
-    }  
-})
+//Disconnected from discord. Probs time to restart while disconnected.
+//client.on('reconnecting', () => console.log('Disconnected from discord. Restarting...'), process.exit());
 
 //Logging into pterodactyl using Nodeactyl
 DanBotHosting.login(config.Pterodactyl.hosturl, config.Pterodactyl.apikey, (logged_in) => {
-  console.log("Nodeactyl logged in? " + logged_in);
+  console.log(chalk.magenta('[APP] ') + chalk.green("Nodeactyl logged in? " + logged_in));
+});
+DanBotHostingClient.login(config.Pterodactyl.hosturl, config.Pterodactyl.apikeyclient, (logged_in) => {
+  console.log(chalk.magenta('[CLIENT] ') + chalk.green("Nodeactyl logged in? " + logged_in));
 });
 
 //Bot login
 client.login(config.DiscordBot.Token);
+
+//Test Email
+//const message = {
+//  from: config.Email.From,
+//  to: 'danielpd93@gmail.com',
+//  subject: 'DanBot Hosting Webpage and Discord Bot now online!',
+//  html: "DanBot Hosting Stats page is now online!"
+//};
+//transport.sendMail(message, function(err, info) {
+//  if (err) {
+//    console.log(err)
+//  } else {
+//    console.log(info);
+//  }
+//});
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+server.listen(PORT, function () {
+    console.log(chalk.magenta('[WEB] ') + chalk.green("Listening on port " + PORT));
+});
+
+app.get('/data', function (req, res) {
+  if (req.query.servername == undefined) {
+    var data = JSON.stringify(req.query);
+    fs.writeFileSync('data/' + req.query.speedname + '-speedtest.json', data);
+  } else {
+    var data = JSON.stringify(req.query);
+    fs.writeFileSync('data/' + req.query.servername + '.json', data);
+  }
+});
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
@@ -91,29 +105,36 @@ app.get("/", (req, res) => {
   //Data for node 1
   var N1 = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8.json', 'utf8');
   var Node1 = JSON.parse(N1);
+  var N1speed = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8-speedtest.json', 'utf8');
+  var Node1speed = JSON.parse(N1speed);
 
   //Data for node 2
   var N2 = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181.json', 'utf8');
   var Node2 = JSON.parse(N2);
+  var N2speed = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181-speedtest.json', 'utf8');
+  var Node2speed = JSON.parse(N2speed);
  
   //Data for node 3
-  var N3 = fs.readFileSync('./data/6fc3e9bf-24a8-47cd-99d3-fa159e05a9f4.json', 'utf8');
+  var N3 = fs.readFileSync('./data/bed240f5-7c87-4013-90ee-a5bbc21f60da.json', 'utf8');
   var Node3 = JSON.parse(N3);
+  var N3speed = fs.readFileSync('./data/bed240f5-7c87-4013-90ee-a5bbc21f60da-speedtest.json', 'utf8');
+  var Node3speed = JSON.parse(N3speed);
 
-  //Data for node 4
-  var N4 = fs.readFileSync('./data/15ffcdd0-a021-4ded-977d-284d777330a0.json', 'utf8');
+  //Data for node 4 (Private)
+  var N4 = fs.readFileSync('./data/Server-01.json', 'utf8');
   var Node4 = JSON.parse(N4);
-
-  //Data for node 5 (Private)
-  var N5 = fs.readFileSync('./data/Server-01.json', 'utf8');
-  var Node5 = JSON.parse(N5);
+  var N4speed = fs.readFileSync('./data/Server-01-speedtest.json', 'utf8');
+  var Node4speed = JSON.parse(N4speed);
 
   res.render('index',  { layout: false,
     Node1Data: Node1,
     Node2Data: Node2,
     Node3Data: Node3,
     Node4Data: Node4,
-    Node5Data: Node5
+    Node1DataSpeed: Node1speed,
+    Node2DataSpeed: Node2speed,
+    Node3DataSpeed: Node3speed,
+    Node4DataSpeed: Node4speed
 });
 });
 
@@ -122,9 +143,12 @@ app.get("/Node1", (req, res) => {
   //Data for node 1
   var N1 = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8.json', 'utf8');
   var Node1 = JSON.parse(N1);
+  var N1speed = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8-speedtest.json', 'utf8');
+  var Node1speed = JSON.parse(N1speed);
 
   res.render('node1',  { layout: false,
-    Node1Data: Node1
+    Node1Data: Node1,
+    Node1DataSpeed: Node1speed
 });
 });
 
@@ -133,44 +157,43 @@ app.get("/Node2", (req, res) => {
   //Data for node 2
   var N2 = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181.json', 'utf8');
   var Node2 = JSON.parse(N2);
+  var N2speed = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181-speedtest.json', 'utf8');
+  var Node2speed = JSON.parse(N2speed);
 
   res.render('node2',  { layout: false,
-    Node2Data: Node2
+    Node2Data: Node2,
+    Node2DataSpeed: Node2speed
 });
 });
 
 app.get("/Node3", (req, res) => {
 
   //Data for node 3
-  var N3 = fs.readFileSync('./data/6fc3e9bf-24a8-47cd-99d3-fa159e05a9f4.json', 'utf8');
+  var N3 = fs.readFileSync('./data/bed240f5-7c87-4013-90ee-a5bbc21f60da.json', 'utf8');
   var Node3 = JSON.parse(N3);
+  var N3speed = fs.readFileSync('./data/bed240f5-7c87-4013-90ee-a5bbc21f60da-speedtest.json', 'utf8');
+  var Node3speed = JSON.parse(N3speed);
 
   res.render('node3',  { layout: false,
-    Node3Data: Node3
+    Node3Data: Node3,
+    Node3DataSpeed: Node3speed
 });
 });
 
 app.get("/Node4", (req, res) => {
 
   //Data for node 4
-  var N4 = fs.readFileSync('./data/15ffcdd0-a021-4ded-977d-284d777330a0.json', 'utf8');
+  var N4 = fs.readFileSync('./data/Server-01.json', 'utf8');
   var Node4 = JSON.parse(N4);
+  var N4speed = fs.readFileSync('./data/Server-01-speedtest.json', 'utf8');
+  var Node4speed = JSON.parse(N4speed);
 
   res.render('node4',  { layout: false,
-    Node4Data: Node4
+    Node4Data: Node4,
+    Node4DataSpeed: Node4speed
 });
 });
 
-app.get("/Node5", (req, res) => {
-
-  //Data for node 5
-  var N5 = fs.readFileSync('./data/Server-01.json', 'utf8');
-  var Node5 = JSON.parse(N5);
-
-  res.render('node5',  { layout: false,
-    Node5Data: Node5
-});
-});
 
 //Catch 404 and forward to error handler
 app.use(function(req, res, next) {

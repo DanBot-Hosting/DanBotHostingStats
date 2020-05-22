@@ -1,21 +1,21 @@
 {
-  "name": "servermontior",
-  "version": "1.0.0",
-  "description": "A software that runs a local web server to show system info, E.G: CPU Graph, Memory Graph along with more helpful info. Good for anyone who has multiple servers/computers like me and needs some way to monitor them from a single or multiple computers. ",
+  "name": "danbothostingstats",
+  "version": "1.0.1",
+  "description": "A modified version of ServerMonitor by danielpmc. ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielpmc/ServerMonitor.git"
+    "url": "git+https://github.com/danbot-devs/DanBotHostingStats.git"
   },
-  "author": "danielpmc",
+  "author": "danbot-devs",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danielpmc/ServerMonitor/issues"
+    "url": "https://github.com/danbot-devs/DanBotHostingStats/issues"
   },
-  "homepage": "https://github.com/danielpmc/ServerMonitor#readme",
+  "homepage": "https://github.com/danbot-devs/DanBotHostingStats#readme",
   "dependencies": {
     "body-parser": "latest",
     "chalk": "^3.0.0",
@@ -28,6 +28,8 @@
     "http": "latest",
     "moment": "^2.24.0",
     "nodeactyl-beta": "0.0.10",
+    "nodemailer": "^6.4.6",
+    "quick.db": "^7.1.1",
     "socket.io": "latest",
     "validator": "^13.0.0"
   }

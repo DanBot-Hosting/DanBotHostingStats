@@ -20,6 +20,7 @@ var config = require("./config.json");
 var { get } = require('superagent')
 var chalk = require('chalk');
 var moment = require("moment");
+const speedTest = require('speedtest-net'); 
 
 server.listen(PORT, function () {
     console.log(chalk.blueBright("The servers hostname is: " + chalk.green(os.hostname) + ", Please put this in the config file"))
@@ -352,16 +353,19 @@ app.get('/', async function (req, res) {
                         //Because Panel doesn't give response to Daemon it thinks it timed out.
                         //But really it didn't data was still sent. 
                         //So ignore this error.
+                        return;
                     } else if (error == "Error: read ECONNRESET") {
                         //Do nothing because panel went down. Program will still continue to try and send data.
                         //So ignore this error.
+                        return;
                     } else if (error == "Error: ETIMEDOUT") {
                         //Do nothing because panel went down. Program will still continue to try and send data.
                         //So ignore this error.
+                        return;
                     }else {
                         //Log the error in red and exit process
                         console.log(chalk.red("ERROR! " + error))
-                        process.exit();
+                        return;
                     }
     
                 });
@@ -372,6 +376,47 @@ app.get('/', async function (req, res) {
             process.exit();
         }
 
-}, 2500);   
+}, 2500);  
 
+setInterval(async () => {
+var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
+const speed = await speedTest({maxTime: 5000})
+speed.on('data', async (data) => {
+request({
+    uri: "http://" + config.panelip + ":" + config.panelport + "/data?speedname=" + os.hostname +    //OS hostname for saving data panel sided.
+      "&ping=" + data.server.ping +                                                                  //Speedtest Ping. (MS)
+      "&download=" + data.speeds.download +                                                          //Download Speed (Mbps)
+      "&upload=" + data.speeds.upload +                                                              //Upload Speed (Mbps)
+      "&updatetime= " + timestamp,                                                                   //Last time the node sent data to the panel                                                                      //Date and time (Example: 1578594094569)
+    method: "GET",
+    timeout: 5000,
+    followRedirect: true,
+    maxRedirects: 10
+}, function (error, response, body) {
+
+    //Send data to panel
+    res.send(body);
+
+    //Error checking.
+    if (error == "undefined") {
+        //No errors = Do nothing :D
+    } else if (error == "Error: ESOCKETTIMEDOUT") {
+        //Because Panel doesn't give response to Daemon it thinks it timed out.
+        //But really it didn't data was still sent. 
+        //So ignore this error.
+    } else if (error == "Error: read ECONNRESET") {
+        //Do nothing because panel went down. Program will still continue to try and send data.
+        //So ignore this error.
+    } else if (error == "Error: connect ECONNREFUSED " + config.panelip + ":" + config.panelport) {
+        //Do nothing because panel went down. Program will still continue to try and send data.
+        //So ignore this error.
+    }else {
+        //Log the error in red and exit process
+        console.log(chalk.red("ERROR! " + error))
+        process.exit();
+  }
+});
+});
+}, 21600000); 
+//}, 20000); 
 });
