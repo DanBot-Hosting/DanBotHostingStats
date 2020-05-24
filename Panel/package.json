@@ -1,6 +1,6 @@
 {
   "name": "danbothostingstats",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "A modified version of ServerMonitor by danielpmc. ",
   "main": "index.js",
   "scripts": {
