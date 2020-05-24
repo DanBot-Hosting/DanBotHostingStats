@@ -34,6 +34,7 @@ exports.run = async (client, message) => {
                 deny: 1024
             }
         ]).catch(console.error);
+        message.reply(`Please check ${channel.id} to create an account.`)
 
         let category = server.channels.find(c => c.id == "697585283214082078" && c.type == "category");
         if (!category) throw new Error("Category channel does not exist");
@@ -118,8 +119,6 @@ exports.run = async (client, message) => {
 
         DanBotHosting.createUser(collected1.first().content, password, collected2.first().content, collected1.first().content, ".", false, "en").then(user => {
 
-            console.log(user)
-
             if (user == "Error: User already exists! (Or Email/Username is existing already)") {
                 msg.edit("ERROR: A user with that email/username already exists.", null)
                 setTimeout(function () {
@@ -138,6 +137,25 @@ exports.run = async (client, message) => {
                 setTimeout(function () {
                     channel.delete();
                 }, 3600000);
+
+                //Account Linking.
+                consoleUser = consoleUser.filter(x => x.attributes.email == collected2.first().content)
+                console.log(consoleUser)
+
+                if (consoleUser.length == 0) return console.log(chalk.magenta('[DISCORD] ') + chalk.green("No account with that email exists...")).then(
+                )
+        
+                consoleUser = consoleUser[0];
+                const timestamp = `${moment().format("HH:mm:ss")}`;
+                const datestamp = `${moment().format("YYYY-MM-DD")}`;
+                userData.set(`${message.author.id}`, {
+                    discordID: message.author.id,
+                    consoleID: consoleUser.attributes.id,
+                    email: consoleUser.attributes.email,
+                    username: consoleUser.attributes.username,
+                    linkTime: timestamp,
+                    linkDate: datestamp
+                })
 
         }).catch(err => {
             console.log(err);

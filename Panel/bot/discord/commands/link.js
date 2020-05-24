@@ -22,7 +22,7 @@ exports.run = async (client, message) => {
                 deny: 1024
             }
         ]).catch(console.error);
-        message.channel.send(`<@${message.author.id}>, Please check <#${channel.id}> to link your account.`)
+        message.reply(`Please check ${channel.id} to link your account.`)
 
         let category = server.channels.find(c => c.id == "697585283214082078" && c.type == "category");
         if (!category) throw new Error("Category channel does not exist");

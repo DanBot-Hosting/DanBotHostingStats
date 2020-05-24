@@ -1,5 +1,6 @@
 module.exports = (client, message) => {
     if(message.content.toLowerCase().includes("tiktok")) { message.delete() }
+    if(message.content.toLowerCase().includes("discord.gg")) { message.delete() }
     const prefix = config.DiscordBot.Prefix;
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
