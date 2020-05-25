@@ -23,6 +23,7 @@
     "ejs": "^3.0.1",
     "express": "latest",
     "express-handlebars": "^3.1.0",
+    "git-repo-info": "^2.1.1",
     "hbs": "^4.1.0",
     "helmet": "^3.21.2",
     "http": "latest",
