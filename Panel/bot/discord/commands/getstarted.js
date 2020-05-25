@@ -34,7 +34,7 @@ exports.run = async (client, message) => {
                 deny: 1024
             }
         ]).catch(console.error);
-        message.reply(`Please check ${channel.id} to create an account.`)
+        message.reply(`Please check <#${channel.id}> to create an account.`)
 
         let category = server.channels.find(c => c.id == "697585283214082078" && c.type == "category");
         if (!category) throw new Error("Category channel does not exist");

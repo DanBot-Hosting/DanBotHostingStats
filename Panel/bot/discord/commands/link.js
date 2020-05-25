@@ -22,7 +22,7 @@ exports.run = async (client, message) => {
                 deny: 1024
             }
         ]).catch(console.error);
-        message.reply(`Please check ${channel.id} to link your account.`)
+        message.reply(`Please check <#${channel.id}> to link your account.`)
 
         let category = server.channels.find(c => c.id == "697585283214082078" && c.type == "category");
         if (!category) throw new Error("Category channel does not exist");
@@ -83,7 +83,17 @@ exports.run = async (client, message) => {
             linkTime: timestamp,
             linkDate: datestamp
         })
+
+        let embedstaff = new Dicord.RichEmbed()
+        .setColor('GREEN')
+        .addField('__**Linked Discord account:**__', message.author.id)
+        .addField('__**Linked Console account email:**__', consoleUser.attributes.email)
+        .addField('__**Linked At: (TIME / DATE)**__', linkTime + " / " + linkDate)
+        .addField('__**Linked Console username:**__', consoleUser.attributes.username)
+        .addField('__**Linked Console ID:**__', consoleUser.attributes.id)
+
             channel.send("Account linked! You can now create server's and use other features on this bot!").then(
+                client.channels.get(config.DiscordBot.mLogs).send(`<@${message.author.id}> linked their account. Heres some info: `, embedstaff),
                 setTimeout(() => {
                     channel.delete();
                 }, 5000)

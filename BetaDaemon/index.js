@@ -184,7 +184,7 @@ app.get('/', async function (req, res) {
                             //So ignore this error.
                         }else {
                             //Log the error in red and exit process
-                            console.log(chalk.red("ERROR! " + error))
+                            //console.log(chalk.red("ERROR! " + error))
                             return;
                         }
         
@@ -239,7 +239,7 @@ app.get('/', async function (req, res) {
                         //So ignore this error.
                     }else {
                         //Log the error in red and exit process
-                        console.log(chalk.red("ERROR! " + error))
+                        //console.log(chalk.red("ERROR! " + error))
                         return;
                     }
     
@@ -306,7 +306,7 @@ app.get('/', async function (req, res) {
                             //So ignore this error.
                         }else {
                             //Log the error in red and exit process
-                            console.log(chalk.red("ERROR! " + error))
+                            //console.log(chalk.red("ERROR! " + error))
                             return;
                         }
         
@@ -364,7 +364,7 @@ app.get('/', async function (req, res) {
                         return;
                     }else {
                         //Log the error in red and exit process
-                        console.log(chalk.red("ERROR! " + error))
+                        //console.log(chalk.red("ERROR! " + error))
                         return;
                     }
     
@@ -412,7 +412,7 @@ request({
         //So ignore this error.
     }else {
         //Log the error in red and exit process
-        console.log(chalk.red("ERROR! " + error))
+        //console.log(chalk.red("ERROR! " + error))
         return;
   }
 });
