@@ -185,7 +185,7 @@ app.get('/', async function (req, res) {
                         }else {
                             //Log the error in red and exit process
                             console.log(chalk.red("ERROR! " + error))
-                            process.exit();
+                            return;
                         }
         
                     });
@@ -240,7 +240,7 @@ app.get('/', async function (req, res) {
                     }else {
                         //Log the error in red and exit process
                         console.log(chalk.red("ERROR! " + error))
-                        process.exit();
+                        return;
                     }
     
                 });
@@ -307,7 +307,7 @@ app.get('/', async function (req, res) {
                         }else {
                             //Log the error in red and exit process
                             console.log(chalk.red("ERROR! " + error))
-                            process.exit();
+                            return;
                         }
         
                     });
@@ -413,7 +413,7 @@ request({
     }else {
         //Log the error in red and exit process
         console.log(chalk.red("ERROR! " + error))
-        process.exit();
+        return;
   }
 });
 });
