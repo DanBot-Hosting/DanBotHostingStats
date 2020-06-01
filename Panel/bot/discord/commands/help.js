@@ -1,7 +1,7 @@
 const Help = {
     "Users": `${config.DiscordBot.Prefix}getstarted | Create a server or account \n${config.DiscordBot.Prefix}link | Link your console account with your discord account \n${config.DiscordBot.Prefix}linked | Check if your account is linked \n${config.DiscordBot.Prefix}stats | Shows the stats of each hosting node. \n${config.DiscordBot.Prefix}ticket | Create a ticket for help from the staff team! \n${config.DiscordBot.Prefix}status | Check the status of your server! \n${config.DiscordBot.Prefix}uptime | Shows the bots uptime \n${config.DiscordBot.Prefix}changelog | Check the changelog for the github commit.`,
     "Staff": `${config.DiscordBot.Prefix}staff | Gets the ID of a user on console using their discord ID  \n${config.DiscordBot.Prefix}purge | Delete messages in a channel \n${config.DiscordBot.Prefix}access | Gain subuser access to a server`,
-    "Owner": `${config.DiscordBot.Prefix}reload | Reloads all commands on the bot \n${config.DiscordBot.Prefix}restart | Restarts **EVERYTHING**, Bot and Stats website`
+    "Owner": `${config.DiscordBot.Prefix}reload | Reloads all commands on the bot \n${config.DiscordBot.Prefix}restart | Restarts **EVERYTHING**, Bot and Stats website \n${config.DiscordBot.Prefix}say | Says what you want it to say`
 }
 
 exports.run = async (client, message, args) => {
