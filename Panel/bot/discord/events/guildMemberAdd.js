@@ -10,6 +10,7 @@ const config = {
 }
 
 module.exports = async(client, member, guild) => {
+    if(member.bot) return console.log("huh a bot just joined :) more friends :D")
     const memberrole = member.guild.roles.find(role => role.id === config.member);
     member.guild.members.get(member.user.id).addRole(memberrole)
     client.channels.get(config.welcome).send("Welcome <@" + member.user.id + "> to DanBot Hosting. To get started please read <#640158484985413632>");
