@@ -28,9 +28,12 @@
     "helmet": "^3.21.2",
     "http": "latest",
     "moment": "^2.24.0",
+    "nodeactyl": "^2.0.2",
     "nodeactyl-beta": "0.0.10",
     "nodemailer": "^6.4.6",
+    "puppeteer": "^1.19.0",
     "quick.db": "^7.1.1",
+    "resolve": "^1.17.0",
     "socket.io": "latest",
     "validator": "^13.0.0"
   }

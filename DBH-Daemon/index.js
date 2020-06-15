@@ -7,6 +7,7 @@
  Free Monitoring software made by danielpmc                                                       
 */
 
+var PORT = 2001;
 var app = require('express')();
 var server = require('http').createServer(app);
 var request = require("request");
@@ -20,12 +21,11 @@ var { get } = require('superagent')
 var chalk = require('chalk');
 var moment = require("moment");
 const speedTest = require('speedtest-net'); 
-var PORT = config.daemonport;
 
 server.listen(PORT, function () {
     console.log(chalk.blueBright("The servers hostname is: " + chalk.green(os.hostname) + ", Please put this in the config file"))
     console.log(PORT + " listening...");
-    ping('0.0.0.0', config.daemonport)
+    ping('0.0.0.0', 2001)
 
     //Config file checking
     if (config.panelip == "Your panel ip here") {
@@ -380,7 +380,7 @@ app.get('/', async function (req, res) {
 
 setInterval(async () => {
 var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
-const speed = await speedTest({maxTime: 5000, serverId: "4848"})
+const speed = await speedTest({maxTime: 5000})
 speed.on('data', async (data) => {
 request({
     uri: "http://" + config.panelip + ":" + config.panelport + "/data?speedname=" + os.hostname +    //OS hostname for saving data panel sided.

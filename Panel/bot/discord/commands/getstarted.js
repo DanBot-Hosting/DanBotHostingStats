@@ -118,6 +118,7 @@ exports.run = async (client, message) => {
         let password = await getPassword();
 
         DanBotHosting.createUser(collected1.first().content, password, collected2.first().content, collected1.first().content, ".", false, "en").then(user => {
+            console.log(user)
 
             if (user == "Error: User already exists! (Or Email/Username is existing already)") {
                 msg.edit("ERROR: A user with that email/username already exists.", null)

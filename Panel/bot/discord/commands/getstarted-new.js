@@ -233,7 +233,9 @@ exports.run = async (client, message) => {
             return false;
         } else if (collected2.first().content.toLowerCase() === 'minecraft') {
             collected2.first().delete();
-            DanBotHosting.createServer("latest", collected1.first().content, userData.fetch(message.author.id + ".consoleID"), null, "3", "quay.io/pterodactyl/core:java", null, "2048", "0", "5000", "500", "200", "0", "0").then(res => {
+            console.log(collected1.first().content)
+            DanBotHosting.createServer("latest", `test`, `1`, null, "3", "quay.io/pterodactyl/core:java", "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}", "2048", "0", "25000", "500", "0", "0", "1").then(res => {
+            //DanBotHosting.createServer("latest", collected1.first().content, userData.fetch(message.author.id + ".consoleID"), null, "3", "quay.io/pterodactyl/core:java", null, "2048", "0", "5000", "500", "200", "0", "0").then(res => {
                 console.log(res)
             }).catch(error =>{
                 console.log(error);

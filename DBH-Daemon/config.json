@@ -5,8 +5,6 @@
     "panelping": true,
     "panelms": 5000,
 
-    "daemonport": "2001",
-
     "Discord": false,
     "DiscordWebhook": "No webhook token",
 

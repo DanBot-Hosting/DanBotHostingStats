@@ -62,17 +62,17 @@ exports.run = async (client, message) => {
             return msg.edit("Request to link your account canceled.", null).then(channel.delete())
         }
 
-        let consoleUser = await DanBotHosting.getAllUsers();
-        consoleUser = consoleUser.filter(x => x.attributes.email == collected1.first().content.trim())
-        console.log(consoleUser)
+        let consoleUser3 = await DanBotHosting.getAllUsers();
+        consoleUser2 = consoleUser3.filter(x => x.attributes.email == collected1.first().content.trim())
+        console.log(consoleUser2)
 
-        if (consoleUser.length == 0) return channel.send("No account with that email exists...").then(
+        if (consoleUser2.length == 0) return channel.send("No account with that email exists...").then(
             setTimeout(() => {
                 channel.delete();
             }, 5000)
         )
 
-        consoleUser = consoleUser[0];
+        consoleUser = consoleUser2[0];
         const timestamp = `${moment().format("HH:mm:ss")}`;
         const datestamp = `${moment().format("YYYY-MM-DD")}`;
         userData.set(`${message.author.id}`, {
@@ -84,7 +84,7 @@ exports.run = async (client, message) => {
             linkDate: datestamp
         })
 
-        let embedstaff = new Dicord.RichEmbed()
+        let embedstaff = new Discord.RichEmbed()
         .setColor('GREEN')
         .addField('__**Linked Discord account:**__', message.author.id)
         .addField('__**Linked Console account email:**__', consoleUser.attributes.email)

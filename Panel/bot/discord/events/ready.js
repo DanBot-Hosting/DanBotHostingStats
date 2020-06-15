@@ -1,4 +1,4 @@
-module.exports = (client, guild, files) => {
+module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Bot logged in!"));
 
 //Auto Activities List
