@@ -13,8 +13,12 @@ module.exports = async (client, guild, files) => {
             "type": "LISTENING"
         },
         {
-            "text": "Stalking Dan coding me :)",
+            "text": "over Dan coding me :)",
             "type": "WATCHING"
+        },
+        {
+            "text": "with bots on DanBot Hosting.",
+            "type": "PLAYING"
         }
     ];
     setInterval(() => {
