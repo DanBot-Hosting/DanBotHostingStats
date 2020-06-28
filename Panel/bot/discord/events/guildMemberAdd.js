@@ -33,8 +33,8 @@ module.exports = async(client, member, guild) => {
             const invite50 = member.guild.roles.find(role => role.id === config.invite50);
             if (invite.uses == 5) return member.guild.members.get(inviter.id).addRole(invite5), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 5 invites! Here's a role for you :)`);
             if (invite.uses == 10) return member.guild.members.get(inviter.id).removeRole(invite5), member.guild.members.get(inviter.id).addRole(invite10), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 10 invites! Here's a role for you :)`);;
-            if (invite.uses >= 25) return member.guild.members.get(inviter.id).removeRole(invite10), member.guild.members.get(inviter.id).addRole(invite25), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 25 invites! Here's a role for you :)`);;
-            if (invite.uses >= 50) return member.guild.members.get(inviter.id).removeRole(invite25), member.guild.members.get(inviter.id).addRole(invite50), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 50 invites! Here's a role for you :)`);;
+            if (invite.uses == 25) return member.guild.members.get(inviter.id).removeRole(invite10), member.guild.members.get(inviter.id).addRole(invite25), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 25 invites! Here's a role for you :)`);;
+            if (invite.uses == 50) return member.guild.members.get(inviter.id).removeRole(invite25), member.guild.members.get(inviter.id).addRole(invite50), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 50 invites! Here's a role for you :)`);;
           });
     }
 };
