@@ -5,6 +5,7 @@ Panel/package-lock.json
 Panel/data
 Panel/config.json
 Panel/json.sqlite
+Panel/test.js
 
 Daemon/node_modules
 Daemon/package-lock.json
