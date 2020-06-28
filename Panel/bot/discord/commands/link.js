@@ -7,7 +7,7 @@ exports.run = async (client, message) => {
 
     let result = userData.get(message.author.id)
     if (userData.get(message.author.id) == null) {
-    if (message.member.roles.find(r => r.name === "Customers")) {
+    if (message.member.roles.find(r => r.id === "639489891016638496")) {
 
         const server = message.guild
 
@@ -63,6 +63,7 @@ exports.run = async (client, message) => {
         }
 
         let consoleUser3 = await DanBotHosting.getAllUsers();
+        console.log(consoleUser3)
         consoleUser2 = consoleUser3.filter(x => x.attributes.email == collected1.first().content.trim())
         console.log(consoleUser2)
 
@@ -88,7 +89,7 @@ exports.run = async (client, message) => {
         .setColor('GREEN')
         .addField('__**Linked Discord account:**__', message.author.id)
         .addField('__**Linked Console account email:**__', consoleUser.attributes.email)
-        .addField('__**Linked At: (TIME / DATE)**__', linkTime + " / " + linkDate)
+        .addField('__**Linked At: (TIME / DATE)**__', timestamp + " / " + datestamp)
         .addField('__**Linked Console username:**__', consoleUser.attributes.username)
         .addField('__**Linked Console ID:**__', consoleUser.attributes.id)
 

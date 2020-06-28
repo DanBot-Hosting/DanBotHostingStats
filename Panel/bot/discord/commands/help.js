@@ -5,20 +5,20 @@ const Help = {
 }
 
 exports.run = async (client, message, args) => {
-    if (message.member.roles.find(r => r.name === "Staff")) {
+    if (message.member.roles.find(r => r.id === "713154800178561134")) {
     let embed = new Discord.RichEmbed()
         .setColor(`BLUE`)
         .addField(`__**Commands List for users:**__`, Help.Users)
         .addField(`__**Staff Commands:**__`, Help.Staff)
     message.channel.send(embed)
-    } else if (message.member.roles.find(r => r.name === "Owner")) {
+    } else if (message.member.roles.find(r => r.id === "639481606112804875")) {
     let embed = new Discord.RichEmbed()
         .setColor(`BLUE`)
         .addField(`__**Commands List for users:**__`, Help.Users)
         .addField(`__**Staff Commands:**__`, Help.Staff)
         .addField(`__**Owner Commands:**__`, Help.Owner)
     message.channel.send(embed)
-    } else if (message.member.roles.find(r => r.name === "Members")) {
+    } else if (message.member.roles.find(r => r.id === "639490038434103306")) {
     let embed = new Discord.RichEmbed()
         .setColor(`BLUE`)
         .addField(`__**Commands List for users:**__`, Help.Users)

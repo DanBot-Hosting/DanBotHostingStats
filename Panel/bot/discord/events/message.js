@@ -1,5 +1,7 @@
+//let client = require("../../../../index.js").client;
+
 module.exports = (client, message) => {
-    if(message.content.toLowerCase().includes("tiktok")) {message.reply('Ew. Get out here with that crap :bammer:'), message.delete() }
+    //if(message.content.toLowerCase().includes("tiktok")) {message.reply('Ew. Get out here with that crap :bammer:'), message.delete() }
     if(message.content.toLowerCase().includes("discord.gg")) { 
         if(message.channel.id === '717146816918847489') {
             return;
@@ -7,7 +9,7 @@ module.exports = (client, message) => {
             return;
         } else {
             message.delete();
-            message.reply('No advertising here. Check out <#717146816918847489> or <#719259195471429722> for advertising!')
+            //message.reply('No advertising here. Check out <#717146816918847489> or <#719259195471429722> for advertising!')
         }
     }
 

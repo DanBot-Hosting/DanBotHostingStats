@@ -1,7 +1,7 @@
 const execSync = require('child_process').execSync; 
 
 exports.run = async(client, message) => {
-    if(!message.member.roles.find(r => r.name === "Owner")){
+    if (message.author.id !== config.DiscordBot.ownerID) {
         return message.channel.send(`Only my master can use this command`);
     }
 

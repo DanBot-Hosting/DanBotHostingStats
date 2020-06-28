@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 exports.run = (client, message, args) => {
-    if(message.member.roles.find(r => r.name === "Owner")){
+  if (message.author.id !== config.DiscordBot.ownerID) {
     const start = process.hrtime();
     exec(`${args.join(" ")}`, (error, stdout) => {
       let response = (error || stdout);

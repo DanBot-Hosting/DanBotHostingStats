@@ -9,5 +9,4 @@ Panel/json.sqlite
 Daemon/node_modules
 Daemon/package-lock.json
 
-BetaDaemon/node_modules
-BetaDaemon/package-lock.json
+test/

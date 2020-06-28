@@ -28,16 +28,21 @@ let transport = nodemailer.createTransport({
 
 
 //Discord Bot
+//const events = require("events");
 var node = require('nodeactyl');
+let db = require("quick.db");
 global.DanBotHosting = node.Application;
 global.DanBotHostingClient = node.Client;
 global.Discord = require("discord.js");
-const client = new Discord.Client()
 global.fs = require("fs");
 global.moment = require("moment");
-let db = require("quick.db");
 global.userData = new db.table("userData")
+global.client = new Discord.Client();
+//const DBH = new events();
+const bot = client;
 
+//exports.bot = client;
+//exports.DBH = DBH;
 
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
@@ -48,6 +53,23 @@ fs.readdir('./bot/discord/events/', (err, files) => {
       delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
     });
   }); 
+
+
+  //Event Handler
+
+/*fs.readdir("./bot/discord/events/", (err, files) => {
+  if (err) return console.log(err);
+  files.forEach(file => {
+      fs.readdir("./bot/discord/events/" + file, (err, ff) => {
+          if (!ff || ff.length == 0) return console.log(`No Events Found in ${file}`);
+          ff.filter(x => x.toLowerCase().endsWith(".js")).forEach(x => {
+          
+              require(`./bot/discord/events/${file}/${x}`);
+          });
+          console.log(`${file} - ${ff.filter(x => toLowerCase().endsWith(".js")).join(", ")}`);
+      });
+  });
+});*/
 
 //Disconnected from discord. Probs time to restart while disconnected.
 //client.on('reconnecting', () => console.log('Disconnected from discord. Restarting...'), process.exit());

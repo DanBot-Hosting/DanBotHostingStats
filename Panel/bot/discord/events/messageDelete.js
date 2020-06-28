@@ -1,3 +1,5 @@
+//let client = require("../../../../index.js").client;
+
 module.exports = (client, message) => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
@@ -14,4 +16,4 @@ module.exports = (client, message) => {
     .setTimestamp()
     .setFooter("Message delete in " + message.channel.name);
     client.channels.get(config.DiscordBot.mLogs).send({embed});
-}
+};
