@@ -56,7 +56,6 @@ exports.run = async (client, message) => {
             const warning = await message.channel.send('<@' + message.author.id + '> are you sure you want to close this ticket? please type `confirm` to close the ticket or `cancel` to keep the ticket open.')
             
             let collected1 = await message.channel.awaitMessages(filter2, {
-                max: 1,
                 time: 30000,
                 errors: ['time'],
             }).catch(x => {
@@ -68,7 +67,7 @@ exports.run = async (client, message) => {
                 return false;
             })
     
-            if (collected1.first().content === 'confirm') {
+            if (collected1.first().content.toLowerCase() === 'confirm') {
                 return message.channel.send("**Closing ticket.**", null).then(setTimeout(() => { message.channel.delete()}, 5000))
             } else if (collected1.first().content === 'cancel') {
                 return message.channel.send('Closing ticket. __**Canceled**__ Ticket staying open.');
