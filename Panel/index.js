@@ -194,7 +194,7 @@ app.get("/Node3", (req, res) => {
   //Data for node 3
   var N3 = fs.readFileSync('./data/e5406f6d-a9a6-44fa-9dde-429ffc1bf1d7.json', 'utf8');
   var Node3 = JSON.parse(N3);
-  var N3speed = fs.readFileSync('./data/bed240f5-7c87-4013-90ee-a5bbc21f60da-speedtest.json', 'utf8');
+  var N3speed = fs.readFileSync('./data/e5406f6d-a9a6-44fa-9dde-429ffc1bf1d7-speedtest.json', 'utf8');
   var Node3speed = JSON.parse(N3speed);
 
   res.render('node3',  { layout: false,

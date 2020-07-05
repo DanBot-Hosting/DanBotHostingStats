@@ -53,7 +53,7 @@ exports.run = async (client, message) => {
         let msg = await channel.send("<@" + message.author.id + ">", {
             embed: new Discord.RichEmbed()
                 .setColor(0x36393e)
-                .setDescription("Please enter a username")
+                .setDescription("Please enter a username (**Please dont use spaces**)")
                 .setFooter("You can type 'cancel' to cancel the request")
         })
 
