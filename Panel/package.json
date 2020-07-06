@@ -29,7 +29,7 @@
     "helmet": "^3.21.2",
     "http": "latest",
     "moment": "^2.24.0",
-    "nodeactyl": "github:zLupa/Nodeactyl",
+    "nodeactyl": "github:Burchard36/Nodeactyl",
     "nodeactyl-beta": "0.0.10",
     "nodemailer": "^6.4.6",
     "puppeteer": "^1.19.0",
