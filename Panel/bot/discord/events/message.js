@@ -14,6 +14,10 @@ module.exports = (client, message) => {
             //message.reply('No advertising here. Check out <#717146816918847489> or <#719259195471429722> for advertising!')
         }
     }
+    
+    if (message.channel.id === '738543144555118622') {
+        message.react('✅');
+    }
 
     if (message.channel.type == "dm") {
         if (message.author.id == "137624084572798976") {
