@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
     .addField("Example", config.DiscordBot.Prefix + "mute @Someone 5 spamming in general.")
     .setDescription("Description: " + "Gives a user the muted role for x minutes");
 
-    if(message.member.roles.find(r => r.id === "713154800178561134")) { 
+    if(message.member.roles.find(r => r.id === "748117822370086932")) { 
         if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES')) return message.reply('Sorry, i dont have the perms to do this cmd i need MANAGE_ROLES. :x:')
 
         //If no user pinged

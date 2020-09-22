@@ -26,6 +26,9 @@ let transport = nodemailer.createTransport({
   }
 });
 
+const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
+const { getUser, getBot } = require(process.cwd() + "/util/discordAPI");
+
 
 //Discord Bot
 //const events = require("events");
@@ -37,9 +40,10 @@ global.Discord = require("discord.js");
 global.fs = require("fs");
 global.moment = require("moment");
 global.userData = new db.table("userData")
-global.client = new Discord.Client();
+global.client = new Discord.Client({disableEveryone: true});
 //const DBH = new events();
 const bot = client;
+global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
 
 //exports.bot = client;
 //exports.DBH = DBH;
@@ -53,6 +57,7 @@ fs.readdir('./bot/discord/events/', (err, files) => {
       delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
     });
   }); 
+
 
 
   //Event Handler
@@ -82,8 +87,17 @@ DanBotHostingClient.login(config.Pterodactyl.hosturl, config.Pterodactyl.apikeyc
   console.log(chalk.magenta('[CLIENT] ') + chalk.green("Nodeactyl logged in? " + logged_in));
 });
 
+//Logging into proxmox (Virtual Machine manager)
+//global.proxmox = require("proxmox")(config.Proxmox.username, config.Proxmox.password, config.Proxmox.url);
+
+//global.proxmox = require('node-proxmox')(config.Proxmox.url, config.Proxmox.username, config.Proxmox.auth, config.Proxmox.password);
+//proxmox.get('/nodes/', (data) => {
+//  console.log(data)
+//})
+
 //Bot login
 client.login(config.DiscordBot.Token);
+global.Allowed = [ "338192747754160138", "137624084572798976" ];
 
 //Test Email
 //const message = {
@@ -100,6 +114,55 @@ client.login(config.DiscordBot.Token);
 //  }
 //});
 
+// website things
+
+const passport = require("passport");
+const session = require("express-session");
+const strategy = require("passport-discord").Strategy;
+const MongoStore = require("connect-mongo")(session);
+const cookieParser = require("cookie-parser");
+const csrf = require("csurf");
+const helmet = require("helmet");
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
+
+passport.use(
+  new strategy(
+    {
+      clientID: config.DiscordBot.clientID,
+      clientSecret: config.DiscordBot.clientSecret,
+      callbackURL: config.DiscordBot.callbackURL,
+      scope: ["identify"]
+    },
+    (accessToken, refreshToken, profile, done) => {
+      process.nextTick(() => {
+        return done(null, profile);
+      });
+    }
+  )
+);
+
+app.use(
+  session({
+    store: new MongoStore({
+      url:
+        config.DB.MongoDB
+    }),
+    secret: "FROPT",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(helmet({ frameguard: false }));
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -108,119 +171,207 @@ server.listen(PORT, function () {
     console.log(chalk.magenta('[WEB] ') + chalk.green("Listening on port " + PORT));
 });
 
+global.nodeData = new db.table("nodeData")
 app.get('/data', function (req, res) {
   if (req.query.servername == undefined) {
     var data = JSON.stringify(req.query);
     fs.writeFileSync('data/' + req.query.speedname + '-speedtest.json', data);
   } else {
     var data = JSON.stringify(req.query);
-    fs.writeFileSync('data/' + req.query.servername + '.json', data);
-  }
+    //fs.writeFileSync('data/' + req.query.servername + '.json', data);
+    console.log(data)
+    nodeData.set(req.query.servername, {
+      servername: req.query.servername,
+      cpu: data.cpu,
+      cpuload: data.cpuload,
+      cputhreads: data.cputhreads,
+      cpucores: data.cpucores,
+      memused: data.memused,
+      memtotal: data.memtotal,
+      swapused: data.swapused, 
+      swaptotal: data.swaptotal,
+      diskused: data.diskused,
+      disktotal: data.disktotal,
+      netrx: data.netrx,
+      nettx: data.nettx,
+      osplatform: data.osplatform,
+      oslogofile: data.oslogofile,
+      osrelease: data.osrelease,
+      osuptime: data.osuptime,
+      biosvendor: data.biosvendor,
+      biosversion: data.biosversion,
+      biosdate: data.biosdate,
+      servermonitorversion: data.servermonitorversion,
+      datatime: data.datatime,
+      dockercontainers: data.dockercontainers,
+      dockercontainersrunning: data.dockercontainersrunning,
+      dockercontainerspaused: data.dockercontainerspaused,
+      dockercontainersstopped: data.dockercontainersstopped,
+      updatetime: data.updatetime
+    });
+  } 
 });
+/*
+userData.set(`${message.author.id}`, {
+                    discordID: message.author.id,
+                    consoleID: user.id,
+                    email: user.email,
+                    username: user.username,
+                    linkTime: timestamp,
+                    linkDate: datestamp
+                })
+*/
+
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine', 'hbs');
 
+app.use((req, res, next) => {
+      res.set("Access-Control-Allow-Origin", "*");
+      res.set("Access-Control-Allow-Methods", "GET, POST");
+
+      console.log(
+        (req.headers["cf-connecting-ip"] ||
+          req.headers["x-forwarded-for"] ||
+          req.ip) +
+          " [" +
+          req.method +
+          "] " +
+          req.url
+      );
+
+      next();
+    });
+
 //Routes
-app.get("/", (req, res) => {
 
-  //Data for node 1
-  var N1 = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8.json', 'utf8');
-  var Node1 = JSON.parse(N1);
-  var N1speed = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8-speedtest.json', 'utf8');
-  var Node1speed = JSON.parse(N1speed);
 
-  //Data for node 2
-  var N2 = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181.json', 'utf8');
-  var Node2 = JSON.parse(N2);
-  var N2speed = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181-speedtest.json', 'utf8');
-  var Node2speed = JSON.parse(N2speed);
- 
-  //Data for node 3
-  var N3 = fs.readFileSync('./data/e5406f6d-a9a6-44fa-9dde-429ffc1bf1d7.json', 'utf8');
-  var Node3 = JSON.parse(N3);
-  var N3speed = fs.readFileSync('./data/e5406f6d-a9a6-44fa-9dde-429ffc1bf1d7-speedtest.json', 'utf8');
-  var Node3speed = JSON.parse(N3speed);
+// DanBot Hosting Stats
 
-  //Data for node 4 (Private)
-  var N4 = fs.readFileSync('./data/Server-01.json', 'utf8');
-  var Node4 = JSON.parse(N4);
-  var N4speed = fs.readFileSync('./data/Server-01-speedtest.json', 'utf8');
-  var Node4speed = JSON.parse(N4speed);
+const apiRoute = require("./routes/api.js");
+const botRoute = require("./routes/bot.js");
+const indexRoute = require("./routes/index.js");
+const statsRoute = require("./routes/stats.js");
+const meRoute = require("./routes/me.js");
+//const { config } = require("process");
 
-  res.render('index',  { layout: false,
-    Node1Data: Node1,
-    Node2Data: Node2,
-    Node3Data: Node3,
-    Node4Data: Node4,
-    Node1DataSpeed: Node1speed,
-    Node2DataSpeed: Node2speed,
-    Node3DataSpeed: Node3speed,
-    Node4DataSpeed: Node4speed
-});
-});
+app.use("/api", apiRoute);
+app.use("/bot", botRoute);
+app.use("/", indexRoute);
+app.use("/stats", statsRoute);
+app.use("/me", meRoute);
 
-app.get("/Node1", (req, res) => {
+app.get("/user/:ID", async (req, res) => {
+   let user = req.params.ID;
+   let memberr = "No"
+    
+  if (!isSnowflake(user)) {
+    return res.render("error.ejs", {
+      user: req.isAuthenticated() ? req.user : null,
+      message: "Make sure ID is a valid ID"
+    });
+  }
 
-  //Data for node 1
-  var N1 = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8.json', 'utf8');
-  var Node1 = JSON.parse(N1);
-  var N1speed = fs.readFileSync('./data/0286b2ad-dc80-4b5c-a0de-b81945b010e8-speedtest.json', 'utf8');
-  var Node1speed = JSON.parse(N1speed);
+  let [use] = await getBot(user)
 
-  res.render('node1',  { layout: false,
-    Node1Data: Node1,
-    Node1DataSpeed: Node1speed
-});
-});
+  if (use.user_id && use.user_id[0].endsWith("is not snowflake."))
+    return res.render("error.ejs", {
+      user: req.isAuthenticated() ? req.user : null,
+    message: "ID is invalid"
+    });
+  
+  if (use.message == "Unknown User")
+    return res.render("error.ejs", {
+      user: req.isAuthenticated() ? req.user : null,
+      message: "Discord API - Unknown User"
+    });
+  
+  if (use.bot === true) return res.redirect("/bot/" + user);
+  
+    try {
+    bot.fetchUser(user).then(User => {
+      if (User.bot) {
+        return res.redirect("/bot/" + User.id);
+      }
 
-app.get("/Node2", (req, res) => {
+      var member = bot.guilds
+        .get("639477525927690240")
+        .members.get(User.id);
+      if (!member) {
+        (pColor = "grey"), (presence = "offline");
+      }
+      let guild = bot.guilds.get("639477525927690240");
+      if (guild.member(User.id)) {
+        memberr = "yes";
+      }
+      if (member) {
+        presence = member.presence.status;
 
-  //Data for node 2
-  var N2 = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181.json', 'utf8');
-  var Node2 = JSON.parse(N2);
-  var N2speed = fs.readFileSync('./data/2e3f071a-af2b-4dc9-be5a-7ce72590a181-speedtest.json', 'utf8');
-  var Node2speed = JSON.parse(N2speed);
-
-  res.render('node2',  { layout: false,
-    Node2Data: Node2,
-    Node2DataSpeed: Node2speed
-});
-});
-
-app.get("/Node3", (req, res) => {
-
-  //Data for node 3
-  var N3 = fs.readFileSync('./data/e5406f6d-a9a6-44fa-9dde-429ffc1bf1d7.json', 'utf8');
-  var Node3 = JSON.parse(N3);
-  var N3speed = fs.readFileSync('./data/e5406f6d-a9a6-44fa-9dde-429ffc1bf1d7-speedtest.json', 'utf8');
-  var Node3speed = JSON.parse(N3speed);
-
-  res.render('node3',  { layout: false,
-    Node3Data: Node3,
-    Node3DataSpeed: Node3speed
-});
-});
-
-app.get("/Node4", (req, res) => {
-
-  //Data for node 4
-  var N4 = fs.readFileSync('./data/Server-01.json', 'utf8');
-  var Node4 = JSON.parse(N4);
-  var N4speed = fs.readFileSync('./data/Server-01-speedtest.json', 'utf8');
-  var Node4speed = JSON.parse(N4speed);
-
-  res.render('node4',  { layout: false,
-    Node4Data: Node4,
-    Node4DataSpeed: Node4speed
-});
+        if (presence) {
+          if (presence === "offline") {
+            presence = "Offline";
+            pColor = "grey";
+          } else if (presence === "online") {
+            presence = "Online";
+            pColor = "#43B581";
+          } else if (presence === "dnd") {
+            presence = "DND";
+            pColor = "#F04747";
+          } else if (presence === "streaming") {
+            presence = "Streaming";
+            pColor = "purple";
+          } else if (presence === "idle") {
+            presence = "Idle";
+            pColor = "#FAA61A";
+          } else {
+            (pColor = "grey"), (presence = "Not Available");
+          }
+        }
+      }
+   
+   let avatar = `https://mythicalbots.xyz/bot/${user}/avatar`;
+   
+   let bots = db.get(`${User.id}.bots`);
+   if(!bots) bots = null;
+   
+   console.log(bots)
+   
+   res.render("me/user.ejs", {
+        user: req.isAuthenticated() ? req.user : null,
+        User,
+        avatar,
+      //  Data,
+        pColor,
+        presence,
+    //    info,
+        memberr,
+        use,
+        bots,
+        db,
+      //  Discord,
+    //    pageType: { user: true }
+   });
+    });
+  } catch (e) {
+    return res.render("error.ejs", {
+      user: req.isAuthenticated() ? req.user : null,
+      message: e
+    });
+  }
+   
 });
 
 
 //Catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.status(404).render("error.ejs", {
+    message: "Page Not Found",
+    user: req.isAuthenticated() ? req.user : null
+  });
 });
+
+setInterval(async() => {
+    console.log("[Automatic Process] Getting bot stats from MBL")
+    require("./util/MBL.js")    
+}, 600000);

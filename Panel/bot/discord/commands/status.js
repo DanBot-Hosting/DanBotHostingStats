@@ -1,3 +1,4 @@
+const axios = require('axios');
 exports.run = (client, message) => {
     const args = message.content.split(' ').slice(1).join(' ');
     
@@ -9,6 +10,21 @@ exports.run = (client, message) => {
     
         } else {
             message.delete();
+
+            //Send Request
+            axios({
+                url: config.Pterodactyl.hosturl + "/api/application/users",
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(response => {
+                const data = response.attributes;
+
             DanBotHostingClient.getServerStatus(args).then((status) => {
             DanBotHostingClient.getCPUUsage(args).then(CPUUsageResponse => {
             DanBotHostingClient.getRAMUsage(args).then(RAMUsageResponse => {
@@ -18,7 +34,7 @@ exports.run = (client, message) => {
                     if (RAMUsageResponse.limit == "0") {
                         let embedstatus = new Discord.RichEmbed()
                             .setColor('GREEN')
-                            .addField('**Server name**', InfoResponse.attributes.name)
+                            .addField('**Server name**', data.name)
                             .addField('**Status**', `Online :)`, true)
                             .addField('**CPU Usage**', CPUUsageResponse.current + ' %')
                             .addField('**RAM Usage**', RAMUsageResponse.current + ' MB out of UNLIMITED MB')
@@ -46,5 +62,6 @@ exports.run = (client, message) => {
             }).catch((error) => {
                 console.log(error);
             })})})})});
+        });
         };
 };

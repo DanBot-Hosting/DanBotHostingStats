@@ -1,7 +1,8 @@
 const execSync = require('child_process').execSync; 
-
+const ms = require('ms');
 exports.run = async(client, message) => {
-    if (message.author.id !== config.DiscordBot.ownerID) {
+    let ids = [ "338192747754160138", "137624084572798976", "293841631583535106"];
+    if (!ids.includes(message.author.id)) {
         return message.channel.send(`Only my master can use this command`);
     }
 

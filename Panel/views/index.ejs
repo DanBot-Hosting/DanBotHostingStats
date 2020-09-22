@@ -1,0 +1,140 @@
+<%- include("./partials/header.ejs", { botInfo: false, Title: "Home", Avatar: "", Redirect: "/me" }) %>
+
+<meta http-equiv="refresh" content="10"/>
+<br><br><br>
+
+<br><br><br>
+
+        <style>
+            .container {
+                text-align: center;
+                align-items: center;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .large {
+                font-size: 4em;
+            }
+            
+</style>
+  <div class="">
+        <div class="row justify-content-md-center">
+          <a style="color:white;" href="https://danbot.host/stats/Node1"><h3>Node 1 Stats</h3></a>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> <%- Node1Data.cpu %> (Cores: <%- Node1Data.cpucores %>, Threads: <%- Node1Data.cputhreads %>)</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> <%-Node1Data.cpuload%>%</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> <%-Node1Data.memused%> / <%-Node1Data.memtotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%-Node1Data.swapused%> / <%-Node1Data.swaptotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- Node1Data.diskused %> / <%- Node1Data.disktotal %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- Node1Data.netrx %> <strong>Tx:</strong> <%- Node1Data.nettx %> </div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> <%- Node1Data.osuptime %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> <%- Node1Data.updatetime %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- Node1DataSpeed.ping %>ms <br> <strong>Download:</strong> <%- Node1DataSpeed.download %>Mbps, <strong>Upload: </strong><%- Node1DataSpeed.upload %>Mbps, <strong>Last Updated:</strong> <%- Node1DataSpeed.updatetime %></div>
+        </div>
+
+        <div class="row justify-content-md-center">
+          <a style="color:white;" href="https://danbot.host/stats/Node2"><h3>Node 2 Stats</h3></a>
+        </div> 
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> <%-Node2Data.cpu %> (Cores: <%-Node2Data.cpucores%>, Threads: <%-Node2Data.cputhreads%>)</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> <%-Node2Data.cpuload%>%</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> <%-Node2Data.memused%> / <%-Node2Data.memtotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%-Node2Data.swapused%> / <%-Node2Data.swaptotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%-Node2Data.diskused%> / <%-Node2Data.disktotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%-Node2Data.netrx%> <strong>Tx:</strong> <%-Node2Data.nettx%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> <%-Node2Data.osuptime %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> <%-Node2Data.updatetime%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%-Node2DataSpeed.ping%>ms <br> <strong>Download:</strong> <%-Node2DataSpeed.download%>Mbps, <strong>Upload: </strong><%-Node2DataSpeed.upload%>Mbps, <strong>Last Updated:</strong> <%-Node2DataSpeed.updatetime%></div>
+        </div>
+
+        <div class="row justify-content-md-center">
+          <a style="color:white;" href="https://danbot.host/stats/Node3"><h3>Node 3 Stats</h3></a>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> <%-Node3Data.cpu%> (Cores: <%-Node3Data.cpucores%>, Threads: <%-Node3Data.cputhreads%>)</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> <%-Node3Data.cpuload%>%</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> <%-Node3Data.memused%> / <%-Node3Data.memtotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%-Node3Data.swapused%> / <%-Node3Data.swaptotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%-Node3Data.diskused%> / <%-Node3Data.disktotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%-Node3Data.netrx%> <strong>Tx:</strong> <%-Node3Data.nettx%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> <%-Node3Data.osuptime%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> <%-Node3Data.updatetime%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%-Node3DataSpeed.ping%>ms <br> <strong>Download:</strong> <%-Node3DataSpeed.download%>Mbps, <strong>Upload: </strong><%-Node3DataSpeed.upload%>Mbps, <strong>Last Updated:</strong> <%-Node3DataSpeed.updatetime%></div>
+        </div>
+    </div>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+document.onkeydown = function(e) {
+        if (e.ctrlKey && 
+            (e.keyCode === 67 || 
+             e.keyCode === 86 || 
+             e.keyCode === 85 || 
+             e.keyCode === 117)) {
+            return false;
+        } else {
+            return true;
+        }
+};
+$(document).keypress("u",function(e) {
+  if(e.ctrlKey)
+  {
+return false;
+}
+else
+{
+return true;
+}
+});
+</script>

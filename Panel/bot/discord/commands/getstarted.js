@@ -21,6 +21,7 @@ exports.run = async (client, message) => {
         message.channel.send(embed)
 
     } else if (args == "account") {
+        if (userData.get(message.author.id) == null) {
         const server = message.guild
 
         let channel = await server.createChannel(message.author.tag, "text", [{
@@ -36,7 +37,7 @@ exports.run = async (client, message) => {
         ]).catch(console.error);
         message.reply(`Please check <#${channel.id}> to create an account.`)
 
-        let category = server.channels.find(c => c.id == "697585283214082078" && c.type == "category");
+        let category = server.channels.find(c => c.id == "738539016688894024" && c.type == "category");
         if (!category) throw new Error("Category channel does not exist");
 
         await channel.setParent(category.id);
@@ -101,8 +102,7 @@ exports.run = async (client, message) => {
 
 
         if (collected2.first().content === 'cancel') {
-            msg.edit("Request to create a new user has been canceled!", null).then(channel.delete())
-            return false;
+            channel.delete()
         }
 
         if (!validator.isEmail(collected2.first().content.trim())) {
@@ -120,7 +120,18 @@ exports.run = async (client, message) => {
         DanBotHosting.createUser(collected1.first().content, password, collected2.first().content, collected1.first().content, ".", false, "en").then(user => {
             console.log(user)
 
-            if (user == "Error: User already exists! (Or Email/Username is existing already)") {
+                const timestamp = `${moment().format("HH:mm:ss")}`;
+                const datestamp = `${moment().format("YYYY-MM-DD")}`;
+                userData.set(`${message.author.id}`, {
+                    discordID: message.author.id,
+                    consoleID: user.id,
+                    email: user.email,
+                    username: user.username,
+                    linkTime: timestamp,
+                    linkDate: datestamp
+                })
+
+            if (user == "Error: User already exists! (Or Email/Username is in use already)") {
                 msg.edit("ERROR: A user with that email/username already exists.", null)
                 setTimeout(function () {
                     channel.delete();
@@ -139,32 +150,21 @@ exports.run = async (client, message) => {
                     channel.delete();
                 }, 3600000);
 
-                //Account Linking.
-                consoleUser = consoleUser.filter(x => x.attributes.email == collected2.first().content)
-                console.log(consoleUser)
-
-                if (consoleUser.length == 0) return console.log(chalk.magenta('[DISCORD] ') + chalk.green("No account with that email exists...")).then(
-                )
-        
-                consoleUser = consoleUser[0];
-                const timestamp = `${moment().format("HH:mm:ss")}`;
-                const datestamp = `${moment().format("YYYY-MM-DD")}`;
-                userData.set(`${message.author.id}`, {
-                    discordID: message.author.id,
-                    consoleID: consoleUser.attributes.id,
-                    email: consoleUser.attributes.email,
-                    username: consoleUser.attributes.username,
-                    linkTime: timestamp,
-                    linkDate: datestamp
-                })
-
         }).catch(err => {
-            console.log(err);
+            if (err = "Error: User already exists! (Or Email/Username is in use already)") {
+                msg.edit("ERROR: A user with that email/username already exists.", null)
+                setTimeout(function () {
+                    channel.delete();
+                }, 10000);
+            }
         })
-
+        } else {
+            message.channel.send('You already have an account')
+        }
     } else if (args == "server") {
-        message.channel.send('This is being worked on. Please ping one of our Admins or the Owner and they will create a server for you!')
+        message.channel.send('Please use `' + config.DiscordBot.Prefix + "server create type servername` \nTo see server types please do: `" + config.DiscordBot.Prefix + "server create list`")
 
+        const filter2 = m => m.author.id === message.author.id;
         /*        const filter2 = m => m.author.id === message.author.id;
                 message.channel.send("", {
                     embed: new Discord.RichEmbed()

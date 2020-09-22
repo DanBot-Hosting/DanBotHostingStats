@@ -1,0 +1,130 @@
+<%- include("../partials/header.ejs", { botInfo: false, Title: `Your Bots`, Avatar: ``, Redirect: `/me` }) %>
+<link rel="stylesheet" href="//mythicalbots.xyz/css/bots.css">
+<link rel="stylesheet" href="//mythicalbots.xyz/css/form.css">
+
+<link href="//soulcoven.me/css/bw.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="https://mythicalbots.xyz/css/form.css">
+<script src="https://use.fontawesome.com/bfddc8ce66.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous" async></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
+<script src="https://kit.fontawesome.com/75db8f9097.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Dosis:200,400,700" rel="stylesheet">
+
+
+<main>
+  <div class="jumbotron secondary-jumbotron bg-transparent">
+<center>
+      <div class="container">
+            <h1>New Server </h1>
+            <center><h2 style="font-size:20px;">Create a new server</h2></center>
+      </div>
+</center>
+  </div>
+<!--  
+<div class="container">
+ <center>
+   <div class="row" role="alert">
+     <div class="col-md-12" role="alert">
+       <div class="alert alert-primary alert-danger" role="alert">
+         <button type="button" class="close" data-dismiss="alert">×</button>
+         <h4 class="alert-heading"> This is still being worked on! </h4>
+         
+      </div>
+    </div>
+  </div>
+ </center>
+</div> 
+  -->
+<!--
+ Ideas:
+- desc
+- image
+- news title
+- news brack
+
+
+
+-->
+  
+  <div class="container">
+   <div id="errormessage"></div>
+   <div class="col-lg-7 card server-form-panel">
+      <article class="card-body">
+         <form action="" method="post" role="form">
+            <input type="hidden" name="id" value="<%= user.id %>">
+
+              <h5>Server Name <span style="color:red">*</span></h5>
+             <div class="form-group input-group">
+               <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+               </div>
+               <input name="name" id="name" class="form-control xtags" placeholder="What should we name it?" type="text" value="" required>
+            </div>
+           <p class="help-block">- Ex: Baby Witch Help
+            </p>
+            <br>
+              
+      <h5>What type of Server? <span style="color:red">*</span></h5>
+             <div class="form-group input-group">
+               <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-info" style="padding:0"></i></span>
+               </div>
+                <select class="custom-select" id="type" name="type" required>
+             
+                <option selected>Choose...</option>
+                
+                <option> NodeJS </option>
+                <option> Java </option>
+                <option> Python </option>
+                <option> Minecraft.Paper </option>
+                <option> Minecraft.Forge </option>
+                <option> FiveM </option>
+            
+                
+                </select>              
+            </div>
+           <p class="help-block">- Use the selector
+            </p>
+            <br>
+
+            <h5>Location? <span style="color:red">*</span></h5>
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                 <span class="input-group-text"><i class="fa fa-info" style="padding:0"></i></span>
+              </div>
+               <select class="custom-select" id="type" name="location" required>
+            
+               <option selected>Choose...</option>
+               
+               <option> US </option>
+               <option> EU </option>
+               
+               </select>              
+           </div>
+          <p class="help-block">- Use the selector (ONLY WORKS FOR GAMESERVERS)
+           </p>
+           <br>
+
+            <hr>
+            
+            <div class="form-group">
+               <button type="submit" class="btn btn-red btn-block" id="ssubm" name="ssubm" onclick="return xcheck();">Submit</button>
+            </div>
+            
+         </form>
+      </article>
+   </div>
+</div>
+  
+</main>
+
+<script>
+$('textarea').autoResize();
+</script>

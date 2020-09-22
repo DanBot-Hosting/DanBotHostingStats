@@ -1,0 +1,57 @@
+<%- include("../partials/header.ejs", { botInfo: false, Title: `Your Bots`, Avatar: ``, Redirect: `/me` }) %>
+<link rel="stylesheet" href="//mythicalbots.xyz/css/bots.css">
+<link rel="stylesheet" href="//mythicalbots.xyz/css/form.css">
+<br><br><br>
+
+<div class="py-5 text-center filter-dark" style="background-size:cover;background-repeat:no-repeat;">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<div class="d-lg-none"></div>
+<center>
+<img class="img-fluid d-block rounded-circle mx-auto" src="https://mythicalbots.xyz/bot/<%- user.id %>/avatar" alt="" data-toggle="tooltip" data-placement="top" title="">
+<h2 style="font-size:25px;"><%- user.username%>#<%- user.discriminator %></h2>
+<h5 style="font-size:20px;">You can find your Bots & More here.</h5><br>
+</div>
+</div>
+</div>
+</div>
+
+<hr>
+
+<% if(bots) { %>
+<div class="padded-container">
+  <div class="row"> 
+  
+
+<% for(var i=0; i < bots.length; i++) { %>
+
+    <% let data = db.get(bots[i]) %>
+    
+    <div class="col-lg-4 col-md-6 col-sm-12" style="">
+      <a class="no-color" href="/bot/<%- data.id %>">
+        <div class="card preview-card">
+          <div class="card-body">
+            <div class="head">
+              <img class="float-left lazy" src="https://cdn.discordapp.com/avatars/<%= data.id %>/<%= data.client.avatar %>" onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;" alt="Avatar" draggable="false">
+              <div class="content">
+                <h3 title="bot name"><%- data.client.username %> <% if(data.Status === "Verified") { %> <span>&#10003;</span><% } %> </h3>
+                <p class="description" style="color:black" title="biography">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+<% } %>
+  </div>
+</div>
+
+<% } else { %>
+<center>
+<br>
+<h5 class="sub">Sorry no bots were found. <br> This might be a code issue or you have no bots. </h5>
+</center>
+<% } %>

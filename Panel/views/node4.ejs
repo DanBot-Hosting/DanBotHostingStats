@@ -1,0 +1,57 @@
+<%- include("./partials/header.ejs", { botInfo: false, Title: "Node 4 Stats", Avatar: "", Redirect: "/me" }) %>
+
+<meta http-equiv="refresh" content="10"/>
+<br><br><br>
+
+<br><br><br>
+
+        <style>
+            .container {
+                text-align: center;
+                align-items: center;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .large {
+                font-size: 4em;
+            }
+            
+</style>
+
+  <div class="">
+        <div class="row justify-content-md-center">
+          <a style="color:white;" href="https://danbot.host/stats/"><h3>All Stats</h3></a>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> <%- Node4Data.cpu %> (Cores: <%- Node4Data.cpucores %>, Threads: <%- Node4Data.cputhreads %>)</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> <%-Node4Data.cpuload%>%</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> <%-Node4Data.memused%> / <%-Node4Data.memtotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%-Node4Data.swapused%> / <%-Node4Data.swaptotal%></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- Node4Data.diskused %> / <%- Node4Data.disktotal %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- Node4Data.netrx %> <strong>Tx:</strong> <%- Node4Data.nettx %> </div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> <%- Node4Data.osuptime %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> <%- Node4Data.updatetime %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- Node4DataSpeed.ping %>ms <br> <strong>Download:</strong> <%- Node4DataSpeed.download %>Mbps, <strong>Upload: </strong><%- Node4DataSpeed.upload %>Mbps, <strong>Last Updated:</strong> <%- Node4DataSpeed.updatetime %></div>
+        </div>
+
+
+        
+    </div>

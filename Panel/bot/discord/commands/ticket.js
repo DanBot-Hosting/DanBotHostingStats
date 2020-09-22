@@ -23,16 +23,16 @@ exports.run = async (client, message) => {
             },
             {
                 type: "role",
-                id: "697599153538334841",
+                id: "748117822370086932",
                 allow: 84992
             }
         ]).catch(console.error);
-        message.reply(`Please check ${channel} for your ticket.`)
+        message.reply(`Please check <#${channel.id}> for your ticket.`)
 
-        let category = server.channels.find(c => c.id == "654313162086285323" && c.type == "category");
+        let category = server.channels.find(c => c.id == "738538742603841650" && c.type == "category");
         if (!category) throw new Error("Category channel does not exist");
 
-        await channel.setParent(category.id);
+        await channel.setParent(category.id).catch(console.error);
 
         channel.overwritePermissions(message.author, {
             VIEW_CHANNEL: true,
@@ -41,14 +41,15 @@ exports.run = async (client, message) => {
         })
 
         if (userData.get(message.author.id) == null) {
-            channel.send('@ everyone \n\n <@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is not linked with a console account*')
+            channel.send('@<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is not linked with a console account*')
         } else  {
             let embed = new Discord.RichEmbed()
                 .setColor(`GREEN`)
                 .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
+                .addField(`__**Email**__`, userData.fetch(message.author.id + ".email"))
                 .addField(`__**Date (YYYY/MM/DD)**__`, userData.fetch(message.author.id + ".linkDate"))
                 .addField(`__**Time**__`, userData.fetch(message.author.id + ".linkTime"))
-                channel.send('@ everyone \n\n <@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is linked with:* ', embed)
+                channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is linked with:* ', embed)
         }
     } else if (args == "close") {
         if (message.channel.name.includes('-ticket')) {
@@ -56,6 +57,7 @@ exports.run = async (client, message) => {
             const warning = await message.channel.send('<@' + message.author.id + '> are you sure you want to close this ticket? please type `confirm` to close the ticket or `cancel` to keep the ticket open.')
             
             let collected1 = await message.channel.awaitMessages(filter2, {
+                max: 1,
                 time: 30000,
                 errors: ['time'],
             }).catch(x => {
@@ -67,7 +69,7 @@ exports.run = async (client, message) => {
                 return false;
             })
     
-            if (collected1.first().content.toLowerCase() === 'confirm') {
+            if (collected1.first().content === 'confirm') {
                 return message.channel.send("**Closing ticket.**", null).then(setTimeout(() => { message.channel.delete()}, 5000))
             } else if (collected1.first().content === 'cancel') {
                 return message.channel.send('Closing ticket. __**Canceled**__ Ticket staying open.');
