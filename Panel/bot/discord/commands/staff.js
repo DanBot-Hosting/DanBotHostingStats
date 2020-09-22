@@ -1,8 +1,8 @@
 exports.run = async (client, message, args) => {
     if (!args[0]) {
         let embed = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
+            .setColor('RANDOM')
+            .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
         message.channel.send(embed)
     } else if (message.content.toLowerCase().includes("linked")) {
         if (args[1] === "") {
@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
         } else {
             if (userData.get(args[1]) == null) {
                 message.channel.send("That account is not linked with a console account :sad:")
-            } else  {
+            } else {
                 console.log(userData.fetch(args[1]))
                 let embed = new Discord.RichEmbed()
                     .setColor(`GREEN`)

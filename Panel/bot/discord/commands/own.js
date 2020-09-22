@@ -1,7 +1,7 @@
 exports.run = async (client, message) => {
     if (userData.get(message.author.id) == null) {
         message.channel.send("You can't use this command as your account is not linked. You can link it with: `" + config.DiscordBot.Prefix + "link`")
-    } else  {
+    } else {
         let consoleUser = await DanBotHosting.getAllServers();
         consoleUser = consoleUser.filter(x => x.attributes.user == userData.fetch(message.author.id + ".consoleID"))
 

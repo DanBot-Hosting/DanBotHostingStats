@@ -2,7 +2,7 @@ exports.run = async (client, message) => {
     let result = userData.get(message.author.id)
     if (userData.get(message.author.id) == null) {
         message.channel.send("You'r account is not linked. Please link you'r account using " + config.DiscordBot.Prefix + "link")
-    } else  {
+    } else {
         let embed = new Discord.RichEmbed()
             .setColor(`GREEN`)
             .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))

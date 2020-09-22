@@ -11,9 +11,9 @@ const config = {
 }
 //let client = require("../../../../index.js").client;
 
-module.exports = async(client, member, guild) => {
+module.exports = async (client, member, guild) => {
 
-    var getAge = function(millis) {
+    var getAge = function (millis) {
         var dur = {};
         var units = [{
                 label: "milliseconds",
@@ -36,19 +36,19 @@ module.exports = async(client, member, guild) => {
                 mod: 31
             }
         ];
-    
-        units.forEach(function(u) {
+
+        units.forEach(function (u) {
             millis = (millis - (dur[u.label] = (millis % u.mod))) / u.mod;
         });
-    
-        var nonZero = function(u) {
+
+        var nonZero = function (u) {
             return dur[u.label];
         };
-        dur.toString = function() {
+        dur.toString = function () {
             return units
                 .reverse()
                 .filter(nonZero)
-                .map(function(u) {
+                .map(function (u) {
                     return dur[u.label] + " " + (dur[u.label] == 1 ? u.label.slice(0, -1) : u.label);
                 })
                 .join(', ');
@@ -56,13 +56,13 @@ module.exports = async(client, member, guild) => {
         return dur;
     };
 
-        if (Date.now() - member.user.createdAt < 863136000) {
-          member.kick().then(memberkicked => {
-              client.channels.get('738527858594414663').send(member.user.tag + ` has been auto-kicked as account is under 10days old \nThat account was created ${getAge(member.user.createdAt)}, ago`)
-          });
-        }
-    
-    if(member.user.bot) {
+    if (Date.now() - member.user.createdAt < 863136000) {
+        member.kick().then(memberkicked => {
+            client.channels.get('738527858594414663').send(member.user.tag + ` has been auto-kicked as account is under 10days old \nThat account was created ${getAge(member.user.createdAt)}, ago`)
+        });
+    }
+
+    if (member.user.bot) {
         const botrole = member.guild.roles.find(role => role.id === config.bot);
         member.guild.members.get(member.user.id).addRole(botrole)
         client.channels.get(config.welcome).send("Welcome <@" + member.user.id + ">, More bot friends :D")
@@ -70,23 +70,23 @@ module.exports = async(client, member, guild) => {
         const memberrole = member.guild.roles.find(role => role.id === config.member);
         member.guild.members.get(member.user.id).addRole(memberrole)
         client.channels.get(config.welcome).send("Welcome <@" + member.user.id + "> to DanBot Hosting. To get started please read <#738527470164377630>");
-    
+
         member.guild.fetchInvites().then(guildInvites => {
             const ei = invites[member.guild.id];
             invites[member.guild.id] = guildInvites;
             const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
             const inviter = client.users.get(invite.inviter.id);
             let embed = new Discord.RichEmbed()
-            .setColor(`GREEN`)
-            .addField(`New Members Username:`, member.user.tag, true)
-            .addField(`New Members ID:`, '`' + member.user.id + '`', true)
-            .addField('Account created:', member.user.createdAt.toDateString(), true)
-            .addField("Members Status", member.user.presence !== null && member.user.presence.status !== null ? member.user.presence.status : "Offline")
-            .addField('\u200b', '\u200b')
-            .addField(`Invited by:`, inviter.tag, true)
-            .addField(`Inviter's ID:`, '`' + inviter.id + '`', true)
-            .addField(`Invite code used:`, '`' + invite.code + '`', true)
-            .addField(`Invite used`, invite.uses + ' times', true);
+                .setColor(`GREEN`)
+                .addField(`New Members Username:`, member.user.tag, true)
+                .addField(`New Members ID:`, '`' + member.user.id + '`', true)
+                .addField('Account created:', member.user.createdAt.toDateString(), true)
+                .addField("Members Status", member.user.presence !== null && member.user.presence.status !== null ? member.user.presence.status : "Offline")
+                .addField('\u200b', '\u200b')
+                .addField(`Invited by:`, inviter.tag, true)
+                .addField(`Inviter's ID:`, '`' + inviter.id + '`', true)
+                .addField(`Invite code used:`, '`' + invite.code + '`', true)
+                .addField(`Invite used`, invite.uses + ' times', true);
             client.channels.get(config.invitechannel).send(embed)
             //client.channels.get(config.invitechannel).send(`${member.user.tag} (ID: ${member.user.id}) joined using invite code ` + "`" + invite.code + "`" + ` from ${inviter.tag} (ID: ${inviter.id}). Invite code has been used ${invite.uses} times.`);
             const invite5 = member.guild.roles.find(role => role.id === config.invite5);
@@ -97,8 +97,8 @@ module.exports = async(client, member, guild) => {
             if (invite.uses == 10) return member.guild.members.get(inviter.id).removeRole(invite5), member.guild.members.get(inviter.id).addRole(invite10), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 10 invites! Here's a role for you :)`);;
             if (invite.uses == 25) return member.guild.members.get(inviter.id).removeRole(invite10), member.guild.members.get(inviter.id).addRole(invite25), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 25 invites! Here's a role for you :)`);;
             if (invite.uses == 50) return member.guild.members.get(inviter.id).removeRole(invite25), member.guild.members.get(inviter.id).addRole(invite50), client.channels.get(config.inviterewmsg).send(`<@${inviter.id}> just hit 50 invites! Here's a role for you :)`);;
-          });
+        });
 
-          
+
     }
 };

@@ -1,2 +1,1 @@
-exports.run = async (client, message) => {
-};
+exports.run = async (client, message) => {};

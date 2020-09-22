@@ -8,9 +8,9 @@ exports.run = (client, message, args) => {
       const end = process.hrtime(start);
       message.channel.send("", {
         embed: new Discord.RichEmbed()
-        .setDescription("```"+response+"```")
-        .setTimestamp()
-        .setColor("RANDOM")
+          .setDescription("```" + response + "```")
+          .setTimestamp()
+          .setColor("RANDOM")
       })
     });
   }

@@ -32,7 +32,7 @@ exports.run = async (client, message) => {
                 type: 'user',
                 id: message.author.id,
                 deny: 1024
-            } 
+            }
         ]).catch(console.error);
         console.log(channel.id)
         message.channel.send('<@' + message.author.id + '>, Please check <#' + channel.id + '>')
@@ -108,7 +108,7 @@ exports.run = async (client, message) => {
 
         if (!validator.isEmail(collected2.first().content.trim())) {
             msg.delete()
-            channel.send(`\`${collected2.first().content.trim()}`+"` is not a Valid Email!");
+            channel.send(`\`${collected2.first().content.trim()}` + "` is not a Valid Email!");
             setTimeout(() => {
                 channel.delete();
             }, 10000);
@@ -129,24 +129,24 @@ exports.run = async (client, message) => {
                 }, 10000);
                 return false;
             }
-                msg.edit("Hello! You created an new account, Heres the login information", {
-                    embed: new Discord.RichEmbed()
-                        .setColor(0x36393e)
-                        .setDescription("URL: " + config.Pterodactyl.hosturl + " \nUsername: " + collected1.first().content + " \nEmail: " + collected2.first().content + " \nPassword: " + password)
-                        .setFooter("Please note: It is recommended that you change the password")
-                })
-                channel.send('**You have 1Hour to keep note of this info before the channel is deleted.**')
-                message.guild.members.get(message.author.id).addRole("639489891016638496");
-                setTimeout(function () {
-                    channel.delete();
-                }, 3600000);
+            msg.edit("Hello! You created an new account, Heres the login information", {
+                embed: new Discord.RichEmbed()
+                    .setColor(0x36393e)
+                    .setDescription("URL: " + config.Pterodactyl.hosturl + " \nUsername: " + collected1.first().content + " \nEmail: " + collected2.first().content + " \nPassword: " + password)
+                    .setFooter("Please note: It is recommended that you change the password")
+            })
+            channel.send('**You have 1Hour to keep note of this info before the channel is deleted.**')
+            message.guild.members.get(message.author.id).addRole("639489891016638496");
+            setTimeout(function () {
+                channel.delete();
+            }, 3600000);
 
         }).catch(err => {
             console.log(err);
         })
 
     } else if (args == "server") {
-        message.channel.send('This is being worked on. Please ping one of our Admins or the Owner and they will create a server for you!')   
+        message.channel.send('This is being worked on. Please ping one of our Admins or the Owner and they will create a server for you!')
 
         const server = message.guild
 
@@ -159,7 +159,7 @@ exports.run = async (client, message) => {
                 type: 'user',
                 id: message.author.id,
                 deny: 1024
-            } 
+            }
         ]).catch(console.error);
         console.log(channel.id)
         message.channel.send('<@' + message.author.id + '>, Please check <#' + channel.id + '>')
@@ -235,9 +235,9 @@ exports.run = async (client, message) => {
             collected2.first().delete();
             console.log(collected1.first().content)
             DanBotHosting.createServer("latest", `test`, `1`, null, "3", "quay.io/pterodactyl/core:java", "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}", "2048", "0", "25000", "500", "0", "0", "1").then(res => {
-            //DanBotHosting.createServer("latest", collected1.first().content, userData.fetch(message.author.id + ".consoleID"), null, "3", "quay.io/pterodactyl/core:java", null, "2048", "0", "5000", "500", "200", "0", "0").then(res => {
+                //DanBotHosting.createServer("latest", collected1.first().content, userData.fetch(message.author.id + ".consoleID"), null, "3", "quay.io/pterodactyl/core:java", null, "2048", "0", "5000", "500", "200", "0", "0").then(res => {
                 console.log(res)
-            }).catch(error =>{
+            }).catch(error => {
                 console.log(error);
             })
 

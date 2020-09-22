@@ -22,103 +22,103 @@ exports.run = async (client, message) => {
 
     } else if (args == "account") {
         if (userData.get(message.author.id) == null) {
-        const server = message.guild
+            const server = message.guild
 
-        let channel = await server.createChannel(message.author.tag, "text", [{
-                type: 'role',
-                id: message.guild.id,
-                deny: 0x400
-            },
-            {
-                type: 'user',
-                id: message.author.id,
-                deny: 1024
+            let channel = await server.createChannel(message.author.tag, "text", [{
+                    type: 'role',
+                    id: message.guild.id,
+                    deny: 0x400
+                },
+                {
+                    type: 'user',
+                    id: message.author.id,
+                    deny: 1024
+                }
+            ]).catch(console.error);
+            message.reply(`Please check <#${channel.id}> to create an account.`)
+
+            let category = server.channels.find(c => c.id == "738539016688894024" && c.type == "category");
+            if (!category) throw new Error("Category channel does not exist");
+
+            await channel.setParent(category.id);
+
+            channel.overwritePermissions(message.author, {
+                VIEW_CHANNEL: true,
+                SEND_MESSAGES: true,
+                READ_MESSAGE_HISTORY: true
+            })
+
+
+            const filter2 = m => m.author.id === message.author.id;
+
+            let msg = await channel.send("<@" + message.author.id + ">", {
+                embed: new Discord.RichEmbed()
+                    .setColor(0x36393e)
+                    .setDescription("Please enter a username (**Please dont use spaces**)")
+                    .setFooter("You can type 'cancel' to cancel the request")
+            })
+
+            //First Collection "UserName"
+
+            let collected1 = await channel.awaitMessages(filter2, {
+                max: 1,
+                time: 30000,
+                errors: ['time'],
+            }).catch(x => {
+                msg.delete()
+                channel.send(`ERROR: User failed to provide an answer.`);
+                setTimeout(() => {
+                    channel.delete();
+                }, 3000);
+                return false;
+            })
+
+            if (collected1.first().content === 'cancel') {
+                return msg.edit("Request to create a new user has been canceled!", null).then(channel.delete())
             }
-        ]).catch(console.error);
-        message.reply(`Please check <#${channel.id}> to create an account.`)
 
-        let category = server.channels.find(c => c.id == "738539016688894024" && c.type == "category");
-        if (!category) throw new Error("Category channel does not exist");
+            await msg.edit("", {
+                embed: new Discord.RichEmbed()
+                    .setColor(0x36393e)
+                    .setDescription(`Username: **${collected1.first().content}** \nPlease enter a Email.`)
+                    .setFooter("You can type 'cancel' to cancel the request")
+            })
+            collected1.first().delete();
 
-        await channel.setParent(category.id);
+            //scnd Collection "Email"
 
-        channel.overwritePermissions(message.author, {
-            VIEW_CHANNEL: true,
-            SEND_MESSAGES: true,
-            READ_MESSAGE_HISTORY: true
-        })
-
-
-        const filter2 = m => m.author.id === message.author.id;
-
-        let msg = await channel.send("<@" + message.author.id + ">", {
-            embed: new Discord.RichEmbed()
-                .setColor(0x36393e)
-                .setDescription("Please enter a username (**Please dont use spaces**)")
-                .setFooter("You can type 'cancel' to cancel the request")
-        })
-
-        //First Collection "UserName"
-
-        let collected1 = await channel.awaitMessages(filter2, {
-            max: 1,
-            time: 30000,
-            errors: ['time'],
-        }).catch(x => {
-            msg.delete()
-            channel.send(`ERROR: User failed to provide an answer.`);
-            setTimeout(() => {
-                channel.delete();
-            }, 3000);
-            return false;
-        })
-
-        if (collected1.first().content === 'cancel') {
-            return msg.edit("Request to create a new user has been canceled!", null).then(channel.delete())
-        }
-
-        await msg.edit("", {
-            embed: new Discord.RichEmbed()
-                .setColor(0x36393e)
-                .setDescription(`Username: **${collected1.first().content}** \nPlease enter a Email.`)
-                .setFooter("You can type 'cancel' to cancel the request")
-        })
-        collected1.first().delete();
-
-        //scnd Collection "Email"
-
-        let collected2 = await channel.awaitMessages(filter2, {
-            max: 1,
-            time: 30000,
-            errors: ['time'],
-        }).catch(x => {
-            msg.delete()
-            channel.send(`ERROR: User failed to provide an answer.`);
-            setTimeout(() => {
-                channel.delete();
-            }, 3000);
-            return false;
-        })
+            let collected2 = await channel.awaitMessages(filter2, {
+                max: 1,
+                time: 30000,
+                errors: ['time'],
+            }).catch(x => {
+                msg.delete()
+                channel.send(`ERROR: User failed to provide an answer.`);
+                setTimeout(() => {
+                    channel.delete();
+                }, 3000);
+                return false;
+            })
 
 
-        if (collected2.first().content === 'cancel') {
-            channel.delete()
-        }
+            if (collected2.first().content === 'cancel') {
+                channel.delete()
+            }
 
-        if (!validator.isEmail(collected2.first().content.trim())) {
-            msg.delete()
-            channel.send(`\`${collected2.first().content.trim()}`+"` is not a Valid Email!");
-            setTimeout(() => {
-                channel.delete();
-            }, 10000);
-            return false;
-        }
-        collected2.first().delete();
+            if (!validator.isEmail(collected2.first().content.trim())) {
+                msg.delete()
+                channel.send(`\`${collected2.first().content.trim()}` + "` is not a Valid Email!");
+                setTimeout(() => {
+                    channel.delete();
+                }, 10000);
+                return false;
+            }
+            collected2.first().delete();
 
-        let password = await getPassword();
+            let password = await getPassword();
 
-        DanBotHosting.createUser(collected1.first().content, password, collected2.first().content, collected1.first().content, ".", false, "en").then(user => {
-            console.log(user)
+            DanBotHosting.createUser(collected1.first().content, password, collected2.first().content, collected1.first().content, ".", false, "en").then(user => {
+                console.log(user)
 
                 const timestamp = `${moment().format("HH:mm:ss")}`;
                 const datestamp = `${moment().format("YYYY-MM-DD")}`;
@@ -131,13 +131,13 @@ exports.run = async (client, message) => {
                     linkDate: datestamp
                 })
 
-            if (user == "Error: User already exists! (Or Email/Username is in use already)") {
-                msg.edit("ERROR: A user with that email/username already exists.", null)
-                setTimeout(function () {
-                    channel.delete();
-                }, 10000);
-                return false;
-            }
+                if (user == "Error: User already exists! (Or Email/Username is in use already)") {
+                    msg.edit("ERROR: A user with that email/username already exists.", null)
+                    setTimeout(function () {
+                        channel.delete();
+                    }, 10000);
+                    return false;
+                }
                 msg.edit("Hello! You created an new account, Heres the login information", {
                     embed: new Discord.RichEmbed()
                         .setColor(0x36393e)
@@ -150,14 +150,14 @@ exports.run = async (client, message) => {
                     channel.delete();
                 }, 3600000);
 
-        }).catch(err => {
-            if (err = "Error: User already exists! (Or Email/Username is in use already)") {
-                msg.edit("ERROR: A user with that email/username already exists.", null)
-                setTimeout(function () {
-                    channel.delete();
-                }, 10000);
-            }
-        })
+            }).catch(err => {
+                if (err = "Error: User already exists! (Or Email/Username is in use already)") {
+                    msg.edit("ERROR: A user with that email/username already exists.", null)
+                    setTimeout(function () {
+                        channel.delete();
+                    }, 10000);
+                }
+            })
         } else {
             message.channel.send('You already have an account')
         }

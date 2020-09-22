@@ -76,7 +76,7 @@ exports.run = async (client, message, args) => {
 
     async function rest() {
       let keys = db.get("apiKeys");
-      var filtered = keys.filter(function(el) {
+      var filtered = keys.filter(function (el) {
         return el != `${token}`;
       });
 

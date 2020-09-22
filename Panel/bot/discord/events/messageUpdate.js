@@ -1,11 +1,11 @@
 //let client = require("../../../../index.js").client;
 
 module.exports = (client, message, editedMessage) => {
-  if(editedMessage.content.toLowerCase().includes("discord.gg")) { 
+  if (editedMessage.content.toLowerCase().includes("discord.gg")) {
     editedMessage.delete();
-} else if (editedMessage.content.toLowerCase().includes("discord.com")) {
-  editedMessage.delete()
-}
+  } else if (editedMessage.content.toLowerCase().includes("discord.com")) {
+    editedMessage.delete()
+  }
 
   if (message.author.bot) return;
   if (message.channel.type === 'dm') return;

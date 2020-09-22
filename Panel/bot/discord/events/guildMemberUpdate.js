@@ -1,4 +1,4 @@
-module.exports = async(client, oldMember, newMember) => {
+module.exports = async (client, oldMember, newMember) => {
     // If user nickname changes.
     if (oldMember.nickname !== newMember.nickname) {
 
@@ -16,11 +16,11 @@ module.exports = async(client, oldMember, newMember) => {
         const a = "\u200B";
         if (newName.includes(" ឵឵")) {
             oldMember.setNickname('')
-        } else if(newName.includes("͔")) {
+        } else if (newName.includes("͔")) {
             oldMember.setNickname("")
-        } else if(newName.includes(" ឵឵")) {
+        } else if (newName.includes(" ឵឵")) {
             oldMember.setNickname("")
-        } else if(newName.includes(a)) {
+        } else if (newName.includes(a)) {
             oldMember.setNickname("")
         }
 
@@ -34,7 +34,7 @@ module.exports = async(client, oldMember, newMember) => {
             .setColor(0xFF7700)
             .setTimestamp(new Date());
 
-            //oldMember.setNickname('')
+        //oldMember.setNickname('')
         client.channels.get(config.DiscordBot.oLogs).send(embed)
 
         return;
@@ -67,18 +67,19 @@ module.exports = async(client, oldMember, newMember) => {
 
             client.channels.get(config.DiscordBot.oLogs).send(embed)
 
-        } } else {
-            var removedChange = filterArray(oldRoles, newRoles)[0];
-
-            // Make a new RichEmbed
-            const embed = new Discord.RichEmbed()
-                .setTitle("User Role changed.")
-                .setThumbnail(`${oldMember.user.displayAvatarURL}`)
-                .setDescription("User: " + oldMember + " has lost the role: " + removedChange)
-                .setColor(0xFF7700)
-                .setTimestamp(new Date());
-
-            client.channels.get(config.DiscordBot.oLogs).send(embed)
-
         }
+    } else {
+        var removedChange = filterArray(oldRoles, newRoles)[0];
+
+        // Make a new RichEmbed
+        const embed = new Discord.RichEmbed()
+            .setTitle("User Role changed.")
+            .setThumbnail(`${oldMember.user.displayAvatarURL}`)
+            .setDescription("User: " + oldMember + " has lost the role: " + removedChange)
+            .setColor(0xFF7700)
+            .setTimestamp(new Date());
+
+        client.channels.get(config.DiscordBot.oLogs).send(embed)
+
+    }
 };
