@@ -44,6 +44,7 @@ global.client = new Discord.Client({disableEveryone: true});
 //const DBH = new events();
 const bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
+bot.pvc = new Discord.Collection();
 
 //exports.bot = client;
 //exports.DBH = DBH;
