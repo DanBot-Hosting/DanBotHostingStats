@@ -5,7 +5,11 @@ exports.run = async (client, message) => {
     if (args == "") {
         let embed = new Discord.RichEmbed()
             .setColor(`GREEN`)
-            .addField(`__**Tickets**__`, 'You can create a new ticket by typing: `' + config.DiscordBot.Prefix + 'ticket new` \nYou can download your old tickets by running: `' + config.DiscordBot.Prefix + 'ticket logs` \nYou can close your ticket by running: `' + config.DiscordBot.Prefix + 'ticket close` \n\nAny problems? Please send a message in <#640158951899398144>', true);
+            .addField(`__**Tickets**__`, 'You can create a new ticket by typing: `' + 
+            config.DiscordBot.Prefix + 'ticket new` \nYou can download your old tickets by running: `' + 
+            config.DiscordBot.Prefix + 'ticket logs` \nYou can close your ticket by running: `' + 
+            config.DiscordBot.Prefix + 'ticket close` \nYou can upgrade your ticket by running:' + 
+            config.DiscordBot.Prefix + 'ticket upgrade \n\nAny problems? Please send a message in <#640158951899398144>' , true);
         message.channel.send(embed)
 
     } else if (args == "new") {
@@ -42,20 +46,20 @@ exports.run = async (client, message) => {
 
         if (userData.get(message.author.id) == null) {
             channel.send('@<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is not linked with a console account*')
-        } else  {
+        } else {
             let embed = new Discord.RichEmbed()
                 .setColor(`GREEN`)
                 .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
                 .addField(`__**Email**__`, userData.fetch(message.author.id + ".email"))
                 .addField(`__**Date (YYYY/MM/DD)**__`, userData.fetch(message.author.id + ".linkDate"))
                 .addField(`__**Time**__`, userData.fetch(message.author.id + ".linkTime"))
-                channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is linked with:* ', embed)
+            channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is linked with:* ', embed)
         }
     } else if (args == "close") {
         if (message.channel.name.includes('-ticket')) {
             const filter2 = m => m.author.id === message.author.id;
             const warning = await message.channel.send('<@' + message.author.id + '> are you sure you want to close this ticket? please type `confirm` to close the ticket or `cancel` to keep the ticket open.')
-            
+
             let collected1 = await message.channel.awaitMessages(filter2, {
                 max: 1,
                 time: 30000,
@@ -68,15 +72,17 @@ exports.run = async (client, message) => {
                 }, 3000);
                 return false;
             })
-    
+
             if (collected1.first().content === 'confirm') {
-                return message.channel.send("**Closing ticket.**", null).then(setTimeout(() => { message.channel.delete()}, 5000))
+                return message.channel.send("**Closing ticket.**", null).then(setTimeout(() => {
+                    message.channel.delete()
+                }, 5000))
             } else if (collected1.first().content === 'cancel') {
                 return message.channel.send('Closing ticket. __**Canceled**__ Ticket staying open.');
             }
         } else if (!message.channel.name.includes('-ticket')) {
             message.channel.send('ERROR: You can only use this command in ticket channels.')
-    
+
         }
     } else if (args == "add") {
         if (message.channel.name.includes('-ticket')) {
@@ -90,6 +96,17 @@ exports.run = async (client, message) => {
                     READ_MESSAGE_HISTORY: true
                 })
             }
+        } else {
+            message.channel.send('This command is only to be used inside of ticket channels.')
+        }
+    } else if (args == "upgrade") {
+        if (message.channel.name.includes('-ticket')) {
+            message.reply("Only admins can see this ticket now.")
+                message.channel.overwritePermissions(748117822370086932, {
+                    VIEW_CHANNEL: false,
+                    SEND_MESSAGES: false,
+                    READ_MESSAGE_HISTORY: false
+                })
         } else {
             message.channel.send('This command is only to be used inside of ticket channels.')
         }
