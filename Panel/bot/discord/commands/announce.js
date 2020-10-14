@@ -81,7 +81,7 @@ exports.run = async (client, message, args) => {
         if (embedData.ec) embed.setColor(embedData.ec.toUpperCase());
         if (embedData.eh) embed.setTitle(embedData.eh);
         if (embedData.ef) embed.setFooter(embedData.ef);
-        if (embedData.et) embed.setTimestamp(embedData.et);
+        if (embedData.et) embed.setTimestamp();
     }
     channel.send(normalMessage, embed);
 
