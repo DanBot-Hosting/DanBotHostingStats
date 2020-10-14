@@ -5,6 +5,8 @@ const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
 Router.get("/:ID/", (req, res) => {
+  res.redirect("/")
+  /*
   let ID = req.params.ID;
   if (!ID) return res.status(400).send({ error: true, message: "Please give a bot ID" });
   
@@ -51,6 +53,7 @@ Router.get("/:ID/remove", checkAuth, (req, res) => {
   } else {
     return res.render("error.ejs", { message: "You're not authorized to make changes to this bot." }); 
   }
+  */
 });
 
 module.exports = Router;
