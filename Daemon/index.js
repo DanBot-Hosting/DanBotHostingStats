@@ -379,8 +379,14 @@ app.get('/', async function (req, res) {
 }, 2500);
 
 setInterval(async () => {
+    speedtest()
+}, 10800000);
+speedtest()
+
+
+async function speedtest() {
 var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
-const speed = await speedTest({maxTime: 5000, serverId: "4848"})
+const speed = await speedTest({maxTime: 5000, serverId: "36939"})
 speed.on('data', async (data) => {
 request({
     uri: "http://" + config.panelip + ":" + config.panelport + "/data?speedname=" + os.hostname +    //OS hostname for saving data panel sided.
@@ -417,6 +423,6 @@ request({
   }
 });
 });
-}, 21600000); 
+} 
 //}, 20000); 
 });
