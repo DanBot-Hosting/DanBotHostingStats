@@ -1,6 +1,6 @@
 let findDuplicates = arr => arr.filter((e, i) => arr.indexOf(e) != i)
 
-module.exports = (client, e) => {
+module.exports = async (client, e) => {
 
     if (e.t == "MESSAGE_REACTION_ADD") {
         let channel = client.channels.get(e.d.channel_id);

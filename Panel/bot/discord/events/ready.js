@@ -21,7 +21,7 @@ module.exports = async (client, guild, files) => {
     //Reaction-Roles:
     let rChannel = client.channels.get(client.reactionRoles.channel);
     let rMessage = await rChannel.fetchMessage(client.reactionRoles.message);
-    let reactionEmojis = Object.keys(bot.reactionRoles.reactions);
+    let reactionEmojis = Object.keys(client.reactionRoles.reactions);
 
     for (let ri in reactionEmojis) {
         let reaction = reactionEmojis[ri];
