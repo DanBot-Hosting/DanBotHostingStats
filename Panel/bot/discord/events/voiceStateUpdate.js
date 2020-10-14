@@ -4,9 +4,9 @@ module.exports = async (newM, oldM) => {
     if (oldM.voiceChannelID == newM.voiceChannelID) return;
 
     if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID == "757659750342197289") {
-        if (bot.pvc.get(oldM.voiceChannelID) != null && bot.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
+        if (client.pvc.get(oldM.voiceChannelID) != null && client.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
             oldM.voiceChannel.delete();
-            bot.pvc.delete(oldM.voiceChannelID);
+            client.pvc.delete(oldM.voiceChannelID);
         }
     }
 
@@ -25,7 +25,7 @@ module.exports = async (newM, oldM) => {
         })
         vc.setParent("757659750342197289");
         newM.setVoiceChannel(vc.id);
-        bot.pvc.set(vc.id, {
+        client.pvc.set(vc.id, {
             channelID: vc.id,
             owner: newM.id
         })

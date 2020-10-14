@@ -4,7 +4,7 @@ exports.run = async (client, message, args) => {
     }
 
     if (args[0].toLowerCase() == "add") {
-        if (bot.pvc.get(message.member.voiceChannelID) && bot.pvc.get(message.member.voiceChannelID).owner == message.member.id) {
+        if (client.pvc.get(message.member.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner == message.member.id) {
             let member = message.guild.members.get(args[1].match(/[0-9]{18}/)[0])
 
             if (member == null) {
@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
         }
     }
     if (args[0].toLowerCase() == "remove") {
-        if (bot.pvc.get(message.member.voiceChannelID) && bot.pvc.get(message.member.voiceChannelID).owner == message.member.id) {
+        if (client.pvc.get(message.member.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner == message.member.id) {
 
             let member = message.guild.members.get(args[1].match(/[0-9]{18}/)[0])
 
