@@ -17,6 +17,18 @@ module.exports = async (client, guild, files) => {
             "type": "WATCHING"
         }
     ];
+
+    //Reaction-Roles:
+    let rChannel = client.channels.get(client.reactionRoles.channel);
+    let rMessage = await rChannel.fetchMessage(client.reactionRoles.message);
+    let reactionEmojis = Object.keys(bot.reactionRoles.reactions);
+
+    for (let ri in reactionEmojis) {
+        let reaction = reactionEmojis[ri];
+        if (reaction.length == 18) client.emojis.get(reaction);
+        await rMessage.react(reaction);
+    }
+    // end of Reaction-Roles
     setInterval(() => {
         const activity = activities[Math.floor(Math.random() * activities.length)];
         client.user.setActivity(activity.text, {
