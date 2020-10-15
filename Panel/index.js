@@ -21,29 +21,25 @@ let transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
   auth: {
-    user: config.Email.User,
-    pass: config.Email.Password
+     user: config.Email.User,
+     pass: config.Email.Password
   }
 });
 
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
-const {
-  getUser,
-  getBot
-} = require(process.cwd() + "/util/discordAPI");
+const { getUser, getBot } = require(process.cwd() + "/util/discordAPI");
 
 
 //Discord Bot
-//const events = require("events");
 let db = require("quick.db");
 global.Discord = require("discord.js");
 global.fs = require("fs");
 global.moment = require("moment");
-global.userData = new db.table("userData")
-global.client = new Discord.Client({
-  disableEveryone: true
-});
-//const DBH = new events();
+global.userData = new db.table("userData");
+global.settings = new db.table("settings");
+global.webSettings = new db.table("webSettings");
+global.mutesData = new db.table("muteData");
+global.client = new Discord.Client({disableEveryone: true});
 const bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
 bot.pvc = new Discord.Collection();
@@ -59,30 +55,20 @@ bot.reactionRoles = {
   }
 }
 
-//exports.bot = client;
-//exports.DBH = DBH;
 
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
   files = files.filter(f => f.endsWith('.js'));
   files.forEach(f => {
-    const event = require(`./bot/discord/events/${f}`);
-    client.on(f.split('.')[0], event.bind(null, client));
-    delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
-  });
-});
-
-//Logging into proxmox (Virtual Machine manager)
-//global.proxmox = require("proxmox")(config.Proxmox.username, config.Proxmox.password, config.Proxmox.url);
-
-//global.proxmox = require('node-proxmox')(config.Proxmox.url, config.Proxmox.username, config.Proxmox.auth, config.Proxmox.password);
-//proxmox.get('/nodes/', (data) => {
-//  console.log(data)
-//})
+      const event = require(`./bot/discord/events/${f}`);
+      client.on(f.split('.')[0], event.bind(null, client));
+      delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
+    });
+  }); 
 
 //Bot login
 client.login(config.DiscordBot.Token);
-global.Allowed = ["338192747754160138", "137624084572798976"];
+global.Allowed = [ "338192747754160138", "137624084572798976" ];
 
 //Test Email
 //const message = {
@@ -117,7 +103,8 @@ passport.deserializeUser((obj, done) => {
 });
 
 passport.use(
-  new strategy({
+  new strategy(
+    {
       clientID: config.DiscordBot.clientID,
       clientSecret: config.DiscordBot.clientSecret,
       callbackURL: config.DiscordBot.callbackURL,
@@ -134,8 +121,7 @@ passport.use(
 app.use(
   session({
     store: new MongoStore({
-      url: config.DB.MongoDB
-    }),
+      url: config.DB.MongoDB }),
     secret: "FROPT",
     resave: false,
     saveUninitialized: false
@@ -144,18 +130,14 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(helmet({
-  frameguard: false
-}));
+app.use(helmet({ frameguard: false }));
 app.use(cookieParser());
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 server.listen(PORT, function () {
-  console.log(chalk.magenta('[WEB] ') + chalk.green("Listening on port " + PORT));
+    console.log(chalk.magenta('[WEB] ') + chalk.green("Listening on port " + PORT));
 });
 
 global.nodeData = new db.table("nodeData")
@@ -210,27 +192,26 @@ app.get('/data', function (req, res) {
   } 
 })
 
-
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine', 'hbs');
 
 app.use((req, res, next) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "GET, POST");
+      res.set("Access-Control-Allow-Origin", "*");
+      res.set("Access-Control-Allow-Methods", "GET, POST");
 
-  console.log(
-    (req.headers["cf-connecting-ip"] ||
-      req.headers["x-forwarded-for"] ||
-      req.ip) +
-    " [" +
-    req.method +
-    "] " +
-    req.url
-  );
+      console.log(
+        (req.headers["cf-connecting-ip"] ||
+          req.headers["x-forwarded-for"] ||
+          req.ip) +
+          " [" +
+          req.method +
+          "] " +
+          req.url
+      );
 
-  next();
-});
+      next();
+    });
 
 //Routes
 
@@ -242,6 +223,7 @@ const botRoute = require("./routes/bot.js");
 const indexRoute = require("./routes/index.js");
 const statsRoute = require("./routes/stats.js");
 const meRoute = require("./routes/me.js");
+const adminRoute = require("./routes/admin.js");
 //const { config } = require("process");
 
 app.use("/api", apiRoute);
@@ -249,11 +231,12 @@ app.use("/bot", botRoute);
 app.use("/", indexRoute);
 app.use("/stats", statsRoute);
 app.use("/me", meRoute);
+app.use("/admin", adminRoute);
 
 app.get("/user/:ID", async (req, res) => {
-  let user = req.params.ID;
-  let memberr = "No"
-
+   let user = req.params.ID;
+   let memberr = "No"
+    
   if (!isSnowflake(user)) {
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
@@ -266,18 +249,18 @@ app.get("/user/:ID", async (req, res) => {
   if (use.user_id && use.user_id[0].endsWith("is not snowflake."))
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
-      message: "ID is invalid"
+    message: "ID is invalid"
     });
-
+  
   if (use.message == "Unknown User")
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
       message: "Discord API - Unknown User"
     });
-
+  
   if (use.bot === true) return res.redirect("/bot/" + user);
-
-  try {
+  
+    try {
     bot.fetchUser(user).then(User => {
       if (User.bot) {
         return res.redirect("/bot/" + User.id);
@@ -317,29 +300,29 @@ app.get("/user/:ID", async (req, res) => {
           }
         }
       }
-
-      let avatar = `https://mythicalbots.xyz/bot/${user}/avatar`;
-
-      let bots = db.get(`${User.id}.bots`);
-      if (!bots) bots = null;
-
-      console.log(bots)
-
-      res.render("me/user.ejs", {
+   
+   let avatar = `https://mythicalbots.xyz/bot/${user}/avatar`;
+   
+   let bots = db.get(`${User.id}.bots`);
+   if(!bots) bots = null;
+   
+   console.log(bots)
+   
+   res.render("me/user.ejs", {
         user: req.isAuthenticated() ? req.user : null,
         User,
         avatar,
-        //  Data,
+      //  Data,
         pColor,
         presence,
-        //    info,
+    //    info,
         memberr,
         use,
         bots,
         db,
-        //  Discord,
-        //    pageType: { user: true }
-      });
+      //  Discord,
+    //    pageType: { user: true }
+   });
     });
   } catch (e) {
     return res.render("error.ejs", {
@@ -347,19 +330,19 @@ app.get("/user/:ID", async (req, res) => {
       message: e
     });
   }
-
+   
 });
 
 
 //Catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.status(404).render("error.ejs", {
     message: "Page Not Found",
     user: req.isAuthenticated() ? req.user : null
   });
 });
 
-setInterval(async () => {
-  console.log("[Automatic Process] Getting bot stats from MBL")
-  require("./util/MBL.js")
+setInterval(async() => {
+    console.log("[Automatic Process] Getting bot stats from MBL")
+    require("./util/MBL.js")    
 }, 600000);
