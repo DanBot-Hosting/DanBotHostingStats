@@ -230,16 +230,6 @@ app.get('/data', function (req, res) {
     });
   }
 });
-/*
-userData.set(`${message.author.id}`, {
-                    discordID: message.author.id,
-                    consoleID: user.id,
-                    email: user.email,
-                    username: user.username,
-                    linkTime: timestamp,
-                    linkDate: datestamp
-                })
-*/
 
 
 //View engine setup
