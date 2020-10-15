@@ -35,10 +35,7 @@ const {
 
 //Discord Bot
 //const events = require("events");
-var node = require('nodeactyl');
 let db = require("quick.db");
-global.DanBotHosting = node.Application;
-global.DanBotHostingClient = node.Client;
 global.Discord = require("discord.js");
 global.fs = require("fs");
 global.moment = require("moment");
@@ -73,35 +70,6 @@ fs.readdir('./bot/discord/events/', (err, files) => {
     client.on(f.split('.')[0], event.bind(null, client));
     delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
   });
-});
-
-
-
-//Event Handler
-
-/*fs.readdir("./bot/discord/events/", (err, files) => {
-  if (err) return console.log(err);
-  files.forEach(file => {
-      fs.readdir("./bot/discord/events/" + file, (err, ff) => {
-          if (!ff || ff.length == 0) return console.log(`No Events Found in ${file}`);
-          ff.filter(x => x.toLowerCase().endsWith(".js")).forEach(x => {
-          
-              require(`./bot/discord/events/${file}/${x}`);
-          });
-          console.log(`${file} - ${ff.filter(x => toLowerCase().endsWith(".js")).join(", ")}`);
-      });
-  });
-});*/
-
-//Disconnected from discord. Probs time to restart while disconnected.
-//client.on('reconnecting', () => console.log('Disconnected from discord. Restarting...'), process.exit());
-
-//Logging into pterodactyl using Nodeactyl
-DanBotHosting.login(config.Pterodactyl.hosturl, config.Pterodactyl.apikey, (logged_in) => {
-  console.log(chalk.magenta('[APP] ') + chalk.green("Nodeactyl logged in? " + logged_in));
-});
-DanBotHostingClient.login(config.Pterodactyl.hosturl, config.Pterodactyl.apikeyclient, (logged_in) => {
-  console.log(chalk.magenta('[CLIENT] ') + chalk.green("Nodeactyl logged in? " + logged_in));
 });
 
 //Logging into proxmox (Virtual Machine manager)
