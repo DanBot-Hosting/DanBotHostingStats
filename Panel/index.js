@@ -192,44 +192,55 @@ server.listen(PORT, function () {
 
 global.nodeData = new db.table("nodeData")
 app.get('/data', function (req, res) {
+  let nodes = [ "Node1", "Node2", "Node3"];
   if (req.query.servername == undefined) {
-    var data = JSON.stringify(req.query);
-    fs.writeFileSync('data/' + req.query.speedname + '-speedtest.json', data);
+    if (!nodes.includes(req.query.speedname)) {
+      res.redirect("/")
+    } else {
+    nodeData.set(req.query.speedname + '-speedtest', {
+      speedname: req.query.speedname,
+      ping: req.query.ping,
+      download: req.query.download,
+      upload: req.query.upload,
+      updatetime: req.query.updatetime
+    });
+    };
   } else {
-    var data = JSON.stringify(req.query);
-    //fs.writeFileSync('data/' + req.query.servername + '.json', data);
-    console.log(data)
+    if (!nodes.includes(req.query.servername)) {
+      res.redirect("/")
+    } else {
     nodeData.set(req.query.servername, {
       servername: req.query.servername,
-      cpu: data.cpu,
-      cpuload: data.cpuload,
-      cputhreads: data.cputhreads,
-      cpucores: data.cpucores,
-      memused: data.memused,
-      memtotal: data.memtotal,
-      swapused: data.swapused,
-      swaptotal: data.swaptotal,
-      diskused: data.diskused,
-      disktotal: data.disktotal,
-      netrx: data.netrx,
-      nettx: data.nettx,
-      osplatform: data.osplatform,
-      oslogofile: data.oslogofile,
-      osrelease: data.osrelease,
-      osuptime: data.osuptime,
-      biosvendor: data.biosvendor,
-      biosversion: data.biosversion,
-      biosdate: data.biosdate,
-      servermonitorversion: data.servermonitorversion,
-      datatime: data.datatime,
-      dockercontainers: data.dockercontainers,
-      dockercontainersrunning: data.dockercontainersrunning,
-      dockercontainerspaused: data.dockercontainerspaused,
-      dockercontainersstopped: data.dockercontainersstopped,
-      updatetime: data.updatetime
+      cpu: req.query.cpu,
+      cpuload: req.query.cpuload,
+      cputhreads: req.query.cputhreads,
+      cpucores: req.query.cpucores,
+      memused: req.query.memused,
+      memtotal: req.query.memtotal,
+      swapused: req.query.swapused, 
+      swaptotal: req.query.swaptotal,
+      diskused: req.query.diskused,
+      disktotal: req.query.disktotal,
+      netrx: req.query.netrx,
+      nettx: req.query.nettx,
+      osplatform: req.query.osplatform,
+      oslogofile: req.query.oslogofile,
+      osrelease: req.query.osrelease,
+      osuptime: req.query.osuptime,
+      biosvendor: req.query.biosvendor,
+      biosversion: req.query.biosversion,
+      biosdate: req.query.biosdate,
+      servermonitorversion: req.query.servermonitorversion,
+      datatime: req.query.datatime,
+      dockercontainers: req.query.dockercontainers,
+      dockercontainersrunning: req.query.dockercontainersrunning,
+      dockercontainerspaused: req.query.dockercontainerspaused,
+      dockercontainersstopped: req.query.dockercontainersstopped,
+      updatetime: req.query.updatetime
     });
   }
-});
+  } 
+})
 
 
 //View engine setup
