@@ -142,9 +142,9 @@ server.listen(PORT, function () {
 
 global.nodeData = new db.table("nodeData")
 app.get('/data', function (req, res) {
-  let nodes = [ "Node1", "Node2", "Node3"];
+  let nodes = [ "154.27.68.232", "154.27.68.233", "154.27.68.234", "167.86.113.158"];
   if (req.query.servername == undefined) {
-    if (!nodes.includes(req.query.speedname)) {
+    if (!nodes.includes(req.headers["cf-connecting-ip"])) {
       res.redirect("/")
     } else {
     nodeData.set(req.query.speedname + '-speedtest', {
@@ -156,7 +156,7 @@ app.get('/data', function (req, res) {
     });
     };
   } else {
-    if (!nodes.includes(req.query.servername)) {
+    if (!nodes.includes(req.headers["cf-connecting-ip"])) {
       res.redirect("/")
     } else {
     nodeData.set(req.query.servername, {
