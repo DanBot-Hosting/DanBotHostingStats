@@ -91,7 +91,6 @@ module.exports = async (client, member, guild) => {
                 .addField(`Invite code used:`, '`' + invite.code + '`', true)
                 .addField(`Invite used`, invite.uses + ' times', true);
             client.channels.get(config.invitechannel).send(embed)
-            //client.channels.get(config.invitechannel).send(`${member.user.tag} (ID: ${member.user.id}) joined using invite code ` + "`" + invite.code + "`" + ` from ${inviter.tag} (ID: ${inviter.id}). Invite code has been used ${invite.uses} times.`);
             const invite5 = member.guild.roles.find(role => role.id === config.invite5);
             const invite10 = member.guild.roles.find(role => role.id === config.invite10);
             const invite25 = member.guild.roles.find(role => role.id === config.invite25);
