@@ -17,6 +17,12 @@ module.exports = async (client, guild, files) => {
             "type": "WATCHING"
         }
     ];
+    setInterval(() => {
+        const activity = activities[Math.floor(Math.random() * activities.length)];
+        client.user.setActivity(activity.text, {
+            type: activity.type
+        });
+    }, 30000);
 
     //Reaction-Roles:
     let rChannel = client.channels.get(client.reactionRoles.channel);
@@ -29,12 +35,6 @@ module.exports = async (client, guild, files) => {
         await rMessage.react(reaction);
     }
     // end of Reaction-Roles
-    setInterval(() => {
-        const activity = activities[Math.floor(Math.random() * activities.length)];
-        client.user.setActivity(activity.text, {
-            type: activity.type
-        });
-    }, 30000);
 
     global.invites = {};
     client.guilds.forEach(g => {
@@ -43,7 +43,7 @@ module.exports = async (client, guild, files) => {
         });
     });
 
-    //Voice channel stats updator
+    //Voice channel stats
     setInterval(async () => {
         let guild1 = await client.guilds.get("639477525927690240").fetchMembers();
         let roleID1 = '748117822370086932';
