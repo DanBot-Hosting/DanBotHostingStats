@@ -102,7 +102,7 @@ exports.run = async (client, message) => {
     } else if (args == "upgrade") {
         if (message.channel.name.includes('-ticket')) {
             message.reply("Only admins can see this ticket now.")
-                message.channel.overwritePermissions(748117822370086932, {
+                message.channel.overwritePermissions("748117822370086932", {
                     VIEW_CHANNEL: false,
                     SEND_MESSAGES: false,
                     READ_MESSAGE_HISTORY: false
