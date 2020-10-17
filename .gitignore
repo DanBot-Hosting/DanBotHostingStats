@@ -7,6 +7,7 @@ Panel/config.json
 Panel/json.sqlite
 Panel/images
 Panel/start.bat
+Panel/eng.traineddata
 
 Daemon/node_modules
 Daemon/package-lock.json
