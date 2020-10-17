@@ -1,7 +1,4 @@
-//let client = require("../../../../index.js").client;
-
 module.exports = (client, message) => {
-    //if(message.content.toLowerCase().includes("tiktok")) {message.reply('Ew. Get out here with that crap :bammer:'), message.delete() }
     if(message.author.id === client.user.id) { 
         return;
     } else if (message.content.toLowerCase().includes("discord.gg")) { 

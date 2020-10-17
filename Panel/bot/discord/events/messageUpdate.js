@@ -5,7 +5,9 @@ module.exports = (client, message, editedMessage) => {
     editedMessage.delete();
   } else if (editedMessage.content.toLowerCase().includes("discord.com")) {
     editedMessage.delete()
-  }
+  } else if (editedMessage.content.toLowerCase().includes("discordapp.com឵឵")) {
+    message.delete()
+  } 
 
   if (message.author.bot) return;
   if (message.channel.type === 'dm') return;
