@@ -17,31 +17,64 @@ Router.get("/form/new-server", checkAuth, (req, res) => {
 Router.post("/form/new-server", checkAuth, (req, res) => {
     
     let data = req.body;
-    console.log(data); 
-//{ id: '137624084572798976', name: 'test', type: 'NodeJS', ssubm: '' }
-    if(data.type == "NodeJS") {
-      console.log('Lmao nodejs')
-    }
-    
+    console.log(data);
     res.redirect("/me?e=ERROR");
     
 });
 
 Router.get("/form/staff-apply", checkAuth, (req, res) => {
   let bots = db.get(`${req.user.id}.bots`);
-  res.render("forms/apply-staff.ejs", { user: req.isAuthenticated() ? req.user : null, bots, db });
+  if (webSettings.fetch("staff-applications.enabled") == "true") {
+    res.render("forms/apply-staff.ejs", { user: req.isAuthenticated() ? req.user : null, bots, db });
+  } else if (webSettings.fetch("staff-applications.enabled") == "false") {
+    res.render("forms/apply-staff-closed.ejs", { user: req.isAuthenticated() ? req.user : null, bots, db });
+  }
 });
 
 Router.post("/form/staff-apply", checkAuth, (req, res) => {
     
     let data = req.body;
     console.log(data); 
-//{ id: '137624084572798976', name: 'test', type: 'NodeJS', ssubm: '' }
-    if(data.type == "NodeJS") {
-      console.log('Lmao nodejs')
-    }
+    const embed = new Discord.RichEmbed()
+        .setColor(0x00A2E8)
+        .addField("__**Ping**__", `<@${data.id}>`)
+        .addField("__**User ID**__", data.id)
+        .addField("__**Console Email**__", data.cemail)
+        .addField("__**How long have you been in DBH?**__", data.joindate)
+        .addField("__**Previous experiences**__", data.prev)
+        .addField("__**Coding knowledge**__", data.coding)
+        .addField("__**Any projects you are proud of?**__", data.projects)
+        .setTimestamp()
+        .setFooter("New staff app submitted! ");
+    client.channels.get("757204887242014760").send({embed});
     
-    res.redirect("/me?e=ERROR");
+    res.redirect("/me?e=COMPLETE");
+    
+});
+
+Router.get("/requests", checkAuth, (req, res) => {
+  let bots = db.get(`${req.user.id}.bots`);
+    res.render("requests.ejs", { user: req.isAuthenticated() ? req.user : null, bots, db });
+});
+
+Router.post("/requests", checkAuth, (req, res) => {
+    
+    let data = req.body;
+    console.log(data); 
+    const embed = new Discord.RichEmbed()
+        .setColor(0x00A2E8)
+        .addField("__**Ping**__", `<@${data.id}>`)
+        .addField("__**User ID**__", data.id)
+        .addField("__**Console Email**__", data.cemail)
+        .addField("__**How long have you been in DBH?**__", data.joindate)
+        .addField("__**Previous experiences**__", data.prev)
+        .addField("__**Coding knowledge**__", data.coding)
+        .addField("__**Any projects you are proud of?**__", data.projects)
+        .setTimestamp()
+        .setFooter("New staff app submitted! ");
+    client.channels.get("757204887242014760").send({embed});
+    
+    res.redirect("/me?e=COMPLETE");
     
 });
 

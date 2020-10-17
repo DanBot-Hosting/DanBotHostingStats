@@ -28,7 +28,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
    // console.log(data);
     let info = db.get(data.id);
     
-    console.log(`API: ${data.id} just submitted stats`)
+    console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
 
     if (info) {
       let botData = {

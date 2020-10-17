@@ -1,0 +1,70 @@
+<%- include("./partials/header.ejs", { botInfo: false, Title: `Your Bots`, Avatar: ``, Redirect: `/me` }) %>
+<link rel="stylesheet" href="//mythicalbots.xyz/css/bots.css">
+<link rel="stylesheet" href="//mythicalbots.xyz/css/form.css">
+
+<link href="//soulcoven.me/css/bw.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="https://mythicalbots.xyz/css/form.css">
+<script src="https://use.fontawesome.com/bfddc8ce66.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous" async></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
+<script src="https://kit.fontawesome.com/75db8f9097.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Dosis:200,400,700" rel="stylesheet">
+
+
+<main>
+  <div class="jumbotron secondary-jumbotron bg-transparent">
+<center>
+      <div class="container">
+            <h1>Admin Options</h1>
+            <center><h2 style="font-size:20px;">Select where you would like to go</h2></center>
+      </div>
+</center>
+  </div>
+<!--  
+<div class="container">
+ <center>
+   <div class="row" role="alert">
+     <div class="col-md-12" role="alert">
+       <div class="alert alert-primary alert-danger" role="alert">
+         <button type="button" class="close" data-dismiss="alert">×</button>
+         <h4 class="alert-heading"> This is still being worked on! </h4>
+         
+      </div>
+    </div>
+  </div>
+ </center>
+</div> 
+  -->
+<!--
+ Ideas:
+- desc
+- image
+- news title
+- news brack
+
+
+
+-->
+  
+  <div class="container">
+   <div id="errormessage"></div>
+   <div class="col-lg-7 card server-form-panel">
+      <article class="card-body">
+         <a href="/admin/settings"><h2>Server Settings</h2></a>
+         <a href="/admin/requests"><h2>Requests</h2></a>
+      </article>
+   </div>
+</div>
+  
+</main>
+
+<script>
+$('textarea').autoResize();
+</script>

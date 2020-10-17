@@ -24,6 +24,7 @@
       <div class="container">
             <h1>Staff application </h1>
             <center><h2 style="font-size:20px;">Apply for staff</h2></center>
+            <center><h1 style="font-size:20px;">Please give as much information as possible.</h1></center>
       </div>
 </center>
   </div>
@@ -65,7 +66,7 @@
                <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
                </div>
-               <input name="name" id="cemail" class="form-control xtags" placeholder="Whats your console email? (Used to verify that you host here)" type="text" value="" required>
+               <input name="cemail" id="cemail" class="form-control xtags" placeholder="Whats your console email? (Used to verify that you host here)" type="text" value="" required>
             </div>
             <br>
               
@@ -74,7 +75,7 @@
                <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-info" style="padding:0"></i></span>
                </div>
-                <select class="custom-select" id="joindate" name="type" required>
+                <select class="custom-select" id="joindate" name="joindate" required>
              
                 <option selected>Select...</option>
                 
@@ -85,21 +86,29 @@
             </div>
             <br>
 
-            <h5>Location? <span style="color:red">*</span></h5>
-            <div class="form-group input-group">
-              <div class="input-group-prepend">
-                 <span class="input-group-text"><i class="fa fa-info" style="padding:0"></i></span>
-              </div>
-               <select class="custom-select" id="type" name="location" required>
-            
-               <option selected>Choose...</option>
-               
-               <option> US </option>
-               <option> EU </option>
-               
-               </select>              
-           </div>
+              <h5>Previous experiences: <span style="color:red">*</span></h5>
+             <div class="form-group input-group">
+               <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+               </div>
+               <input name="prev" id="prev" class="form-control xtags" placeholder="Let us know about previous experiences!" type="text" value="" required>
+            </div>
+            <br>
+            <h5>Coding knowledge: <span style="color:red">*</span></h5>
+             <div class="form-group input-group">
+               <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+               </div>
+               <input name="coding" id="coding" class="form-control xtags" placeholder="Not needed but is good to have for most issues!" type="text" value="" required>
+            </div>
            <br>
+           <h5>Any projects you are proud of? <span style="color:red">*</span></h5>
+             <div class="form-group input-group">
+               <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+               </div>
+               <input name="projects" id="projects" class="form-control xtags" placeholder="What are any projects you have made that you are proud of?" type="text" value="" required>
+            </div>
 
             <hr>
             

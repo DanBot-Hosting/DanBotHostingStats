@@ -209,6 +209,15 @@ h4 {
         </div>
         </li>      
   <% if(user) { %> 
+  
+    <div class="dropdown">
+      <button style="outline: none;" class="dropbtn">Forms</button>
+      <div class="dropdown-content">
+        <a href="/me/form/staff-apply">Staff Application</a>
+        <a href="/?e=NOT-COMPLETE">Create Server</a>
+      </div>
+    </div> 
+
 <div class="dropdown">
     <button style="outline: none;" class="dropbtn">More</button>
     <div class="dropdown-content">
@@ -216,10 +225,6 @@ h4 {
       <a rel="nofollow" target="blank" href="https://docs.danbot.xyz/">Docs</a>
       <a href="/feedback">Feedback</a>
       <a href="/partners">Partners</a>
-
-      <div class="dropdown-divider"></div> 
-      <a onClick="toggleDarkMode (this)">
-        <i class="fas fa-sync-alt"></i> no </a>
     </div>
 </div> 
   <% } else { %>
@@ -261,6 +266,7 @@ h4 {
           <div class="dropdown-content">
             <a href="/user/<%= user.id%>">Profile</a>
             <a href="/me">Your Bots</a>
+            <a href="/requests">Requests</a>
             <div class="dropdown-divider"></div>
             <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>

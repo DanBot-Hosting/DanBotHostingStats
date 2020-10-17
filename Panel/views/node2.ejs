@@ -25,31 +25,31 @@
           <a style="color:white;" href="https://danbot.host/stats/"><h3>All Stats</h3></a>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> <%- Node2Data.cpu %> (Cores: <%- Node2Data.cpucores %>, Threads: <%- Node2Data.cputhreads %>)</div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> <%- nodeData.fetch("Node2.cpu") %> (Cores: <%- nodeData.fetch("Node2.cpucores") %>, Threads: <%- nodeData.fetch("Node2.cputhreads") %>)</div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> <%-Node2Data.cpuload%>%</div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> <%- nodeData.fetch("Node2.cpuload") %>%</div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> <%-Node2Data.memused%> / <%-Node2Data.memtotal%></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> <%- nodeData.fetch("Node2.memused") %> / <%- nodeData.fetch("Node2.memtotal") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%-Node2Data.swapused%> / <%-Node2Data.swaptotal%></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%- nodeData.fetch("Node2.swapused") %> / <%- nodeData.fetch("Node2.swaptotal") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- Node2Data.diskused %> / <%- Node2Data.disktotal %></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node2.diskused") %> / <%- nodeData.fetch("Node2.total") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- Node2Data.netrx %> <strong>Tx:</strong> <%- Node2Data.nettx %> </div>
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- nodeData.fetch("Node2.netrx") %> <strong>Tx:</strong> <%- nodeData.fetch("Node2.nettx") %> </div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> <%- Node2Data.osuptime %></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> <%- nodeData.fetch("Node2.osuptime") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> <%- Node2Data.updatetime %></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> <%- nodeData.fetch("Node2.updatetime") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- Node2DataSpeed.ping %>ms <br> <strong>Download:</strong> <%- Node2DataSpeed.download %>Mbps, <strong>Upload: </strong><%- Node2DataSpeed.upload %>Mbps, <strong>Last Updated:</strong> <%- Node2DataSpeed.updatetime %></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- nodeData.fetch("Node2-speedtest.ping") %>ms <br> <strong>Download:</strong> <%- nodeData.fetch("Node2-speedtest.download") %>Mbps, <strong>Upload: </strong><%- nodeData.fetch("Node2-speedtest.upload") %>Mbps, <strong>Last Updated:</strong> <%- nodeData.fetch("Node2-speedtest.updatetime") %></div>
         </div>
 
 
