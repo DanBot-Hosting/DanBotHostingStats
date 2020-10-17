@@ -2,12 +2,13 @@ const axios = require('axios');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
-        message.channel.send("This account is not linked. Please link it using `" + config.DiscordBot.Prefix + "link`, then retry this command")
+        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID. \nIf you have not made an account yet please check out `" + config.DiscordBot.prefix + "getstarted` to create an account \nIf you already have an account link it using `" + config.DiscordBot.Prefix + "link`")
     } else {
         if (!args[0]) {
             //No args
             let embed = new Discord.RichEmbed()
-                .setTitle('__**Commands**__ \n' + config.DiscordBot.Prefix + 'server create type servername \n' + config.DiscordBot.Prefix + 'server list')
+                .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list`')
+            message.channel.send(embed)
 
         } else if (args[0].toLowerCase() == "create") {
             //Do server creation things
