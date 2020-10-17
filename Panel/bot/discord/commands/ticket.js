@@ -36,7 +36,10 @@ exports.run = async (client, message) => {
         let category = server.channels.find(c => c.id == "738538742603841650" && c.type == "category");
         if (!category) throw new Error("Category channel does not exist");
 
-        await channel.setParent(category.id).catch(console.error);
+        let categorybackup = server.channels.find(c => c.id == "741082659610034257" && c.type == "category");
+        if (!categorybackup) throw new Error("Category channel does not exist");
+
+        await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(console.error));
 
         channel.overwritePermissions(message.author, {
             VIEW_CHANNEL: true,
