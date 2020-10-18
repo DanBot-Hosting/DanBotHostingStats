@@ -41,11 +41,14 @@ exports.run = async (client, message) => {
 
         await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(console.error));
 
-        channel.overwritePermissions(message.author, {
-            VIEW_CHANNEL: true,
-            SEND_MESSAGES: true,
-            READ_MESSAGE_HISTORY: true
-        })
+        setTimeout(() => {
+            channel.overwritePermissions(message.author, {
+                VIEW_CHANNEL: true,
+                SEND_MESSAGES: true,
+                READ_MESSAGE_HISTORY: true
+            })
+            
+        }, 1000)
 
         if (userData.get(message.author.id) == null) {
             channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is not linked with a console account*')

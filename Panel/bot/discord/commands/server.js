@@ -301,24 +301,13 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                         message.channel.send(embed)
                     }).catch(error => {
-                        if (error.includes("400")) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node is out of ports. \nPlease wait for a host admin to open more ports.")
-                            message.channel.send(embed)
-                            message.channel.send('<@137624084572798976> Assign more ports.')
-                        } else if (error.includes('504')) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node did not respond in time. You could re-run the command or a outage might be happening if this happens multiple times")
-                            message.channel.send(embed)
-                        } else {
+                        
                         let embed1 = new Discord.RichEmbed()
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
-                        }
+                        
                     })
                 }
             } else if (args[1].toLowerCase() === "minecraft.forge") {
@@ -345,7 +334,7 @@ exports.run = async (client, message, args) => {
                             "MC_VERSION": "latest"
                         },
                         "feature_limits": {
-                            "databases": 0,
+                            "databases": 2,
                             "allocations": 1
                         },
                         "deploy": {
@@ -377,24 +366,13 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                         message.channel.send(embed)
                     }).catch(error => {
-                        if (error.includes("400")) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node is out of ports. \nPlease wait for a host admin to open more ports.")
-                            message.channel.send(embed)
-                            message.channel.send('<@137624084572798976> Assign more ports.')
-                        } else if (error.includes('504')) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node did not respond in time. You could re-run the command or a outage might be happening if this happens multiple times")
-                            message.channel.send(embed)
-                        } else {
+                        
                         let embed1 = new Discord.RichEmbed()
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
-                        }
+                        
                     })
                 }
             } else if (args[1].toLowerCase() === "fivem") {
