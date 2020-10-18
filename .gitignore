@@ -11,3 +11,5 @@ Panel/eng.traineddata
 
 Daemon/node_modules
 Daemon/package-lock.json
+
+Test/*

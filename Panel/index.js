@@ -142,7 +142,7 @@ server.listen(PORT, function () {
 
 global.nodeData = new db.table("nodeData")
 app.get('/data', function (req, res) {
-  let nodes = [ "154.27.68.232", "154.27.68.233", "154.27.68.234", "167.86.113.158"];
+  let nodes = [ "154.27.68.232", "154.27.68.233", "154.27.68.234", "167.86.113.158", "51.38.69.73"];
   if (req.query.servername == undefined) {
     if (!nodes.includes(req.headers["cf-connecting-ip"])) {
       res.redirect("/")

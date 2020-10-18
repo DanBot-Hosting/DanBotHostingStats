@@ -70,6 +70,14 @@ module.exports = (client, message) => {
     const command = args.shift().toLowerCase();
     console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
         try {
+            //Channel checker
+            if (message.channel.id == "754441222424363088") return; //Lounge
+            if (message.channel.id == "739231758087880845") return; //Host support
+            if (message.channel.id == "738839334333186068") return; //Python Support
+            if (message.channel.id == "738840097218101309") return; //Javascript Support
+            if (message.channel.id == "738844675372482720") return; //HTML support
+            if (message.channel.id == "738846229919825992") return; //Java support
+            
             let commandFile = require(`../commands/${command}.js`);
             commandFile.run(client, message, args);
         } catch (err) {

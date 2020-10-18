@@ -1,6 +1,6 @@
 {
-    "panelip": "154.27.68.232", 
-    "panelport": "1144",
+    "panelip": "danbot.host", 
+    "panelport": "80",
     "debug": true,
     "panelping": true,
     "panelms": 5000,
@@ -9,11 +9,6 @@
 
     "Discord": false,
     "DiscordWebhook": "No webhook token",
-
-    "SystemIPs": [
-        "192.168.1.175",
-        "173.249.33.82"
-    ],
 
     "Docker": false
 }
