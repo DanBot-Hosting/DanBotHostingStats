@@ -26,6 +26,10 @@ Router.get("/Node3", (req, res) => {
     res.redirect("/stats/Node3");
 });
 
+Router.get("/Node4", (req, res) => {
+  res.redirect("/stats/Node4");
+});
+
 
 
 Router.get("/bots", (req, res) => {

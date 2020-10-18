@@ -2,7 +2,7 @@ const axios = require('axios');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
-        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID. \nIf you have not made an account yet please check out `" + config.DiscordBot.prefix + "getstarted` to create an account \nIf you already have an account link it using `" + config.DiscordBot.Prefix + "link`")
+        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID. \nIf you have not made an account yet please check out `" + config.DiscordBot.Prefix + "getstarted` to create an account \nIf you already have an account link it using `" + config.DiscordBot.Prefix + "link`")
     } else {
         if (!args[0]) {
             //No args
@@ -331,7 +331,8 @@ exports.run = async (client, message, args) => {
                         },
                         "environment": {
                             "SERVER_JARFILE": "server.jar",
-                            "MC_VERSION": "latest"
+                            "MC_VERSION": "latest",
+                            "FORGE_VERSION": "1.16.3"
                         },
                         "feature_limits": {
                             "databases": 2,

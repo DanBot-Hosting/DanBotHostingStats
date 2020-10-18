@@ -77,7 +77,10 @@ module.exports = (client, message) => {
             if (message.channel.id == "738840097218101309") return; //Javascript Support
             if (message.channel.id == "738844675372482720") return; //HTML support
             if (message.channel.id == "738846229919825992") return; //Java support
-            
+            if (message.channel.id == "738548111323955270") {
+                if (!command == "info") return; 
+            } //Add Your Bot 
+
             let commandFile = require(`../commands/${command}.js`);
             commandFile.run(client, message, args);
         } catch (err) {
