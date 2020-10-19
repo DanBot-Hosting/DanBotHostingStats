@@ -333,7 +333,10 @@ exports.run = async (client, message) => {
             const consoleUser = bigArr.find(usr => usr.attributes ? usr.attributes.email == messagecollected.content : false);
 
         if (!consoleUser) {
-            channel.send('I can\'t find a user with that account!')
+            channel.send('I can\'t find a user with that account! \nRemoving channel!')
+            setTimeout(() => {
+                channel.delete();
+            }, 5000)
         } else {
 
             function codegen(length) {
