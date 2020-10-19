@@ -519,7 +519,9 @@ exports.run = async (client, message, args) => {
                 }).catch(
                     message.channel.send('Either the panel is having a issue or im not able to find that server!')
                 )
-            });
+            }).catch(
+                message.channel.send('Either the panel is having a issue or im not able to find that server!')
+            )
             }
         }
     };
