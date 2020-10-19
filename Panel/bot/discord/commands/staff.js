@@ -1,3 +1,4 @@
+const exec = require('child_process').exec;
 exports.run = async (client, message, args) => {
     if (message.member.roles.find(r => r.id === "748117822370086932")) {
     if (!args[0]) { 
@@ -107,6 +108,18 @@ exports.run = async (client, message, args) => {
         } else if (args[1] === "delete") {
             //Delete request
         }
+    } else if (message.content.toLowerCase().includes("update")) {
+        if (message.member.roles.find(r => r.id === "639481606112804875")) {
+            exec(`git pull`, (error, stdout) => {
+                let response = (error || stdout);
+                if (!error) {
+                    message.channel.send('Pulled from GitHub. Restarting bot')
+                    setTimeout(() => {
+                        process.exit();
+                    }, 1000)
+                }
+            });
+        };
     }
 };
 }
