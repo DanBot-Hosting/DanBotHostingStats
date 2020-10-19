@@ -112,10 +112,12 @@ exports.run = async (client, message, args) => {
                         let rmessage = await rchannel.fetchMessage(m);
                         let reactions = Object.keys(reactionRoles[c][r]);
                         await rmessage.clearReactions();
+                        debugChannel.send(reactions.join(", "))
 
                         for (let ri in reactions) {
                             let reaction = reactions[ri];
-                            if (reaction.length == 18) client.emojis.get(reaction);
+                            if (reaction.length == 18) reaction = client.emojis.get(reaction);
+                            debugChannel.send(reaction)
                             await rmessage.react(reaction);
                         }
                     });
