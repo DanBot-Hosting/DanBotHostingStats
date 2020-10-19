@@ -1,3 +1,5 @@
+const { config } = require('process');
+
 const exec = require('child_process').exec;
 exports.run = async (client, message, args) => {
     if (message.member.roles.find(r => r.id === "748117822370086932")) {
@@ -7,7 +9,7 @@ exports.run = async (client, message, args) => {
                 .setColor('RANDOM')
                 .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
                 .addField('**Admin Commands:**', config.DiscordBot.Prefix + "staff apply open/closed | Open or close staff applications. \n" + config.DiscordBot.Prefix + "staff settings | Shows current website settings")
-                .addField('**Owner Commands:**', config.DiscordBot.Prefix + "staff maintenance on/off | Enable or disable website maintenance.")
+                .addField('**Owner Commands:**', config.DiscordBot.Prefix + "staff maintenance on/off | Enable or disable website maintenance. \n" + config.DiscordBot.Prefix + "staff update | Pulls updates from GitHub")
             message.channel.send(embed)
         } else {
             let embed = new Discord.RichEmbed()
