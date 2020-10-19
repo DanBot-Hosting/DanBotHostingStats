@@ -392,7 +392,7 @@ exports.run = async (client, message) => {
                                 }, 5000)
                                 );
                         } else {
-                            channel.send('Code is incorrect. Linking cancelled!')
+                            channel.send('Code is incorrect. Linking cancelled! \n\nRemoving channel!')
                             setTimeout(() => {
                                 channel.delete();
                             }, 2000)
