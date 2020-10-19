@@ -97,11 +97,15 @@ exports.run = async (client, message, args) => {
             let reactionRoles = require('../reactionRoles');
             client.reactionRoles = reactionRoleConfig;
 
-            let reactionRolesChannels = Object.keys(reactionRoles);
+            let debugChannel = client.channels.get('757029522682937354');
 
+            let reactionRolesChannels = Object.keys(reactionRoles);
+            message.channel.send(reactionRolesChannels.join(", "))
             reactionRolesChannels.forEach(c => {
                 let channel = client.channels.get(c);
                 let reactionRolesChannelMessages = Object.keys(reactionRoles[c]);
+                message.channel.send(channel.name + " :::: " + reactionRolesChannelMessages.join(", "))
+
                 reactionRolesChannelMessages.forEach(async m => {
                     let message = await channel.fetchMessage(m);
                     let reactions = Object.keys(reactionRoles[c][r]);
