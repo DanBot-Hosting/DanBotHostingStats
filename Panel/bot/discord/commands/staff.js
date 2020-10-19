@@ -123,7 +123,9 @@ exports.run = async (client, message, args) => {
                 };
                 }
             });
-        };
+        } else {
+            message.channel.send('ono')
+        }
     }
 };
 }
