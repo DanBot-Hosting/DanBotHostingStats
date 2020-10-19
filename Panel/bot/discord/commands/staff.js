@@ -97,7 +97,7 @@ exports.run = async (client, message, args) => {
             message.channel.send("test")
             try {
                 let reactionRoles = require('../reactionRoles');
-                client.reactionRoles = reactionRoleConfig;
+                client.reactionRoles = reactionRoles;
 
                 let debugChannel = client.channels.get('757029522682937354');
 
