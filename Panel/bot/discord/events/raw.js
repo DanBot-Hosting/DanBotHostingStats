@@ -8,7 +8,7 @@ module.exports = async (client, e) => {
         let emoji = e.d.emoji;
         let member = message.guild.members.get(e.d.user_id);
 
-        if (member.user.bot || client.reactionRoles[channel.id] == null || client.reactionRoles[channel.id][message.id]) return;
+        if (member.user.bot || client.reactionRoles[channel.id] == null || client.reactionRoles[channel.id][message.id] == null) return;
 
         let reactionRoles = client.reactionRoles[channel.id][message.id];
 

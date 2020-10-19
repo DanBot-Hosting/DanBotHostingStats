@@ -94,37 +94,26 @@ exports.run = async (client, message, args) => {
             }
             break;
         case 'reactionroles':
-            message.channel.send("test")
-            try {
-                let reactionRoles = require('../reactionRoles');
-                client.reactionRoles = reactionRoles;
+            let reactionRoles = require('../reactionRoles');
+            client.reactionRoles = reactionRoles;
 
-                let debugChannel = client.channels.get('757029522682937354');
+            let reactionRolesChannels = Object.keys(reactionRoles);
+            reactionRolesChannels.forEach(c => {
+                let rchannel = client.channels.get(c);
+                let reactionRolesChannelMessages = Object.keys(reactionRoles[c]);
 
-                let reactionRolesChannels = Object.keys(reactionRoles);
-                debugChannel.send(reactionRolesChannels.join(", "))
-                reactionRolesChannels.forEach(c => {
-                    let rchannel = client.channels.get(c);
-                    let reactionRolesChannelMessages = Object.keys(reactionRoles[c]);
-                    debugChannel.send(rchannel.name + " :::: " + reactionRolesChannelMessages.join(", "))
+                reactionRolesChannelMessages.forEach(async m => {
+                    let rmessage = await rchannel.fetchMessage(m);
+                    let reactions = Object.keys(reactionRoles[c][m]);
+                    await rmessage.clearReactions();
 
-                    reactionRolesChannelMessages.forEach(async m => {
-                        let rmessage = await rchannel.fetchMessage(m);
-                        let reactions = Object.keys(reactionRoles[c][m]);
-                        await rmessage.clearReactions();
-                        debugChannel.send(reactions.join(", "))
-
-                        for (let ri in reactions) {
-                            let reaction = reactions[ri];
-                            if (reaction.length == 18) reaction = client.emojis.get(reaction);
-                            debugChannel.send(reaction)
-                            await rmessage.react(reaction);
-                        }
-                    });
-                })
-            } catch (e) {
-                message.channel.send(e.name)
-            }
+                    for (let ri in reactions) {
+                        let reaction = reactions[ri];
+                        if (reaction.length == 18) reaction = client.emojis.get(reaction);
+                        await rmessage.react(reaction);
+                    }
+                });
+            })
             break;
         case 'update':
             if (message.member.roles.find(r => r.id === "639481606112804875") || message.author.id == '293841631583535106') {
