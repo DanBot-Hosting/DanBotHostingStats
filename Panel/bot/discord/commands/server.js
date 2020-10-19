@@ -516,12 +516,7 @@ exports.run = async (client, message, args) => {
                             .addField('**LIMITS (0 = unlimited)**', 'MEMORY: ' + response.data.attributes.limits.memory + 'MB \nDISK: ' + response.data.attributes.limits.disk + 'MB \nCPU: ' + response.data.attributes.limits.cpu)
                             .addField('**MISC LIMITS**', 'DATABASES: ' + response.data.attributes.feature_limits.databases + '\nBACKUPS: ' + response.data.attributes.feature_limits.backups)
                         message.reply(embedstatus)
-                }).catch(
-                    message.channel.send('Either the panel is having a issue or im not able to find that server!')
-                )
-            }).catch(
-                message.channel.send('Either the panel is having a issue or im not able to find that server!')
-            )
+                    })});
             }
         }
     };
