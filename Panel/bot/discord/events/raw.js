@@ -15,11 +15,13 @@ module.exports = async (client, e) => {
             let input = emoji.id != null ? emoji.id : emoji.name;
 
             if (reactionRoles[input] != null) {
+                let role = message.guild.roles.get(reactionRoles[input]);
+
                 if (member.roles.find(x => x.id == reactionRoles[input])) {
-                    await member.removeRole(reactionRoles[input]).catch(client.channels.get('757029522682937354').send("a"));
+                    await member.removeRole(role);
                     member.user.send("removed the role: `" + role.name + "`!");
                 } else {
-                    await member.addRole(reactionRoles[input]).catch(client.channels.get('757029522682937354').send("a"));
+                    await member.addRole(role);
                     member.user.send("gave you the role: `" + role.name + "`!");
                 };
 
