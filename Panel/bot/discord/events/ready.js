@@ -27,7 +27,7 @@ module.exports = async (client, guild, files) => {
     //Reaction-Roles:
 
     let reactionRoles = require('../reactionRoles');
-    client.reactionRoles = reactionRoleConfig;
+    client.reactionRoles = reactionRoles;
 
     // end of Reaction-Roles
 
