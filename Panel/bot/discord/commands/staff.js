@@ -113,7 +113,7 @@ exports.run = async (client, message, args) => {
             exec(`git pull`, (error, stdout) => {
                 let response = (error || stdout);
                 if (!error) {
-                    message.channel.send('Pulled from GitHub. Restarting bot')
+                    message.channel.send('Pulled from GitHub. Restarting bot. \n\nLogs: \n' + response)
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
