@@ -94,6 +94,7 @@ exports.run = async (client, message, args) => {
             }
             break;
         case 'reactionroles':
+            message.channel.send("test")
             try {
                 let reactionRoles = require('../reactionRoles');
                 client.reactionRoles = reactionRoleConfig;
@@ -119,8 +120,8 @@ exports.run = async (client, message, args) => {
                         }
                     });
                 })
-            } catch (error) {
-                message.channel.send(error)
+            } catch (e) {
+                message.channel.send(e.name)
             }
             break;
         case 'update':
