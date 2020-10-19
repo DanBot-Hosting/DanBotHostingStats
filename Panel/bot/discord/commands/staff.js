@@ -110,7 +110,7 @@ exports.run = async (client, message, args) => {
 
                     reactionRolesChannelMessages.forEach(async m => {
                         let rmessage = await rchannel.fetchMessage(m);
-                        let reactions = Object.keys(reactionRoles[c][r]);
+                        let reactions = Object.keys(reactionRoles[c][m]);
                         await rmessage.clearReactions();
                         debugChannel.send(reactions.join(", "))
 
