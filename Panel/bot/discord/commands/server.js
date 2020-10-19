@@ -474,7 +474,21 @@ exports.run = async (client, message, args) => {
             //delete server things
             message.channel.send('Uh this isnt done yet...')
         } else if (args[0].toLowerCase() == "manage") {
-
+            message.channel.send('Uh this isnt done yet...')
+        } else if (args[0].toLowerCase() == "status") {
+            axios({
+                url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(response => {
+                console.log(response.data.attributes)
+            });
         }
     };
 };
