@@ -1,4 +1,5 @@
 const axios = require('axios');
+var pretty = require('prettysize');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
@@ -7,7 +8,7 @@ exports.run = async (client, message, args) => {
         if (!args[0]) {
             //No args
             let embed = new Discord.RichEmbed()
-                .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list`')
+                .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid`')
             message.channel.send(embed)
 
         } else if (args[0].toLowerCase() == "create") {
@@ -476,20 +477,47 @@ exports.run = async (client, message, args) => {
         } else if (args[0].toLowerCase() == "manage") {
             message.channel.send('Uh this isnt done yet...')
         } else if (args[0].toLowerCase() == "status") {
-            axios({
-                url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
-                method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-                    'Content-Type': 'application/json',
-                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                }
-            }).then(response => {
-                //response.data.attributes - identifier - node - limits - feature_limits (LIMITS: limits: { memory: 0, swap: -1, disk: 5000, io: 500, cpu: 0 }) (Feature_Limits:  feature_limits: { databases: 0, allocations: 0, backups: 0 })
-                console.log(response.data.attributes.variables)
-            });
+            if (!args[1]) {
+                let embed = new Discord.RichEmbed()
+                    .setColor(`GREEN`)
+                    .addField(`__**Server Status**__`, 'What server would you like to view? Please type: `' + config.DiscordBot.Prefix + 'server status serverid`', true)
+                message.channel.send(embed)
+            } else {
+                axios({
+                    url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
+                    method: 'GET',
+                    followRedirect: true,
+                    maxRedirects: 5,
+                    headers: {
+                        'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                        'Content-Type': 'application/json',
+                        'Accept': 'Application/vnd.pterodactyl.v1+json',
+                    }
+                }).then(response => {
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1] + "/resources",
+                        method: 'GET',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        }
+                    }).then(resources => {
+                        let embedstatus = new Discord.RichEmbed()
+                            .setColor('GREEN')
+                            .addField('**Status**', resources.data.attributes.current_state, true)
+                            .addField('**CPU Usage**', resources.data.attributes.resources.cpu_absolute + '%')
+                            .addField('**RAM Usage**', pretty(resources.data.attributes.resources.memory_bytes) + '  out of UNLIMITED MB')
+                            .addField('**DISK Usage**', pretty(resources.data.attributes.resources.disk_bytes) + '  out of UNLIMITED MB')
+                            .addField('**NET Usage**', 'UPLOADED: ' + pretty(resources.data.attributes.resources.network_tx_bytes) + ', DOWNLOADED: ' + pretty(resources.data.attributes.resources.network_rx_bytes))
+                            .addField('\u200b', '\u200b')
+                            .addField('**LIMITS (0 = unlimited)**', 'MEMORY: ' + response.data.attributes.limits.memory + 'MB \nDISK: ' + response.data.attributes.limits.disk + 'GB \nCPU: ' + response.data.attributes.limits.cpu)
+                            .addField('**MISC LIMITS**', 'DATABASES: ' + response.data.attributes.feature_limits.databases + '\nBACKUPS: ' + response.data.attributes.feature_limits.backups)
+                        message.reply(embedstatus)
+                })});
+            }
         }
     };
 };

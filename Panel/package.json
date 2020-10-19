@@ -43,6 +43,7 @@
     "nodemailer": "^6.4.11",
     "passport": "^0.4.1",
     "passport-discord": "^0.1.4",
+    "prettysize": "^2.0.0",
     "proxmox": "^0.1.0",
     "pterodactyl.js": "^2.1.1",
     "puppeteer": "^1.20.0",
