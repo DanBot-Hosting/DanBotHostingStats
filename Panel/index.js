@@ -17,7 +17,7 @@ global.fs = require("fs");
 const hbs = require('hbs');
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
-let transport = nodemailer.createTransport({
+global.transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
   auth: {
