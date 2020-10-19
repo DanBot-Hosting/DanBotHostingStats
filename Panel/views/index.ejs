@@ -36,7 +36,7 @@
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%- nodeData.fetch("Node1.swapused") %> / <%- nodeData.fetch("Node1.swaptotal") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node1.diskused") %> / <%- nodeData.fetch("Node1.total") %></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node1.diskused") %> / <%- nodeData.fetch("Node1.disktotal") %></div>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- nodeData.fetch("Node1.netrx") %> <strong>Tx:</strong> <%- nodeData.fetch("Node1.nettx") %> </div>
@@ -67,7 +67,7 @@
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%- nodeData.fetch("Node2.swapused") %> / <%- nodeData.fetch("Node2.swaptotal") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node2.diskused") %> / <%- nodeData.fetch("Node2.total") %></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node2.diskused") %> / <%- nodeData.fetch("Node2.disktotal") %></div>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- nodeData.fetch("Node2.netrx") %> <strong>Tx:</strong> <%- nodeData.fetch("Node2.nettx") %> </div>
@@ -98,7 +98,7 @@
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%- nodeData.fetch("Node3.swapused") %> / <%- nodeData.fetch("Node3.swaptotal") %></div>
         </div>
         <div class="row justify-content-md-center">
-          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node3.diskused") %> / <%- nodeData.fetch("Node3.total") %></div>
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node3.diskused") %> / <%- nodeData.fetch("Node3.disktotal") %></div>
         </div>
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- nodeData.fetch("Node3.netrx") %> <strong>Tx:</strong> <%- nodeData.fetch("Node3.nettx") %> </div>
@@ -112,6 +112,38 @@
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- nodeData.fetch("Node3-speedtest.ping") %>ms <br> <strong>Download:</strong> <%- nodeData.fetch("Node3-speedtest.download") %>Mbps, <strong>Upload: </strong><%- nodeData.fetch("Node3-speedtest.upload") %>Mbps, <strong>Last Updated:</strong> <%- nodeData.fetch("Node3-speedtest.updatetime") %></div>
         </div>
+
+        <div class="row justify-content-md-center">
+          <a style="color:white;" href="https://danbot.host/stats/Node4"><h3>Node 4 Stats</h3></a>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU:</strong> <%- nodeData.fetch("Node4.cpu") %> (Cores: <%- nodeData.fetch("Node4.cpucores") %>, Threads: <%- nodeData.fetch("Node4.cputhreads") %>)</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>CPU Load:</strong> <%- nodeData.fetch("Node4.cpuload") %>%</div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>RAM (Used/Total)</strong> <%- nodeData.fetch("Node4.memused") %> / <%- nodeData.fetch("Node4.memtotal") %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> <strong>SWAP (Used/Total)</strong> <%- nodeData.fetch("Node4.swapused") %> / <%- nodeData.fetch("Node4.swaptotal") %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> <strong>Host storage drive (Used/Total):</strong> <%- nodeData.fetch("Node4.diskused") %> / <%- nodeData.fetch("Node4.disktotal") %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-download" aria-hidden="true"></i> <strong>Network: Rx:</strong> <%- nodeData.fetch("Node4.netrx") %> <strong>Tx:</strong> <%- nodeData.fetch("Node4.nettx") %> </div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Uptime:</strong> <%- nodeData.fetch("Node4.osuptime") %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Last Updated:</strong> <%- nodeData.fetch("Node4.updatetime") %></div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- nodeData.fetch("Node4-speedtest.ping") %>ms <br> <strong>Download:</strong> <%- nodeData.fetch("Node4-speedtest.download") %>Mbps, <strong>Upload: </strong><%- nodeData.fetch("Node4-speedtest.upload") %>Mbps, <strong>Last Updated:</strong> <%- nodeData.fetch("Node4-speedtest.updatetime") %></div>
+        </div>
+        
     </div>
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

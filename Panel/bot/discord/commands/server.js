@@ -12,6 +12,11 @@ exports.run = async (client, message, args) => {
 
         } else if (args[0].toLowerCase() == "create") {
             //Do server creation things
+            if (!args[1]) {
+                let embed = new Discord.RichEmbed()
+                    .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list`')
+                message.channel.send(embed)
+            }
             if (args[1].toLowerCase() === "nodejs") {
                 //Code for nodejs server
                 if (!otherargs) {
@@ -468,6 +473,8 @@ exports.run = async (client, message, args) => {
         } else if (args[0].toLowerCase() == "delete") {
             //delete server things
             message.channel.send('Uh this isnt done yet...')
+        } else if (args[0].toLowerCase() == "manage") {
+
         }
     };
 };
