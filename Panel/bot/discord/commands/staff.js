@@ -1,4 +1,6 @@
-const { config } = require('process');
+const {
+    config
+} = require('process');
 
 const exec = require('child_process').exec;
 exports.run = async (client, message, args) => {
@@ -18,6 +20,7 @@ exports.run = async (client, message, args) => {
                 .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
             message.channel.send(embed)
         }
+        return;
     }
 
     switch (args[0].toLowerCase()) {
@@ -44,14 +47,14 @@ exports.run = async (client, message, args) => {
 
         case 'apply':
             if (args[1] == null) {
-                message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/closed` to enable or disable staff applications")
+                message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/close` to enable or disable staff applications")
             } else {
                 if (args[1] == "open") {
                     webSettings.set("staff-applications", {
                         enabled: "true"
                     });
                     message.channel.send("Staff applications now open")
-                } else if (args[1] == "closed") {
+                } else if (args[1] == "close") {
                     webSettings.set("staff-applications", {
                         enabled: "false"
                     });
@@ -89,6 +92,28 @@ exports.run = async (client, message, args) => {
             } else if (args[1] === "delete") {
                 //Delete request
             }
+            break;
+        case 'reactionroles':
+            let reactionRoles = require('../reactionRoles');
+            client.reactionRoles = reactionRoleConfig;
+
+            let reactionRolesChannels = Object.keys(reactionRoles);
+
+            reactionRolesChannels.forEach(c => {
+                let channel = client.channels.get(c);
+                let reactionRolesChannelMessages = Object.keys(reactionRoles[c]);
+                reactionRolesChannelMessages.forEach(async m => {
+                    let message = await channel.fetchMessage(m);
+                    let reactions = Object.keys(reactionRoles[c][r]);
+                    await message.clearReactions();
+
+                    for (let ri in reactions) {
+                        let reaction = reactions[ri];
+                        if (reaction.length == 18) client.emojis.get(reaction);
+                        await message.react(reaction);
+                    }
+                });
+            })
             break;
         case 'update':
             if (message.member.roles.find(r => r.id === "639481606112804875") || message.author.id == '293841631583535106') {

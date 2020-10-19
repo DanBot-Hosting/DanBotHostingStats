@@ -34,6 +34,7 @@ const {
 
 
 //Discord Bot
+
 let db = require("quick.db");
 global.Discord = require("discord.js");
 global.fs = require("fs");
@@ -48,20 +49,6 @@ global.client = new Discord.Client({
 const bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
 bot.pvc = new Discord.Collection();
-bot.reactionRoles = {
-  message: '765879417003180082',
-  channel: '765877675147264000',
-  reactions: {
-    //  unicode/id : roleID 
-    '📣': '767845918350376960',
-    '🕹️': '760207814546817085',
-    '🎥': '758020921939460166',
-    '🎉': '765865412725440522',
-    '❔': '767846121195175938',
-    '⌛': '745358424883200210'
-  }
-}
-
 
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
