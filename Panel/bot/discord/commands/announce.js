@@ -41,9 +41,11 @@ exports.run = async (client, message, args) => {
         e: 'Enable embed',
         eh: 'Embed Header',
         ed: 'Embed Description',
-        ef: 'Embed Footer',
+        ei: 'Embed Image',
+        etn: 'Embed Thumbnail',
         ec: 'Embed Color',
-        et: 'Embed Timestamp'
+        ef: 'Embed Footer',
+        et: 'Embed Timestamp',
     }
     let flagsdesc = ""
     const entries = Object.entries(flags)
@@ -54,7 +56,7 @@ exports.run = async (client, message, args) => {
         message.channel.send("", {
             embed: new Discord.RichEmbed()
                 .setColor("YELLOW")
-                .setDescription(`Incorrect Usage!\nusage: \`DBH!announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ef <message> | -ec <color> | -et]]]\``)
+                .setDescription(`Incorrect Usage!\nusage: \`DBH!announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
                 .addField("**Variables:**", flagsdesc)
                 .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
         })
@@ -77,6 +79,8 @@ exports.run = async (client, message, args) => {
     let normalMessage = embedData.nm || "";
     if (embedData.e) {
         embed = new Discord.RichEmbed();
+        if (embedData.ei) embed.setImage(embedData.ei);
+        if (embedData.etn) embed.setThumbnail(embedData.etn);
         if (embedData.ed) embed.setDescription(embedData.ed);
         if (embedData.ec) embed.setColor(embedData.ec.toUpperCase());
         if (embedData.eh) embed.setTitle(embedData.eh);
