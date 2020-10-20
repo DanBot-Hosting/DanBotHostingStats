@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const parse = (string, options) => {
     if (!(options instanceof Object)) options = {};
 
-    let flagsToUse = ['e', 'ed', 'eh', 'ef', 'ec', 'et', 'nm'];
+    let flagsToUse = ['e', 'ed', 'eh', 'ef', 'ec', 'et', 'nm', 'ei', 'etn'];
 
     string = string.trim();
     let flags = string.split(/-+/);
