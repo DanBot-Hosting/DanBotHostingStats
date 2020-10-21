@@ -386,7 +386,15 @@ exports.run = async(client, message, args) => {
                     };
             }, 12000)
 
-        })}
+        })
+    } else {
+        let embed = new Discord.RichEmbed()
+                .setColor(`GREEN`)
+                .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
+                .addField(`__**Linked Date (DD/MM/YY)**__`, userData.fetch(message.author.id + ".linkDate"))
+                .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"))
+        message.channel.send("This account is linked!", embed)
+    }
     } else if (args[0].toLowerCase() == "unlink") {
         userData.delete(message.author.id)
             message.channel.send('You have unlinked this account!')
