@@ -143,8 +143,6 @@ app.get('/data', function (req, res) {
   let nodes = ["154.27.68.232", "154.27.68.233", "167.86.113.158", "51.38.69.73"];
   if (req.query.servername == undefined) {
     if (!nodes.includes(req.headers["cf-connecting-ip"])) {
-      res.redirect("/")
-    } else {
       nodeData.set(req.query.speedname + '-speedtest', {
         speedname: req.query.speedname,
         ping: req.query.ping,
@@ -152,11 +150,11 @@ app.get('/data', function (req, res) {
         upload: req.query.upload,
         updatetime: req.query.updatetime
       });
+    } else {
+      res.redirect("/")
     };
   } else {
-    if (!nodes.includes(req.headers["cf-connecting-ip"])) {
-      res.redirect("/")
-    } else {
+    if (nodes.includes(req.headers["cf-connecting-ip"])) {
       nodeData.set(req.query.servername, {
         servername: req.query.servername,
         cpu: req.query.cpu,
@@ -186,6 +184,8 @@ app.get('/data', function (req, res) {
         dockercontainersstopped: req.query.dockercontainersstopped,
         updatetime: req.query.updatetime
       });
+    } else {
+      res.redirect("/")
     }
   }
 })
