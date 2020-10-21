@@ -116,7 +116,7 @@ exports.run = async (client, message, args) => {
             })
             break;
         case 'update':
-            if (message.member.roles.find(r => r.id === "639481606112804875") || message.author.id == '293841631583535106') {
+            if (message.member.roles.find(r => r.id === "639481606112804875") || message.author.id == '293841631583535106' || message.author.id == '229367793479319553') {
                 exec(`git pull`, (error, stdout) => {
                     let response = (error || stdout);
                     if (!error) {
