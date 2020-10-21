@@ -167,11 +167,11 @@ exports.run = async (client, message) => {
                         .setDescription("URL: " + config.Pterodactyl.hosturl + " \nUsername: " + collected1.first().content + " \nEmail: " + collected2.first().content + " \nPassword: " + password)
                         .setFooter("Please note: It is recommended that you change the password")
                 })
-                channel.send('**You have 1Hour to keep note of this info before the channel is deleted.**')
+                channel.send('**You have 30mins to keep note of this info before the channel is deleted.**')
                 message.guild.members.get(message.author.id).addRole("639489891016638496");
                 setTimeout(function () {
                     channel.delete();
-                }, 3600000);
+                }, 1800000);
 
         }).catch(err => {
             if (err = "Error: User already exists! (Or Email/Username is in use already)") {
