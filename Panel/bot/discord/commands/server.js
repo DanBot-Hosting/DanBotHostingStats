@@ -338,6 +338,7 @@ exports.run = async (client, message, args) => {
                         "environment": {
                             "SERVER_JARFILE": "server.jar",
                             "MC_VERSION": "latest",
+                            "BUILD_TYPE": "recommended",
                             "FORGE_VERSION": "1.16.3"
                         },
                         "feature_limits": {
