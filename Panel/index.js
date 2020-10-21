@@ -142,7 +142,7 @@ global.nodeData = new db.table("nodeData")
 app.get('/data', function (req, res) {
   let nodes = ["154.27.68.232", "154.27.68.233", "167.86.113.158", "51.38.69.73"];
   if (req.query.servername == undefined) {
-    if (!nodes.includes(req.headers["cf-connecting-ip"])) {
+    if (nodes.includes(req.headers["cf-connecting-ip"])) {
       nodeData.set(req.query.speedname + '-speedtest', {
         speedname: req.query.speedname,
         ping: req.query.ping,
