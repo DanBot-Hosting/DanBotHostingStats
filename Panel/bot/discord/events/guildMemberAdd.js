@@ -61,9 +61,39 @@ module.exports = async (client, member, guild) => {
 
     if (Date.now() - member.user.createdAt < 863136000) {
         member.kick().then(memberkicked => {
-            client.channels.get('738527858594414663').send(member.user.tag + ` has been auto-kicked as account is under 10days old \nThat account was created ${getAge(member.user.createdAt)}, ago`)
+            client.channels.get('738527858594414663').send(member.user.tag + ` has been auto-kicked as account is under 10days old \nThat account was created ${getAge(Date.now() - member.user.createdAt)}, ago`)
         });
+      }
+
+    if(member.user.bot) {
+        let botID = member.user.id;
+        let bot = db.get(`${botID}`);
+        if(!bot) {
+            client.channels.get(config.welcome).send("Bot: <@" + member.user.id + ">, tried to join but is not using our API.")
+            member.kick();
+        } else {
+            const botrole = member.guild.roles.find(role => role.id === config.bot);
+            member.guild.members.get(member.user.id).addRole(botrole);
+            client.channels.get(config.welcome).send("Welcome <@" + member.user.id + ">, More bot friends :D \nBot owned by: <@" + bot.owner + ">");
+        }
+} else if (!member.user.bot) {
+    if (userData.get(message.author.id) == null) {
+        const memberrole = member.guild.roles.find(role => role.id === config.member);
+        member.guild.members.get(member.user.id).addRole(memberrole)
+        client.channels.get(config.welcome).send("Welcome <@" + member.user.id + "> to DanBot Hosting. To get started please read <#738527470164377630>");
+    } else {
+        const memberrole = member.guild.roles.find(role => role.id === config.member);
+        const clientrole = member.guild.roles.find(role => role.id === "639489891016638496");
+        member.guild.members.get(member.user.id).addRole(memberrole)
+        member.guild.members.get(member.user.id).addRole(clientrole)
+        client.channels.get(config.welcome).send("Welcome back <@" + member.user.id + "> to DanBot Hosting!");
     }
+    
+    if(mutesData.fetch(member.user.id + ".muted") === "true") {
+        let muteRole = client.guilds.get(member.guild.id).roles.find(r => r.id == "726829710935457872");
+        member.guild.members.get(member.user.id).addRole(muteRole)
+    }
+}
 
     if (member.user.bot) {
         const botrole = member.guild.roles.find(role => role.id === config.bot);
