@@ -3,7 +3,7 @@ var pretty = require('prettysize');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
-        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID. \nIf you have not made an account yet please check out `" + config.DiscordBot.Prefix + "getstarted` to create an account \nIf you already have an account link it using `" + config.DiscordBot.Prefix + "user link`")
+        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID. \nIf you have not made an account yet please check out `" + config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" + config.DiscordBot.Prefix + "user link`")
     } else {
         if (!args[0]) {
             //No args
