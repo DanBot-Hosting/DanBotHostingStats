@@ -283,7 +283,8 @@ exports.run = async (client, message, args) => {
                             "dedicated_ip": false,
                             "port_range": []
                         },
-                        "start_on_completion": false
+                        "start_on_completion": false,
+                        "oom_disabled": false
                     };
 
                     //Sending the data:
@@ -350,7 +351,8 @@ exports.run = async (client, message, args) => {
                             "dedicated_ip": false,
                             "port_range": []
                         },
-                        "start_on_completion": false
+                        "start_on_completion": false,
+                        "oom_disabled": false
                     };
 
                     //Sending the data:
@@ -420,7 +422,8 @@ exports.run = async (client, message, args) => {
                             "dedicated_ip": false,
                             "port_range": []
                         },
-                        "start_on_completion": false
+                        "start_on_completion": false,
+                        "oom_disabled": false
                     };
 
                     //Sending the data:
