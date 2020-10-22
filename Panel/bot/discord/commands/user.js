@@ -345,7 +345,7 @@ exports.run = async(client, message, args) => {
                             console.log(info);
                             channel.send('Please check the email account for a verification code to complete linking. You have 2mins')
         
-                            const collector = new Discord.MessageCollector(channel, m => m.author.id === message.author.id, { time: 120000, max: 1 });
+                            const collector = new Discord.MessageCollector(channel, m => m.author.id === message.author.id, { time: 120000, max: 2 });
                             collector.on('collect', message => {
                                 if (message.content == code) {
                                     const timestamp = `${moment().format("HH:mm:ss")}`;
