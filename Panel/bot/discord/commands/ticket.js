@@ -9,7 +9,7 @@ exports.run = async (client, message) => {
             config.DiscordBot.Prefix + 'ticket new` \nYou can download your old tickets by running: `' + 
             config.DiscordBot.Prefix + 'ticket logs` \nYou can close your ticket by running: `' + 
             config.DiscordBot.Prefix + 'ticket close` \nYou can upgrade your ticket by running:`' + 
-            config.DiscordBot.Prefix + 'ticket upgrade` \n\nAny problems? Please send a message in <#640158951899398144>' , true);
+            config.DiscordBot.Prefix + 'ticket upgrade` \n\nAny problems? Please send a message in <#739231758087880845> and someone will help you.' , true);
         message.channel.send(embed)
 
     } else if (args == "new") {
