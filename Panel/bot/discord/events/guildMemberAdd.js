@@ -78,7 +78,7 @@ module.exports = async(client, member, guild) => {
                 member.guild.members.get(member.user.id).addRole(botrole);
                 client.channels.get(config.welcome).send("Welcome <@" + member.user.id + ">, More bot friends :D \nBot owned by: <@" + bot.owner + ">");
             }
-    } else if (!member.user.bot) {
+    } else {
         if (userData.get(message.author.id) == null) {
             const memberrole = member.guild.roles.find(role => role.id === config.member);
             member.guild.members.get(member.user.id).addRole(memberrole)
