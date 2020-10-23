@@ -427,11 +427,79 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
+            }else if (args[1].toLowerCase() === "minecraft.bedrock") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 1,
+                        "egg": 18,
+                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
+                        "startup": "./bedrock_server",
+                        "limits": {
+                            "memory": 2048,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "BEDROCK_VERSION": "latest",
+                            "LD_LIBRARY_PATH": "."
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [5],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
+                    })
+                }
             } else {
                 //Anything else
                 let embed2 = new Discord.RichEmbed()
                     .setColor(`RED`)
-                    .addField(`__**Supported By Server Creation:**__`, "NodeJS \nPython \nJava \nMinecraft.Paper \nMinecraft.Forge \nFiveM")
+                    .addField(`__**Minecraft:**__`, "Minecraft.Forge \nMinecraft.Paper \nMinecraft.Bedrock", true)
+                    .addField(`__**Grand Theft Auto:**__`, "GTAV.FiveM", true)
+                    .addField(`__**Bots:**__`, "NodeJS \nPython \nJava")
                 message.channel.send(embed2)
             }
         } else if (args[0].toLowerCase() == "delete") {
