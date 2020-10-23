@@ -427,7 +427,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            }else if (args[1].toLowerCase() === "minecraft.bedrock") {
+            } else if (args[1].toLowerCase() === "minecraft.bedrock") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -493,13 +493,152 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
+            } else if (args[1].toLowerCase() === "gmod") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 2,
+                        "egg": 9,
+                        "docker_image": "quay.io/pterodactyl/core:source",
+                        "startup": "./srcds_run -game garrysmod -console -port {{SERVER_PORT}} +ip 0.0.0.0 +host_workshop_collection {{WORKSHOP_ID}} +map {{SRCDS_MAP}} +gamemode {{GAMEMODE}} -strictportbind -norestart +sv_setsteamaccount {{STEAM_ACC}} +maxplayers {{MAX_PLAYERS}}  -tickrate {{TICKRATE}}",
+                        "limits": {
+                            "memory": 2048,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "SRCDS_MAP": "gm_flatgrass",
+                            "STEAM_ACC": null,
+                            "SRCDS_APPID": "4020",
+                            "WORKSHOP_ID": null,
+                            "GAMEMODE": "sandbox",
+                            "MAX_PLAYERS": "32",
+                            "TICKRATE": "22"
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [5],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
+                    })
+                }
+            } else if (args[1].toLowerCase() === "gs:go") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 2,
+                        "egg": 7,
+                        "docker_image": "quay.io/pterodactyl/core:source",
+                        "startup": "./srcds_run -game csgo -console -port {{SERVER_PORT}} +ip 0.0.0.0 +map {{SRCDS_MAP}} -strictportbind -norestart +sv_setsteamaccount {{STEAM_ACC}}",
+                        "limits": {
+                            "memory": 2048,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "SRCDS_MAP": "de_dust2",
+                            "STEAM_ACC": ".",
+                            "SRCDS_APPID": "740"
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [5],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
+                    })
+                }
             } else {
                 //Anything else
                 let embed2 = new Discord.RichEmbed()
                     .setColor(`RED`)
                     .addField(`__**Minecraft:**__`, "Minecraft.Forge \nMinecraft.Paper \nMinecraft.Bedrock", true)
                     .addField(`__**Grand Theft Auto:**__`, "GTAV.FiveM", true)
-                    .addField(`__**Bots:**__`, "NodeJS \nPython \nJava")
+                    .addField(`__**Bots:**__`, "NodeJS \nPython \nJava", true)
+                    .addField(`__**Source Engine:**__`, "GMod \nGS:GO")
                 message.channel.send(embed2)
             }
         } else if (args[0].toLowerCase() == "delete") {
