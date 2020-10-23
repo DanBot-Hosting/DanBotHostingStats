@@ -2,6 +2,7 @@ const axios = require('axios');
 module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
 
+    let guild = bot.guilds.get('639477525927690240');
 
     //Auto Activities List
     const activities = [{
@@ -40,34 +41,27 @@ module.exports = async (client, guild, files) => {
 
     //Voice channel stats
     setInterval(async () => {
-        let guild1 = await client.guilds.get("639477525927690240").fetchMembers();
-        let roleID1 = '748117822370086932';
-        let staffCount = guild1.roles.get(roleID1).members.size;
+        let staffCount = await guild.roles.get('748117822370086932').members;
         client.channels.get("739821419910791348").edit({
-            name: `Staff: ${staffCount}`,
+            name: `Staff: ${staffCount.size}`,
             reason: "Staff count update"
         });
 
-        let guild2 = await client.guilds.get("639477525927690240").fetchMembers();
-        let roleID2 = '639490038434103306';
-        let memberCount = guild2.roles.get(roleID2).members.size;
+        let memberCount = await guild.roles.get('639490038434103306').members.size;
         client.channels.get("739821366991257621").edit({
-            name: `Members: ${memberCount}`,
+            name: `Members: ${memberCount.size}`,
             reason: "Member count update"
         });
 
-        let guild3 = await client.guilds.get("639477525927690240").fetchMembers();
-        let roleID3 = '704467807122882562';
-        let botCount = guild3.roles.get(roleID3).members.size;
+        let botCount = await guild3.roles.get('704467807122882562').members;
         client.channels.get("739821468296413254").edit({
-            name: `Bots: ${botCount}`,
+            name: `Bots: ${botCount.size}`,
             reason: "Bot count update"
         });
 
-        let guild4 = await client.guilds.get("639477525927690240")
-        const ticketcount = guild4.channels.filter(x => x.name.endsWith("-ticket")).size
+        const ticketcount = await guild.channels.filter(x => x.name.endsWith("-ticket"))
         client.channels.get("739821447924416562").edit({
-            name: `Tickets: ${ticketcount}`,
+            name: `Tickets: ${ticketcount.size}`,
             reason: "Ticket count update"
         })
 
