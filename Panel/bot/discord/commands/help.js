@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
             .addField(`__**Commands List for users:**__`, Help.Users)
             .addField(`__**Staff Commands:**__`, Help.Staff)
         message.channel.send(embed)
-    } else if (message.member.roles.find(r => r.id === "639490038434103306")) {
+    } else {
         let embed = new Discord.RichEmbed()
             .setColor(`BLUE`)
             .addField(`__**Commands List for users:**__`, Help.Users)
