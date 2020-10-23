@@ -47,6 +47,9 @@ exports.run = async (client, message, args) => {
            message.guild.member(user).removeRole(muteRole)
            console.log(chalk.magenta('[DISCORD] ') + chalk.cyan(user.user.username + ' has now been unmuted after ' + messagez +' minute(s)'))
            mutesData.delete(user);
+           setTimeout(() => {
+                message.guild.member(user).removeRole(muteRole)
+           }, 2000)
            }, messagez * 60000);
           } else {
            client.channels.get(modlog.id).send({embed})
@@ -54,6 +57,9 @@ exports.run = async (client, message, args) => {
            message.guild.member(user).removeRole(muteRole)
            console.log(chalk.magenta('[DISCORD] ') + chalk.cyan(user.user.username + ' has now been unmuted after ' + messagez +' minute(s)'))
            mutesData.delete(user);
+           setTimeout(() => {
+                message.guild.member(user).removeRole(muteRole)
+           }, 2000)
            }, messagez * 60000);
           }
         })
