@@ -1,7 +1,5 @@
 module.exports = (client, message) => {
-    if (message.author.id === client.user.id) {
-        return;
-    } else if (message.content.toLowerCase().includes("discord.gg")) {
+    if (message.content.toLowerCase().includes("discord.gg")) {
         message.delete();
     } else if (message.content.toLowerCase().includes("discord.com")) {
         message.delete()

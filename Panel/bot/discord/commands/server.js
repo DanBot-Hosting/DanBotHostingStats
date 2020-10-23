@@ -77,26 +77,14 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Server name:**__`, data.name)
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                         message.channel.send(embed)
-                        console.log(response)
                     }).catch(error => {
-                        if (error.includes("400")) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node is out of ports. \nPlease wait for a host admin to open more ports.")
-                            message.channel.send(embed)
-                            message.channel.send('<@137624084572798976> Assign more ports.')
-                        } else if (error.includes('504')) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node did not respond in time. You could re-run the command or a outage might be happening if this happens multiple times")
-                            message.channel.send(embed)
-                        } else {
+                        
                         let embed1 = new Discord.RichEmbed()
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
-                        }
+                        
                     })
                 }
             } else if (args[1].toLowerCase() === "python") {
@@ -154,24 +142,13 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                         message.channel.send(embed)
                     }).catch(error => {
-                        if (error.includes("400")) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node is out of ports. \nPlease wait for a host admin to open more ports.")
-                            message.channel.send(embed)
-                            message.channel.send('<@137624084572798976> Assign more ports.')
-                        } else if (error.includes('504')) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node did not respond in time. You could re-run the command or a outage might be happening if this happens multiple times")
-                            message.channel.send(embed)
-                        } else {
+                        
                         let embed1 = new Discord.RichEmbed()
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
-                        }
+                        
                     })
                 }
             } else if (args[1].toLowerCase() === "java") {
@@ -229,24 +206,13 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                         message.channel.send(embed)
                     }).catch(error => {
-                        if (error.includes("400")) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node is out of ports. \nPlease wait for a host admin to open more ports.")
-                            message.channel.send(embed)
-                            message.channel.send('<@137624084572798976> Assign more ports.')
-                        } else if (error.includes('504')) {
-                            const embed = new Discord.RichEmbed()
-                                .setColor('RED')
-                                .addField(`__**ERROR:**__`, "Node did not respond in time. You could re-run the command or a outage might be happening if this happens multiple times")
-                            message.channel.send(embed)
-                        } else {
+                        
                         let embed1 = new Discord.RichEmbed()
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
-                        }
+                        
                     })
                 }
             } else if (args[1].toLowerCase() === "minecraft.paper") {
@@ -464,9 +430,100 @@ exports.run = async (client, message, args) => {
             }
         } else if (args[0].toLowerCase() == "delete") {
             //delete server things
-            message.channel.send('Uh this isnt done yet...')
+            message.channel.send('Checking server ' + args[1]).then((msg) => {
+                axios({
+                    url: config.Pterodactyl.hosturl + "/api/application/servers/" + args[1],
+                    method: 'GET',
+                    followRedirect: true,
+                    maxRedirects: 5,
+                    headers: {
+                        'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                        'Content-Type': 'application/json',
+                        'Accept': 'Application/vnd.pterodactyl.v1+json',
+                    }
+                }).then(response => {
+                    console.log(response)
+                    msg.edit('Are you sure you want to delete `' + response.data.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
+                    const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000, max: 2 });
+                    collector.on('collect', message => {
+                        if (message == "confirm") {
+                            message.delete()
+                            axios({
+                                url: config.Pterodactyl.hosturl + "/api/application/servers/" + args[1],
+                                method: 'DELETE',
+                                followRedirect: true,
+                                maxRedirects: 5,
+                                headers: {
+                                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                                }
+                            }).then(response => {
+                                msg.edit('Server deleted!')
+                            });
+                        } else {
+                            message.delete()
+                            msg.edit('Request cancelled!')
+                        }
+                    })
+                });
+            })
         } else if (args[0].toLowerCase() == "manage") {
             message.channel.send('Uh this isnt done yet...')
+        } else if (args[0] == "list") {
+            message.channel.send('Loading servers...')
+            //List servers
+            var arr = [];
+
+            axios({
+                url: "https://panel.danbot.host" + "/api/application/servers",
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer '  + config.Pterodactyl.apikey,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(resources => {
+                var countmax = resources.data.meta.pagination.total_pages
+                var i2 = countmax++
+    
+                var i = 0
+                while (i <i2) {
+                        //console.log(i)
+                        axios({
+                            url: "https://panel.danbot.host" + "/api/application/servers?page=" + i,
+                            method: 'GET',
+                            followRedirect: true,
+                            maxRedirects: 5,
+                            headers: {
+                                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                                'Content-Type': 'application/json',
+                                'Accept': 'Application/vnd.pterodactyl.v1+json',
+                            }
+                        }).then(response => {
+                            //console.log(resources.data.meta)
+                            arr.push(...response.data.data)
+                        });
+                        i++
+                    }
+                    console.log(resources.data.meta.pagination)
+                    var total = resources.data.meta.pagination.total
+                });
+
+                setTimeout(async () => {
+                    //console.log(arr.length)
+                    const output = await arr.filter(usr => usr.attributes ? usr.attributes.user == userData.get(message.author.id).consoleID : false)
+                    setTimeout(() => {
+                        var clean = output.map(e => "`" + e.attributes.name + "` Server ID: `" + e.attributes.identifier + "`\n")
+                        var clean2 = clean.toString().replace(/^\s+|\s+$/g,'')
+                        const embed = new Discord.RichEmbed()
+                            .addField('__**Your Servers:**__', "Server Name: \n" +  clean2)
+                        message.channel.send(embed)
+                        //console.log(output)
+                    },500)
+                }, 10000)
         } else if (args[0].toLowerCase() == "status") {
             if (!args[1]) {
                 let embed = new Discord.RichEmbed()
@@ -510,6 +567,9 @@ exports.run = async (client, message, args) => {
                         message.reply(embedstatus)
                     })});
             }
+        } else if (args[0].toLowerCase() == "proxy") {
+            const embed = new Discord.RichEmbed()
+                .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
         }
     };
 };
