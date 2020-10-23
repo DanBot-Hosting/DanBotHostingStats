@@ -47,7 +47,8 @@ exports.run = async (client, message, args) => {
                         },
                         "feature_limits": {
                             "databases": 0,
-                            "allocations": 1
+                            "allocations": 1,
+                            "backups": 10
                         },
                         "deploy": {
                             "locations": [3],
@@ -111,7 +112,8 @@ exports.run = async (client, message, args) => {
                         },
                         "feature_limits": {
                             "databases": 0,
-                            "allocations": 1
+                            "allocations": 1,
+                            "backups": 10
                         },
                         "deploy": {
                             "locations": [3],
@@ -175,7 +177,8 @@ exports.run = async (client, message, args) => {
                         },
                         "feature_limits": {
                             "databases": 0,
-                            "allocations": 1
+                            "allocations": 1,
+                            "backups": 10
                         },
                         "deploy": {
                             "locations": [3],
@@ -242,7 +245,8 @@ exports.run = async (client, message, args) => {
                         },
                         "feature_limits": {
                             "databases": 0,
-                            "allocations": 1
+                            "allocations": 1,
+                            "backups": 10
                         },
                         "deploy": {
                             "locations": [5],
@@ -310,7 +314,8 @@ exports.run = async (client, message, args) => {
                         },
                         "feature_limits": {
                             "databases": 2,
-                            "allocations": 1
+                            "allocations": 1,
+                            "backups": 10
                         },
                         "deploy": {
                             "locations": [5],
@@ -381,7 +386,8 @@ exports.run = async (client, message, args) => {
                         },
                         "feature_limits": {
                             "databases": 2,
-                            "allocations": 1
+                            "allocations": 1,
+                            "backups": 10
                         },
                         "deploy": {
                             "locations": [5],
