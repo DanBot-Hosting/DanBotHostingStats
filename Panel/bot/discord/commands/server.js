@@ -218,7 +218,7 @@ exports.run = async (client, message, args) => {
                         
                     })
                 }
-            } else if (args[1].toLowerCase() === "minecraft.paper") {
+            } else if (args[1].toLowerCase() === "paper") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -287,7 +287,7 @@ exports.run = async (client, message, args) => {
                         
                     })
                 }
-            } else if (args[1].toLowerCase() === "minecraft.forge") {
+            } else if (args[1].toLowerCase() === "forge") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -355,7 +355,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            } else if (args[1].toLowerCase() === "gtav.fivem") {
+            } else if (args[1].toLowerCase() === "fivem") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -427,7 +427,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            } else if (args[1].toLowerCase() === "minecraft.bedrock") {
+            } else if (args[1].toLowerCase() === "bedrock") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -635,10 +635,10 @@ exports.run = async (client, message, args) => {
                 //Anything else
                 let embed2 = new Discord.RichEmbed()
                     .setColor(`RED`)
-                    .addField(`__**Minecraft:**__`, "Minecraft.Forge \nMinecraft.Paper \nMinecraft.Bedrock", true)
-                    .addField(`__**Grand Theft Auto:**__`, "GTAV.FiveM", true)
+                    .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock", true)
+                    .addField(`__**Grand Theft Auto:**__`, "FiveM", true)
                     .addField(`__**Bots:**__`, "NodeJS \nPython \nJava", true)
-                    .addField(`__**Source Engine:**__`, "GMod \nGS:GO")
+                    .addField(`__**Source Engine:**__`, "GMod \nGS:GO", true)
                 message.channel.send(embed2)
             }
         } else if (args[0].toLowerCase() == "delete") {
