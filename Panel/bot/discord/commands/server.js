@@ -355,7 +355,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            } else if (args[1].toLowerCase() === "fivem") {
+            } else if (args[1].toLowerCase() === "gtav.fivem") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
