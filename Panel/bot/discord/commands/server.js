@@ -845,7 +845,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Grand Theft Auto:**__`, "FiveM", true)
                     .addField(`__**Bots:**__`, "NodeJS \nPython \nJava", true)
                     .addField(`__**Source Engine:**__`, "GMod \nGS:GO \nARK:SE", true)
-                    .addField(`__**Voice Servers:**__`, "TS3 \nMumble")
+                    .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
                 message.channel.send(embed2)
             }
         } else if (args[0].toLowerCase() == "delete") {
