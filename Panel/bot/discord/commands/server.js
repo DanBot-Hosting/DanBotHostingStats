@@ -631,7 +631,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            } else if (args[1].toLowerCase() === "ARK:SE") {
+            } else if (args[1].toLowerCase() === "ark:se") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -705,7 +705,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            } else if (args[1].toLowerCase() === "TS3") {
+            } else if (args[1].toLowerCase() === "ts3") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -771,7 +771,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            } else if (args[1].toLowerCase() === "Mumble") {
+            } else if (args[1].toLowerCase() === "mumble") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
