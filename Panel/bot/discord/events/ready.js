@@ -3,6 +3,11 @@ const axios = require('axios');
 module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
 
+    //Check make sure create account channels are closed after a hour
+    setTimeout(() => {
+        client.guilds.get("639477525927690240").channels.filter(x => x.parentID == '738539016688894024' && (Date.now() - x.createdAt) > 1800000 ).forEach(x => x.delete())
+    }, 60000)
+
     //Auto Activities List
     const activities = [{
             "text": "over DanBot Hosting",
