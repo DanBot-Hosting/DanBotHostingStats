@@ -643,7 +643,7 @@ exports.run = async (client, message, args) => {
             }
         } else if (args[0].toLowerCase() == "delete") {
             //delete server things
-            message.channel.send('Checking server ' + args[1]).then((msg) => {
+           const msg message.channel.send('Checking server ' + args[1]).then((msg) => {
                 axios({
                     url: config.Pterodactyl.hosturl + "/api/application/servers/" + args[1],
                     method: 'GET',
