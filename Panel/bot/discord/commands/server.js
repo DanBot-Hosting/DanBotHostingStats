@@ -725,7 +725,7 @@ exports.run = async (client, message, args) => {
                             "cpu": 0
                         },
                         "environment": {
-                            "TS_VERSION": "latest",
+                            "TS_VERSION": "3.12.1",
                             "FILE_TRANSFER": "30033"
                         },
                         "feature_limits": {
