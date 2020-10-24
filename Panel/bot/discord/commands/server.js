@@ -781,8 +781,14 @@ exports.run = async (client, message, args) => {
                     })});
             }
         } else if (args[0].toLowerCase() == "proxy") {
+            let domainfilter = [".com", ".co.uk"];
+
             const embed = new Discord.RichEmbed()
                 .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
-        }
+            if (!args[1]) {
+                message.channel.send(embed)
+            } 
+
+        } 
     };
 };
