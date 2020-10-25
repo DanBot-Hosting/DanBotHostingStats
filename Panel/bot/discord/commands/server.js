@@ -494,6 +494,71 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
+            } else if (args[1].toLowerCase() === "pocketminemp") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 1,
+                        "egg": 28,
+                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
+                        "startup": "./bin/php7/bin/php ./PocketMine-MP.phar --no-wizard --disable-ansi",
+                        "limits": {
+                            "memory": 2048,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "PMMP_VERSION": "latest"
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [5],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
+                    })
+                }
             } else if (args[1].toLowerCase() === "gmod") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
@@ -842,8 +907,8 @@ exports.run = async (client, message, args) => {
                 //Anything else
                 let embed2 = new Discord.RichEmbed()
                     .setColor(`RED`)
-                    .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock", true)
-                    .addField(`__**Grand Theft Auto:**__`, "FiveM", true)
+                    .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
+                    .addField(`__**Grand Theft Auto 5:**__`, "FiveM", true)
                     .addField(`__**Bots:**__`, "NodeJS \nPython \nJava", true)
                     .addField(`__**Source Engine:**__`, "GMod \nGS:GO \nARK:SE", true)
                     .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
