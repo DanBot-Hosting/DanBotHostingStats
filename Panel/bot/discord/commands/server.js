@@ -207,6 +207,7 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Created for user ID:**__`, data.user)
                             .addField(`__**Server name:**__`, data.name)
                             .addField(`__**Type:**__`, args[1].toLowerCase())
+                            .addField(`__**WARNING:**__`, "**Using a java server to run gameservers is __NOT__ allowed. You could have your server deleted for doing so.**")
                         message.channel.send(embed)
                     }).catch(error => {
                         
