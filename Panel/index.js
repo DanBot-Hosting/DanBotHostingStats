@@ -142,7 +142,7 @@ global.nodeData = new db.table("nodeData")
 app.get('/data', function (req, res) {
   let nodes = ["154.27.68.232", "154.27.68.233", "167.86.113.158", "51.38.69.73"];
   if (req.query.servername == undefined) {
-    if (!nodes.includes(req.headers["x-forwarded-for"])) {
+    if (!nodes.includes(req.headers["x-forwarded-for" || "cf-connecting-ip"])) {
       res.redirect("/")
     } else {
       nodeData.set(req.query.speedname + '-speedtest', {
@@ -154,7 +154,7 @@ app.get('/data', function (req, res) {
       });
     };
   } else {
-    if (!nodes.includes(req.headers["x-forwarded-for"])) {
+    if (!nodes.includes(req.headers["x-forwarded-for" || "cf-connecting-ip"])) {
       res.redirect("/")
     } else {
       nodeData.set(req.query.servername, {
