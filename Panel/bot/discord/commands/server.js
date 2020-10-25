@@ -630,7 +630,7 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            } else if (args[1].toLowerCase() === "gs:go") {
+            } else if (args[1].toLowerCase() === "cs:go") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
                 } else {
@@ -1187,7 +1187,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
                     .addField(`__**Grand Theft Auto 5:**__`, "FiveM", true)
                     .addField(`__**Bots:**__`, "NodeJS \nPython \nJava", true)
-                    .addField(`__**Source Engine:**__`, "GMod \nGS:GO \nARK:SE", true)
+                    .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
                     .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
                     .addField(`__**Misc Games:**__`, "Rust", true)
                     .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
