@@ -981,7 +981,206 @@ exports.run = async (client, message, args) => {
                         message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
-            }  else {
+            } else if (args[1].toLowerCase() === "mongodb") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 12,
+                        "egg": 35,
+                        "docker_image": "quay.io/parkervcp/pterodactyl-images:db_mongo-4",
+                        "startup": "mongod --fork --dbpath /home/container/mongodb/ --port ${SERVER_PORT} --logpath /home/container/logs/mongo.log; until nc -z -v -w5 127.0.0.1 ${SERVER_PORT}; do echo 'Waiting for mongodb connection...'; sleep 5; done && mongo 127.0.0.1:${SERVER_PORT} && mongo --eval 'db.getSiblingDB('admin').shutdownServer()' 127.0.0.1:${SERVER_PORT}",
+                        "limits": {
+                            "memory": 0,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "MONGO_USER": "admin",
+                            "MONGO_USER_PASS": "aP@55word"
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [3],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
+                    })
+                }
+            } else if (args[1].toLowerCase() === "redis") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 12,
+                        "egg": 36,
+                        "docker_image": "quay.io/parkervcp/pterodactyl-images:db_redis-6",
+                        "startup": "/usr/local/bin/redis-server /home/container/redis.conf --save 60 1 --dir /home/container/ --bind 0.0.0.0 --port {{SERVER_PORT}} --requirepass {{SERVER_PASSWORD}} --maxmemory {{SERVER_MEMORY}}mb --daemonize yes && redis-cli -p {{SERVER_PORT}} -a {{SERVER_PASSWORD}}; redis-cli -p {{SERVER_PORT}} -a {{SERVER_PASSWORD}} shutdown save",
+                        "limits": {
+                            "memory": 0,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "SERVER_PASSWORD": "P@55w0rd"
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [3],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
+                    })
+                }
+            } else if (args[1].toLowerCase() === "postgres") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 12,
+                        "egg": 37,
+                        "docker_image": "quay.io/parkervcp/pterodactyl-images:db_postgres",
+                        "startup": `postgres  -D /home/container/postgres_db/`,
+                        "limits": {
+                            "memory": 0,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "PGPASSWORD": "P@55word",
+                            "PGROOT": "ZPWgpMN4hETqjXAV",
+                            "PGUSER": "pterodactyl",
+                            "PGDATABASE": "pterodactyl"
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [3],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
+                    })
+                }
+            } else {
                 //Anything else
                 let embed2 = new Discord.RichEmbed()
                     .setColor(`RED`)
@@ -991,6 +1190,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Source Engine:**__`, "GMod \nGS:GO \nARK:SE", true)
                     .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
                     .addField(`__**Misc Games:**__`, "Rust", true)
+                    .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
                 message.channel.send(embed2)
             }
         } else if (args[0].toLowerCase() == "delete") {
