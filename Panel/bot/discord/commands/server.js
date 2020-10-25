@@ -651,8 +651,8 @@ exports.run = async (client, message, args) => {
                         },
                         "environment": {
                             "SRCDS_MAP": "de_dust2",
-                            "STEAM_ACC": ".",
-                            "SRCDS_APPID": "BD1868C7DFC242D39EBE2062B10C6A3A"
+                            "STEAM_ACC": "BD1868C7DFC242D39EBE2062B10C6A3A",
+                            "SRCDS_APPID": "740"
                         },
                         "feature_limits": {
                             "databases": 2,
