@@ -1189,7 +1189,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Bots:**__`, "NodeJS \nPython \nJava", true)
                     .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
                     .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
-                    .addField(`__**Misc Games:**__`, "Rust", true)
+                    .addField(`__**SteamCMD:**__`, "Rust", true)
                     .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
                 message.channel.send(embed2)
             }
@@ -1326,6 +1326,7 @@ exports.run = async (client, message, args) => {
                             .addField('**DISK Usage**', pretty(resources.data.attributes.resources.disk_bytes) + '  out of UNLIMITED MB')
                             .addField('**NET Usage**', 'UPLOADED: ' + pretty(resources.data.attributes.resources.network_tx_bytes) + ', DOWNLOADED: ' + pretty(resources.data.attributes.resources.network_rx_bytes))
                             .addField('**NODE**', response.data.attributes.node)
+                            .addField('**FULL ID**', response.data.attributes.uuid)
                             .addField('\u200b', '\u200b')
                             .addField('**LIMITS (0 = unlimited)**', 'MEMORY: ' + response.data.attributes.limits.memory + 'MB \nDISK: ' + response.data.attributes.limits.disk + 'MB \nCPU: ' + response.data.attributes.limits.cpu)
                             .addField('**MISC LIMITS**', 'DATABASES: ' + response.data.attributes.feature_limits.databases + '\nBACKUPS: ' + response.data.attributes.feature_limits.backups)
