@@ -1346,13 +1346,11 @@ exports.run = async (client, message, args) => {
             const embed = new Discord.RichEmbed()
                 .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
                 .setFooter('If you just tried to link a domain. That TLD is not supported yet!')
-                console.log(args[0] + " args 1 " + args[1])
             if (!args[1]) {
                 message.channel.send(embed)
             } else {
                 if (!args[2]) {
                     message.channel.send(embed)
-                    console.log('uh args 2')
                 } else {
                     //SSH Connection
                     ssh.connect({
@@ -1408,7 +1406,7 @@ exports.run = async (client, message, args) => {
                                                 //If an error exists. Eror and delete the proxy file
                                                 message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
                                                 fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                            } else {
+                                            } else if (result.stderr.includes('Congratulations!')) {
                                                 //No error. Continue to enable site on apache2 then restart
                                                 console.log('SSL Gen complete. Continue!')
 
