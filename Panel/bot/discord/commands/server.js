@@ -1352,6 +1352,7 @@ exports.run = async (client, message, args) => {
                 if (!args[2]) {
                     message.channel.send(embed)
                 } else {
+                    message.channel.send('Please give me a few seconds. Trying to link you\'r domain!')
                     //SSH Connection
                     ssh.connect({
                         host: config.SSH.Host,
@@ -1401,12 +1402,7 @@ exports.run = async (client, message, args) => {
                                         
                                         //Run command to genate SSL cert.
                                         ssh.execCommand(`service apache2 stop && certbot certonly -d ${args[1]} --standalone --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
-                                            if (result.stderr) {
-                                                console.log(result)
-                                                //If an error exists. Eror and delete the proxy file
-                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
-                                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                            } else if (result.stderr.includes('Congratulations!')) {
+                                            if (result.stdout.includes('Congratulations!')) {
                                                 //No error. Continue to enable site on apache2 then restart
                                                 console.log('SSL Gen complete. Continue!')
 
@@ -1419,6 +1415,9 @@ exports.run = async (client, message, args) => {
                                                         console.log('Enabled website.')
                                                     }
                                                 })
+                                            } else {
+                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
+                                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                             }
                                         })
                                       }, function(error) {
