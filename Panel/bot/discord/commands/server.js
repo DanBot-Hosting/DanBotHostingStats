@@ -5,6 +5,7 @@ const path = require('path');
 const {NodeSSH} = require('node-ssh')
 const ssh = new NodeSSH()
 const rif = require('replace-in-file');
+const { config } = require('process');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
@@ -13,7 +14,7 @@ exports.run = async (client, message, args) => {
         if (!args[0]) {
             //No args
             let embed = new Discord.RichEmbed()
-                .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid`')
+                .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \n`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere`')
             message.channel.send(embed)
 
         } else if (args[0].toLowerCase() == "create") {
@@ -1340,8 +1341,6 @@ exports.run = async (client, message, args) => {
                     })});
             }
         } else if (args[0].toLowerCase() == "proxy") {
-            let domainfilter = [".com", ".co.uk", ".us", ".xyz", ".org", ".host"];
-
             const embed = new Discord.RichEmbed()
                 .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
                 .setFooter('If you just tried to link a domain. That TLD is not supported yet!')
