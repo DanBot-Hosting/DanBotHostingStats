@@ -1404,6 +1404,7 @@ exports.run = async (client, message, args) => {
                                         //Run command to genate SSL cert.
                                         ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
                                             if (result.stderr) {
+                                                console.log(result)
                                                 //If an error exists. Eror and delete the proxy file
                                                 message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
                                                 fs.unlinkSync("./proxy/" + args[1] + ".conf");
