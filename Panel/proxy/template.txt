@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+  ServerName REPLACE-DOMAIN
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L] 
+</VirtualHost>
+<VirtualHost *:443>
+  ServerName REPLACE-DOMAIN
+    ProxyRequests off
+    SSLProxyEngine on
+    ProxyPreserveHost On
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/REPLACE-DOMAIN/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/REPLACE-DOMAIN/privkey.pem
+
+    <Location />
+        ProxyPass http://REPLACE-IP:REPLACE-PORT/
+        ProxyPassReverse http://REPLACE-IP:REPLACE-PORT/
+    </Location>
+</VirtualHost> 
+
+
+

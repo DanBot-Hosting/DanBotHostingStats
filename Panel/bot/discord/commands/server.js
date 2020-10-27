@@ -1,5 +1,10 @@
 const axios = require('axios');
 var pretty = require('prettysize');
+const fs = require('fs');
+const path = require('path');
+const {NodeSSH} = require('node-ssh');
+const { config } = require('process');
+const rif = require('replace-in-file');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
@@ -1335,6 +1340,7 @@ exports.run = async (client, message, args) => {
                     })});
             }
         } else if (args[0].toLowerCase() == "proxy") {
+            if (message.author.id == "137624084572798976") {
             let domainfilter = [".com", ".co.uk", ".us", ".xyz", ".org"];
 
             const embed = new Discord.RichEmbed()
@@ -1345,9 +1351,82 @@ exports.run = async (client, message, args) => {
                 if (!args[2]) {
                     message.channel.send(embed)
                 } else {
+                    //SSH Connection
+                    ssh.connect({
+                        host: config.SSH.Host,
+                        username: config.SSH.User,
+                        port: config.SSH.Port,
+                        password: config.SSH.Password,
+                        tryKeyboard: true,
+                    })
 
+                    //Copy template file. Ready to be changed!
+                    fs.copySync(path.resolve('/root/DBH/Panel/proxy/template.txt'), '/root/DBH/Panel/proxy/' + args[1] + '.conf');
+
+                    setTimeout(() => {
+                        //Change Domain
+                        const domainchange = replace.sync({
+                            files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                            from: "REPLACE-DOMAIN",
+                            to: args[1],
+                            countMatches: true,
+                        });
+
+                        //Change Server IP
+                        setTimeout(() => {
+                            const ipchange = replace.sync({
+                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                from: "REPLACE-IP",
+                                to: args[1],
+                                countMatches: true,
+                            });
+
+                            //Change Server Port
+                            setTimeout(() => {
+                                const portchange = replace.sync({
+                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                    from: "REPLACE-PORT",
+                                    to: args[1],
+                                    countMatches: true,
+                                });
+
+                                //Upload file to /etc/apache2/sites-available
+                                setTimeout(() => {
+                                    ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.txt', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
+                                        
+                                        //Run command to genate SSL cert.
+                                        ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
+                                            if (result.stderr) {
+                                                //If an error exists. Eror and delete the proxy file
+                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
+                                                fs.unlinkSync("/root/DBH/Panel/proxy/" + args[1] + ".txt");
+                                            } else {
+                                                //No error. Continue to enable site on apache2 then restart
+                                                console.log('SSL Gen complete. Continue!')
+
+                                                ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
+                                                    if (result.stderr) {
+                                                        //If an error exists. Eror and delete the proxy file
+                                                        message.channel.send('ERROR: Cancelled. Please contact Dan')
+                                                    } else {
+                                                        //Complete
+                                                        console.log('Enabled website.')
+                                                    }
+                                                })
+                                            }
+                                        })
+                                      }, function(error) {
+                                          //If error exists. Error and delete proxy file
+                                          fs.unlinkSync("/root/DBH/Panel/proxy/" + args[1] + ".txt");
+                                          message.channel.send("FAILED \nERROR: " + error);
+                                    })
+                                }, 250) //END - Upload file to /etc/apache2/sites-available
+                            }, 100) //END - Change Server Port
+                        }, 100) //END - Change Server IP
+                    }, 250) //END - //Change Domain
                 }
             }
+        }
         } 
     };
 };
