@@ -1364,7 +1364,7 @@ exports.run = async (client, message, args) => {
                     })
 
                     //Copy template file. Ready to be changed!
-                    fs.copyFile(path.resolve('/root/DBH/Panel/proxy/template.txt'), '/root/DBH/Panel/proxy/' + args[1] + '.conf', (err) => { 
+                    fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => { 
                         if (err) { 
                           console.log("Error Found:", err); 
                         }
@@ -1399,14 +1399,14 @@ exports.run = async (client, message, args) => {
 
                                 //Upload file to /etc/apache2/sites-available
                                 setTimeout(() => {
-                                    ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.txt', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
+                                    ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
                                         
                                         //Run command to genate SSL cert.
                                         ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
                                             if (result.stderr) {
                                                 //If an error exists. Eror and delete the proxy file
                                                 message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
-                                                fs.unlinkSync("/root/DBH/Panel/proxy/" + args[1] + ".txt");
+                                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                             } else {
                                                 //No error. Continue to enable site on apache2 then restart
                                                 console.log('SSL Gen complete. Continue!')
@@ -1424,7 +1424,7 @@ exports.run = async (client, message, args) => {
                                         })
                                       }, function(error) {
                                           //If error exists. Error and delete proxy file
-                                          fs.unlinkSync("/root/DBH/Panel/proxy/" + args[1] + ".txt");
+                                          fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                           message.channel.send("FAILED \nERROR: " + error);
                                     })
                                 }, 250) //END - Upload file to /etc/apache2/sites-available
