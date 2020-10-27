@@ -1402,7 +1402,7 @@ exports.run = async (client, message, args) => {
                                     ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
                                         
                                         //Run command to genate SSL cert.
-                                        ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
+                                        ssh.execCommand(`service apache2 stop && certbot certonly -d ${args[1]} --standalone --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
                                             if (result.stderr) {
                                                 console.log(result)
                                                 //If an error exists. Eror and delete the proxy file
