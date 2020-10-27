@@ -8,6 +8,7 @@ Panel/json.sqlite
 Panel/images
 Panel/start.bat
 Panel/eng.traineddata
+Panel/proxy
 
 Daemon/node_modules
 Daemon/package-lock.json
