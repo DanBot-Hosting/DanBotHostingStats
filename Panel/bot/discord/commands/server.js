@@ -2,7 +2,8 @@ const axios = require('axios');
 var pretty = require('prettysize');
 const fs = require('fs');
 const path = require('path');
-const {NodeSSH} = require('node-ssh');
+const {NodeSSH} = require('node-ssh')
+const ssh = new NodeSSH()
 const rif = require('replace-in-file');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
@@ -1345,15 +1346,14 @@ exports.run = async (client, message, args) => {
             const embed = new Discord.RichEmbed()
                 .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
                 .setFooter('If you just tried to link a domain. That TLD is not supported yet!')
+                console.log(args[0] + " args 1 " + args[1])
             if (!args[1]) {
                 message.channel.send(embed)
-            } else 
-            if (args[1].includes(domainfilter)) {
+            } else {
                 if (!args[2]) {
                     message.channel.send(embed)
                     console.log('uh args 2')
                 } else {
-                    console.log('test')
                     //SSH Connection
                     ssh.connect({
                         host: config.SSH.Host,
@@ -1364,11 +1364,15 @@ exports.run = async (client, message, args) => {
                     })
 
                     //Copy template file. Ready to be changed!
-                    fs.copySync(path.resolve('/root/DBH/Panel/proxy/template.txt'), '/root/DBH/Panel/proxy/' + args[1] + '.conf');
+                    fs.copyFile(path.resolve('/root/DBH/Panel/proxy/template.txt'), '/root/DBH/Panel/proxy/' + args[1] + '.conf', (err) => { 
+                        if (err) { 
+                          console.log("Error Found:", err); 
+                        }
+                    })
 
                     setTimeout(() => {
                         //Change Domain
-                        const domainchange = replace.sync({
+                        const domainchange = rif.sync({
                             files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                             from: "REPLACE-DOMAIN",
                             to: args[1],
@@ -1377,7 +1381,7 @@ exports.run = async (client, message, args) => {
 
                         //Change Server IP
                         setTimeout(() => {
-                            const ipchange = replace.sync({
+                            const ipchange = rif.sync({
                                 files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                 from: "REPLACE-IP",
                                 to: args[1],
@@ -1386,7 +1390,7 @@ exports.run = async (client, message, args) => {
 
                             //Change Server Port
                             setTimeout(() => {
-                                const portchange = replace.sync({
+                                const portchange = rif.sync({
                                     files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                     from: "REPLACE-PORT",
                                     to: args[1],
