@@ -1363,67 +1363,78 @@ exports.run = async (client, message, args) => {
                     })
 
                     //Copy template file. Ready to be changed!
-                    fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => { 
-                        if (err) { 
-                          console.log("Error Found:", err); 
-                        }
-                    })
-
-                    setTimeout(() => {
-                        //Change Domain
-                        const domainchange = rif.sync({
-                            files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                            from: "REPLACE-DOMAIN",
-                            to: args[1],
-                            countMatches: true,
-                        });
-
-                        //Change Server IP
-                        setTimeout(() => {
-                            const ipchange = rif.sync({
-                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                from: "REPLACE-IP",
-                                to: args[1],
-                                countMatches: true,
-                            });
-
-                            //Change Server Port
+                    fs.access(path.resolve(path.dirname(require.main.filename), "proxy/" + args[1] + ".conf"), fs.constants.R_OK, (err) => {
+                        if (!err) {
+                            return message.channel.send("This domain has been linked before or is currently linked..")
+                        } else {
+                            fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => { 
+                                if (err) { 
+                                  console.log("Error Found:", err); 
+                                }
+                            })
+                            fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => { 
+                                if (err) { 
+                                  console.log("Error Found:", err); 
+                                }
+                            })
+        
                             setTimeout(() => {
-                                const portchange = rif.sync({
+                                //Change Domain
+                                const domainchange = rif.sync({
                                     files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                    from: "REPLACE-PORT",
+                                    from: "REPLACE-DOMAIN",
                                     to: args[1],
                                     countMatches: true,
                                 });
-
-                                //Upload file to /etc/apache2/sites-available
+        
+                                //Change Server IP
                                 setTimeout(() => {
-                                    ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
-                                        
-                                        //Run command to genate SSL cert.
-                                        ssh.execCommand(`service apache2 stop && certbot certonly -d ${args[1]} --standalone --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
-                                            if (result.stdout.includes('Congratulations!')) {
-                                                //No error. Continue to enable site on apache2 then restart
-                                                console.log('SSL Gen complete. Continue!')
-
-                                                ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
-                                                        //Complete
-                                                        message.reply('Domain has now been linked!')
+                                    const ipchange = rif.sync({
+                                        files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                        from: "REPLACE-IP",
+                                        to: args[1],
+                                        countMatches: true,
+                                    });
+        
+                                    //Change Server Port
+                                    setTimeout(() => {
+                                        const portchange = rif.sync({
+                                            files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                            from: "REPLACE-PORT",
+                                            to: args[1],
+                                            countMatches: true,
+                                        });
+        
+                                        //Upload file to /etc/apache2/sites-available
+                                        setTimeout(() => {
+                                            ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
+                                                
+                                                //Run command to genate SSL cert.
+                                                ssh.execCommand(`service apache2 stop && certbot certonly -d ${args[1]} --standalone --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
+                                                    if (result.stdout.includes('Congratulations!')) {
+                                                        //No error. Continue to enable site on apache2 then restart
+                                                        console.log('SSL Gen complete. Continue!')
+        
+                                                        ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
+                                                                //Complete
+                                                                message.reply('Domain has now been linked!')
+                                                        })
+                                                    } else {
+                                                        message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
+                                                        fs.unlinkSync("./proxy/" + args[1] + ".conf");
+                                                    }
                                                 })
-                                            } else {
-                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
-                                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                            }
-                                        })
-                                      }, function(error) {
-                                          //If error exists. Error and delete proxy file
-                                          fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                          message.channel.send("FAILED \nERROR: " + error);
-                                    })
-                                }, 250) //END - Upload file to /etc/apache2/sites-available
-                            }, 100) //END - Change Server Port
-                        }, 100) //END - Change Server IP
-                    }, 250) //END - //Change Domain
+                                              }, function(error) {
+                                                  //If error exists. Error and delete proxy file
+                                                  fs.unlinkSync("./proxy/" + args[1] + ".conf");
+                                                  message.channel.send("FAILED \nERROR: " + error);
+                                            })
+                                        }, 250) //END - Upload file to /etc/apache2/sites-available
+                                    }, 100) //END - Change Server Port
+                                }, 100) //END - Change Server IP
+                            }, 250) //END - //Change Domain
+                        }
+                    })
                 }
             }
         }
