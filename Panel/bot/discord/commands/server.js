@@ -1348,10 +1348,7 @@ exports.run = async (client, message, args) => {
             if (!args[1]) {
                 message.channel.send(embed)
             } else 
-            if (!args[1].includes(domainfilter)) {
-                message.channel.send(embed)
-                console.log('uh args 1')
-            } else {
+            if (args[1].includes(domainfilter)) {
                 if (!args[2]) {
                     message.channel.send(embed)
                     console.log('uh args 2')
