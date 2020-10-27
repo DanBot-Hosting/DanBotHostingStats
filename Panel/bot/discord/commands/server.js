@@ -1340,7 +1340,7 @@ exports.run = async (client, message, args) => {
             }
         } else if (args[0].toLowerCase() == "proxy") {
             if (message.author.id == "137624084572798976") {
-            let domainfilter = [".com", ".co.uk", ".us", ".xyz", ".org"];
+            let domainfilter = [".com", ".co.uk", ".us", ".xyz", ".org", ".host"];
 
             const embed = new Discord.RichEmbed()
                 .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
