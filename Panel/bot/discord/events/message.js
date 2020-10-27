@@ -22,11 +22,7 @@ module.exports = (client, message) => {
                 Tesseract.recognize(
                     attachment.url,
                     'eng',
-                ).then(({
-                    data: {
-                        text
-                    }
-                }) => {
+                ).then(({ data: { text } }) => {
                     if (text.includes("There was an error attempting to establish")) {
                         message.reply('It looks like you are getting a error with the websocket. Try refreshing if that doesnt work please check <#738530520945786921>')
                     } else if (text.includes("HTTP/E_CONN_REFUSED")) {
@@ -45,8 +41,6 @@ module.exports = (client, message) => {
                         message.reply('Looks like the server cant find a `index.js` file. Please check make sure you uploaded your main file and changed startup prams to make sure the server is starting with the correct file. \nIf that doesnt help please wait for a human to come help you.')
                     } else if (text.includes('Please try re-compiling or re-installing')) {
                         message.channel.send('Looks like you might of uploaded your `node_modules` folder. Please delete this folder and when you server starts modules will be auto installed.')
-                    } else if (text.toLowerCase().includes('owo' || 'uwu')) {
-                        message.reply('UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO UwU OwO')
                     }
                 })
             })
