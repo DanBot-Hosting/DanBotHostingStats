@@ -1390,7 +1390,23 @@ exports.run = async (client, message, args) => {
                                     });
                                     z++
                                 }
-        
+
+                                //Grab node and port ready for the config 
+                                axios({
+                                    url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
+                                    method: 'GET',
+                                    followRedirect: true,
+                                    maxRedirects: 5,
+                                    headers: {
+                                        'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'Application/vnd.pterodactyl.v1+json',
+                                    }
+                                }).then(response => {
+                                const node = response.attributes.node;
+                                const port = response.relationships.allocations.data.attributes.port
+                                if (node == "Node 1 - Discord Bots") {
+                                
                                 //Change Server IP
                                 setTimeout(() => {
                                     var y = 0;
@@ -1398,7 +1414,7 @@ exports.run = async (client, message, args) => {
                                         const ipchange = rif.sync({
                                             files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                             from: "REPLACE-IP",
-                                            to: args[1],
+                                            to: "154.27.68.232",
                                             countMatches: true,
                                         });
                                         y++
@@ -1411,11 +1427,47 @@ exports.run = async (client, message, args) => {
                                             const portchange = rif.sync({
                                                 files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                                 from: "REPLACE-PORT",
-                                                to: args[1],
+                                                to: port,
                                                 countMatches: true,
                                             });
                                             x++
                                         }
+                                    }, 100) //END - Change Server Port
+                                }, 100) //END - Change Server IP
+                                } else if (node == "Node 2 - Discord Bots") {
+                                
+                                //Change Server IP
+                                setTimeout(() => {
+                                    var y = 0;
+                                    while (y <3) {
+                                        const ipchange = rif.sync({
+                                            files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                            from: "REPLACE-IP",
+                                            to: "154.27.68.233",
+                                            countMatches: true,
+                                        });
+                                        y++
+                                    };
+        
+                                    //Change Server Port
+                                    setTimeout(() => {
+                                        var x = 0;
+                                        while (x <3) {
+                                            const portchange = rif.sync({
+                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                from: "REPLACE-PORT",
+                                                to: port,
+                                                countMatches: true,
+                                            });
+                                            x++
+                                        }
+                                    }, 100) //END - Change Server Port
+                                }, 100) //END - Change Server IP
+                                } else {
+                                    message.channel.send('Unsupported node. Stopping reverse proxy.')
+                                    fs.unlinkSync("./proxy/" + args[1] + ".conf");
+                                }
+
         
                                         //Upload file to /etc/apache2/sites-available
                                         setTimeout(() => {
@@ -1442,8 +1494,7 @@ exports.run = async (client, message, args) => {
                                                   message.channel.send("FAILED \nERROR: " + error);
                                             })
                                         }, 250) //END - Upload file to /etc/apache2/sites-available
-                                    }, 100) //END - Change Server Port
-                                }, 100) //END - Change Server IP
+                            }) //END - Grab server info (Node and Port)
                             }, 250) //END - //Change Domain
                         }
                     })
