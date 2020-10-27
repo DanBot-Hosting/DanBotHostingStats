@@ -1403,8 +1403,8 @@ exports.run = async (client, message, args) => {
                                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                                     }
                                 }).then(response => {
-                                const node = response.attributes.node;
-                                const port = response.relationships.allocations.data.attributes.port
+                                const node = response.data.attributes.node;
+                                const port = response.data.relationships.allocations.data.attributes.port
                                 if (node == "Node 1 - Discord Bots") {
                                 
                                 //Change Server IP
