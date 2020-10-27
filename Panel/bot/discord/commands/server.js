@@ -1393,7 +1393,7 @@ exports.run = async (client, message, args) => {
 
                                 //Grab node and port ready for the config 
                                 axios({
-                                    url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
+                                    url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[2],
                                     method: 'GET',
                                     followRedirect: true,
                                     maxRedirects: 5,
