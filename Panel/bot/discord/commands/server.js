@@ -1380,30 +1380,42 @@ exports.run = async (client, message, args) => {
         
                             setTimeout(() => {
                                 //Change Domain
-                                const domainchange = rif.sync({
-                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                    from: "REPLACE-DOMAIN",
-                                    to: args[1],
-                                    countMatches: true,
-                                });
-        
-                                //Change Server IP
-                                setTimeout(() => {
-                                    const ipchange = rif.sync({
+                                var z = 0;
+                                while (z <5) {
+                                    const domainchange = rif.sync({
                                         files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                        from: "REPLACE-IP",
+                                        from: "REPLACE-DOMAIN",
                                         to: args[1],
                                         countMatches: true,
                                     });
+                                    z++
+                                }
         
-                                    //Change Server Port
-                                    setTimeout(() => {
-                                        const portchange = rif.sync({
+                                //Change Server IP
+                                setTimeout(() => {
+                                    var y = 0;
+                                    while (y <3) {
+                                        const ipchange = rif.sync({
                                             files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                            from: "REPLACE-PORT",
+                                            from: "REPLACE-IP",
                                             to: args[1],
                                             countMatches: true,
                                         });
+                                        y++
+                                    };
+        
+                                    //Change Server Port
+                                    setTimeout(() => {
+                                        var x = 0;
+                                        while (x <3) {
+                                            const portchange = rif.sync({
+                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                from: "REPLACE-PORT",
+                                                to: args[1],
+                                                countMatches: true,
+                                            });
+                                            x++
+                                        }
         
                                         //Upload file to /etc/apache2/sites-available
                                         setTimeout(() => {
