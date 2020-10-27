@@ -1485,6 +1485,7 @@ exports.run = async (client, message, args) => {
                                                         })
                                                     } else {
                                                         message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
+                                                        ssh.execCommand(`service apache2 start`, { cwd:'/root' })
                                                         fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                                     }
                                                 })
