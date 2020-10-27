@@ -30,7 +30,7 @@ module.exports = async (client, guild, files) => {
                 if (response.includes("Already up to date.")) {
                     console.log('Bot already up to date. No changes since last pull')
                 } else {
-                    message.channel.send('**[AUTOMATIC]** \nNew update on GitHub. Pulling. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting bot**")
+                    client.channels.get('766068015686483989').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting bot**")
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
