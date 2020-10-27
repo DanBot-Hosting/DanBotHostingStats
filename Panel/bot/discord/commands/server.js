@@ -1352,7 +1352,7 @@ exports.run = async (client, message, args) => {
                 if (!args[2]) {
                     message.channel.send(embed)
                 } else {
-                    message.channel.send('Please give me a few seconds. Trying to link you\'r domain!')
+                    message.channel.send('Please give me a few seconds. Trying to link that domain!')
                     //SSH Connection
                     ssh.connect({
                         host: config.SSH.Host,
@@ -1407,13 +1407,8 @@ exports.run = async (client, message, args) => {
                                                 console.log('SSL Gen complete. Continue!')
 
                                                 ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
-                                                    if (result.stderr) {
-                                                        //If an error exists. Eror and delete the proxy file
-                                                        message.channel.send('ERROR: Cancelled. Please contact Dan')
-                                                    } else {
                                                         //Complete
-                                                        console.log('Enabled website.')
-                                                    }
+                                                        message.reply('Domain has now been linked!')
                                                 })
                                             } else {
                                                 message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
