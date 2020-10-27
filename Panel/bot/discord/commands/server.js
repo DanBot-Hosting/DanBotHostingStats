@@ -1191,6 +1191,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
                     .addField(`__**SteamCMD:**__`, "Rust", true)
                     .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+                    .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server")
                 message.channel.send(embed2)
             }
         } else if (args[0].toLowerCase() == "delete") {
@@ -1338,10 +1339,15 @@ exports.run = async (client, message, args) => {
 
             const embed = new Discord.RichEmbed()
                 .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
-            if (!args[1]) {
+            if (!args[1] || !args[1].includes(domainfilter)) {
                 message.channel.send(embed)
-            } 
+            } else {
+                if (!args[2]) {
+                    message.channel.send(embed)
+                } else {
 
+                }
+            }
         } 
     };
 };
