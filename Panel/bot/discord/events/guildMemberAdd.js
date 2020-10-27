@@ -64,6 +64,7 @@ module.exports = async(client, member, guild) => {
         if (Date.now() - member.user.createdAt < 863136000) {
           member.kick().then(memberkicked => {
               client.channels.get('738527858594414663').send(member.user.tag + ` has been auto-kicked as account is under 10days old \nThat account was created ${getAge(Date.now() - member.user.createdAt)}, ago`)
+              client.users.get(member.user.id).send('Sorry! We only allow accounts over the age of 10days to join. \nYou\'r account is ' + getAge(Date.now() - member.user.createdAt) + ", ago. \n\nYou are welcome to join again once this account is over 10days old!")
           });
         }
     

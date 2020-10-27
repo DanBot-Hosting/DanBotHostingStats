@@ -13,3 +13,5 @@ Daemon/node_modules
 Daemon/package-lock.json
 
 Test/*
+
+OutageBot/*
