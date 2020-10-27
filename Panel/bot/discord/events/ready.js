@@ -1,4 +1,3 @@
-//let client = require("../../../../index.js").client;
 const exec = require('child_process').exec;
 const axios = require('axios');
 module.exports = async (client, guild, files) => {
