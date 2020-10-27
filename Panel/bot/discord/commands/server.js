@@ -1347,9 +1347,11 @@ exports.run = async (client, message, args) => {
                 .setFooter('If you just tried to link a domain. That TLD is not supported yet!')
             if (!args[1] || !args[1].includes(domainfilter)) {
                 message.channel.send(embed)
+                console.log('uh args 1')
             } else {
                 if (!args[2]) {
                     message.channel.send(embed)
+                    console.log('uh args 2')
                 } else {
                     //SSH Connection
                     ssh.connect({
