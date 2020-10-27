@@ -1340,7 +1340,6 @@ exports.run = async (client, message, args) => {
                     })});
             }
         } else if (args[0].toLowerCase() == "proxy") {
-            if (message.author.id == "137624084572798976") {
             let domainfilter = [".com", ".co.uk", ".us", ".xyz", ".org", ".host"];
 
             const embed = new Discord.RichEmbed()
@@ -1502,6 +1501,5 @@ exports.run = async (client, message, args) => {
                 }
             }
         }
-        } 
     };
 };
