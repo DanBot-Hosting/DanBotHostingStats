@@ -3,7 +3,6 @@ var pretty = require('prettysize');
 const fs = require('fs');
 const path = require('path');
 const {NodeSSH} = require('node-ssh');
-const { config } = require('process');
 const rif = require('replace-in-file');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
