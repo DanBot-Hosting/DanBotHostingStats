@@ -1404,9 +1404,9 @@ exports.run = async (client, message, args) => {
                                     }
                                 }).then(response => {
                                 const node = response.data.attributes.node;
-                                console.log(response.data.attributes)
-                                const port = response.data.relationships.allocations.data.attributes.port
-                                if (node == "Node 1 - Discord Bots") {
+                                console.log(node)
+                                const port = response.data.attributes.relationships.allocations.data[0].attributes.port
+                                if (node === "Node 1 - Discord Bots") {
                                 
                                 //Change Server IP
                                 setTimeout(() => {
@@ -1435,7 +1435,7 @@ exports.run = async (client, message, args) => {
                                         }
                                     }, 100) //END - Change Server Port
                                 }, 100) //END - Change Server IP
-                                } else if (node == "Node 2 - Discord Bots") {
+                                } else if (node === "Node 2  - Discord Bots") {
                                 
                                 //Change Server IP
                                 setTimeout(() => {
