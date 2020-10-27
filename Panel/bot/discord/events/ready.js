@@ -23,6 +23,7 @@ module.exports = async (client, guild, files) => {
         }
     ];
 
+    //Automatic 60second git pull.
     setInterval(() => {
         exec(`git pull`, (error, stdout) => {
             let response = (error || stdout);
