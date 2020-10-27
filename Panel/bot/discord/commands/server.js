@@ -1484,7 +1484,7 @@ exports.run = async (client, message, args) => {
                                                                 message.reply('Domain has now been linked!')
                                                         })
                                                     } else {
-                                                        message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!')
+                                                        message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled! \n\n*If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache')
                                                         ssh.execCommand(`service apache2 start`, { cwd:'/root' })
                                                         fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                                     }

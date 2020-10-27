@@ -281,7 +281,7 @@ exports.run = async(client, message, args) => {
             followRedirect: true,
             maxRedirects: 5,
             headers: {
-                'Authorization': 'Bearer ' + "FhzH9PUVKcUnrHxCySA9dOPbyVmimDaVmCEtXKaPvPMpAivj",
+                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
                 'Content-Type': 'application/json',
                 'Accept': 'Application/vnd.pterodactyl.v1+json',
             }
@@ -297,7 +297,7 @@ exports.run = async(client, message, args) => {
                         followRedirect: true,
                         maxRedirects: 5,
                         headers: {
-                            'Authorization': 'Bearer ' + "FhzH9PUVKcUnrHxCySA9dOPbyVmimDaVmCEtXKaPvPMpAivj",
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
                             'Content-Type': 'application/json',
                             'Accept': 'Application/vnd.pterodactyl.v1+json',
                         }
