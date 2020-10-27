@@ -1404,6 +1404,7 @@ exports.run = async (client, message, args) => {
                                     }
                                 }).then(response => {
                                 const node = response.data.attributes.node;
+                                console.log(response.data.attributes)
                                 const port = response.data.relationships.allocations.data.attributes.port
                                 if (node == "Node 1 - Discord Bots") {
                                 
