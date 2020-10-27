@@ -1363,7 +1363,7 @@ exports.run = async (client, message, args) => {
                     })
 
                     //Copy template file. Ready to be changed!
-                    fs.copySync(path.resolve('/root/DBH/Panel/proxy/template.txt'), '/root/DBH/Panel/proxy/' + args[1] + '.conf');
+                    fs.copySync(path.resolve('/root/DBH/Panel/proxy/template.txt'), args[1] + '.conf');
 
                     setTimeout(() => {
                         //Change Domain
