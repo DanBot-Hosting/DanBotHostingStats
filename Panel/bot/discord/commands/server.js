@@ -1245,10 +1245,12 @@ exports.run = async (client, message, args) => {
                                         }
                                     }).then(response => {
                                         msg.edit('Server deleted!')
+                                        collector.stop()
                                     });
                                 } else {
                                     message.delete()
                                     msg.edit('Request cancelled!')
+                                    collector.stop()
                                 }
                             })
                                 
