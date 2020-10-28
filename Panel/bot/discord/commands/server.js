@@ -1248,33 +1248,33 @@ exports.run = async (client, message, args) => {
                     const output = await arr.find(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
                     setTimeout(() => {
                         console.log(output)
-                        if (!output.attributes.user == userData.get(message.author.id).consoleID) {
-                            message.channel.send('You do not own that server. You cant delete it.')
-                        } else {
-
-                    msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
-                    const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000, max: 2 });
-                    collector.on('collect', message => {
-                        if (message == "confirm") {
-                            message.delete()
-                            axios({
-                                url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id,
-                                method: 'DELETE',
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        if (output.attributes.user == userData.get(message.author.id).consoleID) {
+                            msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
+                            const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000, max: 2 });
+                            collector.on('collect', message => {
+                                if (message == "confirm") {
+                                    message.delete()
+                                    axios({
+                                        url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id,
+                                        method: 'DELETE',
+                                        followRedirect: true,
+                                        maxRedirects: 5,
+                                        headers: {
+                                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                                        }
+                                    }).then(response => {
+                                        msg.edit('Server deleted!')
+                                    });
+                                } else {
+                                    message.delete()
+                                    msg.edit('Request cancelled!')
                                 }
-                            }).then(response => {
-                                msg.edit('Server deleted!')
-                            });
+                            })
+                                
                         } else {
-                            message.delete()
-                            msg.edit('Request cancelled!')
-                        }
-                    })
+                            message.channel.send('You do not own that server. You cant delete it.')
                         }
                     },500)
                 }, 10000)
