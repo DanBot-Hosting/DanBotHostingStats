@@ -17,6 +17,10 @@ Router.get("/:ID/", (req, res) => {
   if(!bot)return res.render("error.ejs", { message: "Bot Not Found" });
   
   res.render("bot/index.ejs", { bot, user: req.isAuthenticated() ? req.user : null });
+  */
+  
+      return res.render("error.ejs", { message: "page temporarily deleted." }); 
+
   
 });
 
@@ -52,7 +56,6 @@ Router.get("/:ID/remove", checkAuth, (req, res) => {
   } else {
     return res.render("error.ejs", { message: "You're not authorized to make changes to this bot." }); 
   }
-  */
 });
 
 module.exports = Router;
