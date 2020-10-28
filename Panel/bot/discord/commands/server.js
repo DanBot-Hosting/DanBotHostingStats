@@ -1480,11 +1480,13 @@ exports.run = async (client, message, args) => {
                                                                 //Complete
                                                                 message.reply('Domain has now been linked!')
 
+                                                                /*
                                                                 domains.set(args[1], {
                                                                     DiscordID: message.author.id,
                                                                     ServerID: args[2],
                                                                     Domain: args[1]
                                                                   });
+                                                                */
                                                         })
                                                     } else {
                                                         message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled! \n\n*If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache')
