@@ -13,9 +13,8 @@ const config2 = {
     "bot": "704467807122882562"
 }
 
-let db = require("quick.db");
-//let client = require("../../../../index.js").client;
-
+const Canvas = require("canvas");
+const db = require("quick.db");
 module.exports = async(client, member, guild) => {
 
     var getAge = function(millis) {
@@ -83,7 +82,7 @@ module.exports = async(client, member, guild) => {
         if (userData.get(member.user.id) == null) {
             const memberrole = member.guild.roles.find(role => role.id === config2.member);
             member.guild.members.get(member.user.id).addRole(memberrole)
-            client.channels.get(config2.welcome).send("Welcome <@" + member.user.id + "> to DanBot Hosting. To get started please read <#738527470164377630>");
+            client.channels.get(config2.welcome).send("Welcome <@" + member.user.id + "> to DanBot Hosting. To get started please read <#738527470164377630>");    
         } else {
             const memberrole = member.guild.roles.find(role => role.id === config2.member);
             const clientrole = member.guild.roles.find(role => role.id === "639489891016638496");

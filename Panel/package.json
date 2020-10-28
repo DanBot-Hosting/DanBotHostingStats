@@ -18,6 +18,7 @@
   "homepage": "https://github.com/danbot-devs/DanBotHostingStats#readme",
   "dependencies": {
     "body-parser": "latest",
+    "canvas": "^2.6.1",
     "chalk": "^3.0.0",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
