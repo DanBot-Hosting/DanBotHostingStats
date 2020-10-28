@@ -1252,7 +1252,7 @@ exports.run = async (client, message, args) => {
                             message.channel.send('You do not own that server. You cant delete it.')
                         } else {
 
-                    msg.edit('Are you sure you want to delete `' + response.data.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
+                    msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
                     const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000, max: 2 });
                     collector.on('collect', message => {
                         if (message == "confirm") {
