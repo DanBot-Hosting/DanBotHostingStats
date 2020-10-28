@@ -1204,53 +1204,29 @@ exports.run = async (client, message, args) => {
             if (!args[1]) {
                 message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
             } else {
-            message.channel.send('Checking server ' + args[1] + '\nPlease allow me 10seconds to fetch this.').then((msg) => {
-                var arr = [];
-
-            axios({
-                url: "https://panel.danbot.host" + "/api/application/servers",
-                method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    'Authorization': 'Bearer '  + config.Pterodactyl.apikey,
-                    'Content-Type': 'application/json',
-                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                }
-            }).then(resources => {
-                var countmax = resources.data.meta.pagination.total_pages
-                var i2 = countmax++
-    
-                var i = 0
-                while (i <i2) {
-                        //console.log(i)
-                        axios({
-                            url: "https://panel.danbot.host" + "/api/application/servers?page=" + i,
-                            method: 'GET',
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                                'Content-Type': 'application/json',
-                                'Accept': 'Application/vnd.pterodactyl.v1+json',
-                            }
-                        }).then(response => {
-                            //console.log(resources.data.meta)
-                            arr.push(...response.data.data)
-                        });
-                        i++
+            message.channel.send('Checking server ' + args[1] + '\nPlease allow me 2seconds to fetch this.').then((msg) => {
+                axios({
+                    url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
+                    method: 'GET',
+                    followRedirect: true,
+                    maxRedirects: 5,
+                    headers: {
+                        'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                        'Content-Type': 'application/json',
+                        'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
-                });
+                }).then(response => {
+                    const preoutput = response.data.attributes.relationships.servers.data
+                    const output = preoutput.find(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
+                
 
                 setTimeout(async () => {
                     //console.log(arr.length)
-                    const output = await arr.find(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
                     setTimeout(() => {
                         if (!output) {
                             msg.edit('Can\'t find that server :(')
                         } else {
 
-                        console.log(output)
                         if (output.attributes.user == userData.get(message.author.id).consoleID) {
                             msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
                             const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000, max: 2 });
@@ -1281,7 +1257,8 @@ exports.run = async (client, message, args) => {
                         }
                         }
                     },500)
-                }, 10000)
+                }, 1000)
+            });
                 });
             }
         } else if (args[0].toLowerCase() == "manage") {
