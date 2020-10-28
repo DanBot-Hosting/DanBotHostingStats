@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
         if (!args[0]) {
             //No args
             let embed = new Discord.RichEmbed()
-                .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere`')
+                .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere` \nDelete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
             message.channel.send(embed)
 
         } else if (args[0].toLowerCase() == "create") {
