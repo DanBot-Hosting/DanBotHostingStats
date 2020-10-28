@@ -1201,26 +1201,64 @@ exports.run = async (client, message, args) => {
             }
         } else if (args[0].toLowerCase() == "delete") {
             //delete server things
+            if (!args[1]) {
+                message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
+            } else {
             message.channel.send('Checking server ' + args[1]).then((msg) => {
-                axios({
-                    url: config.Pterodactyl.hosturl + "/api/application/servers/" + args[1],
-                    method: 'GET',
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                        'Content-Type': 'application/json',
-                        'Accept': 'Application/vnd.pterodactyl.v1+json',
+                var arr = [];
+
+            axios({
+                url: "https://panel.danbot.host" + "/api/application/servers",
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer '  + config.Pterodactyl.apikey,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(resources => {
+                var countmax = resources.data.meta.pagination.total_pages
+                var i2 = countmax++
+    
+                var i = 0
+                while (i <i2) {
+                        //console.log(i)
+                        axios({
+                            url: "https://panel.danbot.host" + "/api/application/servers?page=" + i,
+                            method: 'GET',
+                            followRedirect: true,
+                            maxRedirects: 5,
+                            headers: {
+                                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                                'Content-Type': 'application/json',
+                                'Accept': 'Application/vnd.pterodactyl.v1+json',
+                            }
+                        }).then(response => {
+                            //console.log(resources.data.meta)
+                            arr.push(...response.data.data)
+                        });
+                        i++
                     }
-                }).then(response => {
-                    console.log(response)
+                    var total = resources.data.meta.pagination.total
+                });
+
+                setTimeout(async () => {
+                    //console.log(arr.length)
+                    const output = await arr.map(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
+                    setTimeout(() => {
+                        console.log(output)
+                        if (!output.attributes.user == userData.get(message.author.id).consoleID) {
+                            message.channel.send('You do not own that server. You cant delete it.')
+                        } else {
+
                     msg.edit('Are you sure you want to delete `' + response.data.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
                     const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000, max: 2 });
                     collector.on('collect', message => {
                         if (message == "confirm") {
                             message.delete()
                             axios({
-                                url: config.Pterodactyl.hosturl + "/api/application/servers/" + args[1],
+                                url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id,
                                 method: 'DELETE',
                                 followRedirect: true,
                                 maxRedirects: 5,
@@ -1237,8 +1275,11 @@ exports.run = async (client, message, args) => {
                             msg.edit('Request cancelled!')
                         }
                     })
+                        }
+                    },500)
+                }, 10000)
                 });
-            })
+            }
         } else if (args[0].toLowerCase() == "manage") {
             message.channel.send('Uh this isnt done yet...')
         } else if (args[0] == "list") {
