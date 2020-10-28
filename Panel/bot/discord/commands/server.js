@@ -1240,13 +1240,16 @@ exports.run = async (client, message, args) => {
                         });
                         i++
                     }
-                    var total = resources.data.meta.pagination.total
                 });
 
                 setTimeout(async () => {
                     //console.log(arr.length)
                     const output = await arr.find(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
                     setTimeout(() => {
+                        if (!output) {
+                            msg.edit('Can\'t find that server :(')
+                        } else {
+
                         console.log(output)
                         if (output.attributes.user == userData.get(message.author.id).consoleID) {
                             msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted**')
@@ -1275,6 +1278,7 @@ exports.run = async (client, message, args) => {
                                 
                         } else {
                             message.channel.send('You do not own that server. You cant delete it.')
+                        }
                         }
                     },500)
                 }, 10000)
