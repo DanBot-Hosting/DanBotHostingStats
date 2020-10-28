@@ -1245,7 +1245,7 @@ exports.run = async (client, message, args) => {
 
                 setTimeout(async () => {
                     //console.log(arr.length)
-                    const output = await arr.map(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
+                    const output = await arr.find(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
                     setTimeout(() => {
                         console.log(output)
                         if (!output.attributes.user == userData.get(message.author.id).consoleID) {
