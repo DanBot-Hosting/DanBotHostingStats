@@ -43,6 +43,7 @@ global.userData = new db.table("userData");
 global.settings = new db.table("settings");
 global.webSettings = new db.table("webSettings");
 global.mutesData = new db.table("muteData");
+global.domains = new db.table("linkedDomains")
 global.client = new Discord.Client({
   disableEveryone: true
 });

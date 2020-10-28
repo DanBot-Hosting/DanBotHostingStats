@@ -1341,7 +1341,7 @@ exports.run = async (client, message, args) => {
             }
         } else if (args[0].toLowerCase() == "proxy") {
             const embed = new Discord.RichEmbed()
-                .setTitle('__**How to link a domain to a website/server**__ \nCommand format: `' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
+                .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
             if (!args[1]) {
                 message.channel.send(embed)
             } else {
@@ -1479,6 +1479,12 @@ exports.run = async (client, message, args) => {
                                                         ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
                                                                 //Complete
                                                                 message.reply('Domain has now been linked!')
+
+                                                                domains.set(args[1], {
+                                                                    DiscordID: message.author.id,
+                                                                    ServerID: args[2],
+                                                                    Domain: args[1]
+                                                                  });
                                                         })
                                                     } else {
                                                         message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled! \n\n*If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache')
