@@ -1,0 +1,59 @@
+{
+    "Port": 1144, 
+
+    "DiscordBot": {
+        "Token": "Bot Token",
+        "Prefix": "Prefix",
+        "clientID": "Client ID from Discord Dev portal for the bot",
+        "clientSecret": "Client Secret from the Discord Dev Portal.",
+        "callbackURL": "Call back url. For logging into the website",
+        "ownerID": "Owner ID. Gives you access to a few more commands :)",
+        "mLogs": "Message logs channel ID",
+        "oLogs": "Other logs channel id (Currently used for namechanges and linking logs)",
+        "welcome": "Welcome channel ID",
+        "inviterewmsg": "Invite reward message channel ID",
+        "invite5": "Invite 5+ role ID",
+        "invite10": "Invite 10+ role ID",
+        "invite25": "Invite 25+ role ID",
+        "invite50": "Invite 50+ role ID",
+        "invitechannel": "Invite logs channel ID",
+        "requestsChannel": "Request channel ID"
+    },
+
+    "DiscordSuggestions": {
+        "channelID": "Channel ID for Suggestions webhook",
+        "Token": "Discord Webhook token"
+    },
+
+    "DB": {
+        "MongoDB": "MongoDB connection (forgot what this is for but give it one anyway)"
+    },
+
+    "Pterodactyl": {
+        "hosturl": "Pterodactyl URL (Dont put the / on the end) Example: https://your.panel.com",
+        "apikey": "Pterodactyl ADMIN Api key. Where to find? add admin/api to the end of your panel domain",
+        "apikeyclient": "Pterodactyl CLIENT Api key. Find it: add account/api to the end of your panel domain"
+    },
+
+    "Proxmox": {
+        "url": "Proxmox (Not used yet so ignore this)",
+        "auth": "Proxmox (Not used yet so ignore this)",
+        "username": "Proxmox (Not used yet so ignore this)",
+        "password": "Proxmox (Not used yet so ignore this)"
+    },
+    
+    "Email": {
+        "Host": "smtp mail server host",
+        "Port": "587",
+        "User": "smtp mail server username",
+        "Password": "smtp mail server password",
+        "From": "Mail from email"
+    },
+
+    "SSH": {
+        "Host": "SSH Host (Used for Proxy servers right now)",
+        "User": "root",
+        "Password": "User password for SSH",
+        "Port": 22
+    }
+}
