@@ -23,7 +23,7 @@ module.exports = async (client, oldMember, newMember) => {
         } else if (newName.includes(a)) {
             oldMember.setNickname("")
         } else if (newName.includes("!")) {
-            oldMember.setNickname("I'm a hoister")
+            oldMember.setNickname("I'm a furry OwO")
         }
 
         // Make a new RichEmbed
