@@ -1,5 +1,6 @@
 const exec = require('child_process').exec;
 const axios = require('axios');
+const { Message } = require('discord.js');
 module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
 
@@ -60,7 +61,22 @@ module.exports = async (client, guild, files) => {
             invites[g.id] = guildInvites;
         });
     });
-    
+
+    //Node status channel embed
+    setInterval(() => {
+
+        //Node status
+        client.channels.get("757949242495991918").fetchMessage("771507868997648384").then(msg => {
+            const embed = new Discord.RichEmbed()
+                .addField("__**Node Status**__", `Node 1: ${nodeStatus.get("node1").status} \nNode 2: ${nodeStatus.get("node2").status} \nNode 3: ${nodeStatus.get("node3").status} \nNode 4: ${nodeStatus.get(node4)}`)
+            msg.edit(embed)
+        });
+
+        //Misc status
+        client.channels.get("757949242495991918").fetchMessage("771508453344673814").then(msg => {
+        });
+    }, 15000)
+
     //Voice channel stats updator
     setInterval(async () => {
         let guild1 = await client.guilds.get("639477525927690240").fetchMembers();

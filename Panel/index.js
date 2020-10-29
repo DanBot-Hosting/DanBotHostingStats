@@ -17,6 +17,7 @@ global.fs = require("fs");
 const hbs = require('hbs');
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 global.transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
@@ -33,8 +34,75 @@ const {
 } = require(process.cwd() + "/util/discordAPI");
 
 
-//Discord Bot
+//Node status 
+setInterval(() => {
+//Node 1
+axios({
+  url: config.Pterodactyl.hosturl + "/api/client/servers/99d65091/resources",
+  method: 'GET',
+  followRedirect: true,
+  maxRedirects: 5,
+  headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+  }
+}).then(response => {
+  nodeStatus.set("node1", {
+    status: "Online"
+  });
+}).catch(error => {
+  nodeStatus.set("node1", {
+    status: "Offline"
+  });
+})
 
+//Node 2
+axios({
+  url: config.Pterodactyl.hosturl + "/api/client/servers/0cb9a74e/resources",
+  method: 'GET',
+  followRedirect: true,
+  maxRedirects: 5,
+  headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+  }
+}).then(response => {
+  nodeStatus.set("node2", {
+    status: "Online"
+  });
+}).catch(error => {
+  nodeStatus.set("node2", {
+    status: "Offline"
+  });
+})
+
+//Node 3
+axios({
+  url: config.Pterodactyl.hosturl + "/api/client/servers/373fafce/resources",
+  method: 'GET',
+  followRedirect: true,
+  maxRedirects: 5,
+  headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+  }
+}).then(response => {
+  nodeStatus.set("node3", {
+    status: "Online"
+  });
+}).catch(error => {
+  nodeStatus.set("node3", {
+    status: "Offline"
+  });
+})
+
+}, 5000)
+
+
+//Discord Bot
 let db = require("quick.db");
 global.Discord = require("discord.js");
 global.fs = require("fs");
@@ -43,7 +111,8 @@ global.userData = new db.table("userData");
 global.settings = new db.table("settings");
 global.webSettings = new db.table("webSettings");
 global.mutesData = new db.table("muteData");
-global.domains = new db.table("linkedDomains")
+global.domains = new db.table("linkedDomains");
+global.nodeStatus = new db.table("nodeStatus");
 global.client = new Discord.Client({
   disableEveryone: true
 });
