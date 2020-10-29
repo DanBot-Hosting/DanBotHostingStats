@@ -49,11 +49,11 @@ axios({
   }
 }).then(response => {
   nodeStatus.set("node1", {
-    status: "Online"
+    status: "Online 🟢"
   });
 }).catch(error => {
   nodeStatus.set("node1", {
-    status: "Offline"
+    status: "Offline 🔴"
   });
 })
 
@@ -70,11 +70,11 @@ axios({
   }
 }).then(response => {
   nodeStatus.set("node2", {
-    status: "Online"
+    status: "Online 🟢"
   });
 }).catch(error => {
   nodeStatus.set("node2", {
-    status: "Offline"
+    status: "Offline 🔴"
   });
 })
 
@@ -91,11 +91,11 @@ axios({
   }
 }).then(response => {
   nodeStatus.set("node3", {
-    status: "Online"
+    status: "Online 🟢"
   });
 }).catch(error => {
   nodeStatus.set("node3", {
-    status: "Offline"
+    status: "Offline 🔴"
   });
 })
 
