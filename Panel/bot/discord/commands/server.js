@@ -1221,7 +1221,6 @@ exports.run = async (client, message, args) => {
                 
 
                 setTimeout(async () => {
-                    //console.log(arr.length)
                     setTimeout(() => {
                         if (!output) {
                             msg.edit('Can\'t find that server :(')
