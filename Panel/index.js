@@ -47,7 +47,7 @@ global.domains = new db.table("linkedDomains")
 global.client = new Discord.Client({
   disableEveryone: true
 });
-const bot = client;
+global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
 bot.pvc = new Discord.Collection();
 
