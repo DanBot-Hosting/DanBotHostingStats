@@ -68,7 +68,7 @@ module.exports = async (client, guild, files) => {
         //Node status
         client.channels.get("757949242495991918").fetchMessage("771507868997648384").then(msg => {
             const embed = new Discord.RichEmbed()
-                .addField("__**Node Status**__", `Node 1: ${nodeStatus.get("node1").status} \nNode 2: ${nodeStatus.get("node2").status} \nNode 3: ${nodeStatus.get("node3").status} \nNode 4: ${nodeStatus.get("node4")}`)
+                .addField("__**Node Status**__", `**Node 1**: ${nodeStatus.get("node1").status} \n**Node 2**: ${nodeStatus.get("node2").status} \n**Node 3**: ${nodeStatus.get("node3").status} \n**Node 4**: ${nodeStatus.get("node4").status}`)
             msg.edit(embed)
         });
 
