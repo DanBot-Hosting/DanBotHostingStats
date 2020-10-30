@@ -75,7 +75,7 @@ module.exports = async (client, guild, files) => {
         //Misc status
         client.channels.get("757949242495991918").fetchMessage("771508453344673814").then(msg => {
             const embed = new Discord.RichEmbed()
-                .setTitle(`__**Misc Status**__ \n**Lavalink 1**: ${nodeStatus.get("lava.danbot.host:2333").status} \n**Lavalink 2**: ${nodeStatus.get("lava2.danbot.host:2333").status} \n**Mail Server**: ${nodeStatus.get("mail.danbot.host").status} \n**Reverse Proxy**: ${nodeStatus.get("154.27.68.234").status} \n**Panel Website**: ${nodeStatus.get("panel.danbot.host").status}`)
+                .setTitle(`__**Misc Status**__ \n**Lavalink 1**: ${nodeStatus.get("lava.danbot.host").status} \n**Lavalink 2**: ${nodeStatus.get("lava2.danbot.host").status} \n**Mail Server**: ${nodeStatus.get("mail.danbot.host").status} \n**Reverse Proxy**: ${nodeStatus.get("154.27.68.234").status} \n**Panel Website**: ${nodeStatus.get("panel.danbot.host").status}`)
             msg.edit(embed)
         });
     }, 15000)
