@@ -19,6 +19,7 @@ global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 var ping = require('ping');
+const ping2 = require('ping-tcp-js')
 global.transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
@@ -121,7 +122,7 @@ axios({
   });
 })
 
-var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'lava2.danbot.host:2333', 'lava.danbot.host:2333'];
+var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host'];
 hosts.forEach(function(host){
   ping.sys.probe(host, function(isAlive){
     if (isAlive == true) {
@@ -135,6 +136,22 @@ hosts.forEach(function(host){
     }
   });
 });
+
+const portz = 2333;
+
+//Lavalink Server 1
+const hostz = 'lava.danbot.host';
+ping2
+  .ping(hostz, portz)
+  .then(() => nodeStatus.set(hostz), { status: "Online 🟢" })
+  .catch((e) => nodeStatus.set(hostz), { status: "Offline 🔴" });
+
+//Lavalink Server 2
+const hostz2 = 'lava2.danbot.host';
+ping2
+  .ping(hostz2, portz)
+  .then(() => nodeStatus.set(hostz), { status: "Online 🟢" })
+  .catch((e) => nodeStatus.set(hostz), { status: "Offline 🔴" });
 
 }, 5000)
 
