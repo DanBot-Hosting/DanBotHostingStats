@@ -143,15 +143,23 @@ const portz = 2333;
 const hostz = 'lava.danbot.host';
 ping2
   .ping(hostz, portz)
-  .then(() => nodeStatus.set("lava.danbot.host"), { status: "Online 🟢" })
-  .catch((e) => nodeStatus.set("lava.danbot.host"), { status: "Offline 🔴" });
+  .then(() => nodeStatus.set("lava.danbot.host"), { 
+    status: "Online 🟢" 
+  })
+  .catch((e) => nodeStatus.set("lava.danbot.host"), { 
+    status: "Offline 🔴" 
+  });
 
 //Lavalink Server 2
 const hostz2 = 'lava2.danbot.host';
 ping2
   .ping(hostz2, portz)
-  .then(() => nodeStatus.set("lava2.danbot.host"), { status: "Online 🟢" })
-  .catch((e) => nodeStatus.set("lava2.danbot.host"), { status: "Offline 🔴" });
+  .then(() => nodeStatus.set("lava2.danbot.host"), { 
+    status: "Online 🟢" 
+  })
+  .catch((e) => nodeStatus.set("lava2.danbot.host"), { 
+    status: "Offline 🔴" 
+  });
 
 }, 5000)
 
