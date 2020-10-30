@@ -100,6 +100,27 @@ axios({
   });
 })
 
+//Node 4
+axios({
+  url: config.Pterodactyl.hosturl + "/api/client/servers/98ca4dbd/resources",
+  method: 'GET',
+  followRedirect: true,
+  maxRedirects: 5,
+  headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+  }
+}).then(response => {
+  nodeStatus.set("node4", {
+    status: "Online 🟢"
+  });
+}).catch(error => {
+  nodeStatus.set("node4", {
+    status: "Offline 🔴"
+  });
+})
+
 var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'lava2.danbot.host:2333', 'lava.danbot.host:2333'];
 hosts.forEach(function(host){
   ping.sys.probe(host, function(isAlive){
