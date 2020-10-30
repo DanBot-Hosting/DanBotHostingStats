@@ -24,7 +24,7 @@ module.exports = async (client, guild, files) => {
         }
     ];
 
-    //Automatic 60second git pull.
+    //Automatic 30second git pull.
     setInterval(() => {
         exec(`git pull`, (error, stdout) => {
             let response = (error || stdout);
@@ -39,7 +39,7 @@ module.exports = async (client, guild, files) => {
                 };
             }
         })
-    }, 60000)
+    }, 30000)
 
     setInterval(() => {
         const activity = activities[Math.floor(Math.random() * activities.length)];
