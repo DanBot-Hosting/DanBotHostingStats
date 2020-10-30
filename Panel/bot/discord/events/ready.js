@@ -74,6 +74,9 @@ module.exports = async (client, guild, files) => {
 
         //Misc status
         client.channels.get("757949242495991918").fetchMessage("771508453344673814").then(msg => {
+            const embed = new Discord.RichEmbed()
+                .setTitle(`__**Node Status**__ \n**Lavalink 1**: ${nodeStatus.get("lavalink1").status} \n**Lavalink 2**: ${nodeStatus.get("lavalink2").status} \n**Mail Server**: ${nodeStatus.get("mail").status} \n**Reverse Proxy**: ${nodeStatus.get("rproxy").status} \n**Panel Website**: ${nodeStatus.get("panel").status}`)
+            msg.edit(embed)
         });
     }, 15000)
 

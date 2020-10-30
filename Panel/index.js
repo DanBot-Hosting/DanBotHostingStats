@@ -18,6 +18,7 @@ const hbs = require('hbs');
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
+var ping = require('ping');
 global.transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
@@ -98,6 +99,21 @@ axios({
     status: "Offline 🔴"
   });
 })
+
+var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'lava2.danbot.host:2333', 'lava.danbot.host:2333'];
+hosts.forEach(function(host){
+  ping.sys.probe(host, function(isAlive){
+    if (isAlive == true) {
+      nodeStatus.set(host, {
+        status: "Online 🟢"
+      })
+    } else if (isAlive == false) {
+      nodeStatus.set(host, {
+        status: "Offline 🔴"
+      });
+    }
+  });
+});
 
 }, 5000)
 
