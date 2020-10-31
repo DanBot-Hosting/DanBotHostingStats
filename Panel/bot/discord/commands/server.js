@@ -1270,26 +1270,8 @@ exports.run = async (client, message, args) => {
             message.channel.send('Loading servers...')
             //List servers
             var arr = [];
-
-            axios({
-                url: "https://panel.danbot.host" + "/api/application/servers",
-                method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    'Authorization': 'Bearer '  + config.Pterodactyl.apikey,
-                    'Content-Type': 'application/json',
-                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                }
-            }).then(resources => {
-                var countmax = resources.data.meta.pagination.total_pages
-                var i2 = countmax++
-    
-                var i = 0
-                while (i <i2) {
-                        //console.log(i)
                         axios({
-                            url: "https://panel.danbot.host" + "/api/application/servers?page=" + i,
+                            url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
                             method: 'GET',
                             followRedirect: true,
                             maxRedirects: 5,
@@ -1299,27 +1281,22 @@ exports.run = async (client, message, args) => {
                                 'Accept': 'Application/vnd.pterodactyl.v1+json',
                             }
                         }).then(response => {
+                            const preoutput = response.data.attributes.relationships.servers.data
                             //console.log(resources.data.meta)
-                            arr.push(...response.data.data)
+                            arr.push(...preoutput)
+                            setTimeout(async () => {
+                                //console.log(arr.length)
+                                console.log(arr)
+                                const output = await preoutput.filter(usr => usr.attributes ? usr.attributes.user == userData.get(message.author.id).consoleID : false)
+                                setTimeout(() => {
+                                    var clean = arr.flatMap(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
+                                    const embed = new Discord.RichEmbed()
+                                        .addField('__**Your Servers:**__', clean)
+                                    message.channel.send(embed)
+                                    //console.log(output)
+                                },500)
+                            }, 5000)
                         });
-                        i++
-                    }
-                    console.log(resources.data.meta.pagination)
-                    var total = resources.data.meta.pagination.total
-                });
-
-                setTimeout(async () => {
-                    //console.log(arr.length)
-                    const output = await arr.filter(usr => usr.attributes ? usr.attributes.user == userData.get(message.author.id).consoleID : false)
-                    setTimeout(() => {
-                        var clean = output.map(e => "`" + e.attributes.name + "` Server ID: `" + e.attributes.identifier + "`\n")
-                        var clean2 = clean.toString().replace(/^\s+|\s+$/g,'')
-                        const embed = new Discord.RichEmbed()
-                            .addField('__**Your Servers:**__', "Server Name: \n" +  clean2)
-                        message.channel.send(embed)
-                        //console.log(output)
-                    },500)
-                }, 10000)
         } else if (args[0].toLowerCase() == "status") {
             if (!args[1]) {
                 let embed = new Discord.RichEmbed()
