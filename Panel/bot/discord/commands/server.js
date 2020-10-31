@@ -1262,6 +1262,8 @@ exports.run = async (client, message, args) => {
             });
                 });
             }
+        } else if (args[0].toLowerCase() == "unproxy") {
+            //Remove proxy
         } else if (args[0].toLowerCase() == "manage") {
             message.channel.send('Uh this isnt done yet...')
         } else if (args[0] == "list") {
@@ -1382,7 +1384,7 @@ exports.run = async (client, message, args) => {
                     })
 
                     //Copy template file. Ready to be changed!
-                    fs.access(path.resolve(path.dirname(require.main.filename), "proxy/" + args[1] + ".conf"), fs.constants.R_OK, (err) => {
+                    fs.access(path.resolve(path.dirname(require.main.filename), "proxy/" + args[1].toLowerCase() + ".conf"), fs.constants.R_OK, (err) => {
                         if (!err) {
                             return message.channel.send("This domain has been linked before or is currently linked..")
                         } else {
@@ -1404,7 +1406,7 @@ exports.run = async (client, message, args) => {
                                     const domainchange = rif.sync({
                                         files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                         from: "REPLACE-DOMAIN",
-                                        to: args[1],
+                                        to: args[1].toLowerCase(),
                                         countMatches: true,
                                     });
                                     z++
