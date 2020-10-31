@@ -156,7 +156,7 @@ ping2
   .ping(hostz2, portz)
   .then(() => nodeStatus.set("lava2.danbot.host", { 
     status: "Online 🟢" 
-  }), console.log('test'))
+  }))
   .catch((e) => nodeStatus.set("lava2.danbot.host", { 
     status: "Offline 🔴" 
   }));
