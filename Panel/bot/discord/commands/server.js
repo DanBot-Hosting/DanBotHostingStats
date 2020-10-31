@@ -1287,9 +1287,8 @@ exports.run = async (client, message, args) => {
                             setTimeout(async () => {
                                 //console.log(arr.length)
                                 console.log(arr)
-                                const output = await preoutput.filter(usr => usr.attributes ? usr.attributes.user == userData.get(message.author.id).consoleID : false)
                                 setTimeout(() => {
-                                    var clean = arr.flatMap(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
+                                    var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
                                     const embed = new Discord.RichEmbed()
                                         .addField('__**Your Servers:**__', clean)
                                     message.channel.send(embed)
