@@ -14,7 +14,7 @@ module.exports = (client, message) => {
         message.guild.members.get(message.author.id).removeRole(muteRole)
     }
 
-
+/*
     if (message.attachments.size > 0) {
         if (message.attachments.every(attachIsImage)) {
             const Tesseract = require("tesseract.js")
@@ -50,8 +50,9 @@ module.exports = (client, message) => {
     function attachIsImage(msgAttach) {
         var url = msgAttach.url;
         //True if this url is a png image.
-        return url.indexOf("png", url.length - "png".length /*or 3*/ ) !== -1;
-    }
+        return url.indexOf("png", url.length - "png".length /*or 3*/// ) !== -1;
+   // }
+
 
     if (message.channel.type == "dm") {
         if (message.author.id == "137624084572798976") {
