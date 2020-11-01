@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
             let embed = new Discord.RichEmbed()
                 .setColor('RANDOM')
                 .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
-                .addField('**Admin Commands:**', config.DiscordBot.Prefix + "staff apply open/closed | Open or close staff applications. \n" + config.DiscordBot.Prefix + "staff settings | Shows current website settings")
+                .addField('**Admin Commands:**', config.DiscordBot.Prefix + "staff apply open/close | Open or close staff applications. \n" + config.DiscordBot.Prefix + "staff settings | Shows current website settings")
                 .addField('**Owner Commands:**', config.DiscordBot.Prefix + "staff maintenance on/off | Enable or disable website maintenance. \n" + config.DiscordBot.Prefix + "staff update | Pulls updates from GitHub")
             message.channel.send(embed)
         } else {
@@ -59,9 +59,9 @@ exports.run = async (client, message, args) => {
                     message.channel.send("Staff applications now closed")
                 } else {
                     if (webSettings.fetch("staff-applications.enabled") == "true") {
-                        message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/closed` to enable or disable staff applications \n**Staff applications are currently:** **OPEN**");
+                        message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/close` to enable or disable staff applications \n**Staff applications are currently:** **OPEN**");
                     } else if (webSettings.fetch("staff-applications.enabled") == "false") {
-                        message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/closed` to enable or disable staff applications \n**Staff applications are currently:** **CLOSED**");
+                        message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/close` to enable or disable staff applications \n**Staff applications are currently:** **CLOSED**");
                     }
                 };
             };

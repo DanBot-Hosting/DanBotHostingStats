@@ -135,7 +135,7 @@ hosts.forEach(function(host){
       });
     }
   });
-});
+}, { timeout: 10 });
 
 const portz = 2333;
 
