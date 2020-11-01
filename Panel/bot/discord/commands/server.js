@@ -1505,7 +1505,26 @@ exports.run = async (client, message, args) => {
                 }
             }
         } else if (args[0].toLowerCase() == "unproxy") {
-            //Remove proxy
+            if (!args[1]) {
+                const embed = new Discord.RichEmbed()
+                    .setTitle('__**How to remove a domain from a server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server unproxy domainhere')
+                message.channel.send(embed)
+            } else {
+            
+            //SSH Connection
+            ssh.connect({
+                host: config.SSH.Host,
+                username: config.SSH.User,
+                port: config.SSH.Port,
+                password: config.SSH.Password,
+                tryKeyboard: true,
+            })
+
+            //Delete file from apache2 dir
+            ssh.execCommand('a2dissite ' + args[1] + ' && rm /etc/apache2/sites-available/' + args[1] + '.conf && rm -rf /etc/letsencrypt/live/' + args[1] + ' && rm -rf /etc/letsencrypt/archive' + args[1], { cwd:'/root' })
+            fs.unlinkSync("./proxy/" + args[1] + ".conf");
+
+            }
         }
     }
 };
