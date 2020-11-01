@@ -1472,7 +1472,7 @@ exports.run = async (client, message, args) => {
                                             ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
                                                 
                                                 //Run command to genate SSL cert.
-                                                ssh.execCommand(`service apache2 stop && certbot certonly -d ${args[1]} --standalone --non-interactive --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
+                                                ssh.execCommand(`certbot certonly -d ${args[1]} --standalone --non-interactive --webroot-path /var/www/html --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
                                                     if (result.stdout.includes('Congratulations!')) {
                                                         //No error. Continue to enable site on apache2 then restart
                                                         console.log('SSL Gen complete. Continue!')
@@ -1491,7 +1491,6 @@ exports.run = async (client, message, args) => {
                                                         })
                                                     } else {
                                                         message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled! \n\n**If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache** \n\nFull Error: ```' + result.stdout + '```')
-                                                        ssh.execCommand(`service apache2 start`, { cwd:'/root' })
                                                         fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                                     }
                                                 })
