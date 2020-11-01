@@ -1262,8 +1262,6 @@ exports.run = async (client, message, args) => {
             });
                 });
             }
-        } else if (args[0].toLowerCase() == "unproxy") {
-            //Remove proxy
         } else if (args[0].toLowerCase() == "manage") {
             message.channel.send('Uh this isnt done yet...')
         } else if (args[0] == "list") {
@@ -1472,7 +1470,7 @@ exports.run = async (client, message, args) => {
                                             ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
                                                 
                                                 //Run command to genate SSL cert.
-                                                ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html  --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
+                                                ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
                                                     if (result.stdout.includes('Congratulations!')) {
                                                         //No error. Continue to enable site on apache2 then restart
                                                         console.log('SSL Gen complete. Continue!')
@@ -1506,6 +1504,8 @@ exports.run = async (client, message, args) => {
                     })
                 }
             }
+        } else if (args[0].toLowerCase() == "unproxy") {
+            //Remove proxy
         }
-    };
+    }
 };
