@@ -62,6 +62,13 @@ module.exports = async (client, guild, files) => {
         });
     }, 30000);
 
+    // Voice-Channels:
+    
+    client.pvc = new Discord.Collection();
+
+    // end of Voice-Channels
+
+
     //Reaction-Roles:
 
     let reactionRoles = require('../reactionRoles');

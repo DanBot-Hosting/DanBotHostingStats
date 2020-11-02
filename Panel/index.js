@@ -180,7 +180,6 @@ global.client = new Discord.Client({
 });
 global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
-bot.pvc = new Discord.Collection();
 
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
