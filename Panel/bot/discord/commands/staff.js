@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
             let embed = new Discord.RichEmbed()
                 .setColor('RANDOM')
                 .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
-                .addField('**Admin Commands:**', config.DiscordBot.Prefix + "staff apply open/close | Open or close staff applications. \n" + config.DiscordBot.Prefix + "staff settings | Shows current website settings")
+                .addField('**Admin Commands:**', config.DiscordBot.Prefix + "staff apply open/close | Open or close staff applications. \n" + config.DiscordBot.Prefix + "staff settings | Shows current website settings\n" + config.DiscordBot.Prefix + "staff reactionroles | Reloads all reaction roles.")
                 .addField('**Owner Commands:**', config.DiscordBot.Prefix + "staff maintenance on/off | Enable or disable website maintenance. \n" + config.DiscordBot.Prefix + "staff update | Pulls updates from GitHub")
             message.channel.send(embed)
         } else {
@@ -92,6 +92,7 @@ exports.run = async (client, message, args) => {
             }
             break;
         case 'reactionroles':
+            message.channel.send("Reloading reaction roles...")
             let reactionRoles = require('../reactionRoles');
             client.reactionRoles = reactionRoles;
 
@@ -110,6 +111,8 @@ exports.run = async (client, message, args) => {
                         if (reaction.length == 18) reaction = client.emojis.get(reaction);
                         await rmessage.react(reaction);
                     }
+                    message.channel.send("Done reloading reaction roles...");
+
                 });
             })
             break;
