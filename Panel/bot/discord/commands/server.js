@@ -1521,9 +1521,9 @@ exports.run = async (client, message, args) => {
             })
 
             //Delete file from apache2 dir
-            ssh.execCommand('a2dissite ' + args[1] + ' && rm /etc/apache2/sites-available/' + args[1] + '.conf && rm -rf /etc/letsencrypt/live/' + args[1] + ' && rm -rf /etc/letsencrypt/archive' + args[1], { cwd:'/root' })
+            ssh.execCommand('a2dissite ' + args[1] + ' && rm /etc/apache2/sites-available/' + args[1] + '.conf && rm -rf /etc/letsencrypt/live/' + args[1] + ' && rm -rf /etc/letsencrypt/archive' + args[1] + '&& service apache2 restart', { cwd:'/root' })
             fs.unlinkSync("./proxy/" + args[1] + ".conf");
-
+            message.channel.send('Proxy has been removed from ' + args[1])
             }
         }
     }
