@@ -30,6 +30,26 @@ Router.get("/Node4", (req, res) => {
   res.redirect("/stats/Node4");
 });
 
+//Node status json format
+Router.get("/nodeStatus", (req, res) => {
+  let data = {
+    nodestatus: {
+      Node1: nodeStatus.fetch("node1").status,
+      Node2: nodeStatus.fetch("node2").status,
+      Node3: nodeStatus.fetch("node3").status,
+      Node4: nodeStatus.fetch("node4").status
+    },
+    misc: {
+      Lava1: nodeStatus.fetch("lava.danbot.host").status,
+      Lava2: nodeStatus.fetch("lava2.danbot.host").status,
+      Mail: nodeStatus.fetch("mail.danbot.host").status,
+      RProxy: nodeStatus.fetch("154.27.68.234").status,
+      Panel: nodeStatus.fetch("panel.danbot.host").status
+    }
+  };
+
+  res.json(data);
+});
 
 
 Router.get("/bots", (req, res) => {

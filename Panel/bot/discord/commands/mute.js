@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
             mutesData.set(user.user.id, {
                 muted: "true",
                 muteTime: Date.now(),
-                mutedLength: messagez
+                mutedLength: messagez * 60000
             });
             message.channel.send("***The user has been successfully muted for " + messagez + " minute(s) :white_check_mark:***")
         if (!modlog) {
