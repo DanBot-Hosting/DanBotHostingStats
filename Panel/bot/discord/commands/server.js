@@ -1505,6 +1505,7 @@ exports.run = async (client, message, args) => {
                 }
             }
         } else if (args[0].toLowerCase() == "unproxy") {
+            if (message.author.id == "137624084572798976") { 
             if (!args[1]) {
                 const embed = new Discord.RichEmbed()
                     .setTitle('__**How to remove a domain from a server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server unproxy domainhere')
@@ -1525,6 +1526,9 @@ exports.run = async (client, message, args) => {
             fs.unlinkSync("./proxy/" + args[1] + ".conf");
             message.channel.send('Proxy has been removed from ' + args[1])
             }
+        } else {
+            message.channel.send('command temp disabled')
+        }
         }
     }
 };
