@@ -1204,7 +1204,7 @@ exports.run = async (client, message, args) => {
             if (!args[1]) {
                 message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
             } else {
-            message.channel.send('Checking server ' + args[1] + '\nPlease allow me 2seconds to fetch this.').then((msg) => {
+            message.channel.send('Checking server `' + args[1] + '`\nPlease allow me 2seconds to fetch this.').then((msg) => {
                 axios({
                     url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
                     method: 'GET',
