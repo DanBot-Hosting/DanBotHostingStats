@@ -221,7 +221,7 @@ bot.on("voiceStateUpdate", async (oldM, newM) => {
       })
     }
   } catch (error) {
-    guild.channels.get('757029522682937354').send(error.name)
+    guild.channels.get('757029522682937354').send("```"+error.toString()+"```")
   }
 })
 
