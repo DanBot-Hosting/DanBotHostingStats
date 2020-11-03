@@ -1,7 +1,10 @@
 module.exports = async (newM, oldM) => {
-    console.log(client.pvc)
     let guild = newM.guild;
+
+    guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
+
     if (oldM.voiceChannelID == newM.voiceChannelID) return;
+
 
     if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID == "757659750342197289") {
         if (client.pvc.get(oldM.voiceChannelID) != null && client.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
