@@ -225,15 +225,15 @@ global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.chann
 //   }
 // })
 
-// //Event handler
-// fs.readdir('./bot/discord/events/', (err, files) => {
-//   files = files.filter(f => f.endsWith('.js'));
-//   files.forEach(f => {
-//     const event = require(`./bot/discord/events/${f}`);
-//     client.on(f.split('.')[0], event.bind(null, client));
-//     delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
-//   });
-// });
+//Event handler
+fs.readdir('./bot/discord/events/', (err, files) => {
+  files = files.filter(f => f.endsWith('.js'));
+  files.forEach(f => {
+    const event = require(`./bot/discord/events/${f}`);
+    client.on(f.split('.')[0], event.bind(null, client));
+    delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
+  });
+});
 
 //Bot login
 client.login(config.DiscordBot.Token);
