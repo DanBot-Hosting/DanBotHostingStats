@@ -38,128 +38,130 @@ const {
 
 //Node status 
 setInterval(() => {
-//Node 1
-axios({
-  url: config.Pterodactyl.hosturl + "/api/client/servers/99d65091/resources",
-  method: 'GET',
-  followRedirect: true,
-  maxRedirects: 5,
-  headers: {
+  //Node 1
+  axios({
+    url: config.Pterodactyl.hosturl + "/api/client/servers/99d65091/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
       'Content-Type': 'application/json',
       'Accept': 'Application/vnd.pterodactyl.v1+json',
-  }
-}).then(response => {
-  nodeStatus.set("node1", {
-    status: "Online 🟢"
-  });
-}).catch(error => {
-  nodeStatus.set("node1", {
-    status: "Offline 🔴"
-  });
-})
-
-//Node 2
-axios({
-  url: config.Pterodactyl.hosturl + "/api/client/servers/0cb9a74e/resources",
-  method: 'GET',
-  followRedirect: true,
-  maxRedirects: 5,
-  headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-  }
-}).then(response => {
-  nodeStatus.set("node2", {
-    status: "Online 🟢"
-  });
-}).catch(error => {
-  nodeStatus.set("node2", {
-    status: "Offline 🔴"
-  });
-})
-
-//Node 3
-axios({
-  url: config.Pterodactyl.hosturl + "/api/client/servers/373fafce/resources",
-  method: 'GET',
-  followRedirect: true,
-  maxRedirects: 5,
-  headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-  }
-}).then(response => {
-  nodeStatus.set("node3", {
-    status: "Online 🟢"
-  });
-}).catch(error => {
-  nodeStatus.set("node3", {
-    status: "Offline 🔴"
-  });
-})
-
-//Node 4
-axios({
-  url: config.Pterodactyl.hosturl + "/api/client/servers/98ca4dbd/resources",
-  method: 'GET',
-  followRedirect: true,
-  maxRedirects: 5,
-  headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-  }
-}).then(response => {
-  nodeStatus.set("node4", {
-    status: "Online 🟢"
-  });
-}).catch(error => {
-  nodeStatus.set("node4", {
-    status: "Offline 🔴"
-  });
-})
-
-var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host'];
-hosts.forEach(function(host){
-  ping.sys.probe(host, function(isAlive){
-    if (isAlive == true) {
-      nodeStatus.set(host, {
-        status: "Online 🟢"
-      })
-    } else if (isAlive == false) {
-      nodeStatus.set(host, {
-        status: "Offline 🔴"
-      });
     }
+  }).then(response => {
+    nodeStatus.set("node1", {
+      status: "Online 🟢"
+    });
+  }).catch(error => {
+    nodeStatus.set("node1", {
+      status: "Offline 🔴"
+    });
+  })
+
+  //Node 2
+  axios({
+    url: config.Pterodactyl.hosturl + "/api/client/servers/0cb9a74e/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+  }).then(response => {
+    nodeStatus.set("node2", {
+      status: "Online 🟢"
+    });
+  }).catch(error => {
+    nodeStatus.set("node2", {
+      status: "Offline 🔴"
+    });
+  })
+
+  //Node 3
+  axios({
+    url: config.Pterodactyl.hosturl + "/api/client/servers/373fafce/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+  }).then(response => {
+    nodeStatus.set("node3", {
+      status: "Online 🟢"
+    });
+  }).catch(error => {
+    nodeStatus.set("node3", {
+      status: "Offline 🔴"
+    });
+  })
+
+  //Node 4
+  axios({
+    url: config.Pterodactyl.hosturl + "/api/client/servers/98ca4dbd/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+  }).then(response => {
+    nodeStatus.set("node4", {
+      status: "Online 🟢"
+    });
+  }).catch(error => {
+    nodeStatus.set("node4", {
+      status: "Offline 🔴"
+    });
+  })
+
+  var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host'];
+  hosts.forEach(function (host) {
+    ping.sys.probe(host, function (isAlive) {
+      if (isAlive == true) {
+        nodeStatus.set(host, {
+          status: "Online 🟢"
+        })
+      } else if (isAlive == false) {
+        nodeStatus.set(host, {
+          status: "Offline 🔴"
+        });
+      }
+    });
+  }, {
+    timeout: 4
   });
-}, { timeout: 4 });
 
-const portz = 2333;
+  const portz = 2333;
 
-//Lavalink Server 1
-const hostz = 'lava.danbot.host';
-ping2
-  .ping(hostz, portz)
-  .then(() => nodeStatus.set("lava.danbot.host", { 
-    status: "Online 🟢" 
-  }))
-  .catch((e) => nodeStatus.set("lava.danbot.host", { 
-    status: "Offline 🔴" 
-  }));
+  //Lavalink Server 1
+  const hostz = 'lava.danbot.host';
+  ping2
+    .ping(hostz, portz)
+    .then(() => nodeStatus.set("lava.danbot.host", {
+      status: "Online 🟢"
+    }))
+    .catch((e) => nodeStatus.set("lava.danbot.host", {
+      status: "Offline 🔴"
+    }));
 
-//Lavalink Server 2
-const hostz2 = 'lava2.danbot.host';
-ping2
-  .ping(hostz2, portz)
-  .then(() => nodeStatus.set("lava2.danbot.host", { 
-    status: "Online 🟢" 
-  }))
-  .catch((e) => nodeStatus.set("lava2.danbot.host", { 
-    status: "Offline 🔴" 
-  }));
+  //Lavalink Server 2
+  const hostz2 = 'lava2.danbot.host';
+  ping2
+    .ping(hostz2, portz)
+    .then(() => nodeStatus.set("lava2.danbot.host", {
+      status: "Online 🟢"
+    }))
+    .catch((e) => nodeStatus.set("lava2.danbot.host", {
+      status: "Offline 🔴"
+    }));
 
 }, 5000)
 
@@ -184,42 +186,42 @@ global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.chann
 bot.on("voiceStateUpdate", async (oldM, newM) => {
   let guild = newM.guild;
   try {
-      guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
-  } catch (error) {
-      guild.channels.get('757029522682937354').send(error.name)
-  }
-  if (oldM.voiceChannelID == newM.voiceChannelID) return;
+    guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
+    if (oldM.voiceChannelID == newM.voiceChannelID) return;
 
 
-  if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID == "757659750342197289") {
+    if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID == "757659750342197289") {
       if (client.pvc.get(oldM.voiceChannelID) != null && client.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
-          console.log("delete")
+        guild.channels.get('757029522682937354').send("delete " + oldM.voiceChannelID)
 
-          oldM.voiceChannel.delete();
-          client.pvc.delete(oldM.voiceChannelID);
+        oldM.voiceChannel.delete();
+        client.pvc.delete(oldM.voiceChannelID);
       }
-  }
+    }
 
-  if (newM.voiceChannelID == "757660050977456238") {
-      console.log("create")
+    if (newM.voiceChannelID == "757660050977456238") {
+      guild.channels.get('757029522682937354').send("create")
       let cleanName = transliterate.slugify(newM.user.username);
       if (cleanName == '') cleanName = 'unknown';
       let vc = await guild.createChannel(`${cleanName}'s Room`, {
-          type: "voice",
-          permissionOverwrites: [{
-              id: guild.id,
-              deny: ["CONNECT", "VIEW_CHANNEL"]
-          }, {
-              id: newM.id,
-              allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
-          }]
+        type: "voice",
+        permissionOverwrites: [{
+          id: guild.id,
+          deny: ["CONNECT", "VIEW_CHANNEL"]
+        }, {
+          id: newM.id,
+          allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
+        }]
       })
       vc.setParent("757659750342197289");
       newM.setVoiceChannel(vc.id);
       client.pvc.set(vc.id, {
-          channelID: vc.id,
-          owner: newM.id
+        channelID: vc.id,
+        owner: newM.id
       })
+    }
+  } catch (error) {
+    guild.channels.get('757029522682937354').send(error.name)
   }
 })
 
