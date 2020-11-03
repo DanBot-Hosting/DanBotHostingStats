@@ -1,8 +1,10 @@
 module.exports = async (newM, oldM) => {
     let guild = newM.guild;
-
-    guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
-
+    try {
+        guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
+    } catch (error) {
+        guild.channels.get('757029522682937354').send(error.name)
+    }
     if (oldM.voiceChannelID == newM.voiceChannelID) return;
 
 
