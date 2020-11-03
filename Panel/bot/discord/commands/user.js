@@ -175,6 +175,13 @@ exports.run = async(client, message, args) => {
                     }, 10000);
                 }
             })
+        } else {
+                let embed = new Discord.RichEmbed()
+                        .setColor(`GREEN`)
+                        .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
+                        .addField(`__**Linked Date (DD/MM/YY)**__`, userData.fetch(message.author.id + ".linkDate"))
+                        .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"))
+                message.channel.send("You already have an account!", embed)
         }
     } else if (args[0].toLowerCase() == "password") {
         //Password reset
