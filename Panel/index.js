@@ -181,13 +181,10 @@ global.client = new Discord.Client({
 global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
 
-bot.on("voiceStateUpdate", async (newM, oldM) => {
+// Create Custom Channel
+bot.on("voiceStateUpdate", async (oldM, newM) => {
   let guild = newM.guild;
-  try {
-      guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
-  } catch (error) {
-      guild.channels.get('757029522682937354').send(error.name)
-  }
+
   if (oldM.voiceChannelID == newM.voiceChannelID) return;
 
 
@@ -222,6 +219,8 @@ bot.on("voiceStateUpdate", async (newM, oldM) => {
       })
   }
 })
+// End
+
 
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
