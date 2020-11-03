@@ -9,19 +9,7 @@ module.exports = async (client, guild, files) => {
         client.guilds.get("639477525927690240").channels.filter(x => x.parentID == '738539016688894024' && (Date.now() - x.createdAt) > 1800000 ).forEach(x => x.delete())
     }, 60000)
 
-    //Auto member role for any members who dont have it (happens a lot)
-    setTimeout(async () => {
-        const rolemembers = client.guilds.get("639477525927690240").roles.find(r => r.id == "639490038434103306");
-        const users = await client.guilds.get("639477525927690240").members.array();
-        users.forEach(u => {
-            if (u.user.bot == true) {
-                console.log('REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE BOT REEEEEEEEEEEEEEEEEEEEEEE ' + u)
-            } else if (u.user.bot == false) {
-                console.log(u)
-                u.addRole(rolemembers)
-            }
-        });
-    }, 30000)
+    
 
     //Auto Activities List
     const activities = [{
