@@ -1,5 +1,6 @@
 {
     "Port": 1144, 
+    "APIPort": 1145,
 
     "DiscordBot": {
         "Token": "Bot Token",

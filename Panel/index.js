@@ -8,13 +8,24 @@ Free Hosting for ever!                                            /____/
 */
 
 global.config = require("./config.json");
-var PORT = config.Port;
 var express = require('express');
+const helmet = require("helmet");
+const cookieParser = require("cookie-parser");
+
+//Main danbot.host app
 var app = express();
 var server = require('http').createServer(app);
+var PORT = config.Port;
+const hbs = require('hbs');
+
+//Animal API app
+var animalapp = express();
+var animalserver = require('http').createServer(animalapp);
+var APIPORT = config.APIPort;
+const apihbs = require('hbs');
+
 var bodyParser = require('body-parser');
 global.fs = require("fs");
-const hbs = require('hbs');
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
@@ -122,7 +133,7 @@ setInterval(() => {
     });
   })
 
-  var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host'];
+  var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host'];
   hosts.forEach(function (host) {
     ping.sys.probe(host, function (isAlive) {
       if (isAlive == true) {
@@ -197,30 +208,61 @@ fs.readdir('./bot/discord/events/', (err, files) => {
 client.login(config.DiscordBot.Token);
 global.Allowed = ["338192747754160138", "137624084572798976"];
 
-//Test Email
-//const message = {
-//  from: config.Email.From,
-//  to: 'danielpd93@gmail.com',
-//  subject: 'DanBot Hosting Webpage and Discord Bot now online!',
-//  html: "DanBot Hosting Stats page is now online!"
-//};
-//transport.sendMail(message, function(err, info) {
-//  if (err) {
-//    console.log(err)
-//  } else {
-//    console.log(info);
-//  }
-//});
 
-// website things
+//Animal API website
+animalapp.use(helmet({
+  frameguard: false
+}));
+animalapp.use(cookieParser());
 
+animalapp.use(bodyParser.json());
+animalapp.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+animalserver.listen(APIPORT, function () {
+  console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green("Listening on port " + APIPORT));
+});
+
+//View engine setup
+apihbs.registerPartials(__dirname + '/animalAPI/views/partials')
+animalapp.set('view engine', 'hbs');
+
+animalapp.use((req, res, next) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST");
+
+  console.log('[api.danbot.host] ' +
+    (req.headers["cf-connecting-ip"] ||
+      req.headers["x-forwarded-for"] ||
+      req.ip) +
+    "[" +
+    req.method +
+    "] " +
+    req.url
+  );
+
+  next();
+});
+
+animalapp.get('/', function (req, res) {
+  res.send('hello!')
+})
+
+//Dog API
+const dogRoute = require("./animalAPI/dog.js");
+animalapp.use("/dog", dogRoute);
+
+//Cat API
+const catRoute = require("./animalAPI/cat.js");
+animalapp.use("/cat", catRoute);
+
+//DanBot.host website
 const passport = require("passport");
 const session = require("express-session");
 const strategy = require("passport-discord").Strategy;
 const MongoStore = require("connect-mongo")(session);
-const cookieParser = require("cookie-parser");
 const csrf = require("csurf");
-const helmet = require("helmet");
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -268,7 +310,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 server.listen(PORT, function () {
-  console.log(chalk.magenta('[WEB] ') + chalk.green("Listening on port " + PORT));
+  console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
 });
 
 global.nodeData = new db.table("nodeData")
@@ -331,11 +373,11 @@ app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "GET, POST");
 
-  console.log(
+  console.log('[danbot.host] ' + 
     (req.headers["cf-connecting-ip"] ||
       req.headers["x-forwarded-for"] ||
       req.ip) +
-    " [" +
+    "[" +
     req.method +
     "] " +
     req.url

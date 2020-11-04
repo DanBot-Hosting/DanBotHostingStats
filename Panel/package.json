@@ -55,6 +55,7 @@
     "resolve": "^1.17.0",
     "socket.io": "latest",
     "tesseract.js": "^2.1.1",
+    "transliteration": "^2.2.0",
     "unirest": "^0.6.0",
     "validator": "^13.1.1"
   }

@@ -9,6 +9,8 @@ Panel/images
 Panel/start.bat
 Panel/eng.traineddata
 Panel/proxy
+Panel/animalAPI/dog/*
+Panel/animalAPI/cat/*
 
 Daemon/node_modules
 Daemon/package-lock.json

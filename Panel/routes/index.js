@@ -44,7 +44,8 @@ Router.get("/nodeStatus", (req, res) => {
       Lava2: nodeStatus.fetch("lava2.danbot.host").status,
       Mail: nodeStatus.fetch("mail.danbot.host").status,
       RProxy: nodeStatus.fetch("154.27.68.234").status,
-      Panel: nodeStatus.fetch("panel.danbot.host").status
+      Panel: nodeStatus.fetch("panel.danbot.host").status,
+      AnimalAPI: nodeStatus.fetch("api.danbot.host").status
     }
   };
 
