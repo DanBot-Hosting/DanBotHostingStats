@@ -28,22 +28,17 @@ module.exports = async (client, guild, files) => {
 
     // Mute sync:
 
-    let muteRole = client.guilds.first.roles.find(r => r.id == "726829710935457872");
-
     mutesData.fetchAll().map(x => ({
         ID: x.ID,
         data: JSON.parse(x.data)
     })).forEach(x => {
-        let unmuteIn = x.expiresAt - Date.now();
-
+        let unmuteIn = x.data.expiresAt - Date.now();
         if (unmuteIn < 0) unmuteIn = 1000;
 
         setTimeout(() => {
-            client.guilds.first().members.get(x.ID).removeRole(muteRole);
-            mutesData.remove(x.ID)
+            client.guilds.get('639477525927690240').members.get(x.ID).removeRole('726829710935457872');
+            mutesData.delete(x.ID)
         }, unmuteIn)
-
-
     })
 
 
