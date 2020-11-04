@@ -1301,6 +1301,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Server Status**__`, 'What server would you like to view? Please type: `' + config.DiscordBot.Prefix + 'server status serverid`', true)
                 message.channel.send(embed)
             } else {
+                message.channel.send('Fetching server...')
                 axios({
                     url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
                     method: 'GET',
