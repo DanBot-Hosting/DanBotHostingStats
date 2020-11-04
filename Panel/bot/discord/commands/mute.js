@@ -2,14 +2,14 @@ exports.run = async (client, message, args) => {
 
     //Usage embed
     const usage = new Discord.RichEmbed()
-    .setColor(0x00A2E8)
-    .setThumbnail(client.user.avatarURL)
-    .setTitle("Command: " + config.DiscordBot.Prefix + "mute")
-    .addField("Usage", config.DiscordBot.Prefix + "mute @Someone <minutes> <reason>")
-    .addField("Example", config.DiscordBot.Prefix + "mute @Someone 5 spamming in general.")
-    .setDescription("Description: " + "Gives a user the muted role for x minutes");
+        .setColor(0x00A2E8)
+        .setThumbnail(client.user.avatarURL)
+        .setTitle("Command: " + config.DiscordBot.Prefix + "mute")
+        .addField("Usage", config.DiscordBot.Prefix + "mute @Someone <minutes> <reason>")
+        .addField("Example", config.DiscordBot.Prefix + "mute @Someone 5 spamming in general.")
+        .setDescription("Description: " + "Gives a user the muted role for x minutes");
 
-    if(message.member.roles.find(r => r.id === "748117822370086932")) { 
+    if (message.member.roles.find(r => r.id === "748117822370086932")) {
         if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES')) return message.reply('Sorry, i dont have the perms to do this cmd i need MANAGE_ROLES. :x:')
 
         //If no user pinged
@@ -27,43 +27,46 @@ exports.run = async (client, message, args) => {
 
         //Muted embed
         const embed = new Discord.RichEmbed()
-        .setColor(0x00A2E8)
-        .setTitle("Action: Mute")
-        .addField("Moderator", message.author.tag + " (ID: " + message.author.id + ")")
-        .addField("User", user.user.tag + " (ID: " + user.user.id + ")")
-        .addField("Time", messagez, true)
-        .addField("Reason", reason, true)
-        .setFooter("Time used: " + message.createdAt.toDateString())
+            .setColor(0x00A2E8)
+            .setTitle("Action: Mute")
+            .addField("Moderator", message.author.tag + " (ID: " + message.author.id + ")")
+            .addField("User", user.user.tag + " (ID: " + user.user.id + ")")
+            .addField("Time", messagez, true)
+            .addField("Reason", reason, true)
+            .setFooter("Time used: " + message.createdAt.toDateString())
 
         message.guild.member(user).addRole(muteRole).then(() => {
             mutesData.set(user.user.id, {
                 muted: "true",
-                muteTime: Date.now(),
-                mutedLength: messagez * 60000
+                mutedAt: Date.now(),
+                expiresAt: Date.now + (messagez * 60000)
             });
+
             message.channel.send("***The user has been successfully muted for " + messagez + " minute(s) :white_check_mark:***")
-        if (!modlog) {
-           setTimeout(() => {
-           message.guild.member(user).removeRole(muteRole)
-           console.log(chalk.magenta('[DISCORD] ') + chalk.cyan(user.user.username + ' has now been unmuted after ' + messagez +' minute(s)'))
-           mutesData.delete(user.user.id);
-           setTimeout(() => {
-                message.guild.member(user).removeRole(muteRole)
-           }, 2000)
-           }, messagez * 60000);
-          } else {
-           client.channels.get(modlog.id).send({embed})
-           setTimeout(() => {
-           message.guild.member(user.user.id).removeRole(muteRole)
-           console.log(chalk.magenta('[DISCORD] ') + chalk.cyan(user.user.username + ' has now been unmuted after ' + messagez +' minute(s)'))
-           mutesData.delete(user.user.id);
-           setTimeout(() => {
-                message.guild.member(user).removeRole(muteRole)
-           }, 2000)
-           }, messagez * 60000);
-          }
+            if (!modlog) {
+                setTimeout(() => {
+                    message.guild.member(user).removeRole(muteRole)
+                    console.log(chalk.magenta('[DISCORD] ') + chalk.cyan(user.user.username + ' has now been unmuted after ' + messagez + ' minute(s)'))
+                    mutesData.delete(user.user.id);
+                    setTimeout(() => {
+                        message.guild.member(user).removeRole(muteRole)
+                    }, 2000)
+                }, messagez * 60000);
+            } else {
+                client.channels.get(modlog.id).send({
+                    embed
+                })
+                setTimeout(() => {
+                    message.guild.member(user.user.id).removeRole(muteRole)
+                    console.log(chalk.magenta('[DISCORD] ') + chalk.cyan(user.user.username + ' has now been unmuted after ' + messagez + ' minute(s)'))
+                    mutesData.delete(user.user.id);
+                    setTimeout(() => {
+                        message.guild.member(user).removeRole(muteRole)
+                    }, 2000)
+                }, messagez * 60000);
+            }
         })
-      
+
 
     } else {
         message.channel.send('Missing perms to do that :(')
