@@ -32,16 +32,13 @@ module.exports = async (client, guild, files) => {
         ID: x.ID,
         data: JSON.parse(x.data)
     })).forEach(x => {
-        let unmuteIn = x.expiresAt - Date.now();
-
+        let unmuteIn = x.data.expiresAt - Date.now();
         if (unmuteIn < 0) unmuteIn = 1000;
 
         setTimeout(() => {
             client.guilds.get('639477525927690240').members.get(x.ID).removeRole('726829710935457872');
             mutesData.delete(x.ID)
         }, unmuteIn)
-
-
     })
 
 
