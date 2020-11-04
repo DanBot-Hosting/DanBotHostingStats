@@ -28,7 +28,7 @@ module.exports = async (client, guild, files) => {
 
     // Mute sync:
 
-    let muteRole = client.guilds.first.roles.find(r => r.id == "726829710935457872");
+    let muteRole = client.guilds.first().roles.find(r => r.id == "726829710935457872");
 
     mutesData.fetchAll().map(x => ({
         ID: x.ID,
