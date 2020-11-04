@@ -183,48 +183,6 @@ global.client = new Discord.Client({
 global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
 
-// bot.on("voiceStateUpdate", async (oldM, newM) => {
-//   let guild = newM.guild;
-//   try {
-//     guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
-//     if (oldM.voiceChannelID == newM.voiceChannelID) return;
-
-
-//     if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID == "757659750342197289") {
-//       if (client.pvc.get(oldM.voiceChannelID) != null && client.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
-//         guild.channels.get('757029522682937354').send("delete " + oldM.voiceChannelID)
-
-//         oldM.voiceChannel.delete();
-//         client.pvc.delete(oldM.voiceChannelID);
-//       }
-//     }
-
-//     if (newM.voiceChannelID == "757660050977456238") {
-//       guild.channels.get('757029522682937354').send("create")
-//       let cleanName = transliterate.slugify(newM.user.username);
-//       if (cleanName == '') cleanName = 'unknown';
-//       let vc = await guild.createChannel(`${cleanName}'s Room`, {
-//         type: "voice",
-//         permissionOverwrites: [{
-//           id: guild.id,
-//           deny: ["CONNECT", "VIEW_CHANNEL"]
-//         }, {
-//           id: newM.id,
-//           allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
-//         }]
-//       })
-//       vc.setParent("757659750342197289");
-//       newM.setVoiceChannel(vc.id);
-//       client.pvc.set(vc.id, {
-//         channelID: vc.id,
-//         owner: newM.id
-//       })
-//     }
-//   } catch (error) {
-//     guild.channels.get('757029522682937354').send("```"+error.toString()+"```")
-//   }
-// })
-
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
   files = files.filter(f => f.endsWith('.js'));

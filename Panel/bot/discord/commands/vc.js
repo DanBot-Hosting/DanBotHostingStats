@@ -1,6 +1,6 @@
 exports.run = async (client, message, args) => {
     if (args.length < 2) {
-        message.channel.send("usage: `DBH!vc <<add | remove> <@user | userID>`")
+        message.reply("Incorrect usage. (`DBH!vc <add | remove> <@user | userID>`)")
     }
 
     if (args[0].toLowerCase() == "add") {
