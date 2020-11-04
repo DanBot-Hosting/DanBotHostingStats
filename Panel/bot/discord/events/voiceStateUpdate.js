@@ -1,11 +1,7 @@
 const transliterate = require('transliteration');
-module.exports = async (newM, oldM) => {
+module.exports = async (client, oldM, newM) => {
     let guild = newM.guild;
-    try {
-        guild.channels.get('757029522682937354').send((oldM == newM ? `${oldM.displayName}: ${oldM.voiceChannelID} = ${newM.voiceChannelID}` : `${oldM.displayName}: ${oldM.voiceChannelID} -> ${newM.voiceChannelID}`))
-    } catch (error) {
-        guild.channels.get('757029522682937354').send(error.name)
-    }
+
     if (oldM.voiceChannelID == newM.voiceChannelID) return;
 
 
