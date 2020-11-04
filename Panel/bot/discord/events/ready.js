@@ -1,6 +1,5 @@
 const exec = require('child_process').exec;
 const axios = require('axios');
-const { Message } = require('discord.js');
 module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
 
