@@ -40,7 +40,7 @@ module.exports = async (client, guild, files) => {
 
         setTimeout(() => {
             client.guilds.first().members.get(x.ID).removeRole(muteRole);
-            mutesData.remove(x.ID)
+            mutesData.delete(x.ID)
         }, unmuteIn)
 
 
