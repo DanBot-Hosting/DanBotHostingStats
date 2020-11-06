@@ -91,7 +91,7 @@ module.exports = async (client, member, guild) => {
     if (Object.keys(config2.invites).includes(invite.uses.toString())) {
         await inviter.removeRoles(Object.values(config2.invites))
         inviter.addRole(config2.invites[invite.uses.toString()]).then(() => {
-            inviteChannel.send(`${inviter.id} just hit ${invite.uses} invites! Here's a role for you :)`);
+            inviteChannel.send(`<@${inviter.id}> just hit ${invite.uses} invites! Here's a role for you :)`);
         })
     }
 }
