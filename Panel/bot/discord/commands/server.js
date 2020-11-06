@@ -89,7 +89,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                         
                     })
                 }
@@ -154,7 +153,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                         
                     })
                 }
@@ -220,7 +218,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                         
                     })
                 }
@@ -289,7 +286,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                         
                     })
                 }
@@ -358,7 +354,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "fivem") {
@@ -430,7 +425,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "bedrock") {
@@ -496,7 +490,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "pocketminemp") {
@@ -561,7 +554,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "gmod") {
@@ -632,7 +624,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "cs:go") {
@@ -699,7 +690,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "ark:se") {
@@ -773,7 +763,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "ts3") {
@@ -839,7 +828,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "mumble") {
@@ -905,7 +893,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "rust") {
@@ -983,7 +970,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "mongodb") {
@@ -1049,7 +1035,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "redis") {
@@ -1114,7 +1099,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else if (args[1].toLowerCase() === "postgres") {
@@ -1182,7 +1166,6 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
-                        message.channel.send("<@137624084572798976> Issue when creating server. \nResponse: `" + error + "`")
                     })
                 }
             } else {
