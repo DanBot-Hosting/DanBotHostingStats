@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
     
     let sendinfo = new Discord.RichEmbed()
     .setColor("BLUE")
-    .setTitle(`${bot.client.username} | DanBot Hosting Stats`)
+    .setTitle(`DanBot Hosting`)
     .setDescription("The bot id you provided is not in my database! Confused? Read below.")
     .addField("Sent data to the website, and it still show this?", "Please ping Dan (if he active) or one of the mod to help you", true)
     .addField("What database?", "If you looking to add your bot here, you must post your stats to the npm. How to post it? [Click me](https://canary.discord.com/channels/639477525927690240/738548111323955270/738551079343620166)", true)
