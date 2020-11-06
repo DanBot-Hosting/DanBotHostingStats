@@ -156,6 +156,70 @@ exports.run = async (client, message, args) => {
                         
                     })
                 }
+            } else if (args[1].toLowerCase() === "aio") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 5,
+                        "egg": 15,
+                        "docker_image": "danielpmc/discordnode8",
+                        "startup": "${STARTUP_CMD}",
+                        "limits": {
+                            "memory": 0,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "STARTUP_CMD": "bash"
+                        },
+                        "feature_limits": {
+                            "databases": 0,
+                            "allocations": 1,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [3],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                        
+                    })
+                }
             } else if (args[1].toLowerCase() === "java") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
@@ -1174,7 +1238,7 @@ exports.run = async (client, message, args) => {
                     .setColor(`RED`)
                     .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
                     .addField(`__**Grand Theft Auto 5:**__`, "FiveM", true)
-                    .addField(`__**Bots:**__`, "NodeJS \nPython \nJava", true)
+                    .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
                     .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
                     .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
                     .addField(`__**SteamCMD:**__`, "Rust", true)
