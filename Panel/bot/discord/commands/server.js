@@ -632,7 +632,7 @@ exports.run = async (client, message, args) => {
                         "name": otherargs,
                         "user": userData.get(message.author.id + ".consoleID"),
                         "nest": 9,
-                        "egg": 26,
+                        "egg": 44,
                         "docker_image": "quay.io/parkervcp/pterodactyl-images:base_debian",
                         "startup": `./server`,
                         "limits": {
@@ -698,7 +698,7 @@ exports.run = async (client, message, args) => {
                         "name": otherargs,
                         "user": userData.get(message.author.id + ".consoleID"),
                         "nest": 9,
-                        "egg": 26,
+                        "egg": 45,
                         "docker_image": "quay.io/parkervcp/pterodactyl-images:game_samp",
                         "startup": `./samp03svr`,
                         "limits": {
@@ -1496,7 +1496,7 @@ exports.run = async (client, message, args) => {
                 let embed2 = new Discord.RichEmbed()
                     .setColor(`RED`)
                     .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
-                    .addField(`__**Grand Theft Auto 5:**__`, "FiveM", true)
+                    .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
                     .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
                     .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
                     .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
