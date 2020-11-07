@@ -623,6 +623,72 @@ exports.run = async (client, message, args) => {
                         message.channel.send(embed1)
                     })
                 }
+            } else if (args[1].toLowerCase() === "rage.mp") {
+                if (!otherargs) {
+                    message.channel.send('You must provide a server name!')
+                } else {
+                    //Data to send
+                    const data = {
+                        "name": otherargs,
+                        "user": userData.get(message.author.id + ".consoleID"),
+                        "nest": 9,
+                        "egg": 26,
+                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_debian",
+                        "startup": `./server`,
+                        "limits": {
+                            "memory": 2048,
+                            "swap": 0,
+                            "disk": 0,
+                            "io": 500,
+                            "cpu": 0
+                        },
+                        "environment": {
+                            "SERVER_NAME": "RAGE:MP Unofficial server",
+                            "MAX_PLAYERS": "50",
+                            "ANNOUNCE": "0"
+                        },
+                        "feature_limits": {
+                            "databases": 2,
+                            "allocations": 2,
+                            "backups": 10
+                        },
+                        "deploy": {
+                            "locations": [5],
+                            "dedicated_ip": false,
+                            "port_range": []
+                        },
+                        "start_on_completion": false,
+                        "oom_disabled": false
+                    };
+
+                    //Sending the data:
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/application/servers",
+                        method: 'POST',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        },
+                        data: data,
+                    }).then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, data.user)
+                            .addField(`__**Server name:**__`, data.name)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        
+                        let embed1 = new Discord.RichEmbed()
+                            .setColor(`RED`)
+                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
+                        message.channel.send(embed1)
+                    })
+                }
             } else if (args[1].toLowerCase() === "bedrock") {
                 if (!otherargs) {
                     message.channel.send('You must provide a server name!')
