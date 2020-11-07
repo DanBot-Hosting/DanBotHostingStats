@@ -44,8 +44,6 @@ exports.run = async (client, message, args) => {
                             "cpu": 0
                         },
                         "environment": {
-                            "INSTALL_REPO": null,
-                            "INSTALL_BRANCH": null,
                             "USER_UPLOAD": "0",
                             "AUTO_UPDATE": "0",
                             "BOT_JS_FILE": "index.js"
