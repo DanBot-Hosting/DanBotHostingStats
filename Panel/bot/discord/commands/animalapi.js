@@ -1,10 +1,11 @@
 const superagent = require("snekfetch");
 exports.run = async (client, message, args) => {
     if (!args[0]) {
-        superagent.get('https://api.danbot.host/dog')
+        superagent.get('https://api.danbot.host/total')
             .end((err, response) => {
                 const embed = new Discord.RichEmbed()
-                    .addField('Dog API:', response.body.total + " images. \nhttps://api.danbot.host/dog")
+                    .addField('Dog API:', response.body.dogtotal + " images. \nhttps://api.danbot.host/dog", true)
+                    .addField('Cat API:', response.body.cattotal + " images. \nhttps://api.danbot.host/cat", true)
                 message.channel.send(embed)
             })
     } else if (args[0] == "dog") {
