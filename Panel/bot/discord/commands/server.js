@@ -89,6 +89,7 @@ exports.run = async (client, message, args) => {
                             .setColor(`RED`)
                             .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
                         message.channel.send(embed1)
+                        console.log(error)
                         
                     })
                 }
