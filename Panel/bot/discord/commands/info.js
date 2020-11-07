@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
       botID = t.id;
     };
     
-    if(!botID)return message.channel.send("Error: Please provide a bot id!");
+    if(!botID)return message.channel.send("Error: Invalid command format! \n`" + config.DiscordBot.Prefix + "info botid`");
     let bot = db.get(`${botID}`);
     
     let sendinfo = new Discord.RichEmbed()
