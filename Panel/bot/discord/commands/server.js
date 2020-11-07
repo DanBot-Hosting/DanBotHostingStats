@@ -51,7 +51,7 @@ exports.run = async (client, message, args) => {
                             "BOT_JS_FILE": "index.js"
                         },
                         "feature_limits": {
-                            "databases": 0,
+                            "databases": 2,
                             "allocations": 1,
                             "backups": 10
                         },
@@ -115,7 +115,7 @@ exports.run = async (client, message, args) => {
                             "STARTUP_CMD": "bash"
                         },
                         "feature_limits": {
-                            "databases": 0,
+                            "databases": 2,
                             "allocations": 1,
                             "backups": 10
                         },
@@ -179,7 +179,7 @@ exports.run = async (client, message, args) => {
                             "STARTUP_CMD": "bash"
                         },
                         "feature_limits": {
-                            "databases": 0,
+                            "databases": 2,
                             "allocations": 1,
                             "backups": 10
                         },
@@ -243,7 +243,7 @@ exports.run = async (client, message, args) => {
                             "STARTUP_CMD": "bash"
                         },
                         "feature_limits": {
-                            "databases": 0,
+                            "databases": 2,
                             "allocations": 1,
                             "backups": 10
                         },
