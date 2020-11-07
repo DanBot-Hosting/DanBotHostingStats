@@ -714,6 +714,8 @@ exports.run = async (client, message, args) => {
                             "allocations": 1,
                             "backups": 10
                         },
+                        "environment": {
+                        },
                         "deploy": {
                             "locations": [5],
                             "dedicated_ip": false,
