@@ -27,7 +27,7 @@ module.exports = async (client, guild, files) => {
 
 
     // Mute sync:
-
+/*
     mutesData.fetchAll().map(x => ({
         ID: x.ID,
         data: JSON.parse(x.data)
@@ -41,7 +41,7 @@ module.exports = async (client, guild, files) => {
         }, unmuteIn)
     })
 
-
+*/
 
     //Automatic 30second git pull.
     setInterval(() => {
