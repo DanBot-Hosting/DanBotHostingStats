@@ -5,6 +5,7 @@ exports.run = async (client, message, args) => {
             .end((err, response) => {
                 const embed = new Discord.RichEmbed()
                     .addField('[Dog API](https://api.danbot.host/dog):', response.body.total + " images.")
+                message.channel.send(embed)
             })
     } else if (args[0] == "dog") {
         superagent.get('https://api.danbot.host/dog')
