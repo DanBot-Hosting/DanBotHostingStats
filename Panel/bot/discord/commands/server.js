@@ -56,7 +56,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -121,7 +121,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -185,7 +185,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -249,7 +249,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -1118,7 +1118,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -1183,7 +1183,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -1325,7 +1325,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -1389,7 +1389,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
@@ -1456,7 +1456,7 @@ exports.run = async (client, message, args) => {
                             "backups": 10
                         },
                         "deploy": {
-                            "locations": [3, 8],
+                            "locations": [3, 9],
                             "dedicated_ip": false,
                             "port_range": []
                         },
