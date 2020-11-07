@@ -249,6 +249,10 @@ animalapp.get('/', function (req, res) {
   res.send('hello!')
 })
 
+//Total images 
+const totalRoute = require("./animalAPI/total.js");
+animalapp.use("/total", totalRoute);
+
 //Dog API
 const dogRoute = require("./animalAPI/dog.js");
 animalapp.use("/dog", dogRoute);
