@@ -12,7 +12,10 @@ Router.get("/fetch", (req, res) => {
             res.send('Missing data.')
         } else {
             if (userData.get(req.body.user) == null) {
-                res.json('error: No account for this user')
+                const data = {
+                    error: "No account found for that user!"
+                }
+                res.json(data)
             } else {
                 const data = {
                     username: userData.get(req.body.user).username,
