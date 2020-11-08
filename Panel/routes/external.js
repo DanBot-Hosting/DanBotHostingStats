@@ -8,15 +8,19 @@ Router.get("/", (req, res) => {
 
 Router.get("/fetch", (req, res) => {
     if (req.headers.password == config.externalPassword) {
-        const data = {
-            username: userData.get(req.body.user).username,
-            email: userData.get(req.body.user).email,
-            discordID: userData.get(req.body.user).discordID,
-            consoleID: userData.get(req.body.user).consoleID,
-            linkTime: userData.get(req.body.user).linkTime,
-            linkDate: userData.get(req.body.user).linkDate
+        if (!req.body.user) {
+            res.send('Missing data.')
+        } else {
+            const data = {
+                username: userData.get(req.body.user).username,
+                email: userData.get(req.body.user).email,
+                discordID: userData.get(req.body.user).discordID,
+                consoleID: userData.get(req.body.user).consoleID,
+                linkTime: userData.get(req.body.user).linkTime,
+                linkDate: userData.get(req.body.user).linkDate
+            }
+            res.json(data)
         }
-        res.json(data)
     } else {
         res.send('No permission!')
     }
