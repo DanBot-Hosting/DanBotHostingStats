@@ -8,6 +8,7 @@ Router.get("/", (req, res) => {
 
 Router.get("/fetch", (req, res) => {
     var headers = JSON.stringify(req.headers)
+    console.log(headers)
     if (headers.password == config.externalPassword) {
         res.send('Hello!')
     } else {
