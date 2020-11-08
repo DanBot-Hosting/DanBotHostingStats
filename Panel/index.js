@@ -401,6 +401,7 @@ const indexRoute = require("./routes/index.js");
 const statsRoute = require("./routes/stats.js");
 const meRoute = require("./routes/me.js");
 const adminRoute = require("./routes/admin.js");
+const externalRoute = require("./routes/external.js");
 //const { config } = require("process");
 
 app.use("/api", apiRoute);
@@ -409,6 +410,7 @@ app.use("/", indexRoute);
 app.use("/stats", statsRoute);
 app.use("/me", meRoute);
 app.use("/admin", adminRoute);
+app.use("/external", externalRoute);
 
 app.get("/user/:ID", async (req, res) => {
   let user = req.params.ID;
