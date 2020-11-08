@@ -7,10 +7,16 @@ Router.get("/", (req, res) => {
 });
 
 Router.get("/fetch", (req, res) => {
-    var headers = JSON.stringify(req.headers)
-    console.log(headers)
-    if (headers.password == config.externalPassword) {
-        res.send('Hello!')
+    if (req.headers.password == config.externalPassword) {
+        const data = {
+            username: userData.get(req.body.user).username,
+            email: userData.get(req.body.user).email,
+            discordID: userData.get(req.body.user).discordID,
+            consoleID: userData.get(req.body.user).consoleID,
+            linkTime: userData.get(req.body.user).linkTime,
+            linkDate: userData.get(req.body.user).linkDate
+        }
+        res.json(data)
     } else {
         res.send('No permission!')
     }
