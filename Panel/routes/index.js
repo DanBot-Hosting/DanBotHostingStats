@@ -37,7 +37,9 @@ Router.get("/nodeStatus", (req, res) => {
       Node1: nodeStatus.fetch("node1").status,
       Node2: nodeStatus.fetch("node2").status,
       Node3: nodeStatus.fetch("node3").status,
-      Node4: nodeStatus.fetch("node4").status
+      Node4: nodeStatus.fetch("node4").status,
+      Node5: nodeStatus.fetch("node5").status,
+      Node6: nodeStatus.fetch("node6").status
     },
     misc: {
       Lava1: nodeStatus.fetch("lava.danbot.host").status,
