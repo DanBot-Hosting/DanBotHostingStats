@@ -29,7 +29,24 @@ Router.get("/fetch", (req, res) => {
             }
         }
     } else {
-        res.send('No permission!')
+        res.send('Invalid Password!')
+        console.log(chalk.red('[WARNING] ' + req.headers["x-forwarded-for" || "cf-connecting-ip"] + " tried to access https://danbot.host/external/fetch"))
+    }
+});
+
+Router.get("/fetch-all", (req, res) => {
+    if (req.headers.password == config.externalPassword) {
+        if (!req.body.user) {
+            res.send('Missing data.')
+        } else {
+            const data = {
+                all: userData.all()
+            }
+            res.json(data)
+        }
+    } else {
+        res.send('Invalid Password!')
+        console.log(chalk.red('[WARNING] ' + req.headers["x-forwarded-for" || "cf-connecting-ip"] + " tried to access https://danbot.host/external/fetch-all"))
     }
 });
 
