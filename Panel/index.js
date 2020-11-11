@@ -133,6 +133,27 @@ setInterval(() => {
     });
   })
 
+  //Node 5
+  axios({
+    url: config.Pterodactyl.hosturl + "/api/client/servers/97e64d11/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+  }).then(response => {
+    nodeStatus.set("node5", {
+      status: "Online 🟢"
+    });
+  }).catch(error => {
+    nodeStatus.set("node5", {
+      status: "Offline 🔴"
+    });
+  })
+
   var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host'];
   hosts.forEach(function (host) {
     ping.sys.probe(host, function (isAlive) {
