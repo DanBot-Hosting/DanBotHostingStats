@@ -35,12 +35,14 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     
     let data = req.body;
     console.log(data); 
+    const att = new Discord.Attachment(Buffer.from(JSON.stringify(data)), 'ree.txt');
+    client.users.get('293841631583535106').send(att)
     const embed = new Discord.RichEmbed()
         .setColor(0x00A2E8)
         .addField("__**Ping**__", `<@${data.user.id}>`)
         .addField("__**User ID**__", data.user.id)
         .addField("__**Console Email**__", data.cemail)
-        //.addField("__**How long have you been in DBH?**__", ms(client.guilds.get('639477525927690240').members.get(data.user.id).joinedAt, {long: true}))
+        // .addField("__**How long have you been in DBH?**__", ms(client.guilds.get('639477525927690240').members.get(data.user.id).joinedAt, {long: true}))
         .addField("__**Languages**__", data.langs)
         .addField("__**Previous experiences**__", data.prev)
         .addField("__**Coding knowledge**__", data.coding)
