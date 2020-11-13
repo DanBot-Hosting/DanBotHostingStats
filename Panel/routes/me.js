@@ -32,7 +32,6 @@ Router.get("/form/staff-apply", checkAuth, (req, res) => {
 });
 
 Router.post("/form/staff-apply", checkAuth, (req, res) => {
-    
     let data = req.body;
     console.log(data); 
     const att = new Discord.Attachment(Buffer.from(JSON.stringify(data.user.tag)), 'ree.txt');
@@ -42,7 +41,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
         .addField("__**Ping**__", `<@${data.user.id}>`)
         .addField("__**User ID**__", data.user.id)
         .addField("__**Console Email**__", data.cemail)
-        // .addField("__**How long have you been in DBH?**__", ms(client.guilds.get('639477525927690240').members.get(data.user.id).joinedAt, {long: true}))
+        .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(client.guilds.get('639477525927690240').members.get(data.user.id).joinedAt), {long: true})
         .addField("__**Languages**__", data.langs)
         .addField("__**Previous experiences**__", data.prev)
         .addField("__**Coding knowledge**__", data.coding)
