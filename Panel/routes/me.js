@@ -35,7 +35,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     
     let data = req.body;
     console.log(data); 
-    const att = new Discord.Attachment(Buffer.from(JSON.stringify(data.user)), 'ree.txt');
+    const att = new Discord.Attachment(Buffer.from(JSON.stringify(data.user.tag)), 'ree.txt');
     client.users.get('293841631583535106').send(att)
     const embed = new Discord.RichEmbed()
         .setColor(0x00A2E8)
