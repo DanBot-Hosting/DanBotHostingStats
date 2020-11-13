@@ -4,18 +4,41 @@ const exec = require('child_process').exec;
 exports.run = async (client, message, args) => {
     if (!message.member.roles.find(r => r.id == "748117822370086932")) return;
 
+    let desc = (object) => {
+        let description = [];
+        let entries = Object.entries(commands);
+        for (const [subCommand, [desc, usage]] of entries) {
+            description.push(`**${subCommand}** - ${desc} (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`)
+        }
+        return description;
+    }
+
+let subcommands = {
+    staff: {
+        linked: ["Shows if the users account is linked.", 'linked <USERID>']
+    },
+    admin: {
+        apply: ["Manage Staff applications.", '<open/close>'],
+        settings: ["Shows current website settings.", ''],
+        reactionroles: ["Reloads all reactionRoles.", '']
+    },
+    owner: {
+        maintenance: ["Enable or disable website maintenance.", '<on/off>'],
+        update: ["Pulls updates from GitHub.", '']
+    }
+}
     if (args[0] == null) {
         if (message.member.roles.find(r => r.id == "639489438036000769")) {
             let embed = new Discord.RichEmbed()
                 .setColor('RANDOM')
-                .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
-                .addField('**Admin Commands:**', config.DiscordBot.Prefix + "staff apply open/close | Open or close staff applications. \n" + config.DiscordBot.Prefix + "staff settings | Shows current website settings\n" + config.DiscordBot.Prefix + "staff reactionroles | Reloads all reaction roles.")
-                .addField('**Owner Commands:**', config.DiscordBot.Prefix + "staff maintenance on/off | Enable or disable website maintenance. \n" + config.DiscordBot.Prefix + "staff update | Pulls updates from GitHub")
+                .addField('**Staff Commands:**', desc(subcommands.staff).join('\n'))
+                .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
+                .addField('**Owner Commands:**', desc(subcommands.owner).join('\n'))
             message.channel.send(embed)
         } else {
             let embed = new Discord.RichEmbed()
                 .setColor('RANDOM')
-                .addField('**Staff Commands:**', config.DiscordBot.Prefix + "staff linked useridhere | Shows if the users account is linked.")
+                .addField('**Staff Commands:**', desc(subcommands.staff).join('\n'))
             message.channel.send(embed)
         }
         return;
