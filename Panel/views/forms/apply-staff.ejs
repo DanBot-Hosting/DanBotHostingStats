@@ -11,24 +11,30 @@
 <script src="https://use.fontawesome.com/bfddc8ce66.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous" async></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"
+   type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
 <script src="https://kit.fontawesome.com/75db8f9097.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+   crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Dosis:200,400,700" rel="stylesheet">
 
 
 <main>
-  <div class="jumbotron secondary-jumbotron bg-transparent">
-<center>
-      <div class="container">
+   <div class="jumbotron secondary-jumbotron bg-transparent">
+      <center>
+         <div class="container">
             <h1>Staff application </h1>
-            <center><h2 style="font-size:20px;">Apply for staff</h2></center>
-            <center><h1 style="font-size:20px;">Please give as much information as possible.</h1></center>
-      </div>
-</center>
-  </div>
-<!--  
+            <center>
+               <h2 style="font-size:20px;">Apply for staff</h2>
+            </center>
+            <center>
+               <h1 style="font-size:20px;">Please give as much information as possible.</h1>
+            </center>
+         </div>
+      </center>
+   </div>
+   <!--  
 <div class="container">
  <center>
    <div class="row" role="alert">
@@ -43,7 +49,7 @@
  </center>
 </div> 
   -->
-<!--
+   <!--
  Ideas:
 - desc
 - image
@@ -53,76 +59,77 @@
 
 
 -->
-  
-  <div class="container">
-   <div id="errormessage"></div>
-   <div class="col-lg-7 card server-form-panel">
-      <article class="card-body">
-         <form action="" method="post" role="form">
-            <input type="hidden" name="id" value="<%= user.id %>">
 
-              <h5>Console Email: <span style="color:red">*</span></h5>
-             <div class="form-group input-group">
-               <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
-               </div>
-               <input name="cemail" id="cemail" class="form-control xtags" placeholder="Whats your console email? (Used to verify that you host here)" type="text" value="" required>
-            </div>
-            <br>
-              
-      <h5>How long have you been in DBH? <span style="color:red">*</span></h5>
-             <div class="form-group input-group">
-               <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-info" style="padding:0"></i></span>
-               </div>
-                <select class="custom-select" id="joindate" name="joindate" required>
-             
-                <option selected>Select...</option>
-                
-                <option> Less than 10 days </option>
-                <option> Less than 1 month </option>
-                <option> Longer than 1 month </option>
-                </select>              
-            </div>
-            <br>
+   <div class="container">
+      <div id="errormessage"></div>
+      <div class="col-lg-7 card server-form-panel">
+         <article class="card-body">
+            <form action="" method="post" role="form">
+               <input type="hidden" name="user" value="<%= user %>">
 
-              <h5>Previous experiences: <span style="color:red">*</span></h5>
-             <div class="form-group input-group">
-               <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+               <h5>Console Email: <span style="color:red">*</span></h5>
+               <div class="form-group input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+                  </div>
+                  <input name="cemail" id="cemail" class="form-control xtags"
+                     placeholder="Whats your console email? (Used to verify that you host here)" type="text" value=""
+                     required>
                </div>
-               <input name="prev" id="prev" class="form-control xtags" placeholder="Let us know about previous experiences!" type="text" value="" required>
-            </div>
-            <br>
-            <h5>Coding knowledge: <span style="color:red">*</span></h5>
-             <div class="form-group input-group">
-               <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
-               </div>
-               <input name="coding" id="coding" class="form-control xtags" placeholder="Not needed but is good to have for most issues!" type="text" value="" required>
-            </div>
-           <br>
-           <h5>Any projects you are proud of? <span style="color:red">*</span></h5>
-             <div class="form-group input-group">
-               <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
-               </div>
-               <input name="projects" id="projects" class="form-control xtags" placeholder="What are any projects you have made that you are proud of?" type="text" value="" required>
-            </div>
+               <br>
 
-            <hr>
-            
-            <div class="form-group">
-               <button type="submit" class="btn btn-red btn-block" id="ssubm" name="ssubm" onclick="return xcheck();">Submit</button>
-            </div>
-            
-         </form>
-      </article>
+               <h5>What languages can speak? <span style="color:red">*</span></h5>
+               <div class="form-group input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+                  </div>
+                  <input name="langs" id="langs" class="form-control xtags"
+                     placeholder="Let us know the languages you can speak" type="text" value="" required>
+               </div>
+               <br>
+
+               <h5>Previous experiences: <span style="color:red">*</span></h5>
+               <div class="form-group input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+                  </div>
+                  <input name="prev" id="prev" class="form-control xtags"
+                     placeholder="Let us know about previous experiences! (moderation/support)" type="text" value="" required>
+               </div>
+               <br>
+               <h5>Coding knowledge: <span style="color:red">*</span></h5>
+               <div class="form-group input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+                  </div>
+                  <input name="coding" id="coding" class="form-control xtags"
+                     placeholder="This is required!" type="text" value="" required>
+               </div>
+               <br>
+               <h5>Any projects you are proud of? <span style="color:red">*</span></h5>
+               <div class="form-group input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text"><i class="fa fa-user" style="padding:0"></i></span>
+                  </div>
+                  <input name="projects" id="projects" class="form-control xtags"
+                     placeholder="What are any projects you have made that you are proud of?" type="text" value=""
+                     required>
+               </div>
+
+               <hr>
+
+               <div class="form-group">
+                  <button type="submit" class="btn btn-red btn-block" id="ssubm" name="ssubm"
+                     onclick="return xcheck();">Submit</button>
+               </div>
+
+            </form>
+         </article>
+      </div>
    </div>
-</div>
-  
+
 </main>
 
 <script>
-$('textarea').autoResize();
+   $('textarea').autoResize();
 </script>

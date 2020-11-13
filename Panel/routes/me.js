@@ -1,5 +1,5 @@
 // route for users to get their own bots
-
+const ms = require('ms')
 const Router = require("express").Router();
 const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
@@ -37,10 +37,11 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     console.log(data); 
     const embed = new Discord.RichEmbed()
         .setColor(0x00A2E8)
-        .addField("__**Ping**__", `<@${data.id}>`)
-        .addField("__**User ID**__", data.id)
+        .addField("__**Ping**__", `<@${data.user.id}>`)
+        .addField("__**User ID**__", data.user.id)
         .addField("__**Console Email**__", data.cemail)
-        .addField("__**How long have you been in DBH?**__", data.joindate)
+        .addField("__**How long have you been in DBH?**__", ms(client.guilds.get('639477525927690240').members.get(data.user.id).joinedAt, {long: true}))
+        .addField("__**Languages**__", data.langs)
         .addField("__**Previous experiences**__", data.prev)
         .addField("__**Coding knowledge**__", data.coding)
         .addField("__**Any projects you are proud of?**__", data.projects)
