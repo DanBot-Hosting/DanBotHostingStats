@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
 
     let desc = (object) => {
         let description = [];
-        let entries = Object.entries(commands);
+        let entries = Object.entries(object);
         for (const [subCommand, [desc, usage]] of entries) {
             description.push(`**${subCommand}** - ${desc} (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`)
         }
