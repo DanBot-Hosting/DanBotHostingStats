@@ -31,7 +31,7 @@ const db = require("quick.db");
 module.exports = async (client, member, guild) => {
     let welcomeChannel = client.channels.get(config2.welcome);
 
-    if (Date.now() - member.user.createdAt < 863136000) {
+    if (Date.now() - member.user.createdAt < 863136000 && !member.user.bot) {
         await member.user.send(`Sorry! We only allow accounts over the age of 10days to join. \nYour account is ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})} ago.\n\nYou are welcome to join again once this account is over 10days old!`)
         await member.kick()
         welcomeChannel.send(member.user.tag + ` has been auto-kicked as account is under 10days old.\nThat account was created ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})}, ago`)
