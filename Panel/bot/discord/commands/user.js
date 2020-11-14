@@ -343,7 +343,7 @@ exports.run = async(client, message, args) => {
                         from: config.Email.From,
                         to: messagecollected.content,
                         subject: 'DanBot Hosting - Someone tried to link their Discord account!',
-                        html: "Hello, Someone just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: " + code
+                        html: "Hello, " + message.author.username + " (ID: " + message.author.id + ") just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: " + code
                     };
                     transport.sendMail(emailmessage, function(err, info) {
                         if (err) {
@@ -391,7 +391,7 @@ exports.run = async(client, message, args) => {
                     });
                     
                     };
-            }, 12000)
+            }, 10000)
 
         })
     } else {
