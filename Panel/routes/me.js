@@ -41,13 +41,13 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
         .addField("__**Ping**__", `<@${data.user.id}>`)
         .addField("__**User ID**__", data.user.id)
         .addField("__**Console Email**__", data.cemail)
-        .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(client.guilds.get('639477525927690240').members.get(data.user.id).joinedAt), {long: true})
+        .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(client.guilds.get('639477525927690240').members.get(data.user.id).joinedAt), {long: true}))
         .addField("__**Languages**__", data.langs)
         .addField("__**Previous experiences**__", data.prev)
         .addField("__**Coding knowledge**__", data.coding)
         .addField("__**Any projects you are proud of?**__", data.projects)
         .setTimestamp()
-        .setFooter("New staff app submitted! ");
+        .setFooter("New staff app submitted!");
     client.channels.get("757204887242014760").send({embed});
     
     res.redirect("/me?e=COMPLETE");
