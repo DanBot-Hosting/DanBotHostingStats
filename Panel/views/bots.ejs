@@ -59,26 +59,7 @@
 
 <%= ar[i] %>
 
-    <% let data = db.get(ar[i])
-    %>
-    
-    <div class="col-lg-4 col-md-6 col-sm-12" style="">
-      <a class="no-color" href="/bot/<%- data.id %>">
-        <div class="card preview-card">
-          <div class="card-body">
-            <div class="head">
-              <img class="float-left lazy" src="https://cdn.discordapp.com/avatars/<%= data.id %>/<%= data.client.avatar %>" onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;" alt="Avatar" draggable="false">
-              <div class="content">
-                <h3 class="no-color" title="bot name"><%- data.client.username %> <% if(data.Status === "Verified") { %> <span>&#10003;</span><% } %> </h3>
-                <p class="description" style="color:black" title="biography">
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
-    </div>
-
+   
 <% } %>
   </div>
 </div>
