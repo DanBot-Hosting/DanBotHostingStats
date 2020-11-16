@@ -166,7 +166,7 @@ exports.run = async (client, message, args) => {
                         "name": otherargs,
                         "user": userData.get(message.author.id + ".consoleID"),
                         "nest": 5,
-                        "egg": 15,
+                        "egg": 46,
                         "docker_image": "danielpmc/discordnode8",
                         "startup": "${STARTUP_CMD}",
                         "limits": {
