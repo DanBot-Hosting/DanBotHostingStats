@@ -57,8 +57,24 @@
 
 <% for(var i=0; i < ar.length; i++) { %>
 
-<%= JSON.stringify(ar[i]) %>
 
+
+    <div class="col-lg-4 col-md-6 col-sm-12" style="">
+      <a class="no-color" href="/bot/<%- ar[i].id %>">
+        <div class="card preview-card">
+          <div class="card-body">
+            <div class="head">
+              <img class="float-left lazy" src="https://cdn.discordapp.com/avatars/<%= ar[i].id %>/<%= ar[i].client.avatar %>" onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;" alt="Avatar" draggable="false">
+              <div class="content">
+                <h3 class="no-color" title="bot name"><%- ar[i].client.username %> <% if(ar[i].Status === "Verified") { %> <span>&#10003;</span><% } %> </h3>
+                <p class="description" style="color:black" title="biography">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
    
 <% } %>
   </div>
