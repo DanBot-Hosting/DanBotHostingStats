@@ -1,6 +1,6 @@
 <%- include("../partials/header.ejs", { botInfo: false, Title: `Your Bots`, Avatar: `${avatar}`, Redirect: `/me` }) %>
-<link rel="stylesheet" href="//mythicalbots.xyz/css/bots.css">
-<link rel="stylesheet" href="//mythicalbots.xyz/css/form.css">
+<link rel="stylesheet" href="https://cdn.astrobot.org/css/bots.css">
+<link rel="stylesheet" href="https://cdn.astrobot.org/css/form.css">
 
 <div class="py-5 text-center filter-dark"  style="background-size:cover;background-repeat:no-repeat;">
 <div class="container">
@@ -8,7 +8,7 @@
 <div class="col-md-12">
 <div class="d-lg-none"></div>
 <center>
-  <img class="img-fluid d-block rounded-circle mx-auto" src="<%= `https://mythicalbots.xyz/bot/${User.id}/avatar`%>" alt="" draggable="false" onerror="this.onerror=null;this.src='/images/user.png';" data-toggle="tooltip" data-placement="top" title="<%= User.name %>">
+  <img class="img-fluid d-block rounded-circle mx-auto" src="<%= `https://astrobot.org/user/${User.id}/avatar`%>" alt="" draggable="false" onerror="this.onerror=null;this.src='/images/user.png';" data-toggle="tooltip" data-placement="top" title="<%= User.name %>">
 
 <h2 style="font-size:25px;"><%= User.tag %></h2>
 
