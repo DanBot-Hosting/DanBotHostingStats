@@ -36,7 +36,7 @@ let dynamicPart = document.getElementById("dynamicPart");
 
 (function() {
   var AstroAPI = "https://astrobot.org/api/stats";
-  $.getJSON( AstroAPI, {
+  $.get( AstroAPI, {
     format: "json"
   })
     .done(function( data ) {
