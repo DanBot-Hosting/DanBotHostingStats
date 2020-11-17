@@ -1,18 +1,4 @@
 //const {config} = require('process');
-
-const exec = require('child_process').exec;
-exports.run = async (client, message, args) => {
-    if (!message.member.roles.find(r => r.id == "748117822370086932")) return;
-
-    let desc = (object) => {
-        let description = [];
-        let entries = Object.entries(object);
-        for (const [subCommand, [desc, usage]] of entries) {
-            description.push(`**${subCommand}** - ${desc} (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`)
-        }
-        return description;
-    }
-
 let subcommands = {
     staff: {
         linked: ["Shows if the users account is linked.", 'linked <USERID>']
@@ -27,6 +13,21 @@ let subcommands = {
         update: ["Pulls updates from GitHub.", '']
     }
 }
+
+let desc = (object) => {
+    let description = [];
+    let entries = Object.entries(object);
+    for (const [subCommand, [desc, usage]] of entries) {
+        description.push(`**${subCommand}** - ${desc} (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`)
+    }
+    return description;
+}
+
+const exec = require('child_process').exec;
+
+exports.run = async (client, message, args) => {
+    if (!message.member.roles.find(r => r.id == "748117822370086932")) return;
+
     if (args[0] == null) {
         if (message.member.roles.find(r => r.id == "639489438036000769")) {
             let embed = new Discord.RichEmbed()
@@ -89,15 +90,6 @@ let subcommands = {
                 };
             };
             break;
-
-        case 'settings':
-            if (message.member.roles.find(r => r.id === "639489438036000769")) {
-                let embed = new Discord.RichEmbed()
-                    .addField('__**Staff Applications Enabled?**__', webSettings.fetch("staff-applications.enabled"), true)
-                    .addField('__**Website maintenance enabled?**__', webSettings.fetch("maintenance.enabled"), true)
-                message.channel.send(embed)
-            };
-            break;
         case 'request':
             if (args[1] === "new") {
                 if (args[2] === "proxy") {
@@ -114,7 +106,18 @@ let subcommands = {
                 //Delete request
             }
             break;
+
+        case 'settings':
+            if (message.member.roles.find(r => r.id === "778237595477606440")) {
+                let embed = new Discord.RichEmbed()
+                    .addField('__**Staff Applications Enabled?**__', webSettings.fetch("staff-applications.enabled"), true)
+                    .addField('__**Website maintenance enabled?**__', webSettings.fetch("maintenance.enabled"), true)
+                message.channel.send(embed)
+            };
+            break;
+
         case 'reactionroles':
+            if (!message.member.roles.find(r => r.id === "778237595477606440")) return;
             message.channel.send("Reloading reaction roles...")
             let reactionRoles = require('../reactionRoles');
             client.reactionRoles = reactionRoles;
@@ -140,7 +143,7 @@ let subcommands = {
             })
             break;
         case 'update':
-            if (message.member.roles.find(r => r.id === "639481606112804875") || message.author.id == '293841631583535106') {
+            if (message.member.roles.find(r => r.id === "778237595477606440")) {
                 exec(`git pull`, (error, stdout) => {
                     let response = (error || stdout);
                     if (!error) {

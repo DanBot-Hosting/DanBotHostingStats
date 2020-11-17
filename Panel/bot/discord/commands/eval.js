@@ -1,8 +1,7 @@
 const execSync = require('child_process').execSync;
 const ms = require('ms');
 exports.run = async (client, message) => {
-    let ids = ["338192747754160138", "137624084572798976", "293841631583535106"];
-    if (!ids.includes(message.author.id)) {
+    if (!message.member.roles.find(r => r.id === "778237595477606440")) {
         return message.channel.send(`Only my master can use this command`);
     }
 

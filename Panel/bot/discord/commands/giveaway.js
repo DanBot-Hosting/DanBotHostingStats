@@ -1,6 +1,6 @@
 const ms = require('ms')
 exports.run = async (bot, message, args) => {
-  if (message.member.roles.find(r => r.name === "Owner")) {
+  if (message.member.roles.find(r => r.id === "778237595477606440")) {
     message.delete()
     let channel, giveaway;
     let time = args[0];
