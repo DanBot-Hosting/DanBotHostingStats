@@ -22,7 +22,7 @@ exports.run = async (client, message) => {
         text = text
             .replace(/`/g, '`' + String.fromCharCode(8203))
             .replace(/@/g, '@' + String.fromCharCode(8203))
-            .replace(rege, '404')
+            .replace(rege, 'You\'re so fucking gay for wanting that.')
         return text;
     };
     let args = message.content.split(' ').slice(1);
