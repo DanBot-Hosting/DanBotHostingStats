@@ -7,6 +7,9 @@ const passport = require("passport");
 let Developers = [ "137624084572798976", "338192747754160138" ];
 const rateLimitt = require('express-rate-limit');
 
+var axios = require("axios")
+
+
 Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // temp remove if ratelimit
   let ID = req.params.ID;
   if (!ID)
@@ -131,6 +134,29 @@ Router.get("/bots", rateLimit(15000, 4), (req, res) => {
     let bots = db.get("bot.IDs");
     
     res.json(bots);
+});
+
+Router.get("/astrobot/stats", async (req, res) => {
+  
+  axios.get('https://astrobot.org/api/stats', {
+  })
+  .then(function (response) {
+    res.json(response.data);
+  }).catch(function (error) {
+    console.log(error);
+    let sample = {
+    "error": false,
+    "data": {
+        "servers": 0,
+        "users": 0,
+        "chartsCreated": 0,
+        "node": 0,
+        "discordJS": 0
+    }
+}
+    res.json(sample)
+  })
+  
 });
 
 Router.get(

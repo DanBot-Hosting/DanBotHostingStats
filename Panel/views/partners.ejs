@@ -32,8 +32,11 @@ Astronomy Bot sounds just like it's name :) It's a bot all about Astrology! We a
 <script>
 let dynamicPart = document.getElementById("dynamicPart");
 
-//async function refresh() {
+window.onload = function() {
+  refresh()
+}
 
+async function refresh() {
 (function() {
   var AstroAPI = "/api/astrobot/stats";
   $.get( AstroAPI, {
@@ -43,13 +46,15 @@ let dynamicPart = document.getElementById("dynamicPart");
     }
   })
     .done(function( data ) {
-      console.log(data)
+      console.log(data);
+      dynamicPart.innerHTML = data.data.servers
+      
     })
     .fail(function(jqXHR, textStatus) {
       console.log( "Request failed: " + textStatus );
     });
 })();
-//setTimeout(refresh,20000);
-//}
+setTimeout(refresh,20000);
+}
 </script>
  
