@@ -27,46 +27,26 @@ Astronomy Bot sounds just like it's name :) It's a bot all about Astrology! We a
 </div>
 </div>
 
-    <!--    <script>
-            window.onload = function() {
-            refresh()
-            }
-            let url="https://astrobot.org/api/stats";
-            let dynamicPart = document.getElementById("dynamicPart");
-            
-            
-                        async function refresh() {
-fetch('https://astrobot.org/api/stats')
-  .then(response => response.json())
-  .then(data => {
-    // Here's a list of repos!
-    console.log(data)
-  });
-            setTimeout(refresh,20000);
-            
-            }
-            </script> -->
-            
-              <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
-            
-            <div id="images"></div>
 <script>
+window.onload = function() {
+ refresh()
+}
+let dynamicPart = document.getElementById("dynamicPart");
+
+async function refresh() {
+
 (function() {
-  var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-  $.getJSON( flickerAPI, {
-    tags: "mount rainier",
-    tagmode: "any",
+  var AstroAPI = "https://astrobot.org/api/stats";
+  $.getJSON( AstroAPI, {
     format: "json"
   })
     .done(function( data ) {
-      $.each( data.items, function( i, item ) {
-        $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
-        if ( i === 3 ) {
-          return false;
-        }
-      });
+      console.log(data)
     });
 })();
+setTimeout(refresh,20000);
+}
 </script>
  
