@@ -43,7 +43,9 @@ let dynamicPart = document.getElementById("dynamicPart");
     }
   })
     .done(function( data ) {
-      console.log(data)
+      console.log(data);
+      dynamicPart.innerHTML = data.data.servers
+      
     })
     .fail(function(jqXHR, textStatus) {
       console.log( "Request failed: " + textStatus );
