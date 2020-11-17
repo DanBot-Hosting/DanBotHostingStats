@@ -3,18 +3,19 @@ const commands = {
     Users: {
         user: "See help for that command.",
         server: "See help for that command.",
-        stats: "Shows the stats of each hosting node..",
+        stats: "Shows the stats of each hosting node.",
         ticket: "Create a ticket for help from the staff team!.",
         uptime: "Shows the bots uptime.",
+        vc: "Manage you custom voice channel.",
         info: "Get a bots info.",
         suggest: "Get the link to send in suggestions.",
         animalapi: "Check out our animal api."
     },
     Staff: {
-        staff: "See help for that command .",
+        staff: "See help for that command.",
         purge: "Delete messages in a channel.",
         mute: "Mute da user .",
-        kick: "Kick da user"
+        kick: "Kick da user."
     },
     Owner: {
         reload: "Reloads all commands on the bot.",
@@ -23,7 +24,7 @@ const commands = {
         eval: "Eval some code.",
         exec: "Run some system commands.",
         giveaway: "Launch a giveaway.",
-        announce: "Announce something"
+        announce: "Announce something."
     }
 }
 
