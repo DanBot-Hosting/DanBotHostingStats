@@ -21,8 +21,25 @@ Astronomy Bot sounds just like it's name :) It's a bot all about Astrology! We a
 </div>
 <div class="server-bottom">
 <span class="members">
-<i class="fas fa-server"></i>0?</span>
+<i class="fas fa-server"></i> <i id="dynamicPart"> </i> </span>
 <a href="//astrobot.org?utm_source=dbh" rel="nofollow" target="blank" style="background:#b2c8d2" class="btn btn-r info"><i class="fas fa-info" style="padding:0;"></i></a>
 </div>
 </div>
 </div>
+
+        <script>
+            window.onload = function() {
+            refresh()
+            }
+            let url="https://astrobot.org/api/stats";
+            let dynamicPart = document.getElementById("dynamicPart");
+            
+            
+                        async function refresh() {
+            let info = await(await fetch(url)).json();
+            console.log(info);
+            dynamicPart.innerHTML = "0"
+            setTimeout(refresh,20000);
+            
+            }
+            </script>
