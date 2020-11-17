@@ -41,6 +41,9 @@ let dynamicPart = document.getElementById("dynamicPart");
   })
     .done(function( data ) {
       console.log(data)
+    })
+    .fail(function(jqXHR, textStatus) {
+      console.log( "Request failed: " + textStatus );
     });
 })();
 //setTimeout(refresh,20000);
