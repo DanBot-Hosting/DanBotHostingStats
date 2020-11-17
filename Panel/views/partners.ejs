@@ -37,9 +37,12 @@ Astronomy Bot sounds just like it's name :) It's a bot all about Astrology! We a
             
             
                         async function refresh() {
-            let info = await(await fetch(url))
-            console.log(info);
-            dynamicPart.innerHTML = "0"
+fetch('https://astrobot.org/api/stats')
+  .then(response => response.json())
+  .then(data => {
+    // Here's a list of repos!
+    console.log(data)
+  });
             setTimeout(refresh,20000);
             
             }
