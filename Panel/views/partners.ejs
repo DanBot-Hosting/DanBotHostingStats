@@ -37,7 +37,10 @@ let dynamicPart = document.getElementById("dynamicPart");
 (function() {
   var AstroAPI = "https://astrobot.org/api/stats";
   $.get( AstroAPI, {
-    format: "json"
+    format: "json",
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
     .done(function( data ) {
       console.log(data)
