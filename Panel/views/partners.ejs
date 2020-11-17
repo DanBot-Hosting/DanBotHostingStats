@@ -30,12 +30,9 @@ Astronomy Bot sounds just like it's name :) It's a bot all about Astrology! We a
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
 <script>
-window.onload = function() {
- refresh()
-}
 let dynamicPart = document.getElementById("dynamicPart");
 
-async function refresh() {
+//async function refresh() {
 
 (function() {
   var AstroAPI = "https://astrobot.org/api/stats";
@@ -46,7 +43,7 @@ async function refresh() {
       console.log(data)
     });
 })();
-setTimeout(refresh,20000);
-}
+//setTimeout(refresh,20000);
+//}
 </script>
  
