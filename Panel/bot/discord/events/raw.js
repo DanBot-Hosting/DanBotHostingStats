@@ -35,7 +35,7 @@ module.exports = async (client, e) => {
                 else reaction.remove(e.d.user_id)
             })
         } catch (error) {
-            client.channels.get('757029522682937354').send(error.name)
+            client.channels.get('757029522682937354').send(error.message)
         }
     }
 
