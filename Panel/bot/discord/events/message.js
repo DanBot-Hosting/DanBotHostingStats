@@ -16,10 +16,14 @@ module.exports = (client, message) => {
 
     //Auto reactions on suggestions
     if (message.channel.id == "740302560488980561") {
-        message.react('👍') 
-        setTimeout(() => {
-            message.react('👎')
-        }, 200);
+        if (message.content.includes(">")) {
+
+        } else {
+            message.react('👍') 
+            setTimeout(() => {
+                message.react('👎')
+            }, 200);
+        }
     }
 
     if (message.attachments.size > 0) {
