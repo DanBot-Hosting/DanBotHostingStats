@@ -26,11 +26,8 @@ Astronomy Bot sounds just like it's name :) It's a bot all about Astrology! We a
 </div>
 </div>
 </div>
-<script src='https://code.jquery.com/jquery-3.4.1.min.js' type="1b2731582f2fe69d33778ee2-text/javascript"></script>
-<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' type="1b2731582f2fe69d33778ee2-text/javascript"></script>
-<script src="//cdn.jsdelivr.net/bluebird/3.5.0/bluebird.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
-        <script>
+
+    <!--    <script>
             window.onload = function() {
             refresh()
             }
@@ -48,4 +45,28 @@ fetch('https://astrobot.org/api/stats')
             setTimeout(refresh,20000);
             
             }
-            </script>
+            </script> -->
+            
+              <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+            
+            <div id="images"></div>
+<script>
+(function() {
+  var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+  $.getJSON( flickerAPI, {
+    tags: "mount rainier",
+    tagmode: "any",
+    format: "json"
+  })
+    .done(function( data ) {
+      $.each( data.items, function( i, item ) {
+        $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+        if ( i === 3 ) {
+          return false;
+        }
+      });
+    });
+})();
+</script>
+ 
