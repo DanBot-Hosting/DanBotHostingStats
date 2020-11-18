@@ -34,7 +34,7 @@ const parse = (string, options) => {
 
 exports.run = async (client, message, args) => {
 
-    if (!message.member.hasPermission("ADMINISTRATOR") && message.author.id != "293841631583535106") return;
+    if (!message.member.roles.find(r => r.id === "639489438036000769")) return;
 
     let flags = {
         nm: 'Normal message',
