@@ -1772,7 +1772,7 @@ exports.run = async (client, message, args) => {
                                         }
                                     }, 100) //END - Change Server Port
                                 }, 100) //END - Change Server IP
-                                } else if (node === "Node 3") {
+                                } else if (node === "Node 5") {
                                 
                                     //Change Server IP
                                     setTimeout(() => {
