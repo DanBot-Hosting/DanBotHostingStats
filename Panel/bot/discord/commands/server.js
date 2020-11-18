@@ -2,1517 +2,99 @@ const axios = require('axios');
 var pretty = require('prettysize');
 const fs = require('fs');
 const path = require('path');
-const {NodeSSH} = require('node-ssh')
+const serverCreateSettings = require('../../../createData');
+
+const {
+    NodeSSH
+} = require('node-ssh')
 const ssh = new NodeSSH()
 const rif = require('replace-in-file');
+
 exports.run = async (client, message, args) => {
-    const otherargs = message.content.split(' ').slice(3).join(' ');
-    if (userData.get(message.author.id) == null) {
-        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID. \nIf you have not made an account yet please check out `" + config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" + config.DiscordBot.Prefix + "user link`")
-    } else {
-        if (!args[0]) {
-            //No args
-            let embed = new Discord.RichEmbed()
-                .addField('__**Commands**__', 'Create a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere \nUnlink domain: `' + config.DiscordBot.Prefix  + 'server unproxy domainhere` \nDelete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
-            message.channel.send(embed)
 
-        } else if (args[0].toLowerCase() == "create") {
-            //Do server creation things
-            if (!args[1]) {
-                let embed = new Discord.RichEmbed()
-                    .setTitle('__**Commands**__ \nCreate a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list`')
-                message.channel.send(embed)
-            }
-            if (args[1].toLowerCase() === "nodejs") {
-                //Code for nodejs server
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 5,
-                        "egg": 16,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_nodejs-12",
-                        "startup": `if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then git pull; fi && /usr/local/bin/npm install --production && /usr/local/bin/node /home/container/{{BOT_JS_FILE}}`,
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "INSTALL_REPO": null,
-                            "INSTALL_BRANCH": null,
-                            "USER_UPLOAD": "0",
-                            "AUTO_UPDATE": "0",
-                            "BOT_JS_FILE": "index.js"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false
-                    };
+    let helpEmbed = new Discord.RichEmbed()
+        .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
+        .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
+        .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+        .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
+        .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
+        .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
+        .addField(`__**SteamCMD:**__`, "Rust", true)
+        .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+        .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server")
 
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                        console.log(error)
-                        
-                    })
-                }
-            } else if (args[1].toLowerCase() === "python") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 5,
-                        "egg": 22,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_python-3.8",
-                        "startup": "${STARTUP_CMD}",
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "STARTUP_CMD": "bash"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false
-                    };
+    const severName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
+    let consoleID = userData.get(message.author.id);
+    let data = serverCreateSettings.createParams(severName, consoleID);
 
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                        
-                    })
-                }
-            } else if (args[1].toLowerCase() === "aio") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 5,
-                        "egg": 46,
-                        "docker_image": "danielpmc/discordnode8",
-                        "startup": "${STARTUP_CMD}",
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "STARTUP_CMD": "bash"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false
-                    };
+    if (consoleID == null) {
+        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID.\n" +
+            "If you have not made an account yet please check out `" +
+            config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" +
+            config.DiscordBot.Prefix + "user link`");
+        return;
+    }
+    if (!args[0]) {
+        //No args
+        let embed = new Discord.RichEmbed()
+            .addField('__**Commands**__', 'Create a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere \nUnlink domain: `' + config.DiscordBot.Prefix + 'server unproxy domainhere` \nDelete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
+        message.channel.send(embed)
 
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                        
-                    })
-                }
-            } else if (args[1].toLowerCase() === "java") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 5,
-                        "egg": 25,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_openjdk-8-jre",
-                        "startup": "${STARTUP_CMD}",
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "STARTUP_CMD": "bash"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false
-                    };
+    } else if (args[0].toLowerCase() == "create") {
+        //Do server creation things
+        if (!args[1]) {
+            message.channel.send(helpEmbed)
+            return;
+        }
 
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                            .addField(`__**WARNING:**__`, "**Using a java server to run gameservers is __NOT__ allowed. You could have your server deleted for doing so.**")
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                        
-                    })
-                }
-            } else if (args[1].toLowerCase() === "paper") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 1,
-                        "egg": 3,
-                        "docker_image": "quay.io/pterodactyl/core:java",
-                        "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "MINECRAFT_VERSION": "latest",
-                            "SERVER_JARFILE": "server.jar",
-                            "DL_PATH": "https://papermc.io/api/v1/paper/1.16.1/138/download",
-                            "BUILD_NUMBER": "latest"
-                        },
-                        "feature_limits": {
-                            "databases": 0,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
+        let types = {
+            nodejs: data.nodejs,
+            python: data.python,
+            aio: data.aio,
+            java: data.java,
+            paper: data.paper,
+            forge: data.forge,
+            fivem: data.fivem,
+            "alt:v": data.altv,
+            multitheftauto: data.multitheftauto,
+            "rage.mp": data.ragemp,
+            "sa-mp": data.samp,
+            bedrock: data.bedrock,
+            pocketminemp: data.pocketminemp,
+            gmod: data.gmod,
+            "cs:go": data.csgo,
+            "ark:se": data.arkse,
+            ts3: data.ts3,
+            mumble: data.mumble,
+            rust: data.rust,
+            mongodb: data.mongodb,
+            redis: data.redis,
+            postgres: data.postgres,
+        }
 
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                        
-                    })
-                }
-            } else if (args[1].toLowerCase() === "forge") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 1,
-                        "egg": 2,
-                        "docker_image": "quay.io/pterodactyl/core:java",
-                        "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "SERVER_JARFILE": "server.jar",
-                            "MC_VERSION": "latest",
-                            "BUILD_TYPE": "recommended",
-                            "FORGE_VERSION": "1.16.3"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
+        if (Object.keys(types).includes(args[1].toLowerCase())) {
+            serverCreateSettings.createServer(types[args[1].toLowerCase()])
+                .then(response => {
+                    let embed = new Discord.RichEmbed()
+                        .setColor(`GREEN`)
+                        .addField(`__**Status:**__`, response.statusText)
+                        .addField(`__**Created for user ID:**__`, data.user)
+                        .addField(`__**Server name:**__`, data.name)
+                        .addField(`__**Type:**__`, args[1].toLowerCase())
+                    message.channel.send(embed)
+                }).catch(error => {
+                    message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                    console.log(error)
+                })
+            return;
+        }
+        message.channel.send(helpEmbed)
 
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "fivem") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 9,
-                        "egg": 26,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_alpine",
-                        "startup": `$(pwd)/alpine/opt/cfx-server/ld-musl-x86_64.so.1 --library-path "$(pwd)/alpine/usr/lib/v8/:$(pwd)/alpine/lib/:$(pwd)/alpine/usr/lib/" -- $(pwd)/alpine/opt/cfx-server/FXServer +set citizen_dir $(pwd)/alpine/opt/cfx-server/citizen/ +set sv_licenseKey {{FIVEM_LICENSE}} +set steam_webApiKey {{STEAM_WEBAPIKEY}} +set sv_maxplayers {{MAX_PLAYERS}} +set serverProfile default +set txAdminPort {{TXADMIN_PORT}} $( [ "$TXADMIN_ENABLE" == "1" ] || printf %s '+exec server.cfg' )`,
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "FIVEM_LICENSE": "6pc7xbhxoep0ms5m5rsg09k11plzib6w",
-                            "MAX_PLAYERS": "32",
-                            "SERVER_HOSTNAME": "My new FXServer!",
-                            "FIVEM_VERSION": "latest",
-                            "DOWNLOAD_URL": null,
-                            "STEAM_WEBAPIKEY": "none",
-                            "TXADMIN_PORT": "40120",
-                            "TXADMIN_ENABLE": "0"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "alt:v") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 9,
-                        "egg": 42,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_dotnet",
-                        "startup": `sleep 2 && ./altv-server`,
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "LD_LIBRARY_PATH": ".",
-                            "BUILD": "release",
-                            "PASSWORD": "changeme",
-                            "FIVEM_VERSION": "latest",
-                            "SERVER_DESC": "A alt:v server hosted for free by DanBot Hosting!"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "multitheftauto") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 9,
-                        "egg": 43,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:ubuntu_source",
-                        "startup": `./mta-server64 --port {{SERVER_PORT}} --httpport {{SERVER_WEBPORT}} -n`,
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "SERVER_WEBPORT": "22005"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "rage.mp") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 9,
-                        "egg": 44,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_debian",
-                        "startup": `./server`,
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "SERVER_NAME": "RAGE:MP Unofficial server",
-                            "MAX_PLAYERS": "50",
-                            "ANNOUNCE": "0"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 2,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "sa-mp") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 9,
-                        "egg": 45,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:game_samp",
-                        "startup": `./samp03svr`,
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "environment": {
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "bedrock") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 1,
-                        "egg": 18,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
-                        "startup": "./bedrock_server",
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "BEDROCK_VERSION": "latest",
-                            "LD_LIBRARY_PATH": "."
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "pocketminemp") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 1,
-                        "egg": 28,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
-                        "startup": "./bin/php7/bin/php ./PocketMine-MP.phar --no-wizard --disable-ansi",
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "PMMP_VERSION": "latest"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "gmod") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 2,
-                        "egg": 9,
-                        "docker_image": "quay.io/pterodactyl/core:source",
-                        "startup": "./srcds_run -game garrysmod -console -port {{SERVER_PORT}} +ip 0.0.0.0 +host_workshop_collection {{WORKSHOP_ID}} +map {{SRCDS_MAP}} +gamemode {{GAMEMODE}} -strictportbind -norestart +sv_setsteamaccount {{STEAM_ACC}} +maxplayers {{MAX_PLAYERS}}  -tickrate {{TICKRATE}}",
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "SRCDS_MAP": "gm_flatgrass",
-                            "STEAM_ACC": null,
-                            "SRCDS_APPID": "4020",
-                            "WORKSHOP_ID": null,
-                            "GAMEMODE": "sandbox",
-                            "MAX_PLAYERS": "32",
-                            "TICKRATE": "22"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "cs:go") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 2,
-                        "egg": 7,
-                        "docker_image": "quay.io/pterodactyl/core:source",
-                        "startup": "./srcds_run -game csgo -console -port {{SERVER_PORT}} +ip 0.0.0.0 +map {{SRCDS_MAP}} -strictportbind -norestart +sv_setsteamaccount {{STEAM_ACC}}",
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "SRCDS_MAP": "de_dust2",
-                            "STEAM_ACC": "BD1868C7DFC242D39EBE2062B10C6A3A",
-                            "SRCDS_APPID": "740"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "ark:se") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 2,
-                        "egg": 6,
-                        "docker_image": "quay.io/pterodactyl/core:source",
-                        "startup": `"cd ShooterGame/Binaries/Linux && ./ShooterGameServer {{SERVER_MAP}}?listen?SessionName='{{SESSION_NAME}}'?ServerPassword={{ARK_PASSWORD}}?ServerAdminPassword={{ARK_ADMIN_PASSWORD}}?Port={{PORT}}?MaxPlayers={{SERVER_MAX_PLAYERS}}?RCONPort={{RCON_PORT}}?QueryPort={{QUERY_PORT}}?RCONEnabled={{ENABLE_RCON}} -server -log"`,
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "ARK_PASSWORD": null,
-                            "ARK_ADMIN_PASSWORD": null,
-                            "SERVER_MAX_PLAYERS": "20",
-                            "SERVER_MAP": "TheIsland",
-                            "SESSION_NAME": "ARK SERVER",
-                            "PORT": "7777",
-                            "ENABLE_RCON": "false",
-                            "RCON_PORT": "27020",
-                            "QUERY_PORT": "27015",
-                            "SRCDS_APPID": "376030"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "ts3") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 3,
-                        "egg": 13,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:base_debian",
-                        "startup": `./ts3server default_voice_port={{SERVER_PORT}} query_port={{SERVER_PORT}} filetransfer_ip=0.0.0.0 filetransfer_port={{FILE_TRANSFER}} license_accepted=1`,
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "TS_VERSION": "3.12.1",
-                            "FILE_TRANSFER": "30033"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "mumble") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 3,
-                        "egg": 12,
-                        "docker_image": "quay.io/pterodactyl/core:glibc",
-                        "startup": `./murmur.x86 -fg`,
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "MAX_USERS": "100",
-                            "MUMBLE_VERSION": "1.3.1"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "rust") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 4,
-                        "egg": 14,
-                        "docker_image": "quay.io/pterodactyl/core:rust",
-                        "startup": `./RustDedicated -batchmode +server.port {{SERVER_PORT}} +server.identity "rust" +rcon.port {{RCON_PORT}} +rcon.web true +server.hostname \"{{HOSTNAME}}\" +server.level \"{{LEVEL}}\" +server.description \"{{DESCRIPTION}}\" +server.url \"{{SERVER_URL}}\" +server.headerimage \"{{SERVER_IMG}}\" +server.worldsize \"{{WORLD_SIZE}}\" +server.seed \"{{WORLD_SEED}}\" +server.maxplayers {{MAX_PLAYERS}} +rcon.password \"{{RCON_PASS}}\" +server.saveinterval {{SAVEINTERVAL}} {{ADDITIONAL_ARGS}}`,
-                        "limits": {
-                            "memory": 2048,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "HOSTNAME": "A Rust Server",
-                            "OXIDE": "0",
-                            "LEVEL": "20",
-                            "SERVER_MAP": "Procedural Map",
-                            "DESCRIPTION": "Powered by DanBot Hosting - Free Hosting, Forever",
-                            "SERVER_URL": "https://danbot.host",
-                            "WORLD_SIZE": "3000",
-                            "WORLD_SEED": null,
-                            "MAX_PLAYERS": "40",
-                            "SERVER_IMG": null,
-                            "RCON_PORT": "28016",
-                            "RCON_PASS": "DBHisthebest",
-                            "SAVEINTERVAL": "60",
-                            "ADDITIONAL_ARGS": null
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [5],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "mongodb") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 12,
-                        "egg": 35,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:db_mongo-4",
-                        "startup": "mongod --fork --dbpath /home/container/mongodb/ --port ${SERVER_PORT} --bind_ip 0.0.0.0 --auth --logpath /home/container/logs/mongo.log; until nc -z -v -w5 127.0.0.1 ${SERVER_PORT}; do echo 'Waiting for mongodb connection...'; sleep 5; done && mongo 127.0.0.1:${SERVER_PORT} && mongo --eval 'db.getSiblingDB('admin').shutdownServer()' 127.0.0.1:${SERVER_PORT}",
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "MONGO_USER": "admin",
-                            "MONGO_USER_PASS": "aP@55word"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "redis") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 12,
-                        "egg": 36,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:db_redis-6",
-                        "startup": "/usr/local/bin/redis-server /home/container/redis.conf --save 60 1 --dir /home/container/ --bind 0.0.0.0 --port {{SERVER_PORT}} --requirepass {{SERVER_PASSWORD}} --maxmemory {{SERVER_MEMORY}}mb --daemonize yes && redis-cli -p {{SERVER_PORT}} -a {{SERVER_PASSWORD}}; redis-cli -p {{SERVER_PORT}} -a {{SERVER_PASSWORD}} shutdown save",
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "SERVER_PASSWORD": "P@55w0rd"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else if (args[1].toLowerCase() === "postgres") {
-                if (!otherargs) {
-                    message.channel.send('You must provide a server name!')
-                } else {
-                    //Data to send
-                    const data = {
-                        "name": otherargs,
-                        "user": userData.get(message.author.id + ".consoleID"),
-                        "nest": 12,
-                        "egg": 37,
-                        "docker_image": "quay.io/parkervcp/pterodactyl-images:db_postgres",
-                        "startup": `postgres  -D /home/container/postgres_db/`,
-                        "limits": {
-                            "memory": 0,
-                            "swap": 0,
-                            "disk": 0,
-                            "io": 500,
-                            "cpu": 0
-                        },
-                        "environment": {
-                            "PGPASSWORD": "P@55word",
-                            "PGROOT": "ZPWgpMN4hETqjXAV",
-                            "PGUSER": "pterodactyl",
-                            "PGDATABASE": "pterodactyl"
-                        },
-                        "feature_limits": {
-                            "databases": 2,
-                            "allocations": 1,
-                            "backups": 10
-                        },
-                        "deploy": {
-                            "locations": [10],
-                            "dedicated_ip": false,
-                            "port_range": []
-                        },
-                        "start_on_completion": false,
-                        "oom_disabled": false
-                    };
-
-                    //Sending the data:
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/servers",
-                        method: 'POST',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        },
-                        data: data,
-                    }).then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, data.user)
-                            .addField(`__**Server name:**__`, data.name)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                        message.channel.send(embed)
-                    }).catch(error => {
-                        
-                        let embed1 = new Discord.RichEmbed()
-                            .setColor(`RED`)
-                            .addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")
-                        message.channel.send(embed1)
-                    })
-                }
-            } else {
-                //Anything else
-                let embed2 = new Discord.RichEmbed()
-                    .setColor(`RED`)
-                    .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
-                    .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
-                    .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
-                    .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
-                    .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
-                    .addField(`__**SteamCMD:**__`, "Rust", true)
-                    .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
-                    .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server")
-                message.channel.send(embed2)
-            }
-        } else if (args[0].toLowerCase() == "delete") {
-            //delete server things
-            if (!args[1]) {
-                message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
-            } else {
+    } else if (args[0].toLowerCase() == "delete") {
+        //delete server things
+        if (!args[1]) {
+            message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
+        } else {
             message.channel.send('Checking server `' + args[1] + '`\nPlease allow me 2seconds to fetch this.').then((msg) => {
                 axios({
                     url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
@@ -1527,95 +109,109 @@ exports.run = async (client, message, args) => {
                 }).then(response => {
                     const preoutput = response.data.attributes.relationships.servers.data
                     const output = preoutput.find(srv => srv.attributes ? srv.attributes.identifier == args[1] : false)
-                
 
-                setTimeout(async () => {
-                    setTimeout(() => {
-                        if (!output) {
-                            msg.edit('Can\'t find that server :(')
-                        } else {
 
-                        if (output.attributes.user == userData.get(message.author.id).consoleID) {
-                            msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted and/or its files**')
-                            const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000, max: 2 });
-                            collector.on('collect', message => {
-                                if (message == "confirm") {
-                                    message.delete()
-                                    axios({
-                                        url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id,
-                                        method: 'DELETE',
-                                        followRedirect: true,
-                                        maxRedirects: 5,
-                                        headers: {
-                                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                                        }
-                                    }).then(response => {
-                                        msg.edit('Server deleted!')
-                                        collector.stop()
-                                    }).catch(err => {
-                                        msg.edit('Error with the node. Please try again later')
-                                        collector.stop()
+                    setTimeout(async () => {
+                        setTimeout(() => {
+                            if (!output) {
+                                msg.edit('Can\'t find that server :(')
+                            } else {
+
+                                if (output.attributes.user == userData.get(message.author.id).consoleID) {
+                                    msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted and/or its files**')
+                                    const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, {
+                                        time: 60000,
+                                        max: 2
                                     });
+                                    collector.on('collect', message => {
+                                        if (message == "confirm") {
+                                            message.delete()
+                                            axios({
+                                                url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id,
+                                                method: 'DELETE',
+                                                followRedirect: true,
+                                                maxRedirects: 5,
+                                                headers: {
+                                                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                                                    'Content-Type': 'application/json',
+                                                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                                                }
+                                            }).then(response => {
+                                                msg.edit('Server deleted!')
+                                                collector.stop()
+                                            }).catch(err => {
+                                                msg.edit('Error with the node. Please try again later')
+                                                collector.stop()
+                                            });
+                                        } else {
+                                            message.delete()
+                                            msg.edit('Request cancelled!')
+                                            collector.stop()
+                                        }
+                                    })
+
                                 } else {
-                                    message.delete()
-                                    msg.edit('Request cancelled!')
-                                    collector.stop()
+                                    message.channel.send('You do not own that server. You cant delete it.')
                                 }
-                            })
-                                
-                        } else {
-                            message.channel.send('You do not own that server. You cant delete it.')
-                        }
-                        }
-                    },500)
-                }, 1000)
-            });
-                });
-            }
-        } else if (args[0].toLowerCase() == "manage") {
-            message.channel.send('Uh this isnt done yet...')
-        } else if (args[0] == "list") {
-            message.channel.send('Loading servers...')
-            //List servers
-            var arr = [];
-                        axios({
-                            url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
-                            method: 'GET',
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                                'Content-Type': 'application/json',
-                                'Accept': 'Application/vnd.pterodactyl.v1+json',
                             }
-                        }).then(response => {
-                            const preoutput = response.data.attributes.relationships.servers.data
-                            //console.log(resources.data.meta)
-                            arr.push(...preoutput)
-                            setTimeout(async () => {
-                                //console.log(arr.length)
-                                console.log(arr)
-                                setTimeout(() => {
-                                    var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
-                                    const embed = new Discord.RichEmbed()
-                                        .addField('__**Your Servers:**__', clean)
-                                    message.channel.send(embed)
-                                    //console.log(output)
-                                },500)
-                            }, 5000)
-                        });
-        } else if (args[0].toLowerCase() == "status") {
-            if (!args[1]) {
-                let embed = new Discord.RichEmbed()
-                    .setColor(`GREEN`)
-                    .addField(`__**Server Status**__`, 'What server would you like to view? Please type: `' + config.DiscordBot.Prefix + 'server status serverid`', true)
-                message.channel.send(embed)
-            } else {
-                message.channel.send('Fetching server...')
+                        }, 500)
+                    }, 1000)
+                });
+            });
+        }
+    } else if (args[0].toLowerCase() == "manage") {
+        message.channel.send('Uh this isnt done yet...')
+    } else if (args[0] == "list") {
+        message.channel.send('Loading servers...')
+        //List servers
+        var arr = [];
+        axios({
+            url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                'Content-Type': 'application/json',
+                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            }
+        }).then(response => {
+            const preoutput = response.data.attributes.relationships.servers.data
+            //console.log(resources.data.meta)
+            arr.push(...preoutput)
+            setTimeout(async () => {
+                //console.log(arr.length)
+                console.log(arr)
+                setTimeout(() => {
+                    var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
+                    const embed = new Discord.RichEmbed()
+                        .addField('__**Your Servers:**__', clean)
+                    message.channel.send(embed)
+                    //console.log(output)
+                }, 500)
+            }, 5000)
+        });
+    } else if (args[0].toLowerCase() == "status") {
+        if (!args[1]) {
+            let embed = new Discord.RichEmbed()
+                .setColor(`GREEN`)
+                .addField(`__**Server Status**__`, 'What server would you like to view? Please type: `' + config.DiscordBot.Prefix + 'server status serverid`', true)
+            message.channel.send(embed)
+        } else {
+            message.channel.send('Fetching server...')
+            axios({
+                url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(response => {
                 axios({
-                    url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
+                    url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1] + "/resources",
                     method: 'GET',
                     followRedirect: true,
                     maxRedirects: 5,
@@ -1624,173 +220,105 @@ exports.run = async (client, message, args) => {
                         'Content-Type': 'application/json',
                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
-                }).then(response => {
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1] + "/resources",
-                        method: 'GET',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        }
-                    }).then(resources => {
-                        let embedstatus = new Discord.RichEmbed()
-                            .setColor('GREEN')
-                            .addField('**Status**', resources.data.attributes.current_state, true)
-                            .addField('**CPU Usage**', resources.data.attributes.resources.cpu_absolute + '%')
-                            .addField('**RAM Usage**', pretty(resources.data.attributes.resources.memory_bytes) + '  out of UNLIMITED MB')
-                            .addField('**DISK Usage**', pretty(resources.data.attributes.resources.disk_bytes) + '  out of UNLIMITED MB')
-                            .addField('**NET Usage**', 'UPLOADED: ' + pretty(resources.data.attributes.resources.network_tx_bytes) + ', DOWNLOADED: ' + pretty(resources.data.attributes.resources.network_rx_bytes))
-                            .addField('**NODE**', response.data.attributes.node)
-                            .addField('**FULL ID**', response.data.attributes.uuid)
-                            .addField('\u200b', '\u200b')
-                            .addField('**LIMITS (0 = unlimited)**', 'MEMORY: ' + response.data.attributes.limits.memory + 'MB \nDISK: ' + response.data.attributes.limits.disk + 'MB \nCPU: ' + response.data.attributes.limits.cpu)
-                            .addField('**MISC LIMITS**', 'DATABASES: ' + response.data.attributes.feature_limits.databases + '\nBACKUPS: ' + response.data.attributes.feature_limits.backups)
-                        message.reply(embedstatus)
-                    })});
-            }
-        } else if (args[0].toLowerCase() == "proxy") {
-            const embed = new Discord.RichEmbed()
-                .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
-            if (!args[1]) {
+                }).then(resources => {
+                    let embedstatus = new Discord.RichEmbed()
+                        .setColor('GREEN')
+                        .addField('**Status**', resources.data.attributes.current_state, true)
+                        .addField('**CPU Usage**', resources.data.attributes.resources.cpu_absolute + '%')
+                        .addField('**RAM Usage**', pretty(resources.data.attributes.resources.memory_bytes) + '  out of UNLIMITED MB')
+                        .addField('**DISK Usage**', pretty(resources.data.attributes.resources.disk_bytes) + '  out of UNLIMITED MB')
+                        .addField('**NET Usage**', 'UPLOADED: ' + pretty(resources.data.attributes.resources.network_tx_bytes) + ', DOWNLOADED: ' + pretty(resources.data.attributes.resources.network_rx_bytes))
+                        .addField('**NODE**', response.data.attributes.node)
+                        .addField('**FULL ID**', response.data.attributes.uuid)
+                        .addField('\u200b', '\u200b')
+                        .addField('**LIMITS (0 = unlimited)**', 'MEMORY: ' + response.data.attributes.limits.memory + 'MB \nDISK: ' + response.data.attributes.limits.disk + 'MB \nCPU: ' + response.data.attributes.limits.cpu)
+                        .addField('**MISC LIMITS**', 'DATABASES: ' + response.data.attributes.feature_limits.databases + '\nBACKUPS: ' + response.data.attributes.feature_limits.backups)
+                    message.reply(embedstatus)
+                })
+            });
+        }
+    } else if (args[0].toLowerCase() == "proxy") {
+        const embed = new Discord.RichEmbed()
+            .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
+        if (!args[1]) {
+            message.channel.send(embed)
+        } else {
+            if (!args[2]) {
                 message.channel.send(embed)
             } else {
-                if (!args[2]) {
-                    message.channel.send(embed)
-                } else {
-                    message.channel.send('Please give me a few seconds. Trying to link that domain!')
-                    //SSH Connection
-                    ssh.connect({
-                        host: config.SSH.Host,
-                        username: config.SSH.User,
-                        port: config.SSH.Port,
-                        password: config.SSH.Password,
-                        tryKeyboard: true,
-                    })
+                message.channel.send('Please give me a few seconds. Trying to link that domain!')
+                //SSH Connection
+                ssh.connect({
+                    host: config.SSH.Host,
+                    username: config.SSH.User,
+                    port: config.SSH.Port,
+                    password: config.SSH.Password,
+                    tryKeyboard: true,
+                })
 
-                    //Copy template file. Ready to be changed!
-                    fs.access(path.resolve(path.dirname(require.main.filename), "proxy/" + args[1].toLowerCase() + ".conf"), fs.constants.R_OK, (err) => {
-                        if (!err) {
-                            return message.channel.send("This domain has been linked before or is currently linked..")
-                        } else {
-                            fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => { 
-                                if (err) { 
-                                  console.log("Error Found:", err); 
-                                }
-                            })
-                            fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => { 
-                                if (err) { 
-                                  console.log("Error Found:", err); 
-                                }
-                            })
-        
-                            setTimeout(() => {
-                                //Change Domain
-                                var z = 0;
-                                while (z <5) {
-                                    const domainchange = rif.sync({
-                                        files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                        from: "REPLACE-DOMAIN",
-                                        to: args[1].toLowerCase(),
-                                        countMatches: true,
-                                    });
-                                    z++
-                                }
+                //Copy template file. Ready to be changed!
+                fs.access(path.resolve(path.dirname(require.main.filename), "proxy/" + args[1].toLowerCase() + ".conf"), fs.constants.R_OK, (err) => {
+                    if (!err) {
+                        return message.channel.send("This domain has been linked before or is currently linked..")
+                    } else {
+                        fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => {
+                            if (err) {
+                                console.log("Error Found:", err);
+                            }
+                        })
+                        fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => {
+                            if (err) {
+                                console.log("Error Found:", err);
+                            }
+                        })
 
-                                //Grab node and port ready for the config 
-                                axios({
-                                    url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[2],
-                                    method: 'GET',
-                                    followRedirect: true,
-                                    maxRedirects: 5,
-                                    headers: {
-                                        'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'Application/vnd.pterodactyl.v1+json',
-                                    }
-                                }).then(response => {
+                        setTimeout(() => {
+                            //Change Domain
+                            var z = 0;
+                            while (z < 5) {
+                                const domainchange = rif.sync({
+                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                    from: "REPLACE-DOMAIN",
+                                    to: args[1].toLowerCase(),
+                                    countMatches: true,
+                                });
+                                z++
+                            }
+
+                            //Grab node and port ready for the config 
+                            axios({
+                                url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[2],
+                                method: 'GET',
+                                followRedirect: true,
+                                maxRedirects: 5,
+                                headers: {
+                                    'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                                }
+                            }).then(response => {
                                 const node = response.data.attributes.node;
                                 console.log(node)
                                 const port = response.data.attributes.relationships.allocations.data[0].attributes.port
                                 if (node === "Node 1") {
-                                
-                                //Change Server IP
-                                setTimeout(() => {
-                                    var y = 0;
-                                    while (y <3) {
-                                        const ipchange = rif.sync({
-                                            files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                            from: "REPLACE-IP",
-                                            to: "154.27.68.232",
-                                            countMatches: true,
-                                        });
-                                        y++
-                                    };
-        
-                                    //Change Server Port
-                                    setTimeout(() => {
-                                        var x = 0;
-                                        while (x <3) {
-                                            const portchange = rif.sync({
-                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                from: "REPLACE-PORT",
-                                                to: port,
-                                                countMatches: true,
-                                            });
-                                            x++
-                                        }
-                                    }, 100) //END - Change Server Port
-                                }, 100) //END - Change Server IP
-                                } else if (node === "Node 2") {
-                                
-                                //Change Server IP
-                                setTimeout(() => {
-                                    var y = 0;
-                                    while (y <3) {
-                                        const ipchange = rif.sync({
-                                            files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                            from: "REPLACE-IP",
-                                            to: "154.27.68.233",
-                                            countMatches: true,
-                                        });
-                                        y++
-                                    };
-        
-                                    //Change Server Port
-                                    setTimeout(() => {
-                                        var x = 0;
-                                        while (x <3) {
-                                            const portchange = rif.sync({
-                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                from: "REPLACE-PORT",
-                                                to: port,
-                                                countMatches: true,
-                                            });
-                                            x++
-                                        }
-                                    }, 100) //END - Change Server Port
-                                }, 100) //END - Change Server IP
-                                } else if (node === "Node 5") {
-                                
+
                                     //Change Server IP
                                     setTimeout(() => {
                                         var y = 0;
-                                        while (y <3) {
+                                        while (y < 3) {
                                             const ipchange = rif.sync({
                                                 files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                                 from: "REPLACE-IP",
-                                                to: "154.27.68.244",
+                                                to: "154.27.68.232",
                                                 countMatches: true,
                                             });
                                             y++
                                         };
-            
+
                                         //Change Server Port
                                         setTimeout(() => {
                                             var x = 0;
-                                            while (x <3) {
+                                            while (x < 3) {
                                                 const portchange = rif.sync({
                                                     files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                                     from: "REPLACE-PORT",
@@ -1801,77 +329,142 @@ exports.run = async (client, message, args) => {
                                             }
                                         }, 100) //END - Change Server Port
                                     }, 100) //END - Change Server IP
-                                    } else {
+                                } else if (node === "Node 2") {
+
+                                    //Change Server IP
+                                    setTimeout(() => {
+                                        var y = 0;
+                                        while (y < 3) {
+                                            const ipchange = rif.sync({
+                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                from: "REPLACE-IP",
+                                                to: "154.27.68.233",
+                                                countMatches: true,
+                                            });
+                                            y++
+                                        };
+
+                                        //Change Server Port
+                                        setTimeout(() => {
+                                            var x = 0;
+                                            while (x < 3) {
+                                                const portchange = rif.sync({
+                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                    from: "REPLACE-PORT",
+                                                    to: port,
+                                                    countMatches: true,
+                                                });
+                                                x++
+                                            }
+                                        }, 100) //END - Change Server Port
+                                    }, 100) //END - Change Server IP
+                                } else if (node === "Node 5") {
+
+                                    //Change Server IP
+                                    setTimeout(() => {
+                                        var y = 0;
+                                        while (y < 3) {
+                                            const ipchange = rif.sync({
+                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                from: "REPLACE-IP",
+                                                to: "154.27.68.244",
+                                                countMatches: true,
+                                            });
+                                            y++
+                                        };
+
+                                        //Change Server Port
+                                        setTimeout(() => {
+                                            var x = 0;
+                                            while (x < 3) {
+                                                const portchange = rif.sync({
+                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                    from: "REPLACE-PORT",
+                                                    to: port,
+                                                    countMatches: true,
+                                                });
+                                                x++
+                                            }
+                                        }, 100) //END - Change Server Port
+                                    }, 100) //END - Change Server IP
+                                } else {
                                     message.channel.send('Unsupported node. Stopping reverse proxy.')
                                     fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                 }
 
-        
-                                        //Upload file to /etc/apache2/sites-available
-                                        setTimeout(() => {
-                                            ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function() {
-                                                
-                                                //Run command to genate SSL cert.
-                                                ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
-                                                    if (result.stdout.includes('Congratulations!')) {
-                                                        //No error. Continue to enable site on apache2 then restart
-                                                        console.log('SSL Gen complete. Continue!')
-        
-                                                        ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
-                                                                //Complete
-                                                                message.reply('Domain has now been linked!')
 
-                                                                /*
-                                                                domains.set(args[1], {
-                                                                    DiscordID: message.author.id,
-                                                                    ServerID: args[2],
-                                                                    Domain: args[1]
-                                                                  });
-                                                                */
-                                                        })
-                                                    } else if (result.stdout.includes('Certificate not yet due for renewal')) {
-                                                        //No error. Continue to enable site on apache2 then restart
-                                                        console.log('SSL Gen complete. Continue!')
-        
-                                                        ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
-                                                                //Complete
-                                                                message.reply('Domain has now been linked!')
+                                //Upload file to /etc/apache2/sites-available
+                                setTimeout(() => {
+                                    ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function () {
 
-                                                                /*
-                                                                domains.set(args[1], {
-                                                                    DiscordID: message.author.id,
-                                                                    ServerID: args[2],
-                                                                    Domain: args[1]
-                                                                  });
-                                                                */
-                                                        })
-                                                    } else {
-                                                        message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled! \n\n**If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache** \n\nFull Error: ```' + result.stdout + '```')
-                                                        fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                                    }
+                                        //Run command to genate SSL cert.
+                                        ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m danielpd93@gmail.com`, {
+                                            cwd: '/root'
+                                        }).then(function (result) {
+                                            if (result.stdout.includes('Congratulations!')) {
+                                                //No error. Continue to enable site on apache2 then restart
+                                                console.log('SSL Gen complete. Continue!')
+
+                                                ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, {
+                                                    cwd: '/root'
+                                                }).then(function (result) {
+                                                    //Complete
+                                                    message.reply('Domain has now been linked!')
+
+                                                    /*
+                                                    domains.set(args[1], {
+                                                        DiscordID: message.author.id,
+                                                        ServerID: args[2],
+                                                        Domain: args[1]
+                                                      });
+                                                    */
                                                 })
-                                              }, function(error) {
-                                                  //If error exists. Error and delete proxy file
-                                                  fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                                  message.channel.send("FAILED \nERROR: " + error);
-                                            })
-                                        }, 250) //END - Upload file to /etc/apache2/sites-available
+                                            } else if (result.stdout.includes('Certificate not yet due for renewal')) {
+                                                //No error. Continue to enable site on apache2 then restart
+                                                console.log('SSL Gen complete. Continue!')
+
+                                                ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, {
+                                                    cwd: '/root'
+                                                }).then(function (result) {
+                                                    //Complete
+                                                    message.reply('Domain has now been linked!')
+
+                                                    /*
+                                                    domains.set(args[1], {
+                                                        DiscordID: message.author.id,
+                                                        ServerID: args[2],
+                                                        Domain: args[1]
+                                                      });
+                                                    */
+                                                })
+                                            } else {
+                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!\n\n' +
+                                                    '**If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache** \n\nFull Error: ```' + result.stdout + '```')
+                                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
+                                            }
+                                        })
+                                    }, function (error) {
+                                        //If error exists. Error and delete proxy file
+                                        fs.unlinkSync("./proxy/" + args[1] + ".conf");
+                                        message.channel.send("FAILED \nERROR: " + error);
+                                    })
+                                }, 250) //END - Upload file to /etc/apache2/sites-available
                             }).catch(err => {
                                 message.channel.send('Can\'t find that server :( ')
                                 fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                             }) //END - Grab server info (Node and Port)
-                            }, 250) //END - //Change Domain
-                        }
-                    })
-                }
+                            }) //END - Grab server info (Node and Port)
+                        }, 250) //END - //Change Domain
+                    }
+                })
             }
-        } else if (args[0].toLowerCase() == "unproxy") {
-            if (!args[1]) {
-                const embed = new Discord.RichEmbed()
-                    .setTitle('__**How to remove a domain from a server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server unproxy domainhere')
-                message.channel.send(embed)
-            } else {
-            
+        }
+    } else if (args[0].toLowerCase() == "unproxy") {
+        if (!args[1]) {
+            const embed = new Discord.RichEmbed()
+                .setTitle('__**How to remove a domain from a server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server unproxy domainhere')
+            message.channel.send(embed)
+        } else {
+
             //SSH Connection
             ssh.connect({
                 host: config.SSH.Host,
@@ -1882,10 +475,12 @@ exports.run = async (client, message, args) => {
             })
 
             //Delete file from apache2 dir
-            ssh.execCommand('a2dissite ' + args[1] + ' && rm /etc/apache2/sites-available/' + args[1] + '.conf && rm -rf /etc/letsencrypt/live/' + args[1] + ' && rm -rf /etc/letsencrypt/archive' + args[1] + '&& service apache2 restart', { cwd:'/root' })
+            ssh.execCommand('a2dissite ' + args[1] + ' && rm /etc/apache2/sites-available/' + args[1] + '.conf && rm -rf /etc/letsencrypt/live/' + args[1] + ' && rm -rf /etc/letsencrypt/archive' + args[1] + '&& service apache2 restart', {
+                cwd: '/root'
+            })
             fs.unlinkSync("./proxy/" + args[1] + ".conf");
             message.channel.send('Proxy has been removed from ' + args[1])
-            }
         }
+
     }
 };
