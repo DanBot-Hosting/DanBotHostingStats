@@ -5,7 +5,6 @@ const path = require('path');
 const {NodeSSH} = require('node-ssh')
 const ssh = new NodeSSH()
 const rif = require('replace-in-file');
-const { config } = require('process');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
