@@ -1813,7 +1813,7 @@ exports.run = async (client, message, args) => {
                                                 
                                                 //Run command to genate SSL cert.
                                                 ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
-                                                    if (result.stdout.includes('Congratulations!' || result.stdout.includes('Certificate not yet due for renewal; no action taken.'))) {
+                                                    if (result.stdout.includes('Congratulations!' || result.stdout.includes('Certificate not yet due for renewal'))) {
                                                         //No error. Continue to enable site on apache2 then restart
                                                         console.log('SSL Gen complete. Continue!')
         
