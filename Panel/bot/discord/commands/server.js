@@ -1769,7 +1769,36 @@ exports.run = async (client, message, args) => {
                                         }
                                     }, 100) //END - Change Server Port
                                 }, 100) //END - Change Server IP
-                                } else {
+                                } else if (node === "Node 3") {
+                                
+                                    //Change Server IP
+                                    setTimeout(() => {
+                                        var y = 0;
+                                        while (y <3) {
+                                            const ipchange = rif.sync({
+                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                from: "REPLACE-IP",
+                                                to: "154.27.68.244",
+                                                countMatches: true,
+                                            });
+                                            y++
+                                        };
+            
+                                        //Change Server Port
+                                        setTimeout(() => {
+                                            var x = 0;
+                                            while (x <3) {
+                                                const portchange = rif.sync({
+                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                    from: "REPLACE-PORT",
+                                                    to: port,
+                                                    countMatches: true,
+                                                });
+                                                x++
+                                            }
+                                        }, 100) //END - Change Server Port
+                                    }, 100) //END - Change Server IP
+                                    } else {
                                     message.channel.send('Unsupported node. Stopping reverse proxy.')
                                     fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                 }
@@ -1808,7 +1837,10 @@ exports.run = async (client, message, args) => {
                                                   message.channel.send("FAILED \nERROR: " + error);
                                             })
                                         }, 250) //END - Upload file to /etc/apache2/sites-available
-                            }) //END - Grab server info (Node and Port)
+                            }).catch(err => {
+                                message.channel.send('Can\'t find that server :( ')
+                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
+                             }) //END - Grab server info (Node and Port)
                             }, 250) //END - //Change Domain
                         }
                     })
