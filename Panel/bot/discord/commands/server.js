@@ -5,6 +5,7 @@ const path = require('path');
 const {NodeSSH} = require('node-ssh')
 const ssh = new NodeSSH()
 const rif = require('replace-in-file');
+const { config } = require('process');
 exports.run = async (client, message, args) => {
     const otherargs = message.content.split(' ').slice(3).join(' ');
     if (userData.get(message.author.id) == null) {
@@ -13,7 +14,7 @@ exports.run = async (client, message, args) => {
         if (!args[0]) {
             //No args
             let embed = new Discord.RichEmbed()
-                .addField('__**Commands**__', 'Create a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere` \nDelete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
+                .addField('__**Commands**__', 'Create a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere \nUnlink domain: `' + config.DiscordBot.Prefix  + 'server unproxy domainhere` \nDelete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
             message.channel.send(embed)
 
         } else if (args[0].toLowerCase() == "create") {
