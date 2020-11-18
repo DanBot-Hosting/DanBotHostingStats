@@ -1813,7 +1813,23 @@ exports.run = async (client, message, args) => {
                                                 
                                                 //Run command to genate SSL cert.
                                                 ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m danielpd93@gmail.com`, { cwd:'/root' }).then(function(result) {
-                                                    if (result.stdout.includes('Congratulations!' || result.stdout.includes('Certificate not yet due for renewal'))) {
+                                                    if (result.stdout.includes('Congratulations!')) {
+                                                        //No error. Continue to enable site on apache2 then restart
+                                                        console.log('SSL Gen complete. Continue!')
+        
+                                                        ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, { cwd:'/root' }).then(function(result) {
+                                                                //Complete
+                                                                message.reply('Domain has now been linked!')
+
+                                                                /*
+                                                                domains.set(args[1], {
+                                                                    DiscordID: message.author.id,
+                                                                    ServerID: args[2],
+                                                                    Domain: args[1]
+                                                                  });
+                                                                */
+                                                        })
+                                                    } else if (result.stdout.includes('Certificate not yet due for renewal')) {
                                                         //No error. Continue to enable site on apache2 then restart
                                                         console.log('SSL Gen complete. Continue!')
         
