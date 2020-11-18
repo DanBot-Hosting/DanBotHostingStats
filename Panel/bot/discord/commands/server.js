@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
         .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
         .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server")
 
-    const severName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
+    const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
     let consoleID = userData.get(message.author.id);
     
     if (consoleID == null) {
@@ -34,7 +34,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let data = serverCreateSettings.createParams(severName, consoleID.consoleID);
+    let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
     
     if (!args[0]) {
         //No args
@@ -80,8 +80,8 @@ exports.run = async (client, message, args) => {
                     let embed = new Discord.RichEmbed()
                         .setColor(`GREEN`)
                         .addField(`__**Status:**__`, response.statusText)
-                        .addField(`__**Created for user ID:**__`, data.user)
-                        .addField(`__**Server name:**__`, data.name)
+                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                        .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
                     message.channel.send(embed)
                 }).catch(error => {
