@@ -25,15 +25,17 @@ exports.run = async (client, message, args) => {
 
     const severName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
     let consoleID = userData.get(message.author.id);
-    let data = serverCreateSettings.createParams(severName, consoleID);
-
+    
     if (consoleID == null) {
         message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID.\n" +
-            "If you have not made an account yet please check out `" +
-            config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" +
-            config.DiscordBot.Prefix + "user link`");
+        "If you have not made an account yet please check out `" +
+        config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" +
+        config.DiscordBot.Prefix + "user link`");
         return;
     }
+
+    let data = serverCreateSettings.createParams(severName, consoleID.consoleID);
+    
     if (!args[0]) {
         //No args
         let embed = new Discord.RichEmbed()
