@@ -1554,6 +1554,9 @@ exports.run = async (client, message, args) => {
                                     }).then(response => {
                                         msg.edit('Server deleted!')
                                         collector.stop()
+                                    }).catch(err => {
+                                        msg.edit('Error with the node. Please try again later')
+                                        collector.stop()
                                     });
                                 } else {
                                     message.delete()
