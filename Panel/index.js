@@ -501,7 +501,7 @@ app.get("/user/:ID", async (req, res) => {
         }
       }
 
-      let avatar = `https://mythicalbots.xyz/bot/${user}/avatar`;
+      let avatar = `https://bots.idledev.org/bot/${user}/avatar`;
 
       let bots = db.get(`${User.id}.bots`);
       if (!bots) bots = null;

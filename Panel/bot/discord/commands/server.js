@@ -448,7 +448,7 @@ exports.run = async (client, message, args) => {
                                     }, function (error) {
                                         //If error exists. Error and delete proxy file
                                         fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                        message.channel.send("FAILED \nERROR: " + error);
+                                        message.channel.send("FAILED \n" + error);
                                     })
                                 }, 250) //END - Upload file to /etc/apache2/sites-available
                             }).catch(err => {

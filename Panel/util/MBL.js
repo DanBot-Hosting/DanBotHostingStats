@@ -4,7 +4,7 @@ let fetch = require("node-fetch");
 
 ids.map(async ID => {
    
-   let res = await fetch(`https://mythicalbots.xyz/api/dan/bot/${ID}/info`);
+   let res = await fetch(`https://bots.idledev.org/api/dan/bot/${ID}/info`);
    
    let response = await res.json();
    
