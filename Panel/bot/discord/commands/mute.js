@@ -82,6 +82,7 @@ exports.run = async (client, message, args) => {
 
     if (target == null) return message.reply("please specify a valid user.");
     if (time > 604800000) time = 604800000;
+    if (time < 5000) time = 5000;
 
 
     await target.addRole(config.DiscordBot.roles.mute)
