@@ -52,7 +52,6 @@ exports.run = async (client, message, args) => {
         })
         return;
     }
-    console.log(">>>>>>>>>>>>>>>>",args[0].match(/[0-9]{18}/)[0]);
     let target = message.guild.members.get(args[0].match(/[0-9]{18}/)[0])
     let reason = args.slice(2).join(' ') || `unspecified`;
     let time = ms(args[1]) || 300000;
