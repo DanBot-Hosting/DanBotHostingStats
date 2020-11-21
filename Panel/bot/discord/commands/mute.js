@@ -9,14 +9,14 @@ exports.init = (client) => {
 
     client.on('ready', () => {
         console.log(chalk.red("SYNCING MUTES"));
-        let modlog = message.guild.channels.find(channel => channel.id == config.DiscordBot.modLogs);
+        let guild = client.guilds.get(config.DiscordBot.mainGuild)
+        let modlog = guild.channels.find(channel => channel.id == config.DiscordBot.modLogs);
 
         mutesData.fetchAll().map(x => ({
             ID: x.ID,
             data: x.data
         })).forEach(x => {
-            let guild = client.guilds.get(config.DiscordBot.mainGuild)
-            let member = guild.members.get(x.ID);
+        let member = guild.members.get(x.ID);
             if (x.data.expiresAt <= Date.now()) {
                 mutesData.delete(x.ID);
                 if (member != null) {
