@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
         .addField("In channel", message.channel.name, true)
         .addField("Reason", reason, true)
         .setFooter("Time used: " + message.createdAt.toDateString())
-      return client.channels.get(config.DiscordBot.mLogs).send({
+      return client.channels.get(config.DiscordBot.modLogs).send({
         embed
       });
     })
