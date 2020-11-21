@@ -7,6 +7,7 @@ let mutes = {};
 exports.init = (client) => {
 
     client.on('ready', () => {
+        console.log(chalk.red("SYNCING MUTES"))
         mutesData.fetchAll().map(x => ({
             ID: x.ID,
             data: x.data
