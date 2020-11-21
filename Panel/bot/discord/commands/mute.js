@@ -12,7 +12,8 @@ exports.init = (client) => {
             ID: x.ID,
             data: x.data
         })).forEach(x => {
-            let member = client.guilds.get(config.DiscordBot.mainGuild).members.get(x.ID);
+            let guild = client.guilds.get(config.DiscordBot.mainGuild)
+            let member = guild.members.get(x.ID);
 
             if (x.data.expiresAt <= Date.now()) {
                 mutesData.delete(x.ID);
