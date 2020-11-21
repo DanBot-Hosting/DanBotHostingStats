@@ -14,17 +14,23 @@ exports.init = (client) => {
         })).forEach(x => {
             let guild = client.guilds.get(config.DiscordBot.mainGuild)
             let member = guild.members.get(x.ID);
-
+            console.log(x.ID)
             if (x.data.expiresAt <= Date.now()) {
                 mutesData.delete(x.ID);
-                if (member != null)
+                if (member != null) {
+                    console.log("UNMUTE- expired")
                     member.removeRole(config.DiscordBot.roles.mute);
+                }
             } else {
+                console.log("UNMUTE- timout")
+
                 mutes[x.ID] = setTimeout(() => {
                     delete mutes[member.id];
                     mutesData.delete(x.ID);
-                    if (message.guild.members.get(x.ID) != null)
+                    if (message.guild.members.get(x.ID) != null){
+                        console.log("UNMUTE-  timout expired")
                         member.removeRole(config.DiscordBot.roles.mute);
+                    }
                 }, x.data.expiresAt - Date.now());
             }
         })
@@ -33,7 +39,7 @@ exports.init = (client) => {
     client.on("guildMemberUpdate", (oldM, newM) => {
         if (oldM.roles.get(config.DiscordBot.roles.mute) != null && newM.roles.get(config.DiscordBot.roles.mute) == null) {
             mutesData.delete(oldM.id);
-            clearTimeout(mutes[target.id])
+            clearTimeout(mutes[oldM.id])
             delete mutes[oldM.id];
         }
     })
