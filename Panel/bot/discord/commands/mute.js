@@ -75,7 +75,7 @@ exports.run = async (client, message, args) => {
     if (mutes[target.id] != null) clearTimeout(mutes[target.id])
     mutes[target.id] = setTimeout(() => {
         delete mutes[target.id];
-        mutesData.delete(target.ID);
+        mutesData.delete(target.id);
         if (message.guild.channels.find(x => x.id == args[0].match(/[0-9]{18}/)[0]) != null)
             target.removeRole(config.DiscordBot.roles.mute);
     }, time);
