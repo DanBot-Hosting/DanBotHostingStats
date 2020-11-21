@@ -63,7 +63,7 @@ exports.run = async (client, message, args) => {
 
     await target.addRole(config.DiscordBot.roles.mute)
 
-    mutesData.set(user.user.id, {
+    mutesData.set(target.id, {
         mutedAt: Date.now(),
         expiresAt: Date.now() + time
     });
