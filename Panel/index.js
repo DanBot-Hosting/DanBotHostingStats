@@ -214,7 +214,7 @@ global.client = new Discord.Client({
 });
 global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
-
+require('./bot/discord/commands/mute').init(client)
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
   files = files.filter(f => f.endsWith('.js'));

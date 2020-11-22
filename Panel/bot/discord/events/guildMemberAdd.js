@@ -30,7 +30,7 @@ module.exports = async (client, member, guild) => {
         welcomeChannel.send("Welcome back " + member + " to DanBot Hosting!");
     }
 
-    if (mutesData.fetch(member.id + ".muted") === "true") {
+    if (mutesData.get(member.id) != null) {
         member.addRole(config.DiscordBot.roles.mute)
     }
 

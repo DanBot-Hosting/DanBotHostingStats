@@ -26,23 +26,6 @@ module.exports = async (client, guild, files) => {
     ];
 
 
-    // Mute sync:
-/*
-    mutesData.fetchAll().map(x => ({
-        ID: x.ID,
-        data: JSON.parse(x.data)
-    })).forEach(x => {
-        let unmuteIn = x.data.expiresAt - Date.now();
-        if (unmuteIn < 0) unmuteIn = 1000;
-
-        setTimeout(() => {
-            client.guilds.get('639477525927690240').members.get(x.ID).removeRole('726829710935457872');
-            mutesData.delete(x.ID)
-        }, unmuteIn)
-    })
-
-*/
-
     //Automatic 30second git pull.
     setInterval(() => {
         exec(`git pull`, (error, stdout) => {

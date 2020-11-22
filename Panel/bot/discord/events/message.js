@@ -6,13 +6,6 @@ module.exports = (client, message) => {
     } else if (message.content.toLowerCase().includes("discordapp.com឵឵")) {
         message.delete()
     }
-    if (mutesData.fetch(message.author.id + ".muted") === "true") {
-        let muteRole = client.guilds.get(message.guild.id).roles.find(r => r.id == "726829710935457872");
-        message.guild.members.get(message.author.id).addRole(muteRole)
-    } else if (mutesData.fetch(message.author.id + ".muted") === "false") {
-        let muteRole = client.guilds.get(message.guild.id).roles.find(r => r.id == "726829710935457872");
-        message.guild.members.get(message.author.id).removeRole(muteRole)
-    }
 
     //Auto reactions on suggestions
     if (message.channel.id == "740302560488980561") {
