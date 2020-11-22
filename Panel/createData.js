@@ -28,7 +28,7 @@ list.nodejs = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -57,7 +57,7 @@ list.python = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -86,7 +86,7 @@ list.aio = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -115,7 +115,7 @@ list.java = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -540,7 +540,7 @@ list.ts3 = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -571,7 +571,7 @@ list.mumble = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -645,7 +645,7 @@ list.mongodb = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -675,7 +675,7 @@ list.redis = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -708,7 +708,7 @@ list.postgres = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [10],
+        "locations": [9, 3],
         "dedicated_ip": false,
         "port_range": []
     },
