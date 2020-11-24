@@ -1,10 +1,13 @@
 module.exports = (client, message) => {
-    if (message.content.toLowerCase().includes("discord.gg")) {
-        message.delete();
-    } else if (message.content.toLowerCase().includes("discord.com")) {
-        message.delete()
-    } else if (message.content.toLowerCase().includes("discordapp.com឵឵")) {
-        message.delete()
+    let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
+    if (!whitelisted.includes(message.author.id)) {
+        if (message.content.toLowerCase().includes("discord.gg")) {
+            message.delete();
+        } else if (message.content.toLowerCase().includes("discord.com")) {
+            message.delete()
+        } else if (message.content.toLowerCase().includes("discordapp.com឵឵")) {
+            message.delete()
+        }
     }
 
     //Auto reactions on suggestions
@@ -12,7 +15,7 @@ module.exports = (client, message) => {
         if (message.content.includes(">")) {
 
         } else {
-            message.react('👍') 
+            message.react('👍')
             setTimeout(() => {
                 message.react('👎')
             }, 200);
@@ -26,7 +29,11 @@ module.exports = (client, message) => {
                 Tesseract.recognize(
                     attachment.url,
                     'eng',
-                ).then(({ data: { text } }) => {
+                ).then(({
+                    data: {
+                        text
+                    }
+                }) => {
                     if (text.includes("There was an error attempting to establish")) {
                         message.reply('It looks like you are getting a error with the websocket. Try refreshing if that doesnt work please check <#738530520945786921>')
                     } else if (text.includes("HTTP/E_CONN_REFUSED")) {
@@ -85,8 +92,8 @@ module.exports = (client, message) => {
         ]
         //Channel checker
 
-        if(blacklisted.includes(message.channel.id) && (message.member.roles.find(x => x.id == '748117822370086932') == null) &&
-         !(message.channel.id == '738548111323955270' && command == 'info')) return;
+        if (blacklisted.includes(message.channel.id) && (message.member.roles.find(x => x.id == '748117822370086932') == null) &&
+            !(message.channel.id == '738548111323955270' && command == 'info')) return;
 
         let commandFile = require(`../commands/${command}.js`);
         commandFile.run(client, message, args);
