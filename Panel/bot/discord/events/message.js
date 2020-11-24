@@ -1,5 +1,7 @@
 const fetch = require('node-fetch');
 module.exports = (client, message) => {
+    let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
+    if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
     if (inviteREE.test(message.content)) {
         const msgcontent = message.content
@@ -18,6 +20,7 @@ module.exports = (client, message) => {
             }
         });
     }
+}
     
 
     //Auto reactions on suggestions

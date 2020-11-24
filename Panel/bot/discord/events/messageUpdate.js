@@ -1,7 +1,9 @@
 //let client = require("../../../../index.js").client;
 const fetch = require('node-fetch');
 module.exports = (client, message, editedMessage) => {
-  const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
+  let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
+    if (!whitelisted.includes(message.author.id)) {
+    const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
     if (inviteREE.test(message.content)) {
         const msgcontent = message.content
         code = msgcontent.replace(/(https:\/\/)?(www\.)?(discord\.gg|discord\.me|discordapp\.com\/invite|discord\.com\/invite)\/?/g, "");
@@ -19,6 +21,7 @@ module.exports = (client, message, editedMessage) => {
             }
         });
     }
+}
 
   if (message.author.bot) return;
   if (message.channel.type === 'dm') return;
