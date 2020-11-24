@@ -177,12 +177,12 @@ setInterval(() => {
 
   //Node 1 (PRIVATE ADMIN PANEL)
   axios({
-    url: config.Pterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
+    url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
     method: 'GET',
     followRedirect: true,
     maxRedirects: 5,
     headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+      'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
       'Content-Type': 'application/json',
       'Accept': 'Application/vnd.pterodactyl.v1+json',
     }
