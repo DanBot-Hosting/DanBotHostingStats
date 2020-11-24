@@ -4,8 +4,8 @@ module.exports = (client, message, editedMessage) => {
   let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
     if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
-    if (inviteREE.test(message.content)) {
-        const msgcontent = message.content
+    if (inviteREE.test(editedMessage.content)) {
+        const msgcontent = editedMessage.content
         code = msgcontent.replace(/(https:\/\/)?(www\.)?(discord\.gg|discord\.me|discordapp\.com\/invite|discord\.com\/invite)\/?/g, "");
         console.log(code)
         fetch(`https://discordapp.com/api/invite/${code}`)
