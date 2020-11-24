@@ -126,5 +126,17 @@ exports.run = async (client, message) => {
                 READ_MESSAGE_HISTORY: false
             })
         }
+        else if(args == "label") {
+            if(!args[1] == "") {
+                message.channel.send('No label inputed');
+            }
+            else {
+                if(message.author.roles.cache.has('748117822370086932') {
+                   message.channel.setTopic(`Label: ${args[1]`);
+                   }
+            }
+            
+        }
     }
+    
 };
