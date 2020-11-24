@@ -128,6 +128,7 @@ exports.run = async (client, message, args) => {
                                     collector.on('collect', message => {
                                         if (message == "confirm") {
                                             message.delete()
+                                            msg.edit('Working...')
                                             axios({
                                                 url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id,
                                                 method: 'DELETE',
