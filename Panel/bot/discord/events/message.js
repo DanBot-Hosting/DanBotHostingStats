@@ -1,14 +1,24 @@
+const fetch = require('node-fetch');
 module.exports = (client, message) => {
-    let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
-    if (!whitelisted.includes(message.author.id)) {
-        if (message.content.toLowerCase().includes("discord.gg")) {
-            message.delete();
-        } else if (message.content.toLowerCase().includes("discord.com")) {
-            message.delete()
-        } else if (message.content.toLowerCase().includes("discordapp.com឵឵")) {
-            message.delete()
-        }
+    const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
+    if (inviteREE.test(message.content)) {
+        const msgcontent = message.content
+        code = msgcontent.replace(/(https:\/\/)?(www\.)?(discord\.gg|discord\.me|discordapp\.com\/invite|discord\.com\/invite)\/?/g, "");
+        console.log(code)
+        fetch(`https://discordapp.com/api/invite/${code}`)
+        .then((res) => res.json())
+        .then((json) => {
+            if (json.message === 'Unknown Invite') {
+               //Do nothing
+               console.log(json.message)
+            } else  {
+                message.delete()
+                console.log('uh oh')
+                console.log(json)
+            }
+        });
     }
+    
 
     //Auto reactions on suggestions
     if (message.channel.id == "740302560488980561") {

@@ -1,13 +1,24 @@
 //let client = require("../../../../index.js").client;
-
+const fetch = require('node-fetch');
 module.exports = (client, message, editedMessage) => {
-  if (editedMessage.content.toLowerCase().includes("discord.gg")) {
-    editedMessage.delete();
-  } else if (editedMessage.content.toLowerCase().includes("discord.com")) {
-    editedMessage.delete()
-  } else if (editedMessage.content.toLowerCase().includes("discordapp.com឵឵")) {
-    message.delete()
-  } 
+  const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
+    if (inviteREE.test(message.content)) {
+        const msgcontent = message.content
+        code = msgcontent.replace(/(https:\/\/)?(www\.)?(discord\.gg|discord\.me|discordapp\.com\/invite|discord\.com\/invite)\/?/g, "");
+        console.log(code)
+        fetch(`https://discordapp.com/api/invite/${code}`)
+        .then((res) => res.json())
+        .then((json) => {
+            if (json.message === 'Unknown Invite') {
+               //Do nothing
+               console.log(json.message)
+            } else  {
+                message.delete()
+                console.log('uh oh')
+                console.log(json)
+            }
+        });
+    }
 
   if (message.author.bot) return;
   if (message.channel.type === 'dm') return;
