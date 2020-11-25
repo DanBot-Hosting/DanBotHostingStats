@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
     if (!args[0]) {
         //No args
         let embed = new Discord.RichEmbed()
-            .addField('__**Commands**__', 'Create a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere \nUnlink domain: `' + config.DiscordBot.Prefix + 'server unproxy domainhere` \nDelete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
+            .addField('__**Commands**__', 'Create a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere ` \n Unlink domain: `' + config.DiscordBot.Prefix + 'server unproxy domainhere` \n Delete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
         message.channel.send(embed)
 
     } else if (args[0].toLowerCase() == "create") {
