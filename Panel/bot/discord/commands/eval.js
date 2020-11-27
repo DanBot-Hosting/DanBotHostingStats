@@ -19,10 +19,12 @@ exports.run = async (client, message) => {
                 depth: 0
             })
         let rege = new RegExp(client.token, "gi");
+        let rege2 = new RegExp("9 + 10", "gi");
         text = text
             .replace(/`/g, '`' + String.fromCharCode(8203))
             .replace(/@/g, '@' + String.fromCharCode(8203))
             .replace(rege, 'You\'re so fucking gay for wanting that.')
+            .replace(rege2, '21')
         return text;
     };
     let args = message.content.split(' ').slice(1);
