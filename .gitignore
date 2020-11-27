@@ -11,6 +11,7 @@ Panel/eng.traineddata
 Panel/proxy
 Panel/animalAPI/dog/*
 Panel/animalAPI/cat/*
+Panel/bot/discord/commands/music.js
 
 Daemon/node_modules
 Daemon/package-lock.json

@@ -237,7 +237,7 @@ setInterval(() => {
       status: "Offline 🔴"
     }));
 
-}, 5000)
+}, 2500)
 
 
 //Discord Bot

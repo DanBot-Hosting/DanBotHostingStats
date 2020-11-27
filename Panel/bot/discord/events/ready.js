@@ -71,6 +71,9 @@ module.exports = async (client, guild, files) => {
         });
     });
 
+    //Music stuffs
+    global.guilds = {}; 
+
     //Node status channel embed
     setInterval(() => {
         //Node status
