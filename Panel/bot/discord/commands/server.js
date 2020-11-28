@@ -75,7 +75,23 @@ exports.run = async (client, message, args) => {
         }
 
         if (Object.keys(types).includes(args[1].toLowerCase())) {
-            serverCreateSettings.createServer(types[args[1].toLowerCase()])
+            if(args[1] == "aio" | args[1] == "java") {
+                serverCreateSettings.createServer(types[args[1].toLowerCase()])
+                .then(response => {
+                    let embed = new Discord.RichEmbed()
+                        .setColor(`GREEN`)
+                        .addField(`__**Status:**__`, response.statusText)
+                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                        .addField(`__**Server name:**__`, serverName)
+                        .addField(`__**Type:**__`, args[1].toLowerCase())
+                        .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
+                    message.channel.send(embed)
+                }).catch(error => {
+                    message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                    console.log(error)
+                })
+            } else {
+                serverCreateSettings.createServer(types[args[1].toLowerCase()])
                 .then(response => {
                     let embed = new Discord.RichEmbed()
                         .setColor(`GREEN`)
@@ -88,6 +104,7 @@ exports.run = async (client, message, args) => {
                     message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
                     console.log(error)
                 })
+            }
             return;
         }
         message.channel.send(helpEmbed)
