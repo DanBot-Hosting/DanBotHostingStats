@@ -39,6 +39,7 @@
     "moment": "^2.27.0",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.0",
+    "node-opus": "^0.3.3",
     "node-proxmox": "^0.1.2",
     "node-ssh": "^11.1.1",
     "node-tesseract-ocr": "^2.0.0",
