@@ -432,6 +432,10 @@ app.get('/data', function (req, res) {
   }
 })
 
+app.get('/ads.txt', function (req, res) {
+  res.send("google.com, pub-1419536702363407, DIRECT, f08c47fec0942fa0");
+})
+
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine', 'hbs');
