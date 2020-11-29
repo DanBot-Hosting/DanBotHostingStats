@@ -1,12 +1,12 @@
 let parse = () => {
     let toReturn = [];
 
-    let channels = Object.keys(config.reactionRoles);
+    let channels = Object.keys(config.DiscordBot.reactionRoles);
 
     for (let channel of channels) {
-        let messages = Object.keys(config.reactionRoles[channel])
+        let messages = Object.keys(config.DiscordBot.reactionRoles[channel])
         messages.forEach(message => {
-            for (let [reaction, role] of Object.entries(config.reactionRoles[channel][message])) {
+            for (let [reaction, role] of Object.entries(config.DiscordBot.reactionRoles[channel][message])) {
 
                 toReturn.push({
                     message: message,
