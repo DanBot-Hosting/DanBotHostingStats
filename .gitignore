@@ -15,6 +15,7 @@ Panel/bot/discord/commands/music.js
 
 Daemon/node_modules
 Daemon/package-lock.json
+Daemon/json.sqlite
 
 Test/*
 
