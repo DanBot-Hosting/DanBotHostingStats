@@ -380,57 +380,57 @@ server.listen(PORT, function () {
   console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
 });
 
+//Fetch node data
 global.nodeData = new db.table("nodeData")
-app.get('/data', function (req, res) {
-  let nodes = ["154.27.68.232", "154.27.68.233", "167.86.113.158", "51.38.69.73", "154.27.68.244", "154.27.68.245", "154.27.68.186"];
-  if (req.query.servername == undefined) {
-    if (!nodes.includes(req.headers["x-forwarded-for" || "cf-connecting-ip"])) {
-      res.redirect("/")
-    } else {
-      nodeData.set(req.query.speedname + '-speedtest', {
-        speedname: req.query.speedname,
-        ping: req.query.ping,
-        download: req.query.download,
-        upload: req.query.upload,
-        updatetime: req.query.updatetime
-      });
-    };
-  } else {
-    if (!nodes.includes(req.headers["x-forwarded-for" || "cf-connecting-ip"])) {
-      res.redirect("/")
-    } else {
-      nodeData.set(req.query.servername, {
-        servername: req.query.servername,
-        cpu: req.query.cpu,
-        cpuload: req.query.cpuload,
-        cputhreads: req.query.cputhreads,
-        cpucores: req.query.cpucores,
-        memused: req.query.memused,
-        memtotal: req.query.memtotal,
-        swapused: req.query.swapused,
-        swaptotal: req.query.swaptotal,
-        diskused: req.query.diskused,
-        disktotal: req.query.disktotal,
-        netrx: req.query.netrx,
-        nettx: req.query.nettx,
-        osplatform: req.query.osplatform,
-        oslogofile: req.query.oslogofile,
-        osrelease: req.query.osrelease,
-        osuptime: req.query.osuptime,
-        biosvendor: req.query.biosvendor,
-        biosversion: req.query.biosversion,
-        biosdate: req.query.biosdate,
-        servermonitorversion: req.query.servermonitorversion,
-        datatime: req.query.datatime,
-        dockercontainers: req.query.dockercontainers,
-        dockercontainersrunning: req.query.dockercontainersrunning,
-        dockercontainerspaused: req.query.dockercontainerspaused,
-        dockercontainersstopped: req.query.dockercontainersstopped,
-        updatetime: req.query.updatetime
-      });
-    }
+setInterval(() => {
+  for (i = 1; i < 7; i++) {
+    axios({
+      url: "http://n" + i + ".danbot.host:999/stats",
+      method: 'GET',
+      followRedirect: true,
+      maxRedirects: 5,
+      }).then(response => {
+        nodeData.set(response.data.info.servername, {
+          servername: response.data.info.servername,
+          cpu: response.data.info.cpu,
+          cpuload: response.data.info.cpuload,
+          cputhreads: response.data.info.cputhreads,
+          cpucores: response.data.info.cpucores,
+          memused: response.data.info.memused,
+          memtotal: response.data.info.memtotal,
+          swapused: response.data.info.swapused,
+          swaptotal: response.data.info.swaptotal,
+          diskused: response.data.info.diskused,
+          disktotal: response.data.info.disktotal,
+          netrx: response.data.info.netrx,
+          nettx: response.data.info.nettx,
+          osplatform: response.data.info.osplatform,
+          oslogofile: response.data.info.oslogofile,
+          osrelease: response.data.info.osrelease,
+          osuptime: response.data.info.osuptime,
+          biosvendor: response.data.info.biosvendor,
+          biosversion: response.data.info.biosversion,
+          biosdate: response.data.info.biosdate,
+          servermonitorversion: response.data.info.servermonitorversion,
+          datatime: response.data.info.datatime,
+          dockercontainers: response.data.info.dockercontainers,
+          dockercontainersrunning: response.data.info.dockercontainersrunning,
+          dockercontainerspaused: response.data.info.dockercontainerspaused,
+          dockercontainersstopped: response.data.info.dockercontainersstopped,
+          updatetime: response.data.info.updatetime
+        });
+        nodeData.set(response.data.speedtest.speedname + '-speedtest', {
+          speedname: response.data.speedtest.speedname,
+          ping: response.data.speedtest.ping,
+          download: response.data.speedtest.download,
+          upload: response.data.speedtest.upload,
+          updatetime: response.data.speedtest.updatetime
+        });
+      }).catch(error => {
+        //Do nothing, Node is down
+      })
   }
-})
+}, 2000)
 
 app.get('/ads.txt', function (req, res) {
   res.send("google.com, pub-1419536702363407, DIRECT, f08c47fec0942fa0");

@@ -62,7 +62,7 @@ async function fetchData() {
     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
 
     nodeData.set("data", {
-        servername: os.hostname,
+        servername: os.hostname(),
         cpu: cpudata.manufacturer + " " + cpudata.brand,
         cpuload: cl.currentload.toFixed(2),
         cputhreads: cpudata.cores,
@@ -97,7 +97,7 @@ async function speedtest() {
     const speed = await speedTest({maxTime: 5000, serverId: "36939"})
     speed.on('data', async (data) => {
         nodeData.set('data-speedtest', {
-            speedname: os.hostname,
+            speedname: os.hostname(),
             ping: data.server.ping,
             download: data.speeds.download,
             upload: data.speeds.upload,
