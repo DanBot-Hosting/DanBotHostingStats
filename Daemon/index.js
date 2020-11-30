@@ -7,7 +7,6 @@ var si = require('systeminformation');
 var os = require("os");
 var pretty = require('prettysize');
 var moment = require("moment");
-var config = require("./config.json");
 const speedTest = require('speedtest-net'); 
 var PORT = "999"
 
