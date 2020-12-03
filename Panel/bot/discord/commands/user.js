@@ -17,7 +17,7 @@ exports.run = async(client, message, args) => {
     if (!args[0]) {
         //No args, Help
         const embed = new Discord.RichEmbed()
-            .setTitle("__**Commands**__ \n`" + config.DiscordBot.Prefix + "user new` | Create an account \n`" + config.DiscordBot.Prefix + "user password` | Reset account password \n`" + config.DiscordBot.Prefix + "user link` | Link this account with console account \n`" + config.DiscordBot.Prefix + "user unlink` | Unlinks account from the console account")
+            .setTitle("__**Commands**__ \n`" + config.DiscordBot.Prefix + "user new` | Create an account \n`" + config.DiscordBot.Prefix + "user password` | Reset account password \n`" + config.DiscordBot.Prefix + "user link` | Link this account with console account \n`" + config.DiscordBot.Prefix + "user unlink` | Unlinks account from the console account \n`" + config.DiscordBot.Prefix + "user premium` | Check your premium server limit")
         message.channel.send(embed)
     } else if (args[0].toLowerCase() == "new") {
         if (userData.get(message.author.id) == null) {
