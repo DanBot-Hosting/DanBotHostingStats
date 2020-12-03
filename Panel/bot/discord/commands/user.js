@@ -435,5 +435,14 @@ exports.run = async(client, message, args) => {
             }
         )
         .catch(console.error);
+    } else if (args[0].toLowerCase() == "premium") {
+        if (userPrem.fetch(message.author.id) == null) { 
+            message.channel.send('You are not a premium user')
+        } else {
+            const embed = new Discord.RichEmbed()
+                .setColor('BLUE')
+                .addField('Premium servers used:', userPrem.fetch(message.author.id + ".current" + " / " + userPrem.fetch(message.author.id + ".total")))
+            message.channel.send(embed)
+        }
     }
-        };
+};

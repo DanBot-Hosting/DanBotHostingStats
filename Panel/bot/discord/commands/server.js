@@ -502,5 +502,9 @@ exports.run = async (client, message, args) => {
             message.channel.send('Proxy has been removed from ' + args[1])
         }
 
+    } else if (args[0].toLowerCase() == "move") {
+        if (userPrem.fetch(message.author.id + ".premium")) {
+
+        }
     }
 };
