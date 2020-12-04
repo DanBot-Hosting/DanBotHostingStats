@@ -196,7 +196,7 @@ setInterval(() => {
     });
   })
 
-  var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host'];
+  var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host'];
   hosts.forEach(function (host) {
     ping.sys.probe(host, function (isAlive) {
       if (isAlive == true) {
