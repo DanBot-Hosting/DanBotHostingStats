@@ -100,7 +100,7 @@ module.exports = async (client, guild, files) => {
         //Pub gameserver status
         client.channels.get("757949242495991918").fetchMessage("784531093222064190").then(msg => {
             const embed = new Discord.RichEmbed()
-                .setTitle(`__**DBH Public Gameserver Status's**__ \n**Node 1**: ${nodeStatus.get("pub_node1").status} \n`)
+                .setTitle(`__**DBH Public Gameserver Status's**__ \n**Panel**: ${nodeStatus.get("pub.danbot.host").status} \n**Node 1**: ${nodeStatus.get("pub_node1").status} \n`)
             msg.edit(embed)
         });
     }, 15000)
