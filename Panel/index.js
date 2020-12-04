@@ -203,7 +203,7 @@ setInterval(() => {
     followRedirect: true,
     maxRedirects: 5,
     headers: {
-      'Authorization': 'Bearer ' + config.PubPterodactyl.apikeyclient,
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
       'Content-Type': 'application/json',
       'Accept': 'Application/vnd.pterodactyl.v1+json',
     }
@@ -491,7 +491,6 @@ const statsRoute = require("./routes/stats.js");
 const meRoute = require("./routes/me.js");
 const adminRoute = require("./routes/admin.js");
 const externalRoute = require("./routes/external.js");
-const { config } = require("process");
 //const { config } = require("process");
 
 app.use("/api", apiRoute);
