@@ -3,12 +3,15 @@ var pretty = require('prettysize');
 const fs = require('fs');
 const path = require('path');
 const serverCreateSettings = require('../../../createData');
+const serverCreateSettings_Prem = require('../../../createData_Prem');
 
 const {
     NodeSSH
 } = require('node-ssh')
 const ssh = new NodeSSH()
+const move_ssh = new NodeSSH()
 const rif = require('replace-in-file');
+const { config } = require('process');
 
 exports.run = async (client, message, args) => {
 
@@ -255,6 +258,8 @@ exports.run = async (client, message, args) => {
                         .addField('**MISC LIMITS**', 'DATABASES: ' + response.data.attributes.feature_limits.databases + '\nBACKUPS: ' + response.data.attributes.feature_limits.backups)
                     message.reply(embedstatus)
                 })
+            }).catch(error => {
+                message.channel.send('Server not found')
             });
         }
     } else if (args[0].toLowerCase() == "proxy") {
@@ -503,8 +508,116 @@ exports.run = async (client, message, args) => {
         }
 
     } else if (args[0].toLowerCase() == "move") {
-        if (userPrem.fetch(message.author.id + ".premium")) {
-
+        /*
+        const eggs_to_names = {
+            "16": "nodejs",
+            "22": "python",
+            "46": "aio",
+            "25": "java",
+            "3" : "paper",
+            "2" : "forge",
+            "26": "fivem",
+            "42": "altv",
+            "43": "multitheftauto",
+            "44": "ragemp",
+            "45": "samp",
+            "18": "bedrock",
+            "28": "pocketminemp",
+            "9" : "gmod",
+            "7" : "csgo",
+            "6" : "arkse",
+            "13": "ts3",
+            "12": "mumble",
+            "14": "rust",
+            "35": "mongodb",
+            "36": "redis",
+            "37": "postgres"
         }
+        if (!args[1]) {
+            message.channel.send("Command format: `" + config.DiscordBot.Prefix + "server move serverid node`")
+        } else {
+            if (userPrem.fetch(message.author.id + ".premium")) {
+                if (userPrem.fetch(message.author.id + ".current") > userPrem.fetch(message.author.id + ".max")) {
+                    message.channel.send("You are at your premium server limit")
+                } else {
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[2],
+                        method: 'GET',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        }
+                    }).then(response => {
+                        if (response.data.attributes.node == "Node 1") {
+                            axios({
+                                url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id + ".consoleID") + "?include=servers",
+                                method: 'GET',
+                                followRedirect: true,
+                                maxRedirects: 5,
+                                headers: {
+                                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                                }
+                            }).then(response => {
+                                if (Object.keys(types).includes(args[1].toLowerCase())) {
+                                    if(args[1] == "aio" | args[1] == "java") {
+                                        serverCreateSettings_Prem.createServer()
+                                        .then(response => {
+                                            let embed = new Discord.RichEmbed()
+                                                .setColor(`GREEN`)
+                                                .addField(`__**Status:**__`, response.statusText)
+                                                .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                                                .addField(`__**Server name:**__`, serverName)
+                                                .addField(`__**Type:**__`, args[1].toLowerCase())
+                                                .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
+                                            message.channel.send(embed)
+                                        }).catch(error => {
+                                            message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                                            console.log(error)
+                                        })
+                                    } else {
+                                        serverCreateSettings.createServer(types[args[1].toLowerCase()])
+                                        .then(response => {
+                                            let embed = new Discord.RichEmbed()
+                                                .setColor(`GREEN`)
+                                                .addField(`__**Status:**__`, response.statusText)
+                                                .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                                                .addField(`__**Server name:**__`, serverName)
+                                                .addField(`__**Type:**__`, args[1].toLowerCase())
+                                            message.channel.send(embed)
+                                        }).catch(error => {
+                                            message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                                            console.log(error)
+                                        })
+                                    }
+                                    return;
+                                }
+                                message.channel.send(helpEmbed)
+                                
+                            })
+                            //SSH Connection
+                            ssh.connect({
+                                host: "154.27.68.232",
+                                username: "root",
+                                port: "22",
+                                tryKeyboard: true,
+                            });
+                            ssh.execCommand('', {
+                                cwd: '/root'
+                            })
+                        } else if (response.data.attributes.node == "Node 2 ") {
+
+                        }
+                    })
+                }
+    
+            } else {
+                message.channel.send('Sorry but this command is not ready yet')
+            }
+        }*/
     }
 };
