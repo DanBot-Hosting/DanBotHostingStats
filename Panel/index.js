@@ -196,6 +196,27 @@ setInterval(() => {
     });
   })
 
+  //Node 1 (PUBLIC GAMESERVER PANEL)
+  axios({
+    url: "https://pub.danbot.host/api/client/servers/c9efcb30/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+      'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+  }).then(response => {
+    nodeStatus.set("pub_node1", {
+      status: "Online 🟢"
+    });
+  }).catch(error => {
+    nodeStatus.set("pub_node1", {
+      status: "Offline 🔴"
+    });
+  })
+
   var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host'];
   hosts.forEach(function (host) {
     ping.sys.probe(host, function (isAlive) {
