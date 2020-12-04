@@ -198,12 +198,12 @@ setInterval(() => {
 
   //Node 1 (PUBLIC GAMESERVER PANEL)
   axios({
-    url: "https://pub.danbot.host/api/client/servers/c9efcb30/resources",
+    url: config.PubPterodactyl.hosturl + "/api/client/servers/c9efcb30/resources",
     method: 'GET',
     followRedirect: true,
     maxRedirects: 5,
     headers: {
-      'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
+      'Authorization': 'Bearer ' + config.PubPterodactyl.apikeyclient,
       'Content-Type': 'application/json',
       'Accept': 'Application/vnd.pterodactyl.v1+json',
     }
@@ -491,6 +491,7 @@ const statsRoute = require("./routes/stats.js");
 const meRoute = require("./routes/me.js");
 const adminRoute = require("./routes/admin.js");
 const externalRoute = require("./routes/external.js");
+const { config } = require("process");
 //const { config } = require("process");
 
 app.use("/api", apiRoute);
