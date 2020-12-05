@@ -11,7 +11,6 @@ const {
 const ssh = new NodeSSH()
 const move_ssh = new NodeSSH()
 const rif = require('replace-in-file');
-const { config } = require('process');
 
 exports.run = async (client, message, args) => {
 
