@@ -86,7 +86,9 @@ let parse = async () => {
                 status: nodeStatus.get(d.data).status.includes('Online')
             } : PubNodeStatus[d.data];
 
-            da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage'))))
+            da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
+                round: true
+            }))))))
             console.log(d.name, da);
 
             temp.push(`**${d.name}:** ${da}`)
