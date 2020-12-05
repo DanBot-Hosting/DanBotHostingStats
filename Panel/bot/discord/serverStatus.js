@@ -80,7 +80,7 @@ let getEmbed = () => {
     let data = parse();
 
     let embed = new Discord.RichEmbed();
-    embed.setTile("Danbot Hosting Status");
+    embed.setTitle("Danbot Hosting Status");
 
     for (let [title, d] of data) {
         embed.addField(title, d.join('\n'))
