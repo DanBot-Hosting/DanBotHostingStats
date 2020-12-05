@@ -89,7 +89,6 @@ let parse = async () => {
             da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
                 round: true
             }))))))
-            console.log(d.name, da);
 
             temp.push(`**${d.name}:** ${da}`)
         }
@@ -101,16 +100,16 @@ let parse = async () => {
 
 let getEmbed = () => {
 
-    let data = parse();
+    parse().then(data => {
+        let embed = new Discord.RichEmbed();
+        embed.setTitle("Danbot Hosting Status");
+        embed.setFooter('Updates every 15seconds')
 
-    let embed = new Discord.RichEmbed();
-    embed.setTitle("Danbot Hosting Status");
-    embed.setFooter('Updates every 15seconds')
-
-    for (let [title, d] of Object.entries(data)) {
-        embed.setDescription(`${embed.description || ''}**__${title}:__**\n${d.join('\n')}\n\n`)
-    }
-    return embed;
+        for (let [title, d] of Object.entries(data)) {
+            embed.setDescription(`${embed.description || ''}**__${title}:__**\n${d.join('\n')}\n\n`)
+        }
+        return embed;
+    })
 }
 
 module.exports = {
