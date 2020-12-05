@@ -87,9 +87,9 @@ let parse = () => {
             } : PubNodeStatus[d.data];
 
             console.log(d.name, da);
-            da = da.status == true ? ('🟢 Online') : ('🔴' + (da.vmOnline == null ? "Offline" : (da.vmOnline == true ? "Wing" : "VM")) + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
+            da = da.status == true ? ('🟢 Online') : ('🔴' + (da.vmOnline == null ? "Offline" : (da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
                 round: true
-            })))
+            }))))
 
             temp.push(`**${d.name}:** ${da}`)
         }
