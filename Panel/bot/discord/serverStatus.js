@@ -80,7 +80,7 @@ let parse = async () => {
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
-            let da = PubNodeStatus == null ? {
+            let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? {
                 status: nodeStatus.get(d.data).status.includes('Online')
             } : PubNodeStatus[d.data];
 
