@@ -98,21 +98,22 @@ let parse = async () => {
     return toRetun;
 }
 
-let getEmbed = () => {
-    parse().then(data => {  
-        let embed = new Discord.RichEmbed();
-        embed.setTitle("Danbot Hosting Status");
-        embed.setFooter('Updates every 15seconds');
-        
-        let desc = ''
-        
-        for (let [title, d] of Object.entries(data)) {
-            desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
-        }
-        
-        embed.setDescription(desc)
-        return embed;
-    })
+let getEmbed = async () => {
+
+    let data = parse()
+
+    let embed = new Discord.RichEmbed();
+    embed.setTitle("Danbot Hosting Status");
+    embed.setFooter('Updates every 15seconds');
+
+    let desc = ''
+
+    for await (let [title, d] of Object.entries(data)) {
+        desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
+    }
+
+    embed.setDescription(desc)
+    return embed;
 }
 
 module.exports = {
