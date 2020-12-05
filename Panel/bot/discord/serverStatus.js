@@ -81,6 +81,7 @@ let getEmbed = () => {
 
     let embed = new Discord.RichEmbed();
     embed.setTitle("Danbot Hosting Status");
+    embed.setFooter('Updates every 15seconds')
 
     for (let [title, d] of Object.entries(data)) {
         embed.setDescription(`${embed.description || ''}**__${title}:__**\n${d.join('\n')}\n\n`)
