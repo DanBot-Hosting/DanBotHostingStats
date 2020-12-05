@@ -1,6 +1,3 @@
-const humanizeDuration = require('humanize-duration');
-const axios = require('axios');
-
 let nstatus = {
     "Public Panel": [{
         name: 'Panel',
@@ -64,33 +61,14 @@ let nstatus = {
     }]
 }
 
-let parse = async () => {
+let parse = () => {
     let toRetun = {};
-
-    let PubNodeStatus;
-
-    await axios({
-        url: 'http://localhost:3001',
-        method: 'GET',
-        followRedirect: true,
-        maxRedirects: 5,
-    }).then(x => {
-        PubNodeStatus = x.data;
-    })
 
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
+
         for (let d of data) {
-
-            let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? {
-                status: nodeStatus.get(d.data).status.includes('Online')
-            } : PubNodeStatus[d.data];
-
-            da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
-                round: true
-            }))))))
-
-            temp.push(`**${d.name}:** ${da}`)
+            temp.push(`**${d.name}:** ${nodeStatus.get(d.data).status}`)
         }
 
         toRetun[title] = temp;
@@ -98,21 +76,15 @@ let parse = async () => {
     return toRetun;
 }
 
-let getEmbed = async () => {
-
-    let data = parse()
+let getEmbed = () => {
+    let data = parse();
 
     let embed = new Discord.RichEmbed();
     embed.setTitle("Danbot Hosting Status");
-    embed.setFooter('Updates every 15seconds');
-
-    let desc = ''
 
     for (let [title, d] of Object.entries(data)) {
-        desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
+        embed.setDescription(`${embed.description || ''}**__${title}:__**\n${d.join('\n')}\n\n`)
     }
-    console.log(desc);
-    embed.setDescription(desc)
     return embed;
 }
 
