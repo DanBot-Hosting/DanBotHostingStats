@@ -81,7 +81,9 @@ module.exports = async (client, guild, files) => {
 
     setInterval(() => {
         channel.fetchMessage("784531083596791849").then(msg => {
-            msg.edit('', nstatus.getEmbed());
+            nstatus.getEmbed().then(x => {
+                msg.edit('', x);
+            })
         });
     }, 15000)
 
