@@ -111,7 +111,7 @@ let getEmbed = async () => {
     for await (let [title, d] of Object.entries(data)) {
         desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
-
+    console.log(desc);
     embed.setDescription(desc)
     return embed;
 }
