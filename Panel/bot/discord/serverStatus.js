@@ -82,12 +82,12 @@ let parse = () => {
         let temp = [];
         for (let d of data) {
 
-            let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null || tile == 'Public Panel') ? {
+            let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? {
                 status: nodeStatus.get(d.data).status.includes('Online')
             } : PubNodeStatus[d.data];
 
             console.log(d.name, da);
-            da = da.status == true ? ('🟢 Online') : ('🔴' + (da.vmOnline == null ? "Offline" : (da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
+            da = da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : (da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
                 round: true
             }))))
 
