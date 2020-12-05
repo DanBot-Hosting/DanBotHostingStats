@@ -64,7 +64,7 @@ let nstatus = {
     }]
 }
 
-let parse = async () => {
+let parse = () => {
     let toRetun = {};
 
     let PubNodeStatus;
@@ -84,8 +84,8 @@ let parse = async () => {
             let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? {
                 status: nodeStatus.get(d.data).status.includes('Online')
             } : PubNodeStatus[d.data];
-
-            da = da.status == true ? '🟢 Online' : '🔴' + (da.vmOnline == null ? "Offline" : (da.vmOnline == true ? "Wing" : "VM") + 'Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
+            console.log(da);
+            da = da.status == true ? ('🟢 Online') : ('🔴' + da.vmOnline == null ? "Offline" : (da.vmOnline == true ? "Wing" : "VM") + 'Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
                 round: true
             })))
 
