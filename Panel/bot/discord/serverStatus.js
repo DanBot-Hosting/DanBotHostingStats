@@ -87,7 +87,7 @@ let parse = async () => {
             } : PubNodeStatus[d.data];
 
             console.log(d.name, da);
-            da = da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : (da.vmOnline == true ? "Wing" : "VM") + ' Outage'))
+            da = da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage')))
 
             temp.push(`**${d.name}:** ${da}`)
         }
