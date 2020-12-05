@@ -83,7 +83,7 @@ let getEmbed = () => {
     embed.setTitle("Danbot Hosting Status");
 
     for (let [title, d] of Object.entries(data)) {
-        embed.setTitle(`${embed.title || ''}**__${title}:__**\n${d.join('\n')}\n\n`)
+        embed.setDescription(`${embed.description || ''}**__${title}:__**\n${d.join('\n')}\n\n`)
     }
     return embed;
 }
