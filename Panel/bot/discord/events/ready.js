@@ -1,5 +1,6 @@
 const exec = require('child_process').exec;
 const axios = require('axios');
+const nstatus = require('../serverStatus');
 
 module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
@@ -72,36 +73,15 @@ module.exports = async (client, guild, files) => {
     });
 
     //Music stuffs
-    global.guilds = {}; 
+    global.guilds = {};
 
     //Node status channel embed
+
+    let channel = client.channels.get("757949242495991918");
+
     setInterval(() => {
-        //Node status
-        client.channels.get("757949242495991918").fetchMessage("784531083596791849").then(msg => {
-            const embed = new Discord.RichEmbed()
-                .setTitle(`__**Node Status**__ \n**Node 1**: ${nodeStatus.get("node1").status} \n**Node 2**: ${nodeStatus.get("node2").status} \n**Node 3**: ${nodeStatus.get("node3").status} \n**Node 4**: ${nodeStatus.get("node4").status} \n**Node 5**: ${nodeStatus.get("node5").status} \n**Node 6**: ${nodeStatus.get("node6").status} \n\n__**Donator Nodes**__ \n**Node 7**: ${nodeStatus.get("node7").status}`)
-            msg.edit(embed)
-        });
-
-        //Admin Node status
-        client.channels.get("757949242495991918").fetchMessage("784531086143258624").then(msg => {
-            const embed = new Discord.RichEmbed()
-                .setTitle(`__**Private Admin Panel Node Status**__ \n**Panel**: ${nodeStatus.get('admin.danbot.host').status} \n**Node 1**: ${nodeStatus.get("node1-priv").status}`)
-            msg.edit(embed)
-        });
-
-        //Misc status
-        client.channels.get("757949242495991918").fetchMessage("784531089149657089").then(msg => {
-            const embed = new Discord.RichEmbed()
-                .setTitle(`__**Misc Status**__ \n**Lavalink 1**: ${nodeStatus.get("lava.danbot.host").status} \n**Lavalink 2**: ${nodeStatus.get("lava2.danbot.host").status} \n**Mail Server**: ${nodeStatus.get("mail.danbot.host").status} \n**Reverse Proxy**: ${nodeStatus.get("154.27.68.234").status} \n**Panel Website**: ${nodeStatus.get("panel.danbot.host").status} \n**Animal API**: ${nodeStatus.get("api.danbot.host").status}`)
-            msg.edit(embed)
-        });
-
-        //Pub gameserver status
-        client.channels.get("757949242495991918").fetchMessage("784531093222064190").then(msg => {
-            const embed = new Discord.RichEmbed()
-                .setTitle(`__**DBH Public Gameserver Status's**__ \n**Panel**: ${nodeStatus.get("pub.danbot.host").status} \n**Node 1**: ${nodeStatus.get("pub_node1").status} \n`)
-            msg.edit(embed)
+        channel.fetchMessage("784531083596791849").then(msg => {
+            msg.edit('', nstatus.getEmbed());
         });
     }, 15000)
 
