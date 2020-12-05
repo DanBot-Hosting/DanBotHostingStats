@@ -64,12 +64,12 @@ let nstatus = {
     }]
 }
 
-let parse = () => {
+let parse = async () => {
     let toRetun = {};
 
     let PubNodeStatus;
 
-    axios({
+    await axios({
         url: 'http://localhost:3001',
         method: 'GET',
         followRedirect: true,
