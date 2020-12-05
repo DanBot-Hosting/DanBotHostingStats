@@ -108,7 +108,7 @@ let getEmbed = () => {
 
         let desc = ''
 
-        for (let [title, d] of Object.entries(status)) {
+        for (let [title, d] of Object.entries(data)) {
             desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
         }
 
