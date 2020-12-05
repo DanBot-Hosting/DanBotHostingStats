@@ -1,3 +1,6 @@
+const humanizeDuration = require('humanize-duration');
+const axios = require('axios');
+
 let nstatus = {
     "Public Panel": [{
         name: 'Panel',
@@ -61,14 +64,33 @@ let nstatus = {
     }]
 }
 
-let parse = () => {
+let parse = async () => {
     let toRetun = {};
+
+    let PubNodeStatus;
+
+    await axios({
+        url: 'http://localhost:3001',
+        method: 'GET',
+        followRedirect: true,
+        maxRedirects: 5,
+    }).then(x => {
+        PubNodeStatus = x.data;
+    })
 
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
-
         for (let d of data) {
-            temp.push(`**${d.name}:** ${nodeStatus.get(d.data).status}`)
+
+            let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? {
+                status: nodeStatus.get(d.data).status.includes('Online')
+            } : PubNodeStatus[d.data];
+
+            da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
+                round: true
+            }))))))
+
+            temp.push(`**${d.name}:** ${da}`)
         }
 
         toRetun[title] = temp;
@@ -77,15 +99,22 @@ let parse = () => {
 }
 
 let getEmbed = () => {
-    let data = parse();
 
-    let embed = new Discord.RichEmbed();
-    embed.setTitle("Danbot Hosting Status");
+    parse().then(data => {
+        console.log(data);
+        let embed = new Discord.RichEmbed();
+        embed.setTitle("Danbot Hosting Status");
+        embed.setFooter('Updates every 15seconds')
 
-    for (let [title, d] of Object.entries(data)) {
-        embed.setDescription(`${embed.description || ''}**__${title}:__**\n${d.join('\n')}\n\n`)
-    }
-    return embed;
+        let desc = ''
+
+        for (let [title, d] of Object.entries(status)) {
+            desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
+        }
+
+        embed.setDescription(desc)
+        return embed;
+    })
 }
 
 module.exports = {
