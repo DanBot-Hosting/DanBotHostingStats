@@ -107,9 +107,9 @@ let getEmbed = async () => {
       desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
 
-    let embed = Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
     .setTitle('Danbot Hosting Status').setFooter('This message updates every 15 seconds')
-    .setDescription(desc)
+    .setDescription(desc);
     return embed;
 }
 
