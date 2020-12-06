@@ -139,10 +139,10 @@ exports.run = async (client, message, args) => {
 
             if (Object.keys(types).includes(args[1].toLowerCase())) {
                 serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
-                
+
                     .then(response => {
 
-                        userPrem.set(message.author.id + '.used', user.used++);
+                        userPrem.set(message.author.id + '.used', user.used + 1);
 
 
                         let embed = new Discord.RichEmbed()
