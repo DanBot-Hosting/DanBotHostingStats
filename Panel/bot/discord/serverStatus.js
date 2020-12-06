@@ -106,8 +106,11 @@ let getEmbed = async () => {
     for (let [title, d] of Object.entries(status)) {
       desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
-  
-    return desc;
+
+    let embed = Discord.RichEmbed()
+    .setTitle('Danbot Hosting Status').setFooter('This message updates every 15 seconds')
+    .setDescription(desc)
+    return embed;
 }
 
 module.exports = {
