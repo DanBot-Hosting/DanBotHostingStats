@@ -765,6 +765,6 @@ let createServer = (data) => {
 }
 
 module.exports = {
-    createParams_Prem: data,
-    createServer_Prem: createServer
+    createParams: data,
+    createServer: createServer
 };
