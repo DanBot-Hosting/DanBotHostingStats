@@ -111,6 +111,114 @@ exports.run = async (client, message, args) => {
         }
         message.channel.send(helpEmbed)
 
+    } else if (args[0].toLowerCase() == "create-donator") {
+        if (userPrem.fetch(message.author.id) == null) { 
+            message.channel.send('You are not a premium user')
+        } else if (userPrem.fetch(message.author.id + ".current") > userPrem.fetch(message.author.id + ".max")) {
+            message.channel.send("You are at your premium server limit")
+        } else {
+            //Do server creation things
+            if (!args[1]) {
+                message.channel.send(helpEmbed)
+                return;
+            }
+
+            let types = {
+                nodejs: data.nodejs,
+                python: data.python,
+                aio: data.aio,
+                java: data.java,
+                paper: data.paper,
+                forge: data.forge,
+                fivem: data.fivem,
+                "alt:v": data.altv,
+                multitheftauto: data.multitheftauto,
+                "rage.mp": data.ragemp,
+                "sa-mp": data.samp,
+                bedrock: data.bedrock,
+                pocketminemp: data.pocketminemp,
+                gmod: data.gmod,
+                "cs:go": data.csgo,
+                "ark:se": data.arkse,
+                ts3: data.ts3,
+                mumble: data.mumble,
+                rust: data.rust,
+                mongodb: data.mongodb,
+                redis: data.redis,
+                postgres: data.postgres,
+            }
+    
+            if (Object.keys(types).includes(args[1].toLowerCase())) {
+                if(args[1] == "aio" | args[1] == "java") {
+                    serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
+                    .then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                            .addField(`__**Server name:**__`, serverName)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                            .addField(`__**Node:**__`, "Node 7 - Boosters/Donators")
+                            .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
+                        message.channel.send(embed)
+
+                        let embed2 = new Discord.RichEmbed()
+                            .setTitle('New donator node server created!')
+                            .addField('User:', message.author.id)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                            .addField(`__**Server name:**__`, serverName)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                            .setFooter('User has ' + userPrem.fetch(message.author.id + ".current") + ' out of a max ' + userPrem.fetch(message.author.id + ".total") + ' servers')
+                        client.channels.get("785236066500083772").send(embed2)
+
+                        userPrem.set(message.author.id, {
+                            current: `${userPrem.fetch(message.author.id + ".current") + 1}`,
+                            total : userPrem.fetch(message.author.id + ".total")
+                        })
+
+                    }).catch(error => {
+                        message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                        console.log(error)
+                    })
+                } else {
+                    serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
+                    .then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                            .addField(`__**Server name:**__`, serverName)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                            .addField(`__**Node:**__`, "Node 7 - Boosters/Donators")
+                        message.channel.send(embed)
+
+                        let embed2 = new Discord.RichEmbed()
+                            .setTitle('New donator node server created!')
+                            .addField('User:', message.author.id)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                            .addField(`__**Server name:**__`, serverName)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                            .setFooter('User has ' + userPrem.fetch(message.author.id + ".current") + ' out of a max ' + userPrem.fetch(message.author.id + ".total") + ' servers')
+                        client.channels.get("785236066500083772").send(embed2)
+
+                        userPrem.set(message.author.id, {
+                            current: `${userPrem.fetch(message.author.id + ".current") + 1}`,
+                            total : userPrem.fetch(message.author.id + ".total")
+                        })
+                        
+                    }).catch(error => {
+                        message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                        console.log(error)
+                    })
+                }
+                return;
+            }
+            message.channel.send(helpEmbed)
+        }
+
+
     } else if (args[0].toLowerCase() == "delete") {
         //delete server things
         if (!args[1]) {
