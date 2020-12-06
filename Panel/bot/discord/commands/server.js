@@ -145,7 +145,7 @@ exports.run = async (client, message, args) => {
         let allowed = (message.member.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + 2) : Math.floor(user.donated / config.node7.price);
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
-        if (user.donated == 0) {
+        if (user == null) {
             message.channel.send('You are not a premium user')
         } else if ((allowed - user.used) <= 0) {
             message.channel.send("You are at your premium server limit")
