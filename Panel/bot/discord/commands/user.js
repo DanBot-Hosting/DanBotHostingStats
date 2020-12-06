@@ -444,7 +444,7 @@ exports.run = async (client, message, args) => {
         } else {
             const embed = new Discord.RichEmbed()
                 .setColor('BLUE')
-                .addField('Premium servers used:', user.current + " out of  " + Math.floor(user.donated/config.node7.price) + "servers used")
+                .addField('Premium servers used:', user.used + " out of  " + Math.floor(user.donated/config.node7.price) + " servers used")
             message.channel.send(embed)
         }
     }

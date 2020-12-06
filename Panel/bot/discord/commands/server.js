@@ -27,17 +27,17 @@ exports.run = async (client, message, args) => {
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
     let consoleID = userData.get(message.author.id);
-    
+
     if (consoleID == null) {
         message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID.\n" +
-        "If you have not made an account yet please check out `" +
-        config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" +
-        config.DiscordBot.Prefix + "user link`");
+            "If you have not made an account yet please check out `" +
+            config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" +
+            config.DiscordBot.Prefix + "user link`");
         return;
     }
 
     let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
-    
+
     if (!args[0]) {
         //No args
         let embed = new Discord.RichEmbed()
@@ -77,44 +77,47 @@ exports.run = async (client, message, args) => {
         }
 
         if (Object.keys(types).includes(args[1].toLowerCase())) {
-            if(args[1] == "aio" | args[1] == "java") {
+            if (args[1] == "aio" | args[1] == "java") {
                 serverCreateSettings.createServer(types[args[1].toLowerCase()])
-                .then(response => {
-                    let embed = new Discord.RichEmbed()
-                        .setColor(`GREEN`)
-                        .addField(`__**Status:**__`, response.statusText)
-                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                        .addField(`__**Server name:**__`, serverName)
-                        .addField(`__**Type:**__`, args[1].toLowerCase())
-                        .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
-                    message.channel.send(embed)
-                }).catch(error => {
-                    message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                    console.log(error)
-                })
+                    .then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                            .addField(`__**Server name:**__`, serverName)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                            .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                        console.log(error)
+                    })
             } else {
                 serverCreateSettings.createServer(types[args[1].toLowerCase()])
-                .then(response => {
-                    let embed = new Discord.RichEmbed()
-                        .setColor(`GREEN`)
-                        .addField(`__**Status:**__`, response.statusText)
-                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                        .addField(`__**Server name:**__`, serverName)
-                        .addField(`__**Type:**__`, args[1].toLowerCase())
-                    message.channel.send(embed)
-                }).catch(error => {
-                    message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                    console.log(error)
-                })
+                    .then(response => {
+                        let embed = new Discord.RichEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                            .addField(`__**Server name:**__`, serverName)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                        message.channel.send(embed)
+                    }).catch(error => {
+                        message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                        console.log(error)
+                    })
             }
             return;
         }
         message.channel.send(helpEmbed)
 
     } else if (args[0].toLowerCase() == "create-donator") {
-        if (userPrem.fetch(message.author.id) == null) { 
+        let user = userPrem.fetch(message.author.id);
+        let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
+
+        if (user == null) {
             message.channel.send('You are not a premium user')
-        } else if (userPrem.fetch(message.author.id + ".current") > userPrem.fetch(message.author.id + ".max")) {
+        } else if ((Math.floor(user.donated / config.node7.price) - user.used) <= 0) {
             message.channel.send("You are at your premium server limit")
         } else {
             //Do server creation things
@@ -124,33 +127,18 @@ exports.run = async (client, message, args) => {
             }
 
             let types = {
-                nodejs: data.nodejs,
-                python: data.python,
-                aio: data.aio,
-                java: data.java,
-                paper: data.paper,
-                forge: data.forge,
-                fivem: data.fivem,
-                "alt:v": data.altv,
-                multitheftauto: data.multitheftauto,
-                "rage.mp": data.ragemp,
-                "sa-mp": data.samp,
-                bedrock: data.bedrock,
-                pocketminemp: data.pocketminemp,
-                gmod: data.gmod,
-                "cs:go": data.csgo,
-                "ark:se": data.arkse,
-                ts3: data.ts3,
-                mumble: data.mumble,
-                rust: data.rust,
-                mongodb: data.mongodb,
-                redis: data.redis,
-                postgres: data.postgres,
+                nodejs: pServerCreatesettings.nodejs,
+                python: pServerCreatesettings.python,
+                aio: pServerCreatesettings.aio,
+                java: pServerCreatesettings.java,
+                mumble: pServerCreatesettings.mumble,
+                mongodb: pServerCreatesettings.mongodb,
+                redis: pServerCreatesettings.redis,
+                postgres: pServerCreatesettings.postgres,
             }
-    
+
             if (Object.keys(types).includes(args[1].toLowerCase())) {
-                if(args[1] == "aio" | args[1] == "java") {
-                    serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
+                serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
                     .then(response => {
                         let embed = new Discord.RichEmbed()
                             .setColor(`GREEN`)
@@ -169,50 +157,15 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Created for user ID:**__`, consoleID.consoleID)
                             .addField(`__**Server name:**__`, serverName)
                             .addField(`__**Type:**__`, args[1].toLowerCase())
-                            .setFooter('User has ' + userPrem.fetch(message.author.id + ".current") + ' out of a max ' + userPrem.fetch(message.author.id + ".total") + ' servers')
+                            .setFooter('User has ' + user.used + ' out of a max ' + Math.floor(user.donated / config.node7.price) + ' servers')
                         client.channels.get("785236066500083772").send(embed2)
 
-                        userPrem.set(message.author.id, {
-                            current: `${userPrem.fetch(message.author.id + ".current") + 1}`,
-                            total : userPrem.fetch(message.author.id + ".total")
-                        })
+                        userPrem.set(message.author.id + '.used', user.used++)
 
                     }).catch(error => {
                         message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
                         console.log(error)
                     })
-                } else {
-                    serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
-                    .then(response => {
-                        let embed = new Discord.RichEmbed()
-                            .setColor(`GREEN`)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                            .addField(`__**Server name:**__`, serverName)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                            .addField(`__**Node:**__`, "Node 7 - Boosters/Donators")
-                        message.channel.send(embed)
-
-                        let embed2 = new Discord.RichEmbed()
-                            .setTitle('New donator node server created!')
-                            .addField('User:', message.author.id)
-                            .addField(`__**Status:**__`, response.statusText)
-                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                            .addField(`__**Server name:**__`, serverName)
-                            .addField(`__**Type:**__`, args[1].toLowerCase())
-                            .setFooter('User has ' + userPrem.fetch(message.author.id + ".current") + ' out of a max ' + userPrem.fetch(message.author.id + ".total") + ' servers')
-                        client.channels.get("785236066500083772").send(embed2)
-
-                        userPrem.set(message.author.id, {
-                            current: `${userPrem.fetch(message.author.id + ".current") + 1}`,
-                            total : userPrem.fetch(message.author.id + ".total")
-                        })
-                        
-                    }).catch(error => {
-                        message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                        console.log(error)
-                    })
-                }
                 return;
             }
             message.channel.send(helpEmbed)
