@@ -142,7 +142,7 @@ exports.run = async (client, message, args) => {
 
 
         let user = userPrem.fetch(message.author.id);
-        let allowed = (message.memeber.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + 2) : Math.floor(user.donated / config.node7.price);
+        let allowed = (message.member.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + 2) : Math.floor(user.donated / config.node7.price);
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
         if (user == null) {
@@ -263,7 +263,7 @@ exports.run = async (client, message, args) => {
 
                                                 if (output.attributes.node == 14)
                                                     userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used - 1);
-                                                    
+
                                                 collector.stop()
                                             }).catch(err => {
                                                 msg.edit('Error with the node. Please try again later')
