@@ -60,7 +60,7 @@ exports.run = async (client, message, args) => {
     } else if (args[0].toLowerCase() == "create") {
 
         if (cooldown[message.author.id].nCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].nCreate - Date.now, {round: true})}`)
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
             return;
         }
         cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
@@ -137,7 +137,7 @@ exports.run = async (client, message, args) => {
 
 
         if (cooldown[message.author.id].pCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now, {round: true})}`)
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
             return;
         }
         cooldown[message.author.id].pCreate = Date.now() + (5 * 1000);
@@ -209,7 +209,7 @@ exports.run = async (client, message, args) => {
     } else if (args[0].toLowerCase() == "delete") {
 
         if (cooldown[message.author.id].delete > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].delete - Date.now, {round: true})}`)
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].delete - Date.now(), {round: true})}`)
             return;
         }
         cooldown[message.author.id].delete = Date.now() + (1 * 1000);
