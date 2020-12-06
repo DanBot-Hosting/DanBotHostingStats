@@ -76,6 +76,8 @@ let parse = async () => {
         maxRedirects: 5,
     }).then(x => {
         PubNodeStatus = x.data;
+    }).catch(err => {
+        PubNodeStatus = null;
     })
 
     for (let [title, data] of Object.entries(nstatus)) {
