@@ -11,7 +11,7 @@ module.exports = async (client, oldMember, newMember) => {
             oldName = oldMember.user.username;
         }
 
-        if (['🎄', '🎅', '🍬', '⛄', '❄️'].some(r => newMember.includes(r))) newMember.addRole('784992925678960712');
+        if (['🎄', '🎅', '🍬', '⛄', '❄️'].some(r => newMember.displayName.includes(r))) newMember.addRole('784992925678960712');
         else if (newMember.roles.get('784992925678960712') != null) newMember.removeRole('784992925678960712');
 
 
