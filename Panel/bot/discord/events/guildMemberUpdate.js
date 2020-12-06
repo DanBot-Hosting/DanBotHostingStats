@@ -10,6 +10,11 @@ module.exports = async (client, oldMember, newMember) => {
         if (oldMember.nickname === null) {
             oldName = oldMember.user.username;
         }
+
+        if (['🎄', '🎅', '🍬', '⛄', '❄️'].some(r => newMember.displayName.includes(r))) newMember.addRole('784992925678960712');
+        else if (newMember.roles.get('784992925678960712') != null) newMember.removeRole('784992925678960712');
+
+
         if (newMember.nickname === null) {
             newName = newMember.user.username;
         }
@@ -40,5 +45,5 @@ module.exports = async (client, oldMember, newMember) => {
         client.channels.get(config.DiscordBot.oLogs).send(embed)
 
         return;
-    } 
+    }
 };
