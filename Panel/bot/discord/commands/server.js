@@ -139,7 +139,12 @@ exports.run = async (client, message, args) => {
 
             if (Object.keys(types).includes(args[1].toLowerCase())) {
                 serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
+                
                     .then(response => {
+
+                        userPrem.set(message.author.id + '.used', user.used++);
+
+
                         let embed = new Discord.RichEmbed()
                             .setColor(`GREEN`)
                             .addField(`__**Status:**__`, response.statusText)
@@ -160,7 +165,6 @@ exports.run = async (client, message, args) => {
                             .setFooter('User has ' + user.used + ' out of a max ' + Math.floor(user.donated / config.node7.price) + ' servers')
                         client.channels.get("785236066500083772").send(embed2)
 
-                        userPrem.set(message.author.id + '.used', user.used++)
 
                     }).catch(error => {
                         message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
