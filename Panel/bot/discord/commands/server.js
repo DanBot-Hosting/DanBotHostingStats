@@ -111,7 +111,6 @@ exports.run = async (client, message, args) => {
                         message.channel.send(embed)
                     }).catch(error => {
                         message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                        console.log(error)
                     })
             } else {
                 serverCreateSettings.createServer(types[args[1].toLowerCase()])
@@ -125,7 +124,6 @@ exports.run = async (client, message, args) => {
                         message.channel.send(embed)
                     }).catch(error => {
                         message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                        console.log(error)
                         cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
                     })
             }
@@ -198,7 +196,6 @@ exports.run = async (client, message, args) => {
 
                     }).catch(error => {
                         message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                        console.log(error)
                     })
                 return;
             }
