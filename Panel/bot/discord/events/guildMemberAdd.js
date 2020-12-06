@@ -21,6 +21,11 @@ module.exports = async (client, member, guild) => {
         }
         return;
     }
+    if (userPrem.get(member.id) == null)
+        userPrem.set(member.id, {
+            used: 0,
+            donated: 0
+        })
 
     member.addRole(config.DiscordBot.roles.member)
     if (userData.get(member.id) == null) {
