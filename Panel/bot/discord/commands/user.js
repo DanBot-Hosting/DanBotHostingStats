@@ -442,9 +442,11 @@ exports.run = async (client, message, args) => {
         if (user == null) {
             message.channel.send('You are not a premium user')
         } else {
+            let allowed = Math.floor(user.donated / config.node7.price);
+            if (message.memeber.roles.get('710208090741539006') != null) allowed = allowed + 2;
             const embed = new Discord.RichEmbed()
                 .setColor('BLUE')
-                .addField('Premium servers used:', user.used + " out of  " + Math.floor(user.donated/config.node7.price) + " servers used")
+                .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
             message.channel.send(embed)
         }
     }

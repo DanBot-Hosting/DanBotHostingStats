@@ -142,11 +142,12 @@ exports.run = async (client, message, args) => {
 
 
         let user = userPrem.fetch(message.author.id);
+        let allowed = (message.memeber.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + 2) : Math.floor(user.donated / config.node7.price);
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
         if (user == null) {
             message.channel.send('You are not a premium user')
-        } else if ((Math.floor(user.donated / config.node7.price) - user.used) <= 0) {
+        } else if ((allowed - user.used) <= 0) {
             message.channel.send("You are at your premium server limit")
         } else {
             //Do server creation things
@@ -170,7 +171,7 @@ exports.run = async (client, message, args) => {
                 serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
                     .then(response => {
 
-                        userPrem.set(message.author.id + '.used', user.used + 1);
+                        userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used + 1);
 
 
                         let embed = new Discord.RichEmbed()
@@ -190,7 +191,7 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Created for user ID:**__`, consoleID.consoleID)
                             .addField(`__**Server name:**__`, serverName)
                             .addField(`__**Type:**__`, args[1].toLowerCase())
-                            .setFooter('User has ' + user.used + ' out of a max ' + Math.floor(user.donated / config.node7.price) + ' servers')
+                            .setFooter('User has ' + user.used + ' out of a max ' + allowed + ' servers')
                         client.channels.get("785236066500083772").send(embed2)
 
 
@@ -259,6 +260,10 @@ exports.run = async (client, message, args) => {
                                                 }
                                             }).then(response => {
                                                 msg.edit('Server deleted!')
+
+                                                if (output.attributes.node == 14)
+                                                    userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used - 1);
+                                                    
                                                 collector.stop()
                                             }).catch(err => {
                                                 msg.edit('Error with the node. Please try again later')
