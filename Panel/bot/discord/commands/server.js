@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const serverCreateSettings = require('../../../createData');
 const serverCreateSettings_Prem = require('../../../createData_Prem');
+const humanizeDuration = require('humanize-duration');
 
 const {
     NodeSSH
@@ -12,7 +13,17 @@ const ssh = new NodeSSH()
 const move_ssh = new NodeSSH()
 const rif = require('replace-in-file');
 
+let cooldown = {};
+
 exports.run = async (client, message, args) => {
+
+    if (cooldown[message.author.id] == null) {
+        cooldown[message.author.id] = {
+            nCreate: null,
+            pCreate: null,
+            delete: null
+        }
+    }
 
     let helpEmbed = new Discord.RichEmbed()
         .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
@@ -36,7 +47,9 @@ exports.run = async (client, message, args) => {
         return;
     }
 
+
     let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
+
 
     if (!args[0]) {
         //No args
@@ -45,6 +58,14 @@ exports.run = async (client, message, args) => {
         message.channel.send(embed)
 
     } else if (args[0].toLowerCase() == "create") {
+
+        if (cooldown[message.author.id].nCreate > Date.now()) {
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].nCreate - Date.now, {round: true})}`)
+            return;
+        }
+        cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
+
+
         //Do server creation things
         if (!args[1]) {
             message.channel.send(helpEmbed)
@@ -105,6 +126,7 @@ exports.run = async (client, message, args) => {
                     }).catch(error => {
                         message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
                         console.log(error)
+                        cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
                     })
             }
             return;
@@ -112,6 +134,15 @@ exports.run = async (client, message, args) => {
         message.channel.send(helpEmbed)
 
     } else if (args[0].toLowerCase() == "create-donator") {
+
+
+        if (cooldown[message.author.id].pCreate > Date.now()) {
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now, {round: true})}`)
+            return;
+        }
+        cooldown[message.author.id].pCreate = Date.now() + (5 * 1000);
+
+
         let user = userPrem.fetch(message.author.id);
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
@@ -139,7 +170,6 @@ exports.run = async (client, message, args) => {
 
             if (Object.keys(types).includes(args[1].toLowerCase())) {
                 serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
-
                     .then(response => {
 
                         userPrem.set(message.author.id + '.used', user.used + 1);
@@ -177,6 +207,13 @@ exports.run = async (client, message, args) => {
 
 
     } else if (args[0].toLowerCase() == "delete") {
+
+        if (cooldown[message.author.id].delete > Date.now()) {
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].delete - Date.now, {round: true})}`)
+            return;
+        }
+        cooldown[message.author.id].delete = Date.now() + (1 * 1000);
+
         //delete server things
         if (!args[1]) {
             message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
