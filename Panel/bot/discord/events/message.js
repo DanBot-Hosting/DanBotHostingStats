@@ -22,7 +22,7 @@ module.exports = (client, message) => {
     }
 }
     if (message.author.id == "265240267215339522") { 
-        if (message.content.includes() == "sus") {
+        if (message.content.includes("sus")) {
             message.delete();
             message.reply('no sus...')
         }
