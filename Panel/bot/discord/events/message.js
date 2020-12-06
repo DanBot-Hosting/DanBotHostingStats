@@ -21,7 +21,12 @@ module.exports = (client, message) => {
         });
     }
 }
-    
+    if (message.author.id == "425165710847770634") { 
+        if (message.content.includes() == "sus") {
+            message.delete();
+            message.reply('no sus...')
+        }
+    }
 
     //Auto reactions on suggestions
     if (message.channel.id == "740302560488980561") {
