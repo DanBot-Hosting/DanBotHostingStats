@@ -95,7 +95,7 @@ module.exports = (client, message) => {
         }
     };
 
-
+    if(message.author.bot)return; // to stop bots from creating accounts, tickets and more.
     const prefix = config.DiscordBot.Prefix;
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
