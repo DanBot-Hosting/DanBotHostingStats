@@ -59,20 +59,22 @@ setInterval(() => {
 
             axios({
                 url: 'http://' + data.IP + ':999',
-                method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
                 timeout: 1500,
             }).then(x => {
-                nodeStatus.set(node, {
-                    status: false,
-                    is_vm_online: true
-                });
-            }).catch(err => {
-                nodeStatus.set(node, {
-                    status: false,
-                    is_vm_online: false
-                });
+
+            }).catch(x => {
+
+                if (x.response != null) {
+                    nodeStatus.set(node, {
+                        status: false,
+                        is_vm_online: true
+                    });
+                } else {
+                    nodeStatus.set(node, {
+                        status: false,
+                        is_vm_online: false
+                    });
+                }
             });
         })
     }
