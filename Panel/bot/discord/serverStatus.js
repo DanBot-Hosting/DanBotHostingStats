@@ -70,6 +70,7 @@ let parse = async () => {
     let PubNodeStatus;
 
     await axios({
+        //Why the fuk is this fetching outside of the bot its self. BRUH
         url: 'http://danbot.host/nodeStatus',
         method: 'GET',
         followRedirect: true,
@@ -85,7 +86,7 @@ let parse = async () => {
         for (let d of data) {
 
             let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? {
-                status: nodeStatus.get(d.data).status.includes('Online')
+                status: nodeStatus.get(d.data).status.includes('true')
             } : PubNodeStatus[d.data];
 
             da = (da.status == true ? ('true') : ('🔴 ' + (da.vmOnline == null ? "false" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
