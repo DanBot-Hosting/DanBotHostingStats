@@ -3,31 +3,31 @@ var ping = require('ping');
 const ping2 = require('ping-tcp-js')
 
 let stats = {
-    node1 = {
+    node1: {
         serverID: '99d65091',
         IP: '154.27.68.232'
     },
-    node2 = {
+    node2: {
         serverID: '0cb9a74e',
         IP: '154.27.68.233'
     },
-    node3 = {
+    node3: {
         serverID: '373fafce',
         IP: '167.86.113.158'
     },
-    node4 = {
+    node4: {
         serverID: '98ca4dbd',
         IP: '51.38.69.73'
     },
-    node5 = {
+    node5: {
         serverID: '97e64d11',
         IP: '154.27.68.244'
     },
-    node6 = {
+    node6: {
         serverID: null,
         IP: '154.27.68.245'
     },
-    node7 = {
+    node7: {
         serverID: '94082df3',
         IP: '154.27.68.186'
     },
