@@ -62,6 +62,7 @@ setInterval(() => {
                 method: 'GET',
                 followRedirect: true,
                 maxRedirects: 5,
+                timeout: 1500,
             }).then(x => {
                 nodeStatus.set(node, {
                     status: "Offline 🔴",
