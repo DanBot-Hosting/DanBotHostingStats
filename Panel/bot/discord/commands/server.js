@@ -523,6 +523,35 @@ exports.run = async (client, message, args) => {
                                             }
                                         }, 100) //END - Change Server Port
                                     }, 100) //END - Change Server IP
+                                } else if (node === "Node 7") {
+
+                                    //Change Server IP
+                                    setTimeout(() => {
+                                        var y = 0;
+                                        while (y < 3) {
+                                            const ipchange = rif.sync({
+                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                from: "REPLACE-IP",
+                                                to: "154.27.68.186",
+                                                countMatches: true,
+                                            });
+                                            y++
+                                        };
+
+                                        //Change Server Port
+                                        setTimeout(() => {
+                                            var x = 0;
+                                            while (x < 3) {
+                                                const portchange = rif.sync({
+                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                    from: "REPLACE-PORT",
+                                                    to: port,
+                                                    countMatches: true,
+                                                });
+                                                x++
+                                            }
+                                        }, 100) //END - Change Server Port
+                                    }, 100) //END - Change Server IP
                                 } else {
                                     message.channel.send('Unsupported node. Stopping reverse proxy.')
                                     fs.unlinkSync("./proxy/" + args[1] + ".conf");
