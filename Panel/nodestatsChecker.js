@@ -53,7 +53,7 @@ setInterval(() => {
         }).then(response => {
             nodeStatus.set(node, {
                 status: "Online 🟢",
-                VM_Is_Online: true
+                is_vm_online: true
             });
         }).catch(error => {
 
