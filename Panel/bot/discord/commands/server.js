@@ -165,7 +165,6 @@ exports.run = async (client, message, args) => {
             python: pServerCreatesettings.python,
             aio: pServerCreatesettings.aio,
             java: pServerCreatesettings.java,
-            mumble: pServerCreatesettings.mumble,
             mongodb: pServerCreatesettings.mongodb,
             redis: pServerCreatesettings.redis,
             postgres: pServerCreatesettings.postgres,
@@ -204,12 +203,12 @@ exports.run = async (client, message, args) => {
                 })
             return;
         }
+
         message.channel.send(new Discord.RichEmbed()
         .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
         .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
         .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
         .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
-
 
 
     } else if (args[0].toLowerCase() == "delete") {
