@@ -154,4 +154,4 @@ setInterval(() => {
             status: "Offline 🔴"
         }));
 
-}, 2500)
+}, 3000)
