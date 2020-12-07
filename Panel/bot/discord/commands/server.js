@@ -156,7 +156,11 @@ exports.run = async (client, message, args) => {
         }
         //Do server creation things
         if (!args[1]) {
-            message.channel.send(helpEmbed)
+            message.channel.send(new Discord.RichEmbed()
+                .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
+                .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
+                .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+                .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
             return;
         }
 
@@ -205,10 +209,10 @@ exports.run = async (client, message, args) => {
         }
 
         message.channel.send(new Discord.RichEmbed()
-        .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
-        .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
-        .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
-        .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
+            .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
+            .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
+            .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+            .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
 
 
     } else if (args[0].toLowerCase() == "delete") {
