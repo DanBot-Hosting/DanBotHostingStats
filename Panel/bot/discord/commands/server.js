@@ -149,7 +149,7 @@ exports.run = async (client, message, args) => {
             message.channel.send("You're not a premium user, to get access to premium you can either boost us for 2 **Premium Servers**, or buy a server (1server/$1)")
             return;
         }
-        
+
         if ((allowed - user.used) <= 0) {
             message.channel.send("You are at your premium server limit")
             return;
@@ -204,7 +204,11 @@ exports.run = async (client, message, args) => {
                 })
             return;
         }
-        message.channel.send(helpEmbed)
+        message.channel.send(new Discord.RichEmbed()
+        .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
+        .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
+        .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+        .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
 
 
 
