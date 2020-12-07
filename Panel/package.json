@@ -61,6 +61,7 @@
     "unirest": "^0.6.0",
     "validator": "^13.1.1",
     "ytdl-core": "^4.1.0",
-    "serve-favicon": "*"
+    "serve-favicon": "*",
+    "path": "*"
   }
 }
