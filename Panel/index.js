@@ -18,8 +18,8 @@ var server = require('http').createServer(app);
 var PORT = config.Port;
 const hbs = require('hbs');
 var favicon = require('serve-favicon');
-const path = require("path");
-app.use(favicon(path.join(__dirname, 'views', 'favicon.ico')))
+const pat = require("path");
+app.use(favicon(pat.join(__dirname, 'views', 'favicon.ico')))
 
 //Animal API app
 var animalapp = express();
