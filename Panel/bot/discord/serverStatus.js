@@ -67,31 +67,28 @@ let nstatus = {
 let parse = async () => {
     let toRetun = {};
 
-    let PubNodeStatus;
+    // let PubNodeStatus;
 
-    await axios({
-        //Why the fuk is this fetching outside of the bot its self. BRUH
-        url: 'http://danbot.host/nodeStatus',
-        method: 'GET',
-        followRedirect: true,
-        maxRedirects: 5,
-    }).then(x => {
-        PubNodeStatus = x.data;
-    }).catch(err => {
-        PubNodeStatus = null;
-    })
+    // await axios({
+    //     url: 'http://localhost:3001',
+    //     method: 'GET',
+    //     followRedirect: true,
+    //     maxRedirects: 5,
+    // }).then(x => {
+    //     PubNodeStatus = x.data;
+    // }).catch(err => {
+    //     PubNodeStatus = null;
+    // })
 
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
 
             let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? {
-                status: nodeStatus.get(d.data).status.includes('true')
+                status: nodeStatus.get(d.data)
             } : PubNodeStatus[d.data];
 
-            da = (da.status == true ? ('true') : ('🔴 ' + (da.vmOnline == null ? "false" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
-                round: true
-            }))))))
+            da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.is_vm_online == null ? "Offline" : ((da.is_vm_online == true ? "Wing" : "VM") + ' Outage'))))
 
             temp.push(`**${d.name}:** ${da}`)
         }
@@ -105,14 +102,14 @@ let getEmbed = async () => {
 
     let status = await parse();
     let desc = ''
-  
+
     for (let [title, d] of Object.entries(status)) {
-      desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
+        desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
 
     let embed = new Discord.RichEmbed()
-    .setTitle('Danbot Hosting Status').setFooter('This message updates every 15 seconds')
-    .setDescription(desc);
+        .setTitle('Danbot Hosting Status').setFooter('This message updates every 15 seconds')
+        .setDescription(desc);
     return embed;
 }
 
