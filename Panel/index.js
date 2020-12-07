@@ -46,219 +46,221 @@ const {
   getBot
 } = require(process.cwd() + "/util/discordAPI");
 
+require('./nodestatsChecker');
 
-//Node status 
-setInterval(() => {
-  //Node 1
-  axios({
-    url: config.Pterodactyl.hosturl + "/api/client/servers/99d65091/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("node1", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("node1", {
-      status: "Offline 🔴"
-    });
-  })
 
-  //Node 2
-  axios({
-    url: config.Pterodactyl.hosturl + "/api/client/servers/0cb9a74e/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("node2", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("node2", {
-      status: "Offline 🔴"
-    });
-  })
+// //Node status 
+// setInterval(() => {
+//   //Node 1
+//   axios({
+//     url: config.Pterodactyl.hosturl + "/api/client/servers/99d65091/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("node1", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("node1", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  //Node 3
-  axios({
-    url: config.Pterodactyl.hosturl + "/api/client/servers/373fafce/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("node3", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("node3", {
-      status: "Offline 🔴"
-    });
-  })
+//   //Node 2
+//   axios({
+//     url: config.Pterodactyl.hosturl + "/api/client/servers/0cb9a74e/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("node2", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("node2", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  //Node 4
-  axios({
-    url: config.Pterodactyl.hosturl + "/api/client/servers/98ca4dbd/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("node4", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("node4", {
-      status: "Offline 🔴"
-    });
-  })
+//   //Node 3
+//   axios({
+//     url: config.Pterodactyl.hosturl + "/api/client/servers/373fafce/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("node3", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("node3", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  //Node 5
-  axios({
-    url: config.Pterodactyl.hosturl + "/api/client/servers/97e64d11/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("node5", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("node5", {
-      status: "Offline 🔴"
-    });
-  })
+//   //Node 4
+//   axios({
+//     url: config.Pterodactyl.hosturl + "/api/client/servers/98ca4dbd/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("node4", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("node4", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  //Node 7
-  axios({
-    url: config.Pterodactyl.hosturl + "/api/client/servers/94082df3/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("node7", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("node7", {
-      status: "Offline 🔴"
-    });
-  })
+//   //Node 5
+//   axios({
+//     url: config.Pterodactyl.hosturl + "/api/client/servers/97e64d11/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("node5", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("node5", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  //Node 1 (PRIVATE ADMIN PANEL)
-  axios({
-    url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("node1-priv", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("node1-priv", {
-      status: "Offline 🔴"
-    });
-  })
+//   //Node 7
+//   axios({
+//     url: config.Pterodactyl.hosturl + "/api/client/servers/94082df3/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("node7", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("node7", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  //Node 1 (PUBLIC GAMESERVER PANEL)
-  axios({
-    url: config.PubPterodactyl.hosturl + "/api/client/servers/c9efcb30/resources",
-    method: 'GET',
-    followRedirect: true,
-    maxRedirects: 5,
-    headers: {
-      'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-      'Content-Type': 'application/json',
-      'Accept': 'Application/vnd.pterodactyl.v1+json',
-    }
-  }).then(response => {
-    nodeStatus.set("pub_node1", {
-      status: "Online 🟢"
-    });
-  }).catch(error => {
-    nodeStatus.set("pub_node1", {
-      status: "Offline 🔴"
-    });
-  })
+//   //Node 1 (PRIVATE ADMIN PANEL)
+//   axios({
+//     url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("node1-priv", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("node1-priv", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host'];
-  hosts.forEach(function (host) {
-    ping.sys.probe(host, function (isAlive) {
-      if (isAlive == true) {
-        nodeStatus.set(host, {
-          status: "Online 🟢"
-        })
-      } else if (isAlive == false) {
-        nodeStatus.set(host, {
-          status: "Offline 🔴"
-        });
-      }
-    });
-  }, {
-    timeout: 4
-  });
+//   //Node 1 (PUBLIC GAMESERVER PANEL)
+//   axios({
+//     url: config.PubPterodactyl.hosturl + "/api/client/servers/c9efcb30/resources",
+//     method: 'GET',
+//     followRedirect: true,
+//     maxRedirects: 5,
+//     headers: {
+//       'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+//       'Content-Type': 'application/json',
+//       'Accept': 'Application/vnd.pterodactyl.v1+json',
+//     }
+//   }).then(response => {
+//     nodeStatus.set("pub_node1", {
+//       status: "Online 🟢"
+//     });
+//   }).catch(error => {
+//     nodeStatus.set("pub_node1", {
+//       status: "Offline 🔴"
+//     });
+//   })
 
-  const portz = 2333;
+//   var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host'];
+//   hosts.forEach(function (host) {
+//     ping.sys.probe(host, function (isAlive) {
+//       if (isAlive == true) {
+//         nodeStatus.set(host, {
+//           status: "Online 🟢"
+//         })
+//       } else if (isAlive == false) {
+//         nodeStatus.set(host, {
+//           status: "Offline 🔴"
+//         });
+//       }
+//     });
+//   }, {
+//     timeout: 4
+//   });
 
-  //Lavalink Server 1
-  const hostz = 'lava.danbot.host';
-  ping2
-    .ping(hostz, portz)
-    .then(() => nodeStatus.set("lava.danbot.host", {
-      status: "Online 🟢"
-    }))
-    .catch((e) => nodeStatus.set("lava.danbot.host", {
-      status: "Offline 🔴"
-    }));
+//   const portz = 2333;
 
-  //Lavalink Server 2
-  const hostz2 = 'lava2.danbot.host';
-  ping2
-    .ping(hostz2, portz)
-    .then(() => nodeStatus.set("lava2.danbot.host", {
-      status: "Online 🟢"
-    }))
-    .catch((e) => nodeStatus.set("lava2.danbot.host", {
-      status: "Offline 🔴"
-    }));
+//   //Lavalink Server 1
+//   const hostz = 'lava.danbot.host';
+//   ping2
+//     .ping(hostz, portz)
+//     .then(() => nodeStatus.set("lava.danbot.host", {
+//       status: "Online 🟢"
+//     }))
+//     .catch((e) => nodeStatus.set("lava.danbot.host", {
+//       status: "Offline 🔴"
+//     }));
 
-}, 2500)
+//   //Lavalink Server 2
+//   const hostz2 = 'lava2.danbot.host';
+//   ping2
+//     .ping(hostz2, portz)
+//     .then(() => nodeStatus.set("lava2.danbot.host", {
+//       status: "Online 🟢"
+//     }))
+//     .catch((e) => nodeStatus.set("lava2.danbot.host", {
+//       status: "Offline 🔴"
+//     }));
+
+// }, 2500)
 
 
 //Discord Bot
