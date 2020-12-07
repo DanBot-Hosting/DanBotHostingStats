@@ -67,7 +67,7 @@ let nstatus = {
 let parse = async () => {
     let toRetun = {};
 
-    // let PubNodeStatus;
+    let PubNodeStatus;
 
     // await axios({
     //     url: 'http://localhost:3001',
