@@ -70,7 +70,7 @@ let parse = async () => {
     let PubNodeStatus;
 
     await axios({
-        url: 'http://localhost:3001',
+        url: 'http://danbot.host/nodeStatus',
         method: 'GET',
         followRedirect: true,
         maxRedirects: 5,
@@ -88,7 +88,7 @@ let parse = async () => {
                 status: nodeStatus.get(d.data).status.includes('Online')
             } : PubNodeStatus[d.data];
 
-            da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.vmOnline == null ? "Offline" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
+            da = (da.status == true ? ('true') : ('🔴 ' + (da.vmOnline == null ? "false" : ((da.vmOnline == true ? "Wing" : "VM") + ' Outage' + (da.downtime_startedAt == null ? '' : ' | ' + humanizeDuration(Date.now() - da.downtime_startedAt, {
                 round: true
             }))))))
 
