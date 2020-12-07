@@ -105,7 +105,7 @@ setInterval(() => {
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+            'Authorization': 'Bearer ' + config.PubPterodactyl.apikeyclient,
             'Content-Type': 'application/json',
             'Accept': 'Application/vnd.pterodactyl.v1+json',
         }
