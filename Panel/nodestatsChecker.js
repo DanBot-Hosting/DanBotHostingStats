@@ -52,7 +52,7 @@ setInterval(() => {
             }
         }).then(response => {
             nodeStatus.set(node, {
-                status: "Online 🟢",
+                status: true,
                 is_vm_online: true
             });
         }).catch(error => {
@@ -65,12 +65,12 @@ setInterval(() => {
                 timeout: 1500,
             }).then(x => {
                 nodeStatus.set(node, {
-                    status: "Offline 🔴",
+                    status: false,
                     is_vm_online: true
                 });
             }).catch(err => {
                 nodeStatus.set(node, {
-                    status: "Offline 🔴",
+                    status: false,
                     is_vm_online: false
                 });
             });
@@ -90,11 +90,11 @@ setInterval(() => {
         }
     }).then(response => {
         nodeStatus.set("node1-priv", {
-            status: "Online 🟢"
+            status: true
         });
     }).catch(error => {
         nodeStatus.set("node1-priv", {
-            status: "Offline 🔴"
+            status: false
         });
     })
 
@@ -111,11 +111,11 @@ setInterval(() => {
         }
     }).then(response => {
         nodeStatus.set("pub_node1", {
-            status: "Online 🟢"
+            status: true
         });
     }).catch(error => {
         nodeStatus.set("pub_node1", {
-            status: "Offline 🔴"
+            status: false
         });
     })
 
@@ -125,11 +125,11 @@ setInterval(() => {
         ping.sys.probe(host, function (isAlive) {
             if (isAlive == true) {
                 nodeStatus.set(host, {
-                    status: "Online 🟢"
+                    status: true
                 })
             } else if (isAlive == false) {
                 nodeStatus.set(host, {
-                    status: "Offline 🔴"
+                    status: false
                 });
             }
         });
@@ -141,18 +141,18 @@ setInterval(() => {
     //Lavalink chercker
     ping2.ping('lava.danbot.host', 2333)
         .then(() => nodeStatus.set("lava.danbot.host", {
-            status: "Online 🟢"
+            status: true
         }))
         .catch((e) => nodeStatus.set("lava.danbot.host", {
-            status: "Offline 🔴"
+            status: false
         }));
 
     ping2.ping('lava2.danbot.host', 2333)
         .then(() => nodeStatus.set("lava2.danbot.host", {
-            status: "Online 🟢"
+            status: true
         }))
         .catch((e) => nodeStatus.set("lava2.danbot.host", {
-            status: "Offline 🔴"
+            status: false
         }));
 
 }, 3000)

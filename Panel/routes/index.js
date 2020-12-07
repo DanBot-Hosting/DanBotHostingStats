@@ -34,13 +34,13 @@ Router.get("/Node4", (req, res) => {
 Router.get("/nodeStatus", (req, res) => {
   let data = {
     nodestatus: {
-      Node1: nodeStatus.fetch("node1").status,
-      Node2: nodeStatus.fetch("node2").status,
-      Node3: nodeStatus.fetch("node3").status,
-      Node4: nodeStatus.fetch("node4").status,
-      Node5: nodeStatus.fetch("node5").status,
-      Node6: nodeStatus.fetch("node6").status,
-      Node7: nodeStatus.fetch("node7").status
+      Node1: nodeStatus.fetch("node1"),
+      Node2: nodeStatus.fetch("node2"),
+      Node3: nodeStatus.fetch("node3"),
+      Node4: nodeStatus.fetch("node4"),
+      Node5: nodeStatus.fetch("node5"),
+      Node6: nodeStatus.fetch("node6"),
+      Node7: nodeStatus.fetch("node7")
     },
     misc: {
       Lava1: nodeStatus.fetch("lava.danbot.host").status,
