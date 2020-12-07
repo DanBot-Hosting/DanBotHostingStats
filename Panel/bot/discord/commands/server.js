@@ -142,7 +142,7 @@ exports.run = async (client, message, args) => {
 
 
         let user = userPrem.fetch(message.author.id);
-        let allowed = (message.member.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + 2) : Math.floor(user.donated / config.node7.price);
+        let allowed = (message.member.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + (user.boosted != null ? Math.floor(user.boosted * 2.5) : 2)) : Math.floor(user.donated / config.node7.price);
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
         if (allowed == 0) {
@@ -198,7 +198,7 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Created for user ID:**__`, consoleID.consoleID)
                         .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
-                        .setFooter('User has ' + user.used + ' out of a max ' + allowed + ' servers')
+                        .setFooter('User has ' + user.used + 1 + ' out of a max ' + allowed + ' servers')
                     client.channels.get("785236066500083772").send(embed2)
 
 
