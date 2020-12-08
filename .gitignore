@@ -16,6 +16,8 @@ Panel/bot/discord/commands/music.js
 Daemon/node_modules
 Daemon/package-lock.json
 Daemon/json.sqlite
+Daemon/config.json
+Daemon/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4
 
 Test/*
 

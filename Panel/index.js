@@ -202,6 +202,9 @@ setInterval(() => {
       method: 'GET',
       followRedirect: true,
       maxRedirects: 5,
+      headers: {
+        "password": config.Misc.externalPassword
+      },
       }).then(response => {
         nodeData.set(response.data.info.servername, {
           servername: response.data.info.servername,

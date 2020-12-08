@@ -8,6 +8,9 @@ var os = require("os");
 var pretty = require('prettysize');
 var moment = require("moment");
 const speedTest = require('speedtest-net'); 
+const fs = require('fs')
+const config = require('./config.json')
+const exec = require('child_process').exec;
 var PORT = "999"
 
 //Issue speedtest on startup
@@ -24,12 +27,104 @@ setInterval(async () => {
     fetchData()
 }, 2000)
 
-app.get('/stats', function (req, res) {
-    let data = {
-        info: nodeData.fetch("data"),
-        speedtest: nodeData.fetch("data-speedtest")
+app.get("/", (req, res) => {
+    res.send(`<style>
+    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
+  }
+</style>
+<video class= "video""
+  autoplay=""
+  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
+
+<source src="http://localhost:999/404" type="video/mp4">
+
+</video>`)
+});
+
+app.get('/404', function(req, res) {
+    const path = 'Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4'
+    const stat = fs.statSync(path)
+    const fileSize = stat.size
+    const range = req.headers.range
+    
+    if (range) {
+    const parts = range.replace(/bytes=/, "").split("-")
+    const start = parseInt(parts[0], 10)
+    const end = parts[1]
+    ? parseInt(parts[1], 10)
+    : fileSize-1
+    
+    const chunksize = (end-start)+1
+    const file = fs.createReadStream(path, {start, end})
+    const head = {
+    'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+    'Accept-Ranges': 'bytes',
+    'Content-Length': chunksize,
+    'Content-Type': 'video/mp4',
     }
-    res.send(data)
+    
+    res.writeHead(206, head)
+    file.pipe(res)
+    } else {
+    const head = {
+    'Content-Length': fileSize,
+    'Content-Type': 'video/mp4',
+    }
+    res.writeHead(200, head)
+    fs.createReadStream(path).pipe(res)
+    }
+    })
+
+app.get('/stats', function (req, res) {
+    if (req.headers.password == config.password) {
+        let data = {
+            info: nodeData.fetch("data"),
+            speedtest: nodeData.fetch("data-speedtest")
+        }
+        res.send(data)
+    } else {
+        res.send(`<style>
+    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
+  }
+</style>
+<video class= "video""
+  autoplay=""
+  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
+
+<source src="http://localhost:999/404" type="video/mp4">
+
+</video>`)
+    }
+})
+
+app.get('/wings', function (req, res) {
+    if (req.headers.password == config.password) {
+        console.log(req.query)
+        if (!req.query.action) {
+            res.json({ status: "You forgot to send start/restart/stop in the request"})
+        } else if (req.query.action == "start") {
+            res.json({ status: "Wings started" })
+            exec(`service wings start`)
+        } else if (req.query.action == "restart") {
+            res.json({ status: "Wings restarted" })
+            exec(`service wings restart`)
+        } else if (req.query.action == "stop") {
+            res.json({ status: "Wings stopped" })
+            exec(`service wings stop`)
+        }
+    } else {
+        res.send(`<style>
+    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
+  }
+</style>
+<video class= "video""
+  autoplay=""
+  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
+
+<source src="http://localhost:999/404" type="video/mp4">
+
+</video>`)
+    }
 })
 
 server.listen(PORT, function () {
