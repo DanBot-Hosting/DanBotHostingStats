@@ -41,15 +41,11 @@ setInterval(() => {
     //Public nodes
     for (let [node, data] of Object.entries(stats)) {
         axios({
-            url: config.Pterodactyl.hosturl + "/api/client/servers/" + data.serverID + "/resources",
+            url: 'http://' + data.IP + ':8080',
             method: 'GET',
             followRedirect: true,
+            timeout: 1500,
             maxRedirects: 5,
-            headers: {
-                'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-                'Content-Type': 'application/json',
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
-            }
         }).then(response => {
             nodeStatus.set(node, {
                 status: true,
@@ -57,104 +53,106 @@ setInterval(() => {
             });
         }).catch(error => {
 
-            axios({
-                url: 'http://' + data.IP + ':999',
-                timeout: 1500,
-            }).then(x => {
+            if (error.response == null) {
+                axios({
+                    url: 'http://' + data.IP + ':999',
+                    timeout: 1500,
+                }).then(x => {
 
-            }).catch(x => {
+                }).catch(x => {
 
-                if (x.response != null) {
-                    nodeStatus.set(node, {
-                        status: false,
-                        is_vm_online: true
-                    });
-                } else {
-                    nodeStatus.set(node, {
-                        status: false,
-                        is_vm_online: false
-                    });
-                }
-            });
-        })
-    }
-
-    //Node 1 (PRIVATE ADMIN PANEL)
-    axios({
-        url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
-        method: 'GET',
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
-            'Content-Type': 'application/json',
-            'Accept': 'Application/vnd.pterodactyl.v1+json',
-        }
-    }).then(response => {
-        nodeStatus.set("node1-priv", {
-            status: true
-        });
-    }).catch(error => {
-        nodeStatus.set("node1-priv", {
-            status: false
-        });
-    })
-
-    //Node 1 (PUBLIC GAMESERVER PANEL)
-    axios({
-        url: config.PubPterodactyl.hosturl + "/api/client/servers/c9efcb30/resources",
-        method: 'GET',
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            'Authorization': 'Bearer ' + config.PubPterodactyl.apikeyclient,
-            'Content-Type': 'application/json',
-            'Accept': 'Application/vnd.pterodactyl.v1+json',
-        }
-    }).then(response => {
-        nodeStatus.set("pub_node1", {
-            status: true
-        });
-    }).catch(error => {
-        nodeStatus.set("pub_node1", {
-            status: false
-        });
-    })
-
-    // Panel Cherckers
-    var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host'];
-    hosts.forEach(function (host) {
-        ping.sys.probe(host, function (isAlive) {
-            if (isAlive == true) {
-                nodeStatus.set(host, {
-                    status: true
-                })
-            } else if (isAlive == false) {
-                nodeStatus.set(host, {
-                    status: false
+                    if (x.response != null) {
+                        nodeStatus.set(node, {
+                            status: false,
+                            is_vm_online: true
+                        });
+                    } else {
+                        nodeStatus.set(node, {
+                            status: false,
+                            is_vm_online: false
+                        });
+                    }
                 });
             }
-        });
-    }, {
-        timeout: 4
+        })
+    }
+}
+
+//Node 1 (PRIVATE ADMIN PANEL)
+axios({
+    url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+        'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
+        'Content-Type': 'application/json',
+        'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+}).then(response => {
+    nodeStatus.set("node1-priv", {
+        status: true
     });
+}).catch(error => {
+    nodeStatus.set("node1-priv", {
+        status: false
+    });
+})
+
+//Node 1 (PUBLIC GAMESERVER PANEL)
+axios({
+    url: config.PubPterodactyl.hosturl + "/api/client/servers/c9efcb30/resources",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+        'Authorization': 'Bearer ' + config.PubPterodactyl.apikeyclient,
+        'Content-Type': 'application/json',
+        'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+}).then(response => {
+    nodeStatus.set("pub_node1", {
+        status: true
+    });
+}).catch(error => {
+    nodeStatus.set("pub_node1", {
+        status: false
+    });
+})
+
+// Panel Cherckers
+var hosts = ['154.27.68.234', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host']; hosts.forEach(function (host) {
+    ping.sys.probe(host, function (isAlive) {
+        if (isAlive == true) {
+            nodeStatus.set(host, {
+                status: true
+            })
+        } else if (isAlive == false) {
+            nodeStatus.set(host, {
+                status: false
+            });
+        }
+    });
+}, {
+    timeout: 4
+});
 
 
-    //Lavalink chercker
-    ping2.ping('lava.danbot.host', 2333)
-        .then(() => nodeStatus.set("lava.danbot.host", {
-            status: true
-        }))
-        .catch((e) => nodeStatus.set("lava.danbot.host", {
-            status: false
-        }));
+//Lavalink chercker
+ping2.ping('lava.danbot.host', 2333)
+.then(() => nodeStatus.set("lava.danbot.host", {
+    status: true
+}))
+.catch((e) => nodeStatus.set("lava.danbot.host", {
+    status: false
+}));
 
-    ping2.ping('lava2.danbot.host', 2333)
-        .then(() => nodeStatus.set("lava2.danbot.host", {
-            status: true
-        }))
-        .catch((e) => nodeStatus.set("lava2.danbot.host", {
-            status: false
-        }));
+ping2.ping('lava2.danbot.host', 2333)
+.then(() => nodeStatus.set("lava2.danbot.host", {
+    status: true
+}))
+.catch((e) => nodeStatus.set("lava2.danbot.host", {
+    status: false
+}));
 
 }, 3000)
