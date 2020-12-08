@@ -41,11 +41,15 @@ setInterval(() => {
     //Public nodes
     for (let [node, data] of Object.entries(stats)) {
         axios({
-            url: 'http://' + data.IP + ':8080',
+            url: config.Pterodactyl.hosturl + "/api/client/servers/" + data.serverID + "/resources",
             method: 'GET',
             followRedirect: true,
-            timeout: 1500,
             maxRedirects: 5,
+            headers: {
+                'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                'Content-Type': 'application/json',
+                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            }
         }).then(response => {
             nodeStatus.set(node, {
                 status: true,
@@ -53,27 +57,25 @@ setInterval(() => {
             });
         }).catch(error => {
 
-            if (error.response == null) {
-                axios({
-                    url: 'http://' + data.IP + ':999',
-                    timeout: 1500,
-                }).then(x => {
+            axios({
+                url: 'http://' + data.IP + ':999/random',
+                timeout: 1500,
+            }).then(x => {
 
-                }).catch(x => {
+            }).catch(x => {
 
-                    if (x.response != null) {
-                        nodeStatus.set(node, {
-                            status: false,
-                            is_vm_online: true
-                        });
-                    } else {
-                        nodeStatus.set(node, {
-                            status: false,
-                            is_vm_online: false
-                        });
-                    }
-                });
-            }
+                if (x.response != null) {
+                    nodeStatus.set(node, {
+                        status: false,
+                        is_vm_online: true
+                    });
+                } else {
+                    nodeStatus.set(node, {
+                        status: false,
+                        is_vm_online: false
+                    });
+                }
+            });
         })
     }
 
