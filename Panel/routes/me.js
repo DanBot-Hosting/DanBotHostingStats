@@ -34,8 +34,6 @@ Router.get("/form/staff-apply", checkAuth, (req, res) => {
 Router.post("/form/staff-apply", checkAuth, (req, res) => {
     let data = req.body;
     console.log(data); 
-    const att = new Discord.Attachment(client.guilds.size, 'ree.txt');
-    client.users.get('293841631583535106').send(att)
     const embed = new Discord.RichEmbed()
         .setColor(0x00A2E8)
         .addField("__**Ping**__", `<@${data.user.id}>`)
