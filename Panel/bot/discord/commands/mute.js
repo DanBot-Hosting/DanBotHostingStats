@@ -33,7 +33,7 @@ exports.init = (client) => {
                 }
             } else {
                 mutes[x.ID] = setTimeout(() => {
-                    delete mutes[member.id];
+                    delete mutes[x.id];
                     mutesData.delete(x.ID);
                     if (guild.members.get(x.ID) != null) {
                         member.removeRole(config.DiscordBot.roles.mute);
