@@ -398,6 +398,8 @@ exports.run = async (client, message, args) => {
                 }).then(use => {
                     use = use.data.attributes;
 
+                    console.log(use.relationships);
+
                     if (use.relationships) {
                         let k = Object.keys(use.relationships);
                         use.extras = {};
@@ -410,8 +412,8 @@ exports.run = async (client, message, args) => {
                         delete use.relationships;
                     }
 
-                    console.log(use.extras.servers.find(x => x.identifier == args[1]));
-                    
+                    console.log(use.extras);
+
                     if (use.extras.servers == null || use.extras.servers.find(x => x.identifier == args[1]) == null) {
                         message.channel.send("Couldn't find that server in your server list.")
                         return;
