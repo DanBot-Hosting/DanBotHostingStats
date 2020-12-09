@@ -1,12 +1,14 @@
 exports.run = async (client, message, args) => {
-    try {
-        const embed = new Discord.MessageEmbed()
-            .setAuthor(`${client.snipes.get(message.channel.id).author.tag}`, `${bot.snipes.get(message.channel.id).author.displayAvatarURL({ dynamic: true, format: 'png' })}`)
-            .setDescription(`${client.snipes.get(message.channel.id).content}`)
-            .setColor('RANDOM')
-            .setTimestamp(`${client.snipes.get(message.channel.id).timestamp}`)
-        message.channel.send(embed)
-    } catch (err) {
-        message.channel.send(`There's nothing to snipe!`);
-    };
+    let embed3 = new MessageEmbed()
+            .setDescription(`Theres nothing to snipe`)
+
+        let snipe = snipes.get(message.channel.id)
+        if (!snipe || !snipe.content) return message.channel.send(embed3)
+
+        const embed = new Discord.RichEmbed()
+            .setAuthor(snipe.author.username, snipe.author.displayAvatarURL({ dynamic: true, format: 'png' }))
+            .setTimestamp()
+            .setTitle(`Message by: ${snipe.author.tag}`)
+            .setDescription(snipe.content)
+        message.channel.send(embed);
 }

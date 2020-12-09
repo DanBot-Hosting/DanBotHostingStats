@@ -22,10 +22,10 @@ module.exports = (client, message) => {
     if (message.author.bot || !message.content) {
         return;
     } else {
-           client.snipes.set(message.channel.id, {
-            content: message.content,
-            author: message.author,
-            timestamp: message.createdAt
-        })
+        snipes.set(message.channel.id, message)
+        setTimeout(() => {
+            if (snipes.get(message.channel.id) === message)
+                snipes.delete(message.channel.id)
+        }, 300000);
     }
 };
