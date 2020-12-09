@@ -396,7 +396,7 @@ exports.run = async (client, message, args) => {
                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
                 }).then(use => {
-                    use = input.data.attributes;
+                    use = use.data.attributes;
 
                     if (use.relationships) {
                         let k = Object.keys(use.relationships);
