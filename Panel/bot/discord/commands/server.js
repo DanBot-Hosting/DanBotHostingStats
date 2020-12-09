@@ -409,7 +409,7 @@ exports.run = async (client, message, args) => {
                         })
                         delete use.relationships;
                     }
-                    
+
                     if (use.extras.servers == null || use.extras.servers.find(x => x.identifier == args[2]) == null) {
                         message.channel.send("Couldn't find that server in your server list.")
                         return;
@@ -608,11 +608,11 @@ exports.run = async (client, message, args) => {
                                                     }).then(function (result) {
                                                         //Complete
                                                         message.reply('Domain has now been linked!')
-
-                                                        userData.add(message.author.id + '.domains', {
+                                                        let data = userData.get(message.author.id).domains || []
+                                                        userData.set(message.author.id + '.domains', [...new Set(data), {
                                                             domain: args[1].toLowerCase(),
                                                             serverID: args[2],
-                                                        });
+                                                        }]);
                                                     })
                                                 } else if (result.stdout.includes('Certificate not yet due for renewal')) {
                                                     //No error. Continue to enable site on apache2 then restart
@@ -624,10 +624,11 @@ exports.run = async (client, message, args) => {
                                                         //Complete
                                                         message.reply('Domain has now been linked!')
 
-                                                        userData.add(message.author.id + '.domains', {
+                                                        let data = userData.get(message.author.id).domains || []
+                                                        userData.set(message.author.id + '.domains', [...new Set(data), {
                                                             domain: args[1].toLowerCase(),
                                                             serverID: args[2],
-                                                        });
+                                                        }]);
                                                     })
                                                 } else {
                                                     message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.95` or cloudflare proxy is enabled!\n\n' +
