@@ -145,7 +145,8 @@ exports.run = async (client, message, args) => {
                     email: user.data.attributes.email,
                     username: user.data.attributes.username,
                     linkTime: timestamp,
-                    linkDate: datestamp
+                    linkDate: datestamp,
+                    domains: []
                 })
 
                 if (user == "Error: User already exists! (Or Email/Username is in use already)") {
@@ -369,7 +370,8 @@ exports.run = async (client, message, args) => {
                                             email: consoleUser.attributes.email,
                                             username: consoleUser.attributes.username,
                                             linkTime: timestamp,
-                                            linkDate: datestamp
+                                            linkDate: datestamp,
+                                            domains: []
                                         });
 
                                         let embedstaff = new Discord.RichEmbed()
