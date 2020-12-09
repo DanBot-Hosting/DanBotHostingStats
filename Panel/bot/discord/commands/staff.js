@@ -184,6 +184,21 @@ exports.run = async (client, message, args) => {
 
             message.reply('done')
             break;
-    }
+
+            case 'node':
+            if(!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
+            require('axios')({
+                url: "http://n" + args[2] + ".danbot.host:999/wings?action=" + args[3],
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    "password": config.externalPassword
+                },
+            }).then(response => {
+                message.channel.send(response.data.status)
+            })
+            break;
+    } 
 
 }

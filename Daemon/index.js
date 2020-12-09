@@ -13,6 +13,22 @@ const config = require('./config.json')
 const exec = require('child_process').exec;
 var PORT = "999"
 
+//Automatic 30second git pull.
+setInterval(() => {
+    exec(`git pull`, (error, stdout) => {
+        let response = (error || stdout);
+        if (!error) {
+            if (response.includes("Already up to date.")) {
+            } else {
+                console.log("**[AUTOMATIC]** New update on GitHub.")
+                setTimeout(() => {
+                    process.exit();
+                }, 1000)
+            };
+        }
+    })
+}, 30000)
+
 //Issue speedtest on startup
 speedtest();
 fetchData();
@@ -27,6 +43,25 @@ setInterval(async () => {
     fetchData()
 }, 2000)
 
+app.get("/states", (req, res) => {
+    if (req.headers.password == config.password) {
+        const states = require('/var/lib/pterodactyl/states.json')
+        res.json(states)
+    } else {
+        res.send(`<style>
+    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
+  }
+</style>
+<video class= "video""
+  autoplay=""
+  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
+
+<source src="http://${config.serverip}:999/404" type="video/mp4">
+
+</video>`)
+    }
+})
+
 app.get("/", (req, res) => {
     res.send(`<style>
     .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
@@ -36,7 +71,7 @@ app.get("/", (req, res) => {
   autoplay=""
   mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
 
-<source src="http://localhost:999/404" type="video/mp4">
+<source src="http://${config.serverip}:999/404" type="video/mp4">
 
 </video>`)
 });
@@ -91,7 +126,7 @@ app.get('/stats', function (req, res) {
   autoplay=""
   mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
 
-<source src="http://localhost:999/404" type="video/mp4">
+<source src="http://${config.serverip}:999/404" type="video/mp4">
 
 </video>`)
     }
@@ -121,7 +156,7 @@ app.get('/wings', function (req, res) {
   autoplay=""
   mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
 
-<source src="http://localhost:999/404" type="video/mp4">
+<source src="http://${config.serverip}:999/404" type="video/mp4">
 
 </video>`)
     }
