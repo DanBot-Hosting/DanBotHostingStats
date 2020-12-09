@@ -80,10 +80,11 @@ module.exports = async (client, guild, files) => {
 
     let channel = client.channels.get("757949242495991918");
 
-    setInterval(() => {
-        channel.fetchMessage("784531083596791849").then(msg => {
-            nstatus.getEmbed().then(x => msg.edit(x))
-        });
+    setInterval(async () => {
+        let msg = await channel.fetchMessage("784531083596791849");
+        let embed = await nstatus.getEmbed();
+        if (msg != null) msg.edit(embed)
+        else channel.send(embed)
     }, 15000)
 
     //Voice channel stats updator

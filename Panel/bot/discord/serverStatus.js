@@ -84,7 +84,7 @@ let parse = async () => {
         let temp = [];
         for (let d of data) {
 
-            let da = (PubNodeStatus == null || PubNodeStatus[d.data] == null) ? nodeStatus.get(d.data) : PubNodeStatus[d.data];
+            let da = nodeStatus.get(d.data);
 
             da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.is_vm_online == null ? "Offline" : ((da.is_vm_online == true ? "Wing" : "VM") + ' Outage'))))
 
