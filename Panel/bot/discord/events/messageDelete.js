@@ -17,6 +17,15 @@ module.exports = (client, message) => {
     .setFooter("Message delete in " + message.channel.name);
     client.channels.get(config.DiscordBot.mLogs).send({embed});
     
+    }
+
+    if (message.author.bot || !message.content) {
+        return;
     } else {
+           client.snipes.set(message.channel.id, {
+            content: message.content,
+            author: message.author,
+            timestamp: message.createdAt
+        })
     }
 };

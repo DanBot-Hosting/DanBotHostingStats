@@ -1,6 +1,7 @@
 const exec = require('child_process').exec;
 const axios = require('axios');
 const nstatus = require('../serverStatus');
+global.snipes = new Discord.Collection();
 
 module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
