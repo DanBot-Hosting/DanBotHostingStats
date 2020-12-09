@@ -409,10 +409,8 @@ exports.run = async (client, message, args) => {
                         })
                         delete use.relationships;
                     }
-
-                    console.log(use.extras.servers.find(m => m.identifier == args[1]));
                     
-                    if (use.extras.servers == null || use.extras.servers.find(x => x.identifier == args[1]) == null) {
+                    if (use.extras.servers == null || use.extras.servers.find(x => x.identifier == args[2]) == null) {
                         message.channel.send("Couldn't find that server in your server list.")
                         return;
                     }
