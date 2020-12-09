@@ -448,7 +448,7 @@ exports.run = async (client, message, args) => {
                                             const ipchange = rif.sync({
                                                 files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                                 from: "REPLACE-IP",
-                                                to: "154.27.68.232",
+                                                to: "154.27.68.105",
                                                 countMatches: true,
                                             });
                                             y++
@@ -477,7 +477,7 @@ exports.run = async (client, message, args) => {
                                             const ipchange = rif.sync({
                                                 files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                                 from: "REPLACE-IP",
-                                                to: "154.27.68.233",
+                                                to: "154.27.68.106",
                                                 countMatches: true,
                                             });
                                             y++
@@ -606,7 +606,7 @@ exports.run = async (client, message, args) => {
                                                     */
                                                 })
                                             } else {
-                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.234` or cloudflare proxy is enabled!\n\n' +
+                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.95` or cloudflare proxy is enabled!\n\n' +
                                                     '**If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache** \n\nFull Error: ```' + result.stdout + '```')
                                                 fs.unlinkSync("./proxy/" + args[1] + ".conf");
                                             }
