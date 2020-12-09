@@ -198,7 +198,7 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Created for user ID:**__`, consoleID.consoleID)
                         .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
-                        .setFooter('User has ' + user.used + 1 + ' out of a max ' + allowed + ' servers')
+                        .setFooter('User has ' + (user.used + 1) + ' out of a max ' + allowed + ' servers')
                     client.channels.get("785236066500083772").send(embed2)
 
 
