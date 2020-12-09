@@ -1,5 +1,5 @@
 exports.run = async (client, message, args) => {
-    let embed3 = new MessageEmbed()
+    let embed3 = new Discord.RichEmbed()
             .setDescription(`Theres nothing to snipe`)
 
         let snipe = snipes.get(message.channel.id)
