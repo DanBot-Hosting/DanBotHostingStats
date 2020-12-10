@@ -538,7 +538,7 @@ exports.run = async (client, message, args) => {
                                                 const ipchange = rif.sync({
                                                     files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                                     from: "REPLACE-IP",
-                                                    to: "154.27.68.244",
+                                                    to: "154.27.68.108",
                                                     countMatches: true,
                                                 });
                                                 y++
@@ -567,7 +567,7 @@ exports.run = async (client, message, args) => {
                                                 const ipchange = rif.sync({
                                                     files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
                                                     from: "REPLACE-IP",
-                                                    to: "154.27.68.186",
+                                                    to: "154.27.68.110",
                                                     countMatches: true,
                                                 });
                                                 y++
