@@ -45,7 +45,12 @@ setInterval(async () => {
 
 app.get("/states", (req, res) => {
     if (req.headers.password == config.password) {
-        res.json(fs.createReadStream('/var/lib/pterodactyl/states.json'))
+        exec(`cat /var/lib/pterodactyl/states.json`, (error, stdout) => {
+
+            let response = (error || stdout);
+
+            res.json(response)
+        })
     } else {
         res.send(`<style>
     .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
