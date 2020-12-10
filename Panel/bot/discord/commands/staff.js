@@ -1,9 +1,7 @@
 //const {config} = require('process');
 let subcommands = {
-    staff: {
-        linked: ["Shows if the users account is linked.", 'linked <USERID>']
-    },
     admin: {
+        linked: ["Shows if the users account is linked.", 'linked <USERID>'],
         apply: ["Manage Staff applications.", '<open/close>'],
         settings: ["Shows current website settings.", ''],
         reactionroles: ["Reloads all reactionRoles.", '']
@@ -27,22 +25,15 @@ let desc = (object) => {
 const exec = require('child_process').exec;
 
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.find(r => r.id == "748117822370086932")) return;
+    if (!message.member.roles.find(r => r.id == "639489438036000769")) return;
 
     if (args[0] == null) {
-        if (message.member.roles.find(r => r.id == "639489438036000769")) {
-            let embed = new Discord.RichEmbed()
-                .setColor('RANDOM')
-                .addField('**Staff Commands:**', desc(subcommands.staff).join('\n'))
-                .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
-                .addField('**Owner Commands:**', desc(subcommands.devs).join('\n'))
-            message.channel.send(embed)
-        } else {
-            let embed = new Discord.RichEmbed()
-                .setColor('RANDOM')
-                .addField('**Staff Commands:**', desc(subcommands.staff).join('\n'))
-            message.channel.send(embed)
-        }
+        let embed = new Discord.RichEmbed()
+            .setColor('RANDOM')
+            .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
+            .addField('**Owner Commands:**', desc(subcommands.devs).join('\n'))
+        message.channel.send(embed)
+
         return;
     }
 
@@ -162,32 +153,32 @@ exports.run = async (client, message, args) => {
                 message.channel.send('OwO')
             }
             break;
-            
+
         case 'premium':
-            if(!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
-            if(args.lenght < 4) return;
-            
+            if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
+            if (args.lenght < 4) return;
+
             if (args[1].toLowerCase() == 'donated') {
                 let amount = Number.parseInt(args[3])
-                if(isNaN(amount)) return;
+                if (isNaN(amount)) return;
                 let userid = args[2]
-                
-                userPrem.set(userid+'.donated', amount)
+
+                userPrem.set(userid + '.donated', amount)
             }
 
             if (args[1].toLowerCase() == 'boosted') {
                 let amount = Number.parseInt(args[3])
-                if(isNaN(amount)) return;
+                if (isNaN(amount)) return;
                 let userid = args[2]
-                
-                userPrem.set(userid+'.boosted', amount)
+
+                userPrem.set(userid + '.boosted', amount)
             }
 
             message.reply('done')
             break;
 
-            case 'wings':
-            if(!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
+        case 'wings':
+            if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
             require('axios')({
                 url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2].toLowerCase(),
                 method: 'GET',
@@ -198,6 +189,6 @@ exports.run = async (client, message, args) => {
                 message.channel.send(response.data.status)
             })
             break;
-    } 
+    }
 
 }
