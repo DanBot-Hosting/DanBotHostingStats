@@ -189,10 +189,8 @@ exports.run = async (client, message, args) => {
             case 'wings':
             if(!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
             require('axios')({
-                url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2].toLowerCase,
+                url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2].toLowerCase(),
                 method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
                 headers: {
                     "password": config.externalPassword
                 },

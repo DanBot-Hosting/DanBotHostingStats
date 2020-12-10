@@ -58,18 +58,17 @@ exports.run = async (client, message, args) => {
 
     } else if (args[0].toLowerCase() == "create") {
 
-        if (cooldown[message.author.id].nCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
-            return;
-        }
-        cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
-
-
         //Do server creation things
         if (!args[1]) {
             message.channel.send(helpEmbed)
             return;
         }
+
+        if (cooldown[message.author.id].nCreate > Date.now()) {
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
+            return;
+        }
+        cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
 
         let types = {
             nodejs: data.nodejs,
@@ -133,11 +132,7 @@ exports.run = async (client, message, args) => {
     } else if (args[0].toLowerCase() == "create-donator") {
 
 
-        if (cooldown[message.author.id].pCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
-            return;
-        }
-        cooldown[message.author.id].pCreate = Date.now() + (5 * 1000);
+
 
 
         let user = userPrem.fetch(message.author.id);
@@ -162,6 +157,13 @@ exports.run = async (client, message, args) => {
                 .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
             return;
         }
+
+        if (cooldown[message.author.id].pCreate > Date.now()) {
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
+            return;
+        }
+        cooldown[message.author.id].pCreate = Date.now() + (10 * 1000);
+
 
         let types = {
             nodejs: pServerCreatesettings.nodejs,
@@ -220,7 +222,7 @@ exports.run = async (client, message, args) => {
             message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].delete - Date.now(), {round: true})}`)
             return;
         }
-        cooldown[message.author.id].delete = Date.now() + (1 * 1000);
+        cooldown[message.author.id].delete = Date.now() + (3 * 1000);
 
         //delete server things
         if (!args[1]) {
