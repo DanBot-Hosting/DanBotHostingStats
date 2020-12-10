@@ -68,7 +68,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     .addField("__**Any projects you are proud of?**__", data.projects)
     .setTimestamp()
     .setFooter("New staff app submitted!");
-  client.channels.get("757204887242014760").send({
+  client.channels.get("786607811870064650").send({
     embed
   });
 
@@ -85,28 +85,28 @@ Router.get("/requests", checkAuth, (req, res) => {
   });
 });
 
-Router.post("/requests", checkAuth, (req, res) => {
+// Router.post("/requests", checkAuth, (req, res) => {
 
-  let data = req.body;
-  console.log(data);
-  const embed = new Discord.RichEmbed()
-    .setColor(0x00A2E8)
-    .addField("__**Ping**__", `<@${data.id}>`)
-    .addField("__**User ID**__", data.id)
-    .addField("__**Console Email**__", data.cemail)
-    .addField("__**How long have you been in DBH?**__", data.joindate)
-    .addField("__**Previous experiences**__", data.prev)
-    .addField("__**Coding knowledge**__", data.coding)
-    .addField("__**Any projects you are proud of?**__", data.projects)
-    .setTimestamp()
-    .setFooter("New staff app submitted! ");
-  client.channels.get("757204887242014760").send({
-    embed
-  });
+//   let data = req.body;
+//   console.log(data);
+//   const embed = new Discord.RichEmbed()
+//     .setColor(0x00A2E8)
+//     .addField("__**Ping**__", `<@${data.id}>`)
+//     .addField("__**User ID**__", data.id)
+//     .addField("__**Console Email**__", data.cemail)
+//     .addField("__**How long have you been in DBH?**__", data.joindate)
+//     .addField("__**Previous experiences**__", data.prev)
+//     .addField("__**Coding knowledge**__", data.coding)
+//     .addField("__**Any projects you are proud of?**__", data.projects)
+//     .setTimestamp()
+//     .setFooter("New staff app submitted! ");
+//   client.channels.get("757204887242014760").send({
+//     embed
+//   });
 
-  res.redirect("/me?e=COMPLETE");
+//   res.redirect("/me?e=COMPLETE");
 
-});
+// });
 
 module.exports = Router;
 
