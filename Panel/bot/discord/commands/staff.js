@@ -8,9 +8,10 @@ let subcommands = {
         settings: ["Shows current website settings.", ''],
         reactionroles: ["Reloads all reactionRoles.", '']
     },
-    owner: {
+    devs: {
         maintenance: ["Enable or disable website maintenance.", '<on/off>'],
-        update: ["Pulls updates from GitHub.", '']
+        update: ["Pulls updates from GitHub.", ''],
+        wings: ["Manage the wings of a specific node.", '<NodeID> <Start | Restart | Stop>']
     }
 }
 
@@ -34,7 +35,7 @@ exports.run = async (client, message, args) => {
                 .setColor('RANDOM')
                 .addField('**Staff Commands:**', desc(subcommands.staff).join('\n'))
                 .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
-                .addField('**Owner Commands:**', desc(subcommands.owner).join('\n'))
+                .addField('**Owner Commands:**', desc(subcommands.devs).join('\n'))
             message.channel.send(embed)
         } else {
             let embed = new Discord.RichEmbed()
@@ -185,10 +186,10 @@ exports.run = async (client, message, args) => {
             message.reply('done')
             break;
 
-            case 'node':
+            case 'wings':
             if(!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
             require('axios')({
-                url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2],
+                url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2].toLowerCase,
                 method: 'GET',
                 followRedirect: true,
                 maxRedirects: 5,
