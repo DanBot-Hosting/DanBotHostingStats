@@ -45,8 +45,7 @@ setInterval(async () => {
 
 app.get("/states", (req, res) => {
     if (req.headers.password == config.password) {
-        const states = require('/var/lib/pterodactyl/states.json')
-        res.json(states)
+        res.json(fs.createReadStream('/var/lib/pterodactyl/states.json'))
     } else {
         res.send(`<style>
     .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
@@ -56,7 +55,7 @@ app.get("/states", (req, res) => {
   autoplay=""
   mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
 
-<source src="http://${config.serverip}:999/404" type="video/mp4">
+<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
 
 </video>`)
     }
@@ -71,44 +70,10 @@ app.get("/", (req, res) => {
   autoplay=""
   mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
 
-<source src="http://${config.serverip}:999/404" type="video/mp4">
+<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
 
 </video>`)
 });
-
-app.get('/404', function(req, res) {
-    const path = 'Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4'
-    const stat = fs.statSync(path)
-    const fileSize = stat.size
-    const range = req.headers.range
-    
-    if (range) {
-    const parts = range.replace(/bytes=/, "").split("-")
-    const start = parseInt(parts[0], 10)
-    const end = parts[1]
-    ? parseInt(parts[1], 10)
-    : fileSize-1
-    
-    const chunksize = (end-start)+1
-    const file = fs.createReadStream(path, {start, end})
-    const head = {
-    'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-    'Accept-Ranges': 'bytes',
-    'Content-Length': chunksize,
-    'Content-Type': 'video/mp4',
-    }
-    
-    res.writeHead(206, head)
-    file.pipe(res)
-    } else {
-    const head = {
-    'Content-Length': fileSize,
-    'Content-Type': 'video/mp4',
-    }
-    res.writeHead(200, head)
-    fs.createReadStream(path).pipe(res)
-    }
-    })
 
 app.get('/stats', function (req, res) {
     if (req.headers.password == config.password) {
@@ -126,7 +91,7 @@ app.get('/stats', function (req, res) {
   autoplay=""
   mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
 
-<source src="http://${config.serverip}:999/404" type="video/mp4">
+<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
 
 </video>`)
     }
@@ -156,7 +121,7 @@ app.get('/wings', function (req, res) {
   autoplay=""
   mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
 
-<source src="http://${config.serverip}:999/404" type="video/mp4">
+<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
 
 </video>`)
     }
