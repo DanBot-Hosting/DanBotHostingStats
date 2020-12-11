@@ -8,7 +8,7 @@ let stats = {
         IP: '154.27.68.105'
     },
     node2: {
-        serverID: '0cb9a74e',
+        serverID: 'ecb5707a',
         IP: '154.27.68.106'
     },
     node3: {
