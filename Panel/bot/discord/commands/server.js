@@ -266,7 +266,7 @@ exports.run = async (client, message, args) => {
                                             message.delete()
                                             msg.edit('Working...')
                                             axios({
-                                                url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id,
+                                                url: config.Pterodactyl.hosturl + "/api/application/servers/" + output.attributes.id + "/force",
                                                 method: 'DELETE',
                                                 followRedirect: true,
                                                 maxRedirects: 5,
