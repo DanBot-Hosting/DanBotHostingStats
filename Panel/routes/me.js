@@ -66,6 +66,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     .addField("__**Previous experiences**__", data.prev)
     .addField("__**Coding knowledge**__", data.coding)
     .addField("__**Any projects you are proud of?**__", data.projects)
+    .addField("__**Anything else**__", data.else)
     .setTimestamp()
     .setFooter("New staff app submitted!");
   client.channels.get("786607811870064650").send({
