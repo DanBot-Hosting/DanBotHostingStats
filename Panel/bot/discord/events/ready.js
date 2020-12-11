@@ -21,7 +21,7 @@ module.exports = async (client, guild, files) => {
             "type": "LISTENING"
         },
         {
-            "text": "Stalking Dan coding me :)",
+            "text": "solo suck at coding. *jk*",
             "type": "WATCHING"
         }
     ];
