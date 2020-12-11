@@ -667,7 +667,7 @@ exports.run = async (client, message, args) => {
         } else {
 
             if (userData.get(message.author.id).domains.find(x => x.domain == args[1].toLowerCase()) == null) {
-                message.channel.send("that domain isnt link.")
+                message.channel.send("that domain isnt linked.")
                 return;
             }
 
