@@ -9,18 +9,14 @@ exports.run = async (client, message) => {
             let errorcodefake = new Discord.RichEmbed()
                 .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                 .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
-                .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\n
-                SyntaxError: Unexpected identifier
-                at /root/DBH/Panel/bot/discord/commands/eval.js:35:31
-                at runMicrotasks (<anonymous>)
-                at processTicksAndRejections (internal/process/task_queues.js:93:5)\`\`\``, true)
+                .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\nSyntaxError: Unexpected identifier \nat /root/DBH/Panel/bot/discord/commands/eval.js:35:31 \nat runMicrotasks (<anonymous>) \nat processTicksAndRejections (internal/process/task_queues.js:93:5)\`\`\``, true)
                 .setColor(0xFF0000)
                 .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `);
-            return msg.edit({
+            msg.edit({
                 embed: errorcodefake
             })
         })
-    }
+    } else {
 
     function clean(text) {
         if (typeof (text) === 'string') {
@@ -99,4 +95,5 @@ exports.run = async (client, message) => {
             }).catch(e => logger.error(e));
         }
     });
+}
 };
