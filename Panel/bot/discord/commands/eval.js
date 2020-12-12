@@ -1,9 +1,25 @@
 const execSync = require('child_process').execSync;
 const ms = require('ms');
 exports.run = async (client, message) => {
-    
+    let args = message.content.split(' ').slice(1);
+    let cont = message.content.split(' ').slice(1).join(' ');
+
     if (!message.member.roles.find(r => r.id === "778237595477606440")) {
-        return message.channel.send(`Only my master can use this command`);
+        message.channel.send('Evaluating...').then(msg => {
+            let errorcodefake = new Discord.RichEmbed()
+                .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
+                .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+                .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\n
+                SyntaxError: Unexpected identifier
+                at /root/DBH/Panel/bot/discord/commands/eval.js:35:31
+                at runMicrotasks (<anonymous>)
+                at processTicksAndRejections (internal/process/task_queues.js:93:5)\`\`\``, true)
+                .setColor(0xFF0000)
+                .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `);
+            msg.edit({
+                embed: errorcodefake
+            })
+        })
     }
 
     function clean(text) {
@@ -27,8 +43,6 @@ exports.run = async (client, message) => {
             .replace(rege2, '21')
         return text;
     };
-    let args = message.content.split(' ').slice(1);
-    let cont = message.content.split(' ').slice(1).join(' ');
     message.channel.send('Evaluating...').then(msg => {
         try {
             let code = args.join(' ');
