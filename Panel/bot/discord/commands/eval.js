@@ -16,7 +16,7 @@ exports.run = async (client, message) => {
                 at processTicksAndRejections (internal/process/task_queues.js:93:5)\`\`\``, true)
                 .setColor(0xFF0000)
                 .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `);
-            msg.edit({
+            return msg.edit({
                 embed: errorcodefake
             })
         })
