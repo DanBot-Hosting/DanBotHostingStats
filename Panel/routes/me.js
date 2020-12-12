@@ -61,7 +61,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     const embed = new Discord.RichEmbed()
       .setColor(0x00A2E8)
       .addField("__**Ping**__", data.member)
-      .addField("__**User ID**__", data.user)
+      .addField("__**User ID**__", '`<@'+data.user +'>`')
       .addField("__**age**__", data.age)
       .addField("__**Console Email**__", data.cemail)
       .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(data.member.joinedAt), {
@@ -84,7 +84,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
 
     toSend += '__**Ping**__\n' + data.member;
     toSend += '\n-------------------------------------\n__**User ID**__\n' + data.member;
-    toSend += '\n-------------------------------------\n__**User ID**__\n' + data.user;
+    toSend += '\n-------------------------------------\n__**User ID**__\n' + '`<@'+data.user +'>`';
     toSend += '\n-------------------------------------\n__**age**__\n' + data.age;
     toSend += '\n-------------------------------------\n__**Console Email**__\n' + data.cemail;
     toSend += '\n-------------------------------------\n__**How long have you been in DBH?**__\n' + ms(Date.now() - Date.parse(data.member.joinedAt), {
@@ -103,7 +103,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
       channel.send(data.member, att);
     })
 
-    
+
   }
 
   res.redirect("/me?e=COMPLETE");
