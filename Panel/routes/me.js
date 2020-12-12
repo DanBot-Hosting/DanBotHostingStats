@@ -56,26 +56,29 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     error: "You're not a member in out discord server, make sure to join before applying."
   });
   let channel = client.channels.get("786607811870064650");
+  try {
 
-  const embed = new Discord.RichEmbed()
-    .setColor(0x00A2E8)
-    .addField("__**Ping**__", data.member)
-    .addField("__**User ID**__", data.user)
-    .addField("__**age**__", data.age)
-    .addField("__**Console Email**__", data.cemail)
-    .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(data.member.joinedAt), {
-      long: true
-    }))
-    .addField("__**Languages**__", data.langs)
-    .addField("__**Previous experiences**__", data.prev)
-    .addField("__**Coding knowledge**__", data.coding)
-    .addField("__**Any projects you are proud of?**__", data.projects)
-    .addField("__**Anything else**__", data.else)
-    .setTimestamp()
-    .setFooter("New staff app submitted!");
-  channel.send({
-    embed
-  }).catch(x => {
+    const embed = new Discord.RichEmbed()
+      .setColor(0x00A2E8)
+      .addField("__**Ping**__", data.member)
+      .addField("__**User ID**__", data.user)
+      .addField("__**age**__", data.age)
+      .addField("__**Console Email**__", data.cemail)
+      .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(data.member.joinedAt), {
+        long: true
+      }))
+      .addField("__**Languages**__", data.langs)
+      .addField("__**Previous experiences**__", data.prev)
+      .addField("__**Coding knowledge**__", data.coding)
+      .addField("__**Any projects you are proud of?**__", data.projects)
+      .addField("__**Anything else**__", data.else)
+      .setTimestamp()
+      .setFooter("New staff app submitted!");
+    channel.send({
+      embed
+    })
+  } catch (error) {
+
 
     let toSend = ""
 
@@ -97,10 +100,11 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
 
     channel.send(toSend).catch(y => {
       const att = new Discord.Attachment(Buffer.from(toSend), data.member.user.tag + ' - ' + data.member.id + '.txt');
-      channel.send(data.member ,att);
+      channel.send(data.member, att);
     })
 
-  });
+    
+  }
 
   res.redirect("/me?e=COMPLETE");
 
