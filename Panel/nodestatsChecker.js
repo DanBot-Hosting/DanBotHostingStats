@@ -95,7 +95,7 @@ setInterval(() => {
             status: true
         });
     }).catch(error => {
-        fs.writeFileSync('error.txt', error)
+        fs.writeFileSync('error.txt', error.toString())
         nodeStatus.set("node1-priv", {
             status: false
         });
@@ -117,7 +117,7 @@ setInterval(() => {
             status: true
         });
     }).catch(error => {
-        fs.writeFileSync('error2.txt', error)
+        fs.writeFileSync('error2.txt', error.toString())
         nodeStatus.set("pub_node1", {
             status: false
         });
