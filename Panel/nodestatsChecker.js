@@ -102,7 +102,7 @@ setInterval(() => {
 
     //Node 1 (PUBLIC GAMESERVER PANEL)
     axios({
-        url: config.PubPterodactyl.hosturl + "/api/client/servers/c9efcb30/resources",
+        url: config.PubPterodactyl.hosturl + "/api/client/servers/e8766671/resources",
         method: 'GET',
         followRedirect: true,
         maxRedirects: 5,
