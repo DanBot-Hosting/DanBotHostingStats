@@ -45,10 +45,7 @@ exports.run = async (client, message, args) => {
             config.DiscordBot.Prefix + "user link`");
         return;
     }
-
-
     let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
-
 
     if (!args[0]) {
         //No args
@@ -63,8 +60,6 @@ exports.run = async (client, message, args) => {
             message.channel.send(helpEmbed)
             return;
         }
-
-
 
         let types = {
             nodejs: data.nodejs,
@@ -91,7 +86,6 @@ exports.run = async (client, message, args) => {
             postgres: data.postgres,
         }
 
-
         if (Object.keys(types).includes(args[1].toLowerCase())) {
 
             if (cooldown[message.author.id].nCreate > Date.now()) {
@@ -99,7 +93,6 @@ exports.run = async (client, message, args) => {
                 return;
             }
             cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
-
 
             if (args[1] == "aio" | args[1] == "java") {
                 serverCreateSettings.createServer(types[args[1].toLowerCase()])
@@ -135,10 +128,6 @@ exports.run = async (client, message, args) => {
         message.channel.send(helpEmbed)
 
     } else if (args[0].toLowerCase() == "create-donator") {
-
-
-
-
 
         let user = userPrem.fetch(message.author.id);
         let allowed = (message.member.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + (user.boosted != null ? Math.floor(user.boosted * 2.5) : 2)) : Math.floor(user.donated / config.node7.price);
@@ -186,7 +175,6 @@ exports.run = async (client, message, args) => {
 
                     userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used + 1);
 
-
                     let embed = new Discord.RichEmbed()
                         .setColor(`GREEN`)
                         .addField(`__**Status:**__`, response.statusText)
@@ -206,7 +194,6 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Type:**__`, args[1].toLowerCase())
                         .setFooter('User has ' + (user.used + 1) + ' out of a max ' + allowed + ' servers')
                     client.channels.get("785236066500083772").send(embed2)
-
 
                 }).catch(error => {
                     message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
