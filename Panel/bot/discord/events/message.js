@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const tags = require('../models/tags');
 
 module.exports = (client, message) => {
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648', '338192747754160138'];
@@ -116,6 +117,22 @@ module.exports = (client, message) => {
 
         let commandFile = require(`../commands/${command}.js`);
         commandFile.run(client, message, args);
+
+        if (!commandFile) {
+            tags.findOne({
+                    Guild: message.guild.id,
+                    Command: cmd
+                },
+                async (err, data) => {
+                    if (err) throw err;
+                    if (data) {
+                        return message.channel.send(data.Content);
+                    } else return;
+                }
+            );
+            return;
+        }
+
     } catch (err) {
         if (err instanceof Error && err.code === "MODULE_NOT_FOUND") {
             return;

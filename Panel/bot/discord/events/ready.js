@@ -2,9 +2,22 @@ const exec = require('child_process').exec;
 const axios = require('axios');
 const nstatus = require('../serverStatus');
 global.snipes = new Discord.Collection();
+const mongoose = require('mongoose');
+const mongoURI = require("../../../example-config.json")
 
 module.exports = async (client, guild, files) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
+
+
+    //Mongoose Tag system connection
+    try {
+        mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        });
+        console.log('Connected to Data Base!');
+        } catch(e) { console.log(e) }
 
     //Check make sure create account channels are closed after a hour
     setTimeout(() => {

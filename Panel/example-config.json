@@ -30,6 +30,8 @@
         "MongoDB": "MongoDB connection (forgot what this is for but give it one anyway)"
     },
 
+    "mongoURI": "//provide mongoURI HERE PLS THANKS. FOR TAGS SYSTEM.", 
+
     "Pterodactyl": {
         "hosturl": "Pterodactyl URL (Dont put the / on the end) Example: https://your.panel.com",
         "apikey": "Pterodactyl ADMIN Api key. Where to find? add admin/api to the end of your panel domain",
