@@ -92,7 +92,7 @@ exports.run = async (client, message) => {
         }
     } else if (args == "add") {
         if (message.channel.name.includes('-ticket')) {
-            if (!args[1] == "") {
+            if (args[1] == "") {
                 message.channel.send('Please run this command again with the users ID')
             } else {
                 console.log(args[1])
@@ -117,7 +117,7 @@ exports.run = async (client, message) => {
             message.channel.send('This command is only to be used inside of ticket channels.')
         }
     } else if (args == "remove") {
-        if (!args[1] == "") {
+        if (args[1] == "") {
             message.channel.send('Please run this command again with the users ID')
         } else {
             message.channel.overwritePermissions(args[1], {
@@ -126,8 +126,9 @@ exports.run = async (client, message) => {
                 READ_MESSAGE_HISTORY: false
             })
         }
+    }
         else if(args == "label") {
-            if(!args[1] == "") {
+            if(args[1] == "") {
                 message.channel.send('No label inputed');
             }
             else {
@@ -137,6 +138,7 @@ exports.run = async (client, message) => {
             }
             
         }
+
     }
     
 };
