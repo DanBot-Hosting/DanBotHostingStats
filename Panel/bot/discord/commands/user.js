@@ -53,12 +53,21 @@ exports.run = async (client, message, args) => {
             let msg = await channel.send("<@" + message.author.id + ">", {
                 embed: new Discord.RichEmbed()
                     .setColor(0x36393e)
-                    .setDescription("Please enter a username (**Please dont use spaces**)")
+                    .setDescription("Please enter a username (**Please dont use spaces or special characters**)")
                     .setFooter("You can type 'cancel' to cancel the request")
             })
 
-            //First Collection "UserName"
+            const data = {
+                "username": null,
+                "email": null,
+                "first_name": null,
+                "last_name": ".",
+                "password": password,
+                "root_admin": false,
+                "language": "en"
+            }
 
+            //First Collection "UserName"
             try {
                 let collected1 = await channel.awaitMessages(filter2, {
                     max: 1,
@@ -70,12 +79,16 @@ exports.run = async (client, message, args) => {
                     return msg.edit("Request to create a new user has been canceled!", null).then(() => channel.delete())
                 }
 
+                data.username = collected1.first().content.toLowerCase();
+                data.first_name = collected1.first().content;
+
                 await msg.edit("", {
                     embed: new Discord.RichEmbed()
                         .setColor(0x36393e)
                         .setDescription(`Username: **${collected1.first().content.toLowerCase()}** \nPlease enter a Email.`)
                         .setFooter("You can type 'cancel' to cancel the request")
                 })
+
                 collected1.first().delete();
 
                 //scnd Collection "Email"
@@ -98,7 +111,7 @@ exports.run = async (client, message, args) => {
                     }, 10000);
                     return;
                 }
-
+                data.email = collected2.first().content.toLowerCase().trim();
                 collected2.first().delete();
 
             } catch (error) {
@@ -111,17 +124,10 @@ exports.run = async (client, message, args) => {
 
             }
 
-
             let password = getPassword();
-            const data = {
-                "username": collected1.first().content.toLowerCase(),
-                "email": collected2.first().content.toLowerCase(),
-                "first_name": collected1.first().content,
-                "last_name": ".",
-                "password": password,
-                "root_admin": false,
-                "language": "en"
-            }
+
+            data.password = password;
+        
             axios({
                 url: config.Pterodactyl.hosturl + "/api/application/users",
                 method: 'POST',
