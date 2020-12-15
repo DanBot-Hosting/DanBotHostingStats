@@ -3,10 +3,10 @@ var validator = require('validator');
 exports.run = async (client, message, args) => {
 
     //Random password gen
-    var CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     let getPassword = () => {
 
-        var password = "";
+        let password = "";
         while (password.length < 10) {
             password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
         }
@@ -18,8 +18,8 @@ exports.run = async (client, message, args) => {
         //No args, Help
         const embed = new Discord.RichEmbed()
             .addField("__**Commands**__`", config.DiscordBot.Prefix + "user new` | Create an account \n`" + config.DiscordBot.Prefix + "user password` | Reset account password \n`" + config.DiscordBot.Prefix + "user link` | Link this account with console account \n`" + config.DiscordBot.Prefix + "user unlink` | Unlinks account from the console account \n`" + config.DiscordBot.Prefix + "user premium` | Check your premium server limit")
-        message.channel.send(embed)
-    } else if (args[0].toLowerCase() == "new") {
+        await message.channel.send(embed)
+    } else if (args[0].toLowerCase() === "new") {
         if (userData.get(message.author.id) == null) {
             const server = message.guild
 
@@ -36,7 +36,7 @@ exports.run = async (client, message, args) => {
             ]).catch(console.error);
             message.reply(`Please check <#${channel.id}> to create an account.`)
 
-            let category = server.channels.find(c => c.id == settings.fetch("accountcategory.id") && c.type == "category");
+            let category = server.channels.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
             if (!category) throw new Error("Category channel does not exist");
 
             await channel.setParent(category.id);
@@ -48,7 +48,7 @@ exports.run = async (client, message, args) => {
             })
 
 
-            const filter2 = m => m.author.id == message.author.id;
+            const filter2 = m => m.author.id === message.author.id;
 
             let msg = await channel.send("<@" + message.author.id + ">", {
                 embed: new Discord.RichEmbed()
@@ -75,7 +75,7 @@ exports.run = async (client, message, args) => {
                     errors: ['time'],
                 })
 
-                if (collected1.first().content.toLowerCase() == 'cancel') {
+                if (collected1.first().content.toLowerCase() === 'cancel') {
                     return msg.edit("Request to create a new user has been canceled!", null).then(() => channel.delete())
                 }
 
@@ -99,7 +99,7 @@ exports.run = async (client, message, args) => {
                     errors: ['time'],
                 })
 
-                if (collected2.first().content.toLowerCase() == 'cancel') {
+                if (collected2.first().content.toLowerCase() === 'cancel') {
                     return msg.edit("Request to create a new user has been canceled!", null).then(() => channel.delete())
                 }
 
@@ -156,7 +156,7 @@ exports.run = async (client, message, args) => {
                     domains: []
                 })
 
-                if (user == "Error: User already exists! (Or Email/Username is in use already)") {
+                if (user === "Error: User already exists! (Or Email/Username is in use already)") {
                     msg.edit("ERROR: A user with that email/username already exists.", null)
                     setTimeout(function () {
                         channel.delete();
@@ -176,7 +176,7 @@ exports.run = async (client, message, args) => {
                 }, 1800000);
 
             }).catch(err => {
-                if (err = "Error: User already exists! (Or Email/Username is in use already)") {
+                if (err === "Error: User already exists! (Or Email/Username is in use already)") {
                     msg.edit("ERROR: A user with that email/username already exists.", null)
                     setTimeout(function () {
                         channel.delete();
@@ -191,7 +191,7 @@ exports.run = async (client, message, args) => {
                 .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"))
             message.channel.send("You already have an account!", embed)
         }
-    } else if (args[0].toLowerCase() == "password") {
+    } else if (args[0].toLowerCase() === "password") {
         //Password reset
         let password = await getPassword();
         axios({
@@ -240,7 +240,7 @@ exports.run = async (client, message, args) => {
             })
         })
 
-    } else if (args[0].toLowerCase() == "link") {
+    } else if (args[0].toLowerCase() === "link") {
         //Link account
         if (userData.get(message.author.id) == null) {
 
@@ -259,7 +259,7 @@ exports.run = async (client, message, args) => {
             ]).catch(console.error);
             message.reply(`Please check <#${channel.id}> to link your account.`)
 
-            let category = server.channels.find(c => c.id == "738539016688894024" && c.type == "category");
+            let category = server.channels.find(c => c.id === "738539016688894024" && c.type === "category");
             if (!category) throw new Error("Category channel does not exist");
 
             await channel.setParent(category.id);
@@ -291,7 +291,7 @@ exports.run = async (client, message, args) => {
                 }
 
                 const axios = require('axios');
-                var arr = [];
+                let arr = [];
 
                 axios({
                     url: "https://panel.danbot.host" + "/api/application/users",
@@ -304,10 +304,10 @@ exports.run = async (client, message, args) => {
                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
                 }).then(resources => {
-                    var countmax = resources.data.meta.pagination.total_pages
-                    var i2 = countmax++
+                    let countmax = resources.data.meta.pagination.total_pages
+                    let i2 = countmax++
 
-                    var i = 0
+                    let i = 0
                     while (i < i2) {
                         axios({
                             url: "https://panel.danbot.host" + "/api/application/users?page=" + i,
@@ -325,12 +325,12 @@ exports.run = async (client, message, args) => {
                         i++
                     }
                     console.log(resources.data.meta.pagination)
-                    var total = resources.data.meta.pagination.total
+                    let total = resources.data.meta.pagination.total
                 });
                 //Find account then link
                 setTimeout(async () => {
                     console.log(arr.length)
-                    const consoleUser = arr.find(usr => usr.attributes ? usr.attributes.email == messagecollected.content : false);
+                    const consoleUser = arr.find(usr => usr.attributes ? usr.attributes.email === messagecollected.content : false);
 
                     if (!consoleUser) {
                         channel.send('I can\'t find a user with that account! \nRemoving channel!')
@@ -340,10 +340,10 @@ exports.run = async (client, message, args) => {
                     } else {
 
                         function codegen(length) {
-                            var result = '';
-                            var characters = '23456789';
-                            var charactersLength = characters.length;
-                            for (var i = 0; i < length; i++) {
+                            let result = '';
+                            let characters = '23456789';
+                            let charactersLength = characters.length;
+                            for (let i = 0; i < length; i++) {
                                 result += characters.charAt(Math.floor(Math.random() * charactersLength));
                             }
                             return result;
@@ -368,7 +368,7 @@ exports.run = async (client, message, args) => {
                                     max: 2
                                 });
                                 collector.on('collect', message => {
-                                    if (message.content == code) {
+                                    if (message.content === code) {
                                         const timestamp = `${moment().format("HH:mm:ss")}`;
                                         const datestamp = `${moment().format("YYYY-MM-DD")}`;
                                         userData.set(`${message.author.id}`, {
@@ -417,12 +417,12 @@ exports.run = async (client, message, args) => {
                 .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"))
             message.channel.send("This account is linked!", embed)
         }
-    } else if (args[0].toLowerCase() == "unlink") {
+    } else if (args[0].toLowerCase() === "unlink") {
         userData.delete(message.author.id)
         message.channel.send('You have unlinked this account!')
-    } else if (args[0].toLowerCase() == "invites") {
-        var targetUser = null;
-        var isAnotherUserLookup = false;
+    } else if (args[0].toLowerCase() === "invites") {
+        let targetUser = null;
+        let isAnotherUserLookup = false;
         if (message.mentions.members.first() != null) {
             targetUser = message.mentions.members.first().user;
             console.log(targetUser.user);
@@ -446,7 +446,7 @@ exports.run = async (client, message, args) => {
             .catch(console.error);
 
 
-    } else if (args[0].toLowerCase() == "premium") {
+    } else if (args[0].toLowerCase() === "premium") {
         let user = userPrem.fetch(message.author.id);
         if (user == null) {
             message.channel.send('You are not a premium user')
@@ -456,7 +456,7 @@ exports.run = async (client, message, args) => {
             const embed = new Discord.RichEmbed()
                 .setColor('BLUE')
                 .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
-            message.channel.send(embed)
+            await message.channel.send(embed)
         }
     }
 };
