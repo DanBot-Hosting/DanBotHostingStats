@@ -62,7 +62,7 @@ exports.run = async (client, message, args) => {
                 "email": null,
                 "first_name": null,
                 "last_name": ".",
-                "password": password,
+                "password": null,
                 "root_admin": false,
                 "language": "en"
             }
