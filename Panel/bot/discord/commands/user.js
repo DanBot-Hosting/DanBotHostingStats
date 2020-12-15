@@ -102,6 +102,7 @@ exports.run = async (client, message, args) => {
                 collected2.first().delete();
 
             } catch (error) {
+                console.log(error);
                 msg.delete()
                 channel.send(`ERROR: User failed to provide an answer.`);
                 setTimeout(() => {
