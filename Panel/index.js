@@ -8,31 +8,31 @@ Free Hosting for ever!                                            /____/
 */
 
 global.config = require("./config.json");
-var express = require('express');
+const express = require('express');
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 
 //Main danbot.host app
-var app = express();
-var server = require('http').createServer(app);
-var PORT = config.Port;
+const app = express();
+const server = require('http').createServer(app);
+const PORT = config.Port;
 const hbs = require('hbs');
-var favicon = require('serve-favicon');
+const favicon = require('serve-favicon');
 const pat = require("path");
 app.use(favicon(pat.join(__dirname, 'views', 'favicon.ico')))
 
 //Animal API app
-var animalapp = express();
-var animalserver = require('http').createServer(animalapp);
-var APIPORT = config.APIPort;
+const animalapp = express();
+const animalserver = require('http').createServer(animalapp);
+const APIPORT = config.APIPort;
 const apihbs = require('hbs');
 
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
-var ping = require('ping');
+const ping = require('ping');
 const ping2 = require('ping-tcp-js')
 global.transport = nodemailer.createTransport({
   host: config.Email.Host,
@@ -83,7 +83,6 @@ fs.readdir('./bot/discord/events/', (err, files) => {
 //Bot login
 client.login(config.DiscordBot.Token);
 global.Allowed = ["338192747754160138", "137624084572798976"];
-
 
 //Animal API website
 animalapp.use(helmet({

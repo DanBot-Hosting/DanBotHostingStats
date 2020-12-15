@@ -1,4 +1,5 @@
 .git
+.idea
 
 Panel/node_modules
 Panel/package-lock.json
