@@ -48,7 +48,7 @@ exports.run = async (client, message, args) => {
             })
 
 
-            const filter2 = m => m.author.id === message.author.id;
+            const filter2 = m => m.author.id == message.author.id;
 
             let msg = await channel.send("<@" + message.author.id + ">", {
                 embed: new Discord.RichEmbed()
@@ -59,62 +59,62 @@ exports.run = async (client, message, args) => {
 
             //First Collection "UserName"
 
-            let collected1 = await channel.awaitMessages(filter2, {
-                max: 1,
-                time: 30000,
-                errors: ['time'],
-            }).catch(x => {
+            try {
+                let collected1 = await channel.awaitMessages(filter2, {
+                    max: 1,
+                    time: 30000,
+                    errors: ['time'],
+                })
+
+                if (collected1.first().content.toLowerCase() == 'cancel') {
+                    return msg.edit("Request to create a new user has been canceled!", null).then(() => channel.delete())
+                }
+
+                await msg.edit("", {
+                    embed: new Discord.RichEmbed()
+                        .setColor(0x36393e)
+                        .setDescription(`Username: **${collected1.first().content.toLowerCase()}** \nPlease enter a Email.`)
+                        .setFooter("You can type 'cancel' to cancel the request")
+                })
+                collected1.first().delete();
+
+                //scnd Collection "Email"
+
+                let collected2 = await channel.awaitMessages(filter2, {
+                    max: 1,
+                    time: 30000,
+                    errors: ['time'],
+                })
+
+                if (collected2.first().content.toLowerCase() == 'cancel') {
+                    return msg.edit("Request to create a new user has been canceled!", null).then(() => channel.delete())
+                }
+
+                if (!validator.isEmail(collected2.first().content.toLowerCase().trim())) {
+                    msg.delete()
+                    channel.send(`\`${collected2.first().content.toLowerCase().trim()}` + "` is not a Valid Email!");
+                    setTimeout(() => {
+                        channel.delete();
+                    }, 10000);
+                    return;
+                }
+
+                collected2.first().delete();
+
+            } catch (error) {
                 msg.delete()
                 channel.send(`ERROR: User failed to provide an answer.`);
                 setTimeout(() => {
                     channel.delete();
                 }, 3000);
-                return false;
-            })
 
-            if (collected1.first().content === 'cancel') {
-                return msg.edit("Request to create a new user has been canceled!", null).then(channel.delete())
             }
 
-            await msg.edit("", {
-                embed: new Discord.RichEmbed()
-                    .setColor(0x36393e)
-                    .setDescription(`Username: **${collected1.first().content}** \nPlease enter a Email.`)
-                    .setFooter("You can type 'cancel' to cancel the request")
-            })
-            collected1.first().delete();
 
-            //scnd Collection "Email"
-
-            let collected2 = await channel.awaitMessages(filter2, {
-                max: 1,
-                time: 30000,
-                errors: ['time'],
-            }).catch(x => {
-                msg.delete()
-                channel.send(`ERROR: User failed to provide an answer.`);
-                setTimeout(() => {
-                    channel.delete();
-                }, 3000);
-                return false;
-            })
-
-
-            if (!validator.isEmail(collected2.first().content.trim())) {
-                msg.delete()
-                channel.send(`\`${collected2.first().content.trim()}` + "` is not a Valid Email!");
-                setTimeout(() => {
-                    channel.delete();
-                }, 10000);
-                return false;
-            }
-            collected2.first().delete();
-
-            let password = await getPassword();
-
+            let password = getPassword();
             const data = {
-                "username": collected1.first().content,
-                "email": collected2.first().content,
+                "username": collected1.first().content.toLowerCase(),
+                "email": collected2.first().content.toLowerCase(),
                 "first_name": collected1.first().content,
                 "last_name": ".",
                 "password": password,
