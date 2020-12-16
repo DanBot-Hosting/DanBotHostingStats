@@ -4,9 +4,9 @@ exports.run = async (client, message, args) => {
 
     //Random password gen
     const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    let getPassword = () => {
+    var getPassword = () => {
 
-        let password = "";
+        var password = "";
         while (password.length < 10) {
             password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
         }
@@ -140,8 +140,6 @@ exports.run = async (client, message, args) => {
                 },
                 data: data,
             }).then(user => {
-
-                console.log(user)
 
                 const timestamp = `${moment().format("HH:mm:ss")}`;
                 const datestamp = `${moment().format("YYYY-MM-DD")}`;
