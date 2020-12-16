@@ -121,13 +121,12 @@ exports.run = async (client, message, args) => {
                 setTimeout(() => {
                     channel.delete();
                 }, 3000);
-
             }
 
             let password = getPassword();
 
             data.password = password;
-        
+
             axios({
                 url: config.Pterodactyl.hosturl + "/api/application/users",
                 method: 'POST',
@@ -161,12 +160,14 @@ exports.run = async (client, message, args) => {
                     }, 10000);
                     return false;
                 }
+
                 msg.edit("Hello! You created an new account, Heres the login information", {
                     embed: new Discord.RichEmbed()
                         .setColor(0x36393e)
-                        .setDescription("URL: " + config.Pterodactyl.hosturl + " \nUsername: " + collected1.first().content + " \nEmail: " + collected2.first().content + " \nPassword: " + password)
+                        .setDescription("URL: " + config.Pterodactyl.hosturl + " \nUsername: " + data.username + " \nEmail: " + data.email + " \nPassword: " + password)
                         .setFooter("Please note: It is recommended that you change the password")
                 })
+
                 channel.send('**You have 30mins to keep note of this info before the channel is deleted.**')
                 message.guild.members.get(message.author.id).addRole("639489891016638496");
                 setTimeout(function () {
