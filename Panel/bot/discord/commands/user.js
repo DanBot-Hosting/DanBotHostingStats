@@ -1,5 +1,5 @@
 const axios = require("axios");
-var validator = require('validator');
+const validator = require('validator');
 exports.run = async (client, message, args) => {
 
     //Random password gen
