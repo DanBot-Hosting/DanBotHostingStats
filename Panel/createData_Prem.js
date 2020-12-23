@@ -1,4 +1,13 @@
 const axios = require('axios');
+const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+var getPassword = () => {
+
+    var password = "";
+    while (password.length < 16) {
+        password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
+    }
+    return password;
+};
 
 let list = {};
 list.nodejs = (serverName, userID) => ({
@@ -198,7 +207,7 @@ list.mongodb = (serverName, userID) => ({
     },
     "environment": {
         "MONGO_USER": "admin",
-        "MONGO_USER_PASS": "aP@55word"
+        "MONGO_USER_PASS": getPassword()
     },
     "feature_limits": {
         "databases": 0,
