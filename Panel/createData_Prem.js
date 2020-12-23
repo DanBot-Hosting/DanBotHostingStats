@@ -182,6 +182,67 @@ list.redis = (serverName, userID) => ({
     "start_on_completion": false,
     "oom_disabled": false
 })
+list.mongodb = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 12,
+    "egg": 35,
+    "docker_image": "quay.io/parkervcp/pterodactyl-images:db_mongo-4",
+    "startup": "mongod --fork --dbpath /home/container/mongodb/ --port ${SERVER_PORT} --bind_ip 0.0.0.0 --logpath /home/container/logs/mongo.log; until nc -z -v -w5 127.0.0.1 ${SERVER_PORT}; do echo 'Waiting for mongodb connection...'; sleep 5; done && mongo 127.0.0.1:${SERVER_PORT} && mongo --eval 'db.getSiblingDB('admin').shutdownServer()' 127.0.0.1:${SERVER_PORT}",
+    "limits": {
+        "memory": 0,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+        "MONGO_USER": "admin",
+        "MONGO_USER_PASS": "aP@55word"
+    },
+    "feature_limits": {
+        "databases": 0,
+        "allocations": 1,
+        "backups": 0
+    },
+    "deploy": {
+        "locations": [12],
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
+list.redis = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 12,
+    "egg": 36,
+    "docker_image": "quay.io/parkervcp/pterodactyl-images:db_redis-6",
+    "startup": "/usr/local/bin/redis-server /home/container/redis.conf --save 60 1 --dir /home/container/ --bind 0.0.0.0 --port {{SERVER_PORT}} --requirepass {{SERVER_PASSWORD}} --maxmemory {{SERVER_MEMORY}}mb --daemonize yes && redis-cli -p {{SERVER_PORT}} -a {{SERVER_PASSWORD}}; redis-cli -p {{SERVER_PORT}} -a {{SERVER_PASSWORD}} shutdown save",
+    "limits": {
+        "memory": 0,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+        "SERVER_PASSWORD": "P@55w0rd"
+    },
+    "feature_limits": {
+        "databases": 0,
+        "allocations": 1,
+        "backups": 0
+    },
+    "deploy": {
+        "locations": [12],
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
 list.postgres = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -203,9 +264,9 @@ list.postgres = (serverName, userID) => ({
         "PGDATABASE": "pterodactyl"
     },
     "feature_limits": {
-        "databases": 2,
+        "databases": 0,
         "allocations": 1,
-        "backups": 10
+        "backups": 0
     },
     "deploy": {
         "locations": [12],
