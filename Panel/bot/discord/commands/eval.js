@@ -35,7 +35,7 @@ exports.run = async (client, message) => {
         text = text
             .replace(/`/g, '`' + String.fromCharCode(8203))
             .replace(/@/g, '@' + String.fromCharCode(8203))
-            .replace(rege, 'You\'re so fucking gay for wanting that.')
+            .replace(rege, '(node:800) UnhandledPromiseRejectionWarning: Error: Incorrect login details were provided.')
             .replace(rege2, '21')
         return text;
     };
