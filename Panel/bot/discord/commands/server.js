@@ -679,6 +679,8 @@ exports.run = async (client, message, args) => {
         }
 
     } else if (args[0].toLowerCase() == "move") {
+        
+        message.channel.send("OwO")
         /*
         const eggs_to_names = {
             "16": "nodejs",
