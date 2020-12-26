@@ -1,17 +1,16 @@
-var express = require("express");
-var app = express();
-var server = require("http").createServer(app);
-var db = require("quick.db")
-var nodeData = new db.table("nodeData");
-var si = require('systeminformation');
-var os = require("os");
-var pretty = require('prettysize');
-var moment = require("moment");
-const speedTest = require('speedtest-net'); 
-const fs = require('fs')
+const express = require("express");
+const app = express();
+const server = require("http").createServer(app);
+const db = require("quick.db")
+const nodeData = new db.table("nodeData");
+const si = require('systeminformation');
+const os = require("os");
+const pretty = require('prettysize');
+const moment = require("moment");
+const speedTest = require('speedtest-net');
 const config = require('./config.json')
 const exec = require('child_process').exec;
-var PORT = "999"
+const PORT = "999"
 
 //Automatic 30second git pull.
 setInterval(() => {
@@ -24,7 +23,7 @@ setInterval(() => {
                 setTimeout(() => {
                     process.exit();
                 }, 1000)
-            };
+            }
         }
     })
 }, 30000)
@@ -38,13 +37,13 @@ setInterval(async () => {
     speedtest()
 }, 10800000);
 
-//Send data to the panel every 2seconds 
+//Get data and store in the database
 setInterval(async () => {
     fetchData()
 }, 2000)
 
 app.get("/states", (req, res) => {
-    if (req.headers.password == config.password) {
+    if (req.headers.password === config.password) {
         exec(`cat /var/lib/pterodactyl/states.json`, (error, stdout) => {
 
             let response = (error || stdout);
@@ -52,83 +51,43 @@ app.get("/states", (req, res) => {
             res.json(response)
         })
     } else {
-        res.send(`<style>
-    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
-  }
-</style>
-<video class= "video""
-  autoplay=""
-  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
-
-<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
-
-</video>`)
+        res.send('Invalid or no password provided.')
     }
 })
 
 app.get("/", (req, res) => {
-    res.send(`<style>
-    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
-  }
-</style>
-<video class= "video""
-  autoplay=""
-  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
-
-<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
-
-</video>`)
+    res.send('Not sure what you expected to find here. This script just sends data to the panel and its all password protected so you can leave now :)')
 });
 
 app.get('/stats', function (req, res) {
-    if (req.headers.password == config.password) {
+    if (req.headers.password === config.password) {
         let data = {
             info: nodeData.fetch("data"),
             speedtest: nodeData.fetch("data-speedtest")
         }
         res.send(data)
     } else {
-        res.send(`<style>
-    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
-  }
-</style>
-<video class= "video""
-  autoplay=""
-  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
-
-<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
-
-</video>`)
+        res.send('Invalid or no password provided.')
     }
 })
 
 app.get('/wings', function (req, res) {
-    if (req.headers.password == config.password) {
+    if (req.headers.password === config.password) {
         console.log(req.query)
         if (!req.query.action) {
             res.json({ status: "You forgot to send start/restart/stop in the request"})
-        } else if (req.query.action == "start") {
+        } else if (req.query.action === "start") {
             res.json({ status: "Wings started" })
             exec(`service wings start`)
-        } else if (req.query.action == "restart") {
+        } else if (req.query.action === "restart") {
             res.json({ status: "Wings restarted" })
             exec(`service wings restart`)
-        } else if (req.query.action == "stop") {
+        } else if (req.query.action === "stop") {
             res.json({ status: "Wings stopped" })
             exec(`service wings stop`)
         }
     } else {
-        res.send(`<style>
-    .video{position:absolute;top:0;left:0;height:100%;width:100%;object-fit:cover}
-  }
-</style>
-<video class= "video""
-  autoplay=""
-  mqn-video-inview-no-reset="" mqn-video-inview-play="" loop playsinline="">
-
-<source src="http://shitcord.xyz/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4" type="video/mp4">
-
-</video>`)
+        res.send('Invalid or no password provided.')
     }
 })
 
@@ -141,25 +100,25 @@ server.listen(PORT, function () {
 //DATA COLLECTION
 async function fetchData() {
     //Data using the systeminformation package.
-    var memdata = await si.mem();
-    var diskdata = await si.fsSize();
-    var netdata = await si.networkStats();
-    var osdata = await si.osInfo();
-    var bios = await si.bios();
-    var docker = await si.dockerInfo(); 
-    var cl = await si.currentLoad();
-    var cpudata = await si.cpu();
+    let memdata = await si.mem();
+    let diskdata = await si.fsSize();
+    let netdata = await si.networkStats();
+    let osdata = await si.osInfo();
+    let bios = await si.bios();
+    let docker = await si.dockerInfo();
+    let cl = await si.currentLoad();
+    let cpudata = await si.cpu();
 
     //OS UPTIME
-    var uptime = os.uptime();
-    var d = Math.floor(uptime / (3600*24));
-    var h = Math.floor(uptime % (3600*24) / 3600);
-    var m = Math.floor(uptime % 3600 / 60);
-    var s = Math.floor(uptime % 60);
-    var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
-    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    let uptime = os.uptime();
+    let d = Math.floor(uptime / (3600*24));
+    let h = Math.floor(uptime % (3600*24) / 3600);
+    let m = Math.floor(uptime % 3600 / 60);
+    let s = Math.floor(uptime % 60);
+    let dDisplay = d > 0 ? d + (d === 1 ? " day, " : " days, ") : "";
+    let hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
+    let mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
+    let sDisplay = s > 0 ? s + (s === 1 ? " second" : " seconds") : "";
 
     nodeData.set("data", {
         servername: os.hostname(),
