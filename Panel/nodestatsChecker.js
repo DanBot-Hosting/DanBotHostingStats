@@ -25,7 +25,7 @@ let stats = {
     },
     node6: {
         serverID: null,
-        IP: '154.27.68.109'
+        IP: '194.146.44.170'
     },
     node7: {
         serverID: '94082df3',
