@@ -8,14 +8,14 @@ module.exports = (client, message) => {
 
     const description = message.cleanContent
     const descriptionfix = description.substr(0, 600);
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
     .setColor(0x00A2E8)
     .setThumbnail(message.author.avatarURL)
     .addField("Author ", `${message.author.tag} (ID: ${message.author.id})`)
     .addField("Message Content:", `${descriptionfix}`)
     .setTimestamp()
     .setFooter("Message delete in " + message.channel.name);
-    client.channels.get(config.DiscordBot.mLogs).send({embed});
+    client.channels.cache.get(config.DiscordBot.mLogs).send({embed});
     
     }
 

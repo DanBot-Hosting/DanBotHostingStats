@@ -154,7 +154,7 @@ async function fetchData() {
         dockercontainerspaused: docker.containersPaused,
         dockercontainersstopped: docker.containersStopped,
         updatetime: moment().format("YYYY-MM-DD HH:mm:ss")
-      });
+    });
 }
 
 async function speedtest() {

@@ -32,8 +32,6 @@ global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
-const ping = require('ping');
-const ping2 = require('ping-tcp-js')
 global.transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
@@ -44,10 +42,7 @@ global.transport = nodemailer.createTransport({
 });
 
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
-const {
-  getUser,
-  getBot
-} = require(process.cwd() + "/util/discordAPI");
+const { getBot } = require(process.cwd() + "/util/discordAPI");
 
 // Initialising Node Checker 
 require('./nodestatsChecker');
@@ -141,7 +136,6 @@ const passport = require("passport");
 const session = require("express-session");
 const strategy = require("passport-discord").Strategy;
 const MongoStore = require("connect-mongo")(session);
-const csrf = require("csurf");
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -247,15 +241,11 @@ setInterval(() => {
           upload: response.data.speedtest.upload,
           updatetime: response.data.speedtest.updatetime
         });
-      }).catch(error => {
-        //Do nothing, Node is down
-      })
+      }).catch(err => {
+
+    })
   }
 }, 2000)
-
-app.get('/ads.txt', function (req, res) {
-  res.send("google.com, pub-1419536702363407, DIRECT, f08c47fec0942fa0");
-})
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
@@ -319,7 +309,7 @@ app.get("/user/:ID", async (req, res) => {
       message: "ID is invalid"
     });
 
-  if (use.message == "Unknown User")
+  if (use.message === "Unknown User")
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
       message: "Discord API - Unknown User"

@@ -1,7 +1,7 @@
 const humanizeDuration = require('humanize-duration');
 const db = require("quick.db");
 module.exports = async (client, member, guild) => {
-    let welcomeChannel = client.channels.get(config.DiscordBot.welcome);
+    let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
 
     if (Date.now() - member.user.createdAt < 863136000) {
         await member.user.send(`Sorry! We only allow accounts over the age of 10days to join. \nYour account is ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})} ago.\n\nYou are welcome to join again once this account is over 10days old!`)
@@ -41,7 +41,7 @@ module.exports = async (client, member, guild) => {
 
     //Invites
 
-    let guildInvites = await member.guild.fetchInvites()
+    let guildInvites = await member.guild.cache.fetchInvites()
 
     const ei = invites[member.guild.id];
     invites[member.guild.id] = guildInvites;
@@ -49,7 +49,7 @@ module.exports = async (client, member, guild) => {
     const inviter = member.guild.members.get(invite.inviter.id);
     if (inviter == null) return;
 
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setColor(`GREEN`)
         .addField(`New Members Username:`, member.user.tag, true)
         .addField(`New Members ID:`, '`' + member.id + '`', true)
@@ -61,9 +61,9 @@ module.exports = async (client, member, guild) => {
         .addField(`Invite code used:`, '`' + invite.code + '`', true)
         .addField(`Invite used`, invite.uses + ' times', true);
 
-    client.channels.get(config.DiscordBot.invitechannel).send(embed)
+    client.channels.cache.get(config.DiscordBot.invitechannel).send(embed)
 
-    let inviteChannel = client.channels.get(config.DiscordBot.inviterewmsg);
+    let inviteChannel = client.channels.cache.get(config.DiscordBot.inviterewmsg);
 
     if (Object.keys(config.DiscordBot.invites).includes(invite.uses.toString())) {
         await inviter.removeRoles(Object.values(config.DiscordBot.invites))

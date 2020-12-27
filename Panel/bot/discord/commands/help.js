@@ -39,14 +39,14 @@ let desc = (object) => {
 
 exports.run = async (client, message, args) => {
 
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setColor('BLUE')
         .addField(`__**Users:**__ (${Object.entries(commands.Users).length})`, desc(commands.Users).join('\n'))
 
-    if (message.member.roles.get('748117822370086932') != null)
+    if (message.member.roles.cache.get('748117822370086932') != null)
         embed.addField(`__**Staff Commands:**__ (${Object.entries(commands.Staff).length})`, desc(commands.Staff).join('\n'))
 
-    if (message.member.roles.find(r => r.id === "778237595477606440"))
+    if (message.member.roles.cache.find(r => r.id === "778237595477606440"))
         embed.addField(`__**Developer Commands:**__ (${Object.entries(commands.Owner).length})`, desc(commands.Owner).join('\n'))
 
     message.channel.send(embed)

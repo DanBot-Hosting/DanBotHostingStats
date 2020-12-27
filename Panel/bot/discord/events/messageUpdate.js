@@ -28,7 +28,7 @@ module.exports = (client, message, editedMessage) => {
   if (message === editedMessage) return;
   if (message.channel.type !== 'text') return;
 
-  const embed = new Discord.RichEmbed()
+  const embed = new Discord.MessageEmbed()
     .setColor(0x00A2E8)
     .setThumbnail(message.author.avatarURL)
     .addField("Author ", `${message.author.tag} (ID: ${message.author.id})`)
@@ -36,7 +36,7 @@ module.exports = (client, message, editedMessage) => {
     .addField("After Edit", `${editedMessage}`)
     .setTimestamp()
     .setFooter("Message edit in " + message.channel.name);
-  client.channels.get(config.DiscordBot.mLogs).send({
+  client.channels.cache.get(config.DiscordBot.mLogs).send({
     embed
   });
 };

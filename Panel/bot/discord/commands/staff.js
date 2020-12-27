@@ -25,10 +25,10 @@ let desc = (object) => {
 const exec = require('child_process').exec;
 
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.find(r => r.id == "639489438036000769")) return;
+    if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
 
     if (args[0] == null) {
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
             .setColor('RANDOM')
             .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
             .addField('**Owner Commands:**', desc(subcommands.devs).join('\n'))
@@ -46,7 +46,7 @@ exports.run = async (client, message, args) => {
                     message.channel.send("That account is not linked with a console account :sad:")
                 } else {
                     console.log(userData.fetch(args[1]))
-                    let embed = new Discord.RichEmbed()
+                    let embed = new Discord.MessageEmbed()
                         .setColor(`GREEN`)
                         .addField(`__**Username**__`, userData.fetch(args[1] + ".username"))
                         .addField(`__**Email**__`, userData.fetch(args[1] + ".email"))
@@ -63,20 +63,20 @@ exports.run = async (client, message, args) => {
             if (args[1] == null) {
                 message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/close` to enable or disable staff applications")
             } else {
-                if (args[1] == "open") {
+                if (args[1] === "open") {
                     webSettings.set("staff-applications", {
                         enabled: "true"
                     });
                     message.channel.send("Staff applications now open")
-                } else if (args[1] == "close") {
+                } else if (args[1] === "close") {
                     webSettings.set("staff-applications", {
                         enabled: "false"
                     });
                     message.channel.send("Staff applications now closed")
                 } else {
-                    if (webSettings.fetch("staff-applications.enabled") == "true") {
+                    if (webSettings.fetch("staff-applications.enabled") === "true") {
                         message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/close` to enable or disable staff applications \n**Staff applications are currently:** **OPEN**");
-                    } else if (webSettings.fetch("staff-applications.enabled") == "false") {
+                    } else if (webSettings.fetch("staff-applications.enabled") === "false") {
                         message.channel.send("Please run the command using the following format: `" + config.DiscordBot.Prefix + "staff apply open/close` to enable or disable staff applications \n**Staff applications are currently:** **CLOSED**");
                     }
                 };
@@ -91,7 +91,7 @@ exports.run = async (client, message, args) => {
                 message.channel.send('Please use the following format: `' + config.DiscordBot.Prefix + "staff request type userid serverid` \nYou can view types by running: `" + config.DiscordBot.Prefix + "staff request types`")
             } else if (args[1] === "types") {
                 //Types
-                let embed = new Discord.RichEmbed()
+                let embed = new Discord.MessageEmbed()
                     .addField('__**Request Types (Type | Type Meaning):**__', "`proxy` | Reverse Proxy \n`password` | Password reset \n`server` | Server creation (If not on createserver) \n`delete` | Server Deletion")
                 message.channel.send(embed)
             } else if (args[1] === "delete") {
@@ -100,8 +100,8 @@ exports.run = async (client, message, args) => {
             break;
 
         case 'settings':
-            if (message.member.roles.find(r => r.id === "778237595477606440")) {
-                let embed = new Discord.RichEmbed()
+            if (message.member.roles.cache.find(r => r.id === "778237595477606440")) {
+                let embed = new Discord.MessageEmbed()
                     .addField('__**Staff Applications Enabled?**__', webSettings.fetch("staff-applications.enabled"), true)
                     .addField('__**Website maintenance enabled?**__', webSettings.fetch("maintenance.enabled"), true)
                 message.channel.send(embed)
@@ -109,24 +109,24 @@ exports.run = async (client, message, args) => {
             break;
 
         case 'reactionroles':
-            if (!message.member.roles.find(r => r.id === "778237595477606440")) return;
+            if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) return;
             message.channel.send("Reloading reaction roles...")
             let reactionRoles = require('../reactionRoles');
             client.reactionRoles = reactionRoles;
 
             let reactionRolesChannels = Object.keys(reactionRoles);
             reactionRolesChannels.forEach(c => {
-                let rchannel = client.channels.get(c);
+                let rchannel = client.channels.cache.get(c);
                 let reactionRolesChannelMessages = Object.keys(reactionRoles[c]);
 
                 reactionRolesChannelMessages.forEach(async m => {
-                    let rmessage = await rchannel.fetchMessage(m);
+                    let rmessage = await rchannel.messages.fetch(m);
                     let reactions = Object.keys(reactionRoles[c][m]);
                     await rmessage.clearReactions();
 
                     for (let ri in reactions) {
                         let reaction = reactions[ri];
-                        if (reaction.length == 18) reaction = client.emojis.get(reaction);
+                        if (reaction.length === 18) reaction = client.emojis.get(reaction);
                         await rmessage.react(reaction);
                     }
                     message.channel.send("Done reloading reaction roles...");
@@ -135,7 +135,7 @@ exports.run = async (client, message, args) => {
             })
             break;
         case 'update':
-            if (message.member.roles.find(r => r.id === "778237595477606440")) {
+            if (message.member.roles.cache.find(r => r.id === "778237595477606440")) {
                 exec(`git pull`, (error, stdout) => {
                     let response = (error || stdout);
                     if (!error) {
@@ -158,7 +158,7 @@ exports.run = async (client, message, args) => {
             if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
             if (args.lenght < 4) return;
 
-            if (args[1].toLowerCase() == 'donated') {
+            if (args[1].toLowerCase() === 'donated') {
                 let amount = Number.parseInt(args[3])
                 if (isNaN(amount)) return;
                 let userid = args[2]
@@ -166,7 +166,7 @@ exports.run = async (client, message, args) => {
                 userPrem.set(userid + '.donated', amount)
             }
 
-            if (args[1].toLowerCase() == 'boosted') {
+            if (args[1].toLowerCase() === 'boosted') {
                 let amount = Number.parseInt(args[3])
                 if (isNaN(amount)) return;
                 let userid = args[2]

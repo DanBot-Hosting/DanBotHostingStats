@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
     if(!botID)return message.channel.send("Error: Invalid command format! \n`" + config.DiscordBot.Prefix + "info botid`");
     let bot = db.get(`${botID}`);
     
-    let sendinfo = new Discord.RichEmbed()
+    let sendinfo = new Discord.MessageEmbed()
     .setColor("BLUE")
     .setTitle(`DanBot Hosting`)
     .setDescription("The bot id you provided is not in my database! Confused? Read below.")
@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
     if(!bot) return message.channel.send(sendinfo);
     if(bot.deleted) return message.channel.send("Error: This bot has been deleted.");
     
-    let infoEmbed = new Discord.RichEmbed()
+    let infoEmbed = new Discord.MessageEmbed()
     .setColor("BLUE")
     .setTitle(`${bot.client.username} | DanBot Hosting Stats`)
     .setURL("https://danbot.host/bot/" + bot.id)

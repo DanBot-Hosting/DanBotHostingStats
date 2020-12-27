@@ -3,16 +3,16 @@ exports.run = async (client, message, args) => {
         message.reply("Incorrect usage. (`DBH!vc <add | remove> <@user | userID>`)")
     }
 
-    if (args[0].toLowerCase() == "add") {
-        if (client.pvc.get(message.member.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner == message.member.id) {
-            let member = message.guild.members.get(args[1].match(/[0-9]{18}/)[0])
+    if (args[0].toLowerCase() === "add") {
+        if (client.pvc.get(message.member.cache.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner === message.member.id) {
+            let member = message.guild.members.cache.get(args[1].match(/[0-9]{18}/)[0])
 
             if (member == null) {
                 message.reply("Couldn't find that user.")
                 return;
             }
 
-            message.member.voiceChannel.overwritePermissions(member, {
+            message.member.voiceChannel.cache.overwritePermissions(member, {
                 CONNECT: true,
                 VIEW_CHANNEL: true,
                 STREAM: true,
@@ -25,10 +25,10 @@ exports.run = async (client, message, args) => {
             message.reply("You must be in a channel that you own in order to use this command.")
         }
     }
-    if (args[0].toLowerCase() == "remove") {
-        if (client.pvc.get(message.member.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner == message.member.id) {
+    if (args[0].toLowerCase() === "remove") {
+        if (client.pvc.get(message.member.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner === message.member.id) {
 
-            let member = message.guild.members.get(args[1].match(/[0-9]{18}/)[0])
+            let member = message.guild.members.cache.get(args[1].match(/[0-9]{18}/)[0])
 
             if (member == null) {
                 message.reply("Couldn't find that user.")
@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            message.member.voiceChannel.overwritePermissions(member, {
+            message.member.voiceChannel.cache.overwritePermissions(member, {
                 CONNECT: false,
                 VIEW_CHANNEL: false
             });

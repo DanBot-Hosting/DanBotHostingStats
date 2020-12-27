@@ -4,9 +4,9 @@ exports.run = async (client, message) => {
     let args = message.content.split(' ').slice(1);
     let cont = message.content.split(' ').slice(1).join(' ');
 
-    if (!message.member.roles.find(r => r.id === "778237595477606440")) {
+    if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) {
         message.channel.send('Evaluating...').then(msg => {
-            let errorcodefake = new Discord.RichEmbed()
+            let errorcodefake = new Discord.MessageEmbed()
                 .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                 .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                 .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\nSyntaxError: Unexpected identifier \nat /root/DBH/Panel/bot/discord/commands/eval.js:35:31 \nat runMicrotasks (<anonymous>) \nat processTicksAndRejections (internal/process/task_queues.js:93:5)\`\`\``, true)
@@ -17,13 +17,6 @@ exports.run = async (client, message) => {
             })
         })
     } else {
-
-    function clean(text) {
-        if (typeof (text) === 'string') {
-            return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
-        }
-        return text;
-    }
 
     function clean(text) {
         if (typeof text !== 'string')
@@ -49,7 +42,7 @@ exports.run = async (client, message) => {
             }
             if (evaled.length > 2000) {
                 try {
-                    let evalcode1 = new Discord.RichEmbed()
+                    let evalcode1 = new Discord.MessageEmbed()
                         .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                         .setDescription(`**Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                         .addField(`\u200b`, `**Output:**\n\n\`\`\`Output too long, logged to eval.txt`, true)
@@ -62,7 +55,7 @@ exports.run = async (client, message) => {
                     });
                     return fs.writeFile(`eval.txt`, `${clean(evaled)}`);
                 } catch (err) {
-                    let errorcode1 = new Discord.RichEmbed()
+                    let errorcode1 = new Discord.MessageEmbed()
                         .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                         .setDescription(`**Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                         .addField(`\u200b`, `**Output:**\n\n\`\`\`js\nOutput too long, logged to ${__dirname}\\eval.txt\`\`\``, true)
@@ -74,7 +67,7 @@ exports.run = async (client, message) => {
                     return fs.writeFile(`eval.txt`, `${clean(err)}`);
                 }
             }
-            let evalcode = new Discord.RichEmbed()
+            let evalcode = new Discord.MessageEmbed()
                 .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                 .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                 .addField(`\u200b`, `**:outbox_tray: Output:**\n\n\`\`\`js\n${clean(evaled)}\`\`\``, true)
@@ -84,7 +77,7 @@ exports.run = async (client, message) => {
                 embed: evalcode
             }).catch(e => logger.error(e));
         } catch (err) {
-            let errorcode = new Discord.RichEmbed()
+            let errorcode = new Discord.MessageEmbed()
                 .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                 .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                 .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\n${clean(err)}\`\`\``, true)

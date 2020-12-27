@@ -37,14 +37,14 @@ exports.run = async (client, message, args) => {
 
     async function command() {
       try {
-        let apiKeyEmbed = new Discord.RichEmbed()
+        let apiKeyEmbed = new Discord.MessageEmbed()
           .setColor("BLUE")
           .setTitle("DanBot Hosting Bot Stats")
           .setDescription(
             `API Key:\n\`${key}\`\n\nHow to Post? [Visit This](https://www.npmjs.com/package/danbot-hosting) \n Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`
           );
 
-        message.author.send(apiKeyEmbed);
+        await message.author.send(apiKeyEmbed);
         message.channel.send("Check your direct messages for your `API` key.");
       } catch (e) {
         return message.channel.send(

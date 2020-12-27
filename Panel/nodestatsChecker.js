@@ -33,10 +33,10 @@ let stats = {
     },
 }
 
-console.log("NodeChecker Online");
+console.log(chalk.magenta('[Nodes Checker] ') + chalk.green("Online"));
 //Node status 
 setInterval(() => {
-    console.log("Checking Nodes...");
+    //console.log("Checking Nodes...");
 
     //Public nodes
     for (let [node, data] of Object.entries(stats)) {

@@ -16,14 +16,14 @@ exports.run = async (client, message, args) => {
 
     if (!args[0]) {
         //No args, Help
-        const embed = new Discord.RichEmbed()
+        const embed = new Discord.MessageEmbed()
             .addField("__**Commands**__`", config.DiscordBot.Prefix + "user new` | Create an account \n`" + config.DiscordBot.Prefix + "user password` | Reset account password \n`" + config.DiscordBot.Prefix + "user link` | Link this account with console account \n`" + config.DiscordBot.Prefix + "user unlink` | Unlinks account from the console account \n`" + config.DiscordBot.Prefix + "user premium` | Check your premium server limit")
         await message.channel.send(embed)
     } else if (args[0].toLowerCase() === "new") {
         if (userData.get(message.author.id) == null) {
             const server = message.guild
 
-            let channel = await server.createChannel(message.author.tag, "text", [{
+            let channel = await server.channels.create(message.author.tag, "text", [{
                     type: 'role',
                     id: message.guild.id,
                     deny: 0x400
@@ -36,7 +36,7 @@ exports.run = async (client, message, args) => {
             ]).catch(console.error);
             message.reply(`Please check <#${channel.id}> to create an account.`)
 
-            let category = server.channels.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
+            let category = server.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
             if (!category) throw new Error("Category channel does not exist");
 
             await channel.setParent(category.id);
@@ -51,7 +51,7 @@ exports.run = async (client, message, args) => {
             const filter2 = m => m.author.id === message.author.id;
 
             let msg = await channel.send("<@" + message.author.id + ">", {
-                embed: new Discord.RichEmbed()
+                embed: new Discord.MessageEmbed()
                     .setColor(0x36393e)
                     .setDescription("Please enter a username (**Please dont use spaces or special characters**)")
                     .setFooter("You can type 'cancel' to cancel the request")
@@ -83,7 +83,7 @@ exports.run = async (client, message, args) => {
                 data.first_name = collected1.first().content;
 
                 await msg.edit("", {
-                    embed: new Discord.RichEmbed()
+                    embed: new Discord.MessageEmbed()
                         .setColor(0x36393e)
                         .setDescription(`Username: **${collected1.first().content.toLowerCase()}** \nPlease enter a Email.`)
                         .setFooter("You can type 'cancel' to cancel the request")
@@ -162,14 +162,14 @@ exports.run = async (client, message, args) => {
                 }
 
                 msg.edit("Hello! You created an new account, Heres the login information", {
-                    embed: new Discord.RichEmbed()
+                    embed: new Discord.MessageEmbed()
                         .setColor(0x36393e)
                         .setDescription("URL: " + config.Pterodactyl.hosturl + " \nUsername: " + data.username + " \nEmail: " + data.email + " \nPassword: " + password)
                         .setFooter("Please note: It is recommended that you change the password")
                 })
 
                 channel.send('**You have 30mins to keep note of this info before the channel is deleted.**')
-                message.guild.members.get(message.author.id).addRole("639489891016638496");
+                message.guild.members.cache.get(message.author.id).addRole("639489891016638496");
                 setTimeout(function () {
                     channel.delete();
                 }, 1800000);
@@ -183,7 +183,7 @@ exports.run = async (client, message, args) => {
                 }
             })
         } else {
-            let embed = new Discord.RichEmbed()
+            let embed = new Discord.MessageEmbed()
                 .setColor(`GREEN`)
                 .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
                 .addField(`__**Linked Date (DD/MM/YY)**__`, userData.fetch(message.author.id + ".linkDate"))
@@ -245,7 +245,7 @@ exports.run = async (client, message, args) => {
 
             const server = message.guild
 
-            let channel = await server.createChannel(message.author.tag, "text", [{
+            let channel = await server.channels.create(message.author.tag, "text", [{
                     type: 'role',
                     id: message.guild.id,
                     deny: 0x400
@@ -258,7 +258,7 @@ exports.run = async (client, message, args) => {
             ]).catch(console.error);
             message.reply(`Please check <#${channel.id}> to link your account.`)
 
-            let category = server.channels.find(c => c.id === "738539016688894024" && c.type === "category");
+            let category = server.channels.cache.find(c => c.id === "738539016688894024" && c.type === "category");
             if (!category) throw new Error("Category channel does not exist");
 
             await channel.setParent(category.id);
@@ -272,7 +272,7 @@ exports.run = async (client, message, args) => {
 
 
             let msg = await channel.send(message.author, {
-                embed: new Discord.RichEmbed()
+                embed: new Discord.MessageEmbed()
                     .setColor(0x36393e)
                     .setDescription("Please enter your console email address")
                     .setFooter("You can type 'cancel' to cancel the request \n**This will take a few seconds to find your account.**")
@@ -380,7 +380,7 @@ exports.run = async (client, message, args) => {
                                             domains: []
                                         });
 
-                                        let embedstaff = new Discord.RichEmbed()
+                                        let embedstaff = new Discord.MessageEmbed()
                                             .setColor('Green')
                                             .addField('__**Linked Discord account:**__', message.author.id)
                                             .addField('__**Linked Console account email:**__', consoleUser.attributes.email)
@@ -409,7 +409,7 @@ exports.run = async (client, message, args) => {
 
             })
         } else {
-            let embed = new Discord.RichEmbed()
+            let embed = new Discord.MessageEmbed()
                 .setColor(`GREEN`)
                 .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
                 .addField(`__**Linked Date (DD/MM/YY)**__`, userData.fetch(message.author.id + ".linkDate"))
@@ -451,8 +451,8 @@ exports.run = async (client, message, args) => {
             message.channel.send('You are not a premium user')
         } else {
             let allowed = Math.floor(user.donated / config.node7.price);
-            if (message.member.roles.get('710208090741539006') != null) allowed = allowed + (user.boosted != null ? Math.floor(user.boosted * 2.5) : 2);
-            const embed = new Discord.RichEmbed()
+            if (message.member.roles.cache.get('710208090741539006') != null) allowed = allowed + (user.boosted != null ? Math.floor(user.boosted * 2.5) : 2);
+            const embed = new Discord.MessageEmbed()
                 .setColor('BLUE')
                 .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
             await message.channel.send(embed)

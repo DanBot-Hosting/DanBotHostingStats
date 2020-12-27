@@ -2,10 +2,10 @@ const transliterate = require('transliteration');
 module.exports = async (client, oldM, newM) => {
     let guild = newM.guild;
 
-    if (oldM.voiceChannelID == newM.voiceChannelID) return;
+    if (oldM.voiceChannelID === newM.voiceChannelID) return;
 
 
-    if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID == "757659750342197289") {
+    if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID === "757659750342197289") {
         if (client.pvc.get(oldM.voiceChannelID) != null && client.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
             console.log("delete")
 
@@ -14,7 +14,7 @@ module.exports = async (client, oldM, newM) => {
         }
     }
 
-    if (newM.voiceChannelID == "757660050977456238") {
+    if (newM.voiceChannelID === "757660050977456238") {
         console.log("create")
         let cleanName = transliterate.slugify(newM.user.username);
         if (cleanName == '') cleanName = 'unknown';

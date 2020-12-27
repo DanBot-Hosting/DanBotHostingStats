@@ -53,8 +53,8 @@ exports.run = async (client, message, args) => {
         flagsdesc += `**-${flags}** >> ${value}\n`
     }
     if (args.length < 1) {
-        message.channel.send("", {
-            embed: new Discord.RichEmbed()
+        await message.channel.send("", {
+            embed: new Discord.MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(`Incorrect Usage!\nusage: \`DBH!announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
                 .addField("**Variables:**", flagsdesc)
@@ -65,8 +65,8 @@ exports.run = async (client, message, args) => {
 
     let channel = message.guild.channels.find(x => x.id == args[0].match(/[0-9]{18}/));
     if (!channel) {
-        message.channel.send("", {
-            embed: new Discord.RichEmbed()
+        await message.channel.send("", {
+            embed: new Discord.MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(`Couldn't find that channel.`)
                 .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)

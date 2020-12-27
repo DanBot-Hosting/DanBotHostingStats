@@ -1,5 +1,5 @@
 const axios = require('axios');
-var pretty = require('prettysize');
+const pretty = require('prettysize');
 const fs = require('fs');
 const path = require('path');
 const serverCreateSettings = require('../../../createData');
@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
         }
     }
 
-    let helpEmbed = new Discord.RichEmbed()
+    let helpEmbed = new Discord.MessageEmbed()
         .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
         .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
         .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
@@ -49,11 +49,11 @@ exports.run = async (client, message, args) => {
 
     if (!args[0]) {
         //No args
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
             .addField('__**Commands**__', 'Create a server: `' + config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' + config.DiscordBot.Prefix + 'server create list` \nServer Status: `' + config.DiscordBot.Prefix + 'server status serverid` \nLink Domain`' + config.DiscordBot.Prefix + 'server proxy domainhere serveridhere ` \n Unlink domain: `' + config.DiscordBot.Prefix + 'server unproxy domainhere` \n Delete server: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
         message.channel.send(embed)
 
-    } else if (args[0].toLowerCase() == "create") {
+    } else if (args[0].toLowerCase() === "create") {
 
         //Do server creation things
         if (!args[1]) {
@@ -94,10 +94,10 @@ exports.run = async (client, message, args) => {
             }
             cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
 
-            if (args[1] == "aio" | args[1] == "java") {
+            if (args[1] === "aio" | args[1] === "java") {
                 serverCreateSettings.createServer(types[args[1].toLowerCase()])
                     .then(response => {
-                        let embed = new Discord.RichEmbed()
+                        let embed = new Discord.MessageEmbed()
                             .setColor(`GREEN`)
                             .addField(`__**Status:**__`, response.statusText)
                             .addField(`__**Created for user ID:**__`, consoleID.consoleID)
@@ -106,12 +106,12 @@ exports.run = async (client, message, args) => {
                             .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
                         message.channel.send(embed)
                     }).catch(error => {
-                        message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                        message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
                     })
             } else {
                 serverCreateSettings.createServer(types[args[1].toLowerCase()])
                     .then(response => {
-                        let embed = new Discord.RichEmbed()
+                        let embed = new Discord.MessageEmbed()
                             .setColor(`GREEN`)
                             .addField(`__**Status:**__`, response.statusText)
                             .addField(`__**Created for user ID:**__`, consoleID.consoleID)
@@ -119,7 +119,7 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                         message.channel.send(embed)
                     }).catch(error => {
-                        message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                        message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
                         cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
                     })
             }
@@ -127,13 +127,13 @@ exports.run = async (client, message, args) => {
         }
         message.channel.send(helpEmbed)
 
-    } else if (args[0].toLowerCase() == "create-donator") {
+    } else if (args[0].toLowerCase() === "create-donator") {
 
         let user = userPrem.fetch(message.author.id);
-        let allowed = (message.member.roles.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + (user.boosted != null ? Math.floor(user.boosted * 2.5) : 2)) : Math.floor(user.donated / config.node7.price);
+        let allowed = (message.member.roles.cache.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + (user.boosted != null ? Math.floor(user.boosted * 2.5) : 2)) : Math.floor(user.donated / config.node7.price);
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
-        if (allowed == 0) {
+        if (allowed === 0) {
             message.channel.send("You're not a premium user, to get access to premium you can either boost us for 2 **Premium Servers**, or buy a server (1server/$1)")
             return;
         }
@@ -144,7 +144,7 @@ exports.run = async (client, message, args) => {
         }
         //Do server creation things
         if (!args[1]) {
-            message.channel.send(new Discord.RichEmbed()
+            message.channel.send(new Discord.MessageEmbed()
                 .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
                 .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
                 .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
@@ -175,7 +175,7 @@ exports.run = async (client, message, args) => {
 
                     userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used + 1);
 
-                    let embed = new Discord.RichEmbed()
+                    let embed = new Discord.MessageEmbed()
                         .setColor(`GREEN`)
                         .addField(`__**Status:**__`, response.statusText)
                         .addField(`__**Created for user ID:**__`, consoleID.consoleID)
@@ -185,7 +185,7 @@ exports.run = async (client, message, args) => {
                         .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
                     message.channel.send(embed)
 
-                    let embed2 = new Discord.RichEmbed()
+                    let embed2 = new Discord.MessageEmbed()
                         .setTitle('New donator node server created!')
                         .addField('User:', message.author.id)
                         .addField(`__**Status:**__`, response.statusText)
@@ -193,22 +193,22 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
                         .setFooter('User has ' + (user.used + 1) + ' out of a max ' + allowed + ' servers')
-                    client.channels.get("785236066500083772").send(embed2)
+                    client.channels.cache.get("785236066500083772").send(embed2)
 
                 }).catch(error => {
-                    message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                    message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
                 })
             return;
         }
 
-        message.channel.send(new Discord.RichEmbed()
+        message.channel.send(new Discord.MessageEmbed()
             .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
             .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
             .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
             .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
 
 
-    } else if (args[0].toLowerCase() == "delete") {
+    } else if (args[0].toLowerCase() === "delete") {
 
         if (cooldown[message.author.id].delete > Date.now()) {
             message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].delete - Date.now(), {round: true})}`)
@@ -242,14 +242,14 @@ exports.run = async (client, message, args) => {
                                 msg.edit('Can\'t find that server :(')
                             } else {
 
-                                if (output.attributes.user == userData.get(message.author.id).consoleID) {
+                                if (output.attributes.user === userData.get(message.author.id).consoleID) {
                                     msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted and/or its files**')
                                     const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, {
                                         time: 60000,
                                         max: 2
                                     });
                                     collector.on('collect', message => {
-                                        if (message == "confirm") {
+                                        if (message === "confirm") {
                                             message.delete()
                                             msg.edit('Working...')
                                             axios({
@@ -265,7 +265,7 @@ exports.run = async (client, message, args) => {
                                             }).then(response => {
                                                 msg.edit('Server deleted!')
 
-                                                if (output.attributes.node == 14)
+                                                if (output.attributes.node === 14)
                                                     userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used - 1);
 
                                                 collector.stop()
@@ -289,9 +289,9 @@ exports.run = async (client, message, args) => {
                 });
             });
         }
-    } else if (args[0].toLowerCase() == "manage") {
+    } else if (args[0].toLowerCase() === "manage") {
         message.channel.send('Uh this isnt done yet...')
-    } else if (args[0] == "list") {
+    } else if (args[0] === "list") {
         message.channel.send('Loading servers...')
         //List servers
         var arr = [];
@@ -314,16 +314,16 @@ exports.run = async (client, message, args) => {
                 console.log(arr)
                 setTimeout(() => {
                     var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
-                    const embed = new Discord.RichEmbed()
+                    const embed = new Discord.MessageEmbed()
                         .addField('__**Your Servers:**__', clean)
                     message.channel.send(embed)
                     //console.log(output)
                 }, 500)
             }, 5000)
         });
-    } else if (args[0].toLowerCase() == "status") {
+    } else if (args[0].toLowerCase() === "status") {
         if (!args[1]) {
-            let embed = new Discord.RichEmbed()
+            let embed = new Discord.MessageEmbed()
                 .setColor(`GREEN`)
                 .addField(`__**Server Status**__`, 'What server would you like to view? Please type: `' + config.DiscordBot.Prefix + 'server status serverid`', true)
             message.channel.send(embed)
@@ -351,7 +351,7 @@ exports.run = async (client, message, args) => {
                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
                 }).then(resources => {
-                    let embedstatus = new Discord.RichEmbed()
+                    let embedstatus = new Discord.MessageEmbed()
                         .setColor('GREEN')
                         .addField('**Status**', resources.data.attributes.current_state, true)
                         .addField('**CPU Usage**', resources.data.attributes.resources.cpu_absolute + '%')
@@ -369,8 +369,8 @@ exports.run = async (client, message, args) => {
                 message.channel.send('Server not found')
             });
         }
-    } else if (args[0].toLowerCase() == "proxy") {
-        const embed = new Discord.RichEmbed()
+    } else if (args[0].toLowerCase() === "proxy") {
+        const embed = new Discord.MessageEmbed()
             .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
         if (!args[1]) {
             message.channel.send(embed)
@@ -404,7 +404,7 @@ exports.run = async (client, message, args) => {
                         delete use.relationships;
                     }
 
-                    if (use.extras.servers == null || use.extras.servers.find(x => x.identifier == args[2]) == null) {
+                    if (use.extras.servers == null || use.extras.servers.find(x => x.identifier === args[2]) == null) {
                         message.channel.send("Couldn't find that server in your server list.")
                         return;
                     }
@@ -646,14 +646,14 @@ exports.run = async (client, message, args) => {
                 })
             }
         }
-    } else if (args[0].toLowerCase() == "unproxy") {
+    } else if (args[0].toLowerCase() === "unproxy") {
         if (!args[1]) {
-            const embed = new Discord.RichEmbed()
+            const embed = new Discord.MessageEmbed()
                 .setTitle('__**How to remove a domain from a server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server unproxy domainhere')
             message.channel.send(embed)
         } else {
 
-            if (userData.get(message.author.id).domains.find(x => x.domain == args[1].toLowerCase()) == null) {
+            if (userData.get(message.author.id).domains.find(x => x.domain === args[1].toLowerCase()) == null) {
                 message.channel.send("that domain isnt linked.")
                 return;
             }
@@ -678,117 +678,7 @@ exports.run = async (client, message, args) => {
             message.channel.send('Proxy has been removed from ' + args[1])
         }
 
-    } else if (args[0].toLowerCase() == "move") {
-        /*
-        const eggs_to_names = {
-            "16": "nodejs",
-            "22": "python",
-            "46": "aio",
-            "25": "java",
-            "3" : "paper",
-            "2" : "forge",
-            "26": "fivem",
-            "42": "altv",
-            "43": "multitheftauto",
-            "44": "ragemp",
-            "45": "samp",
-            "18": "bedrock",
-            "28": "pocketminemp",
-            "9" : "gmod",
-            "7" : "csgo",
-            "6" : "arkse",
-            "13": "ts3",
-            "12": "mumble",
-            "14": "rust",
-            "35": "mongodb",
-            "36": "redis",
-            "37": "postgres"
-        }
-        if (!args[1]) {
-            message.channel.send("Command format: `" + config.DiscordBot.Prefix + "server move serverid node`")
-        } else {
-            if (userPrem.fetch(message.author.id + ".premium")) {
-                if (userPrem.fetch(message.author.id + ".current") > userPrem.fetch(message.author.id + ".max")) {
-                    message.channel.send("You are at your premium server limit")
-                } else {
-                    axios({
-                        url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[2],
-                        method: 'GET',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        }
-                    }).then(response => {
-                        if (response.data.attributes.node == "Node 1") {
-                            axios({
-                                url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id + ".consoleID") + "?include=servers",
-                                method: 'GET',
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                                }
-                            }).then(response => {
-                                if (Object.keys(types).includes(args[1].toLowerCase())) {
-                                    if(args[1] == "aio" | args[1] == "java") {
-                                        serverCreateSettings_Prem.createServer()
-                                        .then(response => {
-                                            let embed = new Discord.RichEmbed()
-                                                .setColor(`GREEN`)
-                                                .addField(`__**Status:**__`, response.statusText)
-                                                .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                                                .addField(`__**Server name:**__`, serverName)
-                                                .addField(`__**Type:**__`, args[1].toLowerCase())
-                                                .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
-                                            message.channel.send(embed)
-                                        }).catch(error => {
-                                            message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                                            console.log(error)
-                                        })
-                                    } else {
-                                        serverCreateSettings.createServer(types[args[1].toLowerCase()])
-                                        .then(response => {
-                                            let embed = new Discord.RichEmbed()
-                                                .setColor(`GREEN`)
-                                                .addField(`__**Status:**__`, response.statusText)
-                                                .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                                                .addField(`__**Server name:**__`, serverName)
-                                                .addField(`__**Type:**__`, args[1].toLowerCase())
-                                            message.channel.send(embed)
-                                        }).catch(error => {
-                                            message.channel.send(new Discord.RichEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                                            console.log(error)
-                                        })
-                                    }
-                                    return;
-                                }
-                                message.channel.send(helpEmbed)
-                                
-                            })
-                            //SSH Connection
-                            ssh.connect({
-                                host: "154.27.68.232",
-                                username: "root",
-                                port: "22",
-                                tryKeyboard: true,
-                            });
-                            ssh.execCommand('', {
-                                cwd: '/root'
-                            })
-                        } else if (response.data.attributes.node == "Node 2 ") {
-
-                        }
-                    })
-                }
-    
-            } else {
-                message.channel.send('Sorry but this command is not ready yet')
-            }
-        }*/
+    } else if (args[0].toLowerCase() === "move") {
+        message.channel.send('Command coming soon! almost finished :D')
     }
 };

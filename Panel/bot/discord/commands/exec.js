@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 exports.run = (client, message, args) => {
-  if (message.member.roles.find(r => r.id === "778237595477606440")) {
+  if (message.member.roles.cache.find(r => r.id === "778237595477606440")) {
 
     const start = process.hrtime();
 
@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
       const end = process.hrtime(start);
 
       message.channel.send("", {
-        embed: new Discord.RichEmbed()
+        embed: new Discord.MessageEmbed()
           .setDescription("```" + response + "```")
           .setTimestamp()
           .setColor("RANDOM")

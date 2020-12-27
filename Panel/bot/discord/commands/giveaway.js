@@ -1,6 +1,6 @@
 const ms = require('ms')
 exports.run = async (bot, message, args) => {
-  if (message.member.roles.find(r => r.id === "778237595477606440")) {
+  if (message.member.roles.cache.find(r => r.id === "778237595477606440")) {
     message.delete()
     let channel, giveaway;
     let time = args[0];
@@ -13,7 +13,7 @@ exports.run = async (bot, message, args) => {
       if (!channel) {
         let reaction = '🎉';
         let giveawayMessage = await message.channel.send("", {
-          embed: new Discord.RichEmbed()
+          embed: new Discord.MessageEmbed()
             .setTitle("GIVEAWAY! 🎉")
             .setDescription(`Giveaway event started by <@${message.author.id}>. React to this message with ${reaction} to get a chance to win **${prize}**.`)
             .setColor("#0000ff")
@@ -30,7 +30,7 @@ exports.run = async (bot, message, args) => {
           time = ms(time)
           if (time === '5s' || time === '4s' || time === '3s' || time === '2s' || time === '1s' || time === '0s') clearInterval(interval)
           giveawayMessage.edit("🎉🎉🎉", {
-            embed: new Discord.RichEmbed()
+            embed: new Discord.MessageEmbed()
               .setTitle("GIVEAWAY! 🎉")
               .setDescription(`Giveaway event started by <@${message.author.id}>. React to this message with ${reaction} to get a chance to win **${prize}**.`)
               .setColor("#0000ff")
@@ -39,7 +39,7 @@ exports.run = async (bot, message, args) => {
         }, 5 * 1000);
 
         giveaway = bot.setTimeout(async () => {
-          let giveawayMessage = await message.channel.fetchMessage(giveawayMessageID);
+          let giveawayMessage = await message.channel.messages.fetch(giveawayMessageID);
 
           let winners = [];
           if (giveawayMessage.reactions.get(reaction)) {
@@ -56,7 +56,7 @@ exports.run = async (bot, message, args) => {
           if (winner) {
 
             giveawayMessage.edit("", {
-              embed: new Discord.RichEmbed()
+              embed: new Discord.MessageEmbed()
                 .setTitle("Giveaway Event Ended")
                 .setDescription(`${winner} won the giveaway! You just won ${prize}!\nThank you everyone for participating. Better luck next time.`)
                 .setColor("#0000ff")
@@ -65,14 +65,14 @@ exports.run = async (bot, message, args) => {
             });
 
             winner.send("", {
-              embed: new Discord.RichEmbed()
+              embed: new Discord.MessageEmbed()
                 .setTitle("Congratulations")
                 .setDescription(`You won the giveaway in **${message.guild.name}** Server! And you've been awarded with **${prize}**!`)
                 .setColor("#0000ff")
             }).catch(() => {});
           } else {
             giveawayMessage.edit("", {
-              embed: new Discord.RichEmbed()
+              embed: new Discord.MessageEmbed()
                 .setTitle("Giveaway Event Ended")
                 .setDescription(`Unfortunately, no one participated and apparently there\'s no winner. 😕`)
                 .setColor("#ff0000")
@@ -89,7 +89,7 @@ exports.run = async (bot, message, args) => {
           channel = null;
 
           message.channel.send("", {
-            embed: new Discord.RichEmbed()
+            embed: new Discord.MessageEmbed()
               .setTitle("Giveaway Event Ended")
               .setDescription(`The giveaway event was abruptly ended by ${message.author.tag}. Sorry, no giveaways this time!`)
               .setColor("#ff0000")

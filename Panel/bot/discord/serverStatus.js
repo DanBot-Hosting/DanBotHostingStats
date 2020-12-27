@@ -1,6 +1,3 @@
-const humanizeDuration = require('humanize-duration');
-const axios = require('axios');
-
 let nstatus = {
     "Public Panel": [{
         name: 'Panel',
@@ -67,7 +64,7 @@ let nstatus = {
 let parse = async () => {
     let toRetun = {};
 
-    let PubNodeStatus;
+    //let PubNodeStatus;
 
     // await axios({
     //     url: 'http://localhost:3001',
@@ -86,10 +83,10 @@ let parse = async () => {
 
             let da = nodeStatus.get(d.data);
 
-            da = (da.status == true ? ('🟢 Online') : ('🔴 ' + (da.is_vm_online == null ? "Offline" : ((da.is_vm_online == true ? "Wing" : "VM") + ' Outage'))))
+            da = (da.status === true ? ('🟢 Online') : ('🔴 ' + (da.is_vm_online == null ? "Offline" : ((da.is_vm_online === true ? "Wing" : "VM") + ' Outage'))))
 
 
-            if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online == false && nodeStatus.get('node2').is_vm_online == false && nodeStatus.get('node5').is_vm_online == false, nodeStatus.get('node7').is_vm_online == false)
+            if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
                 da = '🔴 Network Outage'
                 
             temp.push(`**${d.name}:** ${da}`)
@@ -109,7 +106,7 @@ let getEmbed = async () => {
         desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
 
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setTitle('Danbot Hosting Status').setFooter('This message updates every 15 seconds')
         .setDescription(desc);
     return embed;
