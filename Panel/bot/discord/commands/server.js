@@ -244,12 +244,12 @@ exports.run = async (client, message, args) => {
 
                                 if (output.attributes.user === userData.get(message.author.id).consoleID) {
                                     msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted and/or its files**')
-                                    const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, {
+                                    const collector = new message.channel.createMessageCollector(message.channel, m => m.author.id === message.author.id, {
                                         time: 60000,
                                         max: 2
                                     });
                                     collector.on('collect', message => {
-                                        if (message === "confirm") {
+                                        if (message.content === "confirm") {
                                             message.delete()
                                             msg.edit('Working...')
                                             axios({
