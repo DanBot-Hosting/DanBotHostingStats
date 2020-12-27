@@ -19,10 +19,6 @@ module.exports = async (client, guild, files) => {
         {
             "text": "DanBot FM",
             "type": "LISTENING"
-        },
-        {
-            "text": "solo suck at coding. *jk*",
-            "type": "WATCHING"
         }
     ];
 
@@ -35,7 +31,7 @@ module.exports = async (client, guild, files) => {
                 if (response.includes("Already up to date.")) {
                     //console.log('Bot already up to date. No changes since last pull')
                 } else {
-                    client.channels.get('766068015686483989').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting bot**")
+                    client.channels.cache.get('766068015686483989').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting bot**")
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
