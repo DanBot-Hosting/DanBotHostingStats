@@ -16,7 +16,7 @@ module.exports = async (client, member, guild) => {
             welcomeChannel.send("Bot: " + member + ", tried to join but is not using our API.")
             member.kick();
         } else {
-            member.addRole(config.DiscordBot.roles.bot);
+            member.roles.add(config.DiscordBot.roles.bot);
             welcomeChannel.send("Welcome " + member + ", More bot friends :D \nBot owned by: <@" + bot.owner + ">");
         }
         return;
@@ -27,16 +27,16 @@ module.exports = async (client, member, guild) => {
             donated: 0
         })
 
-    member.addRole(config.DiscordBot.roles.member)
+    member.roles.add(config.DiscordBot.roles.member)
     if (userData.get(member.id) == null) {
         welcomeChannel.send("Welcome " + member + " to DanBot Hosting. To get started please read <#738527470164377630>");
     } else {
-        member.addRoles(config.DiscordBot.roles.client)
+        member.roles.add(config.DiscordBot.roles.client)
         welcomeChannel.send("Welcome back " + member + " to DanBot Hosting!");
     }
 
     if (mutesData.get(member.id) != null) {
-        member.addRole(config.DiscordBot.roles.mute)
+        member.roles.add(config.DiscordBot.roles.mute)
     }
 
     //Invites
