@@ -15,7 +15,7 @@ exports.run = async (client, message) => {
     } else if (args === "new") {
         const server = message.guild
 
-        let channel = await server.createChannel(message.author.username + "-Ticket", "text", [{
+        let channel = await server.channels.create(message.author.username + "-Ticket", "text", [{
                 type: 'role',
                 id: message.guild.id,
                 deny: 0x400
@@ -42,7 +42,12 @@ exports.run = async (client, message) => {
         await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(console.error));
 
         setTimeout(() => {
-            channel.overwritePermissions(message.author, {
+            channel.updateOverwrite(message.author, {
+                VIEW_CHANNEL: true,
+                SEND_MESSAGES: true,
+                READ_MESSAGE_HISTORY: true
+            })
+            channel.updateOverwrite("748117822370086932", {
                 VIEW_CHANNEL: true,
                 SEND_MESSAGES: true,
                 READ_MESSAGE_HISTORY: true
@@ -66,26 +71,24 @@ exports.run = async (client, message) => {
             const filter2 = m => m.author.id === message.author.id;
             const warning = await message.channel.send('<@' + message.author.id + '> are you sure you want to close this ticket? please type `confirm` to close the ticket or `cancel` to keep the ticket open.')
 
-            let collected1 = await message.channel.cache.awaitMessages(filter2, {
+            let collected1 = await message.channel.createMessageCollector(filter2, {
                 max: 1,
                 time: 30000,
                 errors: ['time'],
-            }).catch(x => {
-                warning.delete()
-                message.channel.send(`ERROR: User failed to provide an answer. Ticket staying open.`);
-                setTimeout(() => {
-                    message.channel.delete();
-                }, 3000);
-                return false;
             })
-
-            if (collected1.first().content === 'confirm') {
-                return message.channel.send("**Closing ticket.**", null).then(setTimeout(() => {
-                    message.channel.delete()
-                }, 5000))
-            } else if (collected1.first().content === 'cancel') {
-                return message.channel.send('Closing ticket. __**Canceled**__ Ticket staying open.');
-            }
+            collected1.on('collect', m => {
+                if (m.content === "confirm") {
+                    message.channel.send("**Closing ticket.**", null).then(setTimeout(() => {
+                        message.channel.delete()
+                    }, 5000))
+                    } else if (m.content === "cancel") {
+                    message.channel.send('Closing ticket. __**Canceled**__ Ticket staying open.');
+                }});
+            collected1.on('end', collected => {
+                if(!collected) {
+                    message.channel.send(`ERROR: User failed to provide an answer. Ticket staying open.`);
+                }
+            });
         } else if (!message.channel.name.includes('-ticket')) {
             message.channel.send('ERROR: You can only use this command in ticket channels.')
 

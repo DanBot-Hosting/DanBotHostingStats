@@ -152,9 +152,10 @@ exports.run = async (client, message, args) => {
                     linkDate: datestamp,
                     domains: []
                 })
-
+console.log(user)
                 if (user === "Error: User already exists! (Or Email/Username is in use already)") {
-                    msg.edit("ERROR: A user with that email/username already exists.", null)
+                    console.log(user)
+                    channel.send("ERROR: A user with that email/username already exists.", null)
                     setTimeout(function () {
                         channel.delete();
                     }, 10000);
