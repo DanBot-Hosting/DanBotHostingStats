@@ -111,7 +111,7 @@ module.exports = (client, message) => {
         ]
         //Channel checker
 
-        if (blacklisted.includes(message.channel.id) && (message.member.roles.find(x => x.id == '748117822370086932') == null) &&
+        if (blacklisted.includes(message.channel.id) && (message.member.roles.cache.find(x => x.id == '748117822370086932') == null) &&
             !(message.channel.id == '738548111323955270' && command == 'info')) return;
 
         let commandFile = require(`../commands/${command}.js`);
