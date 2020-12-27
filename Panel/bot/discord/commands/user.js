@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
 
             await channel.setParent(category.id);
 
-            channel.overwritePermissions(message.author, {
+            channel.updateOverwrite(message.author, {
                 VIEW_CHANNEL: true,
                 SEND_MESSAGES: true,
                 READ_MESSAGE_HISTORY: true
@@ -263,7 +263,7 @@ exports.run = async (client, message, args) => {
 
             await channel.setParent(category.id);
 
-            channel.overwritePermissions(message.author, {
+            channel.updateOverwrite(message.author, {
                 VIEW_CHANNEL: true,
                 SEND_MESSAGES: true,
                 READ_MESSAGE_HISTORY: true

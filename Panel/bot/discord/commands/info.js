@@ -21,19 +21,19 @@ exports.run = async (client, message, args) => {
 
     if(!bot) return message.channel.send(sendinfo);
     if(bot.deleted) return message.channel.send("Error: This bot has been deleted.");
-    
+
     let infoEmbed = new Discord.MessageEmbed()
-    .setColor("BLUE")
-    .setTitle(`${bot.client.username} | DanBot Hosting Stats`)
-    .setURL("https://danbot.host/bot/" + bot.id)
-    .setThumbnail(`https://cdn.discordapp.com/avatars/${bot.id}/${bot.client.avatar}`)
-    .setDescription(`
-    **Status:** ${bot.status}
-    **Servers:** ${bot.servers.toLocaleString()}
-    **Users:** ${bot.users.toLocaleString()}
-    `)
-    .addField("Owner", `<@${bot.owner}> \`(${bot.owner})\``)
-    .addField("Invite", "[Click Me!](<https://discord.com/oauth2/authorize?client_id=" + bot.id + "&permissions=0&scope=bot>)")
+        .setColor("BLUE")
+        .setTitle(`${bot.client.username} | DanBot Hosting Stats`)
+        .setURL("https://danbot.host/bot/" + bot.id)
+        .setThumbnail(`https://cdn.discordapp.com/avatars/${bot.id}/${bot.client.avatar}`)
+        .setDescription(`
+        **Status:** ${bot.status}
+        **Servers:** ${bot.servers.toLocaleString()}
+        **Users:** ${bot.users.toLocaleString()}
+        `)
+        .addField("Owner", `<@${bot.owner}> \`(${bot.owner})\``)
+        .addField("Invite", "[Click Me!](<https://discord.com/oauth2/authorize?client_id=" + bot.id + "&permissions=0&scope=bot>)")
     
     if (bot) return message.channel.send(infoEmbed)
 
