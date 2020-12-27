@@ -13,11 +13,11 @@ module.exports = async (client, member, guild) => {
         let botID = member.id;
         let bot = db.get(`${botID}`);
         if (!bot) {
-            welcomeChannel.send("Bot: " + member + ", tried to join but is not using our API.")
+            welcomeChannel.send("Bot: <@" + member + ">, tried to join but is not using our API.")
             member.kick();
         } else {
             member.roles.add(config.DiscordBot.roles.bot);
-            welcomeChannel.send("Welcome " + member + ", More bot friends :D \nBot owned by: <@" + bot.owner + ">");
+            welcomeChannel.send("Welcome <@" + member + ">, More bot friends :D \nBot owned by: <@" + bot.owner + ">");
         }
         return;
     }
@@ -29,10 +29,10 @@ module.exports = async (client, member, guild) => {
 
     member.roles.add(config.DiscordBot.roles.member)
     if (userData.get(member.id) == null) {
-        welcomeChannel.send("Welcome " + member + " to DanBot Hosting. To get started please read <#738527470164377630>");
+        welcomeChannel.send("Welcome <@" + member + "> to DanBot Hosting. To get started please read <#738527470164377630>");
     } else {
         member.roles.add(config.DiscordBot.roles.client)
-        welcomeChannel.send("Welcome back " + member + " to DanBot Hosting!");
+        welcomeChannel.send("Welcome back <@" + member + "> to DanBot Hosting!");
     }
 
     if (mutesData.get(member.id) != null) {

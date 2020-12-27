@@ -53,7 +53,7 @@ exports.init = (client) => {
     })
 
     client.on("guildMemberUpdate", (oldM, newM) => {
-        if (oldM.roles.cache.get(config.DiscordBot.roles.mute) != null && newM.roles.get(config.DiscordBot.roles.mute) == null) {
+        if (oldM.roles.cache.get(config.DiscordBot.roles.mute) != null && newM.roles.cache.get(config.DiscordBot.roles.mute) == null) {
             mutesData.delete(oldM.id);
             clearTimeout(mutes[oldM.id])
             delete mutes[oldM.id];
