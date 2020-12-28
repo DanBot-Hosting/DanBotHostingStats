@@ -101,6 +101,7 @@ setInterval(() => {
     })
 
     //Node 1 (PUBLIC GAMESERVER PANEL)
+    /*
     axios({
         url: config.PubPterodactyl.hosturl + "/api/client/servers/e8766671/resources",
         method: 'GET',
@@ -120,6 +121,8 @@ setInterval(() => {
             status: false
         });
     })
+    *\
+     */
 
     // Panel Cherckers
     var hosts = ['154.27.68.95', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host'];
