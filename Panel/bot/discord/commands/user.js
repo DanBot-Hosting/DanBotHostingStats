@@ -474,6 +474,6 @@ exports.run = async (client, message, args) => {
                 })
         }
     } catch (error) {
-
+        console.log(error);
     }
 };
