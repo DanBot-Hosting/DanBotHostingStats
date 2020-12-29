@@ -461,14 +461,15 @@ exports.run = async (client, message, args) => {
                 },
             }).then(response => {
                 boosted = response.data[message.author.id];
-            }).catch(() => {})
-
-            let allowed = Math.floor(user.donated / config.node7.price);
-            if (message.member.roles.cache.get('710208090741539006') != null) allowed = allowed + (boosted != null ? Math.floor(boosted * 2.5) : 2);
-            const embed = new Discord.MessageEmbed()
+            }).catch(() => {}).then(() => {
+                  
+                let allowed = Math.floor(user.donated / config.node7.price);
+                if (message.member.roles.cache.get('710208090741539006') != null) allowed = allowed + (boosted != null ? Math.floor(boosted * 2.5) : 2);
+                const embed = new Discord.MessageEmbed()
                 .setColor('BLUE')
                 .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
-            await message.channel.send(embed)
+                await message.channel.send(embed)
+            })
         }
     }
 };
