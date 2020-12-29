@@ -139,7 +139,7 @@ exports.run = async (client, message, args) => {
             },
         }).then(response => {
             boosted = response.data[message.author.id];
-        }).catch(() => {}).then(() => {
+        }).catch((e) => {console.log(e);}).then(() => {
 
             let allowed = (message.member.roles.cache.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + (boosted != null ? Math.floor(boosted * 2.5) : 2)) : Math.floor(user.donated / config.node7.price);
             let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
