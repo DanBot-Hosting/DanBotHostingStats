@@ -152,7 +152,7 @@ exports.run = async (client, message, args) => {
                     linkDate: datestamp,
                     domains: []
                 })
-console.log(user)
+                console.log(user)
                 if (user === "Error: User already exists! (Or Email/Username is in use already)") {
                     console.log(user)
                     channel.send("ERROR: A user with that email/username already exists.", null)
@@ -451,8 +451,20 @@ console.log(user)
         if (user == null) {
             message.channel.send('You are not a premium user')
         } else {
+
+            let boosted;
+            axis({
+                url: "http://161.97.138.124:3003",
+                method: 'GET',
+                headers: {
+                    "password": config.externalPassword
+                },
+            }).then(response => {
+                boosted = response.data[message.author.id];
+            }).catch(() => {})
+
             let allowed = Math.floor(user.donated / config.node7.price);
-            if (message.member.roles.cache.get('710208090741539006') != null) allowed = allowed + (user.boosted != null ? Math.floor(user.boosted * 2.5) : 2);
+            if (message.member.roles.cache.get('710208090741539006') != null) allowed = allowed + (boosted != null ? Math.floor(boosted * 2.5) : 2);
             const embed = new Discord.MessageEmbed()
                 .setColor('BLUE')
                 .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
