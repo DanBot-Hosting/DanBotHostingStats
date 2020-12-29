@@ -453,7 +453,7 @@ exports.run = async (client, message, args) => {
         } else {
 
             let boosted;
-            axis({
+            axios({
                 url: "http://161.97.138.124:3003",
                 method: 'GET',
                 headers: {
