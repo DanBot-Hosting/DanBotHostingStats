@@ -447,29 +447,29 @@ exports.run = async (client, message, args) => {
 
 
     } else if (args[0].toLowerCase() === "premium") {
-        let user = userPrem.fetch(message.author.id);
-        if (user == null) {
-            message.channel.send('You are not a premium user')
-        } else {
-            let boosted;
-            axios({
-                url: "http://161.97.138.124:3003",
-                method: 'GET',
-                headers: {
-                    "password": config.externalPassword
-                },
-            }).then(response => {
-                boosted = response.data[message.author.id];
-            }).catch((e) => {console.log(e);}).then(() => {
+        // let user = userPrem.fetch(message.author.id);
+        // if (user == null) {
+        //     message.channel.send('You are not a premium user')
+        // } else {
+        //     let boosted;
+        //     axios({
+        //         url: "http://161.97.138.124:3003",
+        //         method: 'GET',
+        //         headers: {
+        //             "password": config.externalPassword
+        //         },
+        //     }).then(response => {
+        //         boosted = response.data[message.author.id];
+        //     }).catch((e) => {console.log(e);}).then(() => {
 
-                let allowed = Math.floor(user.donated / config.node7.price);
-                if (message.member.roles.cache.get('710208090741539006') != null) allowed = allowed + (boosted != null ? Math.floor(boosted * 2.5) : 2);
-                const embed = new Discord.MessageEmbed()
-                .setColor('BLUE')
-                .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
-                await message.channel.send(embed)
+        //         let allowed = Math.floor(user.donated / config.node7.price);
+        //         if (message.member.roles.cache.get('710208090741539006') != null) allowed = allowed + (boosted != null ? Math.floor(boosted * 2.5) : 2);
+        //         const embed = new Discord.MessageEmbed()
+        //         .setColor('BLUE')
+        //         .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
+        //         await message.channel.send(embed)
 
-            })
-        }
+        //     })
+        // }
     }
 };
