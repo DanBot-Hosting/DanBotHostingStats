@@ -30,11 +30,10 @@ module.exports = async (client, r, member) => {
     let reactionRole = parse();
     let found = reactionRole.find(x => x.message == r.message.id && x.reaction == emoji);
 
-    let role = member.guild.roles.get(found.role);
-    console.log("removed the role: `" + role.name + "`!");
+    let role = member.guild.roles.cache.get(found.role);
     await member.addRole(role);
     member.user.send("removed the role: `" + role.name + "`!");
-    let memberRoles = member.roles.map(x => x.id).concat(reactionRole.map(x => x.role))
+    let memberRoles = member.roles.cache.map(x => x.id).concat(reactionRole.map(x => x.role))
     let dupped = memberRoles.filter((e, i) => memberRoles.indexOf(e) != i);
-    if (dupped.length == 0) member.removeRole('765869330024890378')
+    if (dupped.length == 0) member.roles.remove('765869330024890378')
 }

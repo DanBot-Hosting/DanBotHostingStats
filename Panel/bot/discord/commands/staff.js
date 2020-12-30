@@ -124,7 +124,7 @@ exports.run = async (client, message, args) => {
 
                     for (let ri in reactions) {
                         let reaction = reactions[ri];
-                        if (reaction.length === 18) reaction = client.emojis.get(reaction);
+                        if (reaction.length === 18) reaction = client.emojis.cache.get(reaction);
                         await rmessage.react(reaction);
                     }
                     message.channel.send("Done reloading reaction roles...");

@@ -1,33 +1,21 @@
 let findDuplicates = arr => arr.filter((e, i) => arr.indexOf(e) != i)
 module.exports = async (client, e) => {
-    if (e.t === "MESSAGE_REACTION_ADD") {
+    if (e.t == "MESSAGE_REACTION_ADD") {
+        console.log(e);
         let channel = bot.channels.cache.get(e.d.channel_id);
-        /**
-         * @type {Discord.Message}
-         */
         let message = await channel.messages.fetch(e.d.message_id);
-
         let member = message.guild.members.cache.get(e.d.user_id);
         let emoji = e.d.emoji;
-
-        let reactionMessage = message.reactions.find(x => x.emoji.id === emoji.id || x.emoji.name === emoji.name);
-
+        let reactionMessage = message.reactions.cache.find(x => (x.emoji.id != null && x.emoji.id == emoji.id) || x.emoji.name == emoji.name);
         bot.emit('reactionAdd', reactionMessage, member)
     }
 
-    if (e.t === "MESSAGE_REACTION_REMOVE") {
-        let channel = bot.channels.cache.get(e.d.channel_id);
-        /**
-         * @type {Discord.Message}
-         */
+    if (e.t == "MESSAGE_REACTION_REMOVE") {
+        let channel = bot.channels.get(e.d.channel_id);
         let message = await channel.fetchMessage(e.d.message_id);
-
         let member = message.guild.members.cache.get(e.d.user_id);
         let emoji = e.d.emoji;
-
-        let reactionMessage = message.reactions.find(x => x.emoji.id === emoji.id || x.emoji.name === emoji.name);
-
+        let reactionMessage = message.reactions.cache.find(x => (x.emoji.id != null && x.emoji.id == emoji.id) || x.emoji.name == emoji.name);
         bot.emit('reactionRemove', reactionMessage, member)
-
     }
 }
