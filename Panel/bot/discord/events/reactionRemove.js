@@ -31,7 +31,7 @@ module.exports = async (client, r, member) => {
     let found = reactionRole.find(x => x.message == r.message.id && x.reaction == emoji);
 
     let role = member.guild.roles.cache.get(found.role);
-    await member.addRole(role);
+    await member.roles.remove(role);
     member.user.send("removed the role: `" + role.name + "`!");
     let memberRoles = member.roles.cache.map(x => x.id).concat(reactionRole.map(x => x.role))
     let dupped = memberRoles.filter((e, i) => memberRoles.indexOf(e) != i);
