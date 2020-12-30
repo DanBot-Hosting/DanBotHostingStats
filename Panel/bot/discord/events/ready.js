@@ -54,13 +54,6 @@ module.exports = async (client, guild, files) => {
     // end of Voice-Channels
 
 
-    //Reaction-Roles:
-
-    let reactionRoles = require('../reactionRoles');
-    client.reactionRoles = reactionRoles;
-
-    // end of Reaction-Roles
-
     global.invites = {};
     client.guilds.cache.forEach(g => {
         g.fetchInvites().then(guildInvites => {

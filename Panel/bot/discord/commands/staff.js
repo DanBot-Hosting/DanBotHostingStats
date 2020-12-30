@@ -1,4 +1,3 @@
-//const {config} = require('process');
 let subcommands = {
     admin: {
         linked: ["Shows if the users account is linked.", 'linked <USERID>'],
@@ -111,8 +110,7 @@ exports.run = async (client, message, args) => {
         case 'reactionroles':
             if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) return;
             message.channel.send("Reloading reaction roles...")
-            let reactionRoles = require('../reactionRoles');
-            client.reactionRoles = reactionRoles;
+            let reactionRoles = config.DiscordBot.reactionRoles
 
             let reactionRolesChannels = Object.keys(reactionRoles);
             reactionRolesChannels.forEach(c => {

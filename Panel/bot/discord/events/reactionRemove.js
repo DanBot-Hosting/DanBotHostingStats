@@ -22,20 +22,19 @@ let parse = () => {
 
 
 module.exports = async (client, r, member) => {
-    // if (member.user.bot == true) return;
+    if (member.user.bot == true) return;
+    let emoji = r.emoji.id != null ? r.emoji.id : r.emoji.name;
 
-    // let emoji = r.emoji.id != null ? r.emoji.id : r.emoji.name;
-    // let reactionRole = parse();
+    
+    // Reaction Roles
+    let reactionRole = parse();
+    let found = reactionRole.find(x => x.message == r.message.id && x.reaction == emoji);
 
-    // // Reaction Roles
-    // let found = reactionRole.find(x => x.message == r.message.id && x.reaction == emoji);
-    // if (found != null) {
-    //     let role = member.guild.roles.get(found.role);
-    //     console.log("removed the role: `" + role.name + "`!");
-    //     await member.addRole(role);
-    //     member.user.send("removed the role: `" + role.name + "`!");
-    //     let memberRoles = member.roles.map(x => x.id).concat(reactionRole.map(x => x.role))
-    //     let dupped = memberRoles.filter((e, i) => memberRoles.indexOf(e) != i);
-    //     if(dupped.length == 0) member.removeRole('765869330024890378')
-    // }
+    let role = member.guild.roles.get(found.role);
+    console.log("removed the role: `" + role.name + "`!");
+    await member.addRole(role);
+    member.user.send("removed the role: `" + role.name + "`!");
+    let memberRoles = member.roles.map(x => x.id).concat(reactionRole.map(x => x.role))
+    let dupped = memberRoles.filter((e, i) => memberRoles.indexOf(e) != i);
+    if (dupped.length == 0) member.removeRole('765869330024890378')
 }
