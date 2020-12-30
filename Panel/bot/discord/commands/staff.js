@@ -120,7 +120,7 @@ exports.run = async (client, message, args) => {
                 reactionRolesChannelMessages.forEach(async m => {
                     let rmessage = await rchannel.messages.fetch(m);
                     let reactions = Object.keys(reactionRoles[c][m]);
-                    await rmessage.clearReactions();
+                    await rmessage.reactions.removeAll();
 
                     for (let ri in reactions) {
                         let reaction = reactions[ri];
