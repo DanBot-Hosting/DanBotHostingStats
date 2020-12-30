@@ -32,7 +32,7 @@ module.exports = async (client, r, member) => {
     if (found.length > 0) {
         found = found[0];
         let role = member.guild.roles.cache.get(found.role);
-        if (role.members.cache.get(member.id) == null) {
+        if (members.roles.cache.get(found.role) == null) {
             await member.roles.add([role, '765869330024890378']);
             member.user.send("gave you the role: `" + role.name + "`!");
         }
