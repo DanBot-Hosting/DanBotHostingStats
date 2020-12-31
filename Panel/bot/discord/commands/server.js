@@ -561,6 +561,35 @@ exports.run = async (client, message, args) => {
                                                 }
                                             }, 100) //END - Change Server Port
                                         }, 100) //END - Change Server IP
+                                    } else if (node === "Node 6") {
+
+                                        //Change Server IP
+                                        setTimeout(() => {
+                                            var y = 0;
+                                            while (y < 3) {
+                                                const ipchange = rif.sync({
+                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                    from: "REPLACE-IP",
+                                                    to: "194.146.44.170",
+                                                    countMatches: true,
+                                                });
+                                                y++
+                                            };
+
+                                            //Change Server Port
+                                            setTimeout(() => {
+                                                var x = 0;
+                                                while (x < 3) {
+                                                    const portchange = rif.sync({
+                                                        files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
+                                                        from: "REPLACE-PORT",
+                                                        to: port,
+                                                        countMatches: true,
+                                                    });
+                                                    x++
+                                                }
+                                            }, 100) //END - Change Server Port
+                                        }, 100) //END - Change Server IP
                                     } else if (node === "Node 7") {
 
                                         //Change Server IP
