@@ -177,15 +177,31 @@ exports.run = async (client, message, args) => {
 
         case 'wings':
             if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
-            require('axios')({
-                url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2].toLowerCase(),
-                method: 'GET',
-                headers: {
-                    "password": config.externalPassword
-                },
-            }).then(response => {
-                message.channel.send(response.data.status)
-            })
+            if (!args[1]) {
+                let i = 1
+                while (i <8) {
+                    require('axios')({
+                        url: "http://n" + i + ".danbot.host:999/wings?action=restart",
+                        method: 'GET',
+                        headers: {
+                            "password": config.externalPassword
+                        },
+                    }).then(response => {
+                        message.channel.send(`[WINGS] ` + response.data.status)
+                    })
+                    i++
+                }
+            } else {
+                require('axios')({
+                    url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2].toLowerCase(),
+                    method: 'GET',
+                    headers: {
+                        "password": config.externalPassword
+                    },
+                }).then(response => {
+                    message.channel.send(response.data.status)
+                })
+            }
             break;
 
         case 'lockdown':

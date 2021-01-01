@@ -170,7 +170,7 @@ exports.run = async (client, message, args) => {
                 })
 
                 channel.send('**You have 30mins to keep note of this info before the channel is deleted.**')
-                message.guild.members.cache.get(message.author.id).addRole("639489891016638496");
+                message.guild.members.cache.get(message.author.id).roles.add("639489891016638496");
                 setTimeout(function () {
                     channel.delete();
                 }, 1800000);

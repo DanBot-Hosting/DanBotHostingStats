@@ -20,7 +20,7 @@ exports.init = (client) => {
             if (x.data.expiresAt <= Date.now()) {
                 mutesData.delete(x.ID);
                 if (member != null) {
-                    member.removeRole(config.DiscordBot.roles.mute);
+                    member.roles.remove(config.DiscordBot.roles.mute);
                     if (modlog != null)
                         modlog.send("", {
                             embed: new Discord.MessageEmbed().setTitle("Action: Unmute")
@@ -36,7 +36,7 @@ exports.init = (client) => {
                     delete mutes[x.id];
                     mutesData.delete(x.ID);
                     if (guild.members.cache.get(x.ID) != null) {
-                        member.removeRole(config.DiscordBot.roles.mute);
+                        member.roles.remove(config.DiscordBot.roles.mute);
                         if (modlog != null)
                             modlog.send("", {
                                 embed: new Discord.MessageEmbed().setTitle("Action: Unmute")
@@ -65,7 +65,7 @@ exports.init = (client) => {
 exports.run = async (client, message, args) => {
     let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
 
-    if (message.member.roles.cache.some(config.DiscordBot.roles.staff) == null) return message.reply("sorry, but it looks like you're too much of a boomer to run this command.");
+    if (message.member.roles.cache.find(r => r.id === config.DiscordBot.roles.staff) == null) return message.reply("sorry, but it looks like you're too much of a boomer to run this command.");
     if (!message.guild.me.hasPermission('MANAGE_ROLES')) return message.reply('Sorry, i dont have the perms to do this cmd i need MANAGE_ROLES. :x:');
 
 
@@ -85,7 +85,7 @@ exports.run = async (client, message, args) => {
     if (time < 5000) time = 5000;
 
 
-    await target.addRole(config.DiscordBot.roles.mute)
+    await target.roles.add(config.DiscordBot.roles.mute)
 
     mutesData.set(target.id, {
         mutedAt: Date.now(),
@@ -101,7 +101,7 @@ exports.run = async (client, message, args) => {
         delete mutes[target.id];
         mutesData.delete(target.id);
         if (message.guild.members.cache.find(x => x.id == args[0].match(/[0-9]{18}/)[0]) != null) {
-            target.removeRole(config.DiscordBot.roles.mute);
+            target.roles.remove(config.DiscordBot.roles.mute);
             if (modlog != null)
                 modlog.send("", {
                     embed: new Discord.MessageEmbed().setTitle("Action: Unmute")
