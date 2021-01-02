@@ -2,9 +2,25 @@ const exec = require('child_process').exec;
 const axios = require('axios');
 const nstatus = require('../serverStatus');
 global.snipes = new Discord.Collection();
+const db = require("quick.db");
 
 module.exports = async (client, guild, files) => {
+
+    function getUsers() {
+            client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
+                r.forEach(r => {
+                    if(r.user.bot) {
+                        if (!db.get(r.user.id)) {
+                            client.guilds.cache.get("639477525927690240").members.kick(r.user.id);
+                            console.log('Kicked ' + r.user.username + " ID: " + r.user.id)
+                        }
+
+                    }
+                });
+            });
+    }
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
+    getUsers()
 
     //Check make sure create account channels are closed after a hour
     setTimeout(() => {
