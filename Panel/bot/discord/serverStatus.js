@@ -35,15 +35,18 @@ let nstatus = {
         data: 'storage1'
     }],
 
-    "Panel Load Balancer": [{
-        name: 'US',
+    "Panels": [{
+        name: 'US Load Balancer',
         data: 'panelus'
     }, {
-        name: 'EU',
+        name: 'EU Load Balancer',
         data: 'paneleu'
     }, {
-        name: 'UK',
+        name: 'UK Load Balancer',
         data: 'paneluk'
+    }, {
+        name: 'MySQL Database',
+        data: 'dbhdb'
     }],
 
     "Admin Panel": [{

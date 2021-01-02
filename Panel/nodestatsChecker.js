@@ -142,7 +142,7 @@ setInterval(() => {
         timeout: 4
     });
 
-    //Panel load balancer status
+    //Panel stuffs
     ping2.ping('161.97.138.124', 80)
         .then(() => nodeStatus.set("paneleu", {
             status: true
@@ -155,6 +155,13 @@ setInterval(() => {
             status: true
         }))
         .catch((e) => nodeStatus.set("panelus", {
+            status: false
+        }));
+    ping2.ping('35.237.73.0', 3306)
+        .then(() => nodeStatus.set("dbhdb", {
+            status: true
+        }))
+        .catch((e) => nodeStatus.set("dbhdb", {
             status: false
         }));
 
