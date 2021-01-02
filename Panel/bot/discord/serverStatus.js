@@ -23,6 +23,9 @@ let nstatus = {
     }, {
         name: 'Storage-1',
         data: 'storage1'
+    }, {
+        name: 'Node-8',
+        data: 'node8'
     }],
 
     "Donator Nodes": [{
