@@ -226,7 +226,7 @@ exports.run = async (client, message, args) => {
                 data: data,
             }).then(user => {
                 message.channel.send('The console account that is linked with the discord account has now been reset. Please check dms for the password. \nA email will also be sent containing the new password')
-                client.users.get(message.author.id).send(`New password for DanBot Hosting: ||**${data.password}**||`)
+                client.users.cache.get(message.author.id).send(`New password for DanBot Hosting: ||**${data.password}**||`)
 
                 const emailmessage = {
                     from: config.Email.From,
