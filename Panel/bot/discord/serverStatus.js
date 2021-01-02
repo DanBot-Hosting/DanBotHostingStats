@@ -42,9 +42,6 @@ let nstatus = {
         name: 'EU Load Balancer',
         data: 'paneleu'
     }, {
-        name: 'UK Load Balancer',
-        data: 'paneluk'
-    }, {
         name: 'MySQL Database',
         data: 'dbhdb'
     }],
