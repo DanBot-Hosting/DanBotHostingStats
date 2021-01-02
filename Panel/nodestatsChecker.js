@@ -150,14 +150,14 @@ setInterval(() => {
         .catch((e) => nodeStatus.set("paneleu", {
             status: false
         }));
-    ping2.ping('34.74.102.235', 2333)
+    ping2.ping('34.74.102.235', 80)
         .then(() => nodeStatus.set("panelus", {
             status: true
         }))
         .catch((e) => nodeStatus.set("panelus", {
             status: false
         }));
-    
+
     //Lavalink chercker
     ping2.ping('lava.danbot.host', 2333)
         .then(() => nodeStatus.set("lava.danbot.host", {
