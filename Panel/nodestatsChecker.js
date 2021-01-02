@@ -157,7 +157,7 @@ setInterval(() => {
         .catch((e) => nodeStatus.set("panelus", {
             status: false
         }));
-    ping2.ping('35.237.73.0', 3306)
+    ping2.ping('62.171.128.136', 3306)
         .then(() => nodeStatus.set("dbhdb", {
             status: true
         }))
