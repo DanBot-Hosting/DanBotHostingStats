@@ -21,9 +21,6 @@ let nstatus = {
         name: 'Node-6',
         data: 'node6'
     }, {
-        name: 'Storage-1',
-        data: 'storage1'
-    }, {
         name: 'Node-8',
         data: 'node8'
     }],
@@ -31,6 +28,11 @@ let nstatus = {
     "Donator Nodes": [{
         name: 'Node-7',
         data: 'node7'
+    }],
+
+    "Storage Nodes": [{
+        name: 'Storage-1',
+        data: 'storage1'
     }],
 
     "Admin Panel": [{
