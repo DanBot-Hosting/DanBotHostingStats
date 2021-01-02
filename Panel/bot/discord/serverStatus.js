@@ -125,8 +125,14 @@ let getEmbed = async () => {
         desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
 
+    date = new Date();
+
+monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var dateString = "Updated at " + date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + " - " 
+    + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+    
     let embed = new Discord.MessageEmbed()
-        .setTitle('Danbot Hosting Status').setFooter('This message updates every 15 seconds')
+        .setTitle('Danbot Hosting Status').setFooter(dateString)
         .setDescription(desc);
     return embed;
 }
