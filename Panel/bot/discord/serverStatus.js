@@ -35,6 +35,14 @@ let nstatus = {
         data: 'storage1'
     }],
 
+    "Panel Nodes": [{
+        name: 'Panel US',
+        data: 'panelus'
+    }, {
+        name: 'Panel EU',
+        data: 'paneleu'
+    }],
+
     "Admin Panel": [{
         name: 'Panel',
         data: 'admin.danbot.host'

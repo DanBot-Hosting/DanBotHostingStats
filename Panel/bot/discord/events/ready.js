@@ -9,6 +9,7 @@ module.exports = async (client, guild, files) => {
     function getUsers() {
             client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
                 r.forEach(r => {
+                    console.log(r)
                     if(r.user.bot) {
                         if (!db.get(r.user.id)) {
                             client.guilds.cache.get("639477525927690240").members.kick(r.user.id);
