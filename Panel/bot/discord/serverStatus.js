@@ -36,11 +36,14 @@ let nstatus = {
     }],
 
     "Panel Load Balancer": [{
-        name: 'Panel US',
+        name: 'US',
         data: 'panelus'
     }, {
-        name: 'Panel EU',
+        name: 'EU',
         data: 'paneleu'
+    }, {
+        name: 'UK',
+        data: 'paneluk'
     }],
 
     "Admin Panel": [{
