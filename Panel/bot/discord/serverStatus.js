@@ -35,7 +35,7 @@ let nstatus = {
         data: 'storage1'
     }],
 
-    "Panels": [{
+    "Panel": [{
         name: 'US Load Balancer',
         data: 'panelus'
     }, {
