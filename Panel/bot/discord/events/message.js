@@ -34,19 +34,15 @@ module.exports = (client, message) => {
             }, 200);
         }
     }
-    
-    if (message.channel.type == "dm") {
-        if (message.author.id == "137624084572798976") {
+
+    if (message.channel.type === "dm") {
+        if (message.author.id === "137624084572798976") {
             const args = message.content.trim().split(/ +/g);
-            client.channels.get(args[0]).startTyping()
-            setTimeout(async () => {
-                client.channels.get(args[0]).send(message.content.split(' ').slice(1).join(' '))
-            }, 5000)
-            client.channels.get(args[0]).stopTyping()
+            client.channels.cache.get(args[0]).send(message.content.split(' ').slice(1).join(' '))
         }
     };
 
-    if(message.author.bot)return; // to stop bots from creating accounts, tickets and more.
+    if(message.author.bot) return; // to stop bots from creating accounts, tickets and more.
     const prefix = config.DiscordBot.Prefix;
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -63,7 +59,7 @@ module.exports = (client, message) => {
         //Channel checker
 
         if (blacklisted.includes(message.channel.id) && (message.member.roles.cache.find(x => x.id == '748117822370086932') == null) &&
-            !(message.channel.id == '738548111323955270' && command == 'info')) return;
+            !(message.channel.id === '738548111323955270' && command === 'info')) return;
 
         let commandFile = require(`../commands/${command}.js`);
         commandFile.run(client, message, args);
