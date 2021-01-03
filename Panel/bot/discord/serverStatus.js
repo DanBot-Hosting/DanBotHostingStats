@@ -128,7 +128,7 @@ let getEmbed = async () => {
     date = new Date();
 
 monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-var dateString = "Updated at " + date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + " - " 
+var dateString = "Updated at " + date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT+1) - "
     + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
     
     let embed = new Discord.MessageEmbed()
