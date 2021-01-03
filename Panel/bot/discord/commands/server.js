@@ -33,6 +33,7 @@ exports.run = async (client, message, args) => {
         .addField(`__**Voice Servers:**__`, "TS3 \nMumble", true)
         .addField(`__**SteamCMD:**__`, "Rust", true)
         .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+        .addField(`__**WebHosting:**__`, "Nginx", true)
         .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server")
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
@@ -62,6 +63,8 @@ exports.run = async (client, message, args) => {
         }
 
         let types = {
+            nginx: data.nginx,
+            reddisordbot: data.reddiscordbot,
             nodejs: data.nodejs,
             python: data.python,
             aio: data.aio,
@@ -171,6 +174,8 @@ exports.run = async (client, message, args) => {
 
 
             let types = {
+                nginx: pServerCreatesettings.nginx,
+                reddisordbot: pServerCreatesettings.reddiscordbot,
                 nodejs: pServerCreatesettings.nodejs,
                 python: pServerCreatesettings.python,
                 aio: pServerCreatesettings.aio,

@@ -11,6 +11,34 @@ var getPassword = () => {
 };
 
 let list = {};
+list.nginx = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 14,
+    "egg": 48,
+    "docker_image": "registry.gitlab.com/tenten8401/pterodactyl-nginx",
+    "startup": `./start.sh`,
+    "limits": {
+        "memory": 0,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": [12],
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false
+});
 list.reddiscordbot = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -288,6 +316,7 @@ list.postgres = (serverName, userID) => ({
 })
 let data = (serverName, userID) => {
     let toReturn = {
+        nginx: null,
         reddiscordbot: null,
         nodejs: null,
         python: null,
