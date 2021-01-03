@@ -17,7 +17,7 @@ list.nginx = (serverName, userID) => ({
     "nest": 14,
     "egg": 48,
     "docker_image": "registry.gitlab.com/tenten8401/pterodactyl-nginx",
-    "startup": `./start.sh`,
+    "startup": `{{STARTUP_CMD}}`,
     "limits": {
         "memory": 0,
         "swap": 0,
@@ -26,6 +26,7 @@ list.nginx = (serverName, userID) => ({
         "cpu": 0
     },
     "environment": {
+        "STARTUP_CMD": "./start.sh"
     },
     "feature_limits": {
         "databases": 2,
