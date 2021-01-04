@@ -9,6 +9,6 @@ exports.run = async (client, message, args) => {
             //.setAuthor(snipe.author.username, snipe.author.avatarURL({ dynamic: true, format: 'png' }))
             .setTimestamp()
             .setTitle(`Message by: ${snipe.author.tag}`)
-            .setDescription(snipe.content)
+            .setDescription("`" + snipe.content + "`")
         message.channel.send(embed);
 }
