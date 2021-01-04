@@ -34,7 +34,7 @@ const parse = (string, options) => {
 
 exports.run = async (client, message, args) => {
 
-    if (!message.member.roles.find(r => r.id === "639489438036000769")) return;
+    if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
 
     let flags = {
         nm: 'Normal message',
@@ -63,7 +63,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let channel = message.guild.channels.find(x => x.id == args[0].match(/[0-9]{18}/));
+    let channel = message.guild.channels.cache.find(x => x.id == args[0].match(/[0-9]{18}/));
     if (!channel) {
         await message.channel.send("", {
             embed: new Discord.MessageEmbed()
@@ -78,7 +78,7 @@ exports.run = async (client, message, args) => {
     let embed = null;
     let normalMessage = embedData.nm || "";
     if (embedData.e) {
-        embed = new Discord.RichEmbed();
+        embed = new Discord.MessageEmbed();
         if (embedData.ei) embed.setImage(embedData.ei);
         if (embedData.etn) embed.setThumbnail(embedData.etn);
         if (embedData.ed) embed.setDescription(embedData.ed);
