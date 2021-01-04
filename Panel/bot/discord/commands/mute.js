@@ -4,7 +4,7 @@ const db = require('quick.db');
 const mutesData = new db.table("muteData");
 const chalk = require('chalk');
 let mutes = {};
-
+ 
 exports.init = (client) => {
 
     client.on('ready', () => {
