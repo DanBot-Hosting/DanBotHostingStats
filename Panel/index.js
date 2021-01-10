@@ -52,13 +52,14 @@ let db = require("quick.db");
 global.Discord = require("discord.js");
 global.fs = require("fs");
 global.moment = require("moment");
-global.userData = new db.table("userData");
-global.settings = new db.table("settings");
-global.webSettings = new db.table("webSettings");
-global.mutesData = new db.table("muteData");
-global.domains = new db.table("linkedDomains");
-global.nodeStatus = new db.table("nodeStatus");
-global.userPrem = new db.table("userPrem");
+global.userData = new db.table("userData");       //User data, Email, ConsoleID, Link time, Username, DiscordID
+global.settings = new db.table("settings");       //Admin settings
+global.webSettings = new db.table("webSettings"); //Web settings (forgot what this is even for)
+global.mutesData = new db.table("muteData");      //Mutes, Stores current muted people and unmute times
+global.domains = new db.table("linkedDomains");   //Linked domains for unproxy and proxy cmd
+global.nodeStatus = new db.table("nodeStatus");   //Node status. Online or offline nodes
+global.userPrem = new db.table("userPrem");       //Premium user data, Donated, Boosted, Total
+global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.client = new Discord.Client({
   disableEveryone: true
 });

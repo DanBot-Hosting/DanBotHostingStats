@@ -79,6 +79,30 @@ setInterval(() => {
         })
     }
 
+    //Server limit
+
+
+    //Node servers checker
+    axios({
+        url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
+        method: 'GET',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Authorization': 'Bearer ' + config.PrivPterodactyl.apikeyclient,
+            'Content-Type': 'application/json',
+            'Accept': 'Application/vnd.pterodactyl.v1+json',
+        }
+    }).then(response => {
+        nodeStatus.set("node1-priv", {
+            status: true
+        });
+    }).catch(error => {
+        nodeStatus.set("node1-priv", {
+            status: false
+        });
+    })
+
     //Node 1 (PRIVATE ADMIN PANEL)
     axios({
         url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",
