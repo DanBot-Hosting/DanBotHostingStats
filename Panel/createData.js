@@ -236,7 +236,7 @@ list.paper = (serverName, userID) => ({
     "environment": {
         "MINECRAFT_VERSION": "latest",
         "SERVER_JARFILE": "server.jar",
-        "DL_PATH": "https://papermc.io/api/v1/paper/1.16.1/138/download",
+        "DL_PATH": "https://papermc.io/api/v2/projects/paper/versions/1.16.4/builds/408/downloads/paper-1.16.4-408.jar",
         "BUILD_NUMBER": "latest"
     },
     "feature_limits": {
