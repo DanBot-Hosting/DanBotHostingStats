@@ -703,7 +703,7 @@ exports.run = async (client, message, args) => {
                                         ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function () {
 
                                             //Run command to genate SSL cert.
-                                            ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m danielpd93@gmail.com`, {
+                                            ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m rp@danbot.host`, {
                                                 cwd: '/root'
                                             }).then(function (result) {
                                                 if (result.stdout.includes('Congratulations!')) {
