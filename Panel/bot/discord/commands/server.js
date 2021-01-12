@@ -226,9 +226,8 @@ exports.run = async (client, message, args) => {
 
         })
     } else if (args[0].toLowerCase() === "create-beta") {
-        if (!message.member.roles.cache.find(r => r.id === '793549158417301544' | '710208090741539006' | '788193704014905364')) {
-            message.channel.send('You are not allowed to use this. F')
-        } else {
+        if (!message.member.roles.cache.find(r => r.id === '793549158417301544' | '710208090741539006' | '788193704014905364')) return message.channel.send('You are not allowed to use this. F')
+
             let bServerCreatesettings = serverCreateSettings_Beta.createParams(serverName, consoleID.consoleID);
 
             //Do server creation things
@@ -292,7 +291,7 @@ exports.run = async (client, message, args) => {
                 .addField(`__**SteamCMD:**__`, "Rust", true)
                 .setFooter("Example: " + config.DiscordBot.Prefix + "server create-beta NodeJS Testing Server"))
 
-        }
+
     } else if (args[0].toLowerCase() === "delete") {
 
         if (cooldown[message.author.id].delete > Date.now()) {
