@@ -31,6 +31,10 @@ let stats = {
         serverID: '94082df3',
         IP: '154.27.68.110'
     },
+    node8: {
+        serverID: 'c3938dea',
+        IP: '195.22.157.112'
+    },
 }
 
 console.log(chalk.magenta('[Nodes Checker] ') + chalk.green("Online"));
