@@ -226,9 +226,9 @@ exports.run = async (client, message, args) => {
 
         })
     } else if (args[0].toLowerCase() === "create-beta") {
-        if (!message.member.roles.cache.get('710208090741539006' | '788193704014905364' | '793549158417301544')) {
+        if (message.member.roles.cache.find('710208090741539006' | '788193704014905364' | '793549158417301544') === null) {
             message.channel.send('You are not allowed to use this. F')
-        } else if (message.member.roles.cache.get('710208090741539006' | '788193704014905364' | '793549158417301544') != null) {
+        } else if (message.member.roles.cache.find('710208090741539006' | '788193704014905364' | '793549158417301544')) {
             let bServerCreatesettings = serverCreateSettings_Beta.createParams(serverName, consoleID.consoleID);
 
             //Do server creation things
