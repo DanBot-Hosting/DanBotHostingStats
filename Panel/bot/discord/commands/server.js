@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const serverCreateSettings = require('../../../createData');
 const serverCreateSettings_Prem = require('../../../createData_Prem');
+const serverCreateSettings_Beta = require('../../../createData_Beta');
 const humanizeDuration = require('humanize-duration');
 
 const {
@@ -221,9 +222,77 @@ exports.run = async (client, message, args) => {
                 .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
                 .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio", true)
                 .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
-                .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
+                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-donator NodeJS Testing Server"))
 
         })
+    } else if (args[0].toLowerCase() === "create-beta") {
+        if (message.member.roles.cache.get('710208090741539006' | '788193704014905364' | '793549158417301544') != null) {
+            message.channel.send('You are not allowed to use this. F')
+        } else {
+            let bServerCreatesettings = serverCreateSettings_Beta.createParams(serverName, consoleID.consoleID);
+
+            //Do server creation things
+            if (!args[1]) {
+                message.channel.send(new Discord.MessageEmbed()
+                    .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
+                    .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
+                    .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+                    .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
+                    .addField(`__**SteamCMD:**__`, "Rust", true)
+                    .setFooter("Example: " + config.DiscordBot.Prefix + "server create-beta NodeJS Testing Server"))
+                return;
+            }
+
+            if (cooldown[message.author.id].pCreate > Date.now()) {
+                message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
+                return;
+            }
+            cooldown[message.author.id].pCreate = Date.now() + (10 * 1000);
+
+
+            let types = {
+                paper: bServerCreatesettings.paper,
+                forge: bServerCreatesettings.forge,
+                fivem: bServerCreatesettings.fivem,
+                "alt:v": bServerCreatesettings.altv,
+                multitheftauto: bServerCreatesettings.multitheftauto,
+                "rage.mp": bServerCreatesettings.ragemp,
+                "sa-mp": bServerCreatesettings.samp,
+                bedrock: bServerCreatesettings.bedrock,
+                pocketminemp: bServerCreatesettings.pocketminemp,
+                gmod: bServerCreatesettings.gmod,
+                "cs:go": bServerCreatesettings.csgo,
+                "ark:se": bServerCreatesettings.arkse,
+                rust: bServerCreatesettings.rust,
+            }
+
+            if (Object.keys(types).includes(args[1].toLowerCase())) {
+                serverCreateSettings_Beta.createServer(types[args[1].toLowerCase()])
+                    .then(response => {
+                        let embed = new Discord.MessageEmbed()
+                            .setColor(`GREEN`)
+                            .addField(`__**Status:**__`, response.statusText)
+                            .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                            .addField(`__**Server name:**__`, serverName)
+                            .addField(`__**Type:**__`, args[1].toLowerCase())
+                            .addField(`__**Node:**__`, "Node 8 - BETA")
+                        message.channel.send(embed)
+
+                    }).catch(error => {
+                    message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                })
+                return;
+            }
+
+            message.channel.send(new Discord.MessageEmbed()
+                .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
+                .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
+                .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+                .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
+                .addField(`__**SteamCMD:**__`, "Rust", true)
+                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-beta NodeJS Testing Server"))
+
+        }
     } else if (args[0].toLowerCase() === "delete") {
 
         if (cooldown[message.author.id].delete > Date.now()) {
