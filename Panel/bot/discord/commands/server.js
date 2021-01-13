@@ -35,7 +35,7 @@ exports.run = async (client, message, args) => {
         .addField(`__**SteamCMD:**__`, "Rust", true)
         .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
         .addField(`__**WebHosting:**__`, "Nginx", true)
-        .addField(`__**Storage:**__`, "storage", true)
+        //.addField(`__**Storage:**__`, "storage", true)
         .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server")
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
