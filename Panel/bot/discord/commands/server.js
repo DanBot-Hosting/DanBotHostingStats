@@ -65,7 +65,7 @@ exports.run = async (client, message, args) => {
         }
 
         let types = {
-            storage: data.storage,
+            //storage: data.storage,
             nginx: data.nginx,
             reddisordbot: data.reddiscordbot,
             nodejs: data.nodejs,
