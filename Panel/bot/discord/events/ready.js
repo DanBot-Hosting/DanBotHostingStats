@@ -25,7 +25,7 @@ module.exports = async (client, guild, files) => {
             r.forEach(r => {
                 let userid = r.displayName
                 //console.log(userid)
-                if (['!', '`', '#', "'", '-', '.', '_'].some(r => userid.startsWith(r)))return r.setNickname('⚠️HOISTER ALERT ⚠️')
+                if (['!', '`', '#', "'", '-', '.', '_', '"', '+'].some(r => userid.startsWith(r)))return r.setNickname('⚠️HOISTER ALERT ⚠️')
 
             })
         })
