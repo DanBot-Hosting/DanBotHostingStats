@@ -19,8 +19,20 @@ module.exports = async (client, guild, files) => {
                 });
             });
     }
+
+    setInterval(() => {
+        client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
+            r.forEach(r => {
+                let userid = r.displayName
+                //console.log(userid)
+                if(userid.startsWith("!")) return r.setNickname('I\'m a furry OwO')
+
+            })
+        })
+    }, 300000) //5mins
+
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
-    getUsers()
+    //getUsers()
 
     //Check make sure create account channels are closed after a hour
     setTimeout(() => {

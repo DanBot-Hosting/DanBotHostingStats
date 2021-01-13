@@ -6,10 +6,6 @@ module.exports = async (client, oldMember, newMember) => {
         const oldName = oldMember.nickname;
         const newName = newMember.nickname;
 
-        // If no set nickname, use the user's username.
-        if (oldMember.nickname === null) {
-            oldName = oldMember.user.username;
-        }
 
         /*
         if (['🎄', '🎅', '🍬', '⛄', '❄️'].some(r => newMember.displayName.includes(r))) newMember.addRole('784992925678960712');
@@ -20,23 +16,10 @@ module.exports = async (client, oldMember, newMember) => {
         if (newMember.nickname === null) {
             newName = newMember.user.username;
         }
-        const a = "\u200B";
-        if (newName.includes(" ឵឵")) {
-            oldMember.setNickname('')
-        } else if (newName.includes("͔")) {
-            oldMember.setNickname("")
-        } else if (newName.includes(" ឵឵")) {
-            oldMember.setNickname("")
-        } else if (newName.includes(a)) {
-            oldMember.setNickname("")
-        } else if (newName.includes("!")) {
-            oldMember.setNickname("I'm a furry OwO")
-        }
 
         // Make a new RichEmbed
         const embed = new Discord.MessageEmbed()
             .setTitle("User Nickname changed.")
-            .setThumbnail(`${oldMember.user.displayAvatarURL}`)
             .setDescription(`User: ${oldMember.user} Nickname has changed.`)
             .addField("Old Nickname", oldName, true)
             .addField("New Nickname", newName, true)
