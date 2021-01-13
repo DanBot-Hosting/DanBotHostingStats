@@ -29,7 +29,7 @@ module.exports = async (client, guild, files) => {
 
             })
         })
-    }, 300000) //5mins
+    }, 60000) //1mins
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
     //getUsers()
