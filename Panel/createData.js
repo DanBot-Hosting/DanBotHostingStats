@@ -173,7 +173,7 @@ list.storage = (serverName, userID) => ({
         "swap": 0,
         "disk": 0,
         "io": 500,
-        "cpu": 5
+        "cpu": 1
     },
     "environment": {
         "STARTUP_CMD": "STORAGE NODE"
