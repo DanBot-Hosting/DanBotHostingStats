@@ -1,10 +1,10 @@
 const axios = require('axios');
 
-const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12341667890";
+const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12341467890";
 var getPassword = () => {
 
     var password = "";
-    while (password.length < 16) {
+    while (password.length < 14) {
         password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
     }
     return password;
@@ -22,13 +22,13 @@ list.paper = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
         "MINECRAFT_VERSION": "latest",
         "SERVER_JARFILE": "server.jar",
-        "DL_PATH": "https://papermc.io/api/v2/projects/paper/versions/1.16.4/builds/408/downloads/paper-1.16.4-408.jar",
+        "DL_PATH": "https://papermc.io/api/v2/projects/paper/versions/1.14.4/builds/408/downloads/paper-1.14.4-408.jar",
         "BUILD_NUMBER": "latest"
     },
     "feature_limits": {
@@ -37,7 +37,7 @@ list.paper = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -55,14 +55,14 @@ list.forge = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
         "SERVER_JARFILE": "server.jar",
         "MC_VERSION": "latest",
         "BUILD_TYPE": "recommended",
-        "FORGE_VERSION": "1.16.3"
+        "FORGE_VERSION": "1.14.3"
     },
     "feature_limits": {
         "databases": 2,
@@ -70,7 +70,7 @@ list.forge = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -88,11 +88,11 @@ list.fivem = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
-        "FIVEM_LICENSE": "6pc7xbhxoep0ms16m16rsg09k11plzib6w",
+        "FIVEM_LICENSE": "6pc7xbhxoep0ms14m14rsg09k11plzib6w",
         "MAX_PLAYERS": "32",
         "SERVER_HOSTNAME": "My new FXServer!",
         "FIVEM_VERSION": "latest",
@@ -107,7 +107,7 @@ list.fivem = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -125,7 +125,7 @@ list.altv = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
@@ -141,7 +141,7 @@ list.altv = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -159,11 +159,11 @@ list.multitheftauto = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
-        "SERVER_WEBPORT": "220016"
+        "SERVER_WEBPORT": "220014"
     },
     "feature_limits": {
         "databases": 2,
@@ -171,7 +171,7 @@ list.multitheftauto = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -189,12 +189,12 @@ list.ragemp = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
         "SERVER_NAME": "RAGE:MP Unofficial server",
-        "MAX_PLAYERS": "160",
+        "MAX_PLAYERS": "140",
         "ANNOUNCE": "0"
     },
     "feature_limits": {
@@ -203,7 +203,7 @@ list.ragemp = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -214,14 +214,14 @@ list.samp = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
     "nest": 9,
-    "egg": 416,
+    "egg": 414,
     "docker_image": "quay.io/parkervcp/pterodactyl-images:game_samp",
     "startup": `./samp03svr`,
     "limits": {
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "feature_limits": {
@@ -231,7 +231,7 @@ list.samp = (serverName, userID) => ({
     },
     "environment": {},
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -249,7 +249,7 @@ list.bedrock = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
@@ -262,7 +262,7 @@ list.bedrock = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -280,7 +280,7 @@ list.pocketminemp = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
@@ -292,7 +292,7 @@ list.pocketminemp = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -310,7 +310,7 @@ list.gmod = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
@@ -328,7 +328,7 @@ list.gmod = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -346,7 +346,7 @@ list.csgo = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
@@ -360,7 +360,7 @@ list.csgo = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -378,7 +378,7 @@ list.arkse = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
@@ -390,7 +390,7 @@ list.arkse = (serverName, userID) => ({
         "PORT": "7777",
         "ENABLE_RCON": "false",
         "RCON_PORT": "27020",
-        "QUERY_PORT": "270116",
+        "QUERY_PORT": "270114",
         "SRCDS_APPID": "376030"
     },
     "feature_limits": {
@@ -399,7 +399,7 @@ list.arkse = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -417,7 +417,7 @@ list.rust = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1600,
+        "io": 1400,
         "cpu": 0
     },
     "environment": {
@@ -431,7 +431,7 @@ list.rust = (serverName, userID) => ({
         "WORLD_SEED": null,
         "MAX_PLAYERS": "40",
         "SERVER_IMG": null,
-        "RCON_PORT": "28016",
+        "RCON_PORT": "28014",
         "RCON_PASS": "DBHisthebest",
         "SAVEINTERVAL": "60",
         "ADDITIONAL_ARGS": null
@@ -442,7 +442,7 @@ list.rust = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [16],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -480,7 +480,7 @@ let createServer = (data) => {
         url: config.Pterodactyl.hosturl + "/api/application/servers",
         method: 'POST',
         followRedirect: true,
-        maxRedirects: 16,
+        maxRedirects: 14,
         headers: {
             'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
             'Content-Type': 'application/json',
