@@ -55,14 +55,14 @@ list.forge = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
         "SERVER_JARFILE": "server.jar",
         "MC_VERSION": "latest",
         "BUILD_TYPE": "recommended",
-        "FORGE_VERSION": "1.14.3"
+        "FORGE_VERSION": "1.16.3"
     },
     "feature_limits": {
         "databases": 2,
@@ -88,11 +88,11 @@ list.fivem = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
-        "FIVEM_LICENSE": "6pc7xbhxoep0ms14m14rsg09k11plzib6w",
+        "FIVEM_LICENSE": "6pc7xbhxoep0ms5m5rsg09k11plzib6w",
         "MAX_PLAYERS": "32",
         "SERVER_HOSTNAME": "My new FXServer!",
         "FIVEM_VERSION": "latest",
@@ -125,7 +125,7 @@ list.altv = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
@@ -159,11 +159,11 @@ list.multitheftauto = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
-        "SERVER_WEBPORT": "220014"
+        "SERVER_WEBPORT": "22005"
     },
     "feature_limits": {
         "databases": 2,
@@ -189,12 +189,12 @@ list.ragemp = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
         "SERVER_NAME": "RAGE:MP Unofficial server",
-        "MAX_PLAYERS": "140",
+        "MAX_PLAYERS": "50",
         "ANNOUNCE": "0"
     },
     "feature_limits": {
@@ -214,14 +214,14 @@ list.samp = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
     "nest": 9,
-    "egg": 414,
+    "egg": 45,
     "docker_image": "quay.io/parkervcp/pterodactyl-images:game_samp",
     "startup": `./samp03svr`,
     "limits": {
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "feature_limits": {
@@ -249,7 +249,7 @@ list.bedrock = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
@@ -280,7 +280,7 @@ list.pocketminemp = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
@@ -310,7 +310,7 @@ list.gmod = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
@@ -346,7 +346,7 @@ list.csgo = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
@@ -378,7 +378,7 @@ list.arkse = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
@@ -390,7 +390,7 @@ list.arkse = (serverName, userID) => ({
         "PORT": "7777",
         "ENABLE_RCON": "false",
         "RCON_PORT": "27020",
-        "QUERY_PORT": "270114",
+        "QUERY_PORT": "27015",
         "SRCDS_APPID": "376030"
     },
     "feature_limits": {
@@ -417,7 +417,7 @@ list.rust = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
@@ -431,7 +431,7 @@ list.rust = (serverName, userID) => ({
         "WORLD_SEED": null,
         "MAX_PLAYERS": "40",
         "SERVER_IMG": null,
-        "RCON_PORT": "28014",
+        "RCON_PORT": "28016",
         "RCON_PASS": "DBHisthebest",
         "SAVEINTERVAL": "60",
         "ADDITIONAL_ARGS": null
