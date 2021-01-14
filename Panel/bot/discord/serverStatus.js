@@ -125,10 +125,17 @@ let getEmbed = async () => {
         desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
 
-    date = new Date();
-
+  date = new Date();
+    var hr;
 monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-var dateString = "Updated at " + date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT+1) - "
+    if(date.getHours() < 10) {
+        hr = `0${date.getHours()}`;
+    }
+    else {
+        hr = date.getHours();
+    }
+
+var dateString = "Updated at " + hr + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT) on "
     + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
     
     let embed = new Discord.MessageEmbed()
