@@ -22,13 +22,13 @@ list.paper = (serverName, userID) => ({
         "memory": 2048,
         "swap": 0,
         "disk": 0,
-        "io": 1400,
+        "io": 500,
         "cpu": 0
     },
     "environment": {
         "MINECRAFT_VERSION": "latest",
         "SERVER_JARFILE": "server.jar",
-        "DL_PATH": "https://papermc.io/api/v2/projects/paper/versions/1.14.4/builds/408/downloads/paper-1.14.4-408.jar",
+        "DL_PATH": "https://papermc.io/api/v2/projects/paper/versions/1.16.4/builds/408/downloads/paper-1.16.4-408.jar",
         "BUILD_NUMBER": "latest"
     },
     "feature_limits": {
