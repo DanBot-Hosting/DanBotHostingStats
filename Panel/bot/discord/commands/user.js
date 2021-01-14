@@ -73,6 +73,8 @@ exports.run = async (client, message, args) => {
                     max: 1,
                     time: 30000,
                     errors: ['time'],
+                }).catch(x => {
+                    channel.send(x.message)
                 })
 
                 if (collected1.first().content.toLowerCase() === 'cancel') {
@@ -97,6 +99,8 @@ exports.run = async (client, message, args) => {
                     max: 1,
                     time: 30000,
                     errors: ['time'],
+                }).catch(x => {
+                    channel.send(x.message)
                 })
 
                 if (collected2.first().content.toLowerCase() === 'cancel') {
