@@ -228,7 +228,7 @@ exports.run = async (client, message, args) => {
 
         })
     } else if (args[0].toLowerCase() === "create-beta") {
-        if (message.member.roles.cache.find(r => r.id === "710208090741539006" | "788193704014905364" | "793549158417301544")) {
+        if(message.member.roles.cache.some(r=>['793549158417301544', '710208090741539006', '788193704014905364'].includes(r.id)) ) {
 
             let bServerCreatesettings = serverCreateSettings_Beta.createParams(serverName, consoleID.consoleID);
 

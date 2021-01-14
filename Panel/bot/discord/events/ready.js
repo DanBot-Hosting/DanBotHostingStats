@@ -4,7 +4,7 @@ const nstatus = require('../serverStatus');
 global.snipes = new Discord.Collection();
 const db = require("quick.db");
 
-module.exports = async (client, guild, files) => {
+module.exports = async (client) => {
 
     function getUsers() {
             client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
