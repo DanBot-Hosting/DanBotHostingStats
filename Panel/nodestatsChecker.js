@@ -32,7 +32,7 @@ let stats = {
         IP: '154.27.68.110'
     },
     node8: {
-        serverID: 'c3938dea',
+        serverID: '8e1d9c32',
         IP: '195.22.157.112'
     },
     storage1: {
