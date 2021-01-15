@@ -3,28 +3,28 @@ let nstatus = {
         name: 'Panel',
         data: 'panel.danbot.host'
     }, {
-        name: 'Node-1 ',
+        name: 'Node-1',
         data: 'node1'
     }, {
-        name: 'Node-2 ',
+        name: 'Node-2',
         data: 'node2'
     }, {
-        name: 'Node-3 ',
+        name: 'Node-3',
         data: 'node3'
     }, {
-        name: 'Node-4 ',
+        name: 'Node-4',
         data: 'node4'
     }, {
-        name: 'Node-5 ',
+        name: 'Node-5',
         data: 'node5'
     }, {
-        name: 'Node-6 ',
+        name: 'Node-6',
         data: 'node6'
     }, {
-        name: 'Node-8 ',
+        name: 'Node-8',
         data: 'node8'
     }, {
-        name: 'Node-9 ',
+        name: 'Node-9',
         data: 'node9'
     }, {
         name: 'Node-10',
