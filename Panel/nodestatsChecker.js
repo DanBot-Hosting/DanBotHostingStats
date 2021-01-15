@@ -35,6 +35,15 @@ let stats = {
         serverID: '8e1d9c32',
         IP: '194.146.44.168'
     },
+    node9: {
+        serverID: 'null',
+        IP: '194.146.44.41'
+    },
+    node10: {
+        serverID: 'null',
+        IP: '194.146.44.58'
+    },
+
     storage1: {
         serverID: 'b2af1392',
         IP: '194.146.44.73'
