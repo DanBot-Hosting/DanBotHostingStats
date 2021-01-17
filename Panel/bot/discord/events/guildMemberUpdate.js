@@ -16,7 +16,11 @@ module.exports = async (client, oldMember, newMember) => {
         if (newMember.nickname === null) {
             newName = newMember.user.username;
         }
-
+        
+        if(oldMember.nickname === null) {
+           oldName = oldMember.user.username
+        }
+        
         // Make a new RichEmbed
         const embed = new Discord.MessageEmbed()
             .setTitle("User Nickname changed.")
