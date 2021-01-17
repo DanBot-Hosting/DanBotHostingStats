@@ -40,7 +40,10 @@ Router.get("/nodeStatus", (req, res) => {
       Node4: nodeStatus.fetch("node4"),
       Node5: nodeStatus.fetch("node5"),
       Node6: nodeStatus.fetch("node6"),
-      Node7: nodeStatus.fetch("node7")
+      Node7: nodeStatus.fetch("node7"),
+      Node8: nodeStatus.fetch("node8"),
+      Node9: nodeStatus.fetch("node9"),
+      Node10: nodeStatus.fetch("node10")
     },
     misc: {
       Lava1: nodeStatus.fetch("lava.danbot.host").status,
@@ -260,6 +263,142 @@ Router.get("/sysinfo", (req, res) => {
         download: nodeData.fetch("Node6-speedtest.download"),
         upload: nodeData.fetch("Node6-speedtest.upload"),
         lastupdate: nodeData.fetch("Node6-speedtest.updatetime")
+      }
+    },
+    Node7: {
+      info: {
+        cpu: nodeData.fetch("Node7.cpu"),
+        cpuload: nodeData.fetch("Node7.cpuload"),
+        cputhreads: nodeData.fetch("Node7.cputhreads"),
+        cpucores: nodeData.fetch("Node7.cpucores"),
+        memused: nodeData.fetch("Node7.memused"),
+        memtotal: nodeData.fetch("Node7.memtotal"),
+        swapused: nodeData.fetch("Node7.swap"),
+        swaptotal: nodeData.fetch("Node7.swaptotal"),
+        diskused: nodeData.fetch("Node7.diskused"),
+        disktotal: nodeData.fetch("Node7.disktotal"),
+        netrx: nodeData.fetch("Node7.netrx"),
+        nettx: nodeData.fetch("Node7.nettx"),
+        osplatform: nodeData.fetch("Node7.osplatform"),
+        oslogofile: nodeData.fetch("Node7.oslogofile"),
+        osrelease: nodeData.fetch("Node7.osrelease"),
+        osuptime: nodeData.fetch("Node7.osuptime"),
+        biosvendor: nodeData.fetch("Node7.biosvender"),
+        biosversion: nodeData.fetch("Node7.biosversion"),
+        biosdate: nodeData.fetch("Node7.biosdate"),
+        dockercontainers: nodeData.fetch("Node7.dockercontainers"),
+        dockercontainersrunning: nodeData.fetch("Node7.dockercontainersrunning"),
+        dockercontainerspaused: nodeData.fetch("Node7.dockercontainerspaused"),
+        dockercontainersstopped: nodeData.fetch("Node7.dockercontainersstopped"),
+        lastupdate: nodeData.fetch("Node7.updatetime")
+      },
+      speedtest: {
+        ping: nodeData.fetch("Node7-speedtest.ping"),
+        download: nodeData.fetch("Node7-speedtest.download"),
+        upload: nodeData.fetch("Node7-speedtest.upload"),
+        lastupdate: nodeData.fetch("Node7-speedtest.updatetime")
+      }
+    },
+    Node8: {
+      info: {
+        cpu: nodeData.fetch("Node8.cpu"),
+        cpuload: nodeData.fetch("Node8.cpuload"),
+        cputhreads: nodeData.fetch("Node8.cputhreads"),
+        cpucores: nodeData.fetch("Node8.cpucores"),
+        memused: nodeData.fetch("Node8.memused"),
+        memtotal: nodeData.fetch("Node8.memtotal"),
+        swapused: nodeData.fetch("Node8.swap"),
+        swaptotal: nodeData.fetch("Node8.swaptotal"),
+        diskused: nodeData.fetch("Node8.diskused"),
+        disktotal: nodeData.fetch("Node8.disktotal"),
+        netrx: nodeData.fetch("Node8.netrx"),
+        nettx: nodeData.fetch("Node8.nettx"),
+        osplatform: nodeData.fetch("Node8.osplatform"),
+        oslogofile: nodeData.fetch("Node8.oslogofile"),
+        osrelease: nodeData.fetch("Node8.osrelease"),
+        osuptime: nodeData.fetch("Node8.osuptime"),
+        biosvendor: nodeData.fetch("Node8.biosvender"),
+        biosversion: nodeData.fetch("Node8.biosversion"),
+        biosdate: nodeData.fetch("Node8.biosdate"),
+        dockercontainers: nodeData.fetch("Node8.dockercontainers"),
+        dockercontainersrunning: nodeData.fetch("Node8.dockercontainersrunning"),
+        dockercontainerspaused: nodeData.fetch("Node8.dockercontainerspaused"),
+        dockercontainersstopped: nodeData.fetch("Node8.dockercontainersstopped"),
+        lastupdate: nodeData.fetch("Node8.updatetime")
+      },
+      speedtest: {
+        ping: nodeData.fetch("Node8-speedtest.ping"),
+        download: nodeData.fetch("Node8-speedtest.download"),
+        upload: nodeData.fetch("Node8-speedtest.upload"),
+        lastupdate: nodeData.fetch("Node8-speedtest.updatetime")
+      }
+    },
+    Node9: {
+      info: {
+        cpu: nodeData.fetch("Node9.cpu"),
+        cpuload: nodeData.fetch("Node9.cpuload"),
+        cputhreads: nodeData.fetch("Node9.cputhreads"),
+        cpucores: nodeData.fetch("Node9.cpucores"),
+        memused: nodeData.fetch("Node9.memused"),
+        memtotal: nodeData.fetch("Node9.memtotal"),
+        swapused: nodeData.fetch("Node9.swap"),
+        swaptotal: nodeData.fetch("Node9.swaptotal"),
+        diskused: nodeData.fetch("Node9.diskused"),
+        disktotal: nodeData.fetch("Node9.disktotal"),
+        netrx: nodeData.fetch("Node9.netrx"),
+        nettx: nodeData.fetch("Node9.nettx"),
+        osplatform: nodeData.fetch("Node9.osplatform"),
+        oslogofile: nodeData.fetch("Node9.oslogofile"),
+        osrelease: nodeData.fetch("Node9.osrelease"),
+        osuptime: nodeData.fetch("Node9.osuptime"),
+        biosvendor: nodeData.fetch("Node9.biosvender"),
+        biosversion: nodeData.fetch("Node9.biosversion"),
+        biosdate: nodeData.fetch("Node9.biosdate"),
+        dockercontainers: nodeData.fetch("Node9.dockercontainers"),
+        dockercontainersrunning: nodeData.fetch("Node9.dockercontainersrunning"),
+        dockercontainerspaused: nodeData.fetch("Node9.dockercontainerspaused"),
+        dockercontainersstopped: nodeData.fetch("Node9.dockercontainersstopped"),
+        lastupdate: nodeData.fetch("Node9.updatetime")
+      },
+      speedtest: {
+        ping: nodeData.fetch("Node9-speedtest.ping"),
+        download: nodeData.fetch("Node9-speedtest.download"),
+        upload: nodeData.fetch("Node9-speedtest.upload"),
+        lastupdate: nodeData.fetch("Node9-speedtest.updatetime")
+      }
+    },
+    Node10: {
+      info: {
+        cpu: nodeData.fetch("Node10.cpu"),
+        cpuload: nodeData.fetch("Node10.cpuload"),
+        cputhreads: nodeData.fetch("Node10.cputhreads"),
+        cpucores: nodeData.fetch("Node10.cpucores"),
+        memused: nodeData.fetch("Node10.memused"),
+        memtotal: nodeData.fetch("Node10.memtotal"),
+        swapused: nodeData.fetch("Node10.swap"),
+        swaptotal: nodeData.fetch("Node10.swaptotal"),
+        diskused: nodeData.fetch("Node10.diskused"),
+        disktotal: nodeData.fetch("Node10.disktotal"),
+        netrx: nodeData.fetch("Node10.netrx"),
+        nettx: nodeData.fetch("Node10.nettx"),
+        osplatform: nodeData.fetch("Node10.osplatform"),
+        oslogofile: nodeData.fetch("Node10.oslogofile"),
+        osrelease: nodeData.fetch("Node10.osrelease"),
+        osuptime: nodeData.fetch("Node10.osuptime"),
+        biosvendor: nodeData.fetch("Node10.biosvender"),
+        biosversion: nodeData.fetch("Node10.biosversion"),
+        biosdate: nodeData.fetch("Node10.biosdate"),
+        dockercontainers: nodeData.fetch("Node10.dockercontainers"),
+        dockercontainersrunning: nodeData.fetch("Node10.dockercontainersrunning"),
+        dockercontainerspaused: nodeData.fetch("Node10.dockercontainerspaused"),
+        dockercontainersstopped: nodeData.fetch("Node10.dockercontainersstopped"),
+        lastupdate: nodeData.fetch("Node10.updatetime")
+      },
+      speedtest: {
+        ping: nodeData.fetch("Node10-speedtest.ping"),
+        download: nodeData.fetch("Node10-speedtest.download"),
+        upload: nodeData.fetch("Node10-speedtest.upload"),
+        lastupdate: nodeData.fetch("Node10-speedtest.updatetime")
       }
     }
   };
