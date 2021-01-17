@@ -6,7 +6,7 @@ const db = require("quick.db");
 
 module.exports = async (client) => {
     setInterval(() => {
-        client.channels.cache.get('754441222424363088').send('<#800396997274107916> **IMPORTANT INFORMATION. EVERYONE PLEASE READ**')
+        client.channels.cache.get('754441222424363088').send('<#738530520945786921> **IMPORTANT INFORMATION. EVERYONE PLEASE READ**')
     }, 600000)
 
     function getUsers() {
