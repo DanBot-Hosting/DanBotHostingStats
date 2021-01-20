@@ -5,9 +5,6 @@ global.snipes = new Discord.Collection();
 const db = require("quick.db");
 
 module.exports = async (client) => {
-    setInterval(() => {
-        client.channels.cache.get('754441222424363088').send('<#738530520945786921> **IMPORTANT INFORMATION. EVERYONE PLEASE READ**')
-    }, 6000000)
 
     function getUsers() {
             client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
