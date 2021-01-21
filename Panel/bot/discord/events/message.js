@@ -40,11 +40,16 @@ module.exports = (client, message) => {
             const args = message.content.trim().split(/ +/g);
             client.channels.cache.get(args[0]).send(message.content.split(' ').slice(1).join(' '))
         } else {
-            client.channels.cache.get('801847783019118663').send(message.author.username + "(" + message.author.id + ") \n" +  message.content)
+            if (message.author.id === "640161047671603205") {
+
+            } else {
+                client.channels.cache.get('801847783019118663').send(message.author.username + "(" + message.author.id + ") \n" +  message.content)
+            }
         }
     };
 
     if(message.author.bot) return; // to stop bots from creating accounts, tickets and more.
+    if(message.channel.type === "dm") return; //stops commandsworking in dms
     const prefix = config.DiscordBot.Prefix;
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
