@@ -43,7 +43,7 @@ module.exports = (client, message) => {
             if (message.author.id === "640161047671603205") {
 
             } else {
-                client.channels.cache.get('801847783019118663').send(message.author.username + " (ID: " + message.author.id + ", PING: <@ " + message.author.id + ">)" + "\n" +  message.content)
+                client.channels.cache.get('801847783019118663').send(message.author.username + " (ID: " + message.author.id + ", PING: <@" + message.author.id + ">)" + "\n" +  message.content)
             }
         }
     };
