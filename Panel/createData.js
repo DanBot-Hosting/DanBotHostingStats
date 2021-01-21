@@ -11,6 +11,15 @@ var getPassword = () => {
 };
 
 let list = {};
+
+
+/*
+
+Web Servers
+
+Nginx
+
+*/
 list.nginx = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -40,6 +49,19 @@ list.nginx = (serverName, userID) => ({
     },
     "start_on_completion": false
 });
+
+
+/*
+
+Discord Bot
+
+Red Discord Bot
+Node.JS
+Python
+AIO - Golang, Node.js v14, Java 11, Python 2.7 & 3
+Java
+
+*/
 list.reddiscordbot = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -161,35 +183,6 @@ list.aio = (serverName, userID) => ({
     },
     "start_on_completion": false
 })
-list.storage = (serverName, userID) => ({
-    "name": serverName,
-    "user": userID,
-    "nest": 5,
-    "egg": 46,
-    "docker_image": "danielpmc/discordnode8",
-    "startup": "${STARTUP_CMD}",
-    "limits": {
-        "memory": 1,
-        "swap": 0,
-        "disk": 0,
-        "io": 500,
-        "cpu": 1
-    },
-    "environment": {
-        "STARTUP_CMD": "STORAGE NODE"
-    },
-    "feature_limits": {
-        "databases": 0,
-        "allocations": 1,
-        "backups": 0
-    },
-    "deploy": {
-        "locations": [13],
-        "dedicated_ip": false,
-        "port_range": []
-    },
-    "start_on_completion": false
-})
 list.java = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -219,6 +212,56 @@ list.java = (serverName, userID) => ({
     },
     "start_on_completion": false
 })
+
+
+/*
+
+Storage Servers
+
+Storage
+
+*/
+list.storage = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 5,
+    "egg": 46,
+    "docker_image": "danielpmc/discordnode8",
+    "startup": "${STARTUP_CMD}",
+    "limits": {
+        "memory": 1,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 1
+    },
+    "environment": {
+        "STARTUP_CMD": "STORAGE NODE"
+    },
+    "feature_limits": {
+        "databases": 0,
+        "allocations": 1,
+        "backups": 0
+    },
+    "deploy": {
+        "locations": [13],
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false
+})
+
+
+/*
+
+Minecraft Servers
+
+Paper
+Forge
+Bedrock
+PocketMineMP
+
+*/
 list.paper = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -285,6 +328,80 @@ list.forge = (serverName, userID) => ({
     "start_on_completion": false,
     "oom_disabled": false
 })
+list.bedrock = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 1,
+    "egg": 18,
+    "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
+    "startup": "./bedrock_server",
+    "limits": {
+        "memory": 2048,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+        "BEDROCK_VERSION": "latest",
+        "LD_LIBRARY_PATH": "."
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": [14],
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
+list.pocketminemp = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 1,
+    "egg": 28,
+    "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
+    "startup": "./bin/php7/bin/php ./PocketMine-MP.phar --no-wizard --disable-ansi",
+    "limits": {
+        "memory": 2048,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+        "PMMP_VERSION": "latest"
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": [14],
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
+
+
+/*
+
+GTA Servers
+
+FiveM - GTA V
+alt:V - GTA V
+Multi Theft Auto - GTA SA
+RageMP - GTA V
+SA-MP - GTA SA
+
+*/
 list.fivem = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -446,67 +563,17 @@ list.samp = (serverName, userID) => ({
     "start_on_completion": false,
     "oom_disabled": false
 })
-list.bedrock = (serverName, userID) => ({
-    "name": serverName,
-    "user": userID,
-    "nest": 1,
-    "egg": 18,
-    "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
-    "startup": "./bedrock_server",
-    "limits": {
-        "memory": 2048,
-        "swap": 0,
-        "disk": 0,
-        "io": 500,
-        "cpu": 0
-    },
-    "environment": {
-        "BEDROCK_VERSION": "latest",
-        "LD_LIBRARY_PATH": "."
-    },
-    "feature_limits": {
-        "databases": 2,
-        "allocations": 1,
-        "backups": 10
-    },
-    "deploy": {
-        "locations": [14],
-        "dedicated_ip": false,
-        "port_range": []
-    },
-    "start_on_completion": false,
-    "oom_disabled": false
-})
-list.pocketminemp = (serverName, userID) => ({
-    "name": serverName,
-    "user": userID,
-    "nest": 1,
-    "egg": 28,
-    "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
-    "startup": "./bin/php7/bin/php ./PocketMine-MP.phar --no-wizard --disable-ansi",
-    "limits": {
-        "memory": 2048,
-        "swap": 0,
-        "disk": 0,
-        "io": 500,
-        "cpu": 0
-    },
-    "environment": {
-        "PMMP_VERSION": "latest"
-    },
-    "feature_limits": {
-        "databases": 2,
-        "allocations": 1,
-        "backups": 10
-    },
-    "deploy": {
-        "locations": [14],
-        "dedicated_ip": false,
-        "port_range": []
-    },
-    "start_on_completion": false,
-    "oom_disabled": false
-})
+
+
+/*
+
+Source Engine Servers
+
+Garry's Mod
+CS:GO
+ARK:SE
+
+*/
 list.gmod = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -614,6 +681,16 @@ list.arkse = (serverName, userID) => ({
     "start_on_completion": false,
     "oom_disabled": false
 })
+
+
+/*
+
+Voice Servers
+
+TeamSpeak 3
+Mumble
+
+*/
 list.ts3 = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -676,6 +753,15 @@ list.mumble = (serverName, userID) => ({
     "start_on_completion": false,
     "oom_disabled": false
 })
+
+
+/*
+
+SteamCMD Servers
+
+Rust
+
+*/
 list.rust = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -719,6 +805,17 @@ list.rust = (serverName, userID) => ({
     "start_on_completion": false,
     "oom_disabled": false
 })
+
+
+/*
+
+Database Servers
+
+MongoDB
+Redis
+Postgres
+
+*/
 list.mongodb = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
