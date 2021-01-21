@@ -245,7 +245,7 @@ list.paper = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -278,7 +278,7 @@ list.forge = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -315,7 +315,7 @@ list.fivem = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -349,7 +349,7 @@ list.altv = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -379,7 +379,7 @@ list.multitheftauto = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -411,7 +411,7 @@ list.ragemp = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -439,7 +439,7 @@ list.samp = (serverName, userID) => ({
     },
     "environment": {},
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -470,7 +470,7 @@ list.bedrock = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -500,7 +500,7 @@ list.pocketminemp = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -536,7 +536,7 @@ list.gmod = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -568,7 +568,7 @@ list.csgo = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -607,7 +607,7 @@ list.arkse = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -712,7 +712,7 @@ list.rust = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [5],
+        "locations": [14],
         "dedicated_ip": false,
         "port_range": []
     },

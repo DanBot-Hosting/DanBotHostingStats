@@ -228,6 +228,7 @@ exports.run = async (client, message, args) => {
 
         })
     } else if (args[0].toLowerCase() === "create-beta") {
+        /*
         if(message.member.roles.cache.some(r=>['793549158417301544', '710208090741539006', '788193704014905364'].includes(r.id)) ) {
 
             let bServerCreatesettings = serverCreateSettings_Beta.createParams(serverName, consoleID.consoleID);
@@ -294,6 +295,9 @@ exports.run = async (client, message, args) => {
                 .setFooter("Example: " + config.DiscordBot.Prefix + "server create-beta NodeJS Testing Server"))
 
         }
+
+         */
+        message.channel.send('There is currently no beta happening right now. Keep an eye out for updates :)')
     } else if (args[0].toLowerCase() === "delete") {
 
         if (cooldown[message.author.id].delete > Date.now()) {
