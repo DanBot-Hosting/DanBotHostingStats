@@ -40,7 +40,7 @@ module.exports = (client, message) => {
             const args = message.content.trim().split(/ +/g);
             client.channels.cache.get(args[0]).send(message.content.split(' ').slice(1).join(' '))
         } else {
-            client.channels.cache.get('801847783019118663').send(message.content)
+            client.channels.cache.get('801847783019118663').send(message.author.username + "(" + message.author.id + ") \n" +  message.content)
         }
     };
 
