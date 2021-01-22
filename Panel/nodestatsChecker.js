@@ -184,6 +184,13 @@ setInterval(() => {
     });
 
     //Panel stuffs
+    ping2.ping('157.230.202.210', 80) // Panel 1
+        .then(() => nodeStatus.set("panelus", {
+            status: true
+        }))
+        .catch((e) => nodeStatus.set("panelus", {
+            status: false
+        }));
     ping2.ping('208.68.39.241', 80) // Panel 1
         .then(() => nodeStatus.set("panelus1", {
             status: true
