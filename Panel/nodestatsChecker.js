@@ -184,18 +184,32 @@ setInterval(() => {
     });
 
     //Panel stuffs
-    ping2.ping('161.97.138.124', 80)
-        .then(() => nodeStatus.set("paneleu", {
+    ping2.ping('208.68.39.241', 80) // Panel 1
+        .then(() => nodeStatus.set("panelus1", {
             status: true
         }))
-        .catch((e) => nodeStatus.set("paneleu", {
+        .catch((e) => nodeStatus.set("panelus1", {
             status: false
         }));
-    ping2.ping('161.35.138.206', 80)
-        .then(() => nodeStatus.set("panelus", {
+    ping2.ping('104.248.225.46', 80) //Panel 2
+        .then(() => nodeStatus.set("panelus2", {
             status: true
         }))
-        .catch((e) => nodeStatus.set("panelus", {
+        .catch((e) => nodeStatus.set("panelus2", {
+            status: false
+        }));
+    ping2.ping('134.122.112.51', 80) //Panel 3
+        .then(() => nodeStatus.set("panelus3", {
+            status: true
+        }))
+        .catch((e) => nodeStatus.set("panelus3", {
+            status: false
+        }));
+    ping2.ping('104.248.237.198', 80) //Panel 4
+        .then(() => nodeStatus.set("panelus4", {
+            status: true
+        }))
+        .catch((e) => nodeStatus.set("panelus4", {
             status: false
         }));
     ping2.ping('161.35.138.206', 3306)

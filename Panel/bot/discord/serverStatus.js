@@ -42,11 +42,17 @@ let nstatus = {
     }],
 
     "Panel": [{
-        name: 'US Load Balancer',
-        data: 'panelus'
+        name: 'US Panel 1',
+        data: 'panelus1'
     }, {
-        name: 'EU Load Balancer',
-        data: 'paneleu'
+        name: 'US Panel 2',
+        data: 'panelus2'
+    }, {
+        name: 'US Panel 3',
+        data: 'panelus3'
+    }, {
+        name: 'US Panel 4',
+        data: 'panelus4'
     }, {
         name: 'MySQL Database',
         data: 'dbhdb'
