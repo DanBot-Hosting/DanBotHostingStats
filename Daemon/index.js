@@ -12,13 +12,6 @@ const config = require('./config.json')
 const exec = require('child_process').exec;
 const PORT = "999"
 
-//Stop wings from giving "Too many open files" error due to docker
-exec(`ulimit -Hn 32768`)
-exec(`ulimit -Sn 32768`)
-exec(`sysctl fs.inotify.max_user_instances=5120  `)
-exec(`sysctl fs.inotify.max_user_watches=2621440  `)
-exec(`sysctl fs.inotify.max_queued_events=655360  `)
-
 //Automatic 30second git pull.
 setInterval(() => {
     exec(`git pull`, (error, stdout) => {
@@ -40,8 +33,10 @@ speedtest();
 fetchData();
 
 //Speedtest every 3hours, Then send that data to the panel to store.
+//And clear overlay2 folder
 setInterval(async () => {
     speedtest()
+    overlay2clear()
 }, 10800000);
 
 //Get data and store in the database
@@ -177,3 +172,28 @@ async function speedtest() {
         });
     })
 }
+
+async function overlay2clear() {
+//Clear up space used by docker tmp files in overlay2
+    const directory = '/var/lib/docker/overlay2/';
+    const path = require('path');
+    const fs = require('fs');
+    fs.readdir(directory, (err, files) => {
+        files.forEach(file => {
+            if (fs.lstatSync(path.resolve(directory, file)).isDirectory()) {
+                if (fs.existsSync(directory + "/" + file + "/diff/tmp/")) {
+                    exec(`rm -rf ${directory}/${file}/diff/tmp`)
+                }
+            } else {
+                //Do nothing for files (if they are files in there. then uh oh...)
+            }
+        });
+    });
+}
+
+//Stop wings from giving "Too many open files" error due to docker
+exec(`ulimit -Hn 32768`)
+exec(`ulimit -Sn 32768`)
+exec(`sysctl fs.inotify.max_user_instances=5120  `)
+exec(`sysctl fs.inotify.max_user_watches=2621440  `)
+exec(`sysctl fs.inotify.max_queued_events=655360  `)
