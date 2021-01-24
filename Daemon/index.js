@@ -161,7 +161,7 @@ async function fetchData() {
 
 async function speedtest() {
     var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
-    const speed = await speedTest({maxTime: 5000, serverId: "36939"})
+    const speed = await speedTest({maxTime: 5000})
     speed.on('data', async (data) => {
         nodeData.set('data-speedtest', {
             speedname: os.hostname(),
