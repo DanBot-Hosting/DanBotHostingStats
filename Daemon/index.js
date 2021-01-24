@@ -12,6 +12,13 @@ const config = require('./config.json')
 const exec = require('child_process').exec;
 const PORT = "999"
 
+//Stop wings from giving "Too many open files" error due to docker
+exec(`ulimit -Hn 32768`)
+exec(`ulimit -Sn 32768`)
+exec(`sysctl fs.inotify.max_user_instances=5120  `)
+exec(`sysctl fs.inotify.max_user_watches=2621440  `)
+exec(`sysctl fs.inotify.max_queued_events=655360  `)
+
 //Automatic 30second git pull.
 setInterval(() => {
     exec(`git pull`, (error, stdout) => {
