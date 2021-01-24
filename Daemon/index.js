@@ -174,15 +174,30 @@ async function speedtest() {
 }
 
 async function overlay2clear() {
-//Clear up space used by docker tmp files in overlay2
-    const directory = '/var/lib/docker/overlay2/';
     const path = require('path');
     const fs = require('fs');
-    fs.readdir(directory, (err, files) => {
+
+    //Clear up space used by docker tmp files in overlay2
+    const directoryol2 = '/var/lib/docker/overlay2/';
+    fs.readdir(directoryol2, (err, files) => {
         files.forEach(file => {
-            if (fs.lstatSync(path.resolve(directory, file)).isDirectory()) {
-                if (fs.existsSync(directory + "/" + file + "/diff/tmp/")) {
-                    exec(`rm -rf ${directory}/${file}/diff/tmp`)
+            if (fs.lstatSync(path.resolve(directoryol2, file)).isDirectory()) {
+                if (fs.existsSync(directoryol2 + "/" + file + "/diff/tmp/")) {
+                    exec(`rm -rf ${directoryol2}/${file}/diff/tmp`)
+                }
+            } else {
+                //Do nothing for files (if they are files in there. then uh oh...)
+            }
+        });
+    });
+
+    //Clear up space used by docker tmp folders in merged
+    const directorymerged = '/var/lib/docker/overlay2/';
+    fs.readdir(directorymerged, (err, files) => {
+        files.forEach(file => {
+            if (fs.lstatSync(path.resolve(directorymerged, file)).isDirectory()) {
+                if (fs.existsSync(directorymerged + "/" + file + "/merged/tmp/")) {
+                    exec(`rm -rf ${directorymerged}/${file}/diff/tmp`)
                 }
             } else {
                 //Do nothing for files (if they are files in there. then uh oh...)
