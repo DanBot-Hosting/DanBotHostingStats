@@ -199,7 +199,9 @@ exports.run = async (client, message, args) => {
                         "password": config.externalPassword
                     },
                 }).then(response => {
-                    message.channel.send(response.data.status)
+                    if (response.data.status === "Wings restarted") {
+                        message.channel.send('[WINGS] Restarted for node ' + args[1] + '\nAllow 5 - 10mins for wings to boot.')
+                    }
                 })
             }
             break;
