@@ -88,7 +88,7 @@ let nstatus = {
         data: 'mail.danbot.host'
     }, {
         name: 'Reverse Proxy',
-        data: '154.27.68.95'
+        data: '63.141.228.92'
     }, {
         name: 'Animal API',
         data: 'api.danbot.host'
