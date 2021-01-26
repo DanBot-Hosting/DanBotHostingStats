@@ -192,6 +192,7 @@ exports.run = async (client, message, args) => {
                     i++
                 }
             } else {
+                message.delete()
                 require('axios')({
                     url: "http://n" + args[1] + ".danbot.host:999/wings?action=" + args[2].toLowerCase(),
                     method: 'GET',
