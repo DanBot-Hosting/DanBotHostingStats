@@ -12,6 +12,12 @@ const config = require('./config.json')
 const exec = require('child_process').exec;
 const PORT = "999"
 
+//Test things (REMOVE BEFORE PUSHING TO GITHUB)
+setTimeout(async () => {
+    const dockertest = await si.dockerContainerStats()
+    console.log(dockertest)
+}, 2000)
+
 //Automatic 30second git pull.
 setInterval(() => {
     exec(`git pull`, (error, stdout) => {

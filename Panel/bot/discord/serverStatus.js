@@ -69,12 +69,12 @@ let nstatus = {
         data: 'node1-priv'
     }],
 
-    "Public Game Servers": [{
-        name: 'Panel',
-        data: 'pub.danbot.host'
+    "Dan's Private Panel": [{
+        name: 'PrivPanel',
+        data: 'private.danbot.host'
     }, {
         name: 'Node-1',
-        data: 'pub_node1'
+        data: 'dan-node1'
     }],
 
     "Misc": [{

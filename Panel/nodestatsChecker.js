@@ -142,28 +142,25 @@ setInterval(() => {
     })
 
     //Node 1 (PUBLIC GAMESERVER PANEL)
-    /*
     axios({
-        url: config.PubPterodactyl.hosturl + "/api/client/servers/e8766671/resources",
+        url: config.DanPterodactyl.hosturl + "/api/client/servers/2b5066aa/resources",
         method: 'GET',
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            'Authorization': 'Bearer ' + config.PubPterodactyl.apikeyclient,
+            'Authorization': 'Bearer ' + config.DanPterodactyl.apikeyclient,
             'Content-Type': 'application/json',
             'Accept': 'Application/vnd.pterodactyl.v1+json',
         }
     }).then(response => {
-        nodeStatus.set("pub_node1", {
+        nodeStatus.set("dan-node1", {
             status: true
         });
     }).catch(error => {
-        nodeStatus.set("pub_node1", {
+        nodeStatus.set("dan-node1", {
             status: false
         });
     })
-    *\
-     */
 
     // Panel Cherckers
     var hosts = ['63.141.228.92', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'pub.danbot.host'];
