@@ -242,6 +242,10 @@ setInterval(() => {
           upload: response.data.speedtest.upload,
           updatetime: response.data.speedtest.updatetime
         });
+        nodeData.set(response.data.info.servername + '-docker', {
+          dockerStats: response.data.docker.dockerStats,
+          dockerAll: response.data.docker.dockerAll
+        })
       }).catch(err => {
 
     })
