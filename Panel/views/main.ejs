@@ -77,34 +77,4 @@
       </div>
    </div>
 </div>
-
-<h1 class="cover-heading">Table Example</h1>
-<div class="container bg-light text-dark">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Server name</th>
-            <th>CPU Usage</th>
-            <th>Ram Usage</th>
-            <th>Disk Usage</th>
-            <th>Server ID</th>
-            <th>Owner ID</th>
-            <th>Discord Owner ID</th>
-            <th>Extra</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%table.forEach(function(entry) {%>
-        <tr>
-            <td><%=entry.name%></td>
-            <td><%=entry.cpuusage%></td>
-            <td><%=entry.ramusage%></td>
-            <td><%=entry.diskusage%></td>
-            <td><%=entry.serverid%></td>
-            <td><%=entry.ownerid%></td>
-            <td><%=entry.discordownerid%></td>
-        </tr>
-        <%});%>
-        </tbody>
-    </table>
 </div>
