@@ -8,10 +8,14 @@ Router.get("/", (req, res) => {
   let from = req.query.utm_source;
   let Message = null;
   let MessageDefined = null;
-    
-  res.render('main.ejs',  {
-    user: req.isAuthenticated() ? req.user : null
-});
+
+  var items = [
+    {name:'node.js', cpuusage:'420%', ramusage:'69gb', diskusage:'666mb', serverid:'123456789', ownerid:'1', discordownerid:'69420666'},];
+  res.render('main.ejs',{
+    user: req.isAuthenticated() ? req.user : null,
+    table:items
+  })
+
 });
 
 Router.get("/Node1", (req, res) => {

@@ -3,6 +3,7 @@ const app = express();
 const server = require("http").createServer(app);
 const db = require("quick.db")
 const nodeData = new db.table("nodeData");
+const dockerData = new db.table("dockerData");
 const si = require('systeminformation');
 const os = require("os");
 const pretty = require('prettysize');
@@ -12,32 +13,11 @@ const config = require('./config.json')
 const exec = require('child_process').exec;
 const PORT = "999"
 
-//Test things (REMOVE BEFORE PUSHING TO GITHUB)
-setTimeout(async () => {
-    const dockertest = await si.dockerContainerStats()
-    console.log(dockertest)
-}, 2000)
-
-//Automatic 30second git pull.
-setInterval(() => {
-    exec(`git pull`, (error, stdout) => {
-        let response = (error || stdout);
-        if (!error) {
-            if (response.includes("Already up to date.")) {
-            } else {
-                console.log("**[AUTOMATIC]** New update on GitHub.")
-                setTimeout(() => {
-                    process.exit();
-                }, 1000)
-            }
-        }
-    })
-}, 30000)
-
 //Issue speedtest on startup
 speedtest();
 fetchData();
 overlay2clear();
+dockers();
 
 //Speedtest every 3hours, Then send that data to the panel to store.
 //And clear overlay2 folder
@@ -49,6 +29,7 @@ setInterval(async () => {
 //Get data and store in the database
 setInterval(async () => {
     fetchData()
+    dockers();
 }, 2000)
 
 app.get("/states", (req, res) => {
@@ -178,6 +159,15 @@ async function speedtest() {
             updatetime: timestamp
         });
     })
+}
+
+async function dockers() {
+    const dockerStats = await si.dockerContainerStats();
+    const dockerAll = await si.dockerContainers();
+    dockerData.set('data', {
+        dockerStats: dockerStats,
+        dockerAll: dockerAll
+    });
 }
 
 async function overlay2clear() {
