@@ -202,6 +202,8 @@ exports.run = async (client, message, args) => {
                 }).then(response => {
                     if (response.data.status === "Wings restarted") {
                         message.channel.send('[WINGS] Restarted for node ' + args[1] + '\nAllow 5 - 10mins for wings to boot.')
+                    } else {
+                        message.channel.send(response.data.status)
                     }
                 })
             }
