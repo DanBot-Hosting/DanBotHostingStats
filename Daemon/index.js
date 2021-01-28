@@ -53,7 +53,8 @@ app.get('/stats', function (req, res) {
     if (req.headers.password === config.password) {
         let data = {
             info: nodeData.fetch("data"),
-            speedtest: nodeData.fetch("data-speedtest")
+            speedtest: nodeData.fetch("data-speedtest"),
+            docker: dockerData.fetch('data')
         }
         res.send(data)
     } else {
