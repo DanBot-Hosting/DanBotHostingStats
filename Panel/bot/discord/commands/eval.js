@@ -35,7 +35,7 @@ exports.run = async (client, message) => {
     message.channel.send('Evaluating...').then(msg => {
         try {
             let code = args.join(' ');
-            let evaled = eval(code);
+            let evaled = await eval(code);
 
             if (typeof evaled !== 'string') {
                 evaled = require('util').inspect(evaled);
