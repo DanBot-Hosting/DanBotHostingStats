@@ -1,6 +1,10 @@
 module.exports = async (client, oldMember, newMember) => {
     // If user nickname changes.
     if (oldMember.displayName !== newMember.displayName) {
+        if(newMember.displayName.toLowerCase().includes("soloisaslut")) {
+            return newMember.setNick(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"));
+        }
+
 
         // Make a new RichEmbed
         const embed = new Discord.MessageEmbed()
