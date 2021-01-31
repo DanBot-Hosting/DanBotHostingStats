@@ -2,7 +2,7 @@ module.exports = async (client, oldMember, newMember) => {
     // If user nickname changes.
     if (oldMember.displayName !== newMember.displayName) {
         if(newMember.displayName.toLowerCase().includes("soloisaslut")) {
-            return newMember.setNick(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"));
+            return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
 
 
