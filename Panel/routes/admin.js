@@ -31,7 +31,7 @@ Router.post("/node5", checkAuth, (req, res) => {
 
     let data = req.body;
     console.log(data);
-    
+
 });
 
 Router.get("/node5", checkAuth, (req, res) => {
