@@ -16,20 +16,20 @@ const PORT = "999"
 //Issue speedtest on startup
 speedtest();
 fetchData();
-overlay2clear();
-dockers();
+//overlay2clear();
+//dockers();
 
 //Speedtest every 3hours, Then send that data to the panel to store.
 //And clear overlay2 folder
 setInterval(async () => {
     speedtest()
-    overlay2clear()
+    //overlay2clear()
 }, 10800000);
 
 //Get data and store in the database
 setInterval(async () => {
     fetchData()
-    dockers();
+    //dockers();
 }, 2000)
 
 app.get("/states", (req, res) => {
@@ -49,12 +49,12 @@ app.get("/", (req, res) => {
     res.send('Not sure what you expected to find here. This script just sends data to the panel and its all password protected so you can leave now :)')
 });
 
-app.get('/stats', function (req, res) {
+app.get('/stats', async function (req, res) {
     if (req.headers.password === config.password) {
         let data = {
             info: nodeData.fetch("data"),
             speedtest: nodeData.fetch("data-speedtest"),
-            docker: dockerData.fetch('data')
+            docker: await si.dockerAll()
         }
         res.send(data)
     } else {
@@ -163,10 +163,8 @@ async function speedtest() {
 }
 
 async function dockers() {
-    const dockerStats = await si.dockerContainerStats();
-    const dockerAll = await si.dockerContainers();
+    const dockerAll = await si.dockerAll();
     dockerData.set('data', {
-        dockerStats: dockerStats,
         dockerAll: dockerAll
     });
 }

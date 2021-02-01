@@ -27,6 +27,15 @@ Router.post("/settings", checkAuth, (req, res) => {
         
 });
 
+Router.post("/node5", checkAuth, (req, res) => {
+
+    var items = nodeData.fetch('Node5-docker.dockerAll')
+    console.log(data);
+    res.render('node5-admin.ejs',{
+        table:items
+    })
+
+});
 //Requests/tickets page
 Router.get("/requests", checkAuth, (req, res) => {
   let bots = db.get(`${req.user.id}.bots`);

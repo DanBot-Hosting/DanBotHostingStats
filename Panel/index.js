@@ -32,6 +32,7 @@ global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
+global.pretty = require('prettysize');
 global.transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
@@ -243,8 +244,7 @@ setInterval(() => {
           updatetime: response.data.speedtest.updatetime
         });
         nodeData.set(response.data.info.servername + '-docker', {
-          dockerStats: response.data.docker.dockerStats,
-          dockerAll: response.data.docker.dockerAll
+          dockerAll: response.data.docker
         })
       }).catch(err => {
 
