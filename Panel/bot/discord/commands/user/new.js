@@ -120,7 +120,10 @@ exports.run = async (client, message, args) => {
 
     }
 
-    channel.send("```" + JSON.stringify(questions.map(x => ({ question: x.question, value: x.value }))) + "```")
+    msg.edit(message.member, {
+        embed: msg.embeds[0].setDescription('Attempting to create an account for you...\n>>>' + questions.map(x => `**${x.id}:** ${x.value.toLowerCase()}`).join('\n'))
+    });
+
 
     // if (userData.get(message.author.id) === null) {
     //     const server = message.guild
