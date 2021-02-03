@@ -121,7 +121,9 @@ exports.run = async (client, message, args) => {
     }
 
     msg.edit(message.member, {
-        embed: msg.embeds[0].setDescription('Attempting to create an account for you...\n>>>' + questions.map(x => `**${x.id}:** ${x.value.toLowerCase()}`).join('\n'))
+        embed: msg.embeds[0]
+        .setDescription('Attempting to create an account for you...\n>>> ' + questions.map(x => `**${x.id}:** ${x.value.toLowerCase()}`).join('\n'))
+        .setFooter('').setTimestamp()
     });
 
 
