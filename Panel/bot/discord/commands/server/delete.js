@@ -1,6 +1,15 @@
 const axios = require('axios');
 
 exports.run = async (client, message, args) => {
+
+    if (client.cooldown[message.author.id] == null) {
+        client.cooldown[message.author.id] = {
+            nCreate: null,
+            pCreate: null,
+            delete: null
+        }
+    }
+
     if (client.cooldown[message.author.id].delete > Date.now()) {
         message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].delete - Date.now(), {round: true})}`)
         return;
