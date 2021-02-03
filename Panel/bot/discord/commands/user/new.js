@@ -184,7 +184,9 @@ exports.run = async (client, message, args) => {
             channel.delete();
         }, 1800000);
     }).catch(err => {
-        let errors = err.response.data.errors
+        console.log(err);
+
+        let errors = err.data.errors;
 
         if (errors) {
             msg.edit('', {
