@@ -54,15 +54,9 @@ exports.run = async (client, message, args) => {
         // Give the user permission to see the channel
         type: 'user',
         id: message.author.id,
-        deny: 1024
+        allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'READ_MESSAGE_HISTORY']
     }
     ]).catch(console.error);
-
-    await channel.updateOverwrite(message.author, {
-        VIEW_CHANNEL: true,
-        SEND_MESSAGES: true,
-        READ_MESSAGE_HISTORY: true
-    })
 
     // Locate the account creation category
     let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
