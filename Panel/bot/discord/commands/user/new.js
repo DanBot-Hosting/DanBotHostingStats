@@ -4,6 +4,7 @@ exports.run = async (client, message, args) => {
 
     if (message.author.id != '293841631583535106') return message.reply('Temporarily disabled. *further updates will be posted in <#738530520945786921>*');
 
+    message.reply('test')
 
     if (userData.get(message.author.id) != null) {
         message.reply("You already have a `panel account` linked to your discord account");
@@ -25,7 +26,7 @@ exports.run = async (client, message, args) => {
     ]
 
     // Create the channel in which the user will use to create his account
-    let channel = await server.channels.create(message.author.tag, "text", [{
+    let channel = await message.guild.channels.create(message.author.tag, "text", [{
         //Deny everyone's access to see the channel
         type: 'role',
         id: message.guild.id,
@@ -40,7 +41,7 @@ exports.run = async (client, message, args) => {
     ]).catch(console.error);
 
     // Locate the account creation category
-    let category = server.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
+    let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
 
     // if not found throw an error
     if (!category) throw new Error("Category channel does not exist");
