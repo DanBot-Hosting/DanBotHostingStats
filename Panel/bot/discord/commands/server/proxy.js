@@ -1,5 +1,5 @@
 const sshClient = require('ssh2').Client;
-exports.run = async (client, message, args, cooldown) => {
+exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
     if (!args[1]) {

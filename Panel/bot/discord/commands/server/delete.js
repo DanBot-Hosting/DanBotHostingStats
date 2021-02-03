@@ -1,11 +1,11 @@
 const axios = require('axios');
 
-exports.run = async (client, message, args, cooldown) => {
-    if (cooldown[message.author.id].delete > Date.now()) {
-        message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].delete - Date.now(), {round: true})}`)
+exports.run = async (client, message, args) => {
+    if (client.cooldown[message.author.id].delete > Date.now()) {
+        message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].delete - Date.now(), {round: true})}`)
         return;
     }
-    cooldown[message.author.id].delete = Date.now() + (3 * 1000);
+    client.cooldown[message.author.id].delete = Date.now() + (3 * 1000);
 
     //delete server things
     if (!args[1]) {

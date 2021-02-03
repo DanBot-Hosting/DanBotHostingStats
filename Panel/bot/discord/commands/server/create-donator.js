@@ -3,9 +3,11 @@ const humanizeDuration = require('humanize-duration');
 
 const axios = require('axios');
 
-exports.run = async (client, message, args, cooldown) => {
-    if (cooldown[message.author.id] == null) {
-        cooldown[message.author.id] = {
+exports.run = async (client, message, args) => {
+    
+    
+    if (client.cooldown[message.author.id] == null) {
+        client.cooldown[message.author.id] = {
             nCreate: null,
             pCreate: null,
             delete: null
@@ -59,11 +61,11 @@ exports.run = async (client, message, args, cooldown) => {
             return;
         }
 
-        if (cooldown[message.author.id].pCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
+        if (client.cooldown[message.author.id].pCreate > Date.now()) {
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
             return;
         }
-        cooldown[message.author.id].pCreate = Date.now() + (10 * 1000);
+        client.cooldown[message.author.id].pCreate = Date.now() + (10 * 1000);
 
 
         let types = {

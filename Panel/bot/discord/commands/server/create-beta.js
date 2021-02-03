@@ -1,12 +1,12 @@
 const serverCreateSettings_Beta = require('../../../createData_Beta');
-exports.run = async (client, message, args, cooldown) => {
-    if (cooldown[message.author.id] == null) {
-        cooldown[message.author.id] = {
-            nCreate: null,
-            pCreate: null,
-            delete: null
-        }
-    }
+exports.run = async (client, message, args) => {
+    // if (client.cooldown[message.author.id] == null) {
+    //     client.cooldown[message.author.id] = {
+    //         nCreate: null,
+    //         pCreate: null,
+    //         delete: null
+    //     }
+    // }
     /*
         if(message.member.roles.cache.some(r=>['793549158417301544', '710208090741539006', '788193704014905364'].includes(r.id)) ) {
 
@@ -24,11 +24,11 @@ exports.run = async (client, message, args, cooldown) => {
                 return;
             }
 
-            if (cooldown[message.author.id].pCreate > Date.now()) {
-                message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
+            if (client.cooldown[message.author.id].pCreate > Date.now()) {
+                message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
                 return;
             }
-            cooldown[message.author.id].pCreate = Date.now() + (10 * 1000);
+            client.cooldown[message.author.id].pCreate = Date.now() + (10 * 1000);
 
 
             let types = {

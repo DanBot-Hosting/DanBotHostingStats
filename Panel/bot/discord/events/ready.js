@@ -50,6 +50,9 @@ module.exports = async (client) => {
         }
     ];
 
+    //Initializing Cooldown
+    client.cooldown = {};
+
 
     //Automatic 30second git pull.
     setInterval(() => {

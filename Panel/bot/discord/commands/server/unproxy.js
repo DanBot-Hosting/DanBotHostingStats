@@ -1,5 +1,5 @@
 const sshClient = require('ssh2').Client;
-exports.run = async (client, message, args, cooldown) => {
+exports.run = async (client, message, args) => {
     if (!args[1]) {
         const embed = new Discord.MessageEmbed()
             .setTitle('__**How to remove a domain from a server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server unproxy domainhere')

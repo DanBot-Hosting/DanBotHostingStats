@@ -1,8 +1,8 @@
 const serverCreateSettings = require('../../../../createData');
 const humanizeDuration = require('humanize-duration');
-exports.run = async (client, message, args, cooldown) => {
-    if (cooldown[message.author.id] == null) {
-        cooldown[message.author.id] = {
+exports.run = async (client, message, args) => {
+    if (client.cooldown[message.author.id] == null) {
+        client.cooldown[message.author.id] = {
             nCreate: null,
             pCreate: null,
             delete: null
@@ -69,11 +69,11 @@ exports.run = async (client, message, args, cooldown) => {
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
 
-        if (cooldown[message.author.id].nCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
+        if (client.cooldown[message.author.id].nCreate > Date.now()) {
+            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
             return;
         }
-        cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
+        client.cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
 
         if (args[1] === "aio" | args[1] === "java") {
             serverCreateSettings.createServer(types[args[1].toLowerCase()])
@@ -101,7 +101,7 @@ exports.run = async (client, message, args, cooldown) => {
                     message.channel.send(embed)
                 }).catch(error => {
                 message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-                cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
+                client.cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
             })
         }
         return;

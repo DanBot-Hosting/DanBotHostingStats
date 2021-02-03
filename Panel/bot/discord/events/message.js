@@ -2,7 +2,6 @@ const fetch = require('node-fetch');
 
 module.exports = (client, message) => {
 
-
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648', '338192747754160138'];
     if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
@@ -24,6 +23,8 @@ module.exports = (client, message) => {
         });
     }
 }
+
+
 
     //Auto reactions on suggestions
     if (message.channel.id === "740302560488980561") {
@@ -71,14 +72,12 @@ module.exports = (client, message) => {
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
         if (command === "server" || command === "user" || command === "staff") {
             //Cooldown setting
-            let cooldown = {};
-
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
-                commandFile.run(client, message, args, cooldown);
+                commandFile.run(client, message, args);
             } else {
                 let commandFile = require(`../commands/${command}/${args[0]}.js`);
-                commandFile.run(client, message, args, cooldown);
+                commandFile.run(client, message, args);
             }
         } else {
             let commandFile = require(`../commands/${command}.js`);

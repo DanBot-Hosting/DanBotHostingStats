@@ -1,5 +1,5 @@
 const axios = require('axios')
-exports.run = async (client, message, args, cooldown) => {
+exports.run = async (client, message, args) => {
     message.channel.send('Loading servers...')
     //List servers
     var arr = [];
