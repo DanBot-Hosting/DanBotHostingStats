@@ -12,10 +12,6 @@ exports.run = async (client, message, args) => {
         return password;
     };
 
-    if (message.author.id != '293841631583535106') return message.reply('Temporarily disabled. *further updates will be posted in <#738530520945786921>*');
-
-    message.reply('test')
-
     if (userData.get(message.author.id) != null) {
         message.reply("You already have a `panel account` linked to your discord account");
         return;
@@ -183,8 +179,6 @@ exports.run = async (client, message, args) => {
             channel.delete();
         }, 1800000);
     }).catch(err => {
-        console.log(err);
-
         let errors = err.response.data.errors;
 
         if (errors) {
