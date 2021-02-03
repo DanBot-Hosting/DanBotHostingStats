@@ -191,9 +191,17 @@ exports.run = async (client, message, args) => {
                 embed: new Discord.MessageEmbed()
                     .setColor("RED")
                     .setTitle("An error has occured:")
-                    .setDescription("**ERRORS:**\n\n" + errors.map(error => error.detail.replace('\n', ' ')).join('\n'))
-                    .setTimestamp()
+                    .setDescription("**ERRORS:**\n\n●" + errors.map(error => error.detail.replace('\n', ' ')).join('\n●'))
+                    .setTimestamp().setFooter('Deleting in 30 seconds...')
             })
+            setTimeout(function () {
+                channel.delete();
+            }, 30000);
+        } else {
+            channel.send('an unexpected error has occured, please try again later...');
+            setTimeout(function () {
+                channel.delete();
+            }, 30000);
         }
     })
 }
