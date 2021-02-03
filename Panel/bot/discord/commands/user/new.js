@@ -2,7 +2,87 @@ const axios = require("axios");
 const validator = require('validator');
 exports.run = async (client, message, args) => {
 
-    message.reply('Temporarily disabled. *further updates will be posted in <#738530520945786921>*')
+    if (message.author.id != '293841631583535106') return message.reply('Temporarily disabled. *further updates will be posted in <#738530520945786921>*');
+
+
+    if (userData.get(message.author.id) != null) {
+        message.reply("You already have a `panel account` linked to your discord account");
+        return;
+    }
+
+    let questions = [
+        {
+            question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
+            filter: (m) => m.author.id === message.author.id && m.content.split(" ").length == 1, // Filter to use...
+            time: 30000, // how much time a user has to answer the question before it times out
+            value: null // The user's response.
+        }, {
+            question: "Whats your email? *(must be a valid email)*",
+            filter: (m) => m.author.id === message.author.id,
+            time: 30000,
+            value: null
+        }
+    ]
+
+    // Create the channel in which the user will use to create his account
+    let channel = await server.channels.create(message.author.tag, "text", [{
+        //Deny everyone's access to see the channel
+        type: 'role',
+        id: message.guild.id,
+        deny: 0x400
+    },
+    {
+        // Give the user permission to see the channel
+        type: 'user',
+        id: message.author.id,
+        deny: 1024
+    }
+    ]).catch(console.error);
+
+    // Locate the account creation category
+    let category = server.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
+
+    // if not found throw an error
+    if (!category) throw new Error("Category channel does not exist");
+
+    //if found set the channel's category to said category
+    await channel.setParent(category.id);
+
+
+    // Tell the user to check the channel.
+    message.reply(`Please check <#${channel.id}> to create an account.`);
+
+    //Send the initial question.
+
+    let msg = null;
+
+    for (const question of questions) {
+
+        if (msg == null) {
+            msg = await channel.send(message.member, {
+                embed: new Discord.MessageEmbed()
+                    .setColor(0x36393e)
+                    .setDescription(question.question)
+                    .setFooter("You can type 'cancel' to cancel the request")
+            });
+        } else {
+            msg.edit(message.member, {
+                embed: msg.embeds[0].setDescription(question.question)
+            });
+        }
+
+        let awaitMessages = await channel.awaitMessages(question.filter, {
+            max: 1,
+            time: question.time,
+            errors: ['time'],
+        }).catch(x => {
+            channel.send(x.message);
+        });
+    
+        question.value = awaitMessages.first().content;
+    }
+
+message.channel.send("```" + JSON.stringify(questions.map(x => ({question: x.question, value: x.value}))) + "```")
 
     // if (userData.get(message.author.id) === null) {
     //     const server = message.guild
