@@ -4,6 +4,14 @@ const humanizeDuration = require('humanize-duration');
 const axios = require('axios');
 
 exports.run = async (client, message, args, cooldown) => {
+    if (cooldown[message.author.id] == null) {
+        cooldown[message.author.id] = {
+            nCreate: null,
+            pCreate: null,
+            delete: null
+        }
+    }
+
     let user = userPrem.fetch(message.author.id);
 
     let boosted;

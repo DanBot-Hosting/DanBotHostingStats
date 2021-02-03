@@ -73,13 +73,6 @@ module.exports = (client, message) => {
 
             //Cooldown setting
             let cooldown = {};
-            if (cooldown[message.author.id] == null) {
-                cooldown[message.author.id] = {
-                    nCreate: null,
-                    pCreate: null,
-                    delete: null
-                }
-            }
 
             if (!args[0]) {
                 let commandFile = require(`../commands/server/help.js`);

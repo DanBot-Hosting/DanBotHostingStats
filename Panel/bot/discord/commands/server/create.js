@@ -1,6 +1,13 @@
 const serverCreateSettings = require('../../../../createData');
 const humanizeDuration = require('humanize-duration');
 exports.run = async (client, message, args, cooldown) => {
+    if (cooldown[message.author.id] == null) {
+        cooldown[message.author.id] = {
+            nCreate: null,
+            pCreate: null,
+            delete: null
+        }
+    }
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
