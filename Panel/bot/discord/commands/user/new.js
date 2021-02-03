@@ -58,6 +58,12 @@ exports.run = async (client, message, args) => {
     }
     ]).catch(console.error);
 
+    await channel.updateOverwrite(message.author, {
+        VIEW_CHANNEL: true,
+        SEND_MESSAGES: true,
+        READ_MESSAGE_HISTORY: true
+    })
+
     // Locate the account creation category
     let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
 
@@ -95,7 +101,10 @@ exports.run = async (client, message, args) => {
             time: question.time,
             errors: ['time'],
         }).catch(x => {
-            channel.send(x.message);
+            channel.send("User failed to provide an input!\nAccount Cancelled! :thumbsup:");
+            setTimeout(() => {
+                channel.delete();
+            }, 5000);
         });
         // Log the value...
         question.value = awaitMessages.first().content.trim();
