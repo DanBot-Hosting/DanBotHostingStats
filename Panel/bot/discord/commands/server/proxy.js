@@ -1,16 +1,16 @@
 const sshClient = require('ssh2').Client;
 exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
-        .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domainhere serverid')
+        .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domain serverid')
     if (!args[1]) {
-        message.channel.send(embed)
+        await message.channel.send(embed)
     } else {
         if (!args[2]) {
-            message.channel.send(embed)
+            await message.channel.send(embed)
         } else {
 
             axios({
-                url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
+                url: config.Pterodactyl.hosturl + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
                 method: 'GET',
                 followRedirect: true,
                 maxRedirects: 5,
