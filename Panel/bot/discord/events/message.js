@@ -84,7 +84,7 @@ module.exports = (client, message) => {
             commandFile.run(client, message, args);
         }
     } catch (err) {
-        console.log(err)
+        //console.log(err)
         if (err instanceof Error && err.code === "MODULE_NOT_FOUND") {
             return;
         }
