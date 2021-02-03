@@ -45,14 +45,15 @@ exports.run = async (client, message, args) => {
 
     // Create the channel in which the user will use to create his account
     let channel = await message.guild.channels.create(message.author.tag, {
-        permissionOverwrites: [{
-            id: message.guild.id,
-            deny: 0x400
-        },
-        {
-            id: message.author.id,
-            allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'READ_MESSAGE_HISTORY']
-        }]
+        permissionOverwrites: [
+            {
+                id: message.author.id,
+                allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'READ_MESSAGE_HISTORY']
+            },
+            {
+                id: message.guild.id,
+                deny: 0x400
+            }]
     }).catch(console.error);
 
     // Locate the account creation category
