@@ -69,16 +69,15 @@ module.exports = (client, message) => {
 
         if (blacklisted.includes(message.channel.id) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
-        if (command === "server") {
-
+        if (command === "server" || "user") {
             //Cooldown setting
             let cooldown = {};
 
             if (!args[0]) {
-                let commandFile = require(`../commands/server/help.js`);
+                let commandFile = require(`../commands/${command}/help.js`);
                 commandFile.run(client, message, args, cooldown);
             } else {
-                let commandFile = require(`../commands/server/${args[0]}.js`);
+                let commandFile = require(`../commands/${command}/${args[0]}.js`);
                 commandFile.run(client, message, args, cooldown);
             }
         } else {

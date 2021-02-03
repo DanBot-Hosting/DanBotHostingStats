@@ -1,5 +1,5 @@
 const axios = require('axios');
-var pretty = require('prettysize');
+const pretty = require('prettysize');
 exports.run = async (client, message, args) => {
     if(!args[0]) {
         let embed = new Discord.MessageEmbed()
