@@ -15,13 +15,23 @@ exports.run = async (client, message, args) => {
         {
             id: "username",
             question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
-            filter: (m) => m.author.id === message.author.id && m.content.trim().split(" ").length == 1, // Filter to use...
+            filter: (m) => m.author.id === message.author.id, // Filter to use...
+            afterChecks: [{
+                check: (msg) => msg.trim().split(" ").length == 1,
+                errorMessage: "username must not contain any spaces",
+            }],
             time: 30000, // how much time a user has to answer the question before it times out
             value: null // The user's response.
         }, {
             id: "email",
             question: "Whats your email? *(must be a valid email)*",
-            filter: (m) => m.author.id === message.author.id && validator.isEmail(m.content.toLowerCase().trim()),
+            filter: (m) => m.author.id === message.author.id,
+            afterChecks: [
+                {
+                    check: (msg) => validator.isEmail(msg.toLowerCase().trim()),
+                    errorMessage: "the email must be valid.",
+                }
+            ],
             time: 30000,
             value: null
         }
@@ -84,8 +94,10 @@ exports.run = async (client, message, args) => {
         // Log the value...
         question.value = awaitMessages.first().content.trim();
 
+        await awaitMessages.first().delete();
+
         if (question.value == 'cancel') {
-            
+
             msg.delete();
             channel.send("Cancelled! :thumbsup:");
 
@@ -93,10 +105,19 @@ exports.run = async (client, message, args) => {
                 channel.delete();
             }, 5000);
             return;
-            
         }
 
-        await awaitMessages.first().delete();
+        for (const aftercheck of question.afterChecks) {
+            if (aftercheck.check(question.value) == false) {
+                channel.send(aftercheck.errorMessage);
+                channel.send("Account Cancelled! :thumbsup:");
+                setTimeout(() => {
+                    channel.delete();
+                }, 5000);
+                return;
+            };
+        }
+
     }
 
     channel.send("```" + JSON.stringify(questions.map(x => ({ question: x.question, value: x.value }))) + "```")
