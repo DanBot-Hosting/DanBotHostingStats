@@ -13,13 +13,15 @@ exports.run = async (client, message, args) => {
 
     let questions = [
         {
+            id: "username",
             question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
-            filter: (m) => m.author.id === message.author.id && m.content.split(" ").length == 1, // Filter to use...
+            filter: (m) => m.author.id === message.author.id && m.content.trim().split(" ").length == 1, // Filter to use...
             time: 30000, // how much time a user has to answer the question before it times out
             value: null // The user's response.
         }, {
+            id: "email",
             question: "Whats your email? *(must be a valid email)*",
-            filter: (m) => m.author.id === message.author.id,
+            filter: (m) => m.author.id === message.author.id && validator.isEmail(m.content.toLowerCase().trim()),
             time: 30000,
             value: null
         }
@@ -79,11 +81,25 @@ exports.run = async (client, message, args) => {
         }).catch(x => {
             channel.send(x.message);
         });
-    
-        question.value = awaitMessages.first().content;
+        // Log the value...
+        question.value = awaitMessages.first().content.trim();
+
+        if (question.value == 'cancel') {
+            
+            msg.delete();
+            channel.send("Cancelled! :thumbsup:");
+
+            setTimeout(() => {
+                channel.delete();
+            }, 5000);
+            return;
+            
+        }
+
+        await awaitMessages.first().delete();
     }
 
-message.channel.send("```" + JSON.stringify(questions.map(x => ({question: x.question, value: x.value}))) + "```")
+    channel.send("```" + JSON.stringify(questions.map(x => ({ question: x.question, value: x.value }))) + "```")
 
     // if (userData.get(message.author.id) === null) {
     //     const server = message.guild
