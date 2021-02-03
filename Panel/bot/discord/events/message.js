@@ -69,10 +69,31 @@ module.exports = (client, message) => {
 
         if (blacklisted.includes(message.channel.id) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
+        if (command === "server") {
 
-        let commandFile = require(`../commands/${command}.js`);
-        commandFile.run(client, message, args);
+            //Cooldown setting
+            let cooldown = {};
+            if (cooldown[message.author.id] == null) {
+                cooldown[message.author.id] = {
+                    nCreate: null,
+                    pCreate: null,
+                    delete: null
+                }
+            }
+
+            if (!args[0]) {
+                let commandFile = require(`../commands/server/help.js`);
+                commandFile.run(client, message, args, cooldown);
+            } else {
+                let commandFile = require(`../commands/server/${args[0]}.js`);
+                commandFile.run(client, message, args, cooldown);
+            }
+        } else {
+            let commandFile = require(`../commands/${command}.js`);
+            commandFile.run(client, message, args);
+        }
     } catch (err) {
+        console.log(err)
         if (err instanceof Error && err.code === "MODULE_NOT_FOUND") {
             return;
         }
