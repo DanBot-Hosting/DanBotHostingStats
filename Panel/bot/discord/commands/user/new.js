@@ -186,7 +186,7 @@ exports.run = async (client, message, args) => {
     }).catch(err => {
         console.log(err);
 
-        let errors = err.data.errors;
+        let errors = err.response.data.errors;
 
         if (errors) {
             msg.edit('', {
