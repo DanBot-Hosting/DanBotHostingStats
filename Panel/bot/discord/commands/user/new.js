@@ -43,8 +43,15 @@ exports.run = async (client, message, args) => {
         }
     ]
 
+    // Locate the account creation category
+    let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
+
+    // if not found throw an error
+    if (!category) throw new Error("Category channel does not exist");
+
     // Create the channel in which the user will use to create his account
     let channel = await message.guild.channels.create(message.author.tag, {
+        parent: category.id,
         permissionOverwrites: [
             {
                 id: message.author.id,
@@ -56,15 +63,11 @@ exports.run = async (client, message, args) => {
             }]
     }).catch(console.error);
 
-    // Locate the account creation category
-    let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
-
-    // if not found throw an error
-    if (!category) throw new Error("Category channel does not exist");
-
-    //if found set the channel's category to said category
-    await channel.setParent(category.id);
-
+    channel.updateOverwrite(message.author, {
+        VIEW_CHANNEL: true,
+        SEND_MESSAGES: true,
+        READ_MESSAGE_HISTORY: true
+    })
 
     // Tell the user to check the channel.
     message.reply(`Please check <#${channel.id}> to create an account.`);
@@ -97,6 +100,7 @@ exports.run = async (client, message, args) => {
             setTimeout(() => {
                 channel.delete();
             }, 5000);
+            return;
         });
         // Log the value...
         question.value = awaitMessages.first().content.trim();
