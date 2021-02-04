@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
         } else {
             const linkalready = userData.fetchAll().filter(users => users.data.domains && users.data.domains.filter(x => x.domain === args[1]).length != 0);
             if (linkalready[0]) {
-                message.channel.send('domain is already linked')
+                message.channel.send('Domain is already linked')
             } else {
                 axios({
                     url: config.Pterodactyl.hosturl + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
@@ -60,7 +60,7 @@ exports.run = async (client, message, args) => {
                             let conn = new sshClient();
                             conn.on('ready', function () {
                                 console.log('SSH: ready');
-                                sentmsg.edit('Please give me a few seconds! \nProcess: SSH connected. \nNext: Making SSL cert...')
+                                sentmsg.edit('Please give me a few seconds! \nProcess: SSH connected. \nNext: Making SSL cert... **This will take a few seconds**')
                             }).connect({
                                 host: config.SSH.Host,
                                 port: config.SSH.Port,
@@ -74,7 +74,7 @@ exports.run = async (client, message, args) => {
                                     stream.on('close', function (code, signal) {
                                     }).on('data', function (data) {
                                         if (data.includes("Congratulations!")) {
-                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file.')
+                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again*')
                                             conn.exec(`echo "<VirtualHost *:80>
                                                ServerName ${args[1]}
                                                RewriteEngine On
@@ -120,7 +120,7 @@ exports.run = async (client, message, args) => {
 
                                             }, 2000)
                                         } else if (data.includes("Certificate not yet due for renewal")) {
-                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file.')
+                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again**')
                                             conn.exec(`echo  "<VirtualHost *:80>
                                                ServerName ${args[1]}
                                                RewriteEngine On
