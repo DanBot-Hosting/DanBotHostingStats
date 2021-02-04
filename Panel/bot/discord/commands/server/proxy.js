@@ -74,7 +74,7 @@ exports.run = async (client, message, args) => {
                                     stream.on('close', function (code, signal) {
                                     }).on('data', function (data) {
                                         if (data.includes("Congratulations!")) {
-                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again*')
+                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again**')
                                             conn.exec(`echo "<VirtualHost *:80>
                                                ServerName ${args[1]}
                                                RewriteEngine On
