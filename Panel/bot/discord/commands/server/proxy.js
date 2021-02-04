@@ -1,4 +1,5 @@
 const sshClient = require('ssh2').Client;
+const axios = require('axios');
 exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domain serverid')
@@ -8,304 +9,173 @@ exports.run = async (client, message, args) => {
         if (!args[2]) {
             await message.channel.send(embed)
         } else {
-
-            axios({
-                url: config.Pterodactyl.hosturl + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
-                method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                    'Content-Type': 'application/json',
-                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                }
-            }).then(use => {
-                use = use.data.attributes;
-
-                if (use.relationships) {
-                    let k = Object.keys(use.relationships);
-                    use.extras = {};
-                    k.forEach(key => {
-                        if (use.relationships[key].data != null)
-                            use.extras[key] = use.relationships[key].data.map(a => a.attributes);
-                        else
-                            use.extras[key] = use.relationships[key];
-                    })
-                    delete use.relationships;
-                }
-
-                if (use.extras.servers == null || use.extras.servers.find(x => x.identifier === args[2]) == null) {
-                    message.channel.send("Couldn't find that server in your server list.")
-                    return;
-                }
-
-                const sentmsg = message.channel.send('Please give me a few seconds! \nProcess: Connecting to SSH...')
-                //SSH Connection
-                let conn = new sshClient();
-                conn.on('ready', function() {
-                    console.log('SSH: ready');
-                    sentmsg.edit('Please give me a few seconds! \nProcess: SSH connected...')
-                }).connect({
-                    host: config.SSH.Host,
-                    port: config.SSH.Port,
-                    username: config.SSH.User,
-                    password: config.SSH.Password
-                });
-
-                //Copy template file. Ready to be changed!
-                fs.access(path.resolve(path.dirname(require.main.filename), "proxy/" + args[1].toLowerCase() + ".conf"), fs.constants.R_OK, (err) => {
-                    if (!err) {
-                        return message.channel.send("This domain has been linked before or is currently linked..")
-                    } else {
-                        fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => {
-                            if (err) {
-                                console.log("Error Found:", err);
-                            }
-                        })
-                        fs.copyFile(path.resolve('./proxy/template.txt'), './proxy/' + args[1] + '.conf', (err) => {
-                            if (err) {
-                                console.log("Error Found:", err);
-                            }
-                        })
-
-                        setTimeout(() => {
-                            //Change Domain
-                            var z = 0;
-                            while (z < 5) {
-                                const domainchange = rif.sync({
-                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                    from: "REPLACE-DOMAIN",
-                                    to: args[1].toLowerCase(),
-                                    countMatches: true,
-                                });
-                                z++
-                            }
-
-                            //Grab node and port ready for the config
-                            axios({
-                                url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[2],
-                                method: 'GET',
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                                }
-                            }).then(response => {
-                                const node = response.data.attributes.node;
-                                console.log(node)
-                                const port = response.data.attributes.relationships.allocations.data[0].attributes.port
-                                if (node === "Node 1") {
-
-                                    //Change Server IP
-                                    setTimeout(() => {
-                                        var y = 0;
-                                        while (y < 3) {
-                                            const ipchange = rif.sync({
-                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                from: "REPLACE-IP",
-                                                to: "154.27.68.105",
-                                                countMatches: true,
-                                            });
-                                            y++
-                                        };
-
-                                        //Change Server Port
-                                        setTimeout(() => {
-                                            var x = 0;
-                                            while (x < 3) {
-                                                const portchange = rif.sync({
-                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                    from: "REPLACE-PORT",
-                                                    to: port,
-                                                    countMatches: true,
-                                                });
-                                                x++
-                                            }
-                                        }, 100) //END - Change Server Port
-                                    }, 100) //END - Change Server IP
-                                } else if (node === "Node 2") {
-
-                                    //Change Server IP
-                                    setTimeout(() => {
-                                        var y = 0;
-                                        while (y < 3) {
-                                            const ipchange = rif.sync({
-                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                from: "REPLACE-IP",
-                                                to: "154.27.68.106",
-                                                countMatches: true,
-                                            });
-                                            y++
-                                        };
-
-                                        //Change Server Port
-                                        setTimeout(() => {
-                                            var x = 0;
-                                            while (x < 3) {
-                                                const portchange = rif.sync({
-                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                    from: "REPLACE-PORT",
-                                                    to: port,
-                                                    countMatches: true,
-                                                });
-                                                x++
-                                            }
-                                        }, 100) //END - Change Server Port
-                                    }, 100) //END - Change Server IP
-                                } else if (node === "Node 5") {
-
-                                    //Change Server IP
-                                    setTimeout(() => {
-                                        var y = 0;
-                                        while (y < 3) {
-                                            const ipchange = rif.sync({
-                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                from: "REPLACE-IP",
-                                                to: "154.27.68.108",
-                                                countMatches: true,
-                                            });
-                                            y++
-                                        };
-
-                                        //Change Server Port
-                                        setTimeout(() => {
-                                            var x = 0;
-                                            while (x < 3) {
-                                                const portchange = rif.sync({
-                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                    from: "REPLACE-PORT",
-                                                    to: port,
-                                                    countMatches: true,
-                                                });
-                                                x++
-                                            }
-                                        }, 100) //END - Change Server Port
-                                    }, 100) //END - Change Server IP
-                                } else if (node === "Node 6") {
-
-                                    //Change Server IP
-                                    setTimeout(() => {
-                                        var y = 0;
-                                        while (y < 3) {
-                                            const ipchange = rif.sync({
-                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                from: "REPLACE-IP",
-                                                to: "194.146.44.170",
-                                                countMatches: true,
-                                            });
-                                            y++
-                                        };
-
-                                        //Change Server Port
-                                        setTimeout(() => {
-                                            var x = 0;
-                                            while (x < 3) {
-                                                const portchange = rif.sync({
-                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                    from: "REPLACE-PORT",
-                                                    to: port,
-                                                    countMatches: true,
-                                                });
-                                                x++
-                                            }
-                                        }, 100) //END - Change Server Port
-                                    }, 100) //END - Change Server IP
-                                } else if (node === "Node 7") {
-
-                                    //Change Server IP
-                                    setTimeout(() => {
-                                        var y = 0;
-                                        while (y < 3) {
-                                            const ipchange = rif.sync({
-                                                files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                from: "REPLACE-IP",
-                                                to: "154.27.68.110",
-                                                countMatches: true,
-                                            });
-                                            y++
-                                        };
-
-                                        //Change Server Port
-                                        setTimeout(() => {
-                                            var x = 0;
-                                            while (x < 3) {
-                                                const portchange = rif.sync({
-                                                    files: '/root/DBH/Panel/proxy/' + args[1] + '.conf',
-                                                    from: "REPLACE-PORT",
-                                                    to: port,
-                                                    countMatches: true,
-                                                });
-                                                x++
-                                            }
-                                        }, 100) //END - Change Server Port
-                                    }, 100) //END - Change Server IP
-                                } else {
-                                    message.channel.send('Unsupported node. Stopping reverse proxy.')
-                                    fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                }
-
-
-                                //Upload file to /etc/apache2/sites-available
-                                setTimeout(() => {
-                                    ssh.putFile('/root/DBH/Panel/proxy/' + args[1] + '.conf', '/etc/apache2/sites-available/' + args[1] + ".conf").then(function () {
-
-                                        //Run command to genate SSL cert.
-                                        ssh.execCommand(`certbot certonly -d ${args[1]} --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m rp@danbot.host`, {
-                                            cwd: '/root'
-                                        }).then(function (result) {
-                                            if (result.stdout.includes('Congratulations!')) {
-                                                //No error. Continue to enable site on apache2 then restart
-                                                console.log('SSL Gen complete. Continue!')
-
-                                                ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, {
-                                                    cwd: '/root'
-                                                }).then(function (result) {
-                                                    //Complete
-                                                    message.reply('Domain has now been linked!')
-                                                    let data = userData.get(message.author.id).domains || []
-                                                    userData.set(message.author.id + '.domains', [...new Set(data), {
-                                                        domain: args[1].toLowerCase(),
-                                                        serverID: args[2],
-                                                    }]);
-                                                })
-                                            } else if (result.stdout.includes('Certificate not yet due for renewal')) {
-                                                //No error. Continue to enable site on apache2 then restart
-                                                console.log('SSL Gen complete. Continue!')
-
-                                                ssh.execCommand(`a2ensite ${args[1]} && service apache2 restart`, {
-                                                    cwd: '/root'
-                                                }).then(function (result) {
-                                                    //Complete
-                                                    message.reply('Domain has now been linked!')
-
-                                                    let data = userData.get(message.author.id).domains || []
-                                                    userData.set(message.author.id + '.domains', [...new Set(data), {
-                                                        domain: args[1].toLowerCase(),
-                                                        serverID: args[2],
-                                                    }]);
-                                                })
-                                            } else {
-                                                message.channel.send('Error making SSL cert. Either the domain is not pointing to `154.27.68.95` or cloudflare proxy is enabled!\n\n' +
-                                                    '**If you have just done this after running the command. Please give the bot 5 - 10mins to refresh the DNS cache** \n\nFull Error: ```' + result.stdout + '```')
-                                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                            }
-                                        })
-                                    }, function (error) {
-                                        //If error exists. Error and delete proxy file
-                                        fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                                        message.channel.send("FAILED \n" + error);
-                                    })
-                                }, 250) //END - Upload file to /etc/apache2/sites-available
-                            }).catch(err => {
-                                message.channel.send('Can\'t find that server :( ')
-                                fs.unlinkSync("./proxy/" + args[1] + ".conf");
-                            }) //END - Grab server info (Node and Port)
-                        }, 250) //END - //Change Domain
+            const linkalready = userData.fetchAll().filter(users => users.data.domains && users.data.domains.filter(x => x.domain === args[1]).length != 0);
+            if (linkalready[0]) {
+                message.channel.send('domain is already linked')
+            } else {
+                axios({
+                    url: config.Pterodactyl.hosturl + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
+                    method: 'GET',
+                    followRedirect: true,
+                    maxRedirects: 5,
+                    headers: {
+                        'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                        'Content-Type': 'application/json',
+                        'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
+                }).then(use => {
+                    use = use.data.attributes;
+
+                    if (use.relationships) {
+                        let k = Object.keys(use.relationships);
+                        use.extras = {};
+                        k.forEach(key => {
+                            if (use.relationships[key].data != null)
+                                use.extras[key] = use.relationships[key].data.map(a => a.attributes);
+                            else
+                                use.extras[key] = use.relationships[key];
+                        })
+                        delete use.relationships;
+                    }
+
+                    if (use.extras.servers == null || use.extras.servers.find(x => x.identifier === args[2]) == null) {
+                        message.channel.send("Couldn't find that server in your server list.")
+                        return;
+                    }
+                    axios({
+                        url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[2],
+                        method: 'GET',
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                            'Content-Type': 'application/json',
+                            'Accept': 'Application/vnd.pterodactyl.v1+json',
+                        }
+                    }).then(response => {
+
+                        message.channel.send('Please give me a few seconds! \nProcess: Connecting to SSH...').then(sentmsg => {
+
+                            //SSH Connection
+                            let conn = new sshClient();
+                            conn.on('ready', function () {
+                                console.log('SSH: ready');
+                                sentmsg.edit('Please give me a few seconds! \nProcess: SSH connected. \nNext: Making SSL cert...')
+                            }).connect({
+                                host: config.SSH.Host,
+                                port: config.SSH.Port,
+                                username: config.SSH.User,
+                                password: config.SSH.Password
+                            });
+
+                            conn.on('ready', function () {
+                                conn.exec('certbot certonly -d ' + args[1] + ' --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m proxy@danbot.host', function (err, stream) {
+                                    if (err) throw err;
+                                    stream.on('close', function (code, signal) {
+                                    }).on('data', function (data) {
+                                        if (data.includes("Congratulations!")) {
+                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file.')
+                                            conn.exec(`echo "<VirtualHost *:80>
+                                               ServerName ${args[1]}
+                                               RewriteEngine On
+                                               RewriteCond %{HTTPS} !=on
+                                               RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L] 
+                                             </VirtualHost>
+                                             <VirtualHost *:443>
+                                               ServerName ${args[1]}
+                                                 ProxyRequests off
+                                                 SSLProxyEngine on
+                                                 ProxyPreserveHost On
+                                               SSLEngine on
+                                               SSLCertificateFile /etc/letsencrypt/live/${args[1]}/fullchain.pem
+                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1]}/privkey.pem
+                                             
+                                                 <Location />
+                                                     ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
+                                                     ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
+                                                 </Location>
+                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && echo "complete`, function (err, stream) {
+                                                if (err) throw err;
+                                                stream.on('close', function (code, signal) {
+                                                }).on('data', function (data) {
+                                                    sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
+                                                    //console.log('STDOUT: ' + data);
+                                                    setTimeout(() => {
+                                                        conn.exec('service apache2 restart && echo "complete', function (err, stream) {
+                                                            if (err) throw err;
+                                                            stream.on('close', function (code, signal) {
+                                                            }).on('data', function (data) {
+                                                                sentmsg.edit('Domain linking complete!')
+                                                                let datalmao = userData.get(message.author.id).domains || []
+                                                                userData.set(message.author.id + '.domains', [...new Set(datalmao), {
+                                                                    domain: args[1].toLowerCase(),
+                                                                    serverID: args[2],
+                                                                }]);
+                                                                conn.end()
+                                                                //console.log('STDOUT: ' + data);
+                                                            })
+                                                        });
+                                                    })
+                                                });
+
+                                            }, 2000)
+                                        } else if (data.includes("Certificate not yet due for renewal")) {
+                                            sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file.')
+                                            conn.exec(`echo  "<VirtualHost *:80>
+                                               ServerName ${args[1]}
+                                               RewriteEngine On
+                                               RewriteCond %{HTTPS} !=on
+                                               RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L] 
+                                             </VirtualHost>
+                                             <VirtualHost *:443>
+                                               ServerName ${args[1]}
+                                                 ProxyRequests off
+                                                 SSLProxyEngine on
+                                                 ProxyPreserveHost On
+                                               SSLEngine on
+                                               SSLCertificateFile /etc/letsencrypt/live/${args[1]}/fullchain.pem
+                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1]}/privkey.pem
+                                             
+                                                 <Location />
+                                                     ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
+                                                     ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
+                                                 </Location>
+                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && echo "complete"`, function (err, stream) {
+                                                if (err) throw err;
+                                                stream.on('close', function (code, signal) {
+                                                }).on('data', function (data) {
+                                                    sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
+                                                    //console.log('STDOUT: ' + data);
+                                                    setTimeout(() => {
+                                                        conn.exec('service apache2 restart && echo "complete"', function (err, stream) {
+                                                            if (err) throw err;
+                                                            stream.on('close', function (code, signal) {
+                                                            }).on('data', function (data) {
+                                                                sentmsg.edit('Domain linking complete!')
+                                                                let datalmao = userData.get(message.author.id).domains || []
+                                                                userData.set(message.author.id + '.domains', [...new Set(datalmao), {
+                                                                    domain: args[1].toLowerCase(),
+                                                                    serverID: args[2],
+                                                                }]);
+                                                                conn.end()
+                                                                //console.log('STDOUT: ' + data);
+                                                            })
+                                                        });
+                                                    })
+                                                });
+
+                                            }, 2000)
+                                        } else {
+                                            sentmsg.edit('ERROR, SSL failed to connect. Is your domain pointing to the correct ip address? (See <#772811143822573608> for the RProxy ip)')
+                                        }
+                                        //console.log('STDOUT: ' + data);
+                                    })
+                                });
+                            })
+                        })
+                    })
                 })
-            })
+            }
         }
     }
 }

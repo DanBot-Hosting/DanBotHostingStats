@@ -6,6 +6,9 @@ const db = require("quick.db");
 
 module.exports = async (client) => {
 
+    global.browser = await puppeteer.launch({args:["--no-sandbox"/*openvz*/]});
+    console.log("[SCREENSHOT] chromium launched");
+
     function getUsers() {
             client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
                 r.forEach(r => {

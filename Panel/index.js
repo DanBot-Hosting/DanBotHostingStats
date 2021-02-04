@@ -49,6 +49,7 @@ const { getBot } = require(process.cwd() + "/util/discordAPI");
 require('./nodestatsChecker');
 
 //Discord Bot
+global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
 global.fs = require("fs");
