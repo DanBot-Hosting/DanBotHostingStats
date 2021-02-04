@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
                         }
                     }).then(response => {
 
-                        message.channel.send('Please give me a few seconds! \nProcess: Connecting to SSH...').then(sentmsg => {
+                        message.reply('Please give me a few seconds! \nProcess: Connecting to SSH...').then(sentmsg => {
 
                             //SSH Connection
                             let conn = new sshClient();
@@ -166,7 +166,7 @@ exports.run = async (client, message, args) => {
 
                                             }, 2000)
                                         } else {
-                                            sentmsg.edit('ERROR, SSL failed to connect. Is your domain pointing to the correct ip address? (See <#772811143822573608> for the RProxy ip)')
+                                            sentmsg.edit('ERROR, SSL failed to connect. Is your domain pointing to the correct ip address? \nReverse Proxy ip is: ' + config.SSH.Host)
                                         }
                                         //console.log('STDOUT: ' + data);
                                     })
