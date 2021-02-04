@@ -5,6 +5,7 @@ Panel/node_modules
 Panel/package-lock.json
 Panel/data
 Panel/config.json
+Panel/enable.json
 Panel/json.sqlite
 Panel/images
 Panel/start.bat

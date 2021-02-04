@@ -8,6 +8,7 @@ Free Hosting for ever!                                            /____/
 */
 
 global.config = require("./config.json");
+global.enabled = require("./enable.json")
 const express = require('express');
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");

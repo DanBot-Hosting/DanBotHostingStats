@@ -99,20 +99,20 @@ module.exports = async (client) => {
     global.guilds = {};
 
     //Node status channel embed
+    if (enabled.NodeStats === true) {
+        let channel = client.channels.cache.get("757949242495991918");
+        setInterval(async () => {
+            let embed = await nstatus.getEmbed();
 
-    let channel = client.channels.cache.get("757949242495991918");
+            let messages = await channel.messages.fetch({
+                limit: 10
+            })
+            messages = messages.filter(x => x.author.id === client.user.id).last();
+            if (messages == null) channel.send(embed)
+            else messages.edit(embed)
 
-    setInterval(async () => {
-        let embed = await nstatus.getEmbed();
-
-        let messages = await channel.messages.fetch({
-            limit: 10
-        })
-        messages = messages.filter(x => x.author.id === client.user.id).last();
-        if (messages == null) channel.send(embed)
-        else messages.edit(embed)
-
-    }, 15000)
+        }, 15000)
+    }
 
     //Voice channel stats updator
     setInterval(async () => {

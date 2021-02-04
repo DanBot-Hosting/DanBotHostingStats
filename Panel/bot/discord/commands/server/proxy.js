@@ -166,7 +166,7 @@ exports.run = async (client, message, args) => {
 
                                             }, 2000)
                                         } else {
-                                            sentmsg.edit('ERROR, SSL failed to connect. Is your domain pointing to the correct ip address? \nReverse Proxy ip is: ' + config.SSH.Host)
+                                            sentmsg.edit('ERROR, SSL failed to connect. Is your domain pointing to the correct ip address? \nReverse Proxy ip is: `' + config.SSH.Host + '`')
                                         }
                                         //console.log('STDOUT: ' + data);
                                     })
