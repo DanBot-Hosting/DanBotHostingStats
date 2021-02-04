@@ -94,7 +94,7 @@ exports.run = async (client, message, args) => {
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                      ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                  </Location>
-                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && echo "complete`, function (err, stream) {
+                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete`, function (err, stream) {
                                                 if (err) throw err;
                                                 stream.on('close', function (code, signal) {
                                                 }).on('data', function (data) {
@@ -140,7 +140,7 @@ exports.run = async (client, message, args) => {
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                      ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                  </Location>
-                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && echo "complete"`, function (err, stream) {
+                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete"`, function (err, stream) {
                                                 if (err) throw err;
                                                 stream.on('close', function (code, signal) {
                                                 }).on('data', function (data) {
