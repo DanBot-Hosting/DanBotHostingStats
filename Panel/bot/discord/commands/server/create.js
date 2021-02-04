@@ -74,7 +74,7 @@ exports.run = async (client, message, args) => {
             message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
             return;
         }*/
-        client.cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
+        //client.cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
 
         if (args[1] === "aio" | args[1] === "java") {
             serverCreateSettings.createServer(types[args[1].toLowerCase()])
