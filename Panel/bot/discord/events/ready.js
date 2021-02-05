@@ -6,51 +6,43 @@ const db = require("quick.db");
 
 module.exports = async (client) => {
 
-    global.browser = await puppeteer.launch({args:["--no-sandbox"/*openvz*/]});
+    let guild = client.guilds.cache.get("639477525927690240");
+
+    global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
     console.log("[SCREENSHOT] chromium launched");
 
-    function getUsers() {
-            client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
-                r.forEach(r => {
-                    if(r.user.bot) {
-                        if (!db.get(r.user.id)) {
-                            client.guilds.cache.get("639477525927690240").members.kick(r.user.id);
-                            console.log('Kicked ' + r.user.username + " ID: " + r.user.id)
-                        }
+    let getUsers = async () => {
+        let unverifiedBots = guild.members.filter(member => member.user.bot && db.get(member.id) == null);
+        unverifiedBots.forEach(member => {
+            await member.kick("Not a verified bot.");
+        })
 
-                    }
-                });
-            });
+        console.log(`Kicked ${unverifiedBots.size} unverified bots.`)
     }
 
-    setInterval(() => {
-        client.guilds.cache.get("639477525927690240").members.fetch().then(r => {
-            r.forEach(r => {
-                let userid = r.displayName
-                //console.log(userid)
-                if (['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => userid.startsWith(r)))return r.setNickname('⚠️HOISTER ALERT ⚠️')
-
-            })
+    let checkNicks = () => {
+        guild.members.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => member.displayName.startsWith(r))).forEach(x => {
+            x.setNickname('⚠️HOISTER ALERT ⚠️');
         })
-    }, 60000) //1mins
+    }
+
+    checkNicks();
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
     //getUsers()
 
     //Check make sure create account channels are closed after a hour
-    setTimeout(() => {
-        client.guilds.cache.get("639477525927690240").channels.cache.filter(x => x.parentID === '738539016688894024' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
-    }, 60000)
+    guild.channels.cache.filter(x => x.parentID === '738539016688894024' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
 
     //Auto Activities List
     const activities = [{
-            "text": "over DanBot Hosting",
-            "type": "WATCHING"
-        },
-        {
-            "text": "DanBot FM",
-            "type": "LISTENING"
-        }
+        "text": "over DanBot Hosting",
+        "type": "WATCHING"
+    },
+    {
+        "text": "DanBot FM",
+        "type": "LISTENING"
+    }
     ];
 
     //Initializing Cooldown
