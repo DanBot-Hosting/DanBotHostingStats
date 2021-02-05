@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
 
     let boosted;
     axios({
-        url: "http://admin.danbot.host:3003",
+        url: "http://admin.danbot.host:1029",
         method: 'GET',
         headers: {
             "password": config.externalPassword
