@@ -21,7 +21,7 @@ module.exports = async (client) => {
     // }
 
     let checkNicks = () => {
-        guild.members.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => member.displayName.startsWith(r))).forEach(x => {
+        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => member.displayName.startsWith(r))).forEach(x => {
             x.setNickname('⚠️HOISTER ALERT ⚠️');
         })
     }
