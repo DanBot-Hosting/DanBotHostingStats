@@ -1,7 +1,7 @@
 const axios = require('axios');
 exports.run = async (client, message, args) => {
     let boosted = await axios({
-        url: "http://admin.danbot.host:3003",
+        url: "http://admin.danbot.host:1029",
         timeout: 3000,
         method: 'GET',
         headers: {
