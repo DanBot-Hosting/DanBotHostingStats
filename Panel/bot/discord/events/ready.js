@@ -11,24 +11,22 @@ module.exports = async (client) => {
     global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
     console.log("[SCREENSHOT] chromium launched");
 
-    let getUsers = async () => {
-        let unverifiedBots = guild.members.filter(member => member.user.bot && db.get(member.id) == null);
-        unverifiedBots.forEach(member => {
-            member.kick("Not a verified bot.");
-        })
+    // let getUsers = async () => {
+    //     let unverifiedBots = guild.members.filter(member => member.user.bot && db.get(member.id) == null);
+    //     unverifiedBots.forEach(member => {
+    //         member.kick("Not a verified bot.");
+    //     })
 
-        console.log(`Kicked ${unverifiedBots.size} unverified bots.`)
-    }
+    //     console.log(`Kicked ${unverifiedBots.size} unverified bots.`)
+    // }
 
-    /*
     let checkNicks = () => {
         guild.members.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => member.displayName.startsWith(r))).forEach(x => {
             x.setNickname('⚠️HOISTER ALERT ⚠️');
         })
     }
-     */
 
-    //checkNicks();
+    checkNicks();
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
     //getUsers()
