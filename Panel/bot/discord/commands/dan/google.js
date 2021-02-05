@@ -3,9 +3,9 @@ exports.run = async (client, message, args) => {
     var query = args.slice(1).join(" ").trim();
 
     if (!query) {
-        message.channel.send('Command format: ' + config.DiscordBot.Prefix + 'dan screenshot domainhere')
+        message.channel.send('Command format: ' + config.DiscordBot.Prefix + 'dan google thing to google')
     } else {
-        pup((query.startsWith("http://") || query.startsWith("https://")) ? query : `http://${query}`);
+        pup(`https://www.google.com/search?q=${encodeURIComponent(query)}`);
 
         async function pup(url) {
             await message.react('🆗');
