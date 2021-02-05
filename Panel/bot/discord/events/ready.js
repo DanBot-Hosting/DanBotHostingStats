@@ -20,13 +20,15 @@ module.exports = async (client) => {
         console.log(`Kicked ${unverifiedBots.size} unverified bots.`)
     }
 
+    /*
     let checkNicks = () => {
         guild.members.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => member.displayName.startsWith(r))).forEach(x => {
             x.setNickname('⚠️HOISTER ALERT ⚠️');
         })
     }
+     */
 
-    checkNicks();
+    //checkNicks();
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
     //getUsers()
