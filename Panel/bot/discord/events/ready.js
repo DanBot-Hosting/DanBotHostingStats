@@ -14,7 +14,7 @@ module.exports = async (client) => {
     let getUsers = async () => {
         let unverifiedBots = guild.members.filter(member => member.user.bot && db.get(member.id) == null);
         unverifiedBots.forEach(member => {
-            await member.kick("Not a verified bot.");
+            member.kick("Not a verified bot.");
         })
 
         console.log(`Kicked ${unverifiedBots.size} unverified bots.`)
