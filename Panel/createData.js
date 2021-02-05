@@ -43,7 +43,7 @@ list.nginx = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": [9, 3, 10],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -86,7 +86,7 @@ list.reddiscordbot = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": [9, 3, 10],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -119,7 +119,7 @@ list.nodejs = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": [9, 3, 10],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -148,7 +148,7 @@ list.python = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": [9, 3, 10],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -177,7 +177,7 @@ list.aio = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": [9, 3, 10],
         "dedicated_ip": false,
         "port_range": []
     },
@@ -206,7 +206,7 @@ list.java = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": [9, 3, 10],
         "dedicated_ip": false,
         "port_range": []
     },
