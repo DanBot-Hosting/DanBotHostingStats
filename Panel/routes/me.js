@@ -50,7 +50,7 @@ Router.get("/form/staff-apply", checkAuth, (req, res) => {
 Router.post("/form/staff-apply", checkAuth, (req, res) => {
 
   let data = req.body;
-  data.member = client.guilds.cache.get('639477525927690240').members.get(data.user);
+  data.member = client.guilds.cache.get('639477525927690240').member.get(data.user);
 
   if (data.member == null) return res.send({
     error: "You're not a member in out discord server, make sure to join before applying."
