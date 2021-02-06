@@ -9,7 +9,7 @@ module.exports = async (client) => {
     let guild = client.guilds.cache.get("639477525927690240");
 
     global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
-    console.log("[SCREENSHOT] chromium launched");
+    console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     // let getUsers = async () => {
     //     let unverifiedBots = guild.members.cache.filter(member => member.user.bot && db.get(member.id) == null);

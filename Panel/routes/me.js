@@ -55,10 +55,10 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
   if (data.member == null) return res.send({
     error: "You're not a member in out discord server, make sure to join before applying."
   });
-  let channel = client.channels.get("786607811870064650");
+  let channel = client.channels.cache.get("786607811870064650");
   try {
 
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setColor(0x00A2E8)
       .addField("__**Ping**__", data.member)
       .addField("__**User ID**__", '`<@'+data.user +'>`')
