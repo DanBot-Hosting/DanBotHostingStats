@@ -5,6 +5,9 @@ module.exports = async (client, oldMember, newMember) => {
             return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
 
+        if(['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => newMember.displayName.startsWith(r))) {
+            newMember.setNickname('⚠️HOISTER ALERT ⚠️');
+        }
 
         // Make a new RichEmbed
         const embed = new Discord.MessageEmbed()

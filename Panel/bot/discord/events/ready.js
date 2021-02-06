@@ -12,7 +12,7 @@ module.exports = async (client) => {
     console.log("[SCREENSHOT] chromium launched");
 
     // let getUsers = async () => {
-    //     let unverifiedBots = guild.members.filter(member => member.user.bot && db.get(member.id) == null);
+    //     let unverifiedBots = guild.members.cache.filter(member => member.user.bot && db.get(member.id) == null);
     //     unverifiedBots.forEach(member => {
     //         member.kick("Not a verified bot.");
     //     })
