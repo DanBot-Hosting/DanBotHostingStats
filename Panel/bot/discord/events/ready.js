@@ -2,6 +2,7 @@ const exec = require('child_process').exec;
 const axios = require('axios');
 const nstatus = require('../serverStatus');
 global.snipes = new Discord.Collection();
+global.edits = new Discord.Collection();
 const db = require("quick.db");
 
 module.exports = async (client) => {
