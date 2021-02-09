@@ -27,6 +27,14 @@ module.exports = (client, message, editedMessage) => {
   if (message.channel.type === 'dm') return;
   if (message === editedMessage) return;
   if (message.channel.type !== 'text') return;
+  
+          if(edits.size === 20) {
+            edits.forEach(function(e)) {
+                           e.delete(message.channel.id);
+        }
+        return;
+        }
+        edits.set(message.channel.id, new_msg, old_msg)
 
   const embed = new Discord.MessageEmbed()
     .setColor(0x00A2E8)
