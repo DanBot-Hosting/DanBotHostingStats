@@ -55,7 +55,7 @@ module.exports = (client, message) => {
     if(message.channel.type === "dm") return; //stops commands working in dms
     const prefix = config.DiscordBot.Prefix;
     if (message.content.indexOf(prefix) !== 0) return;
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(prefix.toLowerCase().length).trim().split(/ +/g);
     const commandargs = message.content.split(' ').slice(1).join(' ');
     const command = args.shift().toLowerCase();
     console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
