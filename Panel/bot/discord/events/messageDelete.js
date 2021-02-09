@@ -22,10 +22,12 @@ module.exports = (client, message) => {
     if (message.author.bot || !message.content) {
         return;
     } else {
+        if(snipes.size === 20) {
+            snipes.forEach(function(s)) {
+                           s.delete(message.channel.id);
+        }
+        return;
+        }
         snipes.set(message.channel.id, message)
-        setTimeout(() => {
-            if (snipes.get(message.channel.id) === message)
-                snipes.delete(message.channel.id)
-        }, 300000);
     }
 };
