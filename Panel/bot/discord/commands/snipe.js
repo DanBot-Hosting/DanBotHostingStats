@@ -3,7 +3,7 @@ exports.run = async (client, message, args) => {
             .setDescription(`Theres nothing to snipe`)
 
 
-if(!args.length) return message.channel.send(`There are a total of ${snipes.get(message.channel.id).length} snipes. Provide one to view.`);
+if(!args.length) return message.channel.send(`There are a total of **${snipes.get(message.channel.id).length}** snipes. Provide one to view.`);
 
         let snipe = snipes.get(message.channel.id)[args[0]];
         if (!snipe || !snipe.content) return message.channel.send(embed3)
