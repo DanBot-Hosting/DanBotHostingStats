@@ -34,7 +34,7 @@ module.exports = (client, message, editedMessage) => {
         }
         return;
         }
-        edits.set(message.channel.id, new_msg, old_msg)
+        edits.set(message.channel.id, message, editedMessage)
 
   const embed = new Discord.MessageEmbed()
     .setColor(0x00A2E8)
