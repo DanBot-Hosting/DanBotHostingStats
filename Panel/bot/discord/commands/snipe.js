@@ -12,7 +12,7 @@ if(!args.length) return message.channel.send(`There are a total of ${snipes.get(
             //.setAuthor(snipe.message.author.username, snipe.message.author.avatarURL({ dynamic: true, format: 'png' }))
             .setTimestamp()
             .setTitle(`Message by: ${snipe.message.author.tag}`)
-            .setDescription(`${snipe.message.content}`);
+            .setDescription(`\`${snipe.message.content}\``);
             
         message.channel.send(embed);
 }
