@@ -10,52 +10,7 @@
 <div class="container">
 <div class="block-center">
 
-<div class="card server-block level1"> <div class="card-body">
-<div>
-<a href="//astrobot.org?utm_source=dbh" rel="nofollow" target="blank">
-<img class="card-avatar" src="//astrobot.org/default" draggable="false"></a>
-</div>
-<h5 class="card-title" title="yuh">Astronomy Bot</h5>
-<div class="le el card-text description">
-Astronomy Bot sounds just like it's name :) It's a bot all about Astrology! We also teach classes on understanding how the stars affect you and more so make sure to check us out!
-</div>
-<div class="server-bottom">
-<span class="members">
-<i class="fas fa-server"></i> <i id="dynamicPart"> </i> </span>
-<a href="//astrobot.org?utm_source=dbh" rel="nofollow" target="blank" style="background:#b2c8d2" class="btn btn-r info"><i class="fas fa-info" style="padding:0;"></i></a>
-</div>
-</div>
-</div>
-
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
-<script>
-let dynamicPart = document.getElementById("dynamicPart");
-
-window.onload = function() {
-  refresh()
-}
-
-async function refresh() {
-(function() {
-  var AstroAPI = "/api/astrobot/stats";
-  $.get( AstroAPI, {
-    format: "json",
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  })
-    .done(function( data ) {
-      console.log(data);
-      dynamicPart.innerHTML = data.data.servers
-      
-    })
-    .fail(function(jqXHR, textStatus) {
-      console.log( "Request failed: " + textStatus );
-    });
-})();
-}
-</script>
  
 <div class="card server-block level1"> <div class="card-body">
   <div>
