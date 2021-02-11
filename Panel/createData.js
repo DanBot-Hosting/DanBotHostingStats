@@ -1,5 +1,9 @@
 const axios = require('axios');
 
+const gaming = [14]          // Gaming nodes
+const botswebdb = [9, 3]     // Bots, Websites and Databases nodes
+const storage = [13]         // Storage nodes
+
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 var getPassword = () => {
 
@@ -43,7 +47,7 @@ list.nginx = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -86,7 +90,7 @@ list.reddiscordbot = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -119,7 +123,7 @@ list.nodejs = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -148,7 +152,7 @@ list.python = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -177,7 +181,7 @@ list.aio = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -206,7 +210,7 @@ list.java = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -244,7 +248,7 @@ list.storage = (serverName, userID) => ({
         "backups": 0
     },
     "deploy": {
-        "locations": [13],
+        "locations": storage,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -288,7 +292,7 @@ list.paper = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -321,7 +325,7 @@ list.forge = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -352,7 +356,7 @@ list.bedrock = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -382,7 +386,7 @@ list.pocketminemp = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -432,7 +436,7 @@ list.fivem = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -466,7 +470,7 @@ list.altv = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -496,7 +500,7 @@ list.multitheftauto = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -528,7 +532,7 @@ list.ragemp = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -556,7 +560,7 @@ list.samp = (serverName, userID) => ({
     },
     "environment": {},
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -603,7 +607,7 @@ list.gmod = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -635,7 +639,7 @@ list.csgo = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -674,7 +678,7 @@ list.arkse = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -798,7 +802,7 @@ list.rust = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [14],
+        "locations": gaming,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -840,7 +844,7 @@ list.mongodb = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -870,7 +874,7 @@ list.redis = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
@@ -903,7 +907,7 @@ list.postgres = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },

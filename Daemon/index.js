@@ -114,7 +114,7 @@ async function fetchData() {
     nodeData.set("data", {
         servername: os.hostname(),
         cpu: cpudata.manufacturer + " " + cpudata.brand,
-        cpuload: cl.currentload.toFixed(2),
+        cpuload: cl.currentload,
         cputhreads: cpudata.cores,
         cpucores: cpudata.physicalCores,
         memused: pretty(memdata.active),
@@ -150,7 +150,7 @@ async function fetchData() {
 
 async function speedtest() {
     var timestamp = `${moment().format("YYYY-MM-DD HH:mm:ss")}`;
-    const speed = await speedTest({maxTime: 5000})
+    const speed = await speedTest({maxTime: 5000, server: 15423, acceptLicense: true, acceptGdpr: true})
     speed.on('data', async (data) => {
         nodeData.set('data-speedtest', {
             speedname: os.hostname(),
