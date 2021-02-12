@@ -1,38 +1,37 @@
 const transliterate = require('transliteration');
-module.exports = async (client, oldM, newM) => {
-    let guild = newM.guild;
+module.exports = async (client, oldV, newV) => {
+    let guild = newV.guild;
 
-    if (oldM.voiceChannelID === newM.voiceChannelID) return;
+    if (oldV.channelID === newV.channelID) return;
 
 
-    if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID === "757659750342197289") {
-        if (client.pvc.get(oldM.voiceChannelID) != null && client.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
-            console.log("delete")
-
-            oldM.voiceChannel.delete();
-            client.pvc.delete(oldM.voiceChannelID);
+    if (oldV.channelID != null && oldV.channelID != "757660050977456238" && oldV.channel.parentID === "757659750342197289") {
+        if (client.pvc.get(oldV.channelID) != null && client.pvc.get(oldV.channelID).owner == oldV.member.id) {
+            oldV.channel.delete();
+            client.pvc.delete(oldV.channelID);
         }
     }
 
-    if (newM.voiceChannelID === "757660050977456238") {
-        console.log("create")
-        let cleanName = transliterate.slugify(newM.user.username);
+    if (newV.channelID === "757660050977456238") {
+        let cleanName = transliterate.slugify(newV.member.user.username);
         if (cleanName == '') cleanName = 'unknown';
-        let vc = await guild.createChannel(`${cleanName}'s Room`, {
+        let vc = await guild.channels.create(`${cleanName}'s Room`, {
             type: "voice",
-            permissionOverwrites: [{
-                id: guild.id,
-                deny: ["CONNECT", "VIEW_CHANNEL"]
-            }, {
-                id: newM.id,
-                allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
-            }]
         })
+
+        vc.overwritePermissions([{
+            id: guild.id,
+            deny: ["CONNECT", "VIEW_CHANNEL"]
+        }, {
+            id: newV.member.id,
+            allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
+        }])
+
         vc.setParent("757659750342197289");
-        newM.setVoiceChannel(vc.id);
+        newV.setChannel(vc.id);
         client.pvc.set(vc.id, {
             channelID: vc.id,
-            owner: newM.id
+            owner: newV.member.id
         })
     }
 };
