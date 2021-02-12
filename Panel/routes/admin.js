@@ -27,25 +27,62 @@ const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
         console.log(data);
 
     });
+Router.post("/node1", checkAuth, (req, res) => {
 
-    Router.post("/node5", checkAuth, (req, res) => {
+    let data = req.body;
+    console.log(data);
 
-        let data = req.body;
-        console.log(data);
+});
 
-    });
+Router.get("/node1", checkAuth, (req, res) => {
+    let bots = db.get(`${req.user.id}.bots`);
+    let items = nodeData.fetch('Node1-docker.dockerAll');
+    let filteredItems = items.filter(i => i.state === "running");
 
-    Router.get("/node5", checkAuth, (req, res) => {
-        let bots = db.get(`${req.user.id}.bots`);
-        let items = nodeData.fetch('Node5-docker.dockerAll');
-        let filteredItems = items.filter(i => i.state === "running");
+    res.render('node1-admin.ejs', {
+        table: filteredItems,
+        user: req.isAuthenticated() ? req.user : null, bots, db
+    })
 
-        res.render('node5-admin.ejs', {
-            table: filteredItems,
-            user: req.isAuthenticated() ? req.user : null, bots, db
-        })
+});
 
-    });
+Router.post("/node2", checkAuth, (req, res) => {
+
+    let data = req.body;
+    console.log(data);
+
+});
+
+Router.get("/node2", checkAuth, (req, res) => {
+    let bots = db.get(`${req.user.id}.bots`);
+    let items = nodeData.fetch('Node2-docker.dockerAll');
+    let filteredItems = items.filter(i => i.state === "running");
+
+    res.render('node2-admin.ejs', {
+        table: filteredItems,
+        user: req.isAuthenticated() ? req.user : null, bots, db
+    })
+
+});
+
+Router.post("/node5", checkAuth, (req, res) => {
+
+    let data = req.body;
+    console.log(data);
+
+});
+
+Router.get("/node5", checkAuth, (req, res) => {
+    let bots = db.get(`${req.user.id}.bots`);
+    let items = nodeData.fetch('Node5-docker.dockerAll');
+    let filteredItems = items.filter(i => i.state === "running");
+
+    res.render('node5-admin.ejs', {
+        table: filteredItems,
+        user: req.isAuthenticated() ? req.user : null, bots, db
+    })
+
+});
 //Requests/tickets page
     Router.get("/requests", checkAuth, (req, res) => {
         let bots = db.get(`${req.user.id}.bots`);
