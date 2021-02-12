@@ -36,9 +36,11 @@ Router.post("/node5", checkAuth, (req, res) => {
 
 Router.get("/node5", checkAuth, (req, res) => {
     let bots = db.get(`${req.user.id}.bots`);
-    var items = nodeData.fetch('Node5-docker.dockerAll')
+    let items = nodeData.fetch('Node5-docker.dockerAll');
+    let filteredItems = items.filter(i => i.state === "running");
+
     res.render('node5-admin.ejs',{
-        table: items,
+        table: filteredItems,
         user: req.isAuthenticated() ? req.user : null, bots, db
     })
 
