@@ -21,12 +21,14 @@ module.exports = async (client) => {
     // }
 
     let checkNicks = () => {
-        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')'].some(r => member.displayName.startsWith(r))).forEach(x => {
+        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']'].some(r => member.displayName.startsWith(r))).forEach(x => {
             x.setNickname('⚠️HOISTER ALERT ⚠️');
         })
     }
 
-    checkNicks();
+    setInterval(() => {
+        checkNicks()
+    }, 60000)
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
     //getUsers()
