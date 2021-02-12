@@ -17,14 +17,16 @@ module.exports = async (client, oldV, newV) => {
         if (cleanName == '') cleanName = 'unknown';
         let vc = await guild.channels.create(`${cleanName}'s Room`, {
             type: "voice",
-            permissionOverwrites: [{
-                id: guild.id,
-                deny: ["CONNECT", "VIEW_CHANNEL"]
-            }, {
-                id: newV.member.id,
-                allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
-            }]
         })
+
+        vc.overwritePermissions([{
+            id: guild.id,
+            deny: ["CONNECT", "VIEW_CHANNEL"]
+        }, {
+            id: newV.member.id,
+            allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
+        }])
+
         vc.setParent("757659750342197289");
         newV.setChannel(vc.id);
         client.pvc.set(vc.id, {

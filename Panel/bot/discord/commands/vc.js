@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            message.member.voice.channelID.overwritePermissions(member, {
+            message.member.voice.channelID.updateOverwrite(member, {
                 CONNECT: true,
                 VIEW_CHANNEL: true,
                 STREAM: true,
@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            message.member.voice.channel.overwritePermissions(member, {
+            message.member.voice.channel.updateOverwrite(member, {
                 CONNECT: false,
                 VIEW_CHANNEL: false
             });
