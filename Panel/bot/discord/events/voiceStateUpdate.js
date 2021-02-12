@@ -5,20 +5,17 @@ module.exports = async (client, oldM, newM) => {
     if (oldM.voiceChannelID === newM.voiceChannelID) return;
 
 
-    if (oldM.voiceChannel != null && oldM.voiceChannelID != "757660050977456238" && oldM.voiceChannel.parentID === "757659750342197289") {
-        if (client.pvc.get(oldM.voiceChannelID) != null && client.pvc.get(oldM.voiceChannelID).owner == oldM.id) {
-            console.log("delete")
-
-            oldM.voiceChannel.delete();
-            client.pvc.delete(oldM.voiceChannelID);
+    if (oldM.voice.channelID != null && oldM.voice.channelID != "757660050977456238" && oldM.voice.channel.parentID === "757659750342197289") {
+        if (client.pvc.get(oldM.voice.channelID) != null && client.pvc.get(oldM.voice.channelID).owner == oldM.id) {
+            oldM.voice.channel.delete();
+            client.pvc.delete(oldM.voice.channelID);
         }
     }
 
-    if (newM.voiceChannelID === "757660050977456238") {
-        console.log("create")
+    if (newM.voice.channelID === "757660050977456238") {
         let cleanName = transliterate.slugify(newM.user.username);
         if (cleanName == '') cleanName = 'unknown';
-        let vc = await guild.createChannel(`${cleanName}'s Room`, {
+        let vc = await guild.channels.create(`${cleanName}'s Room`, {
             type: "voice",
             permissionOverwrites: [{
                 id: guild.id,
@@ -29,7 +26,7 @@ module.exports = async (client, oldM, newM) => {
             }]
         })
         vc.setParent("757659750342197289");
-        newM.setVoiceChannel(vc.id);
+        newM.voice.setChannel(vc.id);
         client.pvc.set(vc.id, {
             channelID: vc.id,
             owner: newM.id

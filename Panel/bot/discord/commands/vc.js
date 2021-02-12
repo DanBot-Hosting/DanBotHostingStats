@@ -4,7 +4,7 @@ exports.run = async (client, message, args) => {
     }
 
     if (args[0].toLowerCase() === "add") {
-        if (client.pvc.get(message.member.cache.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner === message.member.id) {
+        if (client.pvc.get(message.member.voice.channelID) && client.pvc.get(message.member.voice.channelID).owner === message.member.id) {
             let member = message.guild.members.cache.get(args[1].match(/[0-9]{18}/)[0])
 
             if (member == null) {
@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            message.member.voiceChannel.cache.overwritePermissions(member, {
+            message.member.voice.channelID.overwritePermissions(member, {
                 CONNECT: true,
                 VIEW_CHANNEL: true,
                 STREAM: true,
@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
         }
     }
     if (args[0].toLowerCase() === "remove") {
-        if (client.pvc.get(message.member.voiceChannelID) && client.pvc.get(message.member.voiceChannelID).owner === message.member.id) {
+        if (client.pvc.get(message.member.voice.channelID) && client.pvc.get(message.member.voice.channelID).owner === message.member.id) {
 
             let member = message.guild.members.cache.get(args[1].match(/[0-9]{18}/)[0])
 
@@ -40,13 +40,12 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            message.member.voiceChannel.cache.overwritePermissions(member, {
+            message.member.voice.channel.overwritePermissions(member, {
                 CONNECT: false,
                 VIEW_CHANNEL: false
             });
-            member.setVoiceChannel(null);
+            member.voice.setChannel(null);
             message.reply("successfully removed **" + member.user.username + "** from the Voice Channel.")
-
 
         } else {
             message.reply("You must be in a channel that you own in order to use this command.")
