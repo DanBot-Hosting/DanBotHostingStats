@@ -2,62 +2,67 @@ const Router = require("express").Router();
 const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
-Router.get("/", checkAuth, (req, res) => {
-    let bots = db.get(`${req.user.id}.bots`);
-    res.render("admin.ejs", { user: req.isAuthenticated() ? req.user : null, bots, db });
-});
-  
-Router.post("/", checkAuth, (req, res) => {
-      
-    let data = req.body;
-    console.log(data); 
-        
-});
+let allowed = ["338192747754160138","137624084572798976"];
+allowed.push(bot.owner);
+
+if(allowed.includes(req.user.id)) {
+
+    Router.get("/", checkAuth, (req, res) => {
+        let bots = db.get(`${req.user.id}.bots`);
+        res.render("admin.ejs", {user: req.isAuthenticated() ? req.user : null, bots, db});
+    });
+
+    Router.post("/", checkAuth, (req, res) => {
+
+        let data = req.body;
+        console.log(data);
+
+    });
 
 //Settings page
-Router.get("/settings", checkAuth, (req, res) => {
-    let bots = db.get(`${req.user.id}.bots`);
-    res.render("admin-settings.ejs", { user: req.isAuthenticated() ? req.user : null, bots, db });
-});
-  
-Router.post("/settings", checkAuth, (req, res) => {
-      
-    let data = req.body;
-    console.log(data); 
-        
-});
+    Router.get("/settings", checkAuth, (req, res) => {
+        let bots = db.get(`${req.user.id}.bots`);
+        res.render("admin-settings.ejs", {user: req.isAuthenticated() ? req.user : null, bots, db});
+    });
 
-Router.post("/node5", checkAuth, (req, res) => {
+    Router.post("/settings", checkAuth, (req, res) => {
 
-    let data = req.body;
-    console.log(data);
+        let data = req.body;
+        console.log(data);
 
-});
+    });
 
-Router.get("/node5", checkAuth, (req, res) => {
-    let bots = db.get(`${req.user.id}.bots`);
-    let items = nodeData.fetch('Node5-docker.dockerAll');
-    let filteredItems = items.filter(i => i.state === "running");
+    Router.post("/node5", checkAuth, (req, res) => {
 
-    res.render('node5-admin.ejs',{
-        table: filteredItems,
-        user: req.isAuthenticated() ? req.user : null, bots, db
-    })
+        let data = req.body;
+        console.log(data);
 
-});
+    });
+
+    Router.get("/node5", checkAuth, (req, res) => {
+        let bots = db.get(`${req.user.id}.bots`);
+        let items = nodeData.fetch('Node5-docker.dockerAll');
+        let filteredItems = items.filter(i => i.state === "running");
+
+        res.render('node5-admin.ejs', {
+            table: filteredItems,
+            user: req.isAuthenticated() ? req.user : null, bots, db
+        })
+
+    });
 //Requests/tickets page
-Router.get("/requests", checkAuth, (req, res) => {
-  let bots = db.get(`${req.user.id}.bots`);
-  res.render("requests-admin.ejs", { user: req.isAuthenticated() ? req.user : null, bots, db });
-});
+    Router.get("/requests", checkAuth, (req, res) => {
+        let bots = db.get(`${req.user.id}.bots`);
+        res.render("requests-admin.ejs", {user: req.isAuthenticated() ? req.user : null, bots, db});
+    });
 
-Router.post("/requests", checkAuth, (req, res) => {
-    
-  let data = req.body;
-  console.log(data); 
-      
-});
+    Router.post("/requests", checkAuth, (req, res) => {
 
+        let data = req.body;
+        console.log(data);
+
+    });
+}
 module.exports = Router;
 
 /*
