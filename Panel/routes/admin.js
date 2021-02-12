@@ -65,7 +65,7 @@ module.exports = Router;
  */
 function checkAuth(req, res, next) {
   if (req.isAuthenticated()) {
-      let allowed = ["293841631583535106","137624084572798976"];
+      let allowed = ["293841631583535106","137624084572798976"]; //Solo, Dan
       allowed.push(bot.owner);
 
       if(allowed.includes(req.user.id)) {
