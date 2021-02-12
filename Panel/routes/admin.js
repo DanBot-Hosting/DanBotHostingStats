@@ -2,10 +2,6 @@ const Router = require("express").Router();
 const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
-let allowed = ["338192747754160138","137624084572798976"];
-allowed.push(bot.owner);
-
-if(allowed.includes(req.user.id)) {
 
     Router.get("/", checkAuth, (req, res) => {
         let bots = db.get(`${req.user.id}.bots`);
@@ -62,7 +58,6 @@ if(allowed.includes(req.user.id)) {
         console.log(data);
 
     });
-}
 module.exports = Router;
 
 /*
@@ -70,7 +65,14 @@ module.exports = Router;
  */
 function checkAuth(req, res, next) {
   if (req.isAuthenticated()) {
-    return next();
+      let allowed = ["293841631583535106","137624084572798976"];
+      allowed.push(bot.owner);
+
+      if(allowed.includes(req.user.id)) {
+          return next();
+      } else {
+          res.redirect("/me")
+      }
   } else {
     req.session.backURL = req.url;
 
