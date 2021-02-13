@@ -1,25 +1,19 @@
 .git
 .idea
 
-Panel/node_modules
-Panel/package-lock.json
-Panel/data
-Panel/config.json
-Panel/enable.json
-Panel/json.sqlite
-Panel/images
-Panel/start.bat
-Panel/eng.traineddata
-Panel/proxy
-Panel/animalAPI/dog/*
-Panel/animalAPI/cat/*
-Panel/bot/discord/commands/music.js
+node_modules
+package-lock.json
+data
+config.json
+enable.json
+json.sqlite
+images
+start.bat
+eng.traineddata
+proxy
+animalAPI/dog/*
+animalAPI/cat/*
 
-Daemon/node_modules
-Daemon/package-lock.json
-Daemon/json.sqlite
-Daemon/config.json
-Daemon/Rick_Astley___Never_Gonna_Give_You_Up__Video_.mp4
 
 Test/*
 
