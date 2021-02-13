@@ -114,7 +114,7 @@ async function fetchData() {
     nodeData.set("data", {
         servername: os.hostname(),
         cpu: cpudata.manufacturer + " " + cpudata.brand,
-        cpuload: cl.currentload,
+        cpuload: cl.currentload.toFixed(2),
         cputhreads: cpudata.cores,
         cpucores: cpudata.physicalCores,
         memused: pretty(memdata.active),
