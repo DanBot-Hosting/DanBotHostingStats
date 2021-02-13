@@ -39,12 +39,115 @@ exports.run = async (client, message) => {
     embed.addField('\u200b', '\u200b')
     embed.addField("\u200b", "__**[Storage 1 - Storage](https://danbot.host/Storage1)**__ \n**CPU LOAD**: " + nodeData.fetch("Storage1.cpuload") + "% \n**RAM (USED/TOTAL)**: " + nodeData.fetch("Storage1.memused") + " / " + nodeData.fetch("Storage1.memtotal") + " \n**STORAGE (USED/TOTAL)**: " + nodeData.fetch("Storage1.diskused") + " / " + nodeData.fetch("Storage1.disktotal") + " \n**UPTIME**: " + nodeData.fetch("Storage1.osuptime") + "\n**Servers**: **Total**: " + nodeData.fetch("Storage1.dockercontainers") + ", **Running**: " + nodeData.fetch("Storage1.dockercontainersrunning") + ", **Stopped**: " + nodeData.fetch("Storage1.dockercontainersstopped"))
     embed.addField('\u200b', '\u200b')
-    embed.addField('\u200b', `__**Total Usage:**__ \n__**Total CPU Cores:**__ \n${parseFloat(nodeData.fetch("Node1.cputhreads")) + parseFloat(nodeData.fetch("Node2.cputhreads")) + parseFloat(nodeData.fetch("Node3.cputhreads")) + parseFloat(nodeData.fetch("Node4.cputhreads")) + parseFloat(nodeData.fetch("Node5.cputhreads")) + parseFloat(nodeData.fetch("Node6.cputhreads")) + parseFloat(nodeData.fetch("Node7.cputhreads")) + parseFloat(nodeData.fetch("Node8.cputhreads")) + parseFloat(nodeData.fetch("Node9.cputhreads")) + parseFloat(nodeData.fetch("Node10.cputhreads")) + parseFloat(nodeData.fetch("Storage1.cputhreads"))}
-        \n__**Ram Total:**__ \n${formatFileSize(parseFloat(nodeData.fetch("Node1.memusedraw")) + parseFloat(nodeData.fetch("Node2.memusedraw")) + parseFloat(nodeData.fetch("Node3.memusedraw")) + parseFloat(nodeData.fetch("Node4.memusedraw")) + parseFloat(nodeData.fetch("Node5.memusedraw")) + parseFloat(nodeData.fetch("Node6.memusedraw")) + parseFloat(nodeData.fetch("Node7.memusedraw")) + parseFloat(nodeData.fetch("Node8.memusedraw")) + parseFloat(nodeData.fetch("Node9.memusedraw")) + parseFloat(nodeData.fetch("Node10.memusedraw")) + parseFloat(nodeData.fetch("Storage1.memusedraw")))} out of ${formatFileSize(Math.floor(parseFloat(nodeData.fetch("Node1.memtotalraw")) + parseFloat(nodeData.fetch("Node2.memtotalraw")) + parseFloat(nodeData.fetch("Node3.memtotalraw")) + parseFloat(nodeData.fetch("Node4.memtotalraw")) + parseFloat(nodeData.fetch("Node5.memtotalraw")) + parseFloat(nodeData.fetch("Node6.memtotalraw")) + parseFloat(nodeData.fetch("Node7.memtotalraw")) + parseFloat(nodeData.fetch("Node8.memtotalraw")) + parseFloat(nodeData.fetch("Node9.memtotalraw")) + parseFloat(nodeData.fetch("Node10.memtotalraw")) + parseFloat(nodeData.fetch("Storage1.memtotalraw"))), 2)} \n` +
+    embed.addField('\u200b', `__**Total Usage:**__ \n__**Total CPU Cores:**__ \n${parseFloat(nodeData.fetch("Node1.cputhreads")) +
+        parseFloat(nodeData.fetch("Node2.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node3.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node4.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node5.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node6.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node7.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node8.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node9.cputhreads")) + 
+        parseFloat(nodeData.fetch("Node10.cputhreads")) +
+        parseFloat(nodeData.fetch("Node11.cputhreads")) +
+        parseFloat(nodeData.fetch("Node12.cputhreads")) +
+        parseFloat(nodeData.fetch("Node13.cputhreads")) +
+        parseFloat(nodeData.fetch("Node14.cputhreads")) +
+        parseFloat(nodeData.fetch("Node15.cputhreads")) +
+        parseFloat(nodeData.fetch("Storage1.cputhreads"))}
+        \n__**Ram Total:**__ \n${formatFileSize(parseFloat(nodeData.fetch("Node1.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node2.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node3.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node4.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node5.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node6.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node7.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node8.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node9.memusedraw")) + 
+        parseFloat(nodeData.fetch("Node10.memusedraw")) +
+        parseFloat(nodeData.fetch("Node11.memusedraw")) +
+        parseFloat(nodeData.fetch("Node12.memusedraw")) +
+        parseFloat(nodeData.fetch("Node13.memusedraw")) +
+        parseFloat(nodeData.fetch("Node14.memusedraw")) +
+        parseFloat(nodeData.fetch("Node15.memusedraw")) +
+        parseFloat(nodeData.fetch("Storage1.memusedraw")))} out of ${formatFileSize(Math.floor(parseFloat(nodeData.fetch("Node1.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node2.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node3.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node4.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node5.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node6.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node7.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node8.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node9.memtotalraw")) + 
+        parseFloat(nodeData.fetch("Node10.memtotalraw")) +
+        parseFloat(nodeData.fetch("Node11.memtotalraw")) +
+        parseFloat(nodeData.fetch("Node12.memtotalraw")) +
+        parseFloat(nodeData.fetch("Node13.memtotalraw")) +
+        parseFloat(nodeData.fetch("Node14.memtotalraw")) +
+        parseFloat(nodeData.fetch("Node15.memtotalraw")) +
+        parseFloat(nodeData.fetch("Storage1.memtotalraw"))), 2)} \n` +
         `\n__**Disk Total:**__ ` +
-        `\n${formatFileSize(parseFloat(nodeData.fetch("Node1.diskusedraw")) + parseFloat(nodeData.fetch("Node2.diskusedraw")) + parseFloat(nodeData.fetch("Node3.diskusedraw")) + parseFloat(nodeData.fetch("Node4.diskusedraw")) + parseFloat(nodeData.fetch("Node5.diskusedraw")) + parseFloat(nodeData.fetch("Node6.diskusedraw")) + parseFloat(nodeData.fetch("Node7.diskusedraw")) + parseFloat(nodeData.fetch("Node8.diskusedraw")) + parseFloat(nodeData.fetch("Node9.diskusedraw")) + parseFloat(nodeData.fetch("Node10.diskusedraw")) + parseFloat(nodeData.fetch("Storage1.diskusedraw")), 2)} ` +
-        `out of ${formatFileSize(parseFloat(nodeData.fetch("Node1.disktotalraw")) + parseFloat(nodeData.fetch("Node2.disktotalraw")) + parseFloat(nodeData.fetch("Node3.disktotalraw")) + parseFloat(nodeData.fetch("Node4.disktotalraw")) + parseFloat(nodeData.fetch("Node5.disktotalraw")) + parseFloat(nodeData.fetch("Node7.disktotalraw")) + parseFloat(nodeData.fetch("Node8.disktotalraw")) + parseFloat(nodeData.fetch("Node9.disktotalraw")) + parseFloat(nodeData.fetch("Node10.disktotalraw")) + parseFloat(nodeData.fetch("Storage1.disktotalraw")), 2)}
-        \n__**Total Servers:**__ \n**Total**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainers")) + parseFloat(nodeData.fetch("Node2.dockercontainers")) + parseFloat(nodeData.fetch("Node3.dockercontainers")) + parseFloat(nodeData.fetch("Node4.dockercontainers")) + parseFloat(nodeData.fetch("Node5.dockercontainers")) + parseFloat(nodeData.fetch("Node6.dockercontainers")) + parseFloat(nodeData.fetch("Node7.dockercontainers")) + parseFloat(nodeData.fetch("Node8.dockercontainers")) + parseFloat(nodeData.fetch("Node9.dockercontainers")) + parseFloat(nodeData.fetch("Node10.dockercontainers")))} \n**Running**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node2.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node3.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node4.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node5.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node6.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node7.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node8.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node9.dockercontainersrunning")) + parseFloat(nodeData.fetch("Node10.dockercontainersrunning")))} \n**Stopped**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node2.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node3.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node4.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node5.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node6.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node7.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node8.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node9.dockercontainersstopped")) + parseFloat(nodeData.fetch("Node10.dockercontainersstopped")))}`)
+        `\n${formatFileSize(parseFloat(nodeData.fetch("Node1.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node2.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node3.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node4.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node5.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node6.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node7.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node8.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node9.diskusedraw")) + 
+            parseFloat(nodeData.fetch("Node10.diskusedraw")) +
+            parseFloat(nodeData.fetch("Node11.diskusedraw")) +
+            parseFloat(nodeData.fetch("Node12.diskusedraw")) +
+            parseFloat(nodeData.fetch("Node13.diskusedraw")) +
+            parseFloat(nodeData.fetch("Node14.diskusedraw")) +
+            parseFloat(nodeData.fetch("Node15.diskusedraw")) +
+            parseFloat(nodeData.fetch("Storage1.diskusedraw")), 2)} ` +
+        `out of ${formatFileSize(parseFloat(nodeData.fetch("Node1.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node2.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node3.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node4.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node5.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node7.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node8.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node9.disktotalraw")) + 
+            parseFloat(nodeData.fetch("Node10.disktotalraw")) +
+            parseFloat(nodeData.fetch("Node11.disktotalraw")) +
+            parseFloat(nodeData.fetch("Node12.disktotalraw")) +
+            parseFloat(nodeData.fetch("Node13.disktotalraw")) +
+            parseFloat(nodeData.fetch("Node14.disktotalraw")) +
+            parseFloat(nodeData.fetch("Node15.disktotalraw")) +
+            parseFloat(nodeData.fetch("Storage1.disktotalraw")), 2)}
+        \n__**Total Servers:**__ \n**Total**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node2.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node3.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node4.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node5.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node6.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node7.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node8.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node9.dockercontainers")) + 
+            parseFloat(nodeData.fetch("Node10.dockercontainers")))} 
+        \n**Running**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node2.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node3.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node4.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node5.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node6.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node7.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node8.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node9.dockercontainersrunning")) + 
+            parseFloat(nodeData.fetch("Node10.dockercontainersrunning")))} 
+        \n**Stopped**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node2.dockercontainersstopped")) +
+            parseFloat(nodeData.fetch("Node3.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node4.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node5.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node6.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node7.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node8.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node9.dockercontainersstopped")) + 
+            parseFloat(nodeData.fetch("Node10.dockercontainersstopped")))}`)
     embed.setDescription('Want to view more stats live? [Click Here!](https://danbot.host/stats)')
     msg.edit(embed);
 };
