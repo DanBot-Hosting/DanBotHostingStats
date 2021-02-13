@@ -16,7 +16,21 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Dosis:200,400,700" rel="stylesheet">
+<%
+function tableSort(colNum, cmp) {
+    let rows = [...table.rows];
+    rows.sort((a, b) => cmp(a.cells[colNum].textContent, b.cells[colNum].textContent))
+            .map(row => table.appendChild(row));
+}
 
+function sortByAscending() {
+    tableSort(0, (a, b) => a - b); // assuming that school column has number representations
+}
+
+function sortByDescending() {
+    tableSort(0, (a, b) => b - a); // assuming that school column has number representations
+}
+%>
 
 <main>
     <div class="jumbotron secondary-jumbotron bg-transparent">
@@ -33,7 +47,7 @@
             <thead>
             <tr>
                 <th>Server ID</th>
-                <th>CPU Usage</th>
+                <th><button onclick="sortByAscending()">CPU Usage</button></th>
                 <th>RAM Usage</th>
                 <th>NET Usage</th>
                 <th>Extra</th>
