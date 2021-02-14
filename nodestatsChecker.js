@@ -157,9 +157,9 @@ setInterval(() => {
         });
     })
 
-    //Node 1 (PUBLIC GAMESERVER PANEL)
+    //Node 1 
     axios({
-        url: config.DanPterodactyl.hosturl + "/api/client/servers/2b5066aa/resources",
+        url: config.DanPterodactyl.hosturl + "/api/client/servers/019b6467/resources",
         method: 'GET',
         followRedirect: true,
         maxRedirects: 5,
