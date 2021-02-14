@@ -44,19 +44,19 @@ let stats = {
         IP: '194.146.44.58'
     },
     node11: {
-        serverID: 'null',
+        serverID: '0267242c',
         IP: '178.159.2.82'
     },
     node12: {
-        serverID: 'null',
+        serverID: '4526d28b',
         IP: '178.159.2.89'
     },
     node13: {
-        serverID: 'null',
+        serverID: '8bb3a785',
         IP: '178.159.3.205'
     },
     node14: {
-        serverID: 'null',
+        serverID: '7ad8c41b',
         IP: '194.146.44.188'
     },
 
