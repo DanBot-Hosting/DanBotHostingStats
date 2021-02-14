@@ -40,7 +40,7 @@ let stats = {
         IP: '194.146.44.41'
     },
     node10: {
-        serverID: 'null',
+        serverID: '3c93984c',
         IP: '194.146.44.58'
     },
     node11: {
