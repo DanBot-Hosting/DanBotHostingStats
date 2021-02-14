@@ -1,60 +1,86 @@
 {
-    "Port": 1144, 
+    "Port": 1144,
     "APIPort": 1145,
+    "externalPassword": "This should be the same password as the one thats in the daemon config.json (This is how they talk together)",
 
-    "DiscordBot": {
-        "Token": "Bot Token",
-        "Prefix": "Prefix",
-        "clientID": "Client ID from Discord Dev portal for the bot",
-        "clientSecret": "Client Secret from the Discord Dev Portal.",
-        "callbackURL": "Call back url. For logging into the website",
-        "ownerID": "Owner ID. Gives you access to a few more commands :)",
-        "mLogs": "Message logs channel ID",
-        "oLogs": "Other logs channel id (Currently used for namechanges and linking logs)",
-        "welcome": "Welcome channel ID",
-        "inviterewmsg": "Invite reward message channel ID",
-        "invite5": "Invite 5+ role ID",
-        "invite10": "Invite 10+ role ID",
-        "invite25": "Invite 25+ role ID",
-        "invite50": "Invite 50+ role ID",
-        "invitechannel": "Invite logs channel ID",
-        "requestsChannel": "Request channel ID"
+    "node7": {
+        "price": 1
     },
 
-    "DiscordSuggestions": {
-        "channelID": "Channel ID for Suggestions webhook",
-        "Token": "Discord Webhook token"
+    "DiscordBot": {
+        "Token": "Bot token",
+        "Prefix": "Bot Prefix",
+        "clientID": "Bot client ID",
+        "clientSecret": "Bot client secret",
+        "callbackURL": "callback url after logging into the site. should end with /api/callback",
+        "ownerID": "Owner ID (For owner only commands)",
+        "mainGuild": "Main guild the bot will be used in",
+        "mLogs": "Message logs channel ID",
+        "oLogs": "Other logs channel ID",
+        "modLogs": "Mod logs channel ID",
+        "requestsChannel": "Channel that request are in. This isnt used yet but will be soon",
+        "welcome": "Welcome channel ID",
+        "roles": {
+            "member": "Member role ID",
+            "client": "Client role ID",
+            "bot": "Bot role ID",
+            "staff": "Staff role ID (Used for staff commands)",
+            "mute": "Muted role ID"
+        },
+        "invitechannel": "Invite logs channel ID",
+        "inviterewmsg": "Invite reward message channel ID",
+        "invites": {
+            "5": "5+ invites role ID",
+            "10": "10+ invites role ID",
+            "25": "25+ invites role ID",
+            "50": "50+ invites role ID",
+            "100": "100+ invites role ID",
+            "150": "150+ invites role ID",
+            "200": "200+ invites role ID"
+        },
+        "reactionRoles": {
+            "765877675147264000": {
+                "767897280401375244": {
+                    "📣": "767845918350376960"
+                },
+                "767897353721086012": {
+                    "🕹️": "760207814546817085",
+                    "🎥": "758020921939460166",
+                    "🎉": "765865412725440522",
+                    "❔": "767846121195175938",
+                    "⌛": "745358424883200210"
+                }
+            },
+            "754441222424363088": {
+                "770046936957845514": {
+                    "🔪": "772945148937109546"
+                }
+            }
+        }
     },
 
     "DB": {
-        "MongoDB": "MongoDB connection (forgot what this is for but give it one anyway)"
+        "MongoDB": "the mongodb connection URL used for storing logged in users, this will be moved to a local db soon"
     },
 
     "Pterodactyl": {
-        "hosturl": "Pterodactyl URL (Dont put the / on the end) Example: https://your.panel.com",
-        "apikey": "Pterodactyl ADMIN Api key. Where to find? add admin/api to the end of your panel domain",
-        "apikeyclient": "Pterodactyl CLIENT Api key. Find it: add account/api to the end of your panel domain"
+        "hosturl": "Your pterodactyl panel. dont forget the https",
+        "apikey": "your admin api key",
+        "apikeyclient": "your client api key"
     },
 
-    "Proxmox": {
-        "url": "Proxmox (Not used yet so ignore this)",
-        "auth": "Proxmox (Not used yet so ignore this)",
-        "username": "Proxmox (Not used yet so ignore this)",
-        "password": "Proxmox (Not used yet so ignore this)"
-    },
-    
     "Email": {
-        "Host": "smtp mail server host",
+        "Host": "SMTP url",
         "Port": "587",
-        "User": "smtp mail server username",
-        "Password": "smtp mail server password",
-        "From": "Mail from email"
+        "User": "SMTP Username",
+        "Password": "SMTP password",
+        "From": "Email sent from"
     },
 
     "SSH": {
-        "Host": "SSH Host (Used for Proxy servers right now)",
+        "Host": "Reverse proxy IP",
         "User": "root",
-        "Password": "User password for SSH",
+        "Password": "Reverse proxy root password",
         "Port": 22
     }
 }
