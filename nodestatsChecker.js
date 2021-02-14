@@ -157,7 +157,7 @@ setInterval(() => {
         });
     })
 
-    //Node 1 
+    //Node 1
     axios({
         url: config.DanPterodactyl.hosturl + "/api/client/servers/019b6467/resources",
         method: 'GET',
