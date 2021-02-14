@@ -41,9 +41,6 @@ let nstatus = {
     }, {
         name: 'Node-14',
         data: 'node14'
-    }, {
-        name: 'Node-15',
-        data: 'node15'
     }],
 
     "Donator Nodes": [{
