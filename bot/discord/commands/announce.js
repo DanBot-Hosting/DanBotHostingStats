@@ -65,7 +65,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let channel = message.guild.channels.find(x => x.id == args[0].match(/[0-9]{18}/));
+    let channel = message.guild.channels.cache.find(x => x.id == args[0].match(/[0-9]{18}/));
     if (!channel) {
         message.channel.send("", {
             embed: new Discord.RichEmbed()
