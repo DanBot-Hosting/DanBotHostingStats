@@ -49,6 +49,7 @@
     "resolve": "^1.17.0",
     "serve-favicon": "^2.5.0",
     "snekfetch": "^4.0.4",
+    "ssh2": "^0.8.9",
     "tesseract.js": "^2.1.1",
     "transliteration": "^2.2.0",
     "unirest": "^0.6.0",
