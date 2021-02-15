@@ -47,26 +47,28 @@ exports.run = async (client, message, args) => {
         ef: 'Embed Footer',
         et: 'Embed Timestamp',
     }
+
     let flagsdesc = ""
     const entries = Object.entries(flags)
     for (const [flags, value] of entries) {
         flagsdesc += `**-${flags}** >> ${value}\n`
     }
-    if (args.length < 1) {
-        await message.channel.send("", {
-            embed: new Discord.MessageEmbed()
+
+    if (args.length < 2) {
+        message.channel.send("", {
+            embed: new Discord.RichEmbed()
                 .setColor("YELLOW")
-                .setDescription(`Incorrect Usage!\nusage: \`DBH!announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
+                .setDescription(`Incorrect Usage!\nusage: \`${config.prefix}announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
                 .addField("**Variables:**", flagsdesc)
                 .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
         })
         return;
     }
 
-    let channel = message.guild.channels.cache.find(x => x.id == args[0].match(/[0-9]{18}/));
+    let channel = message.guild.channels.find(x => x.id == args[0].match(/[0-9]{18}/));
     if (!channel) {
-        await message.channel.send("", {
-            embed: new Discord.MessageEmbed()
+        message.channel.send("", {
+            embed: new Discord.RichEmbed()
                 .setColor("YELLOW")
                 .setDescription(`Couldn't find that channel.`)
                 .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
@@ -74,11 +76,11 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let embedData = parse(args.join(" ").slice(args[0].length + 1));
+    let embedData = parse(args.join(" ").slice(args[0].length + 1), Object.keys(flags));
     let embed = null;
     let normalMessage = embedData.nm || "";
     if (embedData.e) {
-        embed = new Discord.MessageEmbed();
+        embed = new Discord.RichEmbed();
         if (embedData.ei) embed.setImage(embedData.ei);
         if (embedData.etn) embed.setThumbnail(embedData.etn);
         if (embedData.ed) embed.setDescription(embedData.ed);
@@ -92,7 +94,6 @@ exports.run = async (client, message, args) => {
         channel.send(args.join(" ").slice(args[0].length + 1))
         return;
     }
-    
-    channel.send(normalMessage, embed);
 
+    channel.send(normalMessage, embed);
 };
