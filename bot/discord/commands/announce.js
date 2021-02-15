@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
         message.channel.send("", {
             embed: new Discord.MessageEmbed()
                 .setColor("YELLOW")
-                .setDescription(`Incorrect Usage!\nusage: \`${config.prefix}announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
+                .setDescription(`Incorrect Usage!\nusage: \`DBH!announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
                 .addField("**Variables:**", flagsdesc)
                 .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
         })
