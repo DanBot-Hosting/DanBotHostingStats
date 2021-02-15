@@ -87,6 +87,12 @@ exports.run = async (client, message, args) => {
         if (embedData.ef) embed.setFooter(embedData.ef);
         if (embedData.et) embed.setTimestamp();
     }
+
+    if(embed == null && normalMessage == '') {
+        channel.send(args.join(" ").slice(args[0].length + 1))
+        return;
+    }
+    
     channel.send(normalMessage, embed);
 
 };
