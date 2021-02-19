@@ -101,7 +101,19 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Type:**__`, args[1].toLowerCase())
                     message.channel.send(embed)
                 }).catch(error => {
-                message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                    if (error === "Error: Request failed with status code 400") {
+                        const embed = new Discord.MessageEmbed()
+                            .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan or Solo)`)
+                        message.reply(embed)
+                    } else if (error === "Error: Request failed with status code 504") {
+                        const embed = new Discord.MessageEmbed()
+                            .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
+                        message.reply(embed)
+                    } else {
+                        const embed = new Discord.MessageEmbed()
+                            .addField(`__**Failed to create a new server**__`, error)
+                        message.reply(embed)
+                    }
                 client.cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
             })
         }

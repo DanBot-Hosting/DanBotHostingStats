@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
                     }
 
                     if (use.extras.servers == null || use.extras.servers.find(x => x.identifier === args[2]) == null) {
-                        message.channel.send("Couldn't find that server in your server list.")
+                        message.channel.send("Couldn't find that server in your server list. \nDo you own that server?")
                         return;
                     }
                     axios({

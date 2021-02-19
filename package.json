@@ -54,5 +54,10 @@
     "transliteration": "^2.2.0",
     "unirest": "^0.6.0",
     "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "opusscript": "0.0.7",
+    "simple-youtube-api": "^5.2.1",
+    "ytdl-core": "^4.4.5"
   }
 }
