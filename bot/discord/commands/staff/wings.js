@@ -4,7 +4,7 @@ exports.run = async (client, message, args) => {
     if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
     if (!args[1]) {
         let i = 1
-        while (i <8) {
+        while (i <15) {
             require('axios')({
                 url: "http://n" + i + ".danbot.host:999/wings?action=restart",
                 method: 'GET',
