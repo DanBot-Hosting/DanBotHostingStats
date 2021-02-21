@@ -4,7 +4,7 @@ const Router = require("express").Router();
 const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 const passport = require("passport");
-let Developers = [ "137624084572798976", "338192747754160138" ];
+let Developers = [ "137624084572798976", "293841631583535106" ];
 const rateLimitt = require('express-rate-limit');
 
 var axios = require("axios")
