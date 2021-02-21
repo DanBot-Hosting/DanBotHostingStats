@@ -73,7 +73,7 @@ let nstatus = {
         data: 'dbhdb'
     }],
 
-    "Admin Panel": [{
+    "Solo's Panel": [{
         name: 'Panel',
         data: 'admin.danbot.host'
     }, {
@@ -81,7 +81,7 @@ let nstatus = {
         data: 'node1-priv'
     }],
 
-    "Dan's Private Panel": [{
+    "Dan's Panel": [{
         name: 'Panel',
         data: 'private.danbot.host'
     }, {
@@ -134,7 +134,7 @@ let parse = async () => {
 
            // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
             //    da = '🔴 Network Outage'
-                
+
             temp.push(`**${d.name}:** ${da}`)
         }
 
@@ -164,7 +164,7 @@ monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 
 var dateString = "Updated at " + hr + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT) on "
     + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
-    
+
     let embed = new Discord.MessageEmbed()
         .setTitle('Danbot Hosting Status').setFooter(dateString)
         .setDescription(desc);
