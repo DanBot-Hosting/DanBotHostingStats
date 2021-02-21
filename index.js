@@ -1,10 +1,10 @@
 /*
-    ____              ____        __     __  __           __  _            
+    ____              ____        __     __  __           __  _
    / __ \____ _____  / __ )____  / /_   / / / /___  _____/ /_(_)___  ____ _
   / / / / __ `/ __ \/ __  / __ \/ __/  / /_/ / __ \/ ___/ __/ / __ \/ __ `/
- / /_/ / /_/ / / / / /_/ / /_/ / /_   / __  / /_/ (__  ) /_/ / / / / /_/ / 
-/_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /  
-Free Hosting for ever!                                            /____/   
+ / /_/ / /_/ / / / / /_/ / /_/ / /_   / __  / /_/ (__  ) /_/ / / / / /_/ /
+/_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
+Free Hosting for ever!                                            /____/
 */
 
 global.config = require("./config.json");
@@ -46,7 +46,7 @@ global.transport = nodemailer.createTransport({
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 const { getBot } = require(process.cwd() + "/util/discordAPI");
 
-// Initialising Node Checker 
+// Initialising Node Checker
 require('./nodestatsChecker');
 
 //Discord Bot
@@ -81,7 +81,7 @@ fs.readdir('./bot/discord/events/', (err, files) => {
 
 //Bot login
 client.login(config.DiscordBot.Token);
-global.Allowed = ["338192747754160138", "137624084572798976"];
+global.Allowed = ["293841631583535106", "137624084572798976"];
 
 //Music Stuffs
 const YouTube = require('simple-youtube-api');
@@ -129,7 +129,7 @@ animalapp.get('/', function (req, res) {
   res.send('hello!')
 })
 
-//Total images 
+//Total images
 const totalRoute = require("./animalAPI/total.js");
 animalapp.use("/total", totalRoute);
 
@@ -268,7 +268,7 @@ app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "GET, POST");
 
-  console.log('[danbot.host] ' + 
+  console.log('[danbot.host] ' +
     (req.headers["cf-connecting-ip"] ||
       req.headers["x-forwarded-for"] ||
       req.ip) +
