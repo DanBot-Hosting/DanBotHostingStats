@@ -67,6 +67,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
       .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(data.member.joinedAt), {
         long: true
       }))
+      .addField("__**Which position are you applying for?**__", data.position)
       .addField("__**Languages**__", data.langs)
       .addField("__**Previous experiences**__", data.prev)
       .addField("__**Coding knowledge**__", data.coding)
@@ -94,6 +95,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
       long: true
     });
 
+    toSend += '\n-------------------------------------\n__**Which position are you applying for?**__\n' + data.position;
     toSend += '\n-------------------------------------\n__**Languages**__\n' + data.langs;
     toSend += '\n-------------------------------------\n__**Previous experiences**__\n' + data.prev;
     toSend += '\n-------------------------------------\n__**Coding knowledge**__\n' + data.coding;
