@@ -55,7 +55,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
   if (data.member == null) return res.send({
     error: "You're not a member in out discord server, make sure to join before applying."
   });
-  let channel = client.channels.cache.get("786607811870064650");
+  let channel = client.channels.cache.get("813764244008730654");
   try {
 
     const embed = new Discord.MessageEmbed()
