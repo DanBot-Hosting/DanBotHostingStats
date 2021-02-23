@@ -71,6 +71,9 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
       .addField("__**Previous experiences**__", data.prev)
       .addField("__**Coding knowledge**__", data.coding)
       .addField("__**Any projects you are proud of?**__", data.projects)
+      .addField("__**Why are you applying?**__", data.why)
+      .addField("__**What do you think makes you better than other applicants?**__", data.better)
+      .addField("__**What can you offer to the staff team?**__", data.offer)
       .addField("__**Anything else**__", data.else)
       .setTimestamp()
       .setFooter("New staff app submitted!");
