@@ -55,22 +55,26 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
   if (data.member == null) return res.send({
     error: "You're not a member in out discord server, make sure to join before applying."
   });
-  let channel = client.channels.cache.get("786607811870064650");
+  let channel = client.channels.cache.get("813764244008730654");
   try {
 
     const embed = new Discord.MessageEmbed()
       .setColor(0x00A2E8)
       .addField("__**Ping**__", data.member)
-      .addField("__**User ID**__", '`<@'+data.user +'>`')
+      .addField("__**User ID**__", '`<@' + data.user + '>`')
       .addField("__**age**__", data.age)
       .addField("__**Console Email**__", data.cemail)
       .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(data.member.joinedAt), {
         long: true
       }))
+      .addField("__**Which position are you applying for?**__", data.position)
       .addField("__**Languages**__", data.langs)
       .addField("__**Previous experiences**__", data.prev)
       .addField("__**Coding knowledge**__", data.coding)
       .addField("__**Any projects you are proud of?**__", data.projects)
+      .addField("__**Why are you applying?**__", data.why)
+      .addField("__**What do you think makes you better than other applicants?**__", data.better)
+      .addField("__**What can you offer to the staff team?**__", data.offer)
       .addField("__**Anything else**__", data.else)
       .setTimestamp()
       .setFooter("New staff app submitted!");
@@ -84,17 +88,21 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
 
     toSend += '__**Ping**__\n' + data.member;
     toSend += '\n-------------------------------------\n__**User ID**__\n' + data.member;
-    toSend += '\n-------------------------------------\n__**User ID**__\n' + '`<@'+data.user +'>`';
+    toSend += '\n-------------------------------------\n__**User ID**__\n' + '`<@' + data.user + '>`';
     toSend += '\n-------------------------------------\n__**age**__\n' + data.age;
     toSend += '\n-------------------------------------\n__**Console Email**__\n' + data.cemail;
     toSend += '\n-------------------------------------\n__**How long have you been in DBH?**__\n' + ms(Date.now() - Date.parse(data.member.joinedAt), {
       long: true
     });
 
+    toSend += '\n-------------------------------------\n__**Which position are you applying for?**__\n' + data.position;
     toSend += '\n-------------------------------------\n__**Languages**__\n' + data.langs;
     toSend += '\n-------------------------------------\n__**Previous experiences**__\n' + data.prev;
     toSend += '\n-------------------------------------\n__**Coding knowledge**__\n' + data.coding;
     toSend += '\n-------------------------------------\n__**Any projects you are proud of?**__\n' + data.projects;
+    toSend += '\n-------------------------------------\n__**Why are you applying?**__\n' + data.why;
+    toSend += '\n-------------------------------------\n__**What do you think makes you better than other applicants?**__\n' + data.better;
+    toSend += '\n-------------------------------------\n__**What can you offer to the staff team?**__\n' + data.else;
     toSend += '\n-------------------------------------\n__**Anything else**__\n' + data.else;
 
 
@@ -102,8 +110,6 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
       const att = new Discord.Attachment(Buffer.from(toSend), data.member.user.tag + ' - ' + data.member.id + '.txt');
       channel.send(data.member, att);
     })
-
-
   }
 
   res.redirect("/me?e=COMPLETE");
