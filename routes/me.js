@@ -61,7 +61,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     const embed = new Discord.MessageEmbed()
       .setColor(0x00A2E8)
       .addField("__**Ping**__", data.member)
-      .addField("__**User ID**__", '`<@'+data.user +'>`')
+      .addField("__**User ID**__", '`<@' + data.user + '>`')
       .addField("__**age**__", data.age)
       .addField("__**Console Email**__", data.cemail)
       .addField("__**How long have you been in DBH?**__", ms(Date.now() - Date.parse(data.member.joinedAt), {
@@ -87,7 +87,7 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
 
     toSend += '__**Ping**__\n' + data.member;
     toSend += '\n-------------------------------------\n__**User ID**__\n' + data.member;
-    toSend += '\n-------------------------------------\n__**User ID**__\n' + '`<@'+data.user +'>`';
+    toSend += '\n-------------------------------------\n__**User ID**__\n' + '`<@' + data.user + '>`';
     toSend += '\n-------------------------------------\n__**age**__\n' + data.age;
     toSend += '\n-------------------------------------\n__**Console Email**__\n' + data.cemail;
     toSend += '\n-------------------------------------\n__**How long have you been in DBH?**__\n' + ms(Date.now() - Date.parse(data.member.joinedAt), {
@@ -98,6 +98,9 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
     toSend += '\n-------------------------------------\n__**Previous experiences**__\n' + data.prev;
     toSend += '\n-------------------------------------\n__**Coding knowledge**__\n' + data.coding;
     toSend += '\n-------------------------------------\n__**Any projects you are proud of?**__\n' + data.projects;
+    toSend += '\n-------------------------------------\n__**Why are you applying?**__\n' + data.why;
+    toSend += '\n-------------------------------------\n__**What do you think makes you better than other applicants?**__\n' + data.better;
+    toSend += '\n-------------------------------------\n__**What can you offer to the staff team?**__\n' + data.else;
     toSend += '\n-------------------------------------\n__**Anything else**__\n' + data.else;
 
 
@@ -105,8 +108,6 @@ Router.post("/form/staff-apply", checkAuth, (req, res) => {
       const att = new Discord.Attachment(Buffer.from(toSend), data.member.user.tag + ' - ' + data.member.id + '.txt');
       channel.send(data.member, att);
     })
-
-
   }
 
   res.redirect("/me?e=COMPLETE");
