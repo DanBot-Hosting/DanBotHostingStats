@@ -70,7 +70,7 @@ module.exports = (client, message) => {
 
         if (blacklisted.includes(message.channel.id) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
-        if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "music") {
+        if (command === "server" || command === "user" || command === "staff" || command === "dan") {
             //Cooldown setting
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
@@ -84,10 +84,7 @@ module.exports = (client, message) => {
             commandFile.run(client, message, args);
         }
     } catch (err) {
-        //console.log(err)
-        if (err instanceof Error && err.code === "MODULE_NOT_FOUND") {
-            return;
-        }
+        console.log(err)
     }
 
 };
