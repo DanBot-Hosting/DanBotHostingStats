@@ -3,7 +3,7 @@ const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
 Router.get("/", (req, res) => {
-    
+
   let Query = req.query.q;
   let from = req.query.utm_source;
   let Message = null;
@@ -44,7 +44,11 @@ Router.get("/nodeStatus", (req, res) => {
       Node7: nodeStatus.fetch("node7"),
       Node8: nodeStatus.fetch("node8"),
       Node9: nodeStatus.fetch("node9"),
-      Node10: nodeStatus.fetch("node10")
+      Node10: nodeStatus.fetch("node10"),
+      Node11: nodeStatus.fetch("node11"),
+      Node12: nodeStatus.fetch("node12"),
+      Node13: nodeStatus.fetch("node13"),
+      Node14: nodeStatus.fetch("node14")
     },
     misc: {
       Lava1: nodeStatus.fetch("lava.danbot.host").status,
@@ -72,7 +76,7 @@ Router.get("/sysinfo", (req, res) => {
         memtotal: nodeData.fetch("Node1.memtotal"),
         swapused: nodeData.fetch("Node1.swap"),
         swaptotal: nodeData.fetch("Node1.swaptotal"),
-        diskused: nodeData.fetch("Node1.diskused"), 
+        diskused: nodeData.fetch("Node1.diskused"),
         disktotal: nodeData.fetch("Node1.disktotal"),
         netrx: nodeData.fetch("Node1.netrx"),
         nettx: nodeData.fetch("Node1.nettx"),
@@ -106,7 +110,7 @@ Router.get("/sysinfo", (req, res) => {
         memtotal: nodeData.fetch("Node2.memtotal"),
         swapused: nodeData.fetch("Node2.swap"),
         swaptotal: nodeData.fetch("Node2.swaptotal"),
-        diskused: nodeData.fetch("Node2.diskused"), 
+        diskused: nodeData.fetch("Node2.diskused"),
         disktotal: nodeData.fetch("Node2.disktotal"),
         netrx: nodeData.fetch("Node2.netrx"),
         nettx: nodeData.fetch("Node2.nettx"),
@@ -140,7 +144,7 @@ Router.get("/sysinfo", (req, res) => {
         memtotal: nodeData.fetch("Node3.memtotal"),
         swapused: nodeData.fetch("Node3.swap"),
         swaptotal: nodeData.fetch("Node3.swaptotal"),
-        diskused: nodeData.fetch("Node3.diskused"), 
+        diskused: nodeData.fetch("Node3.diskused"),
         disktotal: nodeData.fetch("Node3.disktotal"),
         netrx: nodeData.fetch("Node3.netrx"),
         nettx: nodeData.fetch("Node3.nettx"),
@@ -174,7 +178,7 @@ Router.get("/sysinfo", (req, res) => {
         memtotal: nodeData.fetch("Node4.memtotal"),
         swapused: nodeData.fetch("Node4.swap"),
         swaptotal: nodeData.fetch("Node4.swaptotal"),
-        diskused: nodeData.fetch("Node4.diskused"), 
+        diskused: nodeData.fetch("Node4.diskused"),
         disktotal: nodeData.fetch("Node4.disktotal"),
         netrx: nodeData.fetch("Node4.netrx"),
         nettx: nodeData.fetch("Node4.nettx"),
@@ -208,7 +212,7 @@ Router.get("/sysinfo", (req, res) => {
         memtotal: nodeData.fetch("Node5.memtotal"),
         swapused: nodeData.fetch("Node5.swap"),
         swaptotal: nodeData.fetch("Node5.swaptotal"),
-        diskused: nodeData.fetch("Node5.diskused"), 
+        diskused: nodeData.fetch("Node5.diskused"),
         disktotal: nodeData.fetch("Node5.disktotal"),
         netrx: nodeData.fetch("Node5.netrx"),
         nettx: nodeData.fetch("Node5.nettx"),
@@ -242,7 +246,7 @@ Router.get("/sysinfo", (req, res) => {
         memtotal: nodeData.fetch("Node6.memtotal"),
         swapused: nodeData.fetch("Node6.swap"),
         swaptotal: nodeData.fetch("Node6.swaptotal"),
-        diskused: nodeData.fetch("Node6.diskused"), 
+        diskused: nodeData.fetch("Node6.diskused"),
         disktotal: nodeData.fetch("Node6.disktotal"),
         netrx: nodeData.fetch("Node6.netrx"),
         nettx: nodeData.fetch("Node6.nettx"),
@@ -410,10 +414,10 @@ Router.get("/sysinfo", (req, res) => {
 
 Router.get("/bots", (req, res) => {
     let q = req.query.q;
-    
+
     let ar = [];
     let lar = [];
-    
+
     let bots = db.get("bot.IDs");
     for(var i=0; i < bots.length; i++) {
         ar.push(db.get(bots[i]));
@@ -421,11 +425,11 @@ Router.get("/bots", (req, res) => {
     }
     ar.sort((a, b) => a.client.username.localeCompare(b.client.username));
    // console.log(ar);
-   
+
     lar.sort(function(a, b) {
         return b.servers - a.servers;
     });
-   
+
     res.render('bots.ejs',  {
        bots: db.get("bot.IDs"),
        db,
@@ -467,9 +471,9 @@ Router.get("/feedback", async (req, res) => {
 
 Router.post("/feedback/post/suggestion", checkAuth, async (req, res) => {
   if (req.body.suggestion) {
-    
+
     // embed
-    
+
       let Kiro = req.isAuthenticated() ? req.user : null;
       let suggestion = req.body.suggestion;
     let SuggestionEmbed = new Discord.RichEmbed()
@@ -478,7 +482,7 @@ Router.post("/feedback/post/suggestion", checkAuth, async (req, res) => {
       .setThumbnail(`https://cdn.discordapp.com/avatars/${Kiro.id}/${Kiro.avatar}`)
       .addField("User", `<@${Kiro.id}>(${Kiro.id})`)
       .addField("Suggestion", `${suggestion}`)
-  
+
     suggestionLog.send(SuggestionEmbed)
 
     res.redirect("/?q=SENT_FEEDBACK");
@@ -489,7 +493,7 @@ Router.post("/feedback/post/suggestion", checkAuth, async (req, res) => {
 
 Router.post("/feedback/post/bug", checkAuth, async (req, res) => {
   if (req.body.bug) {
-    
+
       let Kiro = req.isAuthenticated() ? req.user : null;
   let Bug = req.body.bug;
 
@@ -499,7 +503,7 @@ Router.post("/feedback/post/bug", checkAuth, async (req, res) => {
       .setThumbnail(`https://cdn.discordapp.com/avatars/${Kiro.id}/${Kiro.avatar}`)
       .addField("User", `<@${Kiro.id}>(${Kiro.id})`)
       .addField("Bug", `${Bug}`);
-    
+
     suggestionLog.send(BugEmbed)
 
     res.redirect("/?q=SENT_FEEDBACK");
@@ -509,7 +513,7 @@ Router.post("/feedback/post/bug", checkAuth, async (req, res) => {
 });
 
 Router.get(["/discord","/support"], (req, res) => {
-   res.redirect("//discord.gg/92HBc2Z") 
+   res.redirect("//discord.gg/92HBc2Z")
 });
 
 Router.get("/partners", async (req, res) => {
