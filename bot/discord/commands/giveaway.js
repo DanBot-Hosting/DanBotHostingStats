@@ -50,7 +50,7 @@ exports.run = async (bot, message, args) => {
           while (!winner && winners.length) {
             winner = winners[Math.floor(Math.random() * winners.length)];
             winners.splice(winners.indexOf(winner), 1);
-            winner = await bot.fetchUser(winner).catch(() => {});
+            winner = await bot.users.fetch(winner).catch(() => {});
           }
 
           if (winner) {

@@ -331,7 +331,7 @@ app.get("/user/:ID", async (req, res) => {
   if (use.bot === true) return res.redirect("/bot/" + user);
 
   try {
-    bot.fetchUser(user).then(User => {
+    bot.users.fetch(user).then(User => {
       if (User.bot) {
         return res.redirect("/bot/" + User.id);
       }
