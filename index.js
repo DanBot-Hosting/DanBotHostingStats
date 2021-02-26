@@ -374,6 +374,7 @@ app.get("/user/:ID", async (req, res) => {
       let bots = db.get(`${User.id}.bots`);
       if (!bots) bots = null;
 
+      console.log(avatar)
       console.log(bots)
 
       res.render("me/user.ejs", {
