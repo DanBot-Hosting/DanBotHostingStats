@@ -342,7 +342,7 @@ app.get("/user/:ID", async (req, res) => {
       if (!member) {
         (pColor = "grey"), (presence = "offline");
       }
-      let guild = bot.guilds.get("639477525927690240");
+      let guild = bot.guilds.cache.get("639477525927690240");
       if (guild.member(User.id)) {
         memberr = "yes";
       }
