@@ -423,7 +423,7 @@ Router.get("/bots", (req, res) => {
         ar.push(db.get(bots[i]));
         lar.push(db.get(bots[i]));
     }
-    ar.sort((a, b) => a.client.username.localeCompare(b.client.username));
+    // ar.sort((a, b) => a.client.username.localeCompare(b.client.username)); causing errors
    // console.log(ar);
 
     lar.sort(function(a, b) {
