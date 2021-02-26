@@ -336,9 +336,7 @@ app.get("/user/:ID", async (req, res) => {
         return res.redirect("/bot/" + User.id);
       }
 
-      var member = bot.guilds
-        .get("639477525927690240")
-        .members.get(User.id);
+      var member = bot.guilds.cache.get("639477525927690240").members.cache.get(User.id);
       if (!member) {
         (pColor = "grey"), (presence = "offline");
       }
