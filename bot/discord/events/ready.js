@@ -134,7 +134,7 @@ module.exports = async (client) => {
             reason: "Bot count update"
         });
 
-        client.channels.cache.get("739821468296413254").edit({
+        client.channels.cache.get("815242427978743848").edit({
             name: `Total Members: ${client.guilds.cache.get('639477525927690240').memberCount}`,
             reason: "TMembers count update"
         });
