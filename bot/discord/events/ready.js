@@ -134,6 +134,11 @@ module.exports = async (client) => {
             reason: "Bot count update"
         });
 
+        client.channels.cache.get("739821468296413254").edit({
+            name: `Total Members: ${client.guilds.cache.get('639477525927690240').memberCount}`,
+            reason: "TMembers count update"
+        });
+
         let guild4 = await client.guilds.cache.get("639477525927690240")
         const ticketcount = guild4.channels.cache.filter(x => x.name.endsWith("-ticket")).size
         client.channels.cache.get("739821447924416562").edit({
