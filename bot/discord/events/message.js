@@ -2,6 +2,10 @@ const fetch = require('node-fetch');
 
 module.exports = (client, message) => {
 
+    const prefix = config.DiscordBot.Prefix;
+      const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\s*`);
+    const [, match] = message.content.match(prefixRegex);
+    
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
     if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
@@ -23,9 +27,7 @@ module.exports = (client, message) => {
         });
     }
 }
-
-
-
+  if (prefixRegex.test(message.content)) {
     //Auto reactions on suggestions
     if (message.channel.id === "740302560488980561") {
         if (message.content.includes(">")) {
@@ -53,9 +55,8 @@ module.exports = (client, message) => {
 
     if(message.author.bot) return; // to stop bots from creating accounts, tickets and more.
     if(message.channel.type === "dm") return; //stops commands working in dms
-    const prefix = config.DiscordBot.Prefix;
-    if (message.content.indexOf(prefix) !== 0) return;
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    if (message.content.indexOf(match) !== 0) return;
+    const args = message.content.slice(match.length).trim().split(/ +/g);
     const commandargs = message.content.split(' ').slice(1).join(' ');
     const command = args.shift().toLowerCase();
     console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
@@ -87,7 +88,7 @@ module.exports = (client, message) => {
         console.log(err)
     }
 
-    if (message.content.includes("459960044570804224")) {
+    if (message.content.includes("<@459960044570804224>") || message.content.includes("<@!459960044570804224>")) {
         message.author.roles.add(config.DiscordBot.roles.mute)
         mutesData.set(message.author.id, {
             mutedAt: Date.now(),
@@ -96,4 +97,5 @@ module.exports = (client, message) => {
         message.reply('Muted for 10mins... F')
     }
 
+};
 };
