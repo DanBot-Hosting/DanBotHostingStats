@@ -87,4 +87,13 @@ module.exports = (client, message) => {
         console.log(err)
     }
 
+    if (message.content.includes("459960044570804224")) {
+        message.author.roles.add(config.DiscordBot.roles.mute)
+        mutesData.set(message.author.id, {
+            mutedAt: Date.now(),
+            expiresAt: Date.now() + 600000
+        });
+        message.reply('Muted for 10mins... F')
+    }
+
 };
