@@ -2,7 +2,7 @@ const transliterate = require('transliteration');
 module.exports = async (client, oldV, newV) => {
     let guild = newV.guild;
 
-    if (oldV.channelID === newV.channelID) return;
+    if (oldV.channelID === newV.channelID || enabled.customVoiceChannels == false) return;
 
 
     if (oldV.channelID != null && oldV.channelID != "757660050977456238" && oldV.channel.parentID === "757659750342197289") {
