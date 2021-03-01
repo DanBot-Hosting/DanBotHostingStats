@@ -8,6 +8,8 @@ exports.run = async (client, message, args) => {
         let userid = args[2]
 
         userPrem.set(userid + '.donated', amount)
+        message.channel.send('Thanks <@' + userid + '> for donating! \nYou can now create donator servers using `' + config.DiscordBot.Prefix + 'server create-donator`')
+        client.channels.cache.get('795884677688721448').send('Thanks, <@' + userid + '> for donating ' + amount + '$!')
     }
 
     if (args[1].toLowerCase() === 'boosted') {
@@ -16,7 +18,7 @@ exports.run = async (client, message, args) => {
         let userid = args[2]
 
         userPrem.set(userid + '.boosted', amount)
+        message.reply('done')
     }
 
-    message.reply('done')
 }
