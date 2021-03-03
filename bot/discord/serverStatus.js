@@ -54,9 +54,6 @@ let nstatus = {
     }],
 
     "Panel": [{
-        name: 'Overall Load balancer',
-        data: 'panelus'
-    }, {
         name: 'US Panel 1',
         data: 'panelus1'
     }, {
