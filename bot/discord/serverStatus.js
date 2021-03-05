@@ -61,14 +61,6 @@ let nstatus = {
         data: 'dbhdb'
     }],
 
-    "Solo's Panel": [{
-        name: 'Panel',
-        data: 'admin.danbot.host'
-    }, {
-        name: 'Node-1',
-        data: 'node1-priv'
-    }],
-
     "Dan's Panel": [{
         name: 'Panel',
         data: 'private.danbot.host'
