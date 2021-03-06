@@ -11,12 +11,12 @@ exports.run = async (client, message, args) => {
                 followRedirect: true,
                 maxRedirects: 5,
                 headers: {
-                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                    'Authorization': 'Bearer ' + config.DanPterodactyl.apikeyclient,
                     'Content-Type': 'application/json',
                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                 },
                 data: {
-                    "command": "whitelist add" + args[0]
+                    "command": "whitelist add " + args[0]
                 }
             }).then(response => {
                 message.channel.send('Done! You are now whitelisted')
