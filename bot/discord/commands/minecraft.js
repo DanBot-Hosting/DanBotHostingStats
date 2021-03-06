@@ -1,7 +1,7 @@
 const axios = require("axios")
 
 exports.run = async (client, message, args) => {
-    if (message.member.roles.cache.find(r => r.id === "710208090741539006" || "788193704014905364")) {
+    if (message.member.roles.cache.find(r => r.id === "710208090741539006" || r.id === "788193704014905364")) {
         if (!args[0]) {
             message.channel.send('You can whitelist your name on our private minecraft servers by using `' + config.DiscordBot.Prefix + 'minecraft usernamehere`')
         } else {
@@ -34,5 +34,5 @@ exports.run = async (client, message, args) => {
                 }
             })
         }
-    } else { message.channel.send('no') }
+    } else { message.channel.send('You are not a donator or booster') }
 }
