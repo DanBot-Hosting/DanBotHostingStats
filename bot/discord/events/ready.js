@@ -3,6 +3,7 @@ const axios = require('axios');
 const nstatus = require('../serverStatus');
 global.snipes = new Discord.Collection();
 const db = require("quick.db");
+const pretty = require('prettysize');
 
 module.exports = async (client) => {
 
@@ -186,4 +187,19 @@ module.exports = async (client) => {
     }, 30000);
 
 
+    setInterval(() => {
+        axios({
+            url: config.DanPterodactyl.hosturl + "/api/client/servers/019b6467/resources",
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': 'Bearer ' + config.DanPterodactyl.apikeyclient,
+                'Content-Type': 'application/json',
+                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            }
+        }).then(resources => {
+            client.channels.cache.get("817550848343015475").setTopic("Status: " + resources.data.attributes.current_state + " | CPU Usage: " + resources.data.attributes.resources.cpu_absolute + "% | RAM Usage: " + pretty(resources.data.attributes.resources.memory_bytes) + " / 8GB")
+        })
+    }, 5000)
 };
