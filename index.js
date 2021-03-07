@@ -410,8 +410,3 @@ app.use(function (req, res, next) {
     user: req.isAuthenticated() ? req.user : null
   });
 });
-
-setInterval(async () => {
-  console.log("[Automatic Process] Getting bot stats from MBL")
-  require("./util/MBL.js")
-}, 600000);
