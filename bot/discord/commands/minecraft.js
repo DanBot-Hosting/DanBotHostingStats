@@ -34,5 +34,5 @@ exports.run = async (client, message, args) => {
                 }
             })
         }
-    } else { message.channel.send('You are not a donator or booster') }
+    } else { message.channel.send('You are not a donator or booster :(') }
 }
