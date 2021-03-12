@@ -1,46 +1,46 @@
 let nstatus = {
-    "Public Panel": [{
+    "Public": [{
         name: 'Panel',
         data: 'panel.danbot.host'
     }, {
         name: 'Node-1',
-        data: 'node1'
+        data: 'Node1'
     }, {
         name: 'Node-2',
-        data: 'node2'
+        data: 'Node2'
     }, {
         name: 'Node-3',
-        data: 'node3'
+        data: 'Node3'
     }, {
         name: 'Node-4',
-        data: 'node4'
+        data: 'Node4'
     }, {
         name: 'Node-5',
-        data: 'node5'
+        data: 'Node5'
     }, {
         name: 'Node-6',
-        data: 'node6'
+        data: 'Node6'
     }, {
         name: 'Node-8',
-        data: 'node8'
+        data: 'Node8'
     }, {
         name: 'Node-9',
-        data: 'node9'
+        data: 'Node9'
     }, {
         name: 'Node-10',
-        data: 'node10'
+        data: 'Node10'
     }, {
         name: 'Node-11',
-        data: 'node11'
+        data: 'Node11'
     }, {
         name: 'Node-12',
-        data: 'node12'
+        data: 'Node12'
     }, {
         name: 'Node-13',
-        data: 'node13'
+        data: 'Node13'
     }, {
         name: 'Node-14',
-        data: 'node14'
+        data: 'Node14'
     }],
 
     "Donator Nodes": [{
@@ -90,32 +90,21 @@ let nstatus = {
 let parse = async () => {
     let toRetun = {};
 
-    //let PubNodeStatus;
-
-    // await axios({
-    //     url: 'http://localhost:3001',
-    //     method: 'GET',
-    //     followRedirect: true,
-    //     maxRedirects: 5,
-    // }).then(x => {
-    //     PubNodeStatus = x.data;
-    // }).catch(err => {
-    //     PubNodeStatus = null;
-    // })
-
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
 
-            let da = nodeStatus.get(d.data);
+            let da = nodeStatus.get(d.data.toLowerCase());
+
+            let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
 
             da = (da.status === true ? ('🟢 Online') : ((da.is_vm_online == null ? "🔴 Offline" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 VM") + ' Outage'))))
 
 
-           // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
+            // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
             //    da = '🔴 Network Outage'
 
-            temp.push(`**${d.name}:** ${da}`)
+            temp.push(`**${d.name}:** ${da} ${stats != null ? `[RAM: ${stats.memused}]` : ''}`)
         }
 
         toRetun[title] = temp;
@@ -132,18 +121,18 @@ let getEmbed = async () => {
         desc = `${desc}**__${title}:__**\n${d.join('\n')}\n\n`
     }
 
-  date = new Date();
+    date = new Date();
     var hr;
-monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    if(date.getHours() < 10) {
+    monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    if (date.getHours() < 10) {
         hr = `0${date.getHours()}`;
     }
     else {
         hr = date.getHours();
     }
 
-var dateString = "Updated at " + hr + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT) on "
-    + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+    var dateString = "Updated at " + hr + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT) on "
+        + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
 
     let embed = new Discord.MessageEmbed()
         .setTitle('Danbot Hosting Status').setFooter(dateString)
