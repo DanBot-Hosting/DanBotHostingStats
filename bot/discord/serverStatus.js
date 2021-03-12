@@ -98,13 +98,13 @@ let parse = async () => {
 
             let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
 
-            da = (da.status === true ? ('🟢 Online') : ((da.is_vm_online == null ? "🔴 Offline" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 VM") + ' Outage'))))
+            da = (da.status === true ? ('🟢 Online') : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 VM") + ' Outage'))))
 
 
             // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
             //    da = '🔴 Network Outage'
 
-            temp.push(`**${d.name}:** ${da} ${stats != null ? `[CPU: ${stats.cpuload}, RAM: ${stats.memused}/${stats.memtotal}, SSD: ${stats.diskused}/${stats.disktotal}]` : ''}`)
+            temp.push(`**${d.name}:** ${da} ${stats != null ? `[**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused}/${stats.memtotal}, **SSD**: ${stats.diskused}/${stats.disktotal}]` : ''}`)
         }
 
         toRetun[title] = temp;
