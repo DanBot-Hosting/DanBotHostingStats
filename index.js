@@ -199,7 +199,7 @@ server.listen(PORT, function () {
 //Fetch node data
 global.nodeData = new db.table("nodeData")
 setInterval(() => {
-  for (i = 1; i < 11; i++) {
+  for (i = 1; i < 15; i++) {
     axios({
       url: "http://n" + i + ".danbot.host:999/stats",
       method: 'GET',
