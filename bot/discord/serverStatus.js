@@ -104,7 +104,7 @@ let parse = async () => {
             // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
             //    da = '🔴 Network Outage'
 
-            temp.push(`**${d.name}:** ${da} ${stats != null ? `[RAM: ${stats.memused}]` : ''}`)
+            temp.push(`**${d.name}:** ${da} ${stats != null ? `[CPU: ${stats.cpuload}, RAM: ${stats.memused}/${stats.memtotal}, SSD: ${stats.diskused}/${stats.disktotal}]` : ''}`)
         }
 
         toRetun[title] = temp;
