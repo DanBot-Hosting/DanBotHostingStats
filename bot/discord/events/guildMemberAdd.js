@@ -5,20 +5,20 @@ module.exports = async (client, member, guild) => {
         let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
 
         if (Date.now() - member.user.createdAt < 863136000) {
-            await member.user.send(`Sorry! We only allow accounts over the age of 10days to join. \nYour account was created ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})} ago.\n\nYou are welcome to join again once this account is over 10days old!`)
+            await member.user.send(`Sorry! We only allow accounts created over 10 Days to join. \nYour account was created ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})} Ago.\n\nYou are welcome to join again once this account is over 10 Days old!`)
             await member.kick()
-            welcomeChannel.send(member.user.tag + ` has been auto-kicked as account is under 10days old.\nThat account was created ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})}, ago`)
+            welcomeChannel.send(member.user.tag + `has been auto-kicked as the account is under 10 Days old.\nThe account was created ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})} ago`)
         }
 
         if (member.user.bot) {
             let botID = member.id;
             let bot = db.get(`${botID}`);
             if (!bot) {
-                welcomeChannel.send("Bot: <@" + member + ">, tried to join but is not using our API.")
+                welcomeChannel.send("Bot: <@" + member + ">, tried to join but is not using/Sending data our API.")
                 member.kick();
             } else {
                 member.roles.add(config.DiscordBot.roles.bot);
-                welcomeChannel.send("Welcome <@" + member + ">, More bot friends :D \nBot owned by: <@" + bot.owner + ">");
+                welcomeChannel.send("Welcome <@" + member + ">, More Bot friends :D \nBot owned by: <@" + bot.owner + ">");
             }
             return;
         }
@@ -30,10 +30,10 @@ module.exports = async (client, member, guild) => {
 
         member.roles.add(config.DiscordBot.roles.member)
         if (userData.get(member.id) == null) {
-            welcomeChannel.send("Welcome <@" + member + "> to DanBot Hosting. To get started please read <#738527470164377630>");
+            welcomeChannel.send("Welcome to DanBot Hosting <@" + member + ">. To get started please read <#738527470164377630>");
         } else {
             member.roles.add(config.DiscordBot.roles.client)
-            welcomeChannel.send("Welcome back <@" + member + "> to DanBot Hosting!");
+            welcomeChannel.send("Welcome back to DanBot Hosting <@" + member + ">!");
         }
 
         if (mutesData.get(member.id) != null) {

@@ -23,8 +23,8 @@ module.exports = async (client) => {
     // }
 
     let checkNicks = () => {
-        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']'].some(r => member.displayName.startsWith(r))).forEach(x => {
-            x.setNickname('⚠️HOISTER ALERT ⚠️');
+        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', '™'].some(r => member.displayName.startsWith(r))).forEach(x => {
+            x.setNickname('⚠️ HOISTER ALERT ⚠️');
         })
     }
 
