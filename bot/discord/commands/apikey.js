@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
   if (!args[0]) {
     if (db.has(`${message.author.id}_apikey`)) {
       return message.channel.send(
-        "You already have a `Key`, please check your direct messages, \n or do `DBH!APIKey Reset`"
+        "You already have a `Key`, please check your Direct Messages, \n or do `DBH!APIKey Reset`"
       );
     }
 
@@ -48,7 +48,7 @@ exports.run = async (client, message, args) => {
         message.channel.send("Check your direct messages for your `API` key.");
       } catch (e) {
         return message.channel.send(
-          `I ran into an error while trying to setup your api key. \n Error: ${e}`
+          `An error occured while trying to setup your API Key. \n Error: ${e}`
         );
       }
 
@@ -83,7 +83,7 @@ exports.run = async (client, message, args) => {
       db.set("apiKeys", filtered);
       db.delete(`${message.author.id}_apikey`);
       db.delete(`${token}`)
-      return message.channel.send("Your API Key has been reset!");
+      return message.channel.send("Your API Key has been reseted!");
     }
   }
 };

@@ -6,7 +6,7 @@ exports.run = (client, message, args) => {
 
       let response = (error || stdout);
 
-      if (response.length > 1024) console.log(response), response = 'Output too long.';
+      if (response.length > 1024) console.log(response), response = 'Output is too long.';
 
       message.channel.send("", {
         embed: new Discord.MessageEmbed()

@@ -7,9 +7,9 @@ const commands = {
         ticket: "Create a ticket for help from the staff team!.",
         uptime: "Shows the bots uptime.",
         vc: "Manage you custom voice channel.",
-        info: "Get a bots info.",
+        info: "Get a Bots info.",
         suggest: "Get the link to send in suggestions.",
-        animalapi: "Check out our animal api."
+        animalapi: "Check out our animal API."
     },
     Staff: {
         staff: "See help for that command.",

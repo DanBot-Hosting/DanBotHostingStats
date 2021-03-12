@@ -15,12 +15,12 @@ exports.run = async (client, message, args) => {
     let sendinfo = new Discord.MessageEmbed()
     .setColor("BLUE")
     .setTitle(`DanBot Hosting`)
-    .setDescription("The bot id you provided is not in my database! Confused? Read below.")
+    .setDescription("The Bot ID you Provided is not in the Database! Confused? Read below.")
     .addField("Sent data to the website, and it still show this?", "Please ping Dan (if he active) or one of the mods to help you", true)
     .addField("What database?", "If you looking to add your bot here, you must post your stats to the npm. How to post it? [Click me](https://canary.discord.com/channels/639477525927690240/738548111323955270/738551079343620166)", true)
 
     if(!bot) return message.channel.send(sendinfo);
-    if(bot.deleted) return message.channel.send("Error: This bot has been deleted.");
+    if(bot.deleted) return message.channel.send("Error: This Bot has been Deleted.");
 
     let infoEmbed = new Discord.MessageEmbed()
         .setColor("BLUE")
