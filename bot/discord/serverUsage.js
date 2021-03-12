@@ -1,8 +1,5 @@
 let nstatus = {
     "Public": [{
-        name: 'Panel',
-        data: 'panel.danbot.host'
-    }, {
         name: 'Node-1',
         data: 'Node1'
     }, {
@@ -53,37 +50,9 @@ let nstatus = {
         data: 'storage1'
     }],
 
-    "Panel": [{
-        name: 'US Panel 1',
-        data: 'panelus1'
-    }, {
-        name: 'MySQL Database',
-        data: 'dbhdb'
-    }],
-
     "Dan's Panel": [{
-        name: 'Panel',
-        data: 'private.danbot.host'
-    }, {
         name: 'Node-1',
         data: 'dan-node1'
-    }],
-
-    "Misc": [{
-        name: 'Lavalink 1',
-        data: 'lava.danbot.host'
-    }, {
-        name: 'Lavalink 2',
-        data: 'lava2.danbot.host'
-    }, {
-        name: 'Mail Server',
-        data: 'mail.danbot.host'
-    }, {
-        name: 'Reverse Proxy',
-        data: '63.141.228.92'
-    }, {
-        name: 'Animal API',
-        data: 'api.danbot.host'
     }]
 }
 
@@ -94,15 +63,10 @@ let parse = async () => {
         let temp = [];
         for (let d of data) {
 
-            let da = nodeStatus.get(d.data.toLowerCase());
-
-            da = (da.status === true ? ('🟢 Online') : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **VM**") + ' Outage'))))
+            let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
 
 
-            // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
-            //    da = '🔴 Network Outage'
-
-            temp.push(`**${d.name}:** ${da}`)
+            temp.push(`**${d.name}:** ${stats != null ? `**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}` : ''}`)
         }
 
         toRetun[title] = temp;
