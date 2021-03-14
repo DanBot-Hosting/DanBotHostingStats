@@ -3,6 +3,16 @@ const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
 Router.get("/", (req, res) => {
+  let items = nodeData.fetch('');
+  let filteredItems = items.filter(i => i.state === "running");
+
+  res.render('stats.ejs', {
+    table: filteredItems,
+    user: req.isAuthenticated() ? req.user : null, bots, db
+  })
+});
+
+Router.get("/all", (req, res) => {
 
   res.render('index.ejs',  { layout: false,
     user: req.isAuthenticated() ? req.user : null
