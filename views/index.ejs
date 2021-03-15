@@ -1,3 +1,4 @@
+<script async src="https://arc.io/widget.min.js#hKjxfFbG"></script>
 <%- include("./partials/header.ejs", { botInfo: false, Title: "Home", Avatar: "", Redirect: "/me" }) %>
 
 <meta http-equiv="refresh" content="10"/>
@@ -17,7 +18,7 @@
             .large {
                 font-size: 4em;
             }
-            
+
 </style>
   <div class="">
         <div class="row justify-content-md-center">
@@ -205,7 +206,7 @@
         <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- nodeData.fetch("Node6-speedtest.ping") %>ms <br> <strong>Download:</strong> <%- nodeData.fetch("Node6-speedtest.download") %>Mbps, <strong>Upload: </strong><%- nodeData.fetch("Node6-speedtest.upload") %>Mbps, <strong>Last Updated:</strong> <%- nodeData.fetch("Node6-speedtest.updatetime") %></div>
         </div>
-        
+
         <div class="row justify-content-md-center">
           <a style="color:white;" href="https://danbot.host/stats/Node7"><h3>Node 7 Stats</h3></a>
         </div>
@@ -484,16 +485,16 @@
       <div class="row justify-content-md-center">
           <div class="col-5 text-nowrap"><i class="fa fa-fw fa-clock-o" aria-hidden="true"></i> <strong>Speedtest (Updates every 6hours) | Ping:</strong> <%- nodeData.fetch("Node15-speedtest.ping") %>ms <br> <strong>Download:</strong> <%- nodeData.fetch("Node15-speedtest.download") %>Mbps, <strong>Upload: </strong><%- nodeData.fetch("Node15-speedtest.upload") %>Mbps, <strong>Last Updated:</strong> <%- nodeData.fetch("Node15-speedtest.updatetime") %></div>
       </div>
-        
+
     </div>
-    
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 document.onkeydown = function(e) {
-        if (e.ctrlKey && 
-            (e.keyCode === 67 || 
-             e.keyCode === 86 || 
-             e.keyCode === 85 || 
+        if (e.ctrlKey &&
+            (e.keyCode === 67 ||
+             e.keyCode === 86 ||
+             e.keyCode === 85 ||
              e.keyCode === 117)) {
             return false;
         } else {

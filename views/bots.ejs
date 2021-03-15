@@ -1,3 +1,4 @@
+<script async src="https://arc.io/widget.min.js#hKjxfFbG"></script>
 <%- include("./partials/header.ejs", { botInfo: false, Title: "Bots", Avatar: "", Redirect: "/bots" }) %>
 <link rel="stylesheet" href="https://cdn.astrobot.org/css/bots.css">
 <link rel="stylesheet" href="https://cdn.astrobot.org/css/form.css">
@@ -15,13 +16,13 @@
 </center>
 
 <div class="padded-container">
-  <div class="row"> 
+  <div class="row">
 
 <% for(var i=0; i < bots.length; i++) { %>
 
     <% let data = db.get(bots[i])
     %>
-    
+
     <div class="col-lg-4 col-md-6 col-sm-12" style="">
       <a class="no-color" href="/bot/<%- data.id %>">
         <div class="card preview-card">
@@ -53,7 +54,7 @@
 </center>
 
 <div class="padded-container">
-  <div class="row"> 
+  <div class="row">
 
 <% for(var i=0; i < ar.length; i++) { %>
 
@@ -75,13 +76,13 @@
         </div>
       </a>
     </div>
-   
+
 <% } %>
   </div>
 </div>
-        
+
     <% } %>
-    
+
 <% if(q === "sort_largest") { %>
 <center>
 <br>
@@ -92,7 +93,7 @@
 </center>
 
 <div class="padded-container">
-  <div class="row"> 
+  <div class="row">
 
 <% for(var i=0; i < lar.length; i++) { %>
 
@@ -116,18 +117,18 @@
 <% } %>
   </div>
 </div>
-        
+
     <% } %>
-    
+
 <% } %>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 document.onkeydown = function(e) {
-        if (e.ctrlKey && 
-            (e.keyCode === 67 || 
-             e.keyCode === 86 || 
-             e.keyCode === 85 || 
+        if (e.ctrlKey &&
+            (e.keyCode === 67 ||
+             e.keyCode === 86 ||
+             e.keyCode === 85 ||
              e.keyCode === 117)) {
             return false;
         } else {
@@ -145,4 +146,4 @@ return true;
 }
 });
 </script>
- 
+
