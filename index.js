@@ -304,6 +304,8 @@ app.use("/me", meRoute);
 app.use("/admin", adminRoute);
 app.use("/external", externalRoute);
 
+app.use('/arc-sw.js', proxy('arc.io/arc-sw.js'));
+
 app.get("/user/:ID", async (req, res) => {
   let user = req.params.ID;
   let memberr = "No"
