@@ -198,6 +198,24 @@ setInterval(() => {
             status: false
         }));
 
+    //UK VM Storage 1
+    ping2.ping('n4.danbot.host', 40)
+        .then(() => nodeStatus.set("ukvms1", {
+            status: true
+        }))
+        .catch((e) => nodeStatus.set("ukvms1", {
+            status: false
+        }));
+
+    //Backup Storage
+    ping2.ping('backup.danbot.host', 22)
+        .then(() => nodeStatus.set("backups1", {
+            status: true
+        }))
+        .catch((e) => nodeStatus.set("backups1", {
+            status: false
+        }));
+
     //Lavalink chercker
     ping2.ping('lava.danbot.host', 2333)
         .then(() => nodeStatus.set("lava.danbot.host", {
