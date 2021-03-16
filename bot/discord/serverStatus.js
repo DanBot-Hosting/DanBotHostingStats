@@ -51,6 +51,12 @@ let nstatus = {
     "Storage Nodes": [{
         name: 'Storage-1',
         data: 'storage1'
+    }, {
+        name: 'UK VM Storage 1',
+        data: 'ukvms1'
+    }, {
+        name: 'Backup Storage',
+        data: 'backups1'
     }],
 
     "Panel": [{
