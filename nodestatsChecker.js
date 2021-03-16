@@ -199,7 +199,7 @@ setInterval(() => {
         }));
 
     //UK VM Storage 1
-    ping2.ping('n4.danbot.host', 40)
+    ping2.ping('178.159.3.233', 40)
         .then(() => nodeStatus.set("ukvms1", {
             status: true
         }))
@@ -208,7 +208,7 @@ setInterval(() => {
         }));
 
     //Backup Storage
-    ping2.ping('backup.danbot.host', 22)
+    ping2.ping('176.223.134.244', 22)
         .then(() => nodeStatus.set("backups1", {
             status: true
         }))
