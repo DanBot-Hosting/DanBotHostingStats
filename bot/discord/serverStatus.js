@@ -33,10 +33,10 @@ let nstatus = {
         name: 'Node-11',
         data: 'Node11'
     }, {
-        name: 'Node-12',
+        name: 'Node-12 (Not Released)',
         data: 'Node12'
     }, {
-        name: 'Node-13',
+        name: 'Node-13 (Not Released)',
         data: 'Node13'
     }, {
         name: 'Node-14',
