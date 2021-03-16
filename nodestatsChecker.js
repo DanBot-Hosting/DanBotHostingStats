@@ -199,7 +199,7 @@ setInterval(() => {
         }));
 
     //UK VM Storage 1
-    ping2.ping('178.159.3.233', 40)
+    ping2.ping('178.159.3.233', 1052)
         .then(() => nodeStatus.set("ukvms1", {
             status: true
         }))
