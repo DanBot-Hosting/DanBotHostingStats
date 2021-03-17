@@ -1,8 +1,5 @@
 let nstatus = {
     "Public": [{
-        name: 'Panel',
-        data: 'panel.danbot.host'
-    }, {
         name: 'Node-1',
         data: 'Node1'
     }, {
@@ -75,13 +72,15 @@ let nstatus = {
         data: 'dan-node1'
     }],
 
-    "Misc": [{
-        name: 'Lavalink 1',
+    "LavaLink": [{
+        name: 'Lava 1',
         data: 'lava.danbot.host'
     }, {
-        name: 'Lavalink 2',
+        name: 'Lava 2',
         data: 'lava2.danbot.host'
-    }, {
+    }],
+
+    "Misc": [{
         name: 'Mail Server',
         data: 'mail.danbot.host'
     }, {
