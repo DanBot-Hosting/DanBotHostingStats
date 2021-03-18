@@ -6,7 +6,7 @@ let nstatus = {
         name: 'Node-2 (Closed)',
         data: 'Node2'
     }, {
-        name: 'Node-3',
+        name: 'Node-3 (Temp Closed)',
         data: 'Node3'
     }, {
         name: 'Node-4',
