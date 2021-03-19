@@ -1,10 +1,9 @@
-const axios = require('axios');
-const exec = require('child_process').exec;
-
+const axios = require("axios");
+const exec = require("child_process").exec;
 
 exports.run = async (client, message, args) => {
-    message.channel.send('Command coming soon! almost finished :D')
-    /*
+  message.channel.send("Command coming soon! almost finished :D");
+  /*
     if (!args[1]) {
         message.channel.send('Command format: `DBH!server move serverid node`')
     } else if (!args[2]) {
@@ -117,4 +116,4 @@ exports.run = async (client, message, args) => {
     })
 
      */
-}
+};

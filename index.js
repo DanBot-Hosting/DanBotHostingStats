@@ -8,47 +8,47 @@ Free Hosting for ever!                                            /____/
 */
 
 global.config = require("./config.json");
-global.enabled = require("./enable.json")
-const express = require('express');
+global.enabled = require("./enable.json");
+const express = require("express");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 
 //Main danbot.host app
 const app = express();
-const server = require('http').createServer(app);
+const server = require("http").createServer(app);
 const PORT = config.Port;
-const hbs = require('hbs');
-const favicon = require('serve-favicon');
+const hbs = require("hbs");
+const favicon = require("serve-favicon");
 const pat = require("path");
-app.use(favicon(pat.join(__dirname, 'views', 'favicon.ico')))
-const proxy = require('express-http-proxy');
+app.use(favicon(pat.join(__dirname, "views", "favicon.ico")));
+const proxy = require("express-http-proxy");
 
 //Animal API app
 const animalapp = express();
-const animalserver = require('http').createServer(animalapp);
+const animalserver = require("http").createServer(animalapp);
 const APIPORT = config.APIPort;
-const apihbs = require('hbs');
+const apihbs = require("hbs");
 
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 global.fs = require("fs");
-global.chalk = require('chalk');
-const nodemailer = require('nodemailer');
-const axios = require('axios');
-global.pretty = require('prettysize');
+global.chalk = require("chalk");
+const nodemailer = require("nodemailer");
+const axios = require("axios");
+global.pretty = require("prettysize");
 global.transport = nodemailer.createTransport({
   host: config.Email.Host,
   port: config.Email.Port,
   auth: {
     user: config.Email.User,
-    pass: config.Email.Password
-  }
+    pass: config.Email.Password,
+  },
 });
 
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 const { getBot } = require(process.cwd() + "/util/discordAPI");
 
 // Initialising Node Checker
-require('./nodestatsChecker');
+require("./nodestatsChecker");
 
 //Discord Bot
 global.puppeteer = require("puppeteer");
@@ -56,26 +56,29 @@ let db = require("quick.db");
 global.Discord = require("discord.js");
 global.fs = require("fs");
 global.moment = require("moment");
-global.userData = new db.table("userData");       //User data, Email, ConsoleID, Link time, Username, DiscordID
-global.settings = new db.table("settings");       //Admin settings
+global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
+global.settings = new db.table("settings"); //Admin settings
 global.webSettings = new db.table("webSettings"); //Web settings (forgot what this is even for)
-global.mutesData = new db.table("muteData");      //Mutes, Stores current muted people and unmute times
-global.domains = new db.table("linkedDomains");   //Linked domains for unproxy and proxy cmd
-global.nodeStatus = new db.table("nodeStatus");   //Node status. Online or offline nodes
-global.userPrem = new db.table("userPrem");       //Premium user data, Donated, Boosted, Total
+global.mutesData = new db.table("muteData"); //Mutes, Stores current muted people and unmute times
+global.domains = new db.table("linkedDomains"); //Linked domains for unproxy and proxy cmd
+global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline nodes
+global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.client = new Discord.Client({
-  disableEveryone: true
+  disableEveryone: true,
 });
 global.bot = client;
-global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
-require('./bot/discord/commands/mute').init(client)
+global.suggestionLog = new Discord.WebhookClient(
+  config.DiscordSuggestions.channelID,
+  config.DiscordSuggestions.channelID
+);
+require("./bot/discord/commands/mute").init(client);
 //Event handler
-fs.readdir('./bot/discord/events/', (err, files) => {
-  files = files.filter(f => f.endsWith('.js'));
-  files.forEach(f => {
+fs.readdir("./bot/discord/events/", (err, files) => {
+  files = files.filter((f) => f.endsWith(".js"));
+  files.forEach((f) => {
     const event = require(`./bot/discord/events/${f}`);
-    client.on(f.split('.')[0], event.bind(null, client));
+    client.on(f.split(".")[0], event.bind(null, client));
     delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
   });
 });
@@ -85,50 +88,58 @@ client.login(config.DiscordBot.Token);
 global.Allowed = ["293841631583535106", "137624084572798976"];
 
 //Music Stuffs
-const YouTube = require('simple-youtube-api');
-const ytdl = require('ytdl-core');
+const YouTube = require("simple-youtube-api");
+const ytdl = require("ytdl-core");
 global.youtube = new YouTube(config.GoogleAPIKey);
 global.queue = new Map();
 
 //Animal API website
-animalapp.use(helmet({
-  frameguard: false
-}));
+animalapp.use(
+  helmet({
+    frameguard: false,
+  })
+);
 animalapp.use(cookieParser());
 
 animalapp.use(bodyParser.json());
-animalapp.use(bodyParser.urlencoded({
-  extended: true
-}));
+animalapp.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 animalserver.listen(APIPORT, function () {
-  console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green("Listening on port " + APIPORT));
+  console.log(
+    chalk.magenta("[api.danbot.host] [WEB] ") +
+      chalk.green("Listening on port " + APIPORT)
+  );
 });
 
 //View engine setup
-apihbs.registerPartials(__dirname + '/animalAPI/views/partials')
-animalapp.set('view engine', 'hbs');
+apihbs.registerPartials(__dirname + "/animalAPI/views/partials");
+animalapp.set("view engine", "hbs");
 
 animalapp.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "GET, POST");
 
-  console.log('[api.danbot.host] ' +
-    (req.headers["cf-connecting-ip"] ||
-      req.headers["x-forwarded-for"] ||
-      req.ip) +
-    "[" +
-    req.method +
-    "] " +
-    req.url
+  console.log(
+    "[api.danbot.host] " +
+      (req.headers["cf-connecting-ip"] ||
+        req.headers["x-forwarded-for"] ||
+        req.ip) +
+      "[" +
+      req.method +
+      "] " +
+      req.url
   );
 
   next();
 });
 
-animalapp.get('/', function (req, res) {
-  res.send('hello!')
-})
+animalapp.get("/", function (req, res) {
+  res.send("hello!");
+});
 
 //Total images
 const totalRoute = require("./animalAPI/total.js");
@@ -156,11 +167,12 @@ passport.deserializeUser((obj, done) => {
 });
 
 passport.use(
-  new strategy({
+  new strategy(
+    {
       clientID: config.DiscordBot.clientID,
       clientSecret: config.DiscordBot.clientSecret,
       callbackURL: config.DiscordBot.callbackURL,
-      scope: ["identify"]
+      scope: ["identify"],
     },
     (accessToken, refreshToken, profile, done) => {
       process.nextTick(() => {
@@ -173,43 +185,51 @@ passport.use(
 app.use(
   session({
     store: new MongoStore({
-      url: config.DB.MongoDB
+      url: config.DB.MongoDB,
     }),
     secret: "FROPT",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(helmet({
-  frameguard: false
-}));
+app.use(
+  helmet({
+    frameguard: false,
+  })
+);
 app.use(cookieParser());
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 server.listen(PORT, function () {
-  console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
+  console.log(
+    chalk.magenta("[danbot.host] [WEB] ") +
+      chalk.green("Listening on port " + PORT)
+  );
 });
 
 //Fetch node data
-global.nodeData = new db.table("nodeData")
+global.nodeData = new db.table("nodeData");
 setInterval(() => {
   for (i = 1; i < 15; i++) {
     axios({
       url: "http://n" + i + ".danbot.host:999/stats",
-      method: 'GET',
+      method: "GET",
       followRedirect: true,
       maxRedirects: 5,
       headers: {
-        "password": config.externalPassword
+        password: config.externalPassword,
       },
-      }).then(response => {
+    })
+      .then((response) => {
         nodeData.set(response.data.info.servername, {
           servername: response.data.info.servername,
           cpu: response.data.info.cpu,
@@ -243,47 +263,46 @@ setInterval(() => {
           dockercontainersrunning: response.data.info.dockercontainersrunning,
           dockercontainerspaused: response.data.info.dockercontainerspaused,
           dockercontainersstopped: response.data.info.dockercontainersstopped,
-          updatetime: response.data.info.updatetime
+          updatetime: response.data.info.updatetime,
         });
-        nodeData.set(response.data.speedtest.speedname + '-speedtest', {
+        nodeData.set(response.data.speedtest.speedname + "-speedtest", {
           speedname: response.data.speedtest.speedname,
           ping: response.data.speedtest.ping,
           download: response.data.speedtest.download,
           upload: response.data.speedtest.upload,
-          updatetime: response.data.speedtest.updatetime
+          updatetime: response.data.speedtest.updatetime,
         });
-        nodeData.set(response.data.info.servername + '-docker', {
-          dockerAll: response.data.docker
-        })
-      }).catch(err => {
-
-    })
+        nodeData.set(response.data.info.servername + "-docker", {
+          dockerAll: response.data.docker,
+        });
+      })
+      .catch((err) => {});
   }
-}, 2000)
+}, 2000);
 
 //View engine setup
-hbs.registerPartials(__dirname + '/views/partials')
-app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + "/views/partials");
+app.set("view engine", "hbs");
 
 app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "GET, POST");
 
-  console.log('[danbot.host] ' +
-    (req.headers["cf-connecting-ip"] ||
-      req.headers["x-forwarded-for"] ||
-      req.ip) +
-    "[" +
-    req.method +
-    "] " +
-    req.url
+  console.log(
+    "[danbot.host] " +
+      (req.headers["cf-connecting-ip"] ||
+        req.headers["x-forwarded-for"] ||
+        req.ip) +
+      "[" +
+      req.method +
+      "] " +
+      req.url
   );
 
   next();
 });
 
 //Routes
-
 
 // DanBot Hosting Stats
 
@@ -304,48 +323,50 @@ app.use("/me", meRoute);
 app.use("/admin", adminRoute);
 app.use("/external", externalRoute);
 
-app.get('/.htaccess', (req, res) => {
-  res.sendFile('./.htaccess', { root: __dirname })
-})
+app.get("/.htaccess", (req, res) => {
+  res.sendFile("./.htaccess", { root: __dirname });
+});
 
-app.get('/arc-sw.js', (req, res) => {
-  res.sendFile('./util//arc-sw.js', { root: __dirname });
+app.get("/arc-sw.js", (req, res) => {
+  res.sendFile("./util//arc-sw.js", { root: __dirname });
 });
 
 app.get("/user/:ID", async (req, res) => {
   let user = req.params.ID;
-  let memberr = "No"
+  let memberr = "No";
 
   if (!isSnowflake(user)) {
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
-      message: "Make sure ID is a valid ID"
+      message: "Make sure ID is a valid ID",
     });
   }
 
-  let [use] = await getBot(user)
+  let [use] = await getBot(user);
 
   if (use.user_id && use.user_id[0].endsWith("is not snowflake."))
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
-      message: "ID is invalid"
+      message: "ID is invalid",
     });
 
   if (use.message === "Unknown User")
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
-      message: "Discord API - Unknown User"
+      message: "Discord API - Unknown User",
     });
 
   if (use.bot === true) return res.redirect("/bot/" + user);
 
   try {
-    bot.users.fetch(user).then(User => {
+    bot.users.fetch(user).then((User) => {
       if (User.bot) {
         return res.redirect("/bot/" + User.id);
       }
 
-      var member = bot.guilds.cache.get("639477525927690240").members.cache.get(User.id);
+      var member = bot.guilds.cache
+        .get("639477525927690240")
+        .members.cache.get(User.id);
       if (!member) {
         (pColor = "grey"), (presence = "offline");
       }
@@ -405,17 +426,15 @@ app.get("/user/:ID", async (req, res) => {
   } catch (e) {
     return res.render("error.ejs", {
       user: req.isAuthenticated() ? req.user : null,
-      message: e
+      message: e,
     });
   }
-
 });
-
 
 //Catch 404 and forward to error handler
 app.use(function (req, res, next) {
   res.status(404).render("error.ejs", {
     message: "Page Not Found",
-    user: req.isAuthenticated() ? req.user : null
+    user: req.isAuthenticated() ? req.user : null,
   });
 });

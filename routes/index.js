@@ -3,28 +3,26 @@ const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
 Router.get("/", (req, res) => {
-
   let Query = req.query.q;
   let from = req.query.utm_source;
   let Message = null;
   let MessageDefined = null;
 
-  res.render('main.ejs',{
-    user: req.isAuthenticated() ? req.user : null
-  })
-
+  res.render("main.ejs", {
+    user: req.isAuthenticated() ? req.user : null,
+  });
 });
 
 Router.get("/Node1", (req, res) => {
-    res.redirect("/stats/Node1");
+  res.redirect("/stats/Node1");
 });
 
 Router.get("/Node2", (req, res) => {
-    res.redirect("/stats/Node2");
+  res.redirect("/stats/Node2");
 });
 
 Router.get("/Node3", (req, res) => {
-    res.redirect("/stats/Node3");
+  res.redirect("/stats/Node3");
 });
 
 Router.get("/Node4", (req, res) => {
@@ -48,7 +46,7 @@ Router.get("/nodeStatus", (req, res) => {
       Node11: nodeStatus.fetch("node11"),
       Node12: nodeStatus.fetch("node12"),
       Node13: nodeStatus.fetch("node13"),
-      Node14: nodeStatus.fetch("node14")
+      Node14: nodeStatus.fetch("node14"),
     },
     misc: {
       Lava1: nodeStatus.fetch("lava.danbot.host").status,
@@ -56,8 +54,8 @@ Router.get("/nodeStatus", (req, res) => {
       Mail: nodeStatus.fetch("mail.danbot.host").status,
       RProxy: nodeStatus.fetch("154.27.68.234").status,
       Panel: nodeStatus.fetch("panel.danbot.host").status,
-      AnimalAPI: nodeStatus.fetch("api.danbot.host").status
-    }
+      AnimalAPI: nodeStatus.fetch("api.danbot.host").status,
+    },
   };
 
   res.json(data);
@@ -88,17 +86,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node1.biosversion"),
         biosdate: nodeData.fetch("Node1.biosdate"),
         dockercontainers: nodeData.fetch("Node1.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node1.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node1.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node1.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node1.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node1.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node1.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node1.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node1-speedtest.ping"),
         download: nodeData.fetch("Node1-speedtest.download"),
         upload: nodeData.fetch("Node1-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node1-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node1-speedtest.updatetime"),
+      },
     },
     Node2: {
       info: {
@@ -122,17 +124,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node2.biosversion"),
         biosdate: nodeData.fetch("Node2.biosdate"),
         dockercontainers: nodeData.fetch("Node2.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node2.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node2.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node2.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node2.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node2.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node2.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node2.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node2-speedtest.ping"),
         download: nodeData.fetch("Node2-speedtest.download"),
         upload: nodeData.fetch("Node2-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node2-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node2-speedtest.updatetime"),
+      },
     },
     Node3: {
       info: {
@@ -156,17 +162,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node3.biosversion"),
         biosdate: nodeData.fetch("Node3.biosdate"),
         dockercontainers: nodeData.fetch("Node3.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node3.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node3.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node3.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node3.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node3.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node3.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node3.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node3-speedtest.ping"),
         download: nodeData.fetch("Node3-speedtest.download"),
         upload: nodeData.fetch("Node3-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node3-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node3-speedtest.updatetime"),
+      },
     },
     Node4: {
       info: {
@@ -190,17 +200,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node4.biosversion"),
         biosdate: nodeData.fetch("Node4.biosdate"),
         dockercontainers: nodeData.fetch("Node4.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node4.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node4.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node4.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node4.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node4.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node4.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node4.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node4-speedtest.ping"),
         download: nodeData.fetch("Node4-speedtest.download"),
         upload: nodeData.fetch("Node4-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node4-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node4-speedtest.updatetime"),
+      },
     },
     Node5: {
       info: {
@@ -224,17 +238,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node5.biosversion"),
         biosdate: nodeData.fetch("Node5.biosdate"),
         dockercontainers: nodeData.fetch("Node5.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node5.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node5.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node5.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node5.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node5.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node5.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node5.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node5-speedtest.ping"),
         download: nodeData.fetch("Node5-speedtest.download"),
         upload: nodeData.fetch("Node5-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node5-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node5-speedtest.updatetime"),
+      },
     },
     Node6: {
       info: {
@@ -258,17 +276,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node6.biosversion"),
         biosdate: nodeData.fetch("Node6.biosdate"),
         dockercontainers: nodeData.fetch("Node6.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node6.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node6.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node6.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node6.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node6.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node6.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node6.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node6-speedtest.ping"),
         download: nodeData.fetch("Node6-speedtest.download"),
         upload: nodeData.fetch("Node6-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node6-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node6-speedtest.updatetime"),
+      },
     },
     Node7: {
       info: {
@@ -292,17 +314,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node7.biosversion"),
         biosdate: nodeData.fetch("Node7.biosdate"),
         dockercontainers: nodeData.fetch("Node7.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node7.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node7.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node7.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node7.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node7.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node7.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node7.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node7-speedtest.ping"),
         download: nodeData.fetch("Node7-speedtest.download"),
         upload: nodeData.fetch("Node7-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node7-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node7-speedtest.updatetime"),
+      },
     },
     Node8: {
       info: {
@@ -326,17 +352,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node8.biosversion"),
         biosdate: nodeData.fetch("Node8.biosdate"),
         dockercontainers: nodeData.fetch("Node8.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node8.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node8.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node8.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node8.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node8.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node8.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node8.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node8-speedtest.ping"),
         download: nodeData.fetch("Node8-speedtest.download"),
         upload: nodeData.fetch("Node8-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node8-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node8-speedtest.updatetime"),
+      },
     },
     Node9: {
       info: {
@@ -360,17 +390,21 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node9.biosversion"),
         biosdate: nodeData.fetch("Node9.biosdate"),
         dockercontainers: nodeData.fetch("Node9.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node9.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node9.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node9.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node9.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node9.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node9.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node9.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node9-speedtest.ping"),
         download: nodeData.fetch("Node9-speedtest.download"),
         upload: nodeData.fetch("Node9-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node9-speedtest.updatetime")
-      }
+        lastupdate: nodeData.fetch("Node9-speedtest.updatetime"),
+      },
     },
     Node10: {
       info: {
@@ -394,50 +428,53 @@ Router.get("/sysinfo", (req, res) => {
         biosversion: nodeData.fetch("Node10.biosversion"),
         biosdate: nodeData.fetch("Node10.biosdate"),
         dockercontainers: nodeData.fetch("Node10.dockercontainers"),
-        dockercontainersrunning: nodeData.fetch("Node10.dockercontainersrunning"),
+        dockercontainersrunning: nodeData.fetch(
+          "Node10.dockercontainersrunning"
+        ),
         dockercontainerspaused: nodeData.fetch("Node10.dockercontainerspaused"),
-        dockercontainersstopped: nodeData.fetch("Node10.dockercontainersstopped"),
-        lastupdate: nodeData.fetch("Node10.updatetime")
+        dockercontainersstopped: nodeData.fetch(
+          "Node10.dockercontainersstopped"
+        ),
+        lastupdate: nodeData.fetch("Node10.updatetime"),
       },
       speedtest: {
         ping: nodeData.fetch("Node10-speedtest.ping"),
         download: nodeData.fetch("Node10-speedtest.download"),
         upload: nodeData.fetch("Node10-speedtest.upload"),
-        lastupdate: nodeData.fetch("Node10-speedtest.updatetime")
-      }
-    }
+        lastupdate: nodeData.fetch("Node10-speedtest.updatetime"),
+      },
+    },
   };
 
   res.json(data);
 });
 
-
 Router.get("/bots", (req, res) => {
-    let q = req.query.q;
+  let q = req.query.q;
 
-    let ar = [];
-    let lar = [];
+  let ar = [];
+  let lar = [];
 
-    let bots = db.get("bot.IDs");
-    for(var i=0; i < bots.length; i++) {
-        ar.push(db.get(bots[i]));
-        lar.push(db.get(bots[i]));
-    }
-    // ar.sort((a, b) => a.client.username.localeCompare(b.client.username)); causing errors
-   // console.log(ar);
+  let bots = db.get("bot.IDs");
+  for (var i = 0; i < bots.length; i++) {
+    ar.push(db.get(bots[i]));
+    lar.push(db.get(bots[i]));
+  }
+  // ar.sort((a, b) => a.client.username.localeCompare(b.client.username)); causing errors
+  // console.log(ar);
 
-    lar.sort(function(a, b) {
-        return b.servers - a.servers;
-    });
+  lar.sort(function (a, b) {
+    return b.servers - a.servers;
+  });
 
-    res.render('bots.ejs',  {
-       bots: db.get("bot.IDs"),
-       db,
-       user: req.isAuthenticated() ? req.user : null,
-       q,
-       ar,
-       lar
-    });
+  res.render("bots.ejs", {
+    bots: db.get("bot.IDs"),
+    db,
+    user: req.isAuthenticated() ? req.user : null,
+    q,
+    ar,
+    lar,
+  });
 });
 
 Router.get("/login", (req, res) => {
@@ -450,7 +487,7 @@ Router.get("/login", (req, res) => {
   );
 });
 
-Router.get("/logout", function(req, res) {
+Router.get("/logout", function (req, res) {
   req.session.destroy(() => {
     req.logout();
     //     req.flash('success_msg', 'You are logged out');
@@ -471,19 +508,20 @@ Router.get("/feedback", async (req, res) => {
 
 Router.post("/feedback/post/suggestion", checkAuth, async (req, res) => {
   if (req.body.suggestion) {
-
     // embed
 
-      let Kiro = req.isAuthenticated() ? req.user : null;
-      let suggestion = req.body.suggestion;
+    let Kiro = req.isAuthenticated() ? req.user : null;
+    let suggestion = req.body.suggestion;
     let SuggestionEmbed = new Discord.RichEmbed()
       .setColor("BLUE")
       .setTitle("Suggestion Submission")
-      .setThumbnail(`https://cdn.discordapp.com/avatars/${Kiro.id}/${Kiro.avatar}`)
+      .setThumbnail(
+        `https://cdn.discordapp.com/avatars/${Kiro.id}/${Kiro.avatar}`
+      )
       .addField("User", `<@${Kiro.id}>(${Kiro.id})`)
-      .addField("Suggestion", `${suggestion}`)
+      .addField("Suggestion", `${suggestion}`);
 
-    suggestionLog.send(SuggestionEmbed)
+    suggestionLog.send(SuggestionEmbed);
 
     res.redirect("/?q=SENT_FEEDBACK");
   } else {
@@ -493,18 +531,19 @@ Router.post("/feedback/post/suggestion", checkAuth, async (req, res) => {
 
 Router.post("/feedback/post/bug", checkAuth, async (req, res) => {
   if (req.body.bug) {
-
-      let Kiro = req.isAuthenticated() ? req.user : null;
-  let Bug = req.body.bug;
+    let Kiro = req.isAuthenticated() ? req.user : null;
+    let Bug = req.body.bug;
 
     let BugEmbed = new Discord.RichEmbed()
       .setColor("BLUE")
       .setTitle("Bug Submission")
-      .setThumbnail(`https://cdn.discordapp.com/avatars/${Kiro.id}/${Kiro.avatar}`)
+      .setThumbnail(
+        `https://cdn.discordapp.com/avatars/${Kiro.id}/${Kiro.avatar}`
+      )
       .addField("User", `<@${Kiro.id}>(${Kiro.id})`)
       .addField("Bug", `${Bug}`);
 
-    suggestionLog.send(BugEmbed)
+    suggestionLog.send(BugEmbed);
 
     res.redirect("/?q=SENT_FEEDBACK");
   } else {
@@ -512,8 +551,8 @@ Router.post("/feedback/post/bug", checkAuth, async (req, res) => {
   }
 });
 
-Router.get(["/discord","/support"], (req, res) => {
-   res.redirect("//discord.gg/92HBc2Z")
+Router.get(["/discord", "/support"], (req, res) => {
+  res.redirect("//discord.gg/92HBc2Z");
 });
 
 Router.get("/partners", async (req, res) => {
@@ -524,7 +563,7 @@ Router.get("/partners", async (req, res) => {
 
 module.exports = Router;
 
- /* Authorization check, if not authorized return them to the login page.
+/* Authorization check, if not authorized return them to the login page.
  */
 function checkAuth(req, res, next) {
   if (req.isAuthenticated()) {

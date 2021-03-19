@@ -11,9 +11,7 @@ exports.run = async (client, message, args) => {
    
    */
 
-  let startkey = Math.random()
-    .toString(36)
-    .substring(7);
+  let startkey = Math.random().toString(36).substring(7);
   let key = `danbot-${startkey}`;
 
   let keyPool = db.get("apiKeys");
@@ -54,7 +52,7 @@ exports.run = async (client, message, args) => {
 
       db.push("apiKeys", key);
       db.set(`${message.author.id}_apikey`, key);
-      db.set(`${key}`, message.author.id)
+      db.set(`${key}`, message.author.id);
       return;
     }
   }
@@ -82,7 +80,7 @@ exports.run = async (client, message, args) => {
 
       db.set("apiKeys", filtered);
       db.delete(`${message.author.id}_apikey`);
-      db.delete(`${token}`)
+      db.delete(`${token}`);
       return message.channel.send("Your API Key has been reset!");
     }
   }

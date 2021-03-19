@@ -1,13 +1,13 @@
-const serverCreateSettings_Beta = require('../../../createData_Beta');
+const serverCreateSettings_Beta = require("../../../createData_Beta");
 exports.run = async (client, message, args) => {
-    // if (client.cooldown[message.author.id] == null) {
-    //     client.cooldown[message.author.id] = {
-    //         nCreate: null,
-    //         pCreate: null,
-    //         delete: null
-    //     }
-    // }
-    /*
+  // if (client.cooldown[message.author.id] == null) {
+  //     client.cooldown[message.author.id] = {
+  //         nCreate: null,
+  //         pCreate: null,
+  //         delete: null
+  //     }
+  // }
+  /*
         if(message.member.roles.cache.some(r=>['793549158417301544', '710208090741539006', '788193704014905364'].includes(r.id)) ) {
 
             let bServerCreatesettings = serverCreateSettings_Beta.createParams(serverName, consoleID.consoleID);
@@ -76,5 +76,7 @@ exports.run = async (client, message, args) => {
         }
 
          */
-    message.channel.send('There is currently no beta happening right now. Keep an eye out for updates :)')
-}
+  message.channel.send(
+    "There is currently no beta happening right now. Keep an eye out for updates :)"
+  );
+};
