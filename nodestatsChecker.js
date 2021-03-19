@@ -89,26 +89,15 @@ setInterval(() => {
                 is_vm_online: true
             });
         }).catch(error => {
-
-            axios({
-                url: 'http://' + data.IP + ':999/random',
-                timeout: 1500,
-            }).then(x => {
-
-            }).catch(x => {
-
-                if (x.response != null) {
-                    nodeStatus.set(node, {
-                        status: false,
-                        is_vm_online: true
-                    });
-                } else {
-                    nodeStatus.set(node, {
-                        status: false,
-                        is_vm_online: false
-                    });
-                }
-            });
+            ping2.ping(data.IP, 22)
+                .then(() => nodeStatus.set(node, {
+                    status: false,
+                    is_vm_online: true
+                }))
+                .catch((e) => nodeStatus.set(node, {
+                    status: false,
+                    is_vm_online: true
+                }));
         })
     }
 
