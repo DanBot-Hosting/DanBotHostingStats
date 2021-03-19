@@ -96,7 +96,7 @@ setInterval(() => {
                 }))
                 .catch((e) => nodeStatus.set(node, {
                     status: false,
-                    is_vm_online: true
+                    is_vm_online: false
                 }));
         })
     }
