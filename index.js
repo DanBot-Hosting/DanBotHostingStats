@@ -65,7 +65,10 @@ global.nodeStatus = new db.table("nodeStatus");   //Node status. Online or offli
 global.userPrem = new db.table("userPrem");       //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.client = new Discord.Client({
-  disableEveryone: true
+  restTimeOffset: 0,
+  disableEveryone: true,
+  restWsBridgetimeout: 100,
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
