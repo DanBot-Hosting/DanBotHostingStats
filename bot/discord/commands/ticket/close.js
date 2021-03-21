@@ -9,11 +9,11 @@ exports.run = async (client, message, args) => {
             errors: ['time'],
         })
         collected1.on('collect', m => {
-            if (m.content === "confirm") {
+            if (m.content.toLowerCase() === "confirm") {
                 message.channel.send("**Closing ticket.**", null).then(setTimeout(() => {
                     message.channel.delete()
                 }, 5000))
-            } else if (m.content === "cancel") {
+            } else if (m.content.toLowerCase() === "cancel") {
                 message.channel.send('Closing ticket. __**Canceled**__ Ticket staying open.');
             }});
         collected1.on('end', collected => {
