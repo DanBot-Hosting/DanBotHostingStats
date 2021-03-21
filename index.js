@@ -66,7 +66,7 @@ global.userPrem = new db.table("userPrem");       //Premium user data, Donated, 
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.client = new Discord.Client({
   restTimeOffset: 0,
-  disableEveryone: true,
+  disableMentions: "everyone",
   restWsBridgetimeout: 100,
   partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
