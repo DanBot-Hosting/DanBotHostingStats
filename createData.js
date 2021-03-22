@@ -18,7 +18,7 @@ Node 10  : 16
 Node 11  : 17
 Node 12  : 18
 Node 13  : 19
-Node 14  : 20   
+Node 14  : 20
 */
 
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
