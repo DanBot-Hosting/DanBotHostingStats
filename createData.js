@@ -4,6 +4,23 @@ const gaming = [14]          // Gaming nodes
 const botswebdb = [17, 16, 15, 11]       // Bots, Websites and Databases nodes
 const storage = [13]         // Storage nodes
 
+/*
+Node 1   : 9
+Node 2   : 3
+Node 3   : 5
+Node 4   : 8
+Node 5   : 10
+Node 6   : 11
+Node 7   : 12
+Node 8   : 14
+Node 9   : 15
+Node 10  : 16
+Node 11  : 17
+Node 12  : 18
+Node 13  : 19
+Node 14  : 20   
+*/
+
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 var getPassword = () => {
 
