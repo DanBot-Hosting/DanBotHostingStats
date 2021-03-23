@@ -10,15 +10,20 @@ exports.run = async (client, message, args) => {
     }
 
     if (client.cooldown[message.author.id].delete > Date.now()) {
-        message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].delete - Date.now(), {round: true})}`)
+        message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].delete - Date.now(), { round: true })}`)
         return;
     }
     client.cooldown[message.author.id].delete = Date.now() + (3 * 1000);
-
     //delete server things
     if (!args[1]) {
         message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
     } else {
+
+        if (args[1].match(/[a-z]+/i) == null)
+            return message.channel.send("lol only use english characters.");
+
+        args[1] = args[1].match(/[a-z]+/i)[0];
+
         message.channel.send('Checking server `' + args[1] + '`\nPlease allow me 2seconds to fetch this.').then((msg) => {
             axios({
                 url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
