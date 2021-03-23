@@ -46,7 +46,7 @@ module.exports = (client, message) => {
             if (message.author.id === "640161047671603205") {
 
             } else {
-                client.channels.cache.get('801847783019118663').send(message.author.username + " (ID: " + message.author.id + ", PING: <@" + message.author.id + ">)" + "\n" +  message.content)
+                client.channels.cache.get('801847783019118663').send(message.author.username + " (ID: " + message.author.id + ", PING: <@" + message.author.id + ">)" + "\n" +  message.content.replace('@', '@|'))
             }
         }
     };
@@ -86,14 +86,4 @@ module.exports = (client, message) => {
     } catch (err) {
         console.log(err)
     }
-
-    if (message.content.includes("459960044570804224")) {
-        message.author.roles.add(config.DiscordBot.roles.mute)
-        mutesData.set(message.author.id, {
-            mutedAt: Date.now(),
-            expiresAt: Date.now() + 600000
-        });
-        message.reply('Muted for 10mins... F')
-    }
-
 };
