@@ -1,6 +1,9 @@
 const axios = require('axios');
 
 exports.run = async (client, message, args) => {
+
+    if (message.channel.name.includes('ticket')) return message.channel.send('this is currently disabled')
+
     if (client.cooldown[message.author.id] == null) {
         client.cooldown[message.author.id] = {
             nCreate: null,
