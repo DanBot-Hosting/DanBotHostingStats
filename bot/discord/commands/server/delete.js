@@ -19,10 +19,10 @@ exports.run = async (client, message, args) => {
         message.channel.send('Command format: `' + config.DiscordBot.Prefix + 'server delete serveridhere`')
     } else {
 
-        if (args[1].match(/[a-z]+/i) == null)
+        if (args[1].match(/[0-9a-z]+/i) == null)
             return message.channel.send("lol only use english characters.");
 
-        args[1] = args[1].match(/[a-z]+/i)[0];
+        args[1] = args[1].match(/[0-9a-z]+/i)[0];
 
         message.channel.send('Checking server `' + args[1] + '`\nPlease allow me 2seconds to fetch this.').then((msg) => {
             axios({
