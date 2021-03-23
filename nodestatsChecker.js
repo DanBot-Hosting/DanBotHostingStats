@@ -103,7 +103,6 @@ setInterval(() => {
 
     //Server limit
 
-
     //Node servers checker
     axios({
         url: config.PrivPterodactyl.hosturl + "/api/client/servers/88a20baf/resources",

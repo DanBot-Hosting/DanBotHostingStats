@@ -1,7 +1,7 @@
 //let client = require("../../../../index.js").client;
 const fetch = require('node-fetch');
 module.exports = (client, message, editedMessage) => {
-  let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
+  let whitelisted = ['137624084572798976'];
     if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
     if (inviteREE.test(editedMessage.content)) {
