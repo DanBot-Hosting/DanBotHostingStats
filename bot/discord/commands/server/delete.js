@@ -1,6 +1,11 @@
 const axios = require('axios');
 
 exports.run = async (client, message, args) => {
+
+
+    // uncomment this line if shit goes wrong.
+    // if (!message.channel.name.includes('ticket')) return message.channel.send('this is currently disabled')
+
     if (client.cooldown[message.author.id] == null) {
         client.cooldown[message.author.id] = {
             nCreate: null,
@@ -47,7 +52,8 @@ exports.run = async (client, message, args) => {
                         } else {
 
                             if (output.attributes.user === userData.get(message.author.id).consoleID) {
-                                msg.edit('Are you sure you want to delete `' + output.attributes.name + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted and/or its files**')
+                                msg.edit('Are you sure you want to delete `' + output.attributes.name.split('@').join('@​') //uses an invisible character (U+200B) after the @
+                                + '`?\nPlease type `confirm` to delete this server. You have 1min until this will expire \n\n**You can not restore the server once it has been deleted and/or its files**')
                                 const collector = await message.channel.createMessageCollector(m => m.author.id === message.author.id, {
                                     time: 60000,
                                     max: 2
