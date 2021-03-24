@@ -1,12 +1,18 @@
 const axios = require('axios');
 const pretty = require('prettysize');
 exports.run = async (client, message, args) => {
-    if(!args[0]) {
+    if (!args[0]) {
         let embed = new Discord.MessageEmbed()
             .setColor("GREEN")
             .addField("__**Server Status**__", "What server would you like to view? \nCommand Format: `" + config.DiscordBot.Prefix + "server status serverid")
         await message.channel.send(embed)
     } else {
+
+        if (args[1].match(/[0-9a-z]+/i) == null)
+            return message.channel.send("lol only use english characters.");
+
+        args[1] = args[1].match(/[0-9a-z]+/i)[0];
+
         message.channel.send('Fetching `' + args[1] + '`. \n\n*This could take a few seconds*').then((msg) => {
             axios({
                 url: config.Pterodactyl.hosturl + "/api/client/servers/" + args[1],
@@ -53,7 +59,7 @@ exports.run = async (client, message, args) => {
 
 
                     const filter = (reaction, user) => (['🟢', '🔄', '🔴'].includes(reaction.emoji.name) && user.id === message.author.id);
-                    const collector = msg.createReactionCollector(filter, {time: 20000});
+                    const collector = msg.createReactionCollector(filter, { time: 20000 });
                     collector.on('collect', async (reaction, user) => {
                         if (reaction.emoji.name === "🟢") {
                             axios({
@@ -66,7 +72,7 @@ exports.run = async (client, message, args) => {
                                     'Content-Type': 'application/json',
                                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                                 },
-                                data: { "signal" : "start" },
+                                data: { "signal": "start" },
                             }).then(response => {
                                 message.reply(args[1] + ' server started!').then((msg2) => {
                                     setTimeout(() => {
@@ -85,7 +91,7 @@ exports.run = async (client, message, args) => {
                                     'Content-Type': 'application/json',
                                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                                 },
-                                data: { "signal" : "kill"},
+                                data: { "signal": "kill" },
                             }).then(response => {
                                 setTimeout(() => {
                                     axios({
@@ -98,7 +104,7 @@ exports.run = async (client, message, args) => {
                                             'Content-Type': 'application/json',
                                             'Accept': 'Application/vnd.pterodactyl.v1+json',
                                         },
-                                        data: { "signal" : "start"},
+                                        data: { "signal": "start" },
                                     }).then(response => {
                                         message.reply(args[1] + ' server restarted!').then((msg2) => {
                                             setTimeout(() => {
@@ -119,7 +125,7 @@ exports.run = async (client, message, args) => {
                                     'Content-Type': 'application/json',
                                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                                 },
-                                data: { "signal" : "kill" },
+                                data: { "signal": "kill" },
                             }).then(response => {
                                 message.reply(args[1] + ' server stopped!').then((msg2) => {
                                     setTimeout(() => {
