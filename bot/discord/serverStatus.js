@@ -56,6 +56,11 @@ let nstatus = {
         data: 'dbhdb'
     }],
 
+    "VPS Hosting Servers": [{
+        name: 'VPS-Server-01',
+        data: 'vps-server-01'
+    }],
+
     "Dan's Panel": [{
         name: 'Panel',
         data: 'private.danbot.host'
