@@ -1,6 +1,6 @@
 let nstatus = {
     "Public": [{
-        name: 'Node-1',
+        name: 'Node-1 (RateLimit)',
         data: 'Node1'
     }, {
         name: 'Node-4',
