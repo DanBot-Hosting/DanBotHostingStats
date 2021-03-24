@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = (client, message) => {
 
-    let whitelisted = ['137624084572798976'];
+    let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
     if (!whitelisted.includes(message.author.id)) {
     const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
     if (inviteREE.test(message.content.includes())) {
@@ -46,7 +46,7 @@ module.exports = (client, message) => {
             if (message.author.id === "640161047671603205") {
 
             } else {
-                client.channels.cache.get('801847783019118663').send(message.author.username + " (ID: " + message.author.id + ", PING: <@" + message.author.id + ">)" + "\n" +  message.content.split('@').join('@​'))
+                client.channels.cache.get('801847783019118663').send(message.author.username + " (ID: " + message.author.id + ", PING: <@" + message.author.id + ">)" + "\n" +  message.content.replace('@', '@|'))
             }
         }
     };
