@@ -57,7 +57,7 @@ let nstatus = {
     }],
 
     "VPS Hosting Servers": [{
-        name: 'VPS-Server-01',
+        name: 'Server 1',
         data: 'vps-server-01'
     }],
 
