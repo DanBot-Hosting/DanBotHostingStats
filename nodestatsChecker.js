@@ -196,7 +196,7 @@ setInterval(() => {
         }));
 
     //Backup Storage
-    ping2.ping('176.223.134.244', 22)
+    ping2.ping('176.31.125.135', 22)
         .then(() => nodeStatus.set("backups1", {
             status: true
         }))
