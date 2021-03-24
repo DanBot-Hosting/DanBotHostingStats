@@ -73,7 +73,7 @@ let nstatus = {
     }],
 
     "LavaLink": [{
-        name: 'Lava 1',
+        name: 'Lava 1 (RateLimit)',
         data: 'lava.danbot.host'
     }, {
         name: 'Lava 2',
