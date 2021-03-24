@@ -1,5 +1,5 @@
 let nstatus = {
-    "Public": [{
+    "Nodes": [{
         name: 'Node-1 (RateLimit)',
         data: 'Node1'
     }, {
