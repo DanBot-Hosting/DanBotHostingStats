@@ -1,6 +1,6 @@
 let nstatus = {
     "Nodes": [{
-        name: 'Node-1 (RateLimit)',
+        name: 'Node-1',
         data: 'Node1'
     }, {
         name: 'Node-4',
