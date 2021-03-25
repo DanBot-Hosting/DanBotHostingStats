@@ -87,8 +87,8 @@ exports.run = async (client, message, args) => {
                                                  SSLProxyEngine on
                                                  ProxyPreserveHost On
                                                SSLEngine on
-                                               SSLCertificateFile /etc/letsencrypt/live/${args[1]}/fullchain.pem
-                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1]}/privkey.pem
+                                               SSLCertificateFile /etc/letsencrypt/live/${args[1].toLowerCase()} /fullchain.pem
+                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1].toLowerCase()}/privkey.pem
                                              
                                                  <Location />
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
@@ -133,8 +133,8 @@ exports.run = async (client, message, args) => {
                                                  SSLProxyEngine on
                                                  ProxyPreserveHost On
                                                SSLEngine on
-                                               SSLCertificateFile /etc/letsencrypt/live/${args[1]}/fullchain.pem
-                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1]}/privkey.pem
+                                               SSLCertificateFile /etc/letsencrypt/live/${args[1].toLowerCase()}/fullchain.pem
+                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1].toLowerCase()}/privkey.pem
                                              
                                                  <Location />
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
