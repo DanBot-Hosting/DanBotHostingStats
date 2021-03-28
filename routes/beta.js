@@ -16,6 +16,7 @@ Router.get("/stats", (req, res) => {
 
     res.json({ error: false, data: filteredItems });
   } catch (e) {
+      console.log(e)
     res.json({ error: true, message: e });
   }
 });
