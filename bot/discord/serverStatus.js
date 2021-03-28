@@ -98,7 +98,9 @@ let parse = async () => {
 
             let da = nodeStatus.get(d.data.toLowerCase());
             
-            da = (da.status === true ? (`🟢 Online ${d.data.toLowerCase().includes('node') ? `(${nodeServers.get(d.data.toString().toLowerCase()).servers} / 500)` : ""} : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **VM**") + ' Outage'))))
+            let serverUsage = d.data.toLowerCase().includes('node')? `${nodeServers.get(d.data.toString().toLowerCase())} / 500)` : ''
+
+            da = (da.status === true ? (`🟢 Online ${serverUsage}`) : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **VM**") + ' Outage'))))
 
 
             // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
