@@ -121,7 +121,7 @@ setInterval(() => {
             }
         }).then(response => {
             const servercount = response.data.attributes.relationships.servers.data;
-            nodeServers.set(node, { servers: servercount.length} )
+            nodeServers.set(node, { servers: servercount.length } )
         })
     }
 
