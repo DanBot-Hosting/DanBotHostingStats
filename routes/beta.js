@@ -1,5 +1,12 @@
 const Router = require("express").Router();
 
+Router.get("/", (req, res) => {
+
+    res.json({ error: false, msg: "DanBot Hosting beta API and Animal API" });
+  
+});
+
+
 Router.get("/stats", (req, res) => {
   try {
     let items = nodeData.all();
