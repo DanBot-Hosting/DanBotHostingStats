@@ -18,8 +18,7 @@ Router.get("/", (req, res) => {
   let n13 = [ nodeData.fetch('Node13') ]
   let n14 = [ nodeData.fetch('Node14') ]
   let data = n1.concat(n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14);
-  //console.log(items)
-  //var objectValue = JSON.parse(data);
+
 console.log(data)
   res.render('stats.ejs', {
     table: data,
