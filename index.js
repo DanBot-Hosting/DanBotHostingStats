@@ -129,9 +129,9 @@ animalapp.use((req, res, next) => {
   next();
 });
 
-animalapp.get('/', function (req, res) {
-  res.send('hello!')
-})
+// home page & beta site api
+const totalRoute = require("./routes/beta.js");
+animalapp.use("/", totalRoute);
 
 //Total images
 const totalRoute = require("./animalAPI/total.js");
