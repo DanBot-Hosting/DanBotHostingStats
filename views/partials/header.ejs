@@ -73,7 +73,7 @@ function goto(id) { window.location = `https://danbot.host${id}`; }
 </style>
 
 
-<style> 
+<style>
 
 :root {--void: #0E0B16;--fuschia: #A239CA; --eggshell: #E7DFDD;--neon-green: #ffffff;}
 html{scroll-behavior: smooth;}
@@ -204,21 +204,21 @@ h4 {
           <div class="dropdown">
             <button style="outline: none;" onclick=goto("/bots") class="dropbtn">Bots</button>
           </div>
-        </li> 
+        </li>
         <li class="nav-item">
         <div class="dropdown">
-          <button style="outline: none;" onclick=goto("/stats") class="dropbtn">Stats</button>
+          <button style="outline: none;" onclick=goto("/stats/all") class="dropbtn">Stats</button>
         </div>
-        </li>      
-  <% if(user) { %> 
-  
+        </li>
+  <% if(user) { %>
+
     <div class="dropdown">
       <button style="outline: none;" class="dropbtn">Forms</button>
       <div class="dropdown-content">
         <a href="/me/form/staff-apply">Staff Application</a>
         <a href="/?e=NOT-COMPLETE">Create Server</a>
       </div>
-    </div> 
+    </div>
 
 <div class="dropdown">
     <button style="outline: none;" class="dropbtn">More</button>
@@ -228,7 +228,7 @@ h4 {
       <a href="/feedback">Feedback</a>
       <a href="/partners">Partners</a>
     </div>
-</div> 
+</div>
   <% } else { %>
         <div class="dropdown">
           <button style="outline: none;" class="dropbtn">More</button>
@@ -237,26 +237,26 @@ h4 {
             <a rel="nofollow" target="blank" href="https://docs.danbot.xyz/">Docs</a>
             <a href="/partners">Partners</a>
 
-            <div class="dropdown-divider"></div> 
+            <div class="dropdown-divider"></div>
             <a onClick="toggleDarkMode (this)"><i class="fas fa-sync-alt"></i> no </a></div>
-        </div> 
-        <% } %> 
+        </div>
+        <% } %>
       </div>
-      </div>  
-      
-      <ul class="navbar-nav">  
-        <% if(user) {  %>  
+      </div>
+
+      <ul class="navbar-nav">
+        <% if(user) {  %>
         <% let Developers = [ "137624084572798976", "293841631583535106" ]; %>
-  <% if(Developers.includes(user.id)) { %> 
-        
+  <% if(Developers.includes(user.id)) { %>
+
       <div class="dropdown">
         <button style="outline: none;" class="dropbtn"><a>Staff Settings</a></button>
-        <div class="dropdown-content"> 
-          
-        <% if(Developers.includes(user.id)) { %>  
-          <a href="/admin">Admin</a> 
-          <% } %> 
-          
+        <div class="dropdown-content">
+
+        <% if(Developers.includes(user.id)) { %>
+          <a href="/admin">Admin</a>
+          <% } %>
+
         <a href="/me/users">Users</a>
         </div>
         </div>
@@ -272,13 +272,13 @@ h4 {
             <div class="dropdown-divider"></div>
             <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>
-        </div> 
+        </div>
         <% } else { %>
         <div class=navbar-item>
           <div class=buttons>
             <a class="button btn is-blurple" onclick=goto("/login?redirect=<%= Redirect %>")><i class="fab fa-discord"></i>&nbsp; Login</a>
           </div>
-        </div> 
+        </div>
         <% } %>
       </ul>
       </nav>

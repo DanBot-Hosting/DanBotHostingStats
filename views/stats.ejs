@@ -8,7 +8,6 @@
 
 <main>
 
-    <h1 class="cover-heading">All Stats</h1>
     <div class="container bg-light text-dark">
         <table class="table table-striped">
             <thead>
@@ -23,7 +22,7 @@
             <tbody>
             <%table.forEach(function(entry) {%>
                 <tr>
-                    <td> <%= entry.name.slice(0, -28) %> </td>
+                    <td> <%= entry.info.servername %> </td>
                     <td> <%= entry.cpu_percent.toFixed(2) %>% </td>
                     <td><%- pretty(entry.mem_usage) %> </td>
                     <td>IN: <%- pretty(entry.netIO.rx)%>, OUT: <%- pretty(entry.netIO.tx) %></td>
