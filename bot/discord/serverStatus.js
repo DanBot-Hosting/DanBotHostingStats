@@ -104,7 +104,7 @@ let parse = async () => {
             // if(nodeStatus.get(d.data).is_vm_online != null && nodeStatus.get('node1').is_vm_online === false && nodeStatus.get('node2').is_vm_online === false && nodeStatus.get('node5').is_vm_online === false, nodeStatus.get('node7').is_vm_online === false)
             //    da = '🔴 Network Outage'
 
-            temp.push(`**${d.name}:** ${da}`)
+            temp.push(`**${d.name}:** ${da} (${nodeServers.fetch(d.data)} / 500)`)
         }
 
         toRetun[title] = temp;
