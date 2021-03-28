@@ -136,29 +136,6 @@ Router.get("/bots", rateLimit(15000, 4), (req, res) => {
     res.json(bots);
 });
 
-Router.get("/astrobot/stats", async (req, res) => {
-  
-  axios.get('https://astrobot.org/api/stats', {
-  })
-  .then(function (response) {
-    res.json(response.data);
-  }).catch(function (error) {
-    console.log(error);
-    let sample = {
-    "error": false,
-    "data": {
-        "servers": 0,
-        "users": 0,
-        "chartsCreated": 0,
-        "node": 0,
-        "discordJS": 0
-    }
-}
-    res.json(sample)
-  })
-  
-});
-
 Router.get(
   "/callback",
   passport.authenticate("discord", { failureRedirect: "/404" }),
@@ -176,6 +153,21 @@ Router.get(
     
   }
 );
+
+/* beta site */
+
+Router.get("/stats", (req, res) => {
+  try {
+    let items = nodeData.all();
+    var objectValue = JSON.parse(items);
+
+    let filteredItems = objectValue.filter(i => i.ID === "Node");
+  
+    res.json({ error: false, data: filteredItems });
+  } catch (e) {
+    res.json({ error: true, message: e });
+  }
+});
 
 Router.use("*", (req, res) => {
   res
