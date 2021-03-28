@@ -110,7 +110,7 @@ setInterval(() => {
         })
 
         axios({
-            url: config.Pterodactyl.hosturl + "api/application/nodes/" + data.ID + "?include=servers",
+            url: config.Pterodactyl.hosturl + "/api/application/nodes/" + data.ID + "?include=servers",
             method: 'GET',
             followRedirect: true,
             maxRedirects: 5,
