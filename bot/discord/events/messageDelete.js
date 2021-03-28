@@ -23,13 +23,13 @@ module.exports = (client, message) => {
         return;
     } else {
 
-        snipes.set(message.channel.id, [...snipes.get(message.channel.id), {
+        Messagesnipes.set(message.channel.id, [...Messagesnipes.get(message.channel.id), {
             message: message.content,
             author: message.member,
             timestamp: Date.now(),
             action: "delete"
         }]);
 
-        snipes.set(message.channel.id, snipes.get(message.channel.id).filter(x => (Date.now() - x.timestamp) < 300000 && x != null));
+        Messagesnipes.set(message.channel.id, Messagesnipes.get(message.channel.id).filter(x => (Date.now() - x.timestamp) < 300000 && x != null));
     }
 };

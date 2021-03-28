@@ -56,10 +56,7 @@ global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
 
-//Discord Snipes:
-global.snipes = new Discord.Collection();
-// -------------
-
+global.Messagesnipes = new Discord.Collection();
 global.fs = require("fs");
 global.moment = require("moment");
 global.userData = new db.table("userData");       //User data, Email, ConsoleID, Link time, Username, DiscordID
@@ -79,6 +76,7 @@ global.client = new Discord.Client({
 global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
 require('./bot/discord/commands/mute').init(client)
+
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
   files = files.filter(f => f.endsWith('.js'));
