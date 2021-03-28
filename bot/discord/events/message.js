@@ -61,14 +61,14 @@ module.exports = (client, message) => {
     console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
     try {
         let blacklisted = [
-            '754441222424363088', '739231758087880845',
+            '739231758087880845',
             '738839334333186068', '738840097218101309',
             '738844675372482720', '738846229919825992',
             '738548111323955270'
         ]
         //Channel checker
 
-        if (blacklisted.includes(message.channel.id) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null) &&
+        if ((blacklisted.includes(message.channel.id) || (message.channel.id('754441222424363088') && command != snipe)) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
         if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "ticket") {
             //Cooldown setting

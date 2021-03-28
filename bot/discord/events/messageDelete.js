@@ -22,10 +22,14 @@ module.exports = (client, message) => {
     if (message.author.bot || !message.content) {
         return;
     } else {
-        snipes.set(message.channel.id, message)
-        setTimeout(() => {
-            if (snipes.get(message.channel.id) === message)
-                snipes.delete(message.channel.id)
-        }, 300000);
+
+        snipes.set(message.channel.id, [...snipes.get(message.channel.id), {
+            message: message.content,
+            author: message.member,
+            timestamp: Date.now(),
+            action: "delete"
+        }]);
+
+        snipes.set(message.channel.id, snipes.get(message.channel.id).filter(x => (Date.now() - x.timestamp) < 300000 && x != null));
     }
 };
