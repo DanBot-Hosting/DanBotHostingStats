@@ -5,65 +5,74 @@ const ping2 = require('ping-tcp-js')
 let stats = {
     node1: {
         serverID: '7c740e8c',
-        IP: '142.54.191.91'
+        IP: '142.54.191.91',
+        ID: '1'
     },
     node2: {
         serverID: '5c82cea0',
-        IP: '142.54.191.93'
+        IP: '142.54.191.93',
+        ID: '2'
     },
     node3: {
         serverID: '57622dc8',
-        IP: '167.86.113.158'
+        IP: '167.86.113.158',
+        ID: '7'
     },
     node4: {
         serverID: '98ca4dbd',
-        IP: '178.159.3.233'
+        IP: '178.159.3.233',
+        ID: '11'
     },
     node5: {
         serverID: '6d83e569',
-        IP: '154.27.68.108'
+        IP: '154.27.68.108',
+        ID: '12'
     },
     node6: {
         serverID: '8565f2e0',
-        IP: '51.195.229.146'
+        IP: '51.195.229.146',
+        ID: '13'
     },
     node7: {
         serverID: '94082df3',
-        IP: '142.54.191.92'
+        IP: '142.54.191.92',
+        ID: '14'
     },
     node8: {
         serverID: '8e1d9c32',
-        IP: '194.146.44.168'
+        IP: '194.146.44.168',
+        ID: '17'
     },
     node9: {
         serverID: 'a0493565',
-        IP: '194.146.44.41'
+        IP: '194.146.44.41',
+        ID: '18'
     },
     node10: {
         serverID: '3c93984c',
-        IP: '194.146.44.58'
+        IP: '194.146.44.58',
+        ID: '20'
     },
     node11: {
         serverID: '0267242c',
-        IP: '178.159.2.82'
+        IP: '178.159.2.82',
+        ID: '21'
     },
     node12: {
         serverID: '4526d28b',
-        IP: '178.159.2.89'
+        IP: '178.159.2.89',
+        ID: '22'
     },
     node13: {
         serverID: '8bb3a785',
-        IP: '178.159.3.205'
+        IP: '178.159.3.205',
+        ID: '23'
     },
     node14: {
         serverID: '7ad8c41b',
-        IP: '194.146.44.188'
-    },
-
-    storage1: {
-        serverID: 'b2af1392',
-        IP: '194.146.44.73'
-    },
+        IP: '194.146.44.188',
+        ID: '24'
+    }
 }
 
 console.log(chalk.magenta('[Nodes Checker] ') + chalk.green("Online"));
@@ -98,6 +107,21 @@ setInterval(() => {
                     status: false,
                     is_vm_online: false
                 }));
+        })
+
+        axios({
+            url: config.Pterodactyl.hosturl + "api/application/nodes/" + data.ID + "?include=servers",
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                'Content-Type': 'application/json',
+                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            }
+        }).then(response => {
+            const servercount = response.data.attributes.relationships.servers.data;
+            nodeServers.set(node, { servers: servercount.length} )
         })
     }
 
