@@ -16,7 +16,9 @@ exports.run = async (client, message, args) => {
             id: "748117822370086932",
             allow: 84992
         }
-    ]).catch(console.error);
+    ]).catch((err) => {
+        console.log(err)
+    } );
     message.reply(`Please check <#${channel.id}> for your ticket.`)
 
     let category = server.channels.cache.find(c => c.id === "738538742603841650" && c.type === "category");

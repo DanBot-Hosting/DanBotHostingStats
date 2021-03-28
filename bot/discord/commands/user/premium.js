@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
             "password": config.externalPassword
         },
     }).catch(e => {
-        console.log(e);
+        // console.log(e);
     })
 
     let user = userPrem.fetch(message.author.id);

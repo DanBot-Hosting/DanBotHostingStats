@@ -25,7 +25,9 @@ exports.run = async (client, message, args) => {
         },
     }).then(response => {
         boosted = response.data[message.author.id];
-    }).catch((e) => {console.log(e);}).then(() => {
+    }).catch((e) => {
+        // console.log(e);
+    }).then(() => {
 
         const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
         let consoleID = userData.get(message.author.id);
