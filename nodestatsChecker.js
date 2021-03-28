@@ -202,6 +202,7 @@ setInterval(() => {
         .catch((e) => nodeStatus.set("panelus1", {
             status: false
         }));
+    /*
     ping2.ping('176.31.125.135', 3306)
         .then(() => nodeStatus.set("dbhdb", {
             status: true
@@ -209,7 +210,7 @@ setInterval(() => {
         .catch((e) => nodeStatus.set("dbhdb", {
             status: false
         }));
-
+*/
     //UK VM Storage 1
     ping2.ping('178.159.3.233', 22)
         .then(() => nodeStatus.set("ukvms1", {
