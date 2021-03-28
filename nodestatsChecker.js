@@ -110,12 +110,12 @@ setInterval(() => {
         })
 
         axios({
-            url: config.Pterodactyl.hosturl + "api/application/nodes/" + data.ID + "?include=servers",
+            url: config.Pterodactyl.hosturl + "/api/application/nodes/" + data.ID + "?include=servers",
             method: 'GET',
             followRedirect: true,
             maxRedirects: 5,
             headers: {
-                'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
                 'Content-Type': 'application/json',
                 'Accept': 'Application/vnd.pterodactyl.v1+json',
             }
