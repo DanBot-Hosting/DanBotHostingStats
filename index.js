@@ -9,6 +9,7 @@ Free Hosting for ever!                                            /____/
 
 global.config = require("./config.json");
 global.enabled = require("./enable.json")
+
 const express = require('express');
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
@@ -54,6 +55,11 @@ require('./nodestatsChecker');
 global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
+
+//Discord Snipes:
+global.snipes = new Discord.Collection();
+// -------------
+
 global.fs = require("fs");
 global.moment = require("moment");
 global.userData = new db.table("userData");       //User data, Email, ConsoleID, Link time, Username, DiscordID

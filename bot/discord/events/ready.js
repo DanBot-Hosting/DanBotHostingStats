@@ -2,7 +2,6 @@ const exec = require('child_process').exec;
 const axios = require('axios');
 const nstatus = require('../serverStatus');
 const nUsage = require('../serverUsage');
-global.snipes = new Discord.Collection();
 const db = require("quick.db");
 const pretty = require('prettysize');
 
