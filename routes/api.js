@@ -30,7 +30,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
     let owner = db.get(`${data.key}`);
    // console.log(data);
     let info = db.get(data.id);
-    
+
     console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
 
     if (info) {
@@ -66,29 +66,29 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
 
       db.set(ID, botData);
     }
-    
-    
+
+
  /*   db.fetch(`botIDs`)
-    db.push("botIDs", `${ID}`); 
+    db.push("botIDs", `${ID}`);
  */
- 
+
  let ids = db.get("bot.IDs");
  if(!ids.includes(ID)) {
     db.push("bot.IDs", `${ID}`);
  }
 
  let bots = db.get(`${owner}.bots`);
- 
+
  if(bots) {
- 
+
  if(!bots.includes(ID)) {
     db.push(`${owner}.bots`, `${ID}`);
  }
- 
+
  } else {
-    db.push(`${owner}.bots`, `${ID}`); 
+    db.push(`${owner}.bots`, `${ID}`);
  }
- 
+
     return res
       .status(200)
       .send({ error: false, message: "Bot stats have been recorded" });
@@ -115,7 +115,7 @@ Router.get("/bot/:ID/info", rateLimit(15000, 4), (req, res) => {
   let bot = db.get(`${ID}`);
   if (!bot)
     return res.status(400).send({ error: true, message: "bot not found" });
-    
+
   let data = {
     id: bot.id,
     servers: bot.servers,
@@ -130,9 +130,9 @@ Router.get("/bot/:ID/info", rateLimit(15000, 4), (req, res) => {
 });
 
 Router.get("/bots", rateLimit(15000, 4), (req, res) => {
-    
+
     let bots = db.get("bot.IDs");
-    
+
     res.json(bots);
 });
 
@@ -148,9 +148,9 @@ Router.get(
       req.session.isAdmin = false;
     }
     res.redirect("/me");
-    
+
     //maybe future features.
-    
+
   }
 );
 
@@ -158,12 +158,24 @@ Router.get(
 
 Router.get("/stats", (req, res) => {
   try {
-    let items = nodeData.all();
-    var objectValue = JSON.parse(items);
+      let data = {
+          Node1: nodeData.fetch('Node1'),
+          Node2: nodeData.fetch('Node2'),
+          Node3: nodeData.fetch('Node3'),
+          Node4: nodeData.fetch('Node4'),
+          Node5: nodeData.fetch('Node5'),
+          Node6: nodeData.fetch('Node6'),
+          Node7: nodeData.fetch('Node7'),
+          Node8: nodeData.fetch('Node8'),
+          Node9: nodeData.fetch('Node9'),
+          Node10: nodeData.fetch('Node10'),
+          Node11: nodeData.fetch('Node11'),
+          Node12: nodeData.fetch('Node12'),
+          Node13: nodeData.fetch('Node13'),
+          Node14: nodeData.fetch('Node14')
+      }
 
-    let filteredItems = objectValue.filter(i => i.ID === "Node");
-  
-    res.json({ error: false, data: filteredItems });
+    res.json({ error: false, data: data });
   } catch (e) {
     res.json({ error: true, message: e });
   }
