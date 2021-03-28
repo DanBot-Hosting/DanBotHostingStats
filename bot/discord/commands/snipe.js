@@ -3,7 +3,7 @@ exports.run = async (client, message, args) => {
 
     let snipe = Messagesnipes.get(message.channel.id)
 
-    if (!Messagesnipes) return message.channel.send(embed3)
+    if (!snipe) return message.channel.send(embed3)
 
 
     let number = 0;
