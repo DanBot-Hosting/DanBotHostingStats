@@ -43,11 +43,7 @@ Router.get("/stats", (req, res) => {
       Node14: nodeStatus.fetch('node14')
     }
 
-    let test = {
-      test: nodeData.all()
-    }
-
-    res.json({ error: false, data: data, status: status, test: test });
+    res.json({ error: false, data: data, status: status });
   } catch (e) {
     res.json({ error: true, message: e });
   }
