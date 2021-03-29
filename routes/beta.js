@@ -1,11 +1,16 @@
 const Router = require("express").Router();
 
+const DiscordOauth2 = require("discord-oauth2");
+const oauth = new DiscordOauth2({
+  clientId: config.DiscordBot.clientID,
+  clientSecret: config.DiscordBot.clientSecret
+});
+
 Router.get("/", (req, res) => {
 
     res.json({ error: false, msg: "DanBot Hosting beta API and Animal API" });
 
 });
-
 
 Router.get("/stats", (req, res) => {
   try {
@@ -31,6 +36,43 @@ Router.get("/stats", (req, res) => {
     res.json({ error: true, message: e });
   }
 });
+
+router.post(
+  "/callback",
+
+  async (req, res) => {
+      try {
+    let code = req.query.code;
+    if (!code) return res.json({ error: true, message: "no code" });
+
+    let redirect = req.query.redirect;
+    if(!redirect) return res.json({ error: true, message: "no redirect" });
+
+    let info = await oauth.tokenRequest({
+    
+      redirectUri: redirect + "/callback",
+
+      code: code,
+      scope: "identify",
+      grantType: "authorization_code"
+    });
+
+    let data = {
+      user: null
+    };
+
+    await oauth.getUser(info.access_token).then(async userInfo => {
+        
+        data.user = userInfo;
+        
+        res.send(data);
+    
+    });
+      } catch (e) {
+          return res.json({ error: true, message: e });
+      }
+  }
+);
 
 Router.use("*", (err, req, res) => {
   res
