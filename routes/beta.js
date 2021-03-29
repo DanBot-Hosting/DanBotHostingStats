@@ -32,9 +32,12 @@ Router.get("/stats", (req, res) => {
   }
 });
 
-Router.use("*", (err, req, res) => {
-  res
-    .json({ error: true, status: 404, message: "Endpoint not found" });
+Router.get("*", async function(req, res) {
+  res.status(404).send({
+    error: true,
+    status: 404,
+    message: "Endpoint not found"
+  });
 });
 
 module.exports = Router;
