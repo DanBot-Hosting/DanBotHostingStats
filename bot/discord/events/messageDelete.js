@@ -23,7 +23,7 @@ module.exports = (client, message) => {
 
     let data = {
         message: message.content,
-        author: message.member,
+        member: message.member,
         timestamp: Date.now(),
         action: "delete"
     };

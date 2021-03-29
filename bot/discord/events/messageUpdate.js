@@ -5,11 +5,11 @@ module.exports = (client, oldMessage, newMessage) => {
 
     // Snipe Command:
 
-    if (oldMessage.author.bot || !oldMessage.content) return;
+    if (oldMessage.author.bot || !oldMessage.content || newMessage == null) return;
 
     let data = {
         message: oldMessage.content,
-        author: oldMessage.member,
+        member: oldMessage.member,
         timestamp: Date.now(),
         action: "edit"
     };

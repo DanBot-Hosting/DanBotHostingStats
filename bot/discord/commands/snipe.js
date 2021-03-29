@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
         const embed = new Discord.MessageEmbed()
             //.setAuthor(snipe.author.username, snipe.author.avatarURL({ dynamic: true, format: 'png' }))
             .setTimestamp()
-            .setTitle(`Message by: ${snipedMessage.user.tag}`)
+            .setTitle(`Message by: ${snipedMessage.member.user.tag}`)
             .setDescription("`" + snipedMessage.message + "`")
             .setFooter(`action: ${snipedMessage.action} at `).setTimestamp(msnipedMessageessage.timestamp)
         message.channel.send(embed);
