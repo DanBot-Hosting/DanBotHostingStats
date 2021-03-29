@@ -34,7 +34,6 @@ Router.get("/stats", (req, res) => {
 
 Router.use("*", (err, req, res) => {
   res
-    .status(404)
     .json({ error: true, status: 404, message: "Endpoint not found" });
 });
 
