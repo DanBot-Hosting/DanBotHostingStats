@@ -22,6 +22,6 @@ exports.run = async (client, message, args) => {
             .setTimestamp()
             .setTitle(`Message by: ${snipedMessage.member.user.tag}`)
             .setDescription("`" + snipedMessage.message + "`")
-            .setFooter(`action: ${snipedMessage.action} at `).setTimestamp(msnipedMessageessage.timestamp)
+            .setFooter(`action: ${snipedMessage.action} at `).setTimestamp(snipedMessage.timestamp)
         message.channel.send(embed);
 }
