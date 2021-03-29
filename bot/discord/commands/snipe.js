@@ -1,9 +1,9 @@
 exports.run = async (client, message, args) => {
     let embed3 = new Discord.MessageEmbed().setDescription(`Theres nothing to snipe`)
 
-    let snipe = Messagesnipes.get(message.channel.id)
+    let snipe = messageSnipes.get(message.channel.id)
 
-    if (!snipe) return message.channel.send(embed3)
+    if (snipe == null) return message.channel.send(embed3)
 
 
     let number = 0;
