@@ -31,7 +31,6 @@ module.exports = (client, message) => {
     if (messageSnipes.get(message.channel.id) == null) messageSnipes.set(message.channel.id, [data])
     else messageSnipes.set(message.channel.id, [...messageSnipes.get(message.channel.id), data]);
 
-
     messageSnipes.set(message.channel.id, messageSnipes.get(message.channel.id).filter(x => (Date.now() - x.timestamp) < 300000 && x != null));
 
 };

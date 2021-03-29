@@ -5,7 +5,7 @@ module.exports = (client, oldMessage, newMessage) => {
 
     // Snipe Command:
 
-    if (message.author.bot || !message.content) return;
+    if (oldMessage.author.bot || !oldMessage.content) return;
 
     let data = {
         message: oldMessage.content,
