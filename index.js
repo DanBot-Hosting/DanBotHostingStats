@@ -134,7 +134,7 @@ animalapp.use((req, res, next) => {
 });
 
 // home page & beta site api
-const home = require("./routes/beta.js");
+const home = require("./routes/main.js");
 animalapp.use("/", home);
 
 //Total images
