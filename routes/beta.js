@@ -33,7 +33,7 @@ Router.get("/stats", (req, res) => {
 });
 
 Router.get("*", async function(req, res) {
-  res.status(404).json({
+  res.status(404).send({
     error: true,
     status: 404,
     message: "Endpoint not found"
