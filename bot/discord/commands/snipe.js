@@ -5,6 +5,8 @@ exports.run = async (client, message, args) => {
 
     if (snipe == null) return message.channel.send(embed3)
 
+    snipe = [...snipe.values()]
+
     //Reversing the array 
     snipe.reverse();
 
