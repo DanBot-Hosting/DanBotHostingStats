@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
     // getting the message
     let snipedMessage = snipe[number];
 
-    console.log("SNIPE", snipedMessage, snipe, number);
+    // console.log("SNIPE", snipedMessage, snipe, number);
 
     //sending the message
     const embed = new Discord.MessageEmbed()
