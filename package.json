@@ -54,7 +54,8 @@
     "tesseract.js": "^2.1.1",
     "transliteration": "^2.2.0",
     "unirest": "^0.6.0",
-    "validator": "^13.1.1"
+    "validator": "^13.1.1",
+    "discord-oauth2": "^2.6.0"
   },
   "devDependencies": {
     "opusscript": "0.0.7",
