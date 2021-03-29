@@ -23,7 +23,23 @@ Router.get("/stats", (req, res) => {
       Node11: nodeData.fetch('Node11'),
       Node12: nodeData.fetch('Node12'),
       Node13: nodeData.fetch('Node13'),
-      Node14: nodeData.fetch('Node14')
+      Node14: nodeData.fetch('Node14'),
+        
+      Node1Status: nodeStatus.fetch('Node1'),
+      Node2Status: nodeStatus.fetch('Node2'),
+      Node3Status: nodeStatus.fetch('Node3'),
+      Node4Status: nodeStatus.fetch('Node4'),
+      Node5Status: nodeStatus.fetch('Node5'),
+      Node6Status: nodeStatus.fetch('Node6'),
+      Node7Status: nodeStatus.fetch('Node7'),
+      Node8Status: nodeStatus.fetch('Node8'),
+      Node9Status: nodeStatus.fetch('Node9'),
+      Node10Status: nodeStatus.fetch('Node10'),
+      Node11Status: nodeStatus.fetch('Node11'),
+      Node12Status: nodeStatus.fetch('Node12'),
+      Node13Status: nodeStatus.fetch('Node13'),
+      Node14Status: nodeStatus.fetch('Node14')
+        
     }
 
     res.json({ error: false, data: data });
