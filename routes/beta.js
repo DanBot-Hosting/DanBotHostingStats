@@ -10,20 +10,20 @@ Router.get("/", (req, res) => {
 Router.get("/stats", (req, res) => {
   try {
     let data = {
-      Node1: nodeData.fetch('Node1'),
-      Node2: nodeData.fetch('Node2'),
-      Node3: nodeData.fetch('Node3'),
-      Node4: nodeData.fetch('Node4'),
-      Node5: nodeData.fetch('Node5'),
-      Node6: nodeData.fetch('Node6'),
-      Node7: nodeData.fetch('Node7'),
-      Node8: nodeData.fetch('Node8'),
-      Node9: nodeData.fetch('Node9'),
-      Node10: nodeData.fetch('Node10'),
-      Node11: nodeData.fetch('Node11'),
-      Node12: nodeData.fetch('Node12'),
-      Node13: nodeData.fetch('Node13'),
-      Node14: nodeData.fetch('Node14')
+      Node1: nodeData.fetch('node1'),
+      Node2: nodeData.fetch('node2'),
+      Node3: nodeData.fetch('node3'),
+      Node4: nodeData.fetch('node4'),
+      Node5: nodeData.fetch('node5'),
+      Node6: nodeData.fetch('node6'),
+      Node7: nodeData.fetch('node7'),
+      Node8: nodeData.fetch('node8'),
+      Node9: nodeData.fetch('node9'),
+      Node10: nodeData.fetch('node10'),
+      Node11: nodeData.fetch('node11'),
+      Node12: nodeData.fetch('node12'),
+      Node13: nodeData.fetch('node13'),
+      Node14: nodeData.fetch('node14')
     }
 
     let status = {
