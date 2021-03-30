@@ -70,7 +70,7 @@ Router.get("/stats", (req, res) => {
   }
 });
 
-router.post(
+Router.post(
   "/callback",
 
   async (req, res) => {
