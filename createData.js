@@ -277,6 +277,7 @@ list.storage = (serverName, userID) => ({
 
 Minecraft Servers
 
+Spigot
 Waterfall
 Paper
 Forge
@@ -284,6 +285,38 @@ Bedrock
 PocketMineMP
 
 */
+list.spigot = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 1,
+    "egg": 58,
+    "docker_image": "quay.io/pterodactyl/core:java-11\n",
+    "startup": 'java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}',
+    "limits": {
+        "memory": 2048,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+        "SERVER_JARFILE": "server.jar",
+        "DL_PATH": null,
+        "DL_VERSION": "latest"
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": gaming,
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
 list.waterfall = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
