@@ -775,10 +775,40 @@ list.arkse = (serverName, userID) => ({
 
 Voice Servers
 
+Lavalink
 TeamSpeak 3
 Mumble
 
 */
+list.lavalink = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 3,
+    "egg": 57,
+    "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_openjdk-13",
+    "startup": `java -jar Lavalink.jar`,
+    "limits": {
+        "memory": 0,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": [9, 3],
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
 list.ts3 = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
