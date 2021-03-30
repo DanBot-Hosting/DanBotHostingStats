@@ -92,7 +92,7 @@ let nstatus = {
 let parse = async () => {
     let toRetun = {};
 
-    for (let [title, data] of Object.entries(nstatus)) {
+    for (let [title, data] of Object.entries(nstatus)) { 
         let temp = [];
         for (let d of data) {
 
