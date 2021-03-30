@@ -784,7 +784,7 @@ list.lavalink = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
     "nest": 3,
-    "egg": 57,
+    "egg": 59,
     "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_openjdk-13",
     "startup": `java -jar Lavalink.jar`,
     "limits": {
