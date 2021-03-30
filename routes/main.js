@@ -120,7 +120,8 @@ Router.get(
     if(!redirect) return res.json({ error: true, message: "no redirect" });
 
     let info = await oauth.tokenRequest({
-
+      clientId: config.DiscordBot.clientID,
+      clientSecret: config.DiscordBot.clientSecret,
       redirectUri: redirect + "/callback",
 
       code: code,
