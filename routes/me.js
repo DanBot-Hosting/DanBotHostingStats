@@ -32,7 +32,8 @@ Router.get("/servers", checkAuth, (req, res) => {
     setTimeout(async () => {
       console.log(arr)
       setTimeout(() => {
-        //var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
+        var clean = arr.map(e => e.attributes.container)
+        console.log(clean)
         res.render("me/servers.ejs", {
           user: req.isAuthenticated() ? req.user : null,
             table: arr,
