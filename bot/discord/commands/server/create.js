@@ -1,6 +1,10 @@
 const serverCreateSettings = require('../../../../createData');
 const humanizeDuration = require('humanize-duration');
 exports.run = async (client, message, args) => {
+
+
+    return message.channel.send('temporarely disabled!\nCheck <#738530520945786921> for more information and updates.')
+
     /*
     if (client.cooldown[message.author.id] == null) {
         client.cooldown[message.author.id] = {
