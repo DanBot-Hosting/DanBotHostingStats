@@ -32,7 +32,7 @@
             <tr>
                 <td> <%= entry.attributes.name %> </td>
                 <td> <%= entry.attributes.uuid.slice(0, -28) %> </td>
-                <td> <%= entry.attributes.node %> </td>
+                <td> <%= entry.attributes.container.environment.P_SERVER_LOCATION %> </td>
                 <td><a style="color:red;" href="https://panel.danbot.host/server/<%=entry.attributes.uuid.slice(0, -28)%>">Delete</a>, <a style="color:blue;" href="https://panel.danbot.host/server/<%=entry.attributes.uuid.slice(0, -28)%>/">View</a></td>
 
             </tr>
