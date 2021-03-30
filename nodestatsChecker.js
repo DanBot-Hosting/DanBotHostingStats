@@ -94,16 +94,19 @@ setInterval(() => {
             }
         }).then(response => {
             nodeStatus.set(node, {
+                timestamp: Date.now(),
                 status: true,
                 is_vm_online: true
             });
         }).catch(error => {
             ping2.ping(data.IP, 22)
                 .then(() => nodeStatus.set(node, {
+                    timestamp: Date.now(),
                     status: false,
                     is_vm_online: true
                 }))
                 .catch((e) => nodeStatus.set(node, {
+                    timestamp: Date.now(),
                     status: false,
                     is_vm_online: false
                 }));
@@ -121,8 +124,8 @@ setInterval(() => {
             }
         }).then(response => {
             const servercount = response.data.attributes.relationships.servers.data;
-            nodeServers.set(node, { servers: servercount.length } )
-        }).catch(err => {})
+            nodeServers.set(node, { servers: servercount.length })
+        }).catch(err => { })
     }
 
     //Server limit
@@ -140,10 +143,12 @@ setInterval(() => {
         }
     }).then(response => {
         nodeStatus.set("node1-priv", {
+            timestamp: Date.now(),
             status: true
         });
     }).catch(error => {
         nodeStatus.set("node1-priv", {
+            timestamp: Date.now(),
             status: false
         });
     })
@@ -161,10 +166,12 @@ setInterval(() => {
         }
     }).then(response => {
         nodeStatus.set("dan-node1", {
+            timestamp: Date.now(),
             status: true
         });
     }).catch(error => {
         nodeStatus.set("dan-node1", {
+            timestamp: Date.now(),
             status: false
         });
     })
@@ -175,10 +182,12 @@ setInterval(() => {
         ping.sys.probe(host, function (isAlive) {
             if (isAlive == true) {
                 nodeStatus.set(host, {
+                    timestamp: Date.now(),
                     status: true
                 })
             } else if (isAlive == false) {
                 nodeStatus.set(host, {
+                    timestamp: Date.now(),
                     status: false
                 });
             }
@@ -190,16 +199,20 @@ setInterval(() => {
     //Panel stuffs
     ping2.ping('157.230.202.210', 80) // Panel 1
         .then(() => nodeStatus.set("panelus", {
+            timestamp: Date.now(),
             status: true
         }))
         .catch((e) => nodeStatus.set("panelus", {
+            timestamp: Date.now(),
             status: false
         }));
     ping2.ping('208.68.39.241', 80) // Panel 1
         .then(() => nodeStatus.set("panelus1", {
+            timestamp: Date.now(),
             status: true
         }))
         .catch((e) => nodeStatus.set("panelus1", {
+            timestamp: Date.now(),
             status: false
         }));
     /*
@@ -214,35 +227,43 @@ setInterval(() => {
     //UK VM Storage 1
     ping2.ping('178.159.3.233', 22)
         .then(() => nodeStatus.set("ukvms1", {
+            timestamp: Date.now(),
             status: true
         }))
         .catch((e) => nodeStatus.set("ukvms1", {
+            timestamp: Date.now(),
             status: false
         }));
 
     //Backup Storage
     ping2.ping('176.31.125.135', 22)
         .then(() => nodeStatus.set("backups1", {
+            timestamp: Date.now(),
             status: true
         }))
         .catch((e) => nodeStatus.set("backups1", {
+            timestamp: Date.now(),
             status: false
         }));
 
     //Lavalink chercker
     ping2.ping('lava.danbot.host', 2333)
         .then(() => nodeStatus.set("lava.danbot.host", {
+            timestamp: Date.now(),
             status: true
         }))
         .catch((e) => nodeStatus.set("lava.danbot.host", {
+            timestamp: Date.now(),
             status: false
         }));
 
     ping2.ping('lava2.danbot.host', 2333)
         .then(() => nodeStatus.set("lava2.danbot.host", {
+            timestamp: Date.now(),
             status: true
         }))
         .catch((e) => nodeStatus.set("lava2.danbot.host", {
+            timestamp: Date.now(),
             status: false
         }));
 
