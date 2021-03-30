@@ -107,6 +107,43 @@ Router.post(
   }
 );
 
+Router.get(
+  "/callback",
+
+  async (req, res) => {
+      try {
+    let code = req.query.code;
+    if (!code) return res.json({ error: true, message: "no code" });
+
+    let redirect = req.query.redirect;
+    if(!redirect) return res.json({ error: true, message: "no redirect" });
+
+    let info = await oauth.tokenRequest({
+
+      redirectUri: redirect + "/callback",
+
+      code: code,
+      scope: "identify",
+      grantType: "authorization_code"
+    });
+
+    let data = {
+      user: null
+    };
+
+    await oauth.getUser(info.access_token).then(async userInfo => {
+
+        data.user = userInfo;
+
+        res.send(data);
+
+    });
+      } catch (e) {
+          return res.json({ error: true, message: e });
+      }
+  }
+);
+
 Router.get("*", async function(req, res) {
   res.status(404).send({
     error: true,
