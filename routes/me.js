@@ -13,6 +13,39 @@ Router.get("/", checkAuth, (req, res) => {
   });
 });
 
+Router.get("/servers", checkAuth, (req, res) => {
+  let bots = db.get(`${req.user.id}.bots`);
+
+  var arr = [];
+  axios({
+    url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(req.user.id).consoleID + "?include=servers",
+    method: 'GET',
+    followRedirect: true,
+    maxRedirects: 5,
+    headers: {
+      'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+      'Content-Type': 'application/json',
+      'Accept': 'Application/vnd.pterodactyl.v1+json',
+    }
+  }).then(response => {
+    const preoutput = response.data.attributes.relationships.servers.data
+    arr.push(...preoutput)
+    setTimeout(async () => {
+      console.log(arr)
+      setTimeout(() => {
+        //var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
+        res.render("me/servers.ejs", {
+          user: req.isAuthenticated() ? req.user : null,
+            table: e,
+          db
+        });
+        //console.log(output)
+      }, 500)
+    }, 5000)
+  });
+
+});
+
 Router.get("/form/new-server", checkAuth, (req, res) => {
   let bots = db.get(`${req.user.id}.bots`);
   res.render("forms/newserver.ejs", {
