@@ -253,23 +253,26 @@ setInterval(() => {
           dockercontainersrunning: response.data.info.dockercontainersrunning,
           dockercontainerspaused: response.data.info.dockercontainerspaused,
           dockercontainersstopped: response.data.info.dockercontainersstopped,
-          updatetime: response.data.info.updatetime
+          updatetime: response.data.info.updatetime,
+          timestamp: Date.now()
         });
         nodeData.set(response.data.speedtest.speedname + '-speedtest', {
           speedname: response.data.speedtest.speedname,
           ping: response.data.speedtest.ping,
           download: response.data.speedtest.download,
           upload: response.data.speedtest.upload,
-          updatetime: response.data.speedtest.updatetime
+          updatetime: response.data.speedtest.updatetime,
+          timestamp: Date.now()
         });
         nodeData.set(response.data.info.servername + '-docker', {
-          dockerAll: response.data.docker
+          dockerAll: response.data.docker,
+          timestamp: Date.now()
         })
       }).catch(err => {
 
     })
   }
-}, 2000)
+}, 2000);
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
