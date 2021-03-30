@@ -15,8 +15,8 @@ Router.get("/", (req, res) => {
 Router.get("/stats", (req, res) => {
   try {
     let data = {
-      Node1: nodeData.fetch('node1'),
-      Node2: nodeData.fetch('node2'),
+      Node1: nodeData.fetch('Node1'),
+      Node2: nodeData.fetch('Node2'),
       Node3: nodeData.fetch('Node3'),
       Node4: nodeData.fetch('Node4'),
       Node5: nodeData.fetch('Node5'),
