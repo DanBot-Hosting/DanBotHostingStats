@@ -102,6 +102,7 @@ Router.post(
 
     });
       } catch (e) {
+        console.log(e)
           return res.json({ error: true, message: e });
       }
   }
@@ -139,6 +140,7 @@ Router.get(
 
     });
       } catch (e) {
+        console.log(e)
           return res.json({ error: true, message: e });
       }
   }
