@@ -15,8 +15,6 @@ Router.get("/", checkAuth, (req, res) => {
 });
 
 Router.get("/servers", checkAuth, (req, res) => {
-  let bots = db.get(`${req.user.id}.bots`);
-
   var arr = [];
   axios({
     url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(req.user.id).consoleID + "?include=servers",
@@ -37,7 +35,7 @@ Router.get("/servers", checkAuth, (req, res) => {
         //var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
         res.render("me/servers.ejs", {
           user: req.isAuthenticated() ? req.user : null,
-            table: e,
+            table: arr,
           db
         });
         //console.log(output)
