@@ -277,12 +277,46 @@ list.storage = (serverName, userID) => ({
 
 Minecraft Servers
 
+Waterfall
 Paper
 Forge
 Bedrock
 PocketMineMP
 
 */
+list.waterfall = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 1,
+    "egg": 57,
+    "docker_image": "quay.io/pterodactyl/core:java-11\n",
+    "startup": 'java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}',
+    "limits": {
+        "memory": 2048,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+        "MINECRAFT_VERSION": "latest",
+        "SERVER_JARFILE": "waterfall.jar",
+        "DL_LINK": null,
+        "BUILD_NUMBER": "latest"
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": gaming,
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
 list.paper = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
@@ -780,6 +814,7 @@ list.mumble = (serverName, userID) => ({
 
 SteamCMD Servers
 
+Barotrauma
 Avorion
 Assetto Corsa
 Arma 3
@@ -787,6 +822,35 @@ Arma 3
 Rust
 
 */
+list.barotrauma = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 4,
+    "egg": 56,
+    "docker_image": "quay.io/parkervcp/pterodactyl-images:ubuntu_source",
+    "startup": './DedicatedServer -batchmode',
+    "limits": {
+        "memory": 2048,
+        "swap": 0,
+        "disk": 0,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": gaming,
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false,
+    "oom_disabled": false
+})
 list.avorion = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
