@@ -2,6 +2,7 @@
 const ms = require('ms')
 const Router = require("express").Router();
 const db = require("quick.db");
+const axios = require("axios");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
 Router.get("/", checkAuth, (req, res) => {
