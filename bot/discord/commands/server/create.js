@@ -66,6 +66,14 @@ exports.run = async (client, message, args) => {
         mongodb: data.mongodb,
         redis: data.redis,
         postgres: data.postgres,
+        daystodie: data.daystodie,
+        arma: data.arma,
+        assettocorsa: data.assettocorsa,
+        avorion: data.avorion,
+        barotrauma: data.barotrauma,
+        waterfall: data.waterfall,
+        spigot: data.spigot,
+        lavalink: data.lavalink
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
