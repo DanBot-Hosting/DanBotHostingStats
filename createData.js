@@ -1249,7 +1249,15 @@ let data = (serverName, userID) => {
         rust: null,
         mongodb: null,
         redis: null,
-        postgres: null
+        postgres: null,
+        daystodie: null,
+        arma: null,
+        assettocorsa: null,
+        avorion: null,
+        barotrauma: null,
+        waterfall: null,
+        spigot: null,
+        lavalink: null
     };
 
     for (let [name, filled] of Object.entries(list)) {
