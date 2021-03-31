@@ -21,6 +21,7 @@ exports.run = async (client, message, args) => {
         .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
         .addField(`__**WebHosting:**__`, "Nginx", true)
         //.addField(`__**Storage:**__`, "storage", true)
+        .addField(`⚠️`, "__**Some Nodes might be down, so you might be be able to make some servers**__", true)
         .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server")
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
