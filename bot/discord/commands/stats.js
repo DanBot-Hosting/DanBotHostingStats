@@ -127,7 +127,11 @@ exports.run = async (client, message) => {
             parseFloat(nodeData.fetch("Node7.dockercontainers")) + 
             parseFloat(nodeData.fetch("Node8.dockercontainers")) + 
             parseFloat(nodeData.fetch("Node9.dockercontainers")) + 
-            parseFloat(nodeData.fetch("Node10.dockercontainers")))} 
+            parseFloat(nodeData.fetch("Node10.dockercontainers")) +
+            parseFloat(nodeData.fetch("Node11.dockercontainers")) +
+            parseFloat(nodeData.fetch("Node12.dockercontainers")) +
+            parseFloat(nodeData.fetch("Node13.dockercontainers")) +
+            parseFloat(nodeData.fetch("Node14.dockercontainers")))} 
         \n**Running**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainersrunning")) + 
             parseFloat(nodeData.fetch("Node2.dockercontainersrunning")) + 
             parseFloat(nodeData.fetch("Node3.dockercontainersrunning")) + 
@@ -137,7 +141,11 @@ exports.run = async (client, message) => {
             parseFloat(nodeData.fetch("Node7.dockercontainersrunning")) + 
             parseFloat(nodeData.fetch("Node8.dockercontainersrunning")) + 
             parseFloat(nodeData.fetch("Node9.dockercontainersrunning")) + 
-            parseFloat(nodeData.fetch("Node10.dockercontainersrunning")))} 
+            parseFloat(nodeData.fetch("Node10.dockercontainersrunning")) +
+            parseFloat(nodeData.fetch("Node11.dockercontainersrunning")) +
+            parseFloat(nodeData.fetch("Node12.dockercontainersrunning")) +
+            parseFloat(nodeData.fetch("Node13.dockercontainersrunning")) +
+            parseFloat(nodeData.fetch("Node14.dockercontainersrunning")))} 
         \n**Stopped**: ${Math.floor(parseFloat(nodeData.fetch("Node1.dockercontainersstopped")) + 
             parseFloat(nodeData.fetch("Node2.dockercontainersstopped")) +
             parseFloat(nodeData.fetch("Node3.dockercontainersstopped")) + 
@@ -147,7 +155,11 @@ exports.run = async (client, message) => {
             parseFloat(nodeData.fetch("Node7.dockercontainersstopped")) + 
             parseFloat(nodeData.fetch("Node8.dockercontainersstopped")) + 
             parseFloat(nodeData.fetch("Node9.dockercontainersstopped")) + 
-            parseFloat(nodeData.fetch("Node10.dockercontainersstopped")))}`)
+            parseFloat(nodeData.fetch("Node10.dockercontainersstopped")) +
+            parseFloat(nodeData.fetch("Node11.dockercontainersstopped")) +
+            parseFloat(nodeData.fetch("Node12.dockercontainersstopped")) +
+            parseFloat(nodeData.fetch("Node13.dockercontainersstopped")) +
+            parseFloat(nodeData.fetch("Node14.dockercontainersstopped")))}`)
     embed.setDescription('Want to view more stats live? [Click Here!](https://danbot.host/stats)')
     msg.edit(embed);
 };
