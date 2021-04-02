@@ -6,10 +6,12 @@ exports.run = async (client, message) => {
 
     if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) {
         message.channel.send('Evaluating...').then(msg => {
+            const responses = ["SyntaxError: Unexpected token F in JSON at position 48", "SyntaxError: Unexpected identifier", 'UnhandledPromiseRejectionWarning: DiscordAPIError: Missing Permissions', "TypeError: Cannot read property 'messages' of undefined", "UnhandledPromiseRejectionWarning: MongoError: bad auth : Authentication failed.", `TypeError: Cannot read property '${args.join(' ')}' of undefined`]
+            var cockandballtorturefromwikipediathefreeencylopedia = Math.floor(Math.random * responses.length)
             let errorcodefake = new Discord.MessageEmbed()
                 .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                 .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
-                .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\nSyntaxError: Unexpected identifier \nat /root/DBH/Panel/bot/discord/commands/eval.js:35:31 \nat runMicrotasks (<anonymous>) \nat processTicksAndRejections (internal/process/task_queues.js:93:5)\`\`\``, true)
+                .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\n${cockandballtorturefromwikipediathefreeencylopedia} \nat /root/DBH/Panel/bot/discord/commands/eval.js:35:31 \nat runMicrotasks (<anonymous>) \nat processTicksAndRejections (internal/process/task_queues.js:93:5)\`\`\``, true)
                 .setColor(0xFF0000)
                 .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `);
             msg.edit({
