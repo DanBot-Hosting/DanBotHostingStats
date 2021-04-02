@@ -6,7 +6,7 @@ exports.run = async (client, message) => {
 
     if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) {
         message.channel.send('Evaluating...').then(msg => {
-            const responses = ["SyntaxError: Unexpected token F in JSON at position 48", "SyntaxError: Unexpected identifier", 'UnhandledPromiseRejectionWarning: DiscordAPIError: Missing Permissions', "TypeError: Cannot read property 'messages' of undefined", "UnhandledPromiseRejectionWarning: MongoError: bad auth : Authentication failed."]
+            const responses = ["SyntaxError: Unexpected token F in JSON at position 48", "SyntaxError: Unexpected identifier", 'UnhandledPromiseRejectionWarning: DiscordAPIError: Missing Permissions', "TypeError: Cannot read property 'messages' of undefined", "UnhandledPromiseRejectionWarning: MongoError: bad auth : Authentication failed.", `TypeError: Cannot read property '${args.join(' ')}' of undefined`]
             var cockandballtorturefromwikipediathefreeencylopedia = Math.floor(Math.random * responses.length)
             let errorcodefake = new Discord.MessageEmbed()
                 .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
