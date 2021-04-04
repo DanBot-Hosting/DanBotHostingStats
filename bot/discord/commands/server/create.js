@@ -106,6 +106,7 @@ exports.run = async (client, message, args) => {
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
                     message.reply(embed)
+                   console.log(error)
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
