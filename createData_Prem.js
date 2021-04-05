@@ -74,9 +74,9 @@ list.nodejs = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
     "nest": 5,
-    "egg": 16,
+    "egg": 50,
     "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_nodejs-12",
-    "startup": `if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then git pull; fi && /usr/local/bin/npm install --production --python=/usr/bin/python3 && /usr/local/bin/node /home/container/{{BOT_JS_FILE}}`,
+    "startup": `/usr/local/bin/npm i && /usr/local/bin/node /home/container/{{BOT_JS_FILE}}`,
     "limits": {
         "memory": 0,
         "swap": 0,
