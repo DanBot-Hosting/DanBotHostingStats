@@ -172,9 +172,24 @@ Router.get("/user/:ID", async (req, res) => {
       });
       
     }
-
-
-
+    
+    if (userData.get(ID) == null) {
+                const data = {
+                    error: "No account found for that user!"
+                }
+                res.json(data)
+            } else {
+                const data = {
+                    username: userData.get(ID).username,
+                    email: userData.get(ID).email,
+                    discordID: userData.get(ID).discordID,
+                    consoleID: userData.get(ID).consoleID,
+                    linkTime: userData.get(ID).linkTime,
+                    linkDate: userData.get(ID).linkDate
+                }
+                res.json(data)
+            }
+    
   } catch (e) {
     console.log(e);
     res.json({
