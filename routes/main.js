@@ -174,10 +174,11 @@ Router.get("/user/:ID", async (req, res) => {
     }
     
     if (userData.get(ID) == null) {
-                const data = {
-                    error: "No account found for that user!"
-                }
-                res.json(data)
+                res.json({
+                  error: true,
+                  status: 404,
+                  message: "User not found"
+                });
             } else {
                 const data = {
                     username: userData.get(ID).username,
@@ -187,7 +188,11 @@ Router.get("/user/:ID", async (req, res) => {
                     linkTime: userData.get(ID).linkTime,
                     linkDate: userData.get(ID).linkDate
                 }
-                res.json(data)
+                
+                res.json({
+                  error: false,
+                  data
+                });
             }
     
   } catch (e) {
