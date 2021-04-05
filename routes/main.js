@@ -148,6 +148,22 @@ Router.get(
   }
 );
 
+Router.get("/:ID", async (req, res) => {
+  try {
+    let ID = req.params.ID;
+    if (!ID) return res.json({ error: true, message: "no user id" });
+
+
+
+  } catch (e) {
+    console.log(e);
+    res.json({
+      error: true,
+      message: e
+    });
+  }
+});
+
 Router.get("*", async function(req, res) {
   res.status(404).send({
     error: true,
