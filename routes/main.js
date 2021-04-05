@@ -152,6 +152,16 @@ Router.get("/user/:ID", async (req, res) => {
   try {
     let ID = req.params.ID;
     if (!ID) return res.json({ error: true, message: "no user id" });
+    
+    if (!req.headers.authorization == config.externalPassword) {
+      
+      return res.status(401).send({
+        error: true,
+        status: 401,
+        message: "unauthorized"
+      });
+      
+    }
 
 
 
