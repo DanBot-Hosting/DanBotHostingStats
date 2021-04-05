@@ -148,7 +148,7 @@ Router.get(
   }
 );
 
-Router.get("/:ID", async (req, res) => {
+Router.get("/user/:ID", async (req, res) => {
   try {
     let ID = req.params.ID;
     if (!ID) return res.json({ error: true, message: "no user id" });
