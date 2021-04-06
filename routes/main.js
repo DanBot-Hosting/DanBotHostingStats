@@ -299,6 +299,12 @@ Router.post("/user/:ID/new", async (req, res) => {
                 domains: []
             })
 
+            res.json({
+                error: false,
+                user,
+                message: "OK"
+            });
+
         }).catch(err => {
             console.log(err)
             res.json({
