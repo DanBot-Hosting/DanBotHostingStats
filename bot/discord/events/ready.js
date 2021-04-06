@@ -46,6 +46,10 @@ module.exports = async (client) => {
         "text": "DanBot FM",
         "type": "LISTENING"
     }
+    {
+        "text": "With Dan",
+        "type": "PLAYING"
+    }
     ];
 
     //Initializing Cooldown
