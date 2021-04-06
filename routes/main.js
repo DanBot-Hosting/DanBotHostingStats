@@ -204,6 +204,43 @@ Router.get("/user/:ID", async (req, res) => {
   }
 });
 
+Router.post("/user/:ID/new", async (req, res) => {
+  try {
+    let ID = req.params.ID;
+    if (!ID) return res.json({ error: true, message: "no user id" });
+    
+    console.log(req.headers)
+    console.log(req.body)
+
+    if (!req.headers.authorization) {
+      
+      return res.status(401).send({
+        error: true,
+        status: 401,
+        message: "no authorization header"
+      });
+      
+    }
+    
+    if (!req.headers.authorization == config.externalPassword) {
+      
+      return res.status(401).send({
+        error: true,
+        status: 401,
+        message: "unauthorized"
+      });
+      
+    }
+    
+      } catch (e) {
+    console.log(e);
+    res.json({
+      error: true,
+      message: e
+    });
+  }
+});
+
 Router.get("*", async function(req, res) {
   res.status(404).send({
     error: true,
