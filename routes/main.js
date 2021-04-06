@@ -325,6 +325,27 @@ Router.post("/user/:ID/new", async (req, res) => {
 });
 
 Router.get("/user/:ID/servers", (req, res) => {
+
+    if (!req.headers.authorization) {
+
+        return res.status(401).send({
+            error: true,
+            status: 401,
+            message: "no authorization header"
+        });
+
+    }
+
+    if (!req.headers.authorization === config.externalPassword) {
+
+        return res.status(401).send({
+            error: true,
+            status: 401,
+            message: "unauthorized"
+        });
+
+    }
+
     var arr = [];
     try {
         let ID = req.params.ID;
