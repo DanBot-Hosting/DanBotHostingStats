@@ -11,7 +11,8 @@ exports.run = async (client, message, args) => {
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
-                };
+                }
+                ;
             }
         });
     } else {

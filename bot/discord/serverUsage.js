@@ -88,8 +88,7 @@ let getEmbed = async () => {
     monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     if (date.getHours() < 10) {
         hr = `0${date.getHours()}`;
-    }
-    else {
+    } else {
         hr = date.getHours();
     }
 

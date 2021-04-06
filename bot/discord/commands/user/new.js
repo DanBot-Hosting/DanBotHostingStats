@@ -126,7 +126,8 @@ exports.run = async (client, message, args) => {
                     channel.delete();
                 }, 5000);
                 return;
-            };
+            }
+            ;
         }
 
     }

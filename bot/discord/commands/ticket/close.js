@@ -15,9 +15,10 @@ exports.run = async (client, message, args) => {
                 }, 5000))
             } else if (m.content.toLowerCase() === "cancel") {
                 message.channel.send('Closing ticket. __**Canceled**__ Ticket staying open.');
-            }});
+            }
+        });
         collected1.on('end', collected => {
-            if(!collected) {
+            if (!collected) {
                 message.channel.send(`ERROR: User failed to provide an answer. Ticket staying open.`);
             }
         });

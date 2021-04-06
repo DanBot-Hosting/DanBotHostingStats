@@ -1,4 +1,4 @@
-    exports.run = async (client, message, args) => {
+exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
     var query = args.slice(1).join(" ").trim();
 

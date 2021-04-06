@@ -9,8 +9,10 @@
             <div class="col-md-12">
                 <div class="d-lg-none"></div>
                 <center>
-                    <img class="img-fluid d-block rounded-circle mx-auto" src="https://astrobot.org/user/<%- user.id %>/avatar" alt="" data-toggle="tooltip" data-placement="top" title="">
-                    <h2 style="font-size:25px;"><%- user.username%>#<%- user.discriminator %></h2>
+                    <img class="img-fluid d-block rounded-circle mx-auto"
+                         src="https://astrobot.org/user/<%- user.id %>/avatar" alt="" data-toggle="tooltip"
+                         data-placement="top" title="">
+                    <h2 style="font-size:25px;"><%- user.username %>#<%- user.discriminator %></h2>
                     <h5 style="font-size:20px;">Server List:</h5><br>
             </div>
         </div>
@@ -28,15 +30,19 @@
         </tr>
         </thead>
         <tbody>
-        <%table.forEach(function(entry) {%>
+        <% table.forEach(function(entry) { %>
             <tr>
                 <td> <%= entry.attributes.name %> </td>
                 <td> <%= entry.attributes.uuid.slice(0, -28) %> </td>
                 <td> <%= entry.attributes.container.environment.P_SERVER_LOCATION %> </td>
-                <td><a style="color:red;" href="https://panel.danbot.host/server/<%=entry.attributes.uuid.slice(0, -28)%>">Delete</a>, <a style="color:blue;" href="https://panel.danbot.host/server/<%=entry.attributes.uuid.slice(0, -28)%>/">View</a></td>
+                <td><a style="color:red;"
+                       href="https://panel.danbot.host/server/<%= entry.attributes.uuid.slice(0, -28) %>">Delete</a>, <a
+                            style="color:blue;"
+                            href="https://panel.danbot.host/server/<%= entry.attributes.uuid.slice(0, -28) %>/">View</a>
+                </td>
 
             </tr>
-        <%});%>
+        <% }); %>
         </tbody>
     </table>
 </div>

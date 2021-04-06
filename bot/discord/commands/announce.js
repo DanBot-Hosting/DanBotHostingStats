@@ -90,7 +90,7 @@ exports.run = async (client, message, args) => {
         if (embedData.et) embed.setTimestamp();
     }
 
-    if(embed == null && normalMessage == '') {
+    if (embed == null && normalMessage == '') {
         channel.send(args.join(" ").slice(args[0].length + 1))
         return;
     }

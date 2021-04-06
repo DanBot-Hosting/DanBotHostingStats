@@ -22,15 +22,15 @@ exports.run = async (client, message, args) => {
             password: config.SSH.Password
         });
 
-        conn.on('ready', function() {
-            conn.exec('rm /etc/apache2/sites-enabled/' + args[1] + '.conf && service apache2 restart && sleep 1 && echo "complete"', function(err, stream) {
+        conn.on('ready', function () {
+            conn.exec('rm /etc/apache2/sites-enabled/' + args[1] + '.conf && service apache2 restart && sleep 1 && echo "complete"', function (err, stream) {
                 if (err) throw err;
-                stream.on('close', function(code, signal) {
+                stream.on('close', function (code, signal) {
                     conn.end();
-                }).on('data', function(data) {
+                }).on('data', function (data) {
                     message.channel.send('Proxy has been removed from ' + args[1])
                     userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
-                }).stderr.on('data', function(data) {
+                }).stderr.on('data', function (data) {
                     message.channel.send('FAILED. **Try using `-force` to force unproxy after the server ID** \nERROR: ' + data)
                 });
             });
@@ -52,15 +52,15 @@ exports.run = async (client, message, args) => {
             password: config.SSH.Password
         });
 
-        conn.on('ready', function() {
-            conn.exec('rm /etc/apache2/sites-enabled/' + args[1] + '.conf && service apache2 restart && sleep 1 && echo "complete"', function(err, stream) {
+        conn.on('ready', function () {
+            conn.exec('rm /etc/apache2/sites-enabled/' + args[1] + '.conf && service apache2 restart && sleep 1 && echo "complete"', function (err, stream) {
                 if (err) throw err;
-                stream.on('close', function(code, signal) {
+                stream.on('close', function (code, signal) {
                     conn.end();
-                }).on('data', function(data) {
+                }).on('data', function (data) {
                     message.channel.send('Proxy has been removed from ' + args[1])
                     userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
-                }).stderr.on('data', function(data) {
+                }).stderr.on('data', function (data) {
                     userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
                     message.channel.send('Proxy has been removed from ' + args[1])
                 });

@@ -12,10 +12,12 @@
 <script src="https://use.fontawesome.com/bfddc8ce66.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous" async></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"
+        type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
 <script src="https://kit.fontawesome.com/75db8f9097.js" type="c1b4a7bcbe2fe96ca5f06fd4-text/javascript"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Dosis:200,400,700" rel="stylesheet">
 <%
 function tableSort(colNum, cmp) {
@@ -48,23 +50,28 @@ function sortByDescending() {
             <thead>
             <tr>
                 <th>Server ID</th>
-                <th><button onclick="sortByAscending()">CPU Usage</button></th>
+                <th>
+                    <button onclick="sortByAscending()">CPU Usage</button>
+                </th>
                 <th>RAM Usage</th>
                 <th>NET Usage</th>
                 <th>Extra</th>
             </tr>
             </thead>
             <tbody>
-            <%table.forEach(function(entry) {%>
+            <% table.forEach(function(entry) { %>
                 <tr>
                     <td> <%= entry.name.slice(0, -28) %> </td>
-                    <td> <%= entry.cpu_percent.toFixed(2) %>% </td>
+                    <td> <%= entry.cpu_percent.toFixed(2) %>%</td>
                     <td><%- pretty(entry.mem_usage) %> </td>
-                    <td>IN: <%- pretty(entry.netIO.rx)%>, OUT: <%- pretty(entry.netIO.tx) %></td>
-                    <td><a style="color:red;" href="https://panel.danbot.host/server/<%=entry.name.slice(0, -28)%>">View Server</a>, <a style="color:blue;" href="https://panel.danbot.host/server/<%=entry.name.slice(0, -28)%>/files">Server Files</a></td>
+                    <td>IN: <%- pretty(entry.netIO.rx) %>, OUT: <%- pretty(entry.netIO.tx) %></td>
+                    <td><a style="color:red;" href="https://panel.danbot.host/server/<%= entry.name.slice(0, -28) %>">View
+                            Server</a>, <a style="color:blue;"
+                                           href="https://panel.danbot.host/server/<%= entry.name.slice(0, -28) %>/files">Server
+                            Files</a></td>
 
                 </tr>
-            <%});%>
+            <% }); %>
             </tbody>
         </table>
     </div>

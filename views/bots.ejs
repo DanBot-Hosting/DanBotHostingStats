@@ -7,116 +7,146 @@
 
 <% if(!q) { %>
 
-<center>
-<br>
-<h5 class="sub">All of the bot that send stats.</h5>
-<button onclick=goto("/bots?q=sort_abc") class="dropbtn" style="background-color: ; border:none;cursor:pointer; outline: none;">ABC Order</button>
-<button onclick=goto("/bots?q=sort_largest") class="dropbtn" style="background-color: ; border:none;cursor:pointer; outline: none;">Greatest to Least Order</button>
+    <center>
+        <br>
+        <h5 class="sub">All of the bot that send stats.</h5>
+        <button onclick=goto("/bots?q=sort_abc") class="dropbtn"
+                style="background-color: ; border:none;cursor:pointer; outline: none;">ABC Order
+        </button>
+        <button onclick=goto("/bots?q=sort_largest") class="dropbtn"
+                style="background-color: ; border:none;cursor:pointer; outline: none;">Greatest to Least Order
+        </button>
 
-</center>
+    </center>
 
-<div class="padded-container">
-  <div class="row">
+    <div class="padded-container">
+        <div class="row">
 
-<% for(var i=0; i < bots.length; i++) { %>
+            <% for(var i = 0; i < bots.length; i++) { %>
 
-    <% let data = db.get(bots[i])
-    %>
+                <% let data = db.get(bots[i])
+                %>
 
-    <div class="col-lg-4 col-md-6 col-sm-12" style="">
-      <a class="no-color" href="/bot/<%- data.id %>">
-        <div class="card preview-card">
-          <div class="card-body">
-            <div class="head">
-              <img class="float-left lazy" src="https://cdn.discordapp.com/avatars/<%= data.id %>/<%= data.client.avatar %>" onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;" alt="Avatar" draggable="false">
-              <div class="content">
-                <h3 class="no-color" title="bot name"><%- data.client.username %> <% if(data.Status === "Verified") { %> <span>&#10003;</span><% } %> </h3>
-                <p class="description" style="color:black" title="biography">
-                </p>
-              </div>
-            </div>
-          </div>
+                <div class="col-lg-4 col-md-6 col-sm-12" style="">
+                    <a class="no-color" href="/bot/<%- data.id %>">
+                        <div class="card preview-card">
+                            <div class="card-body">
+                                <div class="head">
+                                    <img class="float-left lazy"
+                                         src="https://cdn.discordapp.com/avatars/<%= data.id %>/<%= data.client.avatar %>"
+                                         onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;"
+                                         alt="Avatar" draggable="false">
+                                    <div class="content">
+                                        <h3 class="no-color" title="bot name"><%- data.client.username %>
+                                            <% if(data.Status === "Verified") { %> <span>&#10003;</span>
+                                            <% } %>
+                                        </h3>
+                                        <p class="description" style="color:black" title="biography">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            <% } %>
         </div>
-      </a>
     </div>
-
-<% } %>
-  </div>
-</div>
 
 <% } else { %>
-<% if(q === "sort_abc") { %>
-<center>
-<br>
-<h5 class="sub">All of bots sorted alphabetically.</h5>
-<button onclick=goto("/bots") class="dropbtn" style="background-color: ; border:none;cursor:pointer; outline: none;">Normal Order</button>
-<button onclick=goto("/bots?q=sort_largest") class="dropbtn" style="background-color: ; border:none;cursor:pointer; outline: none;">Greatest to Least Order</button>
-</center>
+    <% if(q === "sort_abc") { %>
+        <center>
+            <br>
+            <h5 class="sub">All of bots sorted alphabetically.</h5>
+            <button onclick=goto("/bots") class="dropbtn"
+                    style="background-color: ; border:none;cursor:pointer; outline: none;">Normal Order
+            </button>
+            <button onclick=goto("/bots?q=sort_largest") class="dropbtn"
+                    style="background-color: ; border:none;cursor:pointer; outline: none;">Greatest to Least Order
+            </button>
+        </center>
 
-<div class="padded-container">
-  <div class="row">
+        <div class="padded-container">
+            <div class="row">
 
-<% for(var i=0; i < ar.length; i++) { %>
+                <% for(var i = 0; i < ar.length; i++) { %>
 
 
 
-    <div class="col-lg-4 col-md-6 col-sm-12" style="">
-      <a class="no-color" href="/bot/<%- ar[i].id %>">
-        <div class="card preview-card">
-          <div class="card-body">
-            <div class="head">
-              <img class="float-left lazy" src="https://cdn.discordapp.com/avatars/<%= ar[i].id %>/<%= ar[i].client.avatar %>" onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;" alt="Avatar" draggable="false">
-              <div class="content">
-                <h3 class="no-color" title="bot name"><%- ar[i].client.username %> <% if(ar[i].Status === "Verified") { %> <span>&#10003;</span><% } %> </h3>
-                <p class="description" style="color:black" title="biography">
-                </p>
-              </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12" style="">
+                        <a class="no-color" href="/bot/<%- ar[i].id %>">
+                            <div class="card preview-card">
+                                <div class="card-body">
+                                    <div class="head">
+                                        <img class="float-left lazy"
+                                             src="https://cdn.discordapp.com/avatars/<%= ar[i].id %>/<%= ar[i].client.avatar %>"
+                                             onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;"
+                                             alt="Avatar" draggable="false">
+                                        <div class="content">
+                                            <h3 class="no-color" title="bot name"><%- ar[i].client.username %>
+                                                <% if(ar[i].Status === "Verified") { %> <span>&#10003;</span>
+                                                <% } %>
+                                            </h3>
+                                            <p class="description" style="color:black" title="biography">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                <% } %>
             </div>
-          </div>
         </div>
-      </a>
-    </div>
-
-<% } %>
-  </div>
-</div>
 
     <% } %>
 
-<% if(q === "sort_largest") { %>
-<center>
-<br>
-<h5 class="sub">All of bots sorted alphabetically.</h5>
-<button onclick=goto("/bots") class="dropbtn" style="background-color: ; border:none;cursor:pointer; outline: none;">Normal Order</button>
-<button onclick=goto("/bots?q=sort_abc") class="dropbtn" style="background-color: ; border:none;cursor:pointer; outline: none;">ABC Order</button>
+    <% if(q === "sort_largest") { %>
+        <center>
+            <br>
+            <h5 class="sub">All of bots sorted alphabetically.</h5>
+            <button onclick=goto("/bots") class="dropbtn"
+                    style="background-color: ; border:none;cursor:pointer; outline: none;">Normal Order
+            </button>
+            <button onclick=goto("/bots?q=sort_abc") class="dropbtn"
+                    style="background-color: ; border:none;cursor:pointer; outline: none;">ABC Order
+            </button>
 
-</center>
+        </center>
 
-<div class="padded-container">
-  <div class="row">
+        <div class="padded-container">
+            <div class="row">
 
-<% for(var i=0; i < lar.length; i++) { %>
+                <% for(var i = 0; i < lar.length; i++) { %>
 
-    <div class="col-lg-4 col-md-6 col-sm-12" style="">
-      <a class="no-color" href="/bot/<%- lar[i].id %>">
-        <div class="card preview-card">
-          <div class="card-body">
-            <div class="head">
-              <img class="float-left lazy" src="https://cdn.discordapp.com/avatars/<%= lar[i].id %>/<%= lar[i].client.avatar %>" onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;" alt="Avatar" draggable="false">
-              <div class="content">
-                <h3 class="no-color" title="bot name"><%- lar[i].client.username %> <% if(lar[i].Status === "Verified") { %> <span>&#10003;</span><% } %> </h3>
-                <p class="description" style="color:black" title="biography">
-                </p>
-              </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12" style="">
+                        <a class="no-color" href="/bot/<%- lar[i].id %>">
+                            <div class="card preview-card">
+                                <div class="card-body">
+                                    <div class="head">
+                                        <img class="float-left lazy"
+                                             src="https://cdn.discordapp.com/avatars/<%= lar[i].id %>/<%= lar[i].client.avatar %>"
+                                             onerror="this.onerror = null; this.src = &quot;https://cdn.discordapp.com/embed/avatars/0.png?size=256&quot;;"
+                                             alt="Avatar" draggable="false">
+                                        <div class="content">
+                                            <h3 class="no-color" title="bot name"><%- lar[i].client.username %>
+                                                <% if(lar[i].Status === "Verified") { %> <span>&#10003;</span>
+                                                <% } %>
+                                            </h3>
+                                            <p class="description" style="color:black" title="biography">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                <% } %>
             </div>
-          </div>
         </div>
-      </a>
-    </div>
-
-<% } %>
-  </div>
-</div>
 
     <% } %>
 
@@ -124,26 +154,23 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
-document.onkeydown = function(e) {
+    document.onkeydown = function (e) {
         if (e.ctrlKey &&
             (e.keyCode === 67 ||
-             e.keyCode === 86 ||
-             e.keyCode === 85 ||
-             e.keyCode === 117)) {
+                e.keyCode === 86 ||
+                e.keyCode === 85 ||
+                e.keyCode === 117)) {
             return false;
         } else {
             return true;
         }
-};
-$(document).keypress("u",function(e) {
-  if(e.ctrlKey)
-  {
-return false;
-}
-else
-{
-return true;
-}
-});
+    };
+    $(document).keypress("u", function (e) {
+        if (e.ctrlKey) {
+            return false;
+        } else {
+            return true;
+        }
+    });
 </script>
 

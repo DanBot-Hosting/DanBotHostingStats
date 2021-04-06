@@ -8,9 +8,9 @@ Router.get("/", (req, res) => {
     let data = {
         dogtotal: dogfiles.length,
         cattotal: catfiles.length
-      };
-    
-      res.json(data);
+    };
+
+    res.json(data);
 });
 
 module.exports = Router;
