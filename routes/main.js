@@ -231,6 +231,45 @@ Router.post("/user/:ID/new", async (req, res) => {
       });
       
     }
+
+    if (!req.body) {
+      
+      return res.status(404).send({
+        error: true,
+        status: 404,
+        message: "no body"
+      });
+      
+    }
+
+if(!req.body.email) return res.status(404).send({
+        error: true,
+        status: 404,
+        message: "no body email"
+      }); 
+    
+if(!req.body.username) return res.status(404).send({
+        error: true,
+        status: 404,
+        message: "no body username"
+      });
+
+if(!req.body.password) return res.status(404).send({
+        error: true,
+        status: 404,
+        message: "no body password"
+      });
+
+    const data = {
+        "username": req.body.username,
+        "email": req.body.email,
+        "first_name": req.body.username,
+        "last_name": ".",
+        "password": req.body.password,
+        "root_admin": false,
+        "language": "en"
+    }
+    
     
       } catch (e) {
     console.log(e);
