@@ -59,7 +59,7 @@ exports.run = async (client, message, args) => {
 
 
                     const filter = (reaction, user) => (['🟢', '🔄', '🔴'].includes(reaction.emoji.name) && user.id === message.author.id);
-                    const collector = msg.createReactionCollector(filter, { time: 20000 });
+                    const collector = msg.createReactionCollector(filter, {time: 20000});
                     collector.on('collect', async (reaction, user) => {
                         if (reaction.emoji.name === "🟢") {
                             axios({
@@ -72,7 +72,7 @@ exports.run = async (client, message, args) => {
                                     'Content-Type': 'application/json',
                                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                                 },
-                                data: { "signal": "start" },
+                                data: {"signal": "start"},
                             }).then(response => {
                                 message.reply(args[1] + ' server started!').then((msg2) => {
                                     setTimeout(() => {
@@ -91,7 +91,7 @@ exports.run = async (client, message, args) => {
                                     'Content-Type': 'application/json',
                                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                                 },
-                                data: { "signal": "kill" },
+                                data: {"signal": "kill"},
                             }).then(response => {
                                 setTimeout(() => {
                                     axios({
@@ -104,7 +104,7 @@ exports.run = async (client, message, args) => {
                                             'Content-Type': 'application/json',
                                             'Accept': 'Application/vnd.pterodactyl.v1+json',
                                         },
-                                        data: { "signal": "start" },
+                                        data: {"signal": "start"},
                                     }).then(response => {
                                         message.reply(args[1] + ' server restarted!').then((msg2) => {
                                             setTimeout(() => {
@@ -125,7 +125,7 @@ exports.run = async (client, message, args) => {
                                     'Content-Type': 'application/json',
                                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                                 },
-                                data: { "signal": "kill" },
+                                data: {"signal": "kill"},
                             }).then(response => {
                                 message.reply(args[1] + ' server stopped!').then((msg2) => {
                                     setTimeout(() => {

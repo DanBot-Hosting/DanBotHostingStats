@@ -451,7 +451,6 @@ list.rust = (serverName, userID) => ({
 })
 
 
-
 let data = (serverName, userID) => {
     let toReturn = {
         paper: null,

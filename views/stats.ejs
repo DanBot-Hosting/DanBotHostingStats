@@ -7,7 +7,7 @@
 <script async src="https://arc.io/widget.min.js#hKjxfFbG"></script>
 <main>
     <center>
-        <a href="https://danbot.host/stats/all" class="mbtn" >All Stats</a>
+        <a href="https://danbot.host/stats/all" class="mbtn">All Stats</a>
     </center>
     <div class="container bg-light text-dark">
         <table class="table table-striped">
@@ -21,16 +21,16 @@
             </tr>
             </thead>
             <tbody>
-            <%table.forEach(function(entry) {%>
+            <% table.forEach(function(entry) { %>
                 <tr>
                     <td> <%= entry.servername %> </td>
-                    <td> <%= entry.cpuload %>% </td>
-                    <td> <%- entry.memused  %> / <%- entry.memtotal  %></td>
-                    <td> <%- entry.diskused  %> / <%- entry.disktotal  %></td>
+                    <td> <%= entry.cpuload %>%</td>
+                    <td> <%- entry.memused %> / <%- entry.memtotal %></td>
+                    <td> <%- entry.diskused %> / <%- entry.disktotal %></td>
                     <td>IN: <%- entry.netrx %>, OUT: <%- entry.nettx %></td>
 
                 </tr>
-            <%});%>
+            <% }); %>
             </tbody>
         </table>
     </div>
@@ -38,27 +38,24 @@
 </main>
 
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
-document.onkeydown = function(e) {
+    document.onkeydown = function (e) {
         if (e.ctrlKey &&
             (e.keyCode === 67 ||
-             e.keyCode === 86 ||
-             e.keyCode === 85 ||
-             e.keyCode === 117)) {
+                e.keyCode === 86 ||
+                e.keyCode === 85 ||
+                e.keyCode === 117)) {
             return false;
         } else {
             return true;
         }
-};
-$(document).keypress("u",function(e) {
-  if(e.ctrlKey)
-  {
-return false;
-}
-else
-{
-return true;
-}
-});
+    };
+    $(document).keypress("u", function (e) {
+        if (e.ctrlKey) {
+            return false;
+        } else {
+            return true;
+        }
+    });
 </script>

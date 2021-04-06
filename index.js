@@ -37,16 +37,16 @@ const nodemailer = require('nodemailer');
 const axios = require('axios');
 global.pretty = require('prettysize');
 global.transport = nodemailer.createTransport({
-  host: config.Email.Host,
-  port: config.Email.Port,
-  auth: {
-    user: config.Email.User,
-    pass: config.Email.Password
-  }
+    host: config.Email.Host,
+    port: config.Email.Port,
+    auth: {
+        user: config.Email.User,
+        pass: config.Email.Password
+    }
 });
 
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
-const { getBot } = require(process.cwd() + "/util/discordAPI");
+const {getBot} = require(process.cwd() + "/util/discordAPI");
 
 // Initialising Node Checker
 require('./nodestatsChecker');
@@ -68,10 +68,10 @@ global.nodeStatus = new db.table("nodeStatus");   //Node status. Online or offli
 global.userPrem = new db.table("userPrem");       //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.client = new Discord.Client({
-  restTimeOffset: 0,
-  disableMentions: 'everyone',
-  restWsBridgetimeout: 100,
-  partials: ['MESSAGE', 'CHANNEL', 'REACTION']
+    restTimeOffset: 0,
+    disableMentions: 'everyone',
+    restWsBridgetimeout: 100,
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 global.bot = client;
 global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
@@ -79,12 +79,12 @@ require('./bot/discord/commands/mute').init(client)
 
 //Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
-  files = files.filter(f => f.endsWith('.js'));
-  files.forEach(f => {
-    const event = require(`./bot/discord/events/${f}`);
-    client.on(f.split('.')[0], event.bind(null, client));
-    delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
-  });
+    files = files.filter(f => f.endsWith('.js'));
+    files.forEach(f => {
+        const event = require(`./bot/discord/events/${f}`);
+        client.on(f.split('.')[0], event.bind(null, client));
+        delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
+    });
 });
 
 //Bot login
@@ -99,17 +99,17 @@ global.queue = new Map();
 
 //Animal API website
 animalapp.use(helmet({
-  frameguard: false
+    frameguard: false
 }));
 animalapp.use(cookieParser());
 
 animalapp.use(bodyParser.json());
 animalapp.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 
 animalserver.listen(APIPORT, function () {
-  console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green("Listening on port " + APIPORT));
+    console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green("Listening on port " + APIPORT));
 });
 
 //View engine setup
@@ -117,23 +117,23 @@ apihbs.registerPartials(__dirname + '/animalAPI/views/partials')
 animalapp.set('view engine', 'hbs');
 
 animalapp.use((req, res, next) => {
-    
+
     res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods",  "DELETE, POST, GET, OPTIONS");
-  
-  res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
 
-  console.log('[api.danbot.host] ' +
-    (req.headers["cf-connecting-ip"] ||
-      req.headers["x-forwarded-for"] ||
-      req.ip) +
-    "[" +
-    req.method +
-    "] " +
-    req.url
-  );
+    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-  next();
+    console.log('[api.danbot.host] ' +
+        (req.headers["cf-connecting-ip"] ||
+            req.headers["x-forwarded-for"] ||
+            req.ip) +
+        "[" +
+        req.method +
+        "] " +
+        req.url
+    );
+
+    next();
 });
 
 // home page & beta site api
@@ -159,119 +159,119 @@ const strategy = require("passport-discord").Strategy;
 const MongoStore = require("connect-mongo")(session);
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+    done(null, user);
 });
 passport.deserializeUser((obj, done) => {
-  done(null, obj);
+    done(null, obj);
 });
 
 passport.use(
-  new strategy({
-      clientID: config.DiscordBot.clientID,
-      clientSecret: config.DiscordBot.clientSecret,
-      callbackURL: config.DiscordBot.callbackURL,
-      scope: ["identify"]
-    },
-    (accessToken, refreshToken, profile, done) => {
-      process.nextTick(() => {
-        return done(null, profile);
-      });
-    }
-  )
+    new strategy({
+            clientID: config.DiscordBot.clientID,
+            clientSecret: config.DiscordBot.clientSecret,
+            callbackURL: config.DiscordBot.callbackURL,
+            scope: ["identify"]
+        },
+        (accessToken, refreshToken, profile, done) => {
+            process.nextTick(() => {
+                return done(null, profile);
+            });
+        }
+    )
 );
 
 app.use(
-  session({
-    store: new MongoStore({
-      url: config.DB.MongoDB
-    }),
-    secret: "FROPT",
-    resave: false,
-    saveUninitialized: false
-  })
+    session({
+        store: new MongoStore({
+            url: config.DB.MongoDB
+        }),
+        secret: "FROPT",
+        resave: false,
+        saveUninitialized: false
+    })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet({
-  frameguard: false
+    frameguard: false
 }));
 app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 
 server.listen(PORT, function () {
-  console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
+    console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
 });
 
 //Fetch node data
 global.nodeData = new db.table("nodeData")
 setInterval(() => {
-  for (i = 1; i < 15; i++) {
-    axios({
-      url: "http://n" + i + ".danbot.host:999/stats",
-      method: 'GET',
-      followRedirect: true,
-      maxRedirects: 5,
-      headers: {
-        "password": config.externalPassword
-      },
-      }).then(response => {
-        nodeData.set(response.data.info.servername, {
-          servername: response.data.info.servername,
-          cpu: response.data.info.cpu,
-          cpuload: response.data.info.cpuload,
-          cputhreads: response.data.info.cputhreads,
-          cpucores: response.data.info.cpucores,
-          memused: response.data.info.memused,
-          memtotal: response.data.info.memtotal,
-          memusedraw: response.data.info.memusedraw,
-          memtotalraw: response.data.info.memtotalraw,
-          swapused: response.data.info.swapused,
-          swaptotal: response.data.info.swaptotal,
-          swapusedraw: response.data.info.swapusedraw,
-          swaptotalraw: response.data.info.swaptotalraw,
-          diskused: response.data.info.diskused,
-          disktotal: response.data.info.disktotal,
-          diskusedraw: response.data.info.diskusedraw,
-          disktotalraw: response.data.info.disktotalraw,
-          netrx: response.data.info.netrx,
-          nettx: response.data.info.nettx,
-          osplatform: response.data.info.osplatform,
-          oslogofile: response.data.info.oslogofile,
-          osrelease: response.data.info.osrelease,
-          osuptime: response.data.info.osuptime,
-          biosvendor: response.data.info.biosvendor,
-          biosversion: response.data.info.biosversion,
-          biosdate: response.data.info.biosdate,
-          servermonitorversion: response.data.info.servermonitorversion,
-          datatime: response.data.info.datatime,
-          dockercontainers: response.data.info.dockercontainers,
-          dockercontainersrunning: response.data.info.dockercontainersrunning,
-          dockercontainerspaused: response.data.info.dockercontainerspaused,
-          dockercontainersstopped: response.data.info.dockercontainersstopped,
-          updatetime: response.data.info.updatetime,
-          timestamp: Date.now()
-        });
-        nodeData.set(response.data.speedtest.speedname + '-speedtest', {
-          speedname: response.data.speedtest.speedname,
-          ping: response.data.speedtest.ping,
-          download: response.data.speedtest.download,
-          upload: response.data.speedtest.upload,
-          updatetime: response.data.speedtest.updatetime,
-          timestamp: Date.now()
-        });
-        nodeData.set(response.data.info.servername + '-docker', {
-          dockerAll: response.data.docker,
-          timestamp: Date.now()
-        })
-      }).catch(err => {
+    for (i = 1; i < 15; i++) {
+        axios({
+            url: "http://n" + i + ".danbot.host:999/stats",
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                "password": config.externalPassword
+            },
+        }).then(response => {
+            nodeData.set(response.data.info.servername, {
+                servername: response.data.info.servername,
+                cpu: response.data.info.cpu,
+                cpuload: response.data.info.cpuload,
+                cputhreads: response.data.info.cputhreads,
+                cpucores: response.data.info.cpucores,
+                memused: response.data.info.memused,
+                memtotal: response.data.info.memtotal,
+                memusedraw: response.data.info.memusedraw,
+                memtotalraw: response.data.info.memtotalraw,
+                swapused: response.data.info.swapused,
+                swaptotal: response.data.info.swaptotal,
+                swapusedraw: response.data.info.swapusedraw,
+                swaptotalraw: response.data.info.swaptotalraw,
+                diskused: response.data.info.diskused,
+                disktotal: response.data.info.disktotal,
+                diskusedraw: response.data.info.diskusedraw,
+                disktotalraw: response.data.info.disktotalraw,
+                netrx: response.data.info.netrx,
+                nettx: response.data.info.nettx,
+                osplatform: response.data.info.osplatform,
+                oslogofile: response.data.info.oslogofile,
+                osrelease: response.data.info.osrelease,
+                osuptime: response.data.info.osuptime,
+                biosvendor: response.data.info.biosvendor,
+                biosversion: response.data.info.biosversion,
+                biosdate: response.data.info.biosdate,
+                servermonitorversion: response.data.info.servermonitorversion,
+                datatime: response.data.info.datatime,
+                dockercontainers: response.data.info.dockercontainers,
+                dockercontainersrunning: response.data.info.dockercontainersrunning,
+                dockercontainerspaused: response.data.info.dockercontainerspaused,
+                dockercontainersstopped: response.data.info.dockercontainersstopped,
+                updatetime: response.data.info.updatetime,
+                timestamp: Date.now()
+            });
+            nodeData.set(response.data.speedtest.speedname + '-speedtest', {
+                speedname: response.data.speedtest.speedname,
+                ping: response.data.speedtest.ping,
+                download: response.data.speedtest.download,
+                upload: response.data.speedtest.upload,
+                updatetime: response.data.speedtest.updatetime,
+                timestamp: Date.now()
+            });
+            nodeData.set(response.data.info.servername + '-docker', {
+                dockerAll: response.data.docker,
+                timestamp: Date.now()
+            })
+        }).catch(err => {
 
-    })
-  }
+        })
+    }
 }, 2000);
 
 //View engine setup
@@ -279,20 +279,20 @@ hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine', 'hbs');
 
 app.use((req, res, next) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "GET, POST");
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "GET, POST");
 
-  console.log('[danbot.host] ' +
-    (req.headers["cf-connecting-ip"] ||
-      req.headers["x-forwarded-for"] ||
-      req.ip) +
-    "[" +
-    req.method +
-    "] " +
-    req.url
-  );
+    console.log('[danbot.host] ' +
+        (req.headers["cf-connecting-ip"] ||
+            req.headers["x-forwarded-for"] ||
+            req.ip) +
+        "[" +
+        req.method +
+        "] " +
+        req.url
+    );
 
-  next();
+    next();
 });
 
 //Routes
@@ -318,117 +318,117 @@ app.use("/admin", adminRoute);
 app.use("/external", externalRoute);
 
 app.get('/.htaccess', (req, res) => {
-  res.sendFile('./.htaccess', { root: __dirname })
+    res.sendFile('./.htaccess', {root: __dirname})
 })
 
 app.get('/arc-sw.js', (req, res) => {
-  res.sendFile('./util//arc-sw.js', { root: __dirname });
+    res.sendFile('./util//arc-sw.js', {root: __dirname});
 });
 
 app.get("/user/:ID", async (req, res) => {
-  let user = req.params.ID;
-  let memberr = "No"
+    let user = req.params.ID;
+    let memberr = "No"
 
-  if (!isSnowflake(user)) {
-    return res.render("error.ejs", {
-      user: req.isAuthenticated() ? req.user : null,
-      message: "Make sure ID is a valid ID"
-    });
-  }
+    if (!isSnowflake(user)) {
+        return res.render("error.ejs", {
+            user: req.isAuthenticated() ? req.user : null,
+            message: "Make sure ID is a valid ID"
+        });
+    }
 
-  let [use] = await getBot(user)
+    let [use] = await getBot(user)
 
-  if (use.user_id && use.user_id[0].endsWith("is not snowflake."))
-    return res.render("error.ejs", {
-      user: req.isAuthenticated() ? req.user : null,
-      message: "ID is invalid"
-    });
+    if (use.user_id && use.user_id[0].endsWith("is not snowflake."))
+        return res.render("error.ejs", {
+            user: req.isAuthenticated() ? req.user : null,
+            message: "ID is invalid"
+        });
 
-  if (use.message === "Unknown User")
-    return res.render("error.ejs", {
-      user: req.isAuthenticated() ? req.user : null,
-      message: "Discord API - Unknown User"
-    });
+    if (use.message === "Unknown User")
+        return res.render("error.ejs", {
+            user: req.isAuthenticated() ? req.user : null,
+            message: "Discord API - Unknown User"
+        });
 
-  if (use.bot === true) return res.redirect("/bot/" + user);
+    if (use.bot === true) return res.redirect("/bot/" + user);
 
-  try {
-    bot.users.fetch(user).then(User => {
-      if (User.bot) {
-        return res.redirect("/bot/" + User.id);
-      }
+    try {
+        bot.users.fetch(user).then(User => {
+            if (User.bot) {
+                return res.redirect("/bot/" + User.id);
+            }
 
-      var member = bot.guilds.cache.get("639477525927690240").members.cache.get(User.id);
-      if (!member) {
-        (pColor = "grey"), (presence = "offline");
-      }
-      let guild = bot.guilds.cache.get("639477525927690240");
-      if (guild.member(User.id)) {
-        memberr = "yes";
-      }
-      if (member) {
-        presence = member.presence.status;
+            var member = bot.guilds.cache.get("639477525927690240").members.cache.get(User.id);
+            if (!member) {
+                (pColor = "grey"), (presence = "offline");
+            }
+            let guild = bot.guilds.cache.get("639477525927690240");
+            if (guild.member(User.id)) {
+                memberr = "yes";
+            }
+            if (member) {
+                presence = member.presence.status;
 
-        if (presence) {
-          if (presence === "offline") {
-            presence = "Offline";
-            pColor = "grey";
-          } else if (presence === "online") {
-            presence = "Online";
-            pColor = "#43B581";
-          } else if (presence === "dnd") {
-            presence = "DND";
-            pColor = "#F04747";
-          } else if (presence === "streaming") {
-            presence = "Streaming";
-            pColor = "purple";
-          } else if (presence === "idle") {
-            presence = "Idle";
-            pColor = "#FAA61A";
-          } else {
-            (pColor = "grey"), (presence = "Not Available");
-          }
-        }
-      }
+                if (presence) {
+                    if (presence === "offline") {
+                        presence = "Offline";
+                        pColor = "grey";
+                    } else if (presence === "online") {
+                        presence = "Online";
+                        pColor = "#43B581";
+                    } else if (presence === "dnd") {
+                        presence = "DND";
+                        pColor = "#F04747";
+                    } else if (presence === "streaming") {
+                        presence = "Streaming";
+                        pColor = "purple";
+                    } else if (presence === "idle") {
+                        presence = "Idle";
+                        pColor = "#FAA61A";
+                    } else {
+                        (pColor = "grey"), (presence = "Not Available");
+                    }
+                }
+            }
 
-      let avatar = member.user.avatarURL();
+            let avatar = member.user.avatarURL();
 
-      let bots = db.get(`${User.id}.bots`);
-      if (!bots) bots = null;
+            let bots = db.get(`${User.id}.bots`);
+            if (!bots) bots = null;
 
-      // console.log(avatar);
-      // console.log(bots);
+            // console.log(avatar);
+            // console.log(bots);
 
-      res.render("me/user.ejs", {
-        user: req.isAuthenticated() ? req.user : null,
-        User,
-        avatar,
-        //  Data,
-        pColor,
-        presence,
-        //    info,
-        memberr,
-        use,
-        bots,
-        db,
-        //  Discord,
-        //    pageType: { user: true }
-      });
-    });
-  } catch (e) {
-    return res.render("error.ejs", {
-      user: req.isAuthenticated() ? req.user : null,
-      message: e
-    });
-  }
+            res.render("me/user.ejs", {
+                user: req.isAuthenticated() ? req.user : null,
+                User,
+                avatar,
+                //  Data,
+                pColor,
+                presence,
+                //    info,
+                memberr,
+                use,
+                bots,
+                db,
+                //  Discord,
+                //    pageType: { user: true }
+            });
+        });
+    } catch (e) {
+        return res.render("error.ejs", {
+            user: req.isAuthenticated() ? req.user : null,
+            message: e
+        });
+    }
 
 });
 
 
 //Catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  res.status(404).render("error.ejs", {
-    message: "Page Not Found",
-    user: req.isAuthenticated() ? req.user : null
-  });
+    res.status(404).render("error.ejs", {
+        message: "Page Not Found",
+        user: req.isAuthenticated() ? req.user : null
+    });
 });

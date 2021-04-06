@@ -4,8 +4,8 @@ const humanizeDuration = require('humanize-duration');
 const axios = require('axios');
 
 exports.run = async (client, message, args) => {
-    
-    
+
+
     if (client.cooldown[message.author.id] == null) {
         client.cooldown[message.author.id] = {
             nCreate: null,

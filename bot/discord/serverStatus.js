@@ -92,13 +92,13 @@ let nstatus = {
 let parse = async () => {
     let toRetun = {};
 
-    for (let [title, data] of Object.entries(nstatus)) { 
+    for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
 
             let da = nodeStatus.get(d.data.toLowerCase());
             let nodeData = nodeServers.get(d.data.toLowerCase());
-            let serverUsage = d.data.toLowerCase().includes('node')? `(${(nodeData == null || nodeData.servers == null)? 'N/A' : nodeData.servers} / 600)` : ''
+            let serverUsage = d.data.toLowerCase().includes('node') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 600)` : ''
 
             da = (da.status === true ? (`🟢 Online ${serverUsage}`) : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **VM**") + ` Outage ${serverUsage}`))))
 
@@ -128,8 +128,7 @@ let getEmbed = async () => {
     monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     if (date.getHours() < 10) {
         hr = `0${date.getHours()}`;
-    }
-    else {
+    } else {
         hr = date.getHours();
     }
 

@@ -9,7 +9,7 @@ module.exports = async (client) => {
 
     let guild = client.guilds.cache.get("639477525927690240");
 
-    global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
+    global.browser = await puppeteer.launch({args: ["--no-sandbox"/*openvz*/]});
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     // let getUsers = async () => {
@@ -42,10 +42,10 @@ module.exports = async (client) => {
         "text": "over DanBot Hosting",
         "type": "WATCHING"
     },
-    {
-        "text": "DanBot FM",
-        "type": "LISTENING"
-    }
+        {
+            "text": "DanBot FM",
+            "type": "LISTENING"
+        }
     ];
 
     //Initializing Cooldown
@@ -64,7 +64,8 @@ module.exports = async (client) => {
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
-                };
+                }
+                ;
             }
         })
     }, 30000)

@@ -4,13 +4,13 @@ exports.run = async (message, args) => {
     const serverQueue = queue.get(message.guild.id);
 
     const voiceChannel = message.member.voiceChannel;
-    if (!voiceChannel) return message.channel.send({ embed: { description: 'I\'m sorry but you need to be in a voice channel!'}});
+    if (!voiceChannel) return message.channel.send({embed: {description: 'I\'m sorry but you need to be in a voice channel!'}});
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has('CONNECT')) {
-        return message.channel.send({ embed: { description: 'I cannot connect to your voice channel'}});
+        return message.channel.send({embed: {description: 'I cannot connect to your voice channel'}});
     }
     if (!permissions.has('SPEAK')) {
-        return message.channel.send({ embed: { description: 'I cannot speak in this voice channel'}});
+        return message.channel.send({embed: {description: 'I cannot speak in this voice channel'}});
     }
     if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
         const playlist = await youtube.getPlaylist(url);
@@ -19,7 +19,7 @@ exports.run = async (message, args) => {
             const video2 = await youtube.getVideoByID(video.id);
             await handleVideo(video2, message, voiceChannel, true);
         }
-        return message.channel.send({ embed: { description: `✅ Playlist: **${playlist.title}** has been added to queue!`}});
+        return message.channel.send({embed: {description: `✅ Playlist: **${playlist.title}** has been added to queue!`}});
     } else {
         try {
             var video = await youtube.getVideo(url);
@@ -34,7 +34,7 @@ exports.run = async (message, args) => {
                     .setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
                     .setFooter('Please provide a value to select one of the search results ranging from 1-10')
 
-                let messagetoDelete = await message.channel.send({ embed: selectembed})
+                let messagetoDelete = await message.channel.send({embed: selectembed})
 
                 try {
                     var response = await message.channel.awaitMessages(message2 => message2.content > 0 && message2.content < 11, {
