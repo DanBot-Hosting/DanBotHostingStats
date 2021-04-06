@@ -119,9 +119,9 @@ animalapp.set('view engine', 'hbs');
 animalapp.use((req, res, next) => {
     
     res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.set("Access-Control-Allow-Methods",  "DELETE, POST, GET, OPTIONS");
   
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
   console.log('[api.danbot.host] ' +
     (req.headers["cf-connecting-ip"] ||
