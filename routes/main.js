@@ -350,7 +350,7 @@ Router.get("/user/:ID/servers", (req, res) => {
 
                     res.json({
                         error: false,
-                        arr,
+                        data: arr,
                         message: "OK"
                     });
 
