@@ -192,7 +192,8 @@ Router.get("/user/:ID", async (req, res) => {
 
             res.json({
                 error: false,
-                data
+                data,
+                message: "OK"
             });
         }
 
@@ -314,6 +315,69 @@ Router.post("/user/:ID/new", async (req, res) => {
         })
 
 
+    } catch (e) {
+        console.log(e);
+        res.json({
+            error: true,
+            message: e
+        });
+    }
+});
+
+Router.get("/user/:ID/servers", (req, res) => {
+
+    if (!req.headers.authorization) {
+
+        return res.status(401).send({
+            error: true,
+            status: 401,
+            message: "no authorization header"
+        });
+
+    }
+
+    if (!req.headers.authorization === config.externalPassword) {
+
+        return res.status(401).send({
+            error: true,
+            status: 401,
+            message: "unauthorized"
+        });
+
+    }
+
+    var arr = [];
+    try {
+        let ID = req.params.ID;
+        if (!ID) return res.json({error: true, message: "no user id"});
+        axios({
+            url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(ID).consoleID + "?include=servers",
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                'Content-Type': 'application/json',
+                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            }
+        }).then(response => {
+            const preoutput = response.data.attributes.relationships.servers.data
+            arr.push(...preoutput)
+            setTimeout(async () => {
+                console.log(arr)
+                setTimeout(() => {
+                    var clean = arr.map(e => e.attributes.container)
+                    console.log(clean)
+
+                    res.json({
+                        error: false,
+                        data: arr,
+                        message: "OK"
+                    });
+
+                }, 500)
+            }, 5000)
+        });
     } catch (e) {
         console.log(e);
         res.json({
