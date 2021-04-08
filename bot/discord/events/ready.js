@@ -43,10 +43,6 @@ module.exports = async (client) => {
         "type": "WATCHING"
     },
     {
-        "text": "DanBot FM",
-        "type": "LISTENING"
-    }
-    {
         "text": "With Dan",
         "type": "PLAYING"
     }
