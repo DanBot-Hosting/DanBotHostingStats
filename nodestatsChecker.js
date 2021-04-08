@@ -30,7 +30,7 @@ let stats = {
     },
     node6: {
         serverID: '8565f2e0',
-        IP: '51.195.253.240',
+        IP: '5.196.100.232',
         ID: '13'
     },
     node7: {
@@ -45,7 +45,7 @@ let stats = {
     },
     node9: {
         serverID: 'a0493565',
-        IP: '51.195.229.148',
+        IP: '5.196.100.233',
         ID: '18'
     },
     node10: {
@@ -124,8 +124,9 @@ setInterval(() => {
             }
         }).then(response => {
             const servercount = response.data.attributes.relationships.servers.data;
-            nodeServers.set(node, { servers: servercount.length })
-        }).catch(err => { })
+            nodeServers.set(node, {servers: servercount.length})
+        }).catch(err => {
+        })
     }
 
     //Server limit

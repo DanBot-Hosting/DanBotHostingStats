@@ -4,8 +4,8 @@ const humanizeDuration = require('humanize-duration');
 const axios = require('axios');
 
 exports.run = async (client, message, args) => {
-    
-    
+
+
     if (client.cooldown[message.author.id] == null) {
         client.cooldown[message.author.id] = {
             nCreate: null,
@@ -59,6 +59,7 @@ exports.run = async (client, message, args) => {
                 .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
                 .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio \nreddiscordbot", true)
                 .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+                .addField(`__**Misc:**__`, "lavalink", true)
                 .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
             return;
         }
@@ -80,6 +81,7 @@ exports.run = async (client, message, args) => {
             mongodb: pServerCreatesettings.mongodb,
             redis: pServerCreatesettings.redis,
             postgres: pServerCreatesettings.postgres,
+            lavalink: pServerCreatesettings.lavalink,
         }
 
         if (Object.keys(types).includes(args[1].toLowerCase())) {

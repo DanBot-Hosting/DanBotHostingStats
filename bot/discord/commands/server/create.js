@@ -77,11 +77,11 @@ exports.run = async (client, message, args) => {
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
-/*
-        if (client.cooldown[message.author.id].nCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
-            return;
-        }*/
+        /*
+                if (client.cooldown[message.author.id].nCreate > Date.now()) {
+                    message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
+                    return;
+                }*/
         //client.cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
 
         if (args[1] === "aio" | args[1] === "java") {
@@ -106,7 +106,7 @@ exports.run = async (client, message, args) => {
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
                     message.reply(embed)
-                   console.log(error)
+                    console.log(error)
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
@@ -125,22 +125,22 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Type:**__`, args[1].toLowerCase())
                     message.reply(embed)
                 }).catch(error => {
-                    if (error == "Error: Request failed with status code 400") {
-                        const embed = new Discord.MessageEmbed()
-                            .setColor('RED')
-                            .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan or Solo)`)
-                        message.reply(embed)
-                    } else if (error == "Error: Request failed with status code 504") {
-                        const embed = new Discord.MessageEmbed()
-                            .setColor('RED')
-                            .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
-                        message.reply(embed)
-                    } else {
-                        const embed = new Discord.MessageEmbed()
-                            .setColor('RED')
-                            .addField(`__**Failed to create a new server**__`, error)
-                        message.reply(embed)
-                    }
+                if (error == "Error: Request failed with status code 400") {
+                    const embed = new Discord.MessageEmbed()
+                        .setColor('RED')
+                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan or Solo)`)
+                    message.reply(embed)
+                } else if (error == "Error: Request failed with status code 504") {
+                    const embed = new Discord.MessageEmbed()
+                        .setColor('RED')
+                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
+                    message.reply(embed)
+                } else {
+                    const embed = new Discord.MessageEmbed()
+                        .setColor('RED')
+                        .addField(`__**Failed to create a new server**__`, error)
+                    message.reply(embed)
+                }
                 //client.cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
             })
         }

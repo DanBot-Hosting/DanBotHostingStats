@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const gaming = [14]          // Gaming nodes
-const botswebdb = [11, 15, 16, 17, 20]       // Bots, Websites and Databases nodes
+const botswebdb = [11]       // Bots, Websites and Databases nodes
 const storage = [13]         // Storage nodes
 
 /*
@@ -794,6 +794,8 @@ list.lavalink = (serverName, userID) => ({
         "io": 500,
         "cpu": 0
     },
+    "environment": {
+    },
     "feature_limits": {
         "databases": 2,
         "allocations": 1,
@@ -897,8 +899,7 @@ list.barotrauma = (serverName, userID) => ({
         "io": 500,
         "cpu": 0
     },
-    "environment": {
-    },
+    "environment": {},
     "feature_limits": {
         "databases": 2,
         "allocations": 1,

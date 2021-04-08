@@ -24,9 +24,9 @@ let desc = (object) => {
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
 
-        let embed = new Discord.MessageEmbed()
-            .setColor('RANDOM')
-            .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
-            .addField('**Owner Commands:**', desc(subcommands.devs).join('\n'))
-        await message.channel.send(embed)
+    let embed = new Discord.MessageEmbed()
+        .setColor('RANDOM')
+        .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
+        .addField('**Owner Commands:**', desc(subcommands.devs).join('\n'))
+    await message.channel.send(embed)
 }

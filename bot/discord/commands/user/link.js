@@ -29,7 +29,6 @@ exports.run = async (client, message, args) => {
         })
 
 
-
         let msg = await channel.send(message.author, {
             embed: new Discord.MessageEmbed()
                 .setColor(0x36393e)
@@ -106,6 +105,7 @@ exports.run = async (client, message, args) => {
                         }
                         return result;
                     }
+
                     const code = codegen(10);
 
                     const emailmessage = {
@@ -163,7 +163,8 @@ exports.run = async (client, message, args) => {
                         }
                     });
 
-                };
+                }
+                ;
             }, 10000)
 
         })
