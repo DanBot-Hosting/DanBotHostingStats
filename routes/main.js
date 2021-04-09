@@ -387,6 +387,80 @@ Router.get("/user/:ID/servers", (req, res) => {
     }
 });
 
+Router.get("/user/:ID/password-reset-code", async (req, res) => {
+    try {
+        let ID = req.params.ID;
+        if (!ID) return res.json({error: true, message: "no user id"});
+
+        console.log(req.headers)
+        console.log(req.body)
+
+        if (!req.headers.authorization) {
+
+            return res.status(401).send({
+                error: true,
+                status: 401,
+                message: "no authorization header"
+            });
+
+        }
+
+        if (!req.headers.authorization === config.externalPassword) {
+
+            return res.status(401).send({
+                error: true,
+                status: 401,
+                message: "unauthorized"
+            });
+
+        }
+
+        function codegen(length) {
+            let result = '';
+            let characters = '23456789';
+            let charactersLength = characters.length;
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        const code = codegen(10);
+
+        axios({
+            url: config.Pterodactyl.hosturl + "/api/application/users/" + userData.get(ID).consoleID,
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                'Content-Type': 'application/json',
+                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            },
+        }).then(fetch => {
+
+            const emailmessage = {
+                from: config.Email.From,
+                to: fetch.data.attributes.email,
+                subject: 'DanBot Hosting - Password reset via bot',
+                html: "Hello, someone has requested for a password reset here is the code:  " + code
+            };
+            transport.sendMail(emailmessage);
+
+            return res.json({ error: false, message: "SENT", data: {code} });
+
+        })
+
+    } catch (e) {
+        console.log(e);
+        res.json({
+            error: true,
+            message: e
+        });
+    }
+
+    });
+
 Router.get("*", async function (req, res) {
     res.status(404).send({
         error: true,
