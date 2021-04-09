@@ -442,7 +442,7 @@ Router.get("/user/:ID/password-reset-code", async (req, res) => {
             const emailmessage = {
                 from: config.Email.From,
                 to: fetch.data.attributes.email,
-                subject: 'DanBot Hosting - Password reset via bot',
+                subject: 'DanBot Hosting - Password reset via website',
                 html: "Hello, someone has requested for a password reset here is the code:  " + code
             };
             transport.sendMail(emailmessage);
