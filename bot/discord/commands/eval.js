@@ -26,12 +26,12 @@ exports.run = async (client, message) => {
                     depth: 0
                 })
             let rege = new RegExp(client.token, "gi");
-            let rege2 = new RegExp("9 + 10", "gi");
+            let rege2 = new RegExp("6 + 9", "gi");
             text = text
                 .replace(/`/g, '`' + String.fromCharCode(8203))
                 .replace(/@/g, '@' + String.fromCharCode(8203))
                 .replace(rege, '(node:800) UnhandledPromiseRejectionWarning: Error: Incorrect login details were provided.')
-                .replace(rege2, '21')
+                .replace(rege2, '69')
             return text;
         };
         message.channel.send('Evaluating...').then(msg => {
