@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const gaming = [14]          // Gaming nodes
-const botswebdb = [11, 15, 16]       // Bots, Websites and Databases nodes
+const botswebdb = [11, 15, 16, 20, 17]       // Bots, Websites and Databases nodes
 const storage = [13]         // Storage nodes
 
 /*
@@ -802,7 +802,7 @@ list.lavalink = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
