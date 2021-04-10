@@ -78,10 +78,10 @@ exports.run = async (client, message, args) => {
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
 
-                if (client.cooldown[message.author.id].nCreate > Date.now()) {
+                /*if (client.cooldown[message.author.id].nCreate > Date.now()) {
                     message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].nCreate - Date.now(), {round: true})}`)
                     return;
-                }
+                }*/
         //client.cooldown[message.author.id].nCreate = Date.now() + (1200 * 1000)
 
         if (args[1] === "aio" | args[1] === "java") {
