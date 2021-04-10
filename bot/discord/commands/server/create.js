@@ -141,7 +141,7 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Failed to create a new server**__`, error)
                     message.reply(embed)
                 }
-                //client.cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
+                client.cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
             })
         }
         return;
