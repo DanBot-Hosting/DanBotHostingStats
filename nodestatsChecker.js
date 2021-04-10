@@ -207,7 +207,7 @@ setInterval(() => {
             timestamp: Date.now(),
             status: false
         }));
-    ping2.ping('208.68.39.241', 80) // Panel 1
+    ping2.ping('panel.danbot.host', 80) // Panel 1
         .then(() => nodeStatus.set("panelus1", {
             timestamp: Date.now(),
             status: true
