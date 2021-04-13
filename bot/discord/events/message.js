@@ -37,6 +37,19 @@ module.exports = (client, message) => {
         }
     }
 
+    if(message.content.includes("https://cdn.discordapp.com/attachments/754441222424363088/831566529342078976/image0-3.png")) {
+     
+        var role = message.guild.roles.cache.get("726829710935457872")
+        
+        message.reply("Your a freaking idiot get muted khed")
+        
+        message.member.roles.add(role.id)
+        setTimeout(() => { 
+            message.member.roles.remove(role.id)
+        }, 60000)
+        
+   return }
+    
     if (message.channel.type === "dm") {
         if (message.author.id === "137624084572798976") {
             const args = message.content.trim().split(/ +/g);
