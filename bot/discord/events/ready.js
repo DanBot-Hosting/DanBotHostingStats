@@ -42,10 +42,14 @@ module.exports = async (client) => {
         "text": "over DanBot Hosting",
         "type": "WATCHING"
     },
-        {
+    {
+        "text": "With Dan",
+        "type": "PLAYING"
+    }
+    {
             "text": "DanBot FM",
             "type": "LISTENING"
-        }
+    }
     ];
 
     //Initializing Cooldown
