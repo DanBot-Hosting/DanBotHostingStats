@@ -14,7 +14,4 @@ proxy
 animalAPI/dog/*
 animalAPI/cat/*
 
-
 Test/*
-
-OutageBot/*
