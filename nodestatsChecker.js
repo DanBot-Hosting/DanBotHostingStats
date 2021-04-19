@@ -74,8 +74,8 @@ let stats = {
         ID: '24'
     }
 }
-
-console.log(chalk.magenta('[Nodes Checker] ') + chalk.green("Online"));
+if (enabled.nodestatsChecker === true) {
+console.log(chalk.magenta('[Nodes Checker] ') + chalk.green("Enabled and Online"));
 //Node status
 setInterval(() => {
     //console.log("Checking Nodes...");
@@ -272,3 +272,6 @@ setInterval(() => {
         }));
 
 }, 5000)
+} else {
+    console.log(chalk.magenta('[Nodes Checker] ') + chalk.red("Disabled"));
+}

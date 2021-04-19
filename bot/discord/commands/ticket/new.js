@@ -49,7 +49,7 @@ exports.run = async (client, message, args) => {
         let embed = new Discord.MessageEmbed()
             .setColor(`GREEN`)
             .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
-            .addField(`__**Email**__`, userData.fetch(message.author.id + ".email"))
+            .addField(`__**Email**__`, "||`" + userData.fetch(message.author.id + ".email") + "`||")
             .addField(`__**Date (YYYY/MM/DD)**__`, userData.fetch(message.author.id + ".linkDate"))
             .addField(`__**Time**__`, userData.fetch(message.author.id + ".linkTime"))
         channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is linked with:* ', embed)
