@@ -1,45 +1,48 @@
 let nstatus = {
     "Nodes": [{
-        name: 'Node-1',
+        name: 'Node 1',
         data: 'Node1'
     }, {
-        name: 'Node-4',
+        name: 'Node 3 (NOT RELEASED)',
+        data: 'Node3'
+    }, {
+        name: 'Node 4',
         data: 'Node4'
     }, {
-        name: 'Node-5',
+        name: 'Node 5',
         data: 'Node5'
     }, {
-        name: 'Node-6',
+        name: 'Node 6',
         data: 'Node6'
     }, {
-        name: 'Node-7',
+        name: 'Node 7',
         data: 'node7'
     }, {
-        name: 'Node-8',
+        name: 'Node 8',
         data: 'Node8'
     }, {
-        name: 'Node-9',
+        name: 'Node 9',
         data: 'Node9'
     }, {
-        name: 'Node-10',
+        name: 'Node 10',
         data: 'Node10'
     }, {
-        name: 'Node-11',
+        name: 'Node 11',
         data: 'Node11'
     }, {
-        name: 'Node-12',
+        name: 'Node 12',
         data: 'Node12'
     }, {
-        name: 'Node-13',
+        name: 'Node 13',
         data: 'Node13'
     }, {
-        name: 'Node-14',
+        name: 'Node 14',
         data: 'Node14'
     }, {
-        name: 'Node-15 (NOT RELEASED)',
+        name: 'Node 15 (NOT RELEASED)',
         data: 'Node15'
     }, {
-        name: 'Node-16 (NOT RELEASED)',
+        name: 'Node 16 (NOT RELEASED)',
         data: 'Node16'
     }],
 
