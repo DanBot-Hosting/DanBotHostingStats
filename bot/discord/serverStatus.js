@@ -35,6 +35,12 @@ let nstatus = {
     }, {
         name: 'Node-14',
         data: 'Node14'
+    }, {
+        name: 'Node-15 (NOT RELEASED)',
+        data: 'Node15'
+    }, {
+        name: 'Node-16 (NOT RELEASED)',
+        data: 'Node16'
     }],
 
     "Storage Servers": [{

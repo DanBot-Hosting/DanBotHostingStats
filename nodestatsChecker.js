@@ -72,6 +72,16 @@ let stats = {
         serverID: '7ad8c41b',
         IP: '5.196.100.239',
         ID: '24'
+    },
+    node15: {
+        serverID: '7ad8fefe',
+        IP: '164.132.74.213',
+        ID: '25'
+    },
+    node16: {
+        serverID: '7ad8fefe',
+        IP: '164.132.74.213',
+        ID: '26'
     }
 }
 if (enabled.nodestatsChecker === true) {
