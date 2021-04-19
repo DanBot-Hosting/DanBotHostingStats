@@ -216,36 +216,29 @@ setInterval(() => {
             timestamp: Date.now(),
             status: false
         }));
-    /*
-    ping2.ping('176.31.125.135', 3306)
-        .then(() => nodeStatus.set("dbhdb", {
-            status: true
-        }))
-        .catch((e) => nodeStatus.set("dbhdb", {
-            status: false
-        }));
-*/
-    //UK VM Storage 1
-    ping2.ping('178.159.3.233', 22)
-        .then(() => nodeStatus.set("ukvms1", {
-            timestamp: Date.now(),
-            status: true
-        }))
-        .catch((e) => nodeStatus.set("ukvms1", {
-            timestamp: Date.now(),
-            status: false
-        }));
 
     //Backup Storage
-    ping2.ping('176.31.125.135', 22)
-        .then(() => nodeStatus.set("backups1", {
+    axios({
+        url: config.DanPterodactyl.hosturl + "/api/client/servers/6aa54402/resources",
+        method: 'GET',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Authorization': 'Bearer ' + config.DanPterodactyl.apikeyclient,
+            'Content-Type': 'application/json',
+            'Accept': 'Application/vnd.pterodactyl.v1+json',
+        }
+    }).then(response => {
+        nodeStatus.set("backups1", {
             timestamp: Date.now(),
             status: true
-        }))
-        .catch((e) => nodeStatus.set("backups1", {
+        });
+    }).catch(error => {
+        nodeStatus.set("backups1", {
             timestamp: Date.now(),
             status: false
-        }));
+        });
+    })
 
     //Lavalink chercker
     ping2.ping('lava.danbot.host', 2333)
