@@ -826,8 +826,9 @@ list.ts3 = (serverName, userID) => ({
         "cpu": 0
     },
     "environment": {
-        "TS_VERSION": "3.12.1",
-        "FILE_TRANSFER": "30033"
+        "TS_VERSION": "latest",
+        "FILE_TRANSFER": "30033",
+        "QUERY_PORT": "10011"
     },
     "feature_limits": {
         "databases": 2,

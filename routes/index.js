@@ -522,6 +522,18 @@ Router.get("/partners", async (req, res) => {
     });
 });
 
+Router.get("/terms-of-service", async (req, res) => {
+    res.render("tos.ejs", {
+        user: req.isAuthenticated() ? req.user : null,
+    });
+});
+
+Router.get("/privacy-policy", async (req, res) => {
+    res.render("privacy.ejs", {
+        user: req.isAuthenticated() ? req.user : null,
+    });
+});
+
 module.exports = Router;
 
 /* Authorization check, if not authorized return them to the login page.
