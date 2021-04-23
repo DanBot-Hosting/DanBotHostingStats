@@ -60,7 +60,8 @@ exports.run = async (client, message, args) => {
                 .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio \nreddiscordbot", true)
                 .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
                 .addField(`__**Misc:**__`, "lavalink \nNginx", true)
-                .setFooter("Example: " + config.DiscordBot.Prefix + "server create NodeJS Testing Server"))
+                .addField("__**Custom Egg:**__", "ShareX", true)
+                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-donator NodeJS Testing Server"))
             return;
         }
 
@@ -82,6 +83,7 @@ exports.run = async (client, message, args) => {
             redis: pServerCreatesettings.redis,
             postgres: pServerCreatesettings.postgres,
             lavalink: pServerCreatesettings.lavalink,
+            sharex: pServerCreatesettings.sharex,
         }
 
         if (Object.keys(types).includes(args[1].toLowerCase())) {
