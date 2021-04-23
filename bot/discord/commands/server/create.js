@@ -20,6 +20,7 @@ exports.run = async (client, message, args) => {
         .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
+        .addField("__**Custom Egg:**__", "ShareX", true)
         //.addField(__**Storage:**__, "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
@@ -73,7 +74,8 @@ exports.run = async (client, message, args) => {
         barotrauma: data.barotrauma,
         waterfall: data.waterfall,
         spigot: data.spigot,
-        lavalink: data.lavalink
+        lavalink: data.lavalink,
+        sharex: data.sharex
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
