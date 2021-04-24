@@ -371,7 +371,7 @@ list.sharex = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": botswebdb,
+        "locations": [12],
         "dedicated_ip": false,
         "port_range": []
     },
