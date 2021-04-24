@@ -120,9 +120,11 @@ exports.run = async (client, message, args) => {
 
         message.channel.send(new Discord.MessageEmbed()
             .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
-            .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio \nreddiscordbot", true)
-            .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
-            .setFooter("Example: " + config.DiscordBot.Prefix + "server create-donator NodeJS Testing Server"))
+                .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio \nreddiscordbot", true)
+                .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
+                .addField(`__**Misc:**__`, "lavalink \nNginx", true)
+                .addField("__**Custom Egg:**__", "ShareX", true)
+                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-donator NodeJS Testing Server"))
 
     })
 }
