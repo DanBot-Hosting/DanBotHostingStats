@@ -12,15 +12,6 @@ module.exports = async (client) => {
     global.browser = await puppeteer.launch({args: ["--no-sandbox"/*openvz*/]});
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
-    // let getUsers = async () => {
-    //     let unverifiedBots = guild.members.cache.filter(member => member.user.bot && db.get(member.id) == null);
-    //     unverifiedBots.forEach(member => {
-    //         member.kick("Not a verified bot.");
-    //     })
-
-    //     console.log(`Kicked ${unverifiedBots.size} unverified bots.`)
-    // }
-
     let checkNicks = () => {
         guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ','].some(r => member.displayName.startsWith(r))).forEach(x => {
             x.setNickname('⚠️HOISTER ALERT ⚠️');
@@ -51,7 +42,6 @@ module.exports = async (client) => {
     //Initializing Cooldown
     client.cooldown = {};
 
-
     //Automatic 30second git pull.
     setInterval(() => {
         exec(`git pull`, (error, stdout) => {
@@ -81,7 +71,6 @@ module.exports = async (client) => {
     client.pvc = new Discord.Collection();
 
     // end of Voice-Channels
-
 
     global.invites = {};
     client.guilds.cache.forEach(g => {
