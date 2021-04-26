@@ -65,7 +65,6 @@ module.exports = async (client) => {
                         process.exit();
                     }, 1000)
                 }
-                ;
             }
         })
     }, 30000)
