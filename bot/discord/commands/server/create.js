@@ -112,7 +112,7 @@ exports.run = async (client, message, args) => {
                 } else if (error == "Error: Request failed with status code 429") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again.`)
+                        .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again in a minute or two.`)
                     message.reply(embed)
                 } else {
                     const embed = new Discord.MessageEmbed()
