@@ -9,7 +9,6 @@ const commands = {
         uptime: "Shows the bots uptime.",
         vc: "Manage you custom voice channel.",
         info: "Get a bots info.",
-        suggest: "Get the link to send in suggestions.",
         animalapi: "Check out our animal api."
     },
     Staff: {
@@ -21,7 +20,6 @@ const commands = {
     Owner: {
         reload: "Reloads all commands on the bot.",
         'staff update': "Pull latest git commit.",
-        say: "Says what you want it to say.",
         eval: "Eval some code.",
         exec: "Run some system commands.",
         giveaway: "Launch a giveaway.",
