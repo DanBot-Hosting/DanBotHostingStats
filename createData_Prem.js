@@ -1,7 +1,6 @@
 const axios = require('axios');
 
 /*
-
 Donator Nodes as followed:
 Node 7   : 12
 Node 15  : 21
@@ -9,6 +8,7 @@ Node 15  : 21
 Node 7 - Donator bots, websites and lavalink
 Node 15 - Donator gaming node, Used for games ofc. hopefully donators dont read this before its released
 */
+
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 var getPassword = () => {
 
