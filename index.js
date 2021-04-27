@@ -317,10 +317,6 @@ app.use("/me", meRoute);
 app.use("/admin", adminRoute);
 app.use("/external", externalRoute);
 
-app.get('/.htaccess', (req, res) => {
-    res.sendFile('./.htaccess', {root: __dirname})
-})
-
 app.get('/arc-sw.js', (req, res) => {
     res.sendFile('./util//arc-sw.js', {root: __dirname});
 });
