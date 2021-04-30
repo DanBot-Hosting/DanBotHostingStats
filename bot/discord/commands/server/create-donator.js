@@ -56,7 +56,7 @@ exports.run = async (client, message, args) => {
         //Do server creation things
         if (!args[1]) {
             message.channel.send(new Discord.MessageEmbed()
-                .setColor("RED").setDescription(`List of servers: (use DBH!server create-donator <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
+                .setColor("RED")
                 .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
                 .addField("__**Grand Theft Auto:**__", "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
                 .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
