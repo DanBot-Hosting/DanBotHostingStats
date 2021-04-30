@@ -61,13 +61,6 @@ exports.run = async (client, message, args) => {
             return;
         }
 
-        if (client.cooldown[message.author.id].pCreate > Date.now()) {
-            message.reply(`You're currently on cooldown, please wait ${humanizeDuration(client.cooldown[message.author.id].pCreate - Date.now(), {round: true})}`)
-            return;
-        }
-        client.cooldown[message.author.id].pCreate = Date.now() + (10 * 1000);
-
-
         let types = {
             nginx: pServerCreatesettings.nginx,
             reddiscordbot: pServerCreatesettings.reddiscordbot,
