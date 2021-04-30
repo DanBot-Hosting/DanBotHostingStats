@@ -56,12 +56,17 @@ exports.run = async (client, message, args) => {
         //Do server creation things
         if (!args[1]) {
             message.channel.send(new Discord.MessageEmbed()
-                .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
-                .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio \nreddiscordbot", true)
-                .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
-                .addField(`__**Misc:**__`, "lavalink \nNginx", true)
+                .setColor("RED").setDescription(`List of servers: (use DBH!server create-donator <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
+                .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
+                .addField("__**Grand Theft Auto:**__", "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+                .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
+                .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
+                .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
+                .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
+                .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
+                .addField("__**WebHosting:**__", "Nginx", true)
                 .addField("__**Custom Egg:**__", "ShareX", true)
-                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-donator NodeJS Testing Server"))
+                .setFooter("Example: DBH!server create-donator NodeJS Testing Server")
             return;
         }
 
@@ -119,12 +124,18 @@ exports.run = async (client, message, args) => {
         }
 
         message.channel.send(new Discord.MessageEmbed()
-            .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
-                .addField(`__**Bots:**__`, "NodeJS \nPython \nJava \naio \nreddiscordbot", true)
-                .addField(`__**Databases:**__`, "MongoDB \nRedis \nPostgres", true)
-                .addField(`__**Misc:**__`, "lavalink \nNginx", true)
-                .addField("__**Custom Egg:**__", "ShareX", true)
-                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-donator NodeJS Testing Server"))
+            .setColor("RED").setDescription(`List of servers: (use DBH!server create-donator <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
+            .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
+            .addField("__**Grand Theft Auto:**__", "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+            .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
+            .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
+            .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
+            .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
+            .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
+            .addField("__**WebHosting:**__", "Nginx", true)
+            .addField("__**Custom Egg:**__", "ShareX", true)
+            //.addField(__**Storage:**__, "storage", true)
+            .setFooter("Example: DBH!server create-donator NodeJS Testing Server")
 
     })
 }
