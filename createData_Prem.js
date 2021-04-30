@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const gaming = [12]          // Gaming nodes
-const botswebdb = [21]       // Bots, Websites and Databases nodes
+const gaming = [21]          // Gaming nodes
+const botswebdb = [12]       // Bots, Websites and Databases nodes
 const storage = [13]         // Storage nodes
 
 /*
@@ -296,7 +296,7 @@ list.spigot = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -329,7 +329,7 @@ list.waterfall = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -362,7 +362,7 @@ list.paper = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 0,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -395,7 +395,7 @@ list.forge = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -426,7 +426,7 @@ list.bedrock = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -456,7 +456,7 @@ list.pocketminemp = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -506,7 +506,7 @@ list.fivem = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -540,7 +540,7 @@ list.altv = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -570,7 +570,7 @@ list.multitheftauto = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -629,7 +629,7 @@ list.samp = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "environment": {},
@@ -677,7 +677,7 @@ list.gmod = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -709,7 +709,7 @@ list.csgo = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -748,7 +748,7 @@ list.arkse = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -893,7 +893,7 @@ list.barotrauma = (serverName, userID) => ({
     "environment": {},
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -938,7 +938,7 @@ list.avorion = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -974,7 +974,7 @@ list.assettocorsa = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -1018,7 +1018,7 @@ list.arma = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -1052,7 +1052,7 @@ list.daystodie = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
@@ -1095,7 +1095,7 @@ list.rust = (serverName, userID) => ({
     },
     "feature_limits": {
         "databases": 2,
-        "allocations": 1,
+        "allocations": 2,
         "backups": 10
     },
     "deploy": {
