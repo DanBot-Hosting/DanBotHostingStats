@@ -3,9 +3,6 @@ let nstatus = {
         name: 'Node 1',
         data: 'Node1'
     }, {
-        name: 'Node 3 (NOT RELEASED)',
-        data: 'Node3'
-    }, {
         name: 'Node 4',
         data: 'Node4'
     }, {
@@ -39,7 +36,7 @@ let nstatus = {
         name: 'Node 14',
         data: 'Node14'
     }, {
-        name: 'Node 15 (NOT RELEASED)',
+        name: 'Node 15',
         data: 'Node15'
     }, {
         name: 'Node 16 (NOT RELEASED)',
