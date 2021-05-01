@@ -83,6 +83,16 @@ let stats = {
         IP: '137.74.76.68',
         ID: '26'
     },
+    node17: {
+        serverID: 'a73b3514',
+        IP: '137.74.76.70',
+        ID: '28'
+    },
+    node18: {
+        serverID: '058d7a69',
+        IP: '137.74.76.71',
+        ID: '29'
+    },
 }
 if (enabled.nodestatsChecker === true) {
 console.log(chalk.magenta('[Nodes Checker] ') + chalk.green("Enabled and Online"));
