@@ -13,7 +13,7 @@ module.exports = async (client) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     let checkNicks = () => {
-        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ','].some(r => member.displayName.startsWith(r))).forEach(x => {
+        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ',', ':', ';'].some(r => member.displayName.startsWith(r))).forEach(x => {
             x.setNickname('⚠️HOISTER ALERT ⚠️');
         })
     }

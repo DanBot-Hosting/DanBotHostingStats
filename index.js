@@ -22,7 +22,6 @@ const hbs = require('hbs');
 const favicon = require('serve-favicon');
 const pat = require("path");
 app.use(favicon(pat.join(__dirname, 'views', 'favicon.ico')))
-const proxy = require('express-http-proxy');
 
 //Animal API app
 const animalapp = express();
