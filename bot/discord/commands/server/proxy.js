@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
             await message.channel.send(embed)
         } else {
             if (args[1].toLowerCase().includes('only-fans.club')) {
-                if(message.member.roles.cache.some(r=>['793549158417301544', '710208090741539006', '788193704014905364'].includes(r.id)) ) {
+                if(message.member.roles.cache.some(r=>['710208090741539006', '788193704014905364'].includes(r.id)) ) {
                     const linkalready = userData.fetchAll().filter(users => users.data.domains && users.data.domains.filter(x => x.domain === args[1]).length != 0);
                     if (linkalready[0]) {
                         message.channel.send('Domain is already linked')
