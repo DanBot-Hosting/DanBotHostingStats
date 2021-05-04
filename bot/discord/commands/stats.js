@@ -54,6 +54,7 @@ exports.run = async (client, message) => {
         parseFloat(nodeData.fetch("Node13.cputhreads")) +
         parseFloat(nodeData.fetch("Node14.cputhreads")) +
         parseFloat(nodeData.fetch("Node15.cputhreads")) +
+        parseFloat(nodeData.fetch("Node16.cputhreads")) +
         parseFloat(nodeData.fetch("Storage1.cputhreads"))}
         \n__**Ram Total:**__ \n${formatFileSize(parseFloat(nodeData.fetch("Node1.memusedraw")) +
         parseFloat(nodeData.fetch("Node2.memusedraw")) +

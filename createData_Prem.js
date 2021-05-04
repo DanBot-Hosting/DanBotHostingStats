@@ -361,7 +361,7 @@ list.paper = (serverName, userID) => ({
         "BUILD_NUMBER": "latest"
     },
     "feature_limits": {
-        "databases": 0,
+        "databases": 2,
         "allocations": 2,
         "backups": 10
     },
