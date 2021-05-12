@@ -291,7 +291,7 @@ setInterval(() => {
             status: false
         }));
 
-}, 5000)
+}, 10000)
 } else {
     console.log(chalk.magenta('[Nodes Checker] ') + chalk.red("Disabled"));
 }
