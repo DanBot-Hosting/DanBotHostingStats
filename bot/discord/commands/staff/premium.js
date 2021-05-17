@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
 
     if (args[1].toLowerCase() === 'remove') {
         setDonations(userid, Math.max(0, oldBal - amount));
-        sendMessage(userid, Math.max(0, oldBal - amount))
+        // sendMessage(userid, Math.max(0, oldBal - amount))
     }
 
 }
