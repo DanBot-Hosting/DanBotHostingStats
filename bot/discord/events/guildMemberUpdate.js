@@ -3,12 +3,12 @@ module.exports = async (client, oldMember, newMember) => {
     if (oldMember.displayName !== newMember.displayName) {
         newMember.displayName = newMember.displayName.toLowerCase();
 
-        if (newMember.displayName.toLowerCase().includes("soloisaslut")) {
+        if (newMember.displayName.includes("soloisaslut")) {
             return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
 
         if (newMember.displayName.match(/^[a-z]/i)[0] == null) {
-            return newMember.setNickname('⚠️HOISTER ALERT ⚠️');
+            return newMember.setNickname('zHOISTER ALERT');
         }
 
         if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.includes(r))) {
@@ -25,7 +25,5 @@ module.exports = async (client, oldMember, newMember) => {
             .setTimestamp(new Date());
 
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed)
-
-        return;
     }
 };
