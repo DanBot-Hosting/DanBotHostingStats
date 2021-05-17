@@ -16,6 +16,10 @@ module.exports = async (client) => {
         guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ',', ':', ';'].some(r => member.displayName.startsWith(r))).forEach(x => {
             x.setNickname('⚠️HOISTER ALERT ⚠️');
         })
+
+        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.toLowerCase().includes(r))).forEach(x => {
+            x.setNickname('No, No name for you');
+        })
     }
 
     setInterval(() => {

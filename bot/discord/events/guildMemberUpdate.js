@@ -8,6 +8,9 @@ module.exports = async (client, oldMember, newMember) => {
         if (['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ','].some(r => newMember.displayName.startsWith(r))) {
             newMember.setNickname('⚠️HOISTER ALERT ⚠️');
         }
+        if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.toLowerCase().includes(r))) {
+            newMember.setNickname('No, No name for you');
+        }
 
         // Make a new RichEmbed
         const embed = new Discord.MessageEmbed()
