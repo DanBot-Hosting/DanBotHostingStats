@@ -2,6 +2,7 @@ exports.run = async (client, message, args) => {
     if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
 
     if (args.length < 4) return;
+    let parser = new Intl.NumberFormat();
 
     let setDonations = (userid, amount) => {
         userPrem.set(userid + '.donated', amount)
@@ -9,7 +10,7 @@ exports.run = async (client, message, args) => {
 
     let sendMessage = (userid, amount) => {
         message.channel.send('Thanks <@' + userid + '> for donating! \nYou can now create donator servers using `' + config.DiscordBot.Prefix + 'server create-donator`')
-        client.channels.cache.get('795884677688721448').send('Thanks, <@' + userid + '> for donating ' + amount + '$!')
+        client.channels.cache.get('795884677688721448').send('Thanks, <@' + userid + '> for donating ' + parser.format(amount) + '$!')
     }
 
     let userid = message.guild.members.cache.get(args[2].match(/[0-9]{18}/).length == 0 ? args[2] : args[2].match(/[0-9]{18}/)[0]);
@@ -20,7 +21,7 @@ exports.run = async (client, message, args) => {
 
     if (args[1].toLowerCase() === 'add') {
         setDonations(userid, amount + oldBal);
-        sendMessage(userid, amount + oldBal)
+        sendMessage(userid, amount)
     }
 
 
