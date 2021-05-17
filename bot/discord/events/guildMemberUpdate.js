@@ -1,14 +1,17 @@
 module.exports = async (client, oldMember, newMember) => {
     // If user nickname changes.
     if (oldMember.displayName !== newMember.displayName) {
+        newMember.displayName = newMember.displayName.toLowerCase();
+
         if (newMember.displayName.toLowerCase().includes("soloisaslut")) {
             return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
 
-        if (['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ','].some(r => newMember.displayName.startsWith(r))) {
-            newMember.setNickname('⚠️HOISTER ALERT ⚠️');
+        if (newMember.displayName.match(/^[a-z]/i)[0] == null) {
+            return newMember.setNickname('⚠️HOISTER ALERT ⚠️');
         }
-        if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.toLowerCase().includes(r))) {
+
+        if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.includes(r))) {
             newMember.setNickname('Dan\'s a meany');
         }
 
