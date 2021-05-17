@@ -9,7 +9,7 @@ module.exports = async (client, oldMember, newMember) => {
             newMember.setNickname('⚠️HOISTER ALERT ⚠️');
         }
         if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.toLowerCase().includes(r))) {
-            newMember.setNickname('No, No name for you');
+            newMember.setNickname('Dan\'s a meany');
         }
 
         // Make a new RichEmbed
