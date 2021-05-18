@@ -81,7 +81,7 @@ exports.run = async (client, message, args) => {
                     });
                     i++
                 }
-                console.log(resources.data.meta.pagination)
+                // console.log(resources.data.meta.pagination)
                 let total = resources.data.meta.pagination.total
             });
             //Find account then link
