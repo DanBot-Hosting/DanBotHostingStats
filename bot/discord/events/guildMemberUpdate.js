@@ -3,9 +3,12 @@ module.exports = async (client, oldMember, newMember) => {
     if (oldMember.displayName !== newMember.displayName) {
         newMember.displayName = newMember.displayName.toLowerCase();
 
+        /*
+        // SOLO IS A SLUT INDEED
         if (newMember.displayName.includes("soloisaslut")) {
             return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
+        */
 
         if (newMember.displayName.match(/^[a-z]/i)[0] == null) {
             return newMember.setNickname('zHOISTER ALERT');
