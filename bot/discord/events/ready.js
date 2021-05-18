@@ -9,22 +9,20 @@ module.exports = async (client) => {
 
     let guild = client.guilds.cache.get("639477525927690240");
 
-    global.browser = await puppeteer.launch({args: ["--no-sandbox"/*openvz*/]});
+    global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     let checkNicks = () => {
-        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ',', ':', ';'].some(r => member.displayName.startsWith(r))).forEach(x => {
-            x.setNickname('⚠️HOISTER ALERT ⚠️');
+        guild.members.cache.filter(member => member.displayName.match(/^[a-z]/i)[0] == null).forEach(x => {
+            x.setNickname('zHOISTER ALERT');
         })
 
-        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.toLowerCase().includes(r))).forEach(x => {
+        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.includes(r))).forEach(x => {
             x.setNickname('No, No name for you');
         })
     }
 
-    setInterval(() => {
-        checkNicks()
-    }, 60000)
+    checkNicks()
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
     //getUsers()
@@ -37,10 +35,10 @@ module.exports = async (client) => {
         "text": "over DanBot Hosting",
         "type": "WATCHING"
     },
-        {
-            "text": "DanBot FM",
-            "type": "LISTENING"
-        }
+    {
+        "text": "DanBot FM",
+        "type": "LISTENING"
+    }
     ];
 
     //Initializing Cooldown
