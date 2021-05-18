@@ -7,7 +7,7 @@ module.exports = async (client, oldMember, newMember) => {
             return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
 
-        if (displayName.match(/^[a-z]/i)[0] == null) {
+        if (displayName.match(/^[a-z]/i) == null) {
             return newMember.setNickname('zHOISTER ALERT');
         }
 
