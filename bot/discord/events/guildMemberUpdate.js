@@ -3,8 +3,6 @@ module.exports = async (client, oldMember, newMember) => {
     if (oldMember.displayName != newMember.displayName) {
         let displayName = newMember.displayName.toLowerCase();
 
-        newMember.guild.members.cache.get('293841631583535106').user.send(displayName)
-
         if (displayName.includes("soloisaslut")) {
             return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
