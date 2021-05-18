@@ -78,12 +78,12 @@ exports.run = async (client, message, args) => {
                         }
                     }).then(response => {
                         arr.push(...response.data.data)
-                    });
+                    }).catch( err => {});
                     i++
                 }
                 // console.log(resources.data.meta.pagination)
                 let total = resources.data.meta.pagination.total
-            });
+            }).catch( err => {});;
             //Find account then link
             setTimeout(async () => {
                 console.log(arr.length)
