@@ -28,5 +28,5 @@ exports.run = async (client, message, args) => {
                 //console.log(output)
             }, 500)
         }, 5000)
-    });
+    }).catch(err => {});
 }

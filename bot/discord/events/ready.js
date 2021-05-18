@@ -206,6 +206,6 @@ module.exports = async (client) => {
             }
         }).then(resources => {
             client.channels.cache.get("817550848343015475").setTopic("Status: " + resources.data.attributes.current_state + " | CPU Usage: " + resources.data.attributes.resources.cpu_absolute + "% | RAM Usage: " + pretty(resources.data.attributes.resources.memory_bytes) + " / 8GB")
-        })
+        }).catch(err => {});
     }, 5000)
 };
