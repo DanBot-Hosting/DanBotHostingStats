@@ -13,7 +13,7 @@ module.exports = async (client) => {
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     let checkNicks = () => {
-        guild.members.cache.filter(member => member.displayName.match(/^[a-z]/i) == null).forEach(x => {
+        guild.members.cache.filter(member => member.displayName.match(/^[a-z0-9]/i) == null).forEach(x => {
             x.setNickname('zHOISTER ALERT');
         })
 
