@@ -24,12 +24,12 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    if (codes.get(args[1]) != null) {
+    const code = args[1].toLowerCase() == "random" ? codeGen() : args[1];
+
+    if (codes.get(code) != null) {
         message.channel.send('A code with that name already exists');
         return;
-    }
-
-    const code = args[1].toLowerCase() == "random" ? codeGen() : args[1];
+    }    
 
     message.channel.send('Created code: `' + code + '` with `' + args[2] + '` premium servers. \n\nRedeem this with `DBH!server redeem ' + code + '`')
 
