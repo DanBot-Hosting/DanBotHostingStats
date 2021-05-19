@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
 
     message.channel.send('Created code: `' + code + '` with `' + args[2] + '` premium servers. \n\nRedeem this with `DBH!server redeem ' + code + '`')
 
-    codes.set(args[1], {
+    codes.set(code, {
         createdBy: message.author.id,
         balance: balance,
         createdAt: Date.now()
