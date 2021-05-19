@@ -29,23 +29,14 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    if (args[1] === "random") {
-        const code = codeGen();
+    const code = args[1].toLowerCase() == "random" ? codeGen() : args[1];
 
-        message.channel.send('Created code: `' + code + '` with `' + args[2] + '` premium servers. \n\nRedeem this with `DBH!server redeem ' + code + '`')
+    message.channel.send('Created code: `' + code + '` with `' + args[2] + '` premium servers. \n\nRedeem this with `DBH!server redeem ' + code + '`')
 
-        codes.set(code, {
-            createdBy: message.author.id,
-            balance: balance,
-            createdAt: Date.now()
-        });
-    } else {
-        message.channel.send('Created code: `' + args[1] + '` with `' + args[2] + '` premium servers. \n\nRedeem this with `DBH!server redeem ' + args[1] + '`')
+    codes.set(args[1], {
+        createdBy: message.author.id,
+        balance: balance,
+        createdAt: Date.now()
+    });
 
-        codes.set(args[1], {
-            createdBy: message.author.id,
-            balance: balance,
-            createdAt: Date.now()
-        });
-    }
 }
