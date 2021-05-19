@@ -30,6 +30,11 @@ module.exports = async (client) => {
     //Check make sure create account channels are closed after a hour
     guild.channels.cache.filter(x => x.parentID === '738539016688894024' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
 
+    setInterval(() => {
+        let _codes = codes.fetchAll();
+        client.guilds.cache.get('639477525927690240').channels.cache.get('795884677688721448').setTopic(`There's a total of ${_codes.length} active codes (${_codes.map(x => JSON.parse(x.data).balance).reduce((a, b) => a + b, 0)} servers)`)
+    }, 60000);
+
     //Auto Activities List
     const activities = [{
         "text": "over DanBot Hosting",
@@ -206,6 +211,6 @@ module.exports = async (client) => {
             }
         }).then(resources => {
             client.channels.cache.get("817550848343015475").setTopic("Status: " + resources.data.attributes.current_state + " | CPU Usage: " + resources.data.attributes.resources.cpu_absolute + "% | RAM Usage: " + pretty(resources.data.attributes.resources.memory_bytes) + " / 8GB")
-        }).catch(err => {});
+        }).catch(err => { });
     }, 5000)
 };
