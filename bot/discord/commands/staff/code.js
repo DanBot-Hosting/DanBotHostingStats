@@ -1,12 +1,28 @@
 exports.run = async (client, message, args) => {
-    if (!['137624084572798976'].includes(message.author.id)) return;
+    if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
 
-    if (!args[1]) {
+    if (args.length < 3) {
         message.channel.send('Usage: `DBH!staff code name uses')
-    } else if(!args[2]) {
-        message.channel.send('Usage: `DBH!staff code name uses')
-    } else {
-        message.channel.send('Created code: `' + args[1] + '` with `' + args[2] + '` premium servers.')
-        codes.set(args[1], args[2])
+        return;
     }
+
+    let balance = parseInt(args[2]);
+
+    if (isNaN(balance)) {
+        message.channel.send('Uses must be a valid number');
+        return;
+    }
+
+    if (codes.get(args[1]) != null) {
+        message.channel.send('A code with that name already exists');
+        return;
+    }
+
+    message.channel.send('Created code: `' + args[1] + '` with `' + args[2] + '` premium servers.')
+
+    codes.set(args[1], {
+        createdBy: message.author.id,
+        balance: balance,
+        createdAt: Date.now()
+    });
 }
