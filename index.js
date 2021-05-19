@@ -66,6 +66,7 @@ global.domains = new db.table("linkedDomains");   //Linked domains for unproxy a
 global.nodeStatus = new db.table("nodeStatus");   //Node status. Online or offline nodes
 global.userPrem = new db.table("userPrem");       //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
+global.codes = new db.table("redeemCodes");       //Premium server redeem codes...
 global.client = new Discord.Client({
     restTimeOffset: 0,
     disableMentions: 'everyone',
