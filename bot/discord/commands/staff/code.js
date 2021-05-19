@@ -32,7 +32,7 @@ exports.run = async (client, message, args) => {
     if (args[1] === "random") {
         const code = codeGen();
 
-        message.channel.send('Created code: `' + code + '` with `' + args[2] + '` premium servers. \n\nRedeem this with `DBH!server redeem ' + args[1] + '`')
+        message.channel.send('Created code: `' + code + '` with `' + args[2] + '` premium servers. \n\nRedeem this with `DBH!server redeem ' + code + '`')
 
         codes.set(code, {
             createdBy: message.author.id,
