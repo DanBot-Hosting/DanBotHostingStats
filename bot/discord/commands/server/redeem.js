@@ -23,6 +23,8 @@ exports.run = async (client, message, args) => {
 
         codes.delete(args[1]);
 
+        message.author.roles.add('788193704014905364');
+
         setDonations(message.author.id, oldBal + code.balance);
     }
 }

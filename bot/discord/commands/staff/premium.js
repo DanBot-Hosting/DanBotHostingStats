@@ -22,12 +22,14 @@ exports.run = async (client, message, args) => {
     if (args[1].toLowerCase() === 'add') {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount)
+        message.author.roles.add('788193704014905364');
     }
 
 
     if (args[1].toLowerCase() === 'set') {
         setDonations(userid, amount);
         sendMessage(userid, amount)
+        message.author.roles.add('788193704014905364');
     }
 
     if (args[1].toLowerCase() === 'remove') {
