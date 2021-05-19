@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
             message.channel.send('That code is invalid or expired')
             return;
         }
-        let oldBal = userPrem.get(userid + '.donated') || 0;
+        let oldBal = userPrem.get(message.author.id + '.donated') || 0;
 
         let now = Date.now();
         message.channel.send(`You have redeemed a code with ${code.balance} premium server(s), you now have ${oldBal + code.balance}!`)
