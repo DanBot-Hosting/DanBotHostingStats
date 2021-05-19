@@ -1,4 +1,8 @@
 let subcommands = {
+    mods: {
+        lockdown: ["Allows the channel to be locked or unlocked", ''],
+        node: ["Restarts the node if it is down", '']
+    },
     admin: {
         linked: ["Shows if the users account is linked.", 'linked <USERID>'],
         apply: ["Manage Staff applications.", '<open/close>'],
@@ -22,7 +26,7 @@ let desc = (object) => {
 }
 
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
+    if (!message.member.roles.cache.find(r => r.id === "748117822370086932")) return;
 
     let embed = new Discord.MessageEmbed()
         .setColor('RANDOM')
