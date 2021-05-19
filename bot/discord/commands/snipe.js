@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
     let number = 0;
 
     if (args[0] == null) number = 0;
-    else number = parseInt(args[0] - 1);
+    else number = (parseInt(args[0]) - 1);
 
     //setting a min and max
     if (number >= snipe.length) number = snipe.length - 1;
