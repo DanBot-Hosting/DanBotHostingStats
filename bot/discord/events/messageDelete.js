@@ -6,7 +6,7 @@ module.exports = (client, message) => {
         if (message.channel.type !== 'text') return;
 
 
-        const description = message.cleanContent
+        const description = message.cleanContent || "message had no content"
         const descriptionfix = description.substr(0, 600);
         const embed = new Discord.MessageEmbed()
             .setColor(0x00A2E8)
@@ -15,7 +15,7 @@ module.exports = (client, message) => {
             .addField("Message Content:", `${descriptionfix}`)
             .setTimestamp()
             .setFooter("Message delete in " + message.channel.name);
-        client.channels.cache.get(config.DiscordBot.mLogs).send({embed});
+        client.channels.cache.get(config.DiscordBot.mLogs).send({ embed });
 
     }
 
