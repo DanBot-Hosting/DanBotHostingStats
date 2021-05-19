@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     } else if(!args[2]) {
         message.channel.send('Usage: `DBH!staff code name uses')
     } else {
-        message.channel.send('Created code: `' + args[1] + '` with `' + args[2] + '` uses.')
+        message.channel.send('Created code: `' + args[1] + '` with `' + args[2] + '` premium servers.')
         codes.set(args[1], args[2])
     }
 }
