@@ -98,55 +98,55 @@ if (enabled.nodestatsChecker === true) {
 console.log(chalk.magenta('[Nodes Checker] ') + chalk.green("Enabled and Online"));
 //Node status
 setInterval(() => {
-    //console.log("Checking Nodes...");
-
     //Public nodes
     for (let [node, data] of Object.entries(stats)) {
-        axios({
-            url: config.Pterodactyl.hosturl + "/api/client/servers/" + data.serverID + "/resources",
-            method: 'GET',
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
-                'Content-Type': 'application/json',
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
-            }
-        }).then(response => {
-            nodeStatus.set(node, {
-                timestamp: Date.now(),
-                status: true,
-                is_vm_online: true
-            });
-        }).catch(error => {
-            ping2.ping(data.IP, 22)
-                .then(() => nodeStatus.set(node, {
+        setTimeout(() => {
+            axios({
+                url: config.Pterodactyl.hosturl + "/api/client/servers/" + data.serverID + "/resources",
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer ' + config.Pterodactyl.apikeyclient,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(response => {
+                nodeStatus.set(node, {
                     timestamp: Date.now(),
-                    status: false,
+                    status: true,
                     is_vm_online: true
-                }))
-                .catch((e) => nodeStatus.set(node, {
-                    timestamp: Date.now(),
-                    status: false,
-                    is_vm_online: false
-                }));
-        })
+                });
+            }).catch(error => {
+                ping2.ping(data.IP, 22)
+                    .then(() => nodeStatus.set(node, {
+                        timestamp: Date.now(),
+                        status: false,
+                        is_vm_online: true
+                    }))
+                    .catch((e) => nodeStatus.set(node, {
+                        timestamp: Date.now(),
+                        status: false,
+                        is_vm_online: false
+                    }));
+            })
 
-        axios({
-            url: config.Pterodactyl.hosturl + "/api/application/nodes/" + data.ID + "?include=servers",
-            method: 'GET',
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                'Content-Type': 'application/json',
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
-            }
-        }).then(response => {
-            const servercount = response.data.attributes.relationships.servers.data;
-            nodeServers.set(node, {servers: servercount.length})
-        }).catch(err => {
-        })
+            axios({
+                url: config.Pterodactyl.hosturl + "/api/application/nodes/" + data.ID + "?include=servers",
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(response => {
+                const servercount = response.data.attributes.relationships.servers.data;
+                nodeServers.set(node, {servers: servercount.length})
+            }).catch(err => {
+            })
+        }, 500)
     }
 
     //Server limit
