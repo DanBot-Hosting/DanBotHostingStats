@@ -1,7 +1,6 @@
 const humanizeDuration = require('humanize-duration');
 
 exports.run = async (client, message, args) => {
-
     let setDonations = (userid, amount) => {
         userPrem.set(userid + '.donated', amount)
     }
