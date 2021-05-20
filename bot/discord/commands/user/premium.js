@@ -1,3 +1,4 @@
+let parser = new Intl.NumberFormat();
 const axios = require('axios');
 exports.run = async (client, message, args) => {
     let boosted = await axios({
@@ -10,8 +11,9 @@ exports.run = async (client, message, args) => {
     }).catch(e => {
         // console.log(e);
     })
+    let userid = args[1] == null ? (message.author.id) : (args[1].match(/[0-9]{18}/).length == 0 ? args[2] : args[2].match(/[0-9]{18}/)[0]);
 
-    let user = userPrem.fetch(message.author.id);
+    let user = userPrem.fetch(userid);
     if (user == null) {
         message.channel.send('You are not a premium user');
         return;
@@ -22,6 +24,6 @@ exports.run = async (client, message, args) => {
         allowed = allowed + (boosted.data[message.author.id] != null ? Math.floor(boosted.data[message.author.id] * 2.5) : 2);
     const embed = new Discord.MessageEmbed()
         .setColor('BLUE')
-        .addField('Premium servers used:', user.used + " out of  " + allowed + " servers used")
+        .addField('Premium servers used:', (user.used || 0) + " out of  " + parser.format(allowed) + " servers used")
     await message.channel.send(embed)
 }
