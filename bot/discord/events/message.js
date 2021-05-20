@@ -1,6 +1,21 @@
 const fetch = require('node-fetch');
+const axios = require('axios');
 
 module.exports = (client, message) => {
+    if(message.channel.id === "781099821561544744") {
+        axios({
+            url: `https://discord.com/api/v9/channels/${message.channel.id}/messages/${message.id}/crosspost`,
+            method: 'POST',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': "Bot " + config.DiscordBot.Token,
+                'Content-Type': 'application/json',
+            },
+        }).then(response => {
+            //console.log(response)
+        })
+    }
 
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
     if (!whitelisted.includes(message.author.id)) {
