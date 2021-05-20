@@ -48,7 +48,7 @@ const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 const {getBot} = require(process.cwd() + "/util/discordAPI");
 
 // Initialising Node Checker
-// require('./nodestatsChecker');
+require('./nodestatsChecker');
 
 //Discord Bot
 global.puppeteer = require("puppeteer");
