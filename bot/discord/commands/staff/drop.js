@@ -62,7 +62,7 @@ exports.run = async (client, message, args) => {
     });
 
     setTimeout(() => {
-        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 1.2, { round: true }) + "!"));
+        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time - (time / 1.2), { round: true }) + "!"));
     }, time / 1.2);
 
     setTimeout(() => {
