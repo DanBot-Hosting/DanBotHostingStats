@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
     if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
 
     if (args.length < 3) {
-        message.channel.send('Usage: `DBH!staff code name uses')
+        message.channel.send('Usage: `DBH!staff code name uses`\n\nExample: `DBH!staff code danishot 5`')
         return;
     }
 
