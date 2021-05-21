@@ -51,6 +51,15 @@ exports.run = async (client, message, args) => {
             .setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
             .setTimestamp(moment + time)
     });
+
+    codes.set(code.code + ".drop", {
+        time: moment + time,
+        message: {
+            ID: msg.id,
+            channel: msg.channel.id
+        }
+    });
+    
     setTimeout(() => {
         msg.edit("", {
             embed: new Discord.MessageEmbed()
@@ -72,14 +81,6 @@ exports.run = async (client, message, args) => {
     }, time / 2);
 
     setTimeout(() => {
-        pkeys.set(code.code + ".drop", {
-            time: moment + time,
-            message: {
-                ID: msg.id,
-                channel: msg.channel.id
-            }
-        });
-
         msg.edit("", {
             embed: new Discord.MessageEmbed()
                 .setAuthor("Key Drop!")
