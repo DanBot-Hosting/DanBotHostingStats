@@ -30,10 +30,10 @@ module.exports = async (client) => {
     //Check make sure create account channels are closed after a hour
     guild.channels.cache.filter(x => x.parentID === '738539016688894024' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
 
-    setInterval(() => {
-        let _codes = codes.fetchAll();
-        client.guilds.cache.get('639477525927690240').channels.cache.get('795884677688721448').setTopic(`There's a total of ${_codes.length} active codes (${_codes.map(x => JSON.parse(x.data).balance).reduce((a, b) => a + b, 0)} servers)`)
-    }, 60000);
+    // setInterval(() => {
+    //     let _codes = codes.fetchAll();
+    //     client.guilds.cache.get('639477525927690240').channels.cache.get('795884677688721448').setTopic(`There's a total of ${_codes.length} active codes (${_codes.map(x => typeof x.data == 'string'? JSON.parse(x.data).balance : x.data.balance).reduce((a, b) => a + b, 0)} servers)`)
+    // }, 60000);
 
     //Auto Activities List
     const activities = [{
