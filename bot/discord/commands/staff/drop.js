@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
 
     let time = ms(args[1]) || 300000;
 
-    let code; // DBH!server redeem pKadoSSEhASyttn5 
+    let code; 
 
     let moment = Date.now();
 
