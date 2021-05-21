@@ -1,9 +1,11 @@
 const ms = require('ms')
+const humanizeDuration = require('humanize-duration');
+
 exports.run = async (client, message, args) => {
 
     message.delete();
 
-    if (args[0] == null) {
+    if (args[1] == null) {
         message.reply("ayo fam, you need to specify a time.");
         return;
     }
@@ -17,14 +19,14 @@ exports.run = async (client, message, args) => {
         return password;
     };
 
-    let time = ms(args[0]) || 300000;
+    let time = ms(args[1]) || 300000;
 
     let code; // I want to kill myself  | please kill me i beg
 
     let moment = Date.now();
 
 
-    if (!args[1]) {
+    if (!args[2]) {
         let random = codeGen();
 
         code = codes.set(random, {
@@ -34,7 +36,7 @@ exports.run = async (client, message, args) => {
             createdAt: Date.now()
         })
     } else {
-        code = codes.get(args[1]);
+        code = codes.get(args[2]);
         if (code == null) {
             message.reply("That's not a code you scammer")
             return;
@@ -46,7 +48,7 @@ exports.run = async (client, message, args) => {
         embed: new Discord.RichEmbed()
             .setAuthor("Key Drop!")
             .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-            .setDescription("Dropping a premium key in: " + lib.time(time) + "!")
+            .setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
             .setTimestamp(moment + time)
     });
     setTimeout(() => {
@@ -54,7 +56,7 @@ exports.run = async (client, message, args) => {
             embed: new Discord.RichEmbed()
                 .setAuthor("Key Drop!")
                 .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-                .setDescription("Dropping a premium key in: " + lib.time(time - time / 1.2) + "!")
+                .setDescription("Dropping a premium key in: " + humanizeDuration(time - time / 1.2, { round: true }) + "!")
                 .setTimestamp(moment + time)
         });
     }, time / 1.2);
@@ -64,7 +66,7 @@ exports.run = async (client, message, args) => {
             embed: new Discord.RichEmbed()
                 .setAuthor("Key Drop!")
                 .setColor("RED").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-                .setDescription("Dropping a premium key in: " + lib.time(time / 2) + "!")
+                .setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, { round: true }) + "!")
                 .setTimestamp(moment + time)
         });
     }, time / 2);
