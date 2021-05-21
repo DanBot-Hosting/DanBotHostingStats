@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
             code: random,
             createdBy: message.author.id,
             balance: 1,
-            createdAt: moment + times
+            createdAt: moment + time
         })
     } else {
         code = codes.get(args[2]);
