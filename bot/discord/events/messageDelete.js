@@ -4,7 +4,7 @@ module.exports = (client, message) => {
         //if (message.author.bot) return;
         if (message.channel.type === 'dm') return;
         if (message.channel.type !== 'text') return;
-
+        if (message.author == null) return;
 
         const description = message.cleanContent || "message had no content"
         const descriptionfix = description.substr(0, 600);
