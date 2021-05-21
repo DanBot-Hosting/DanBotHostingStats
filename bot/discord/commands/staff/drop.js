@@ -70,6 +70,6 @@ exports.run = async (client, message, args) => {
     }, time / 2);
 
     setTimeout(() => {
-        msg.edit(embed.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem ${code.code}\`\n\n*No one has redeemed the code yet!*`));
+        msg.edit(embed.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`));
     }, time);
 }
