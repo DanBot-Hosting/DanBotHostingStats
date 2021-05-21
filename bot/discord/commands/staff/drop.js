@@ -1,7 +1,7 @@
 const ms = require('ms')
 const humanizeDuration = require('humanize-duration');
 
-exports.run = async (c  ent, message, args) => {
+exports.run = async (client, message, args) => {
 
     message.delete();
 
