@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
 
     let allowed = Math.floor(user.donated / config.node7.price);
     if (message.member.roles.cache.get('710208090741539006') != null)
-        allowed = allowed + (boosted.data[message.author.id] != null ? Math.floor(boosted.data[message.author.id] * 2.5) : 2);
+        allowed = allowed + (boosted.data[userid] != null ? Math.floor(boosted.data[userid] * 2.5) : 2);
     const embed = new Discord.MessageEmbed()
         .setColor('BLUE')
         .addField('Premium servers used:', (user.used || 0) + " out of  " + parser.format(allowed) + " servers used")
