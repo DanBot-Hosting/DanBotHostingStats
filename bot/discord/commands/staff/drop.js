@@ -1,7 +1,7 @@
 const ms = require('ms')
 const humanizeDuration = require('humanize-duration');
 
-exports.run = async (client, message, args) => {
+exports.run = async (c  ent, message, args) => {
 
     message.delete();
 
@@ -45,7 +45,7 @@ exports.run = async (client, message, args) => {
 
 
     let msg = await message.channel.send("", {
-        embed: new Discord.RichEmbed()
+        embed: new Discord.MessageEmbed()
             .setAuthor("Key Drop!")
             .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
             .setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
@@ -53,7 +53,7 @@ exports.run = async (client, message, args) => {
     });
     setTimeout(() => {
         msg.edit("", {
-            embed: new Discord.RichEmbed()
+            embed: new Discord.MessageEmbed()
                 .setAuthor("Key Drop!")
                 .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
                 .setDescription("Dropping a premium key in: " + humanizeDuration(time - time / 1.2, { round: true }) + "!")
@@ -63,7 +63,7 @@ exports.run = async (client, message, args) => {
 
     setTimeout(() => {
         msg.edit("", {
-            embed: new Discord.RichEmbed()
+            embed: new Discord.MessageEmbed()
                 .setAuthor("Key Drop!")
                 .setColor("RED").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
                 .setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, { round: true }) + "!")
@@ -81,7 +81,7 @@ exports.run = async (client, message, args) => {
         });
 
         msg.edit("", {
-            embed: new Discord.RichEmbed()
+            embed: new Discord.MessageEmbed()
                 .setAuthor("Key Drop!")
                 .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
                 .setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem ${code.code}\`\n\n*No one has redeemed the code yet!*`)
