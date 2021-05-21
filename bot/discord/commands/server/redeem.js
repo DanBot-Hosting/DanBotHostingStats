@@ -24,5 +24,11 @@ exports.run = async (client, message, args) => {
 
         message.member.roles.add('788193704014905364');
         setDonations(message.author.id, oldBal + code.balance);
+
+        if (code.drop != null) {
+            let msg = await client.channels.cache.get(code.drop.message.channel)?.messages.fetch(code.drop.message.channel);
+            let embed = msg?.embeds[0]?.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem ${code.code}\`\n\n*Redeemed by ${message.member}*`)
+            msg.edit(embed)
+        }
     }
 }
