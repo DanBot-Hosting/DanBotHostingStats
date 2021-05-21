@@ -59,7 +59,7 @@ exports.run = async (client, message, args) => {
             channel: msg.channel.id
         }
     });
-    
+
     setTimeout(() => {
         msg.edit("", {
             embed: new Discord.MessageEmbed()
@@ -86,9 +86,7 @@ exports.run = async (client, message, args) => {
                 .setAuthor("Key Drop!")
                 .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
                 .setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem ${code.code}\`\n\n*No one has redeemed the code yet!*`)
-                .addField(`${code.usage}/${code.maxUsage}`, "No one redeemed the code!")
                 .setTimestamp(moment + time)
         });
     }, time);
-
 }
