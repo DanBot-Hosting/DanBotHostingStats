@@ -22,6 +22,7 @@ let parse = () => {
 
 
 module.exports = async (client, r, member) => {
+    if(r == null) return;
     if (member.user.bot == true || r.emoji == null) return;
     let emoji = r.emoji.id != null ? r.emoji.id : r.emoji.name;
 
@@ -29,6 +30,8 @@ module.exports = async (client, r, member) => {
     // Reaction Roles
     let reactionRole = parse();
     let found = reactionRole.find(x => x.message == r.message.id && x.reaction == emoji);
+
+    if (found == null) return;
 
     let role = member.guild.roles.cache.get(found.role);
     if (member.roles.cache.get(found.role) != null) {
