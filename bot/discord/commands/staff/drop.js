@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
             code: random,
             createdBy: message.author.id,
             balance: 1,
-            createdAt: Date.now()
+            createdAt: moment + times
         })
     } else {
         code = codes.get(args[2]);
@@ -44,16 +44,17 @@ exports.run = async (client, message, args) => {
     }
 
 
+    let embed = new Discord.MessageEmbed()
+        .setAuthor("Key Drop!")
+        .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
+        .setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
+        .setTimestamp(moment + time)
+
     let msg = await message.channel.send("", {
-        embed: new Discord.MessageEmbed()
-            .setAuthor("Key Drop!")
-            .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-            .setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
-            .setTimestamp(moment + time)
+        embed: embed.setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
     });
 
     codes.set(code.code + ".drop", {
-        time: moment + time,
         message: {
             ID: msg.id,
             channel: msg.channel.id
@@ -61,32 +62,14 @@ exports.run = async (client, message, args) => {
     });
 
     setTimeout(() => {
-        msg.edit("", {
-            embed: new Discord.MessageEmbed()
-                .setAuthor("Key Drop!")
-                .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-                .setDescription("Dropping a premium key in: " + humanizeDuration(time - time / 1.2, { round: true }) + "!")
-                .setTimestamp(moment + time)
-        });
+        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 1.2, { round: true }) + "!"));
     }, time / 1.2);
 
     setTimeout(() => {
-        msg.edit("", {
-            embed: new Discord.MessageEmbed()
-                .setAuthor("Key Drop!")
-                .setColor("RED").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-                .setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, { round: true }) + "!")
-                .setTimestamp(moment + time)
-        });
+        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, { round: true }) + "!"));
     }, time / 2);
 
     setTimeout(() => {
-        msg.edit("", {
-            embed: new Discord.MessageEmbed()
-                .setAuthor("Key Drop!")
-                .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-                .setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem ${code.code}\`\n\n*No one has redeemed the code yet!*`)
-                .setTimestamp(moment + time)
-        });
+        msg.edit(embed.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem ${code.code}\`\n\n*No one has redeemed the code yet!*`));
     }, time);
 }
