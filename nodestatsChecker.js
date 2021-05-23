@@ -1,7 +1,7 @@
 const axios = require('axios');
 var ping = require('ping');
 const ping2 = require('ping-tcp-js')
-
+const chalk = require('chalk') 
 let stats = {
     node1: {
         serverID: '7c740e8c',
