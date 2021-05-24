@@ -198,7 +198,7 @@ setInterval(() => {
     })
 
     // Panel Cherckers
-    var hosts = ['63.141.228.92', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'private.danbot.host'];
+    var hosts = ['164.132.74.251', 'panel.danbot.host', 'mail.danbot.host', 'api.danbot.host', 'admin.danbot.host', 'private.danbot.host'];
     hosts.forEach(function (host) {
         ping.sys.probe(host, function (isAlive) {
             if (isAlive == true) {
