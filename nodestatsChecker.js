@@ -237,6 +237,16 @@ setInterval(() => {
             status: false
         }));
 
+    ping2.ping('51.161.33.34', 3306) // Panel 1
+        .then(() => nodeStatus.set("mysqldatabases", {
+            timestamp: Date.now(),
+            status: true
+        }))
+        .catch((e) => nodeStatus.set("mysqldatabases", {
+            timestamp: Date.now(),
+            status: false
+        }));
+
     //Backup Storage
     axios({
         url: config.DanPterodactyl.hosturl + "/api/client/servers/6aa54402/resources",

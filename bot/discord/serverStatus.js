@@ -92,7 +92,11 @@ let nstatus = {
     }, {
         name: 'Animal API',
         data: 'api.danbot.host'
-    }]
+    }, {
+        name: 'MySQL Databases',
+        data: 'mysqldatabases'
+    }
+    ]
 }
 
 let parse = async () => {
