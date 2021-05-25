@@ -12,9 +12,6 @@ let nstatus = {
         name: 'Node 6',
         data: 'Node6'
     }, {
-        name: 'Node 7',
-        data: 'node7'
-    }, {
         name: 'Node 8',
         data: 'Node8'
     }, {
@@ -36,9 +33,6 @@ let nstatus = {
         name: 'Node 14',
         data: 'Node14'
     }, {
-        name: 'Node 15',
-        data: 'Node15'
-    }, {
         name: 'Node 16',
         data: 'Node16'
     }, {
@@ -55,9 +49,12 @@ let nstatus = {
         data: 'Node20'
     }],
 
-    "Storage Servers": [{
-        name: 'Backup Storage',
-        data: 'backups1'
+    "Donator Nodes": [{
+        name: 'Node 7',
+        data: 'node7'
+    }, {
+        name: 'Node 15',
+        data: 'node15'
     }],
 
     "Panel": [{
@@ -91,11 +88,15 @@ let nstatus = {
         data: 'mail.danbot.host'
     }, {
         name: 'Reverse Proxy',
-        data: '63.141.228.92'
+        data: '164.132.74.251'
     }, {
         name: 'Animal API',
         data: 'api.danbot.host'
-    }]
+    }, {
+        name: 'MySQL Databases',
+        data: 'mysqldatabases'
+    }
+    ]
 }
 
 let parse = async () => {

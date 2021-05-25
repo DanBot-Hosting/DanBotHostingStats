@@ -9,18 +9,20 @@ module.exports = async (client) => {
 
     let guild = client.guilds.cache.get("639477525927690240");
 
-    global.browser = await puppeteer.launch({args: ["--no-sandbox"/*openvz*/]});
+    global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     let checkNicks = () => {
-        guild.members.cache.filter(member => ['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ',', ':', ';'].some(r => member.displayName.startsWith(r))).forEach(x => {
-            x.setNickname('⚠️HOISTER ALERT ⚠️');
+        guild.members.cache.filter(member => member.displayName.match(/^[a-z0-9]/i) == null).forEach(x => {
+            x.setNickname('zHOISTER ALERT');
+        })
+
+        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.includes(r))).forEach(x => {
+            x.setNickname('No, No name for you');
         })
     }
 
-    setInterval(() => {
-        checkNicks()
-    }, 60000)
+    checkNicks()
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green(client.user.username + " has logged in!"));
     //getUsers()
@@ -28,15 +30,20 @@ module.exports = async (client) => {
     //Check make sure create account channels are closed after a hour
     guild.channels.cache.filter(x => x.parentID === '738539016688894024' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
 
+    // setInterval(() => {
+    //     let _codes = codes.fetchAll();
+    //     client.guilds.cache.get('639477525927690240').channels.cache.get('795884677688721448').setTopic(`There's a total of ${_codes.length} active codes (${_codes.map(x => typeof x.data == 'string'? JSON.parse(x.data).balance : x.data.balance).reduce((a, b) => a + b, 0)} servers)`)
+    // }, 60000);
+
     //Auto Activities List
     const activities = [{
         "text": "over DanBot Hosting",
         "type": "WATCHING"
     },
-        {
-            "text": "DanBot FM",
-            "type": "LISTENING"
-        }
+    {
+        "text": "DanBot FM",
+        "type": "LISTENING"
+    }
     ];
 
     //Initializing Cooldown
@@ -204,6 +211,6 @@ module.exports = async (client) => {
             }
         }).then(resources => {
             client.channels.cache.get("817550848343015475").setTopic("Status: " + resources.data.attributes.current_state + " | CPU Usage: " + resources.data.attributes.resources.cpu_absolute + "% | RAM Usage: " + pretty(resources.data.attributes.resources.memory_bytes) + " / 8GB")
-        })
+        }).catch(err => { });
     }, 5000)
 };

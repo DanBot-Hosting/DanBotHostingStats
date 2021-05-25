@@ -1,6 +1,21 @@
 const fetch = require('node-fetch');
+const axios = require('axios');
 
 module.exports = (client, message) => {
+    if(message.channel.id === "781099821561544744") {
+        axios({
+            url: `https://discord.com/api/v9/channels/${message.channel.id}/messages/${message.id}/crosspost`,
+            method: 'POST',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': "Bot " + config.DiscordBot.Token,
+                'Content-Type': 'application/json',
+            },
+        }).then(response => {
+            //console.log(response)
+        })
+    }
 
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
     if (!whitelisted.includes(message.author.id)) {
@@ -68,7 +83,7 @@ module.exports = (client, message) => {
         ]
         //Channel checker
 
-        if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null) &&
+        if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null && message.member.roles.cache.find(x => x.id === '778237595477606440') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
         if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "ticket") {
             //Cooldown setting

@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
 
         args[1] = args[1].match(/[0-9a-z]+/i)[0];
 
-        message.channel.send('Checking server `' + args[1] + '`\nPlease allow me 2seconds to fetch this.').then((msg) => {
+        message.channel.send('Checking server `' + args[1] + '`\nPlease allow me 2 seconds to fetch this.').then((msg) => {
             axios({
                 url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
                 method: 'GET',
@@ -74,6 +74,7 @@ exports.run = async (client, message, args) => {
                                             }
                                         }).then(response => {
                                             msg.edit('Server deleted!')
+                                            console.log(output.attributes.node)
 
                                             if (output.attributes.node === 14 || output.attributes.node === 27)
                                                 userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used - 1);

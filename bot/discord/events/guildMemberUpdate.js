@@ -1,12 +1,18 @@
 module.exports = async (client, oldMember, newMember) => {
     // If user nickname changes.
-    if (oldMember.displayName !== newMember.displayName) {
-        if (newMember.displayName.toLowerCase().includes("soloisaslut")) {
+    if (oldMember.displayName != newMember.displayName) {
+        let displayName = newMember.displayName.toLowerCase();
+
+        if (displayName.includes("soloisaslut")) {
             return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         }
 
-        if (['!', '`', '#', "'", '-', '.', '_', '"', '+', '*', '£', "$", '%', '^', "&", '(', ')', '>', '<', '[', ']', ','].some(r => newMember.displayName.startsWith(r))) {
-            newMember.setNickname('⚠️HOISTER ALERT ⚠️');
+        if (displayName.match(/^[a-z0-9]/i) == null) {
+            return newMember.setNickname('zHOISTER ALERT');
+        }
+
+        if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => displayName.includes(r))) {
+            newMember.setNickname('Dan\'s a meany');
         }
 
         // Make a new RichEmbed
@@ -19,7 +25,5 @@ module.exports = async (client, oldMember, newMember) => {
             .setTimestamp(new Date());
 
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed)
-
-        return;
     }
 };

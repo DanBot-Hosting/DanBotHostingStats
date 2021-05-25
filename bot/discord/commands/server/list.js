@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
         arr.push(...preoutput)
         setTimeout(async () => {
             //console.log(arr.length)
-            console.log(arr)
+            // console.log(arr)
             setTimeout(() => {
                 var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
                 const embed = new Discord.MessageEmbed()
@@ -28,5 +28,5 @@ exports.run = async (client, message, args) => {
                 //console.log(output)
             }, 500)
         }, 5000)
-    });
+    }).catch(err => {});
 }
