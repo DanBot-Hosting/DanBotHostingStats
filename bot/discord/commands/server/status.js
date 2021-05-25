@@ -1,6 +1,9 @@
 const axios = require('axios');
 const pretty = require('prettysize');
 exports.run = async (client, message, args) => {
+
+    return message.channel.send('This command is currently disabled.')
+
     if (!args[0]) {
         let embed = new Discord.MessageEmbed()
             .setColor("GREEN")
