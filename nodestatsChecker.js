@@ -146,7 +146,7 @@ setInterval(() => {
                 nodeServers.set(node, {servers: servercount.length})
             }).catch(err => {
             })
-        }, 500)
+        }, 800)
     }
 
     //Server limit
