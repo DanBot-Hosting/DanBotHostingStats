@@ -12,9 +12,7 @@ module.exports = (client, message) => {
                 'Authorization': "Bot " + config.DiscordBot.Token,
                 'Content-Type': 'application/json',
             },
-        }).then(response => {
-            //console.log(response)
-        })
+        }).then(response => { /* If you guys didnt know this. solo sucks */ })
     }
 
     let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
