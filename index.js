@@ -91,12 +91,6 @@ fs.readdir('./bot/discord/events/', (err, files) => {
 client.login(config.DiscordBot.Token);
 global.Allowed = ["293841631583535106", "137624084572798976"];
 
-//Music Stuffs
-const YouTube = require('simple-youtube-api');
-const ytdl = require('ytdl-core');
-global.youtube = new YouTube(config.GoogleAPIKey);
-global.queue = new Map();
-
 //Animal API website
 animalapp.use(helmet({
     frameguard: false
