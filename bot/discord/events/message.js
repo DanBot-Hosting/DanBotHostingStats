@@ -76,10 +76,11 @@ module.exports = (client, message) => {
     console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
     try {
         let blacklisted = [
-            '739231758087880845',
+            '739231758087880845', '786363228287664190',
             '738839334333186068', '738840097218101309',
             '738844675372482720', '738846229919825992',
-            '738548111323955270', '739175011721413009'
+            '738548111323955270', '739175011721413009',
+            '738785336187945051'
         ]
         //Channel checker
 
