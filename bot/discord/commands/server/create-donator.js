@@ -57,11 +57,13 @@ exports.run = async (client, message, args) => {
                 .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
                 .addField("__**WebHosting:**__", "Nginx", true)
                 .addField("__**Custom Egg:**__", "ShareX", true)
+                .addField("__**Storage:**__", "storage", true)
                 .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
             return;
         }
 
         let types = {
+            storage: pServerCreatesettings.storage,
             nginx: pServerCreatesettings.nginx,
             reddiscordbot: pServerCreatesettings.reddiscordbot,
             nodejs: pServerCreatesettings.nodejs,
