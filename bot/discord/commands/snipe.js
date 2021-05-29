@@ -1,4 +1,7 @@
 exports.run = async (client, message, args) => {
+    
+    // Lets only staff use the command
+    if (!message.member.roles.cache.get('748117822370086932')) return;
 
     if (args[0] != null && args[0].toLowerCase() == 'dump' && message.member.roles.cache.get('778237595477606440') != null) {
 
