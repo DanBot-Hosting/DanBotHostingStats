@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            client.channels.cache.get('848489049203146762').send(`${message.member} purged ${target == '*'? `all messages.`: `${target}'s messages in ${message.channel}.`}`, file)
+            client.channels.cache.get('848489049203146762').send(`${message.member} purged ${target == '*'? `all messages`: `${target}'s messages in ${message.channel}`} for the reason: ${reason}.`, file)
             return;
         }
     }
