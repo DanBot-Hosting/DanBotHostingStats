@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
             if (reason.length == 0) {
                 message.channel.send({
                     embed: new Discord.MessageEmbed().setTitle('Snipe Dump')
-                        .setDescription(" *  -- Can only be used by staff --\n* Usage: DBH!snipe purge [user | *] <reason>\n* if user is not specified the bot will purge all the logs for that current channel\n* if you pass * as user, it will completely dumb the logs.")
+                        .setDescription(" **\*  -- Can only be used by staff --**\n**\* Usage: DBH!snipe purge [user | \*] <reason>**\n**\* if user is not specified the bot will purge all the logs for that current channel**\n**\* if you pass \* as user, it will completely dumb the logs.**")
                         .setColor('BLUE')
                 })
                 return;
@@ -36,8 +36,8 @@ exports.run = async (client, message, args) => {
             // Target Check
 
             let target;
-            if (reason[0] == '*' || message.guild.members.cache.get(reason[0].match(/[0-9]{18}/).length == 0 ? reason[0] : reason[0].match(/[0-9]{18}/)[0])) {
-                target = reason[0].match(/[0-9]{18}/).length == 0 ? reason[0] : reason[0].match(/[0-9]{18}/)[0];
+            if (reason[0] == '*' || (message.guild.members.cache.get((reason[0].match(/[0-9]{18}/).length == 0 || !reason[0].match(/[0-9]{18}/)) ? reason[0] : reason[0].match(/[0-9]{18}/)[0]))) {
+                target = (reason[0].match(/[0-9]{18}/).length == 0 || !reason[0].match(/[0-9]{18}/)) ? reason[0] : reason[0].match(/[0-9]{18}/)[0];
                 reason.shift();
             }
 
@@ -48,6 +48,7 @@ exports.run = async (client, message, args) => {
 
             message.channel.send(`TARGET: ${target} | reason: ${reason.join(' ')}`);
 
+            return;
         }
     }
 
