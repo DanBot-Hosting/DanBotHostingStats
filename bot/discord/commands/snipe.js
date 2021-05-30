@@ -36,8 +36,8 @@ exports.run = async (client, message, args) => {
             // Target Check
 
             let target;
-            if (reason[0] == '*' || (message.guild.members.cache.get((reason[0].match(/[0-9]{18}/).length == 0 || !reason[0].match(/[0-9]{18}/)) ? reason[0] : reason[0].match(/[0-9]{18}/)[0]))) {
-                target = (reason[0].match(/[0-9]{18}/).length == 0 || !reason[0].match(/[0-9]{18}/)) ? reason[0] : reason[0].match(/[0-9]{18}/)[0];
+            if (reason[0] == '*' || (message.guild.members.cache.get((!reason[0].match(/[0-9]{18}/) || reason[0].match(/[0-9]{18}/).length == 0)) ? reason[0] : reason[0].match(/[0-9]{18}/)[0]))) {
+                target = (!reason[0].match(/[0-9]{18}/) || reason[0].match(/[0-9]{18}/).length == 0) ? reason[0] : reason[0].match(/[0-9]{18}/)[0];
                 reason.shift();
             }
 
