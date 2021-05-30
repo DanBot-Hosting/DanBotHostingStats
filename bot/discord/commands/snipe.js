@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     if (args[0] != null) {
 
         if (args[0].toLowerCase() == 'dump' && message.member.roles.cache.get('778237595477606440') != null) {
-
+            let file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipes-Dump.json");
             message.author.send(file);
             message.channel.send('Check your dms.');
             return;
@@ -50,7 +50,7 @@ exports.run = async (client, message, args) => {
 
         }
     }
-    if (message.member.roles.cache.find(r => r.id === config.DiscordBot.roles.staff) == null) return message.reply("You seemed to drop the sniper when you tried sniping, please learn how to snipe.");
+
     let embed3 = new Discord.MessageEmbed().setDescription(`Theres nothing to snipe`)
 
     let snipe = messageSnipes.get(message.channel.id)
