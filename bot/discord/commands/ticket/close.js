@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
                     const embed = new Discord.MessageEmbed()
                     .setColor('RED')
                     .setTitle(`A Ticket Has Been Closed`)
-                    .setDescription(`User: <@!${message.author.id}>\n\n Has closed a Ticket: **${message.channel.name}**`)
+                    .setDescription(`User: <@!${message.author.id}>\n\n Ticket Name: **${message.channel.name}**`)
                     .setFooter(message.author.id)
                     .setTimestamp()
                     channel.send(embed)
