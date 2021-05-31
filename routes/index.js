@@ -546,6 +546,16 @@ Router.get("/cams", (req, res) => {
 
 });
 
+Router.get('/camera-front.png', (req, res) => {
+    if (fs.existsSync('../camera-front.png')) {
+        var img = fs.readFileSync('../camera-front.png');
+        res.writeHead(200, {'Content-Type': 'image/gif'});
+        res.end(img, 'binary')
+    } else {
+        res.send('404')
+    }
+})
+
 module.exports = Router;
 
 /* Authorization check, if not authorized return them to the login page.
