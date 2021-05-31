@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 exports.run = (client, message, args) => {
-    if (message.member.roles.cache.find(r => r.id === "639489438036000769")) { // changed the role to administrator only so i can install a package.
+    if (message.member.roles.cache.find(r => r.id === "778237595477606440")) {
 
         exec(`${args.join(" ")}`, (error, stdout) => {
 
