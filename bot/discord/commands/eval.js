@@ -3,9 +3,8 @@ const ms = require('ms');
 exports.run = async (client, message) => {
     let args = message.content.split(' ').slice(1);
     let cont = message.content.split(' ').slice(1).join(' ');
-//778237595477606440
 
-    if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) { // changed the role to administrator only so i can install a package.
+    if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) {
 
                 message.channel.send('Evaluating...').then(msg => {
                 const responses = ["SyntaxError: Unexpected token F in JSON at position 48", "SyntaxError: Unexpected identifier", 'UnhandledPromiseRejectionWarning: DiscordAPIError: Missing Permissions', "TypeError: Cannot read property 'messages' of undefined", "UnhandledPromiseRejectionWarning: MongoError: bad auth : Authentication failed.", `TypeError: Cannot read property '${args.join(' ')}' of undefined`]
