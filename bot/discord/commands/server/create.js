@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Egg:**__", "ShareX", true)
-        //.addField(__**Storage:**__, "storage", true)
+        .addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
@@ -42,7 +42,7 @@ exports.run = async (client, message, args) => {
     }
 
     let types = {
-        //storage: data.storage,
+        storage: data.storage,
         nginx: data.nginx,
         reddiscordbot: data.reddiscordbot,
         nodejs: data.nodejs,

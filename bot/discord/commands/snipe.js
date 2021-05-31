@@ -1,12 +1,67 @@
 exports.run = async (client, message, args) => {
 
-    if (args[0] != null && args[0].toLowerCase() == 'dump' && message.member.roles.cache.get('778237595477606440') != null) {
+    // Lets only staff use the command [useless - never uncomment - i will find you if you do]
+    // if (!message.member.roles.cache.get('748117822370086932')) return;
 
-        let file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipes-Dump.json");
+    if (args[0] != null) {
 
-        message.author.send(file);
-        message.channel.send('Check your dms.');
-        return;
+        if (args[0].toLowerCase() == 'dump' && message.member.roles.cache.get('778237595477606440') != null) {
+            let file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipes-Dump.json");
+            message.author.send(file);
+            message.channel.send('Check your dms.');
+            return;
+        }
+
+        if (args[0].toLowerCase() == 'purge' && (message.member.roles.cache.get('748117822370086932') != null || message.member.roles.cache.get('778237595477606440') != null)) {
+
+            /**
+             *  -- Can only be used by staff --
+             * Usage: DBH!snipe purge [user | *] <reason>
+             * if user is not specified the bot will purge all the logs for that current channel
+             * if you pass * as user, it will completely dumb the logs.
+             */
+
+            let reason = args.slice(1);
+
+            if (reason.length == 0) {
+                message.channel.send({
+                    embed: new Discord.MessageEmbed().setTitle('Snipe Dump')
+                        .setDescription(" \*  -- Can only be used by staff --\n\* Usage: DBH!snipe purge [user | \*] <reason>\n\* if user is not specified the bot will purge all the logs for that current channel\n\* if you pass \* as user, it will completely dumb the logs.")
+                        .setColor('BLUE')
+                })
+                return;
+            }
+
+            // Target Check
+            let target;
+            if (reason[0] == '*' || message.guild.members.cache.get((reason[0].match(/[0-9]{18}/) == null ? reason[0] : reason[0].match(/[0-9]{18}/)[0]))) {
+                target = (!reason[0].match(/[0-9]{18}/) || reason[0].match(/[0-9]{18}/).length == 0) ? reason[0] : reason[0].match(/[0-9]{18}/)[0];
+                reason.shift();
+            }
+
+            if (reason.length == 0) {
+                message.channel.send('You are required to provide a reason when purging snipe logs.')
+                return;
+            }
+            let file;
+
+            if (target != '*') {
+                file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(messageSnipes.get(message.channel.id).filter(x => x.member == target)), "utf8"), "Snipe-Logs.json");
+                messageSnipes.set(message.channel.id, messageSnipes.get(message.channel.id).filter(x => x.member != target));
+            }
+            else if (message.member.roles.cache.get('778237595477606440') != null && message.member.roles.cache.get('778237595477606440') != null) {
+                file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipe-Logs.json");
+
+                messageSnipes.clear();
+            } else {
+                message.channel.send("You don't have permission to do this.");
+                return;
+            }
+
+            client.channels.cache.get('848489049203146762').send(`${message.member} purged ${target == '*'? `all messages`: `${target}'s messages in ${message.channel}`} for the reason: ${reason}.`, file)
+            message.channel.send('purged.')
+            return;
+        }
     }
 
     let embed3 = new Discord.MessageEmbed().setDescription(`Theres nothing to snipe`)
