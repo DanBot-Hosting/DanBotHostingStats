@@ -538,6 +538,14 @@ Router.get("/privacy-policy", async (req, res) => {
     });
 });
 
+Router.get("/cams", (req, res) => {
+
+    res.render('cams.ejs', {
+        user: req.isAuthenticated() ? req.user : null
+    })
+
+});
+
 module.exports = Router;
 
 /* Authorization check, if not authorized return them to the login page.
