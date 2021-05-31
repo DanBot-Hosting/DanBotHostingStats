@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
                     },
                     ]).then(bin=> {
                     const Discord = require('discord.js') 
-                        const channel = client.channels.cache.get('channel id UwU') //OwO You need a channel ID I suggest making a new one :)
+                        const channel = client.channels.cache.get('848714572667682816');
                         const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .setTitle(`A Ticket Has Been Closed`)
