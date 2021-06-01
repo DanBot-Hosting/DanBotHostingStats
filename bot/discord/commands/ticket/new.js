@@ -44,7 +44,7 @@ exports.run = async (client, message, args) => {
     }, 1000)
 
     if (userData.get(message.author.id) == null) {
-        channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is not linked with a console account*')
+        channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem. \n\n *This account is not linked with a console account*\n\n<748117822370086932> NEW TICKET')
     } else {
         let embed = new Discord.MessageEmbed()
             .setColor(`GREEN`)
