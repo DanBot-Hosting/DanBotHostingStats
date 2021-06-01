@@ -838,7 +838,7 @@ list.ts3 = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [9, 3],
+        "locations": botswebdb,
         "dedicated_ip": false,
         "port_range": []
     },
