@@ -1,6 +1,4 @@
 exports.run = async (client, message, args) => {
-    let staffRole = message.guild.roles.cache.get('748117822370086932');
-
     if (message.channel.name.includes('-ticket')) {
         message.reply("Now all staff can see your tickwt.")
         await message.channel.updateOverwrite('748117822370086932', {
