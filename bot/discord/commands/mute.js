@@ -81,7 +81,7 @@ exports.run = async (client, message, args) => {
     let time = ms(args[1]) || 300000;
 
     if (target == null) return message.reply("please specify a valid user.");
-    if (time > 2592000000) time = 2592000000; //30days
+    if (time > 2592000000) time = 315569520000; //10Years
     if (time < 5000) time = 5000; //5seconds
 
 
