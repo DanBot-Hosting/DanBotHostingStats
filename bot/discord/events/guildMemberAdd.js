@@ -5,7 +5,7 @@ module.exports = async (client, member, guild) => {
         let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
 
         if (Date.now() - member.user.createdAt < 432000000) {
-            await member.ban({reason: "ALT account - Under 5days"}) && welcomeChannel.send('Bonk')
+            await member.ban({reason: "ALT account - Under 5days"}) && welcomeChannel.send('Bonk, Created days ago: ' + humanizeDuration(Date.now() - member.user.createdAt, {round: true}))
 
         } else if (Date.now() - member.user.createdAt < 863136000) {
             await member.user.send(`Sorry! We only allow accounts over the age of 10days to join. \nYour account was created ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})} ago.\n\nYou are welcome to join again once this account is over 10days old!`)
