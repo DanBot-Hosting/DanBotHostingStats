@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
         let code = codes.get(args[1]);
 
         if (code == null) {
-            message.channel.send('That code is invalid or expired')
+            message.reply('That code is invalid or expired')
             return;
         }
         let oldBal = userPrem.get(message.author.id + '.donated') || 0;
