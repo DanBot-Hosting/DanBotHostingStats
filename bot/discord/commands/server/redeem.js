@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         let oldBal = userPrem.get(message.author.id + '.donated') || 0;
 
         let now = Date.now();
-        message.channel.send(`You have redeemed a code with ${code.balance} premium server(s), you now have ${oldBal + code.balance}!`)
+        message.reply(`You have redeemed a code with ${code.balance} premium server(s), you now have ${oldBal + code.balance}!`)
         client.channels.cache.get('795884677688721448').send('<@' + message.author.id + '>, Redeemed code: ' + args[1] + ' it held ' + code.balance + ' premium servers! *This code was redeemed in ' + humanizeDuration(now - code.createdAt) + '*')
 
         codes.delete(args[1]);
