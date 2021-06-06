@@ -149,6 +149,7 @@ Router.get(
     }
 );
 
+/*
 Router.get("/user/:ID", async (req, res) => {
     try {
         let ID = req.params.ID;
@@ -460,7 +461,7 @@ Router.get("/user/:ID/password-reset-code", async (req, res) => {
     }
 
     });
-
+*/
 Router.get("*", async function (req, res) {
     res.status(404).send({
         error: true,
