@@ -164,7 +164,7 @@ Router.get("/user/:ID", async (req, res) => {
 
         }
 
-        if (req.headers.authorization !=== config.externalPassword) {
+        if (req.headers.authorization !== config.externalPassword) {
 
             return res.status(401).send({
                 error: true,
@@ -224,7 +224,7 @@ Router.post("/user/:ID/new", async (req, res) => {
 
         }
 
-        if (req.headers.authorization !=== config.externalPassword) {
+        if (req.headers.authorization !== config.externalPassword) {
 
             return res.status(401).send({
                 error: true,
@@ -336,7 +336,7 @@ Router.get("/user/:ID/servers", (req, res) => {
 
     }
 
-    if (req.headers.authorization !=== config.externalPassword) {
+    if (req.headers.authorization !== config.externalPassword) {
 
         return res.status(401).send({
             error: true,
@@ -405,7 +405,7 @@ Router.get("/user/:ID/password-reset-code", async (req, res) => {
 
         }
 
-        if (req.headers.authorization !=== config.externalPassword) {
+        if (req.headers.authorization !== config.externalPassword) {
 
             return res.status(401).send({
                 error: true,
