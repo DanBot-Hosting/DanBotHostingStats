@@ -7,11 +7,8 @@ const oauth = new DiscordOauth2({
 });
 
 Router.get("/", (req, res) => {
-
-    res.json({error: false, msg: "DanBot Hosting beta API and Animal API"});
-
+    res.json({ error: false, msg: "DanBot Hosting beta API and Animal API" });
 });
-
 
 Router.get("/stats", (req, res) => {
     try {
@@ -65,9 +62,9 @@ Router.get("/stats", (req, res) => {
             Node14: nodeStatus.fetch('node14')
         }
 
-        res.json({error: false, data: data, status: status});
+        res.json({ error: false, data: data, status: status });
     } catch (e) {
-        res.json({error: true, message: e});
+        res.json({ error: true, message: e });
     }
 });
 
@@ -77,10 +74,10 @@ Router.post(
     async (req, res) => {
         try {
             let code = req.query.code;
-            if (!code) return res.json({error: true, message: "no code"});
+            if (!code) return res.json({ error: true, message: "no code" });
 
             let redirect = req.query.redirect;
-            if (!redirect) return res.json({error: true, message: "no redirect"});
+            if (!redirect) return res.json({ error: true, message: "no redirect" });
 
             let info = await oauth.tokenRequest({
                 clientId: config.DiscordBot.clientID,
@@ -105,7 +102,7 @@ Router.post(
             });
         } catch (e) {
             console.log(e)
-            return res.json({error: true, message: e});
+            return res.json({ error: true, message: e });
         }
     }
 );
@@ -116,10 +113,10 @@ Router.get(
     async (req, res) => {
         try {
             let code = req.query.code;
-            if (!code) return res.json({error: true, message: "no code"});
+            if (!code) return res.json({ error: true, message: "no code" });
 
             let redirect = req.query.redirect;
-            if (!redirect) return res.json({error: true, message: "no redirect"});
+            if (!redirect) return res.json({ error: true, message: "no redirect" });
 
             let info = await oauth.tokenRequest({
                 clientId: config.DiscordBot.clientID,
@@ -136,59 +133,46 @@ Router.get(
             };
 
             await oauth.getUser(info.access_token).then(async userInfo => {
-
                 data.user = userInfo;
-
                 res.send(data);
-
             });
         } catch (e) {
             console.log(e)
-            return res.json({error: true, message: e});
+            return res.json({ error: true, message: e });
         }
     }
 );
 
-/*
+
 Router.get("/user/:ID", async (req, res) => {
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({error: true, message: "no user id"});
+        if (!ID) return res.json({ error: true, message: "no user id" });
 
-        if (!req.headers.authorization) {
-
+        if (!req.headers.authorization || req.headers.authorization !== config.externalPassword) {
             return res.status(401).send({
                 error: true,
                 status: 401,
-                message: "no authorization header"
+                message: !req.headers.authorization ? "no authorization header" : "unauthorized"
             });
-
         }
 
-        if (req.headers.authorization !== config.externalPassword) {
+        let userData = userData.get(ID);
 
-            return res.status(401).send({
-                error: true,
-                status: 401,
-                message: "unauthorized"
-            });
-
-        }
-
-        if (userData.get(ID) == null) {
-            res.json({
+        if (userData == null) {
+            return res.json({
                 error: true,
                 status: 404,
                 message: "User not found"
             });
         } else {
             const data = {
-                username: userData.get(ID).username,
-                email: userData.get(ID).email,
-                discordID: userData.get(ID).discordID,
-                consoleID: userData.get(ID).consoleID,
-                linkTime: userData.get(ID).linkTime,
-                linkDate: userData.get(ID).linkDate
+                username: userData.username,
+                email: userData.email,
+                discordID: userData.discordID,
+                consoleID: userData.consoleID,
+                linkTime: userData.linkTime,
+                linkDate: userData.linkDate
             }
 
             res.json({
@@ -210,64 +194,48 @@ Router.get("/user/:ID", async (req, res) => {
 Router.post("/user/:ID/new", async (req, res) => {
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({error: true, message: "no user id"});
+        if (!ID) return res.json({ error: true, message: "no user id" });
 
-        console.log(req.headers)
-        console.log(req.body)
+        // console.log(req.headers)
+        // console.log(req.body)
 
-        if (!req.headers.authorization) {
-
+        if (!req.headers.authorization || req.headers.authorization !== config.externalPassword) {
             return res.status(401).send({
                 error: true,
                 status: 401,
-                message: "no authorization header"
+                message: !req.headers.authorization ? "no authorization header" : "unauthorized"
             });
-
         }
 
-        if (req.headers.authorization !== config.externalPassword) {
+        if (!req.body || !req.body.email || !req.body.username || !req.body.password || !req.body.id) {
 
-            return res.status(401).send({
-                error: true,
-                status: 401,
-                message: "unauthorized"
-            });
+            if (!req.body) {
+                return res.status(404).send({
+                    error: true,
+                    status: 404,
+                    message: "no body"
+                });
+            }
 
-        }
-
-        if (!req.body) {
-
-            return res.status(404).send({
+            let toSend = {
                 error: true,
                 status: 404,
-                message: "no body"
-            });
+                message: "Missing body variables: "
+            }
 
+            let missing = [];
+
+            if (!req.body.id) missing.push("id");
+            if (!req.body.email) missing.push("email");
+            if (!req.body.username) missing.push("username");
+            if (!req.body.password) missing.push("password");
+
+            toSend.message += missing.join(', ')
+
+            return res.status(404).send(toSend);
         }
 
-        if (!req.body.email) return res.status(404).send({
-            error: true,
-            status: 404,
-            message: "no body email"
-        });
 
-        if (!req.body.username) return res.status(404).send({
-            error: true,
-            status: 404,
-            message: "no body username"
-        });
-
-        if (!req.body.password) return res.status(404).send({
-            error: true,
-            status: 404,
-            message: "no body password"
-        });
-
-        if (!req.body.id) return res.status(404).send({
-            error: true,
-            status: 404,
-            message: "no body id"
-        });
 
         const data = {
             "username": req.body.username,
@@ -327,30 +295,18 @@ Router.post("/user/:ID/new", async (req, res) => {
 
 Router.get("/user/:ID/servers", (req, res) => {
 
-    if (!req.headers.authorization) {
-
+    if (!req.headers.authorization || req.headers.authorization !== config.externalPassword) {
         return res.status(401).send({
             error: true,
             status: 401,
-            message: "no authorization header"
+            message: !req.headers.authorization ? "no authorization header" : "unauthorized"
         });
-
-    }
-
-    if (req.headers.authorization !== config.externalPassword) {
-
-        return res.status(401).send({
-            error: true,
-            status: 401,
-            message: "unauthorized"
-        });
-
     }
 
     var arr = [];
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({error: true, message: "no user id"});
+        if (!ID) return res.json({ error: true, message: "no user id" });
         axios({
             url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(ID).consoleID + "?include=servers",
             method: 'GET',
@@ -365,10 +321,10 @@ Router.get("/user/:ID/servers", (req, res) => {
             const preoutput = response.data.attributes.relationships.servers.data
             arr.push(...preoutput)
             setTimeout(async () => {
-                console.log(arr)
+                // console.log(arr)
                 setTimeout(() => {
                     var clean = arr.map(e => e.attributes.container)
-                    console.log(clean)
+                    // console.log(clean)
 
                     res.json({
                         error: false,
@@ -391,29 +347,17 @@ Router.get("/user/:ID/servers", (req, res) => {
 Router.get("/user/:ID/password-reset-code", async (req, res) => {
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({error: true, message: "no user id"});
+        if (!ID) return res.json({ error: true, message: "no user id" });
 
-        console.log(req.headers)
-        console.log(req.body)
+        // console.log(req.headers)
+        // console.log(req.body)
 
-        if (!req.headers.authorization) {
-
+        if (!req.headers.authorization || req.headers.authorization !== config.externalPassword) {
             return res.status(401).send({
                 error: true,
                 status: 401,
-                message: "no authorization header"
+                message: !req.headers.authorization ? "no authorization header" : "unauthorized"
             });
-
-        }
-
-        if (req.headers.authorization !== config.externalPassword) {
-
-            return res.status(401).send({
-                error: true,
-                status: 401,
-                message: "unauthorized"
-            });
-
         }
 
         function codegen(length) {
@@ -448,7 +392,7 @@ Router.get("/user/:ID/password-reset-code", async (req, res) => {
             };
             transport.sendMail(emailmessage);
 
-            return res.json({ error: false, message: "SENT", data: {code} });
+            return res.json({ error: false, message: "SENT", data: { code } });
 
         })
 
@@ -460,8 +404,8 @@ Router.get("/user/:ID/password-reset-code", async (req, res) => {
         });
     }
 
-    });
-*/
+});
+
 Router.get("*", async function (req, res) {
     res.status(404).send({
         error: true,
