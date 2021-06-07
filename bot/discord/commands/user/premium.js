@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
         .addField('Premium servers used:', (user.used || 0) + " out of  " + parser.format(allowed) + " servers used");
 
     if (boosted == null && message.member.roles.cache.get('710208090741539006') != null) {
-        embed.setDescription('**NOTE:** we\'re experiencin  g a problem with out booster API. The number shown might not be accurate.');
+        embed.setDescription('**WARNING:**\n*we\'re experiencing a problem with out booster API. The number shown might not be accurate.*');
     }
 
     await message.channel.send(embed)
