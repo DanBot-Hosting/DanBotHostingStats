@@ -19,11 +19,16 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let allowed = Math.floor(user.donated / config.node7.price);
-    if (message.member.roles.cache.get('710208090741539006') != null)
-        allowed = allowed + (boosted.data[userid] != null ? Math.floor(boosted.data[userid] * 2.5) : 2);
+    let allowed = Math.floor(user.donated / config.node7.price) + ((boosted != null && boosted.data[userid] != null) ? Math.floor(boosted.data[userid] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
+
+
     const embed = new Discord.MessageEmbed()
         .setColor('BLUE')
-        .addField('Premium servers used:', (user.used || 0) + " out of  " + parser.format(allowed) + " servers used")
+        .addField('Premium servers used:', (user.used || 0) + " out of  " + parser.format(allowed) + " servers used");
+
+    if (boosted == null && message.member.roles.cache.get('710208090741539006') != null) {
+        embed.setDescription('**NOTE:** we\'re experiencin  g a problem with out booster API. The number shown might not be accurate.');
+    }
+
     await message.channel.send(embed)
 }
