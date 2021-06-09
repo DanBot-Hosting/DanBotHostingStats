@@ -122,7 +122,7 @@ module.exports = async (client) => {
 
     //Voice channel stats updator
     setInterval(async () => {
-        let guild1 = await client.guilds.cache.get("639477525927690240");
+        let guild1 = client.guilds.cache.get("639477525927690240");
         let roleID1 = '748117822370086932';
         let staffCount = guild1.roles.cache.get(roleID1).members.size;
         client.channels.cache.get("739821419910791348").edit({
@@ -130,7 +130,7 @@ module.exports = async (client) => {
             reason: "Staff count update"
         });
 
-        let guild2 = await client.guilds.cache.get("639477525927690240");
+        let guild2 = client.guilds.cache.get("639477525927690240");
         let roleID2 = '639490038434103306';
         let memberCount = guild2.roles.cache.get(roleID2).members.size;
         client.channels.cache.get("739821366991257621").edit({
@@ -138,7 +138,7 @@ module.exports = async (client) => {
             reason: "Member count update"
         });
 
-        let guild3 = await client.guilds.cache.get("639477525927690240");
+        let guild3 = client.guilds.cache.get("639477525927690240");
         let roleID3 = '704467807122882562';
         let botCount = guild3.roles.cache.get(roleID3).members.size;
         client.channels.cache.get("739821468296413254").edit({
@@ -151,7 +151,7 @@ module.exports = async (client) => {
             reason: "TMembers count update"
         });
 
-        let guild4 = await client.guilds.cache.get("639477525927690240")
+        let guild4 = client.guilds.cache.get("639477525927690240")
         const ticketcount = guild4.channels.cache.filter(x => x.name.endsWith("-ticket")).size
         client.channels.cache.get("739821447924416562").edit({
             name: `Tickets: ${ticketcount}`,
