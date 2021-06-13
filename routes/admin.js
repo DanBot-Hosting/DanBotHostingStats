@@ -83,6 +83,25 @@ Router.get("/node5", checkAuth, (req, res) => {
     })
 
 });
+
+Router.post("/node7", checkAuth, (req, res) => {
+
+    let data = req.body;
+    console.log(data);
+
+});
+
+Router.get("/node7", checkAuth, (req, res) => {
+    let bots = db.get(`${req.user.id}.bots`);
+    let items = nodeData.fetch('Node7-docker.dockerAll');
+    let filteredItems = items.filter(i => i.state === "running");
+
+    res.render('node7-admin.ejs', {
+        table: filteredItems,
+        user: req.isAuthenticated() ? req.user : null, bots, db
+    })
+
+});
 //Requests/tickets page
 Router.get("/requests", checkAuth, (req, res) => {
     let bots = db.get(`${req.user.id}.bots`);
