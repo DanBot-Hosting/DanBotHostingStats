@@ -62,8 +62,8 @@ function sortByDescending() {
             <% table.forEach(function(entry) { %>
                 <tr>
                     <td> <%= entry.name.slice(0, -28) %> </td>
-                    <td> <%= entry.cpu_percent.toFixed(2) %>%</td>
-                    <td><%- pretty(entry.mem_usage) %> </td>
+                    <td> <%= entry.cpuPercent.toFixed(2) %>%</td>
+                    <td><%- pretty(entry.memUsage) %> </td>
                     <td>IN: <%- pretty(entry.netIO.rx) %>, OUT: <%- pretty(entry.netIO.tx) %></td>
                     <td><a style="color:red;" href="https://panel.danbot.host/server/<%= entry.name.slice(0, -28) %>">View
                             Server</a>, <a style="color:blue;"
