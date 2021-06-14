@@ -11,6 +11,7 @@ exports.run = async (client, message, args) => {
     }).catch(e => {
         console.log(e);
     })
+
     let userid = args[1] == null ? (message.author.id) : (args[1].match(/[0-9]{18}/).length == 0 ? args[1] : args[1].match(/[0-9]{18}/)[0]);
 
     let member = message.guild.members.cache.get(userid);
