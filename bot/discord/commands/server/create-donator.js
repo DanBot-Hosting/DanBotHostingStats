@@ -5,7 +5,7 @@ const axios = require('axios');
 
 exports.run = async (client, message, args) => {
 
-    let user = userPrem.fetch(message.author.id);
+    let userPrem = userPrem.fetch(message.author.id) || {};
 
     let boosted;
     axios({
@@ -31,7 +31,9 @@ exports.run = async (client, message, args) => {
             return;
         }
 
-        let allowed = (message.member.roles.cache.get('710208090741539006') != null) ? (Math.floor(user.donated / config.node7.price) + (boosted != null ? Math.floor(boosted * 2.5) : 2)) : Math.floor(user.donated / config.node7.price);
+
+        let allowed = Math.floor((userPrem.donated || 0) / config.node7.price) + ((boosted != null && boosted.data[message.author.id] != null) ? Math.floor(boosted.data[message.author.id] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
+        
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
         if (allowed === 0) {
@@ -126,8 +128,8 @@ exports.run = async (client, message, args) => {
                     client.channels.cache.get("785236066500083772").send(embed2)
 
                 }).catch(error => {
-                message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-            })
+                    message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                })
             return;
         }
 
