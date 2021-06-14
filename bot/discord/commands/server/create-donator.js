@@ -5,7 +5,7 @@ const axios = require('axios');
 
 exports.run = async (client, message, args) => {
 
-    let userPrem = userPrem.fetch(message.author.id) || {};
+    let userP = userPrem.fetch(message.author.id) || {};
 
     let boosted;
     axios({
@@ -32,7 +32,7 @@ exports.run = async (client, message, args) => {
         }
 
 
-        let allowed = Math.floor((userPrem.donated || 0) / config.node7.price) + ((boosted != null && boosted.data[message.author.id] != null) ? Math.floor(boosted.data[message.author.id] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
+        let allowed = Math.floor((userP.donated || 0) / config.node7.price) + ((boosted != null && boosted.data[message.author.id] != null) ? Math.floor(boosted.data[message.author.id] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
         
         let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
