@@ -18,8 +18,6 @@
                 <th>RAM</th>
                 <th>SSD Usage</th>
                 <th>NET Usage</th>
-                <th>Wings Online</th>
-                <th>Server Online</th>
             </tr>
             </thead>
             <tbody>
@@ -30,8 +28,6 @@
                     <td> <%- entry.memused %> / <%- entry.memtotal %></td>
                     <td> <%- entry.diskused %> / <%- entry.disktotal %></td>
                     <td>IN: <%- entry.netrx %>, OUT: <%- entry.nettx %></td>
-                    <td><%- entry.status %></td>
-                    <td><%- entry.is_vm_online %></td>
 
                 </tr>
             <% }); %>
