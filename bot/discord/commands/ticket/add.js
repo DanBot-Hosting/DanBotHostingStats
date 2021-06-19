@@ -7,10 +7,11 @@ exports.run = async (client, message, args) => {
     if (!args[1] || !message.guild.members.cache.get(args[1])) {
         message.channel.send('Please run this command again with the users ID')
     } else {
-        await message.channel.overwritePermissions([{
-            id: args[1],
-            allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY"]
-        }])
+        await message.channel.updateOverwrite(args[1], {
+            VIEW_CHANNEL: true,
+            SEND_MESSAGES: true,
+            READ_MESSAGE_HISTORY: true
+        })
         message.channel.send("Sucess!")
     }
 }
