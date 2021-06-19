@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
             SEND_MESSAGES: true,
             READ_MESSAGE_HISTORY: true
         })
-        message.channel.send("Sucess!")
+        message.channel.send("Success!")
     }
 }
 
