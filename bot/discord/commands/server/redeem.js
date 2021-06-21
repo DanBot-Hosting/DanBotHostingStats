@@ -1,6 +1,10 @@
 const humanizeDuration = require('humanize-duration');
 
 exports.run = async (client, message, args) => {
+    if(message.member.roles.cache.find(r => r.id === "748117822370086932") && message.channel.id === "754441222424363088") {
+    return message.channel.send('LMAO Imagine trying to be a staff member and trying to redeem a code in <#754441222424363088>')
+}
+
     let setDonations = (userid, amount) => {
         userPrem.set(userid + '.donated', amount)
     }
