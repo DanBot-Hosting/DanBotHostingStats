@@ -1,3 +1,4 @@
+
 import { MessageEmbed } from "discord.js";
 exports.run = async (client, message) => {
     // filesize function 
@@ -47,6 +48,5 @@ exports.run = async (client, message) => {
             { inline: true, name: "\u200b", value: "__**[Storage 1 - Storage](https://danbot.host/Storage1)**__ \n**CPU LOAD**: " + nodeData.fetch("Storage1.cpuload") + "% \n**RAM (USED/TOTAL)**: " + nodeData.fetch("Storage1.memused") + " / " + nodeData.fetch("Storage1.memtotal") + " \n**STORAGE (USED/TOTAL)**: " + nodeData.fetch("Storage1.diskused") + " / " + nodeData.fetch("Storage1.disktotal") + " \n**UPTIME**: " + nodeData.fetch("Storage1.osuptime") + "\n**Servers**: **Total**: " + nodeData.fetch("Storage1.dockercontainers") + ", **Running**: " + nodeData.fetch("Storage1.dockercontainersrunning") + ", **Stopped**: " + nodeData.fetch("Storage1.dockercontainersstopped") },
             { inline: true, name: "\u200b", value: `__**Total Usage:**__ \n__**Total CPU Cores:**__ \n${getCpuThreads}\n__**Ram Total:**__ \n${getMemory} \n` + `\n__**Disk Total:**__ ` + `\n${getDisc1} ` + `out of ${getDisc2}\n__**Total Servers:**__ \n**Total**: ${getServersTotal} \n**Running**: ${getServersRunning} \n**Stopped**: ${getServersStopped}` },
         );
-    // send the dm
     msg.edit({ embed: newEmbed })
 };
