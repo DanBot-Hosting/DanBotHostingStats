@@ -3,7 +3,7 @@ const axios = require('axios');
 
 exports.run = async (client, message, args) => {
 
-    let userP = userPrem.fetch(message.author.id) || {};
+    let userP = userPrem.fetch(message.author.id) || { used: 0 };
 
     let boosted = await axios({
         url: "http://admin.danbot.host:1029",
@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let allowed = Math.floor((userP.donated || 0) / config.node7.price) + ((boosted != null && boosted.data[message.author.id] != null) ? Math.floor(boosted.data[message.author.id] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
+    let allowed = Math.floor(userP.donated / config.node7.price) + ((boosted != null && boosted.data[message.author.id] != null) ? Math.floor(boosted.data[message.author.id] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
 
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
@@ -36,7 +36,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    if ((allowed - (userP.used || 0)) <= 0) {
+    if ((allowed - userP.used) <= 0) {
         message.channel.send("You are at your premium server limit")
         return;
     }
@@ -100,7 +100,7 @@ exports.run = async (client, message, args) => {
         serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
             .then(response => {
 
-                userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used + 1);
+                userPrem.set(message.author.id + '.used', userP.used + 1);
 
                 let embed = new Discord.MessageEmbed()
                     .setColor(`GREEN`)
@@ -119,7 +119,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Created for user ID:**__`, consoleID.consoleID)
                     .addField(`__**Server name:**__`, serverName)
                     .addField(`__**Type:**__`, args[1].toLowerCase())
-                    .setFooter('User has ' + ((userP.used || 0) + 1) + ' out of a max ' + allowed + ' servers')
+                    .setFooter('User has ' + (userP.used + 1) + ' out of a max ' + allowed + ' servers')
                 client.channels.cache.get("785236066500083772").send(embed2)
 
             }).catch(error => {
