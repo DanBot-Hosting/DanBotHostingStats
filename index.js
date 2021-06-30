@@ -1,36 +1,36 @@
-/*
-    ____              ____        __     __  __           __  _
-   / __ \____ _____  / __ )____  / /_   / / / /___  _____/ /_(_)___  ____ _
-  / / / / __ `/ __ \/ __  / __ \/ __/  / /_/ / __ \/ ___/ __/ / __ \/ __ `/
- / /_/ / /_/ / / / / /_/ / /_/ / /_   / __  / /_/ (__  ) /_/ / / / / /_/ /
-/_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
-Free Hosting forever!                                            /____/
-*/
+/**
+ *     ____              ____        __     __  __           __  _
+ *    / __ \____ _____  / __ )____  / /_   / / / /___  _____/ /_(_)___  ____ _
+ *   / / / / __ `/ __ \/ __  / __ \/ __/  / /_/ / __ \/ ___/ __/ / __ \/ __ `/
+ *  / /_/ / /_/ / / / / /_/ / /_/ / /_   / __  / /_/ (__  ) /_/ / / / / /_/ /
+ * /_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
+ * Free Hosting forever!                                             /____/
+ */
 
-global.config = require("./config.json");
-global.enabled = require("./enable.json")
+global.config = require('./config.json');
+global.enabled = require('./enable.json');
 
 const express = require('express');
-const helmet = require("helmet");
-const cookieParser = require("cookie-parser");
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 
-//Main danbot.host app
+// Main danbot.host app
 const app = express();
 const server = require('http').createServer(app);
 const PORT = config.Port;
 const hbs = require('hbs');
 const favicon = require('serve-favicon');
-const pat = require("path");
-app.use(favicon(pat.join(__dirname, 'views', 'favicon.ico')))
+const pat = require('path');
+app.use(favicon(pat.join(__dirname, 'views', 'favicon.ico')));
 
-//Animal API app
+// Animal API app
 const animalapp = express();
 const animalserver = require('http').createServer(animalapp);
 const APIPORT = config.APIPort;
 const apihbs = require('hbs');
 
 const bodyParser = require('body-parser');
-global.fs = require("fs");
+global.fs = require('fs');
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
@@ -44,40 +44,44 @@ global.transport = nodemailer.createTransport({
     }
 });
 
-const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
-const {getBot} = require(process.cwd() + "/util/discordAPI");
+const isSnowflake = require(`${process.cwd()}/util/isSnowflake.js`);
+const { getBot } = require(`${process.cwd()}/util/discordAPI`);
 
 // Initialising Node Checker
 require('./nodestatsChecker');
 
-//Discord Bot
-global.puppeteer = require("puppeteer");
-let db = require("quick.db");
-global.Discord = require("discord.js");
+// Discord Bot
+global.puppeteer = require('puppeteer');
+const db = require('quick.db');
+global.Discord = require('discord.js');
 
 global.messageSnipes = new Discord.Collection();
-global.fs = require("fs");
-global.moment = require("moment");
-global.userData = new db.table("userData");       //User data, Email, ConsoleID, Link time, Username, DiscordID
-global.settings = new db.table("settings");       //Admin settings
-global.webSettings = new db.table("webSettings"); //Web settings (forgot what this is even for)
-global.mutesData = new db.table("muteData");      //Mutes, Stores current muted people and unmute times
-global.domains = new db.table("linkedDomains");   //Linked domains for unproxy and proxy cmd
-global.nodeStatus = new db.table("nodeStatus");   //Node status. Online or offline nodes
-global.userPrem = new db.table("userPrem");       //Premium user data, Donated, Boosted, Total
-global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
-global.codes = new db.table("redeemCodes");       //Premium server redeem codes...
+global.fs = require('fs');
+global.moment = require('moment');
+global.userData = new db.table('userData'); // User data, Email, ConsoleID, Link time, Username, DiscordID
+global.settings = new db.table('settings'); // Admin settings
+global.webSettings = new db.table('webSettings'); // Web settings (forgot what this is even for)
+global.mutesData = new db.table('muteData'); // Mutes, Stores current muted people and unmute times
+global.domains = new db.table('linkedDomains'); // Linked domains for unproxy and proxy cmd
+global.nodeStatus = new db.table('nodeStatus'); // Node status. Online or offline nodes
+global.userPrem = new db.table('userPrem'); // Premium user data, Donated, Boosted, Total
+global.nodeServers = new db.table('nodeServers'); // Server count for node limits to stop nodes becoming overloaded
+global.codes = new db.table('redeemCodes'); // Premium server redeem codes...
 global.client = new Discord.Client({
     restTimeOffset: 0,
-    disableMentions: 'everyone',
+    intents: [Discord.Intents.ALL],
+	allowedMentions: {
+		parse: ['users', 'roles'],
+		repliedUser: true
+	},
     restWsBridgetimeout: 100,
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 global.bot = client;
-global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
-require('./bot/discord/commands/mute').init(client)
+global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID);
+require('./bot/discord/commands/mute').init(client);
 
-//Event handler
+// Event handler
 fs.readdir('./bot/discord/events/', (err, files) => {
     files = files.filter(f => f.endsWith('.js'));
     files.forEach(f => {
@@ -87,11 +91,11 @@ fs.readdir('./bot/discord/events/', (err, files) => {
     });
 });
 
-//Bot login
+// Bot login
 client.login(config.DiscordBot.Token);
-global.Allowed = ["293841631583535106", "137624084572798976"];
+global.Allowed = ['293841631583535106', '137624084572798976'];
 
-//Animal API website
+// Animal API website
 animalapp.use(helmet({
     frameguard: false
 }));
@@ -102,55 +106,54 @@ animalapp.use(bodyParser.urlencoded({
     extended: true
 }));
 
-animalserver.listen(APIPORT, function () {
-    console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green("Listening on port " + APIPORT));
+animalserver.listen(APIPORT, () => {
+    console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green(`Listening on port ${APIPORT}`));
 });
 
-//View engine setup
-apihbs.registerPartials(__dirname + '/animalAPI/views/partials')
+// View engine setup
+apihbs.registerPartials(`${__dirname}/animalAPI/views/partials`);
 animalapp.set('view engine', 'hbs');
 
 animalapp.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS');
 
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
-    console.log('[api.danbot.host] ' +
-        (req.headers["cf-connecting-ip"] ||
-            req.headers["x-forwarded-for"] ||
-            req.ip) +
-        "[" +
-        req.method +
-        "] " +
-        req.url
+    console.log(`[api.danbot.host] ${
+        req.headers['cf-connecting-ip']
+            || req.headers['x-forwarded-for']
+            || req.ip
+        }[${
+        req.method
+        }] ${
+        req.url}`
     );
 
     next();
 });
 
 // home page & beta site api
-const home = require("./routes/main.js");
-animalapp.use("/", home);
+const home = require('./routes/main.js');
+animalapp.use('/', home);
 
-//Total images
-const totalRoute = require("./animalAPI/total.js");
-animalapp.use("/total", totalRoute);
+// Total images
+const totalRoute = require('./animalAPI/total.js');
+animalapp.use('/total', totalRoute);
 
-//Dog API
-const dogRoute = require("./animalAPI/dog.js");
-animalapp.use("/dog", dogRoute);
+// Dog API
+const dogRoute = require('./animalAPI/dog.js');
+animalapp.use('/dog', dogRoute);
 
-//Cat API
-const catRoute = require("./animalAPI/cat.js");
-animalapp.use("/cat", catRoute);
+// Cat API
+const catRoute = require('./animalAPI/cat.js');
+animalapp.use('/cat', catRoute);
 
-//DanBot.host website
-const passport = require("passport");
-const session = require("express-session");
-const strategy = require("passport-discord").Strategy;
-const MongoStore = require("connect-mongo")(session);
+// DanBot.host website
+const passport = require('passport');
+const session = require('express-session');
+const strategy = require('passport-discord').Strategy;
+const MongoStore = require('connect-mongo')(session);
 
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -164,12 +167,10 @@ passport.use(
             clientID: config.DiscordBot.clientID,
             clientSecret: config.DiscordBot.clientSecret,
             callbackURL: config.DiscordBot.callbackURL,
-            scope: ["identify"]
+            scope: ['identify']
         },
         (accessToken, refreshToken, profile, done) => {
-            process.nextTick(() => {
-                return done(null, profile);
-            });
+            process.nextTick(() => done(null, profile));
         }
     )
 );
@@ -179,7 +180,7 @@ app.use(
         store: new MongoStore({
             url: config.DB.MongoDB
         }),
-        secret: "FROPT",
+        secret: 'FROPT',
         resave: false,
         saveUninitialized: false
     })
@@ -197,22 +198,22 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-server.listen(PORT, function () {
-    console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
+server.listen(PORT, () => {
+    console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green(`Listening on port ${PORT}`));
 });
 
-//Fetch node data
-global.nodeData = new db.table("nodeData")
+// Fetch node data
+global.nodeData = new db.table('nodeData');
 setInterval(() => {
     for (i = 1; i < 19; i++) {
         axios({
-            url: "http://n" + i + ".danbot.host:999/stats",
+            url: `http://n${i}.danbot.host:999/stats`,
             method: 'GET',
             followRedirect: true,
             maxRedirects: 5,
             headers: {
-                "password": config.externalPassword
-            },
+                password: config.externalPassword
+            }
         }).then(response => {
             nodeData.set(response.data.info.servername, {
                 servername: response.data.info.servername,
@@ -250,7 +251,7 @@ setInterval(() => {
                 updatetime: response.data.info.updatetime,
                 timestamp: Date.now()
             });
-            nodeData.set(response.data.speedtest.speedname + '-speedtest', {
+            nodeData.set(`${response.data.speedtest.speedname}-speedtest`, {
                 speedname: response.data.speedtest.speedname,
                 ping: response.data.speedtest.ping,
                 download: response.data.speedtest.download,
@@ -258,130 +259,128 @@ setInterval(() => {
                 updatetime: response.data.speedtest.updatetime,
                 timestamp: Date.now()
             });
-            nodeData.set(response.data.info.servername + '-docker', {
+            nodeData.set(`${response.data.info.servername}-docker`, {
                 dockerAll: response.data.docker,
                 timestamp: Date.now()
-            })
-        }).catch(err => {
-
-        })
+            });
+        }).catch(() => {
+            // Nothing
+        });
     }
 }, 2000);
 
-//View engine setup
-hbs.registerPartials(__dirname + '/views/partials')
+// View engine setup
+hbs.registerPartials(`${__dirname}/views/partials`);
 app.set('view engine', 'hbs');
 
 app.use((req, res, next) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST");
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, POST');
 
-    console.log('[danbot.host] ' +
-        (req.headers["cf-connecting-ip"] ||
-            req.headers["x-forwarded-for"] ||
-            req.ip) +
-        "[" +
-        req.method +
-        "] " +
-        req.url
-    );
+    console.log(`[danbot.host] ${req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.ip}[${req.method}] ${req.url}`);
 
     next();
 });
 
-//Routes
+// Routes
 
 
 // DanBot Hosting Stats
 
-const apiRoute = require("./routes/api.js");
-const botRoute = require("./routes/bot.js");
-const indexRoute = require("./routes/index.js");
-const statsRoute = require("./routes/stats.js");
-const meRoute = require("./routes/me.js");
-const adminRoute = require("./routes/admin.js");
-const externalRoute = require("./routes/external.js");
-//const { config } = require("process");
+const apiRoute = require('./routes/api.js');
+const botRoute = require('./routes/bot.js');
+const indexRoute = require('./routes/index.js');
+const statsRoute = require('./routes/stats.js');
+const meRoute = require('./routes/me.js');
+const adminRoute = require('./routes/admin.js');
+const externalRoute = require('./routes/external.js');
+// const { config } = require("process");
 
-app.use("/api", apiRoute);
-app.use("/bot", botRoute);
-app.use("/", indexRoute);
-app.use("/stats", statsRoute);
-app.use("/me", meRoute);
-app.use("/admin", adminRoute);
-app.use("/external", externalRoute);
+app.use('/api', apiRoute);
+app.use('/bot', botRoute);
+app.use('/', indexRoute);
+app.use('/stats', statsRoute);
+app.use('/me', meRoute);
+app.use('/admin', adminRoute);
+app.use('/external', externalRoute);
 
 app.get('/arc-sw.js', (req, res) => {
-    res.sendFile('./util//arc-sw.js', {root: __dirname});
+    res.sendFile('./util//arc-sw.js', { root: __dirname });
 });
 
-app.get("/user/:ID", async (req, res) => {
-    let user = req.params.ID;
-    let memberr = "No"
+app.get('/user/:ID', async (req, res) => {
+    const user = req.params.ID;
+    let memberr = 'No';
 
     if (!isSnowflake(user)) {
-        return res.render("error.ejs", {
+        return res.render('error.ejs', {
             user: req.isAuthenticated() ? req.user : null,
-            message: "Make sure ID is a valid ID"
+            message: 'Make sure ID is a valid ID'
         });
     }
 
-    let [use] = await getBot(user)
+    const [use] = await getBot(user);
 
-    if (use.user_id && use.user_id[0].endsWith("is not snowflake."))
-        return res.render("error.ejs", {
+    if (use.user_id && use.user_id[0].endsWith('is not snowflake.')) {
+        return res.render('error.ejs', {
             user: req.isAuthenticated() ? req.user : null,
-            message: "ID is invalid"
+            message: 'ID is invalid'
         });
+    }
 
-    if (use.message === "Unknown User")
-        return res.render("error.ejs", {
+    if (use.message === 'Unknown User') {
+        return res.render('error.ejs', {
             user: req.isAuthenticated() ? req.user : null,
-            message: "Discord API - Unknown User"
+            message: 'Discord API - Unknown User'
         });
+    }
 
-    if (use.bot === true) return res.redirect("/bot/" + user);
+    if (use.bot === true) return res.redirect(`/bot/${user}`);
 
     try {
         bot.users.fetch(user).then(User => {
             if (User.bot) {
-                return res.redirect("/bot/" + User.id);
+                return res.redirect(`/bot/${User.id}`);
             }
 
-            var member = bot.guilds.cache.get("639477525927690240").members.cache.get(User.id);
+            var member = bot.guilds.cache.get('639477525927690240').members.cache.get(User.id);
+
             if (!member) {
-                (pColor = "grey"), (presence = "offline");
+                pColor = 'grey', presence = 'offline';
             }
-            let guild = bot.guilds.cache.get("639477525927690240");
+
+            const guild = bot.guilds.cache.get('639477525927690240');
+
             if (guild.member(User.id)) {
-                memberr = "yes";
+                memberr = 'yes';
             }
+
             if (member) {
                 presence = member.presence.status;
 
                 if (presence) {
-                    if (presence === "offline") {
-                        presence = "Offline";
-                        pColor = "grey";
-                    } else if (presence === "online") {
-                        presence = "Online";
-                        pColor = "#43B581";
-                    } else if (presence === "dnd") {
-                        presence = "DND";
-                        pColor = "#F04747";
-                    } else if (presence === "streaming") {
-                        presence = "Streaming";
-                        pColor = "purple";
-                    } else if (presence === "idle") {
-                        presence = "Idle";
-                        pColor = "#FAA61A";
+                    if (presence === 'offline') {
+                        presence = 'Offline';
+                        pColor = 'grey';
+                    } else if (presence === 'online') {
+                        presence = 'Online';
+                        pColor = '#43B581';
+                    } else if (presence === 'dnd') {
+                        presence = 'DND';
+                        pColor = '#F04747';
+                    } else if (presence === 'streaming') {
+                        presence = 'Streaming';
+                        pColor = 'purple';
+                    } else if (presence === 'idle') {
+                        presence = 'Idle';
+                        pColor = '#FAA61A';
                     } else {
-                        (pColor = "grey"), (presence = "Not Available");
+                        pColor = 'grey', presence = 'Not Available';
                     }
                 }
             }
 
-            let avatar = member.user.avatarURL();
+            const avatar = member.user.avatarURL();
 
             let bots = db.get(`${User.id}.bots`);
             if (!bots) bots = null;
@@ -389,36 +388,35 @@ app.get("/user/:ID", async (req, res) => {
             // console.log(avatar);
             // console.log(bots);
 
-            res.render("me/user.ejs", {
+            res.render('me/user.ejs', {
                 user: req.isAuthenticated() ? req.user : null,
                 User,
                 avatar,
-                //  Data,
+                // Data
                 pColor,
                 presence,
-                //    info,
+                // info
                 memberr,
                 use,
                 bots,
-                db,
-                //  Discord,
-                //    pageType: { user: true }
+                db
+                // Discord,
+                // pageType: { user: true }
             });
         });
     } catch (e) {
-        return res.render("error.ejs", {
+        return res.render('error.ejs', {
             user: req.isAuthenticated() ? req.user : null,
             message: e
         });
     }
-
 });
 
 
-//Catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    res.status(404).render("error.ejs", {
-        message: "Page Not Found",
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
+    res.status(404).render('error.ejs', {
+        message: 'Page Not Found',
         user: req.isAuthenticated() ? req.user : null
     });
 });
