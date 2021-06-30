@@ -1,11 +1,10 @@
 const fs = require('fs');
-const Router = require("express").Router();
+const Router = require('express').Router();
 
-Router.get("/", (req, res) => {
-
-    var dogfiles = fs.readdirSync('./animalAPI/dog')
-    var catfiles = fs.readdirSync('./animalAPI/cat')
-    let data = {
+Router.get('/', (req, res) => {
+    var dogfiles = fs.readdirSync('./animalAPI/dog');
+    var catfiles = fs.readdirSync('./animalAPI/cat');
+    const data = {
         dogtotal: dogfiles.length,
         cattotal: catfiles.length
     };

@@ -1,30 +1,29 @@
-const db = require("quick.db");
-let ids = db.get("bot.IDs");
-let fetch = require("node-fetch");
+const db = require('quick.db');
+const ids = db.get('bot.IDs');
+const fetch = require('node-fetch');
 
 ids.map(async ID => {
+    const res = await fetch(`https://bots.idledev.org/api/dan/bot/${ID}/info`);
 
-    let res = await fetch(`https://bots.idledev.org/api/dan/bot/${ID}/info`);
-
-    let response = await res.json();
+    const response = await res.json();
 
     if (response.error) return; // bot not in mbl
 
-    let info = db.get(ID);
+    const info = db.get(ID);
     if (!info) return; // bot not found
 
-    let mbl = {
+    const mbl = {
         invite: response.invite
-    }
+    };
 
-    console.log(response.invite)
-    let up = "N/A";
+    console.log(response.invite);
+    let up = 'N/A';
 
     if (response.uptime) {
-        up = response.uptime.status
+        up = response.uptime.status;
     }
 
-    let botData = {
+    const botData = {
         id: info.id,
         keyLastUsed: info.keyLastUsed,
         servers: info.servers,
@@ -34,10 +33,9 @@ ids.map(async ID => {
         deleted: info.deleted,
         added: info.added,
         status: up,
-        mbl: mbl,
+        mbl,
         lastPost: info.lastPost
     };
 
     db.set(ID, botData);
-
 });
