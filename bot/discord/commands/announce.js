@@ -34,7 +34,7 @@ const parse = (string, options) => {
 
 exports.run = async (client, message, args) => {
 
-    if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
+    if (!message.member.roles.cache.find(r => ['639489438036000769', '778237595477606440'].includes(r.id))) return;
 
     let flags = {
         nm: 'Normal message',
