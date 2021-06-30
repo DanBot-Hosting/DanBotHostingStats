@@ -6,12 +6,12 @@ exports.run = async (client, message, args) => {
             message.channel.send('You can whitelist your name on our private minecraft servers by using `' + config.DiscordBot.Prefix + 'minecraft usernamehere`')
         } else {
             axios({
-                url: "https://private.danbot.host/api/client/servers/bd2a7f9c/command",
+                url: "https://game.danbot.host/api/client/servers/dbedde03/command",
                 method: 'POST',
                 followRedirect: true,
                 maxRedirects: 5,
                 headers: {
-                    'Authorization': 'Bearer ' + config.DanPterodactyl.apikeyclient,
+                    'Authorization': 'Bearer ' + config.GamePterodactyl.apikeyclient,
                     'Content-Type': 'application/json',
                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                 },
