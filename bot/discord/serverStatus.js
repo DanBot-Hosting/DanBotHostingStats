@@ -39,11 +39,8 @@ let nstatus = {
         name: 'Node 17',
         data: 'Node17'
     }, {
-        name: 'Node 18',
+        name: 'Node 18 (Upcoming, 07/08/2021)',
         data: 'Node18'
-    }, {
-        name: 'Node 19 (NOT RELEASED)',
-        data: 'Node19'
     }, {
         name: 'Node 20 (NOT RELEASED)',
         data: 'Node20'
@@ -55,6 +52,9 @@ let nstatus = {
     }, {
         name: 'Node 15',
         data: 'node15'
+    }, {
+        name: 'Node 19',
+        data: 'Node19'
     }],
 
     "Panel": [{
