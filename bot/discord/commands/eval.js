@@ -49,7 +49,7 @@ exports.run = async (client, message) => {
                         let evalcode1 = new Discord.MessageEmbed()
                             .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
                             .setDescription(`**Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
-                            .addField(`\u200b`, `**Output:**\n\n\`\`\`Output too long, logged to eval.txt`, true)
+                            .addField(`\u200b`, `**Output:**\n\n\`\`\`js\nOutput too long, logged to ${__dirname}\\eval.txt\`\`\``, true)
                             .setColor(0x00FF00)
                             .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`);
                         msg.edit({
