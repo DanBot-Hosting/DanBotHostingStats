@@ -1,7 +1,12 @@
 const fetch = require('node-fetch');
 const axios = require('axios');
 
+const blacklistedWords = [
+    'rape', 'nigga', 'nigger', 'jew'
+]
+
 module.exports = (client, message) => {
+    if(blacklistedWords.includes(message.content.toLowerCase())) { message.delete(), message.reply('Do __NOT__ use that word in this server. You will get muted next time...')}
     if(message.channel.id === "781099821561544744") {
         axios({
             url: `https://discord.com/api/v9/channels/${message.channel.id}/messages/${message.id}/crosspost`,
