@@ -39,7 +39,7 @@ let nstatus = {
         name: 'Node 17',
         data: 'Node17'
     }, {
-        name: 'Node 18 (Upcoming, 07/08/2021)',
+        name: 'Node 18',
         data: 'Node18'
     }, {
         name: 'Node 20 (NOT RELEASED)',
