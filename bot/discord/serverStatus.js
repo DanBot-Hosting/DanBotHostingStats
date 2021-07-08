@@ -3,7 +3,7 @@ let nstatus = {
         name: 'Node 1',
         data: 'Node1'
     }, {
-        name: 'Node 4',
+        name: 'Node 4 (Private)',
         data: 'Node4'
     }, {
         name: 'Node 5',
@@ -53,7 +53,7 @@ let nstatus = {
         name: 'Node 15',
         data: 'node15'
     }, {
-        name: 'Node 19',
+        name: 'Node 19 (Upcoming, 07/08/2021)',
         data: 'Node19'
     }],
 
