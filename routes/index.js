@@ -35,7 +35,7 @@ Router.get("/Node4", (req, res) => {
 Router.get("/nodeStatus", (req, res) => {
     let data = {
         nodestatus: {
-            Node1: nodeStatus.fetch("node1")
+            Node1: nodeStatus.fetch("node1"),
             Node4: nodeStatus.fetch("node4"),
             Node5: nodeStatus.fetch("node5"),
             Node6: nodeStatus.fetch("node6"),
