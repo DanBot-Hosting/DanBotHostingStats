@@ -3,7 +3,7 @@ let nstatus = {
         name: 'Node 1',
         data: 'Node1'
     }, {
-        name: 'Node 4 (Private)',
+        name: 'Node 4',
         data: 'Node4'
     }, {
         name: 'Node 5',
@@ -41,9 +41,6 @@ let nstatus = {
     }, {
         name: 'Node 18',
         data: 'Node18'
-    }, {
-        name: 'Node 20 (NOT RELEASED)',
-        data: 'Node20'
     }],
 
     "Donator Nodes": [{
@@ -53,15 +50,15 @@ let nstatus = {
         name: 'Node 15',
         data: 'node15'
     }, {
-        name: 'Node 19 (Upcoming, 07/08/2021)',
+        name: 'Node 19 (Upcoming)',
         data: 'Node19'
     }],
 
     "Panel": [{
-        name: 'US Panel 1',
+        name: 'FR Panel',
         data: 'panelus1'
     }, {
-        name: 'MySQL Database',
+        name: 'Panel Database',
         data: 'dbhdb'
     }],
 
@@ -89,9 +86,6 @@ let nstatus = {
     }, {
         name: 'Reverse Proxy',
         data: '164.132.74.251'
-    }, {
-        name: 'Animal API',
-        data: 'api.danbot.host'
     }, {
         name: 'MySQL Databases',
         data: 'mysqldatabases'
@@ -142,7 +136,7 @@ let getEmbed = async () => {
         + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
 
     let embed = new Discord.MessageEmbed()
-        .setTitle('Danbot Hosting Status').setFooter(dateString)
+        .setTitle('DanBot Hosting Status').setFooter(dateString)
         .setDescription(desc);
     return embed;
 }
