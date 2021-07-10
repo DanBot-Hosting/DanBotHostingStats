@@ -292,11 +292,11 @@ setInterval(() => {
         }));
 
     ping2.ping('176.31.125.135', 22)
-        .then(() => nodeStatus.set("vps-server-01", {
+        .then(() => nodeStatus.set("vpsfrance-1", {
             timestamp: Date.now(),
             status: true
         }))
-        .catch((e) => nodeStatus.set("vps-server-01", {
+        .catch((e) => nodeStatus.set("vpsfrance-1", {
             timestamp: Date.now(),
             status: false
         }));

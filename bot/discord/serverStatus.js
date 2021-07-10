@@ -63,16 +63,22 @@ let nstatus = {
     }],
 
     "VPS Hosting Servers": [{
-        name: 'Server 1',
-        data: 'vps-server-01'
+        name: 'France - 1',
+        data: 'vpsfrance-1'
     }],
 
-    "Dan's Panel": [{
-        name: 'Panel',
+    "Other Pterodactyl Panels": [{
+        name: 'Dan\'s Panel',
         data: 'private.danbot.host'
     }, {
-        name: 'Node-1',
+        name: 'Dan\'s Node-1',
         data: 'dan-node1'
+    }, {
+        name: 'DBH Game Events Panel',
+        data: 'game.danbot.host'
+    }, {
+        name: 'DBH Game Events Node-1',
+        data: 'game-node1.danbot.host'
     }],
 
     "LavaLink": [{
