@@ -36,7 +36,7 @@ Router.get("/:ID/remove", checkAuth, (req, res) => {
     let bot = db.get(`${ID}`);
     if (!bot) return res.render("error.ejs", {message: "Bot Not Found"});
 
-    let allowed = ["293841631583535106", "137624084572798976"];
+    let allowed = ["137624084572798976"];
     allowed.push(bot.owner);
 
     if (allowed.includes(req.user.id)) {
