@@ -14,7 +14,7 @@ module.exports = async (client) => {
 
     let checkNicks = () => {
         guild.members.cache.filter(member => member.displayName.match(/^[a-z0-9]/i) == null).forEach(x => {
-            x.setNickname('zHOISTER ALERT');
+            x.setNickname('HOISTER ALERT');
         })
 
         guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.includes(r))).forEach(x => {
