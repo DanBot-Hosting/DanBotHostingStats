@@ -27,7 +27,10 @@ exports.run = async (client, message, args) => {
     let categorybackup = server.channels.cache.find(c => c.id === "741082659610034257" && c.type === "category");
     if (!categorybackup) throw new Error("Category channel does not exist");
 
-    await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(console.error));
+    let categorybackup2 = server.channels.cache.find(c => c.id === "864581561830604810" && c.type === "category");
+    if (!categorybackup2) throw new Error("Category channel does not exist");
+
+    await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(channel.setParent(categorybackup2.id).catch(console.error)));
 
     setTimeout(() => {
         channel.updateOverwrite(message.author, {
