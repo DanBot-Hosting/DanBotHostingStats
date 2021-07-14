@@ -1,6 +1,6 @@
 const ms = require('ms')
 exports.run = async (bot, message, args) => {
-    if (message.member.roles.cache.find(r => r.id === "778237595477606440")) {
+    if (message.member.roles.cache.find(r => r.id === "639481606112804875")) {
         message.delete()
         let channel, giveaway;
         let time = args[0];

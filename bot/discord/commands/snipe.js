@@ -5,14 +5,14 @@ exports.run = async (client, message, args) => {
 
     if (args[0] != null) {
 
-        if (args[0].toLowerCase() == 'dump' && message.member.roles.cache.get('778237595477606440') != null) {
+        if (args[0].toLowerCase() == 'dump' && message.member.roles.cache.get('639481606112804875') != null) {
             let file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipes-Dump.json");
             message.author.send(file);
             message.channel.send('Check your dms.');
             return;
         }
 
-        if (args[0].toLowerCase() == 'purge' && (message.member.roles.cache.get('748117822370086932') != null || message.member.roles.cache.get('778237595477606440') != null)) {
+        if (args[0].toLowerCase() == 'purge' && (message.member.roles.cache.get('748117822370086932') != null || message.member.roles.cache.get('639481606112804875') != null)) {
 
             /**
              *  -- Can only be used by staff --
@@ -49,7 +49,7 @@ exports.run = async (client, message, args) => {
                 file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(messageSnipes.get(message.channel.id).filter(x => x.member == target)), "utf8"), "Snipe-Logs.json");
                 messageSnipes.set(message.channel.id, messageSnipes.get(message.channel.id).filter(x => x.member != target));
             }
-            else if (message.member.roles.cache.get('778237595477606440') != null && message.member.roles.cache.get('778237595477606440') != null) {
+            else if (message.member.roles.cache.get('639481606112804875') != null && message.member.roles.cache.get('639481606112804875') != null) {
                 file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipe-Logs.json");
 
                 messageSnipes.clear();

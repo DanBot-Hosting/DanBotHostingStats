@@ -45,7 +45,7 @@ exports.run = async (client, message, args) => {
     if (message.member.roles.cache.get('748117822370086932') != null)
         embed.addField(`__**Staff Commands:**__ (${Object.entries(commands.Staff).length})`, desc(commands.Staff).join('\n'))
 
-    if (message.member.roles.cache.find(r => r.id === "778237595477606440"))
+    if (message.member.roles.cache.find(r => r.id === "639481606112804875"))
         embed.addField(`__**Developer Commands:**__ (${Object.entries(commands.Owner).length})`, desc(commands.Owner).join('\n'))
 
     message.channel.send(embed)
