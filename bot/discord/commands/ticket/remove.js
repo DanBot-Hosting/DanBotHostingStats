@@ -7,7 +7,7 @@ let member = message.mentions.members.first() || message.guild.members.cache.get
 if(!member){
     return message.channel.send('Please Mention someone or use their ID to remove the user from the ticket')
 }
-if(member.roles.cache.some(role => role.id === '844027709859823626')) return message.channel.send(`You can't remove staff From tickets`)
+if(member.roles.cache.some(role => role.id === '748117822370086932')) return message.channel.send(`You can't remove staff From tickets`)
     await message.channel.updateOverwrite(member, {
         VIEW_CHANNEL: false,
         SEND_MESSAGES: false,
