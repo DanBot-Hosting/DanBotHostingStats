@@ -41,8 +41,10 @@ exports.run = async (client, message, args) => {
                     .setColor("BLUE")
                     .setTitle("DanBot Hosting Bot Stats")
                     .setDescription(
-                        `API Key:\n\`${key}\`\n\nHow to Post? [Visit This](https://www.npmjs.com/package/danbot-hosting) \n Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`
+                        `API Key:\n\`${key}\`\n\nHow to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting) \n Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`
                     );
+                    .setFooter('DanBot Hosting Bot Stats')
+                    .setTimestamp()
 
                 await message.author.send(apiKeyEmbed);
                 message.channel.send("Check your direct messages for your `API` key.");
