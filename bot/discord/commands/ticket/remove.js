@@ -3,7 +3,7 @@ if (!message.channel.name.includes('-ticket')) {
     message.channel.send('This command is only to be used inside of ticket channels.')
     return;
 }
-let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+let member = message.mentions.members.first() || message.guild.members.cache.get(args[1]);
 if(!member){
     return message.channel.send('Please Mention someone or use their ID to remove the user from the ticket')
 }
