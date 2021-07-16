@@ -1,7 +1,7 @@
 const db = require("quick.db");
 
 exports.run = async (client, message, args) => {
-  if (!message.member.roles.cache.some("697599153538334841"))
+  if (!message.member.roles.cache.some("639489438036000769"))
     return message.reply("You cannot use this command.");
 
   let action, lowercase;
