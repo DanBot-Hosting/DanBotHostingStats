@@ -60,7 +60,7 @@ exports.run = async (client, message, args) => {
             .map((x) => `\`${action}\``)
             .join(", ")}`
         );
-      if (lowercase && !["true", "false"].includes(lowercase))
+      if (!Boolean(lowercase))
         return message.reply(
           "Invalid lowercase form. The lowercase option must be boolean (true/false)."
         );
@@ -69,7 +69,7 @@ exports.run = async (client, message, args) => {
         name: args[0],
         action: action,
         author: message.author.id,
-        lowercase: !!lowercase,
+        lowercase: JSON.parse(lowercase),
       });
       message.reply("Successfully set the word you provided as blacklisted.");
       sendModLog(
