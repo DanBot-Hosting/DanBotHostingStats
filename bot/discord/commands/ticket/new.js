@@ -1,7 +1,8 @@
 exports.run = async (client, message, args) => {
+    if (message.guild.channels.cache.find(channel => channel.name === `${message.author.username.toString().toLowerCase() + message.author.tag}-ticket`)) return
     const server = message.guild
 
-    let channel = await server.channels.create(message.author.username + "-Ticket", "text", [{
+    let channel = await server.channels.create(message.author.username + message.author.tag + "-Ticket", "text", [{
         type: 'role',
         id: message.guild.id,
         deny: 0x400
