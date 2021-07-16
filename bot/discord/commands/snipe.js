@@ -64,7 +64,7 @@ exports.run = async (client, message, args) => {
         }
     }
 
-    let embed3 = new Discord.MessageEmbed().setDescription(`Theres nothing to snipe`)
+    let embed3 = new Discord.MessageEmbed().setDescription(`There's nothing to snipe.`)
 
     let snipe = messageSnipes.get(message.channel.id)
 
@@ -91,10 +91,14 @@ exports.run = async (client, message, args) => {
     // console.log("SNIPE", snipedMessage, snipe, number);
 
     //sending the message
+    const tmst = (snipedMessage.timestamp / 1000).toString().split(".")[0];
     const embed = new Discord.MessageEmbed()
         .setTitle(`Message ${snipedMessage.action} by ${snipedMessage.member.user.tag}`)
-        .setDescription("`" + snipedMessage.message + "`")
+        .setDescription(`\`${snipedMessage.content.substr(0, 4094)}\``)
         .setFooter(`${number + 1}/${snipe.length}`).setTimestamp(snipedMessage.timestamp)
+        .addField(`${snipedMessage.action} At:`, `<t:${tmst}>, or <t:${tmst}:R>.`, true)
         .setColor("GREEN");
+
+        if (snipedMessage.attachments) embed.addField("Attachments:", snipedMessage.attachments.map(x => x.proxyURL).join(", \n"), true);
     message.channel.send(embed);
 }

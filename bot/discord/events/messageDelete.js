@@ -1,13 +1,12 @@
 module.exports = (client, message) => {
-    if (!message.attachments.size > 0) {
-
         //if (message.author.bot) return;
         if (message.channel.type === 'dm') return;
         if (message.channel.type !== 'text') return;
         if (message.author == null) return;
 
-        const description = message.cleanContent || "message had no content"
-        const descriptionfix = description.substr(0, 600);
+        const description = message.cleanContent || "message had no content";
+        const descriptionfix = description.substr(0, 4096);
+        const attachments = message.attachments.map(attachment => attachment.proxyURL);
         const embed = new Discord.MessageEmbed()
             .setColor(0x00A2E8)
             .setThumbnail(message.author.avatarURL)
@@ -15,15 +14,15 @@ module.exports = (client, message) => {
             .addField("Message Content:", `${descriptionfix}`)
             .setTimestamp()
             .setFooter("Message delete in " + message.channel.name);
+            if (attachments) embed.addField("Attachments:", attachments.join(",\n"));
         client.channels.cache.get(config.DiscordBot.mLogs).send({ embed });
-
-    }
 
     if (message.author.bot || !message.content) return;
 
     let data = {
-        message: message.content,
+        content: message.content,
         member: message.member,
+        attachments,
         timestamp: Date.now(),
         action: "delete"
     };
