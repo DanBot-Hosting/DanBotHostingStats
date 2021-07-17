@@ -93,7 +93,7 @@ module.exports = (client, message) => {
 
         //Check if the commands are disabled.
 
-        if (webSettings.get('commands') != null && message.member.roles.cache.get('639489438036000769') == null) {
+        if (webSettings.get('commands') !== false && message.member.roles.cache.get('639489438036000769') == null) {
             message.channel.send('Discord Bot commands are currently disabled...\n reason: `' + webSettings.get('commands') + '`');
             return;
         }

@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
         if (args[1].toLowerCase() == "off") {
             message.channel.send("Bot commands are now enabled");
 
-            webSettings.set('commands', null);
+            webSettings.set('commands', false);
 
         } else {
             message.channel.send("Bot commands are now disabled! reason: `" + args.slice(1).join(' ') + "`");
