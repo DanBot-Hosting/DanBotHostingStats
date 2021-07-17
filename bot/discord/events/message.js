@@ -6,8 +6,8 @@ const blacklistedWords = [
 ]
 
 module.exports = (client, message) => {
-    if(blacklistedWords.includes(message.content.toLowerCase())) { message.delete(), message.reply('Do __NOT__ use that word in this server. You will get muted next time...')}
-    if(message.channel.id === "781099821561544744") {
+    if (blacklistedWords.includes(message.content.toLowerCase())) { message.delete(), message.reply('Do __NOT__ use that word in this server. You will get muted next time...') }
+    if (message.channel.id === "781099821561544744") {
         axios({
             url: `https://discord.com/api/v9/channels/${message.channel.id}/messages/${message.id}/crosspost`,
             method: 'POST',
@@ -90,6 +90,14 @@ module.exports = (client, message) => {
 
         if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null && message.member.roles.cache.find(x => x.id === '778237595477606440') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
+
+        //Check if the commands are disabled.
+
+        if (webSettings.get('commands') != null && message.member.roles.cache.get('639489438036000769') == null) {
+            message.channel.send('Discord Bot commands are currently disabled...\n reason: `' + webSettings.get('commands') + '`');
+            return;
+        }
+
         if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "ticket") {
             //Cooldown setting
             if (!args[0]) {
