@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
         return password;
     };
 
-    if (!['137624084572798976'].includes(message.author.id)) return;
+    if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
 
     if (args.length < 3) {
         message.channel.send('Usage: `DBH!staff code name uses')
