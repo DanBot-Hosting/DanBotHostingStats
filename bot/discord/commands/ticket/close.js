@@ -57,5 +57,5 @@ exports.run = async (client, message, args) => {
 
                 message.channel.send('🚧 | **Ticket** is staying **opened**!');
     
-            }
+           }
 }
