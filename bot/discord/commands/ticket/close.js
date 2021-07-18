@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
             const filter = (rect, usr) => ['✔️', '❌'].includes(rect.emoji.name) && usr.id === message.author.id
             const response = await msg.awaitReactions(filter, {
                 max: 1,
-                time: 6000,
+                time: 30000,
                 errors: ['time']
             })
             .then(() => {
