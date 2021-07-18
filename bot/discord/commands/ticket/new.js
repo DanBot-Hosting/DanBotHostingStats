@@ -1,3 +1,5 @@
+const Discord = require('discord.js')
+
 exports.run = async (client, message, args) => {
     
             if(message.guild.channels.cache.find(ch => ch.name == `🎫╏${message.author.username.toString().toLowerCase().replace(' ', '-')}_ticket`)) {
