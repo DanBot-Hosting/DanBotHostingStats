@@ -1,7 +1,7 @@
 exports.run = async (client, message, args) => {
     let staffRole = message.guild.roles.cache.get('748117822370086932');
 
-    if (message.channel.name.includes('-ticket')) {
+    if (message.channel.name.includes('_ticket')) {
         message.reply("Only admins can see this ticket now.")
         await message.channel.updateOverwrite('748117822370086932', {
             VIEW_CHANNEL: false,
