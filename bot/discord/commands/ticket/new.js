@@ -10,9 +10,9 @@ exports.run = async (client, message, args) => {
                 console.log(err)
             })
     
-            let category = message.guild.channels.cache.find(c => c.id === "866276118863282197" && c.type === "category");
-            let categorybackup = message.guild.channels.cache.find(c => c.id === "866276171438882816" && c.type === "category");
-            let categorybackup2 = message.guild.channels.cache.find(c => c.id === "866276187075248128" && c.type === "category");
+            let category = message.guild.channels.cache.find(c => c.id === "741082659610034257" && c.type === "category");
+            let categorybackup = message.guild.channels.cache.find(c => c.id === "738538742603841650" && c.type === "category");
+            let categorybackup2 = message.guild.channels.cache.find(c => c.id === "864581561830604810" && c.type === "category");
             if(!category || !categorybackup || !categorybackup2) return;
         
             await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(channel.setParent(categorybackup2.id).catch(console.error)));  
@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
                     VIEW_CHANNEL: true
                 });
         
-                channel.updateOverwrite(config.staffRole, {
+                channel.updateOverwrite('748117822370086932', {
                     SEND_MESSAGES: true,
                     VIEW_CHANNEL: true
                 })
