@@ -3,7 +3,7 @@ const fs = require('fs')
 
 exports.run = async (client, message, args) => {
 
-        if(!message.channel.name.includes('_ticket')) return message.channel.send(`💡 | You can **only** use this **command** in **ticket channel**!`)
+        if(!message.channel.name.includes('-ticket')) return message.channel.send(`💡 | You can **only** use this **command** in **ticket channel**!`)
 
             const embed = new Discord.MessageEmbed()
             .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
