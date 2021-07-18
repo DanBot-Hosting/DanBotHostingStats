@@ -1,5 +1,5 @@
 exports.run = async (client, message, args) => {
-    if (!message.channel.name.includes('-ticket')) {
+    if (!message.channel.name.includes('_ticket')) {
         message.channel.send('This command is only to be used inside of ticket channels.')
         return;
     }
