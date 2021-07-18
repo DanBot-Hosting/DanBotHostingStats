@@ -1,3 +1,6 @@
+const Discord = require('discord.js')
+const fs = require('fs')
+
 exports.run = async (client, message, args) => {
 
         if(!message.channel.name.includes('_ticket')) return message.channel.send(`💡 | You can **only** use this **command** in **ticket channel**!`)
