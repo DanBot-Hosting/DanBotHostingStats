@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
                         const embed = new Discord.MessageEmbed()
                         .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
                         .setDescription(`> New ticket is closed!`)
-                        .addField(`🚧 | Info`, `> **Closed by:** \`${message.author.tag}\`\n> **Ticket Name:** \`${message.channel.name}\``)
+                        .addField(`🚧 | Info`, `> **Closed by:** \`${message.author.tag} (${message.author.id})\`\n> **Ticket Name:** \`${message.channel.name}\``)
                         .setThumbnail('https://cdn.discordapp.com/emojis/860696559573663815.png?v=1')
                         .setColor(message.guild.me.displayHexColor)
                         .setTimestamp()
