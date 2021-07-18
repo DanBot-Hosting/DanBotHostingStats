@@ -18,44 +18,54 @@ exports.run = async (client, message, args) => {
             const filter = (rect, usr) => ['✔️', '❌'].includes(rect.emoji.name) && usr.id === message.author.id
             const response = await msg.awaitReactions(filter, {
                 max: 1,
-                time: 30000
-            });
+                time: 6000,
+                errors: ['time']
+            })
+            .then(() => {
+
+                const emojis = response.first().emoji.name
     
-            const emojis = response.first().emoji.name;
+                if (emojis === '✔️') {
     
-            if (emojis === '✔️') {
-
-                message.channel.send('🚧 | Im **closing** this **ticket**!').then(
-
-                    setTimeout(() => {
-
-                        message.channel.messages.fetch().then(async (messages) => {
-
-                            const script = messages.array().reverse().map(m => `${m.author.tag}: ${m.attachments.size > 0 ? m.attachments.first().proxyURL : m.content}`).join('\n')
-                            fs.writeFile(`script.txt`, script, (err) => { 
-                                console.log(err)
+                    message.channel.send('🚧 | Im **closing** this **ticket**!').then(
+    
+                        setTimeout(() => {
+    
+                            message.channel.messages.fetch().then(async (messages) => {
+    
+                                const script = messages.array().reverse().map(m => `${m.author.tag}: ${m.attachments.size > 0 ? m.attachments.first().proxyURL : m.content}`).join('\n')
+                                fs.writeFile(`script.txt`, script, (err) => { 
+                                    console.log(err)
+                                })
                             })
-                        })
-                        
-                        message.channel.delete()
-
-                        const channel = client.channels.cache.get('848714572667682816')
-                        const embed = new Discord.MessageEmbed()
-                        .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
-                        .setDescription(`> New ticket is closed!`)
-                        .addField(`🚧 | Info`, `> **Closed by:** \`${message.author.tag} (${message.author.id})\`\n> **Ticket Name:** \`${message.channel.name}\``)
-                        .setThumbnail('https://cdn.discordapp.com/emojis/860696559573663815.png?v=1')
-                        .setColor(message.guild.me.displayHexColor)
-                        .setTimestamp()
-                        channel.send({ embed, files: ["./script.txt"] })
-
-                    }, 5000))
+                            
+                            message.channel.delete()
     
-            }
+                            const channel = client.channels.cache.get('866302681512935444')
+                            const embed = new Discord.MessageEmbed()
+                            .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
+                            .setDescription(`> New ticket is closed!`)
+                            .addField(`🚧 | Info`, `> **Closed by:** \`${message.author.tag} (${message.author.id})\`\n> **Ticket Name:** \`${message.channel.name}\``)
+                            .setThumbnail('https://cdn.discordapp.com/emojis/860696559573663815.png?v=1')
+                            .setColor(message.guild.me.displayHexColor)
+                            .setTimestamp()
+                            channel.send({ embed, files: ["./script.txt"] })
     
-            if (emojis === '❌') {
+                        }, 5000))
+        
+                }
+        
+                if (emojis === '❌') {
+    
+                    message.channel.send('🚧 | **Ticket** is staying **opened**!');
+        
+                }
 
-                message.channel.send('🚧 | **Ticket** is staying **opened**!');
-    
-           }
+            })
+
+            .catch(collected => {
+
+                message.channel.send('🚧 | You **didnt** answer in time im not **closing this ticket!**')
+
+            })
 }
