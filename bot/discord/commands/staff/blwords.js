@@ -60,7 +60,7 @@ exports.run = async (client, message, args) => {
             .map((x) => `\`${action}\``)
             .join(", ")}`
         );
-      if (!Boolean(lowercase))
+      if (lowercase && !Boolean(lowercase))
         return message.reply(
           "Invalid lowercase form. The lowercase option must be boolean (true/false)."
         );
