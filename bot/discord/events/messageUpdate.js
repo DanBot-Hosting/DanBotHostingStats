@@ -14,7 +14,7 @@ module.exports = (client, oldMessage, newMessage) => {
         timestamp: Date.now(),
         action: "edit"
     };
-    if (attachments) data.attachments = attachments;
+    // if (attachments) data.attachments = attachments;
 
     if (messageSnipes.get(oldMessage.channel.id) == null) messageSnipes.set(oldMessage.channel.id, [data])
     else messageSnipes.set(oldMessage.channel.id, [...messageSnipes.get(oldMessage.channel.id), data]);
