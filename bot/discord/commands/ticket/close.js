@@ -18,13 +18,19 @@ exports.run = async (client, message, args) => {
             const filter = (rect, usr) => ['✔️', '❌'].includes(rect.emoji.name) && usr.id === message.author.id
             const response = await msg.awaitReactions(filter, {
                 max: 1,
-                time: 30000,
+                time: 6000,
                 errors: ['time']
             })
-            .then(() => {
 
+            .catch(collected => {
+
+                message.channel.send('🚧 | You **didnt** answer in time im not **closing this ticket!**')
+
+            })
+
+                if(!response) return;
                 const emojis = response.first().emoji.name
-    
+
                 if (emojis === '✔️') {
     
                     message.channel.send('🚧 | Im **closing** this **ticket**!').then(
@@ -60,12 +66,4 @@ exports.run = async (client, message, args) => {
                     message.channel.send('🚧 | **Ticket** is staying **opened**!');
         
                 }
-
-            })
-
-            .catch(collected => {
-
-                message.channel.send('🚧 | You **didnt** answer in time im not **closing this ticket!**')
-
-            })
 }
