@@ -47,7 +47,7 @@ exports.run = async (client, message, args) => {
                             
                             message.channel.delete()
     
-                            const channel = client.channels.cache.get('866302681512935444')
+                            const channel = client.channels.cache.get('848714572667682816')
                             const embed = new Discord.MessageEmbed()
                             .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
                             .setDescription(`> New ticket is closed!`)
