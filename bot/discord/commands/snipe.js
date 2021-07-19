@@ -99,6 +99,6 @@ exports.run = async (client, message, args) => {
         .addField(`${snipedMessage.action} At:`, `<t:${tmst}>, or <t:${tmst}:R>.`, true)
         .setColor("GREEN");
 
-        if (snipedMessage.attachments) embed.addField("Attachments:", snipedMessage.attachments.map(x => x.proxyURL).join(", \n"), true);
+        // if (snipedMessage.attachments) embed.addField("Attachments:", snipedMessage.attachments.map(x => x.proxyURL).join(", \n"), true);
     message.channel.send(embed);
 }
