@@ -1,7 +1,8 @@
 const fetch = require("node-fetch"),
   axios = require("axios"),
   db = require("quick.db"),
-  blacklistedWords = ["rape", "nigga", "nigger", "jew"];
+  blacklistedWords = ["rape", "nigga", "nigger", "jew"],
+  { MessageEmbed } = require("discord.js"); 
 
 module.exports = (client, message) => {
   if (blacklistedWords.includes(message.content.toLowerCase())) {
