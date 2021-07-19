@@ -22,7 +22,7 @@ module.exports = (client, message) => {
     let data = {
         content: message.content,
         member: message.member,
-        attachments,
+        // attachments,
         timestamp: Date.now(),
         action: "delete"
     };
