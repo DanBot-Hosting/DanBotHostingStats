@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
 
         message.channel.send('Checking server `' + args[1] + '`\nPlease allow me 2 seconds to fetch this.').then((msg) => {
             axios({
-                url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
+                url: config.Pterodactyl.hosturl + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
                 method: 'GET',
                 followRedirect: true,
                 maxRedirects: 5,

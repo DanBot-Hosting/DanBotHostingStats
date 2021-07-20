@@ -96,29 +96,29 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
                         .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
-                    message.channel.send(embed)
+                    message.channel.send({embeds: [embed]})
                 }).catch(error => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan or Solo)`)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 } else if (error == "Error: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                     // console.log(error)
                 } else if (error == "Error: Request failed with status code 429") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again in a minute or two.`)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, error)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 }
             })
         } else {
@@ -130,33 +130,33 @@ exports.run = async (client, message, args) => {
                         .addField(`__**Created for user ID:**__`, consoleID.consoleID)
                         .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 }).catch(error => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan or Solo)`)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 } else if (error == "Error: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 } else if (error == "Error: Request failed with status code 429") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again.`)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, error)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 }
                 client.cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
             })
         }
         return;
     }
-    await message.channel.send(helpEmbed)
+    await message.channel.send({embeds: [helpEmbed]})
 }

@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
         let embed = new Discord.MessageEmbed()
             .setColor("GREEN")
             .addField("__**Server Status**__", "What server would you like to view? \nCommand Format: `" + config.DiscordBot.Prefix + "server status serverid")
-        await message.channel.send(embed)
+        await message.channel.send({embeds: [embed]})
     } else {
 
         if (args[1].match(/[0-9a-z]+/i) == null)
@@ -49,7 +49,7 @@ exports.run = async (client, message, args) => {
                         .addField('**NODE**', response.data.attributes.node)
                         .addField('**FULL ID**', response.data.attributes.uuid)
                         .setTitle('🟢 Start | 🔄 Restart | 🔴 Stop \nReactions work for 20seconds.')
-                    msg.edit("<@" + message.author.id + ">", embedstatus)
+                    msg.edit({content: "<@" + message.author.id + ">", embeds: [embedstatus]})
                     setTimeout(() => {
                         msg.react('🟢')
                         setTimeout(() => {

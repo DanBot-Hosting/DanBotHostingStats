@@ -4,7 +4,7 @@ exports.run = async (client, message, args) => {
     //List servers
     var arr = [];
     axios({
-        url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
+        url: config.Pterodactyl.hosturl + "/api/application/users/" + userData.get(message.author.id).consoleID + "?include=servers",
         method: 'GET',
         followRedirect: true,
         maxRedirects: 5,
@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
                 var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n")
                 const embed = new Discord.MessageEmbed()
                     .addField('__**Your Servers:**__', clean)
-                message.channel.send(embed)
+                message.channel.send({embeds: [embed]})
                 //console.log(output)
             }, 500)
         }, 5000)

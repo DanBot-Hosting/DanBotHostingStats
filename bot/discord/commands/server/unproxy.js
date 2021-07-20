@@ -3,7 +3,7 @@ exports.run = async (client, message, args) => {
     if (!args[1]) {
         const embed = new Discord.MessageEmbed()
             .setTitle('__**How to remove a domain from a server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server unproxy domainhere')
-        message.channel.send(embed)
+        message.channel.send({embeds: [embed]})
     } else if (!args[2]) {
 
         if (userData.get(message.author.id).domains.find(x => x.domain === args[1].toLowerCase()) == null) {

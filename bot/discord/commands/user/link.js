@@ -52,7 +52,7 @@ exports.run = async (client, message, args) => {
             let arr = [];
 
             axios({
-                url: "https://panel.danbot.host" + "/api/application/users",
+                url: config.Pterodactyl.hosturl + "/api/application/users",
                 method: 'GET',
                 followRedirect: true,
                 maxRedirects: 5,
@@ -68,7 +68,7 @@ exports.run = async (client, message, args) => {
                 let i = 0
                 while (i < i2) {
                     axios({
-                        url: "https://panel.danbot.host" + "/api/application/users?page=" + i,
+                        url: config.Pterodactyl.hosturl + "/api/application/users?page=" + i,
                         method: 'GET',
                         followRedirect: true,
                         maxRedirects: 5,

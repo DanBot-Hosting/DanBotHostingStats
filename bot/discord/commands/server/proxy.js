@@ -4,10 +4,10 @@ exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domain serverid')
     if (!args[1]) {
-        await message.channel.send(embed)
+        await message.channel.send({embeds: [embed]})
     } else {
         if (!args[2]) {
-            await message.channel.send(embed)
+            await message.channel.send({embeds: [embed]})
         } else {
             if (args[1].toLowerCase().includes('only-fans.club')) {
                 if (message.member.roles.cache.some(r => ['710208090741539006', '788193704014905364'].includes(r.id))) {
@@ -25,7 +25,7 @@ exports.run = async (client, message, args) => {
                                 'Content-Type': 'application/json',
                                 'Accept': 'Application/vnd.pterodactyl.v1+json',
                             }
-                        }).then(use => {
+                        }).then(use => { 
                             use = use.data.attributes;
 
                             if (use.relationships) {

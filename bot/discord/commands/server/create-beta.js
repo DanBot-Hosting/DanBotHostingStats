@@ -57,21 +57,21 @@ exports.run = async (client, message, args) => {
                             .addField(`__**Server name:**__`, serverName)
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                             .addField(`__**Node:**__`, "Node 8 - BETA")
-                        message.channel.send(embed)
+                        message.channel.send({embeds: [embed]})
 
                     }).catch(error => {
-                    message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                    message.channel.send({embeds: [new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")]})
                 })
                 return;
             }
 
-            message.channel.send(new Discord.MessageEmbed()
+            message.channel.send({embeds: [new Discord.MessageEmbed()
                 .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
                 .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
                 .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
                 .addField(`__**Source Engine:**__`, "GMod \nCS:GO \nARK:SE", true)
                 .addField(`__**SteamCMD:**__`, "Rust", true)
-                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-beta NodeJS Testing Server"))
+                .setFooter("Example: " + config.DiscordBot.Prefix + "server create-beta NodeJS Testing Server")]})
 
         }
 

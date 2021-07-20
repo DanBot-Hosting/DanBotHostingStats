@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
         if (code.drop != null) {
             let msg = await client.channels.cache.get(code.drop.message.channel)?.messages.fetch(code.drop.message.ID);
             let embed = msg?.embeds[0]?.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*Redeemed by ${message.member}*`)
-            msg.edit(embed)
+            msg.edit({embeds: [embed]})
         }
     }
 }

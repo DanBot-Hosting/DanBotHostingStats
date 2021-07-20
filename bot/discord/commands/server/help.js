@@ -7,5 +7,5 @@ exports.run = async (client, message, args) => {
             config.DiscordBot.Prefix + 'server proxy domainhere serveridhere ` \n Unlink domain: `' +
             config.DiscordBot.Prefix + 'server unproxy domainhere` \n Delete server: `' +
             config.DiscordBot.Prefix + 'server delete serveridhere`')
-    await message.channel.send(embed)
+    await message.channel.send({embeds: [embed]})
 }

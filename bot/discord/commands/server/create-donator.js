@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
 
     //Do server creation things
     if (!args[1]) {
-        message.channel.send(new Discord.MessageEmbed()
+        message.channel.send({embeds: [new Discord.MessageEmbed()
             .setColor("RED")
             .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
             .addField("__**Grand Theft Auto:**__", "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
@@ -55,7 +55,7 @@ exports.run = async (client, message, args) => {
             .addField("__**WebHosting:**__", "Nginx", true)
             .addField("__**Custom Egg:**__", "ShareX", true)
             .addField("__**Storage:**__", "storage", true)
-            .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
+            .setFooter("Example: DBH!server create-donator NodeJS Testing Server")]})
         return;
     }
 
@@ -110,7 +110,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Type:**__`, args[1].toLowerCase())
                     //.addField(`__**Node:**__`, "Node 7 - Boosters/Donators")
                     .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
-                message.channel.send(embed)
+                message.channel.send({embeds: [embed]})
 
                 let embed2 = new Discord.MessageEmbed()
                     .setTitle('New donator node server created!')
@@ -120,15 +120,15 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Server name:**__`, serverName)
                     .addField(`__**Type:**__`, args[1].toLowerCase())
                     .setFooter('User has ' + (userP.used + 1) + ' out of a max ' + allowed + ' servers')
-                client.channels.cache.get("785236066500083772").send(embed2)
+                client.channels.cache.get("785236066500083772").send({embeds: [embed2]})
 
             }).catch(error => {
-                message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                message.channel.send({embeds: [new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`")]})
             })
         return;
     }
 
-    message.channel.send(new Discord.MessageEmbed()
+    message.channel.send({embeds: [new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(`List of servers: (use DBH!server create-donator <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
         .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
@@ -141,6 +141,6 @@ exports.run = async (client, message, args) => {
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Egg:**__", "ShareX", true)
         //.addField(__**Storage:**__, "storage", true)
-        .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
+        .setFooter("Example: DBH!server create-donator NodeJS Testing Server")]})
 
 }
