@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
                 .addField(`__**Console ID**__`, userData.fetch(args[1] + ".consoleID"))
                 .addField(`__**Date (YYYY/MM/DD)**__`, userData.fetch(args[1] + ".linkDate"))
                 .addField(`__**Time**__`, userData.fetch(args[1] + ".linkTime"))
-            await message.channel.send('That account is linked. Heres some data: ', embed)
+            await message.channel.send({content: 'That account is linked. Heres some data: ', embeds: [embed]})
         }
     }
 }

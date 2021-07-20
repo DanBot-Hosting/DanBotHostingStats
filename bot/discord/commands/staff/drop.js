@@ -50,8 +50,8 @@ exports.run = async (client, message, args) => {
         .setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
         .setTimestamp(moment + time)
 
-    let msg = await message.channel.send("", {
-        embed: embed.setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
+    let msg = await message.channel.send({ content: '',
+        embeds: [embed.setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")]
     });
 
     codes.set(code.code + ".drop", {
@@ -62,14 +62,14 @@ exports.run = async (client, message, args) => {
     });
 
     setTimeout(() => {
-        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time - (time / 1.2), { round: true }) + "!"));
+        msg.edit({embeds: [embed.setDescription("Dropping a premium key in: " + humanizeDuration(time - (time / 1.2), { round: true }) + "!")]});
     }, time / 1.2);
 
     setTimeout(() => {
-        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, { round: true }) + "!"));
+        msg.edit({embeds: [embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, { round: true }) + "!")]});
     }, time / 2);
 
     setTimeout(() => {
-        msg.edit(embed.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`));
+        msg.edit({embeds: [embed.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`)]});
     }, time);
 }

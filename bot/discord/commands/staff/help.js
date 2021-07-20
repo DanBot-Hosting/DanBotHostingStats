@@ -32,5 +32,5 @@ exports.run = async (client, message, args) => {
         .setColor('RANDOM')
         .addField('**Admin Commands:**', desc(subcommands.admin).join('\n'))
         .addField('**Owner Commands:**', desc(subcommands.devs).join('\n'))
-    await message.channel.send(embed)
+    await message.channel.send({embeds: [embed]})
 }

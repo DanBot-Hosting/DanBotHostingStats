@@ -3,6 +3,6 @@ exports.run = async (client, message, args) => {
         let embed = new Discord.MessageEmbed()
             .addField('__**Staff Applications Enabled?**__', webSettings.fetch("staff-applications.enabled"), true)
             .addField('__**Website maintenance enabled?**__', webSettings.fetch("maintenance.enabled"), true)
-        await message.channel.send(embed)
+        await message.channel.send({embeds: [embed]})
     }
 }
