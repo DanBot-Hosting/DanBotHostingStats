@@ -6,7 +6,6 @@
 /_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
 Free Hosting forever!                                            /____/
 */
-
 global.config = require("./config.json");
 global.enabled = require("./enable.json")
 
@@ -45,7 +44,9 @@ global.transport = nodemailer.createTransport({
 });
 
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
-const {getBot} = require(process.cwd() + "/util/discordAPI");
+const {
+    getBot
+} = require(process.cwd() + "/util/discordAPI");
 
 // Initialising Node Checker
 require('./nodestatsChecker');
@@ -58,18 +59,23 @@ global.Discord = require("discord.js");
 global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
 global.moment = require("moment");
-global.userData = new db.table("userData");       //User data, Email, ConsoleID, Link time, Username, DiscordID
-global.settings = new db.table("settings");       //Admin settings
+global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
+global.settings = new db.table("settings"); //Admin settings
 global.webSettings = new db.table("webSettings"); //Web settings (forgot what this is even for)
-global.mutesData = new db.table("muteData");      //Mutes, Stores current muted people and unmute times
-global.domains = new db.table("linkedDomains");   //Linked domains for unproxy and proxy cmd
-global.nodeStatus = new db.table("nodeStatus");   //Node status. Online or offline nodes
-global.userPrem = new db.table("userPrem");       //Premium user data, Donated, Boosted, Total
+global.mutesData = new db.table("muteData"); //Mutes, Stores current muted people and unmute times
+global.domains = new db.table("linkedDomains"); //Linked domains for unproxy and proxy cmd
+global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline nodes
+global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
-global.codes = new db.table("redeemCodes");       //Premium server redeem codes...
+global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
 global.client = new Discord.Client({
     restTimeOffset: 0,
     disableMentions: 'everyone',
+    intents: [Discord.Intents.ALL],
+    allowedMentions: {
+        parse: ['users', 'roles'],
+        repliedUser: true
+    },
     restWsBridgetimeout: 100,
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
@@ -102,7 +108,7 @@ animalapp.use(bodyParser.urlencoded({
     extended: true
 }));
 
-animalserver.listen(APIPORT, function () {
+animalserver.listen(APIPORT, function() {
     console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green("Listening on port " + APIPORT));
 });
 
@@ -197,7 +203,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-server.listen(PORT, function () {
+server.listen(PORT, function() {
     console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
 });
 
@@ -312,7 +318,9 @@ app.use("/admin", adminRoute);
 app.use("/external", externalRoute);
 
 app.get('/arc-sw.js', (req, res) => {
-    res.sendFile('./util//arc-sw.js', {root: __dirname});
+    res.sendFile('./util//arc-sw.js', {
+        root: __dirname
+    });
 });
 
 app.get("/user/:ID", async (req, res) => {
@@ -416,7 +424,7 @@ app.get("/user/:ID", async (req, res) => {
 
 
 //Catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.status(404).render("error.ejs", {
         message: "Page Not Found",
         user: req.isAuthenticated() ? req.user : null
