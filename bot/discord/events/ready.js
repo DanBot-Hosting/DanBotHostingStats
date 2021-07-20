@@ -7,7 +7,7 @@ const pretty = require('prettysize');
 
 module.exports = async (client) => {
 
-    let guild = client.guilds.cache.get("639477525927690240");
+    let guild = client.guilds.cache.get(config.DiscordBot.mainGuild);
 
     global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
@@ -122,7 +122,7 @@ module.exports = async (client) => {
 
     //Voice channel stats updator
     setInterval(async () => {
-        let DBHGuild = client.guilds.cache.get("639477525927690240");
+        let DBHGuild = client.guilds.cache.get(config.DiscordBot.mainGuild);
         let roleID1 = '748117822370086932';
         let staffCount = DBHGuild.roles.cache.get(roleID1).members.size;
         client.channels.cache.get("739821419910791348").edit({
