@@ -9,5 +9,7 @@ exports.run = async (client, message, args) => {
         .addField("Bot ping to discord:", client.ws.ping + "ms", true)
         .setFooter(`Ready Timestamp: ${myDate.toString()}`)
         .setColor("GREEN")
-    message.channel.send({embeds: [embed]});
+    message.channel.send({
+        embeds: [embed]
+    });
 }

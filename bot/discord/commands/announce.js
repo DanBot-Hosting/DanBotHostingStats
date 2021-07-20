@@ -60,7 +60,8 @@ exports.run = async (client, message, args) => {
                 .setColor("YELLOW")
                 .setDescription(`Incorrect Usage!\nusage: \`DBH!announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
                 .addField("**Variables:**", flagsdesc)
-                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)]
+                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
+            ]
         })
         return;
     }
@@ -71,7 +72,8 @@ exports.run = async (client, message, args) => {
             embeds: [new Discord.MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(`Couldn't find that channel.`)
-                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)]
+                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
+            ]
         })
         return;
     }
@@ -95,5 +97,8 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    channel.send({content: normalMessage, embeds: [embed]});
+    channel.send({
+        content: normalMessage,
+        embeds: [embed]
+    });
 };

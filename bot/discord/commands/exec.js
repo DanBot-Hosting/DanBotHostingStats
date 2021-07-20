@@ -12,7 +12,8 @@ exports.run = (client, message, args) => {
                 embeds: [new Discord.MessageEmbed()
                     .setDescription("```" + response + "```")
                     .setTimestamp()
-                    .setColor("RANDOM")]
+                    .setColor("RANDOM")
+                ]
             })
 
         });

@@ -25,12 +25,16 @@ exports.run = async (client, message, args) => {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to whitelist you**__`, `Please ping Dan to fix this, Or try again soon`)
-                    message.reply({embeds: [embed]})
+                    message.reply({
+                        embeds: [embed]
+                    })
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to whitelist you**__`, error)
-                    message.reply({embeds: [embed]})
+                    message.reply({
+                        embeds: [embed]
+                    })
                 }
             })
         }

@@ -7,12 +7,17 @@ exports.run = async (client, message, args) => {
                     .addField('Dog API:', response.body.dogtotal + " images. \nhttps://api.danbot.host/dog", true)
                     .addField('Cat API:', response.body.cattotal + " images. \nhttps://api.danbot.host/cat", true)
                     .setFooter('You can get a image from the api using DBH!animalapi animalhere')
-                message.channel.send({embeds: [embed]})
+                message.channel.send({
+                    embeds: [embed]
+                })
             })
     } else if (args[0] === "dog") {
         superagent.get('https://api.danbot.host/dog')
             .end((response) => {
-                message.channel.send({content: "Random dog image from the DanBot Hosting api!", files: [`${response.body.image}`]});
+                message.channel.send({
+                    content: "Random dog image from the DanBot Hosting api!",
+                    files: [`${response.body.image}`]
+                });
             });
     }
 };

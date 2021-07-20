@@ -8,6 +8,8 @@ exports.run = async (client, message, args) => {
         .setTitle("DanBot Hosting - Ping")
         .setDescription(`API Latency: ${Math.round(client.ws.ping)}ms`)
         .setTimestamp()
-    message.channel.send({embeds: [embed]})
+    message.channel.send({
+        embeds: [embed]
+    })
 
 };
