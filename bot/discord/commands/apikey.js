@@ -3,7 +3,10 @@ const Discord = require("discord.js");
 const randomstring = require('randomstring')
 
 exports.run = async (client, message, args) => {
-       let key = `danbot-${randomstring.generate(7)}`
+       
+    let startkey = Math.random().toString(36).substring(7);
+       
+    let key = `danbot-${startkey}`
 
     let keyPool = db.get("apiKeys");
     if (!keyPool) keyPool = [];
