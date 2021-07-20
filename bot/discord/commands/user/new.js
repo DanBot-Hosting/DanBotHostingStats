@@ -17,31 +17,27 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let questions = [
-        {
-            id: "username",
-            question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
-            filter: (m) => m.author.id === message.author.id, // Filter to use...
-            afterChecks: [{
-                check: (msg) => msg.trim().split(" ").length == 1,
-                errorMessage: "username must not contain any spaces",
-            }],
-            time: 30000, // how much time a user has to answer the question before it times out
-            value: null // The user's response.
-        }, {
-            id: "email",
-            question: "Whats your email? *(must be a valid email)*",
-            filter: (m) => m.author.id === message.author.id,
-            afterChecks: [
-                {
-                    check: (msg) => validator.isEmail(msg.toLowerCase().trim()),
-                    errorMessage: "the email must be valid.",
-                }
-            ],
-            time: 30000,
-            value: null
-        }
-    ]
+    let questions = [{
+        id: "username",
+        question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
+        filter: (m) => m.author.id === message.author.id, // Filter to use...
+        afterChecks: [{
+            check: (msg) => msg.trim().split(" ").length == 1,
+            errorMessage: "username must not contain any spaces",
+        }],
+        time: 30000, // how much time a user has to answer the question before it times out
+        value: null // The user's response.
+    }, {
+        id: "email",
+        question: "Whats your email? *(must be a valid email)*",
+        filter: (m) => m.author.id === message.author.id,
+        afterChecks: [{
+            check: (msg) => validator.isEmail(msg.toLowerCase().trim()),
+            errorMessage: "the email must be valid.",
+        }],
+        time: 30000,
+        value: null
+    }]
 
     // Locate the account creation category
     let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
@@ -52,15 +48,15 @@ exports.run = async (client, message, args) => {
     // Create the channel in which the user will use to create his account
     let channel = await message.guild.channels.create(message.author.tag, {
         parent: category.id,
-        permissionOverwrites: [
-            {
+        permissionOverwrites: [{
                 id: message.author.id,
                 allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'READ_MESSAGE_HISTORY']
             },
             {
                 id: message.guild.id,
                 deny: 0x400
-            }]
+            }
+        ]
     }).catch(console.error);
 
     channel.updateOverwrite(message.author, {
@@ -86,8 +82,9 @@ exports.run = async (client, message, args) => {
                     .setFooter("You can type 'cancel' to cancel the request")
             });
         } else {
-            msg.edit(message.member, {
-                embed: msg.embeds[0].setDescription(question.question)
+            msg.edit({
+                content: message.member,
+                embeds: [msg.embeds[0].setDescription(question.question)]
             });
         }
 
@@ -126,16 +123,17 @@ exports.run = async (client, message, args) => {
                     channel.delete();
                 }, 5000);
                 return;
-            }
-            ;
+            };
         }
 
     }
 
-    msg.edit(message.member, {
-        embed: msg.embeds[0]
+    msg.edit({
+        content: message.member,
+        embeds: [msg.embeds[0]
             .setDescription('Attempting to create an account for you...\n\n>>> ' + questions.map(question => `**${question.id}:** ${question.value.toLowerCase()}`).join('\n'))
             .setFooter('').setTimestamp()
+        ]
     });
 
 
@@ -172,35 +170,39 @@ exports.run = async (client, message, args) => {
             domains: []
         })
 
-        msg.edit("Hello! You created an new account, Heres the login information", {
-            embed: new Discord.MessageEmbed()
+        msg.edit({
+            content: "Hello! You created an new account, Heres the login information",
+            embeds: [new Discord.MessageEmbed()
                 .setColor("GREEN")
                 .setDescription("URL: " + config.Pterodactyl.hosturl + " \nUsername: " + data.username + " \nEmail: " + data.email + " \nPassword: " + data.password)
                 .setFooter("Please note: It is recommended that you change the password")
+            ]
         })
 
         channel.send('**You have 30mins to keep note of this info before the channel is deleted.**')
         message.guild.members.cache.get(message.author.id).roles.add("639489891016638496");
-        setTimeout(function () {
+        setTimeout(function() {
             channel.delete();
         }, 1800000);
     }).catch(err => {
         let errors = err.response.data.errors;
 
         if (errors) {
-            msg.edit('', {
-                embed: new Discord.MessageEmbed()
+            msg.edit({
+                content: '',
+                embeds: [new Discord.MessageEmbed()
                     .setColor("RED")
                     .setTitle("An error has occured:")
                     .setDescription("**ERRORS:**\n\n●" + errors.map(error => error.detail.replace('\n', ' ')).join('\n●'))
                     .setTimestamp().setFooter('Deleting in 30 seconds...')
+                ]
             })
-            setTimeout(function () {
+            setTimeout(function() {
                 channel.delete();
             }, 30000);
         } else {
             channel.send('an unexpected error has occured, please try again later...');
-            setTimeout(function () {
+            setTimeout(function() {
                 channel.delete();
             }, 30000);
         }

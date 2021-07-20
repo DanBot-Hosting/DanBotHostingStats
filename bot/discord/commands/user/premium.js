@@ -30,5 +30,7 @@ exports.run = async (client, message, args) => {
         embed.setDescription('**WARNING:**\n*we\'re experiencing a problem with out booster API. The number shown might not be accurate.*');
     }
 
-    await message.channel.send(embed)
+    await message.channel.send({
+        embeds: [embed]
+    })
 }

@@ -5,10 +5,10 @@ exports.run = async (client, message, args) => {
         const server = message.guild
 
         let channel = await server.channels.create(message.author.tag, "text", [{
-            type: 'role',
-            id: message.guild.id,
-            deny: 0x400
-        },
+                type: 'role',
+                id: message.guild.id,
+                deny: 0x400
+            },
             {
                 type: 'user',
                 id: message.author.id,
@@ -30,10 +30,11 @@ exports.run = async (client, message, args) => {
 
 
         let msg = await channel.send(message.author, {
-            embed: new Discord.MessageEmbed()
+            embeds: [new Discord.MessageEmbed()
                 .setColor(0x36393e)
                 .setDescription("Please enter your console email address")
                 .setFooter("You can type 'cancel' to cancel the request \n**This will take a few seconds to find your account.**")
+            ]
         })
 
         const collector = new Discord.MessageCollector(channel, m => m.author.id === message.author.id, {
@@ -78,12 +79,12 @@ exports.run = async (client, message, args) => {
                         }
                     }).then(response => {
                         arr.push(...response.data.data)
-                    }).catch( err => {});
+                    }).catch(err => {});
                     i++
                 }
                 // console.log(resources.data.meta.pagination)
                 let total = resources.data.meta.pagination.total
-            }).catch( err => {});;
+            }).catch(err => {});;
             //Find account then link
             setTimeout(async () => {
                 console.log(arr.length)
@@ -114,7 +115,7 @@ exports.run = async (client, message, args) => {
                         subject: 'DanBot Hosting - Someone tried to link their Discord account!',
                         html: "Hello, " + message.author.username + " (ID: " + message.author.id + ") just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: " + code
                     };
-                    transport.sendMail(emailmessage, function (err, info) {
+                    transport.sendMail(emailmessage, function(err, info) {
                         if (err) {
                             console.log(err)
                         } else {
@@ -148,7 +149,10 @@ exports.run = async (client, message, args) => {
                                         .addField('__**Linked Console ID:**__', consoleUser.attributes.id)
 
                                     channel.send("Account linked!").then(
-                                        client.channels.get(config.DiscordBot.oLogs).send(`<@${message.author.id}> linked their account. Heres some info: `, embedstaff),
+                                        client.channels.get(config.DiscordBot.oLogs).send({
+                                            content: `<@${message.author.id}> linked their account. Heres some info: `,
+                                            embeds: [embedstaff]
+                                        }),
                                         setTimeout(() => {
                                             channel.delete();
                                         }, 5000)
@@ -163,8 +167,7 @@ exports.run = async (client, message, args) => {
                         }
                     });
 
-                }
-                ;
+                };
             }, 10000)
 
         })
@@ -174,6 +177,9 @@ exports.run = async (client, message, args) => {
             .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
             .addField(`__**Linked Date (DD/MM/YY)**__`, userData.fetch(message.author.id + ".linkDate"))
             .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"))
-        await message.channel.send("This account is linked!", embed)
+        await message.channel.send({
+            content: "This account is linked!",
+            embeds: [embed]
+        })
     }
 }
