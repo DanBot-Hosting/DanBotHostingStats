@@ -9,7 +9,7 @@ exports.run = (client, message, args) => {
 
         const embed = new Discord.MessageEmbed()
         .setAuthor(`${client.user.username} | Purge`, client.user.avatarURL())
-        .addField(`❓ | Usage:`, `> ${prefix}purge <amount> <@someone> <reason>`)
+        .addField(`❓ | Usage:`, `> ${prefix}purge <amount> <@someone>`)
         .addField(`💡 | Example:`, `> ${prefix}purge 20 @mqrkelich`)
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp()
