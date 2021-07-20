@@ -16,7 +16,7 @@ exports.run = async (client, message) => {
       `Loading all node's stats! (If this takes longer than 5seconds. This command is broken)`,
       true
     );
-  const msg = await message.channel.send({ embed: firstEmb });
+  const msg = await message.channel.send({ embeds: [firstEmb] });
   // gets the info and stuff
   const getCpuThreads =
     parseFloat(nodeData.fetch("Node1.cputhreads")) +
@@ -464,5 +464,5 @@ exports.run = async (client, message) => {
           `out of ${getDisc2}\n__**Total Servers:**__ \n**Total**: ${getServersTotal} \n**Running**: ${getServersRunning} \n**Stopped**: ${getServersStopped}`,
       }
     );
-  msg.edit({ embed: newEmbed });
+  msg.edit({ embeds: [newEmbed] });
 };

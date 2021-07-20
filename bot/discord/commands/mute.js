@@ -23,12 +23,12 @@ exports.init = (client) => {
                     member.roles.remove(config.DiscordBot.roles.mute);
                     if (modlog != null)
                         modlog.send("", {
-                            embed: new Discord.MessageEmbed().setTitle("Action: Unmute")
+                            embeds: [new Discord.MessageEmbed().setTitle("Action: Unmute")
                                 .addField("User", member.user.tag + " (ID: " + member.id + ")")
                                 .addField("After", ms(x.data.expiresAt - x.data.mutedAt, {
                                     long: true
                                 }), true)
-                                .setFooter("Time:").setTimestamp()
+                                .setFooter("Time:").setTimestamp()]
                         })
                 }
             } else {
@@ -39,12 +39,12 @@ exports.init = (client) => {
                         member.roles.remove(config.DiscordBot.roles.mute);
                         if (modlog != null)
                             modlog.send("", {
-                                embed: new Discord.MessageEmbed().setTitle("Action: Unmute")
+                                embeds: [new Discord.MessageEmbed().setTitle("Action: Unmute")
                                     .addField("User", member.user.tag + " (ID: " + member.id + ")")
                                     .addField("After", ms(x.data.expiresAt - x.data.mutedAt, {
                                         long: true
                                     }), true)
-                                    .setFooter("Time:").setTimestamp()
+                                    .setFooter("Time:").setTimestamp()]
                             })
                     }
                 }, x.data.expiresAt - Date.now());
@@ -71,8 +71,8 @@ exports.run = async (client, message, args) => {
 
     if (args.length < 1) {
         message.channel.send('', {
-            embed: new Discord.MessageEmbed().setColor(0x00A2E8)
-                .setDescription(`Correct usage ${config.DiscordBot.Prefix}mute <@user|userID> [Time : 5m] [Reason : unspecified]`).setFooter('<required> [optional]')
+            embeds: [new Discord.MessageEmbed().setColor(0x00A2E8)
+                .setDescription(`Correct usage ${config.DiscordBot.Prefix}mute <@user|userID> [Time : 5m] [Reason : unspecified]`).setFooter('<required> [optional]')]
         })
         return;
     }
@@ -104,12 +104,12 @@ exports.run = async (client, message, args) => {
             target.roles.remove(config.DiscordBot.roles.mute);
             if (modlog != null)
                 modlog.send("", {
-                    embed: new Discord.MessageEmbed().setTitle("Action: Unmute")
+                    embeds: [new Discord.MessageEmbed().setTitle("Action: Unmute")
                         .addField("User", target.user.tag + " (ID: " + target.id + ")")
                         .addField("After", ms(time, {
                             long: true
                         }), true)
-                        .setFooter("Time:").setTimestamp()
+                        .setFooter("Time:").setTimestamp()]
                 })
         }
     }, time);
@@ -117,7 +117,7 @@ exports.run = async (client, message, args) => {
 
     if (modlog != null) {
         modlog.send('', {
-            embed: new Discord.MessageEmbed()
+            embeds: [new Discord.MessageEmbed()
                 .setColor(0x00A2E8)
                 .setTitle("Action: Mute")
                 .addField("Moderator", message.author.tag + " (ID: " + message.author.id + ")")
@@ -126,7 +126,7 @@ exports.run = async (client, message, args) => {
                     long: true
                 }), true)
                 .addField("Reason", reason, true)
-                .setFooter("Time used:").setTimestamp()
+                .setFooter("Time used:").setTimestamp()]
         })
     }
 };

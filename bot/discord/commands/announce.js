@@ -56,11 +56,11 @@ exports.run = async (client, message, args) => {
 
     if (args.length < 2) {
         message.channel.send("", {
-            embed: new Discord.MessageEmbed()
+            embeds: [new Discord.MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(`Incorrect Usage!\nusage: \`DBH!announce <#channel | ChannelID> [-nm <message> | [-e [-eh <message> | -ed <message> | -ei <link> | -etn <link> | -ef <message> | -ec <color> | -et]]]\``)
                 .addField("**Variables:**", flagsdesc)
-                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
+                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)]
         })
         return;
     }
@@ -68,10 +68,10 @@ exports.run = async (client, message, args) => {
     let channel = message.guild.channels.cache.find(x => x.id == args[0].match(/[0-9]{18}/));
     if (!channel) {
         message.channel.send("", {
-            embed: new Discord.MessageEmbed()
+            embeds: [new Discord.MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(`Couldn't find that channel.`)
-                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)
+                .setTimestamp().setFooter(message.guild.name, message.guild.iconURL)]
         })
         return;
     }
@@ -95,5 +95,5 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    channel.send(normalMessage, embed);
+    channel.send({content: normalMessage, embeds: [embed]});
 };

@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
             .addField(`❓ | Info`, `> How to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting)\n> Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`)
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp()
-            await message.author.send(embed)
+            await message.author.send({embeds: [embed]})
             msg.edit(`🔑 | Check your **DM's** for your **API Key**.`).catch((err) => { message.channel.send(`🔑 | Check your **DM's** for your **API Key**.`)})
 
         } catch(err) {

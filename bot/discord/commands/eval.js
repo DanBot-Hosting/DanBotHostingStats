@@ -16,7 +16,7 @@ exports.run = async (client, message) => {
                     .setColor(0xFF0000)
                     .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `);
                 msg.edit({
-                    embed: errorcodefake
+                    embeds: [errorcodefake]
                 })
                 })
 
@@ -53,7 +53,7 @@ exports.run = async (client, message) => {
                             .setColor(0x00FF00)
                             .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`);
                         msg.edit({
-                            embed: evalcode1
+                            embeds: [evalcode1]
                         }), fs.writeFile(`eval.txt`, `${clean(evaled)}`), message.channel.send("Eval output", {
                             files: ["eval.txt"]
                         });
@@ -66,7 +66,7 @@ exports.run = async (client, message) => {
                             .setColor(0xFF0000)
                             .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms `, `https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwczovL2Euc2FmZS5tb2UvVUJFVWwucG5nIn0.LbWCXwiUul3udoS7s20IJYW8xus`);
                         msg.edit({
-                            embed: errorcode1
+                            embeds: [errorcode1]
                         });
                         return fs.writeFile(`eval.txt`, `${clean(err)}`);
                     }
@@ -78,7 +78,7 @@ exports.run = async (client, message) => {
                     .setColor(0x00FF00)
                     .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`);
                 msg.edit({
-                    embed: evalcode
+                    embeds: [evalcode]
                 }).catch(e => logger.error(e));
             } catch (err) {
                 let errorcode = new Discord.MessageEmbed()
@@ -88,7 +88,7 @@ exports.run = async (client, message) => {
                     .setColor(0xFF0000)
                     .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `);
                 msg.edit({
-                    embed: errorcode
+                    embeds: [errorcode]
                 }).catch(e => logger.error(e));
             }
         });

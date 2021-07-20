@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
 
         if (args[0].toLowerCase() == 'dump' && message.member.roles.cache.get('778237595477606440') != null) {
             let file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipes-Dump.json");
-            message.author.send(file);
+            message.author.send({ files: [file]})
             message.channel.send('Check your dms.');
             return;
         }
@@ -25,9 +25,10 @@ exports.run = async (client, message, args) => {
 
             if (reason.length == 0) {
                 message.channel.send({
-                    embed: new Discord.MessageEmbed().setTitle('Snipe Dump')
-                        .setDescription(" \*  -- Can only be used by staff --\n\* Usage: DBH!snipe purge [user | \*] <reason>\n\* if user is not specified the bot will purge all the logs for that current channel\n\* if you pass \* as user, it will completely dumb the logs.")
-                        .setColor('BLUE')
+                    embeds: [new Discord.MessageEmbed().setColor("RANDOM")
+                    .setTitle("Snipe Dump")
+                    .setDescription("• Staff only accessable.\n• **Usage:** \`DBH!snipe purge [user | *] <reason>\`\n• If user is not specified then the bot will purge all the logs for the current channel.\n• If you provide \`*\` as user then it will completely dump the logs.")
+                    .setTimestamp()]
                 })
                 return;
             }
@@ -58,8 +59,8 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            client.channels.cache.get('848489049203146762').send(`${message.member} purged ${target == '*'? `all messages`: `${target}'s messages in ${message.channel}`} for the reason: ${reason}.`, file)
-            message.channel.send('purged.')
+            client.channels.cache.get('848489049203146762').send({content: `${message.member} purged ${target == '*'? `all messages`: `${target}'s messages in ${message.channel}`} for the reason: ${reason}.`, files: [file]})
+            message.channel.send('Snipes Have been purged.')
             return;
         }
     }
@@ -68,7 +69,7 @@ exports.run = async (client, message, args) => {
 
     let snipe = messageSnipes.get(message.channel.id)
 
-    if (snipe == null) return message.channel.send(embed3)
+    if (snipe == null) return message.channel.send({embeds: [embed3]})
 
     snipe = [...snipe.values()]
 
@@ -96,5 +97,5 @@ exports.run = async (client, message, args) => {
         .setDescription("`" + snipedMessage.message + "`")
         .setFooter(`${number + 1}/${snipe.length}`).setTimestamp(snipedMessage.timestamp)
         .setColor("GREEN");
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
 }

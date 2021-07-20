@@ -14,14 +14,14 @@ exports.run = (client, message, args) => {
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp()
 
-        if(!args[0]) return message.channel.send(embed);
+        if(!args[0]) return message.channel.send({embeds: [embed]});
 
         let user = message.mentions.users.first()
         let amount = !!parseInt(message.content.split(' ')[2]) ? parseInt(message.content.split(' ')[2]) : parseInt(message.content.split(' ')[1])
 
-        if (!amount) return message.channel.send(embed);
-        if(isNaN(amount)) return message.channel.send(embed);
-        if (!amount && !user) return message.channel.send(embed);
+        if (!amount) return message.channel.send({embeds: [embed]});
+        if(isNaN(amount)) return message.channel.send({embeds: [embed]});
+        if (!amount && !user) return message.channel.send({embeds: [embed]});
 
         if (amount < 1 || amount > 99) return message.channel.send(`💡 | Specify a **number** between **1-99** to delete.`)
         
@@ -41,6 +41,6 @@ exports.run = (client, message, args) => {
             .setThumbnail('https://cdn.discordapp.com/emojis/860696522659463199.png?v=1')
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp()
-            return client.channels.cache.get(config.DiscordBot.modLogs).send({ embed: success });
+            return client.channels.cache.get(config.DiscordBot.modLogs).send({ embeds: [success] });
         })
 }

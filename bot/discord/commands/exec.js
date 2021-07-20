@@ -9,10 +9,10 @@ exports.run = (client, message, args) => {
             if (response.length > 1024) console.log(response), response = 'Output too long.';
 
             message.channel.send("", {
-                embed: new Discord.MessageEmbed()
+                embeds: [new Discord.MessageEmbed()
                     .setDescription("```" + response + "```")
                     .setTimestamp()
-                    .setColor("RANDOM")
+                    .setColor("RANDOM")]
             })
 
         });

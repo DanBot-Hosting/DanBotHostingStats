@@ -48,5 +48,5 @@ exports.run = async (client, message, args) => {
     if (message.member.roles.cache.find(r => r.id === "778237595477606440"))
         embed.addField(`__**Developer Commands:**__ (${Object.entries(commands.Owner).length})`, desc(commands.Owner).join('\n'))
 
-    message.channel.send(embed)
+    message.channel.send({embeds: [embed]})
 };

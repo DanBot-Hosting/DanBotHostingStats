@@ -19,18 +19,18 @@ exports.run = async (client, message, args) => {
                     "command": "whitelist add " + args[0]
                 }
             }).then(response => {
-                message.channel.send('Done! You are now whitelisted')
+                message.reply('Done! You are now whitelisted')
             }).catch(error => {
                 if (error == "Error: Request failed with status code 502") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to whitelist you**__`, `Please ping Dan to fix this, Or try again soon`)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to whitelist you**__`, error)
-                    message.reply(embed)
+                    message.reply({embeds: [embed]})
                 }
             })
         }
