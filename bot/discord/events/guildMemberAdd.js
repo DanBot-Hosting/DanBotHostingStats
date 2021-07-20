@@ -65,7 +65,7 @@ module.exports = async (client, member, guild) => {
             .addField(`Invite code used:`, '`' + invite.code + '`', true)
             .addField(`Invite used`, invite.uses + ' times', true);
 
-        client.channels.cache.get(config.DiscordBot.invitechannel).send(embed)
+        client.channels.cache.get(config.DiscordBot.invitechannel).send({embeds: [embed]})
 
         let inviteChannel = client.channels.cache.get(config.DiscordBot.inviterewmsg);
 

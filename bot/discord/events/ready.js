@@ -99,8 +99,8 @@ module.exports = async (client) => {
                 limit: 10
             })
             messages = messages.filter(x => x.author.id === client.user.id).last();
-            if (messages == null) channel.send(embed)
-            else messages.edit(embed)
+            if (messages == null) channel.send({embeds: [embed]})
+            else messages.edit({embeds: [embed]})
 
         }, 15000)
     }
@@ -114,8 +114,8 @@ module.exports = async (client) => {
                 limit: 10
             })
             messages = messages.filter(x => x.author.id === client.user.id).last();
-            if (messages == null) channel.send(embed)
-            else messages.edit(embed)
+            if (messages == null) channel.send({embeds: [embed]})
+            else messages.edit({embeds: [embed]})
 
         }, 15000)
     }

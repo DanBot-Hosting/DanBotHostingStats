@@ -24,6 +24,6 @@ module.exports = async (client, oldMember, newMember) => {
             .setColor(0xFF7700)
             .setTimestamp(new Date());
 
-        client.channels.cache.get(config.DiscordBot.oLogs).send(embed)
+        client.channels.cache.get(config.DiscordBot.oLogs).send({embeds: [embed]})
     }
 };
