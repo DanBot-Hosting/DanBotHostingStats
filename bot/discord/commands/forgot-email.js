@@ -9,5 +9,5 @@ exports.run = async (client, message, args) => {
         .setFooter("Email Recovery")
         .setTimestamp()
     message.channel.send(embed)
-  client.users.cache.get(message.author.id).send("Email: " + userData.fetch(message.author.id + ".email"))
+  client.users.cache.get(message.author.id).send("Email: ${userData.fetch(message.author.id + ".email")}")
 };
