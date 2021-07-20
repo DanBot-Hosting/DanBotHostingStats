@@ -1,6 +1,5 @@
 let db = require("quick.db");
 const Discord = require("discord.js");
-const randomstring = require('randomstring')
 
 exports.run = async (client, message, args) => {
        
