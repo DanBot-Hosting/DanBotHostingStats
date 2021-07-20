@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const axios = require('axios');
 
 const blacklistedWords = [
-    'rape', 'nigga', 'nigger', 'jew', 'aggin', '*nigga*', '**nigga**', '***nigga***', '*aggin*', '**aggin**', '***aggin***'
+    'rape', 'nigga', 'nigger', 'aggin', '*nigga*', '**nigga**', '***nigga***', '*aggin*', '**aggin**', '***aggin***'
 ]
 
 module.exports = (client, message) => {
