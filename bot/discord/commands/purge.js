@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
-exports.run = (client, message, args, config) => {
+exports.run = (client, message, args) => {
     
         if(!message.member.roles.cache.find(r => r.id === '748117822370086932')) {
             return message.channel.send(`🚧 | You **do not** have enough **permissions** to use this **command**.`)
         }
 
-        let prefix = config.DiscordBot.prefix
+        let prefix = config.DiscordBot.Prefix
 
         const embed = new Discord.MessageEmbed()
         .setAuthor(`${client.user.username} | Purge`, client.user.avatarURL())
