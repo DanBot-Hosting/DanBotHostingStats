@@ -3,7 +3,7 @@ const axios = require('axios');
 
 module.exports = (client, message) => {
 const swears = [
-    'rape', 'nigga', 'nigger', 'darkisthebestpersoneverIreallylovehim'
+    'rape', 'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim'
 ]
         if (swears.some(x=> message.content.toLowerCase().includes(x))) {
             message.reply('Do __NOT__ use that word in this server. You will get muted next time...')
