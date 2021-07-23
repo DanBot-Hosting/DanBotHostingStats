@@ -9,6 +9,7 @@ exports.run = async (client, message, args) => {
     }
 
     let sendMessage = (userid, amount) => {
+        message.delete()
         message.channel.send('Thanks <@' + userid + '> for donating! \nYou can now create donator servers using `' + config.DiscordBot.Prefix + 'server create-donator`')
         client.channels.cache.get('795884677688721448').send('Thanks, <@' + userid + '> for donating ' + parser.format(amount) + '$!')
     }
