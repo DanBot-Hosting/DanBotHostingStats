@@ -1,17 +1,16 @@
 exports.run = async (client, message, args) => {
-    if (!message.channel.name.includes('-ticket')) {
-        message.channel.send('This command is only to be used inside of ticket channels.')
-        return;
-    }
+    if (!message.channel.name.includes('-ticket')) return message.channel.send(`💡 | You can **only** use this **command** in **ticket channel**!`)
 
-    if (!args[1] || !message.guild.members.cache.get(args[1])) {
-        message.channel.send('Please run this command again with the users ID')
-    } else {
-        await message.channel.updateOverwrite(args[1], {
-            VIEW_CHANNEL: false,
-            SEND_MESSAGES: false,
-            READ_MESSAGE_HISTORY: false
-        })
-        message.channel.send("Success!")
-    }
+    let user = message.mentions.users.first() || message.guild.members.cache.get(args[1])
+    if(!user) return message.channel.send(`💡 | You **need** to mention someone or enter a valid user's **ID** to remove someone from **this ticket**!`)
+
+    if(user.roles.cache.some(role => role.id === '748117822370086932')) return message.channel.send(`💡 | You **can't** remove **staff** from **tickets**`)
+
+    await message.channel.updateOverwrite(user, {
+        VIEW_CHANNEL: false,
+        SEND_MESSAGES: false,
+        READ_MESSAGE_HISTORY: false
+    })
+
+    message.channel.send(`💡 | Succesfully **removed** ${user} from this **ticket**!`)
 }

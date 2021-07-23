@@ -1,7 +1,7 @@
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
 
-    if (!['137624084572798976'].includes(message.author.id)) return;
+    if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
     if (!args[1]) {
         let i = 1
         while (i < 15) {

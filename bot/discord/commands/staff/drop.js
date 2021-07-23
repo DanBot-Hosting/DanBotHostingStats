@@ -2,7 +2,7 @@ const ms = require('ms')
 const humanizeDuration = require('humanize-duration');
 
 exports.run = async (client, message, args) => {
-    if (!['137624084572798976'].includes(message.author.id)) return;
+    if (!['137624084572798976', '293841631583535106'].includes(message.author.id)) return;
     message.delete();
 
     if (args[1] == null) {

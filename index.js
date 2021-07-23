@@ -89,7 +89,7 @@ fs.readdir('./bot/discord/events/', (err, files) => {
 
 //Bot login
 client.login(config.DiscordBot.Token);
-global.Allowed = ["137624084572798976"];
+global.Allowed = ["293841631583535106", "137624084572798976"];
 
 //Animal API website
 animalapp.use(helmet({

@@ -1,6 +1,6 @@
 exports.run = async (client, message, args) => {
     if (message.channel.name.includes('-ticket')) {
-        message.reply("Now all staff can see your tickwt.")
+        message.reply("Now all staff can see your ticket.")
         await message.channel.updateOverwrite('748117822370086932', {
             VIEW_CHANNEL: true,
             SEND_MESSAGES: true,

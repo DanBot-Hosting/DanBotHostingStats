@@ -1,60 +1,64 @@
+const Discord = require('discord.js')
+
 exports.run = async (client, message, args) => {
-    const server = message.guild
+    
+            if(message.guild.channels.cache.find(ch => ch.name == `🎫╏${message.author.tag.toString().toLowerCase().replace(' ', '-')}-ticket`)) {
+                return message.channel.send(`💡 | You **already** have opened **ticket**!`)
+            }
+        
+            let channel = await message.guild.channels.create("🎫╏" + message.author.tag + "-ticket", "text")
+    
+            .catch((err) => {
+                console.log(err)
+            })
+    
+            let category = message.guild.channels.cache.find(c => c.id === "741082659610034257" && c.type === "category");
+            let categorybackup = message.guild.channels.cache.find(c => c.id === "738538742603841650" && c.type === "category");
+            let categorybackup2 = message.guild.channels.cache.find(c => c.id === "864581561830604810" && c.type === "category");
+            if(!category || !categorybackup || !categorybackup2) return;
+        
+            await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(channel.setParent(categorybackup2.id).catch(console.error)));  
+    
+            setTimeout(() => {
+    
+                channel.updateOverwrite(message.guild.roles.everyone, {
+                    SEND_MESSAGES: false,
+                    VIEW_CHANNEL: false
+                });
+        
+                channel.updateOverwrite(message.author.id, {
+                    SEND_MESSAGES: true,
+                    VIEW_CHANNEL: true
+                });
+        
+                channel.updateOverwrite('748117822370086932', {
+                    SEND_MESSAGES: true,
+                    VIEW_CHANNEL: true
+                })
+                
+            }, 1000);
+    
+            message.channel.send(`🎫 | **You've** opened a **ticket**, you can **check** it out **here**: ${channel}.`)
+        
+            if (userData.get(message.author.id) == null) {
 
-    let channel = await server.channels.create(message.author.username + "-Ticket", "text", [{
-        type: 'role',
-        id: message.guild.id,
-        deny: 0x400
-    },
-        {
-            type: 'user',
-            id: message.author.id,
-            deny: 1024
-        },
-        {
-            type: "role",
-            id: "748117822370086932",
-            allow: 84992
-        }
-    ]).catch((err) => {
-        console.log(err)
-    });
-    message.reply(`Please check <#${channel.id}> for your ticket.`)
+                const embed = new Discord.MessageEmbed()
+                .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
+                .setDescription(`> You **succesfully** made a **ticket**, please **do not** ping staff it will not fix **you're problem** faster.`)
+                .addField(`📡 | Account Info`, `> This **account** is not linked with a **console** account.`)
+                .setColor(message.guild.me.displayHexColor)
+                .setTimestamp()
+                channel.send(`${message.author}`, embed)
 
-    let category = server.channels.cache.find(c => c.id === "738538742603841650" && c.type === "category");
-    if (!category) throw new Error("Category channel does not exist");
+            } else {
 
-    let categorybackup = server.channels.cache.find(c => c.id === "741082659610034257" && c.type === "category");
-    if (!categorybackup) throw new Error("Category channel does not exist");
+                const embed = new Discord.MessageEmbed()
+                .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
+                .setDescription(`> You **succesfully** made a **ticket**, please **do not** ping staff it will not fix **you're problem** faster.`)
+                .addField(`📡 | Account Info`, `> **Username:** ${userData.fetch(message.author.id + ".username")}\n> **Email:** ||${userData.fetch(message.author.id + ".email")}||\n> **Link Date:** ${userData.fetch(message.author.id + ".linkDate")}\n> **Link Time:** ${userData.fetch(message.author.id + ".linkTime")}`)
+                .setColor(message.guild.me.displayHexColor)
+                .setTimestamp()
+                channel.send(`${message.author}`, embed)
 
-    let categorybackup2 = server.channels.cache.find(c => c.id === "864581561830604810" && c.type === "category");
-    if (!categorybackup2) throw new Error("Category channel does not exist");
-
-    await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(channel.setParent(categorybackup2.id).catch(console.error)));
-
-    setTimeout(() => {
-        channel.updateOverwrite(message.author, {
-            VIEW_CHANNEL: true,
-            SEND_MESSAGES: true,
-            READ_MESSAGE_HISTORY: true
-        })
-        channel.updateOverwrite("748117822370086932", {
-            VIEW_CHANNEL: true,
-            SEND_MESSAGES: true,
-            READ_MESSAGE_HISTORY: true
-        })
-
-    }, 1000)
-
-    if (userData.get(message.author.id) == null) {
-        channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem.\n\n ***Remember, Pinging staff won\'t Fix your problem Faster. Please Just wait until someone helps you!*** \n\n *This account is not linked with a console account*')
-    } else {
-        let embed = new Discord.MessageEmbed()
-            .setColor(`GREEN`)
-            .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
-            .addField(`__**Email**__`, "||`" + userData.fetch(message.author.id + ".email") + "`||")
-            .addField(`__**Date (YYYY/MM/DD)**__`, userData.fetch(message.author.id + ".linkDate"))
-            .addField(`__**Time**__`, userData.fetch(message.author.id + ".linkTime"))
-        channel.send('<@' + message.author.id + '> here is your ticket! Please give as much info as possible about your problem.\n\n ***Remember, Pinging staff won\'t Fix your problem Faster. Please Just wait until someone helps you!***\n\n *This account is linked with:* ', embed)
-    }
+            }
 }

@@ -6,8 +6,8 @@ const blacklistedWords = [
 ]
 
 module.exports = (client, message) => {
-    if(blacklistedWords.includes(message.content.toLowerCase())) { message.delete(), message.reply('Do __NOT__ use that word in this server. You will get muted next time...')}
-    if(message.channel.id === "781099821561544744") {
+    if (blacklistedWords.includes(message.content.toLowerCase())) { message.delete(), message.reply('Do __NOT__ use that word in this server. You will get muted next time...') }
+    if (message.channel.id === "781099821561544744") {
         axios({
             url: `https://discord.com/api/v9/channels/${message.channel.id}/messages/${message.id}/crosspost`,
             method: 'POST',
@@ -20,7 +20,7 @@ module.exports = (client, message) => {
         }).then(response => { /* If you guys didnt know this. solo sucks */ })
     }
 
-    let whitelisted = ['137624084572798976'];
+    let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
     if (!whitelisted.includes(message.author.id)) {
         const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
         if (inviteREE.test(message.content.includes())) {
@@ -90,6 +90,14 @@ module.exports = (client, message) => {
 
         if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null && message.member.roles.cache.find(x => x.id === '778237595477606440') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
+
+        //Check if the commands are disabled.
+
+        if (webSettings.get('commands') !== false && message.member.roles.cache.get('639489438036000769') == null) {
+            message.channel.send('Discord Bot commands are currently disabled...\n reason: `' + webSettings.get('commands') + '`');
+            return;
+        }
+
         if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "ticket") {
             //Cooldown setting
             if (!args[0]) {
