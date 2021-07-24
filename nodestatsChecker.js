@@ -24,7 +24,7 @@ let stats = {
         ID: '11'
     },
     node5: {
-        serverID: '90f9c340',
+        serverID: '0cdde57e',
         IP: '178.33.170.232',
         ID: '12'
     },
@@ -49,7 +49,7 @@ let stats = {
         ID: '18'
     },
     node10: {
-        serverID: '93f1dae2',
+        serverID: '122f1a2b',
         IP: '5.196.100.235',
         ID: '20'
     },
@@ -59,17 +59,17 @@ let stats = {
         ID: '21'
     },
     node12: {
-        serverID: '4526d28b',
+        serverID: '1c0a7f49',
         IP: '5.196.100.237',
         ID: '22'
     },
     node13: {
-        serverID: '8bb3a785',
+        serverID: 'b90c157a',
         IP: '5.196.100.238',
         ID: '23'
     },
     node14: {
-        serverID: '4653577d',
+        serverID: '5029e0ef',
         IP: '5.196.100.239',
         ID: '24'
     },
