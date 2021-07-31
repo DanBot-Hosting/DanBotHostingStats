@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
             }
 
 
-            let { donated, used } = userPrem.get(args[1]);
+            let { donated, used } = userPrem.get(args[1]) || { donated: 0, used: 0 };
             let newM = userPrem.get(args[2]) || { donated: 0, used: 0 };
 
 
