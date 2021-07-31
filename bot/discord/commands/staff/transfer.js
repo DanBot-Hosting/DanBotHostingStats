@@ -19,7 +19,8 @@ exports.run = async (client, message, args) => {
             let newData = userData.get(args[2]);
 
             if (!newData || old.consoleID != newData.consoleID) {
-                message.reply('Both accounts should be linked to the same panel account in order for this command to work.')
+                message.reply('Both accounts should be linked to the same panel account in order for this command to work.');
+                return;
             }
 
 
