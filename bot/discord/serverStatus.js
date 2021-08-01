@@ -41,6 +41,39 @@ let nstatus = {
     }, {
         name: 'Node 18',
         data: 'Node18'
+    }, {
+        name: 'Node 20 (Not Released)',
+        data: 'Node20'
+    }, {
+        name: 'Node 21 (Not Released)',
+        data: 'Node21'
+    }, {
+        name: 'Node 22 (Not Released)',
+        data: 'Node22'
+    }, {
+        name: 'Node 23 (Not Released)',
+        data: 'Node23'
+    }, {
+        name: 'Node 24 (Not Released)',
+        data: 'Node24'
+    }, {
+        name: 'Node 25 (Not Released)',
+        data: 'Node25'
+    }, {
+        name: 'Node 26 (Not Released)',
+        data: 'Node26'
+    }, {
+        name: 'Node 27 (Not Released)',
+        data: 'Node27'
+    }, {
+        name: 'Node 28 (Not Released)',
+        data: 'Node28'
+    }, {
+        name: 'Node 29 (Not Released)',
+        data: 'Node29'
+    }, {
+        name: 'Node 30 (Not Released)',
+        data: 'Node30'
     }],
 
     "Donator Nodes": [{
@@ -50,7 +83,7 @@ let nstatus = {
         name: 'Node 15',
         data: 'node15'
     }, {
-        name: 'Node 19 (Upcoming)',
+        name: 'Node 19 (Not Released)',
         data: 'Node19'
     }],
 
