@@ -59,21 +59,6 @@ let nstatus = {
     }, {
         name: 'Node 25 (Not Released)',
         data: 'Node25'
-    }, {
-        name: 'Node 26 (Not Released)',
-        data: 'Node26'
-    }, {
-        name: 'Node 27 (Not Released)',
-        data: 'Node27'
-    }, {
-        name: 'Node 28 (Not Released)',
-        data: 'Node28'
-    }, {
-        name: 'Node 29 (Not Released)',
-        data: 'Node29'
-    }, {
-        name: 'Node 30 (Not Released)',
-        data: 'Node30'
     }],
 
     "Donator Nodes": [{
