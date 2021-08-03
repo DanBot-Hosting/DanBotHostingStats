@@ -262,19 +262,19 @@ module.exports = async (client) => {
 
         //CPU
         client.channels.cache.get("872206316280610886").edit({
-            name: `Total CPU Cores: ${cpucores}`,
+            name: `CPU: ${cpucores}`,
             reason: "CPU Cores update"
         });
 
         //RAM
         client.channels.cache.get("872206213230776380").edit({
-            name: `Total RAM: ${getMemory}`,
+            name: `RAM: ${getMemory}`,
             reason: "Total Ram Update"
         });
 
         //SSD
         client.channels.cache.get("872206273616175165").edit({
-            name: `Total SSD: ${getDisc1} / ${getDisc2}`,
+            name: `SSD: ${getDisc1} / ${getDisc2}`,
             reason: "Total Disk Update"
         });
 
