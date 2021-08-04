@@ -219,7 +219,7 @@ module.exports = async (client) => {
                     parseFloat(nodeData.fetch("Node15.memtotalraw")) +
                     parseFloat(nodeData.fetch("Storage1.memtotalraw"))
                 ),
-                2
+                1
             );
 
         const getDisc1 = formatFileSize(
@@ -262,7 +262,7 @@ module.exports = async (client) => {
 
         //CPU
         client.channels.cache.get("872206316280610886").edit({
-            name: `CPU: ${cpucores}`,
+            name: `CPU: ${cpucores} cores`,
             reason: "CPU Cores update"
         });
 
