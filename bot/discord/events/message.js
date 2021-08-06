@@ -3,8 +3,8 @@ const axios = require('axios');
 
 module.exports = (client, message) => {
 const swears = [
-    'rape', 'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim'
-]
+        'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag'
+    ]
         if (swears.some(x=> message.content.toLowerCase().includes(x))) {
             if(message.author.bot) {
                 message.reply('said a blacklisted word, Its been kicked from the server') 
