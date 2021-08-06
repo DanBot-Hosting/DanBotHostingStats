@@ -81,6 +81,11 @@ Router.get("/form/staff-apply", checkAuth, (req, res) => {
 });
 
 Router.post("/form/staff-apply", checkAuth, (req, res) => {
+    
+    if(webSettings.fetch("staff-applications.enabled") == "false") {
+        res.status(500)
+        return;
+    }
 
     let data = req.body;
     data.member = client.guilds.cache.get('639477525927690240').members.cache.get(data.user);
