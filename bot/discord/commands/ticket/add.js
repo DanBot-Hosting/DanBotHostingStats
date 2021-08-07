@@ -1,7 +1,7 @@
 exports.run = async (client, message, args) => {
     if (message.channel.name.includes('-ticket')) {
         if (args[1] === "") {
-            message.channel.send('Please run this command again with the users ID')
+            message.channel.send('Please run this command again with the users ID.')
         } else {
             console.log(args[1])
             await message.channel.cache.overwritePermissions(args[1], {

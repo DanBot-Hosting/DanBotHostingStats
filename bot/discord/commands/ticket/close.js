@@ -1,7 +1,7 @@
 exports.run = async (client, message, args) => {
     if (message.channel.name.includes('-ticket')) {
         const filter2 = m => m.author.id === message.author.id;
-        const warning = await message.channel.send('<@' + message.author.id + '> are you sure you want to close this ticket? please type `confirm` to close the ticket or `cancel` to keep the ticket open.')
+        const warning = await message.channel.send('<@' + message.author.id + '> are you sure you want to close this ticket? Please type `confirm` to close the ticket or `cancel` to keep the ticket open.')
 
         let collected1 = await message.channel.createMessageCollector(filter2, {
             max: 1,

@@ -1,6 +1,6 @@
 exports.run = async (client, message, args) => {
     if (args[1] === "") {
-        message.channel.send('Please run this command again with the users ID')
+        message.channel.send('Please run this command again with the users ID.')
     } else {
         await message.channel.cache.overwritePermissions(args[1], {
             VIEW_CHANNEL: false,
