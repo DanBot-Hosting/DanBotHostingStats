@@ -1,9 +1,13 @@
 exports.run = async (client, message, args) => {
-    const embed = new Discord.MessageEmbed()
-        .addField("__**Commands**__", "`" + config.DiscordBot.Prefix + "user new` | Create an account \n`" +
-            config.DiscordBot.Prefix + "user password` | Reset account password \n`" +
-            config.DiscordBot.Prefix + "user link` | Link this account with console account \n`" +
-            config.DiscordBot.Prefix + "user unlink` | Unlinks account from the console account \n`" +
-            config.DiscordBot.Prefix + "user premium` | Check your premium server limit")
-    await message.channel.send(embed)
+    
+    let prefix = config.DiscordBot.Prefix
+
+    let embed = new Discord.MessageEmbed()
+    .setAuthor(`${client.user.username} | User Help`, client.user.avatarURL())
+    .addField(`🎭 | User Commands`, `> \`${prefix}user link\`\n> \`${prefix}user unlink\`\n> \`${prefix}user premium\`\n> \`${prefix}user password\`\n> \`${prefix}user new\`\n> \`${prefix}user invite\``)
+    .setThumbnail(client.user.avatarURL())
+    .setColor(message.guild.me.displayHexColor)
+    .setTimestamp()
+
+    await message.channel.send({ embed: embed })
 }
