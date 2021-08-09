@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
 
                 if (emojis === '✅') {
     
-                    message.channel.send(' ').then(
+                    message.channel.send('Closing this ticket').then(
                         setTimeout(() => {
     
                             message.channel.messages.fetch().then(async (messages) => {
