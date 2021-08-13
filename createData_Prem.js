@@ -10,7 +10,7 @@ Node 7   : 12
 Node 15  : 21
 
 Node 7 - Donator bots, websites and lavalink
-Node 15 - Donator gaming node, Used for games ofc. hopefully donators dont read this before its released
+Node 15 - Donator gaming node, Used for games ofc.
 */
 
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
