@@ -3,19 +3,19 @@ const fs = require('fs')
 
 exports.run = async (client, message, args) => {
 
-        if(!message.channel.name.includes('-ticket')) return message.channel.send(`💡 | You can **only** use this **command** in **ticket channel**!`)
+        if(!message.channel.name.includes('-ticket')) return message.channel.send(`You can only use this command in a ticket channel!`);
 
             const embed = new Discord.MessageEmbed()
             .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
-            .setDescription(`> ❓ | Are you sure you want to close this ticket?\n> 💡 | React with emojis to **open/close** this ticket!`)
+            .setDescription(`❓ | Are you sure you want to close this ticket?`)
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp()
 
             const msg = await message.channel.send(`${message.author}`, embed)
-            await msg.react('✔️').catch((err) => { message.channel.send(err) })
+            await msg.react('✅').catch((err) => { message.channel.send(err) })
             await msg.react('❌').catch((err) => { message.channel.send(err) })
     
-            const filter = (rect, usr) => ['✔️', '❌'].includes(rect.emoji.name) && usr.id === message.author.id
+            const filter = (rect, usr) => ['✅', '❌'].includes(rect.emoji.name) && usr.id === message.author.id
             const response = await msg.awaitReactions(filter, {
                 max: 1,
                 time: 30000,
@@ -23,18 +23,15 @@ exports.run = async (client, message, args) => {
             })
 
             .catch(collected => {
-
-                message.channel.send('🚧 | You **didnt** answer in time im not **closing this ticket!**')
-
+                msg.edit('Reactions timed out, keeping this open.');
             })
 
                 if(!response) return;
                 const emojis = response.first().emoji.name
 
-                if (emojis === '✔️') {
+                if (emojis === '✅') {
     
-                    message.channel.send('🚧 | Im **closing** this **ticket**!').then(
-    
+                    message.channel.send('✅ Closing this ticket').then(
                         setTimeout(() => {
     
                             message.channel.messages.fetch().then(async (messages) => {
@@ -62,8 +59,6 @@ exports.run = async (client, message, args) => {
                 }
         
                 if (emojis === '❌') {
-    
-                    message.channel.send('🚧 | **Ticket** is staying **opened**!');
-        
+                    msg.edit('Ok, Ticket is staying open!')
                 }
 }
