@@ -5,7 +5,7 @@ exports.run = (client, message, args) => {
             return message.channel.send(`🚧 | You **do not** have enough **permissions** to use this **command**.`)
         }
 
-        let prefix = config.DiscordBot.prefix
+        let prefix = config.DiscordBot.Prefix
 
         const embed = new Discord.MessageEmbed()
         .setAuthor(`${client.user.username} | Purge`, client.user.avatarURL())
