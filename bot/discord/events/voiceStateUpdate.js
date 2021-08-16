@@ -18,7 +18,7 @@ module.exports = async (client, oldV, newV) => {
         let vc = await guild.channels.create(`${cleanName}'s Room`, {
             type: "voice",
         })
-
+        vc.setParent("757659750342197289");
         vc.overwritePermissions([{
             id: guild.id,
             deny: ["CONNECT", "VIEW_CHANNEL"]
@@ -26,8 +26,6 @@ module.exports = async (client, oldV, newV) => {
             id: newV.member.id,
             allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
         }])
-
-        vc.setParent("757659750342197289");
         newV.setChannel(vc.id);
         client.pvc.set(vc.id, {
             channelID: vc.id,
