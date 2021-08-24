@@ -9,6 +9,12 @@ const rateLimitt = require('express-rate-limit');
 
 var axios = require("axios")
 
+var nodeIPS = ["142.54.191.91", "142.54.191.93", "5.39.83.66",
+               "178.33.170.233", "178.33.170.232", "5.196.100.232",
+               "54.36.224.225", "5.196.100.234", "5.196.100.233",
+               "5.196.100.235", "5.196.100.236", "5.196.100.237",
+               "5.196.100.238", "5.196.100.239", "137.74.76.69",
+               "137.74.76.68", "137.74.76.70", "137.74.76.71"];
 
 Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // temp remove if ratelimit
     let ID = req.params.ID;
@@ -27,45 +33,51 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
     let keys = db.get("apiKeys");
 
     if (keys.includes(data.key)) {
-        let owner = db.get(`${data.key}`);
-        // console.log(data);
-        let info = db.get(data.id);
+        if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
+            let owner = db.get(`${data.key}`);
+            // console.log(data);
+            let info = db.get(data.id);
 
-        console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
+            console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
 
-        if (info) {
-            let botData = {
-                id: data.id,
-                keyLastUsed: data.key,
-                servers: data.servers,
-                users: data.users,
-                owner: owner,
-                client: data.clientInfo,
-                deleted: info.deleted,
-                added: info.added,
-                status: info.status || "N/A",
-                mbl: info.mbl || [],
-                lastPost: Date.now()
-            };
+            if (info) {
+                let botData = {
+                    id: data.id,
+                    keyLastUsed: data.key,
+                    servers: data.servers,
+                    users: data.users,
+                    owner: owner,
+                    client: data.clientInfo,
+                    deleted: info.deleted,
+                    added: info.added,
+                    status: info.status || "N/A",
+                    mbl: info.mbl || [],
+                    lastPost: Date.now()
+                };
 
-            db.set(ID, botData);
+                db.set(ID, botData);
+            } else {
+                let botData = {
+                    id: data.id,
+                    keyLastUsed: data.key,
+                    servers: data.servers,
+                    users: data.users,
+                    owner: owner,
+                    client: data.clientInfo,
+                    deleted: false,
+                    added: Date.now(),
+                    status: "N/A",
+                    mbl: [],
+                    lastPost: Date.now()
+                };
+
+                db.set(ID, botData);
+            }
         } else {
-            let botData = {
-                id: data.id,
-                keyLastUsed: data.key,
-                servers: data.servers,
-                users: data.users,
-                owner: owner,
-                client: data.clientInfo,
-                deleted: false,
-                added: Date.now(),
-                status: "N/A",
-                mbl: [],
-                lastPost: Date.now()
-            };
-
-            db.set(ID, botData);
+            console.log(chalk.red(data.id + ' is not hosted on DBH, Banning...'))
         }
+
+
 
 
         /*   db.fetch(`botIDs`)
