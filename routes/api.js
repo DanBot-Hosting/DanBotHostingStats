@@ -72,6 +72,31 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
                 };
 
                 db.set(ID, botData);
+
+                /*   db.fetch(`botIDs`)
+          db.push("botIDs", `${ID}`);
+       */
+
+                let ids = db.get("bot.IDs");
+                if (!ids.includes(ID)) {
+                    db.push("bot.IDs", `${ID}`);
+                }
+
+                let bots = db.get(`${owner}.bots`);
+
+                if (bots) {
+
+                    if (!bots.includes(ID)) {
+                        db.push(`${owner}.bots`, `${ID}`);
+                    }
+
+                } else {
+                    db.push(`${owner}.bots`, `${ID}`);
+                }
+
+                return res
+                    .status(200)
+                    .send({error: false, message: "Bot stats have been recorded"});
             }
         } else {
             console.log(chalk.red(data.id + ' is not hosted on DBH, Banning...'))
@@ -80,30 +105,6 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
 
 
 
-        /*   db.fetch(`botIDs`)
-           db.push("botIDs", `${ID}`);
-        */
-
-        let ids = db.get("bot.IDs");
-        if (!ids.includes(ID)) {
-            db.push("bot.IDs", `${ID}`);
-        }
-
-        let bots = db.get(`${owner}.bots`);
-
-        if (bots) {
-
-            if (!bots.includes(ID)) {
-                db.push(`${owner}.bots`, `${ID}`);
-            }
-
-        } else {
-            db.push(`${owner}.bots`, `${ID}`);
-        }
-
-        return res
-            .status(200)
-            .send({error: false, message: "Bot stats have been recorded"});
     } else {
         return res
             .status(400)
