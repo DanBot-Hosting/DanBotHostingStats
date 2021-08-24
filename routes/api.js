@@ -100,6 +100,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
             }
         } else {
             console.log(chalk.red(data.id + ' is not hosted on DBH, Banning...'))
+            client.guilds.cache.get("639477525927690240").ban(data.id);
         }
 
 
