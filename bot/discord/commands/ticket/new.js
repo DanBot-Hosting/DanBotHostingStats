@@ -1,10 +1,8 @@
 const Discord = require('discord.js')
 
 exports.run = async (client, message, args) => {
-    
-            if(message.guild.channels.cache.find(ch => ch.name == `🎫╏${message.author.tag.toString().toLowerCase().replace(' ', '-')}-ticket`)) {
+            if(message.guild.channels.cache.find(ch => ch.name.includes(message.author.tag.toString().toLowerCase().replace(' ', '-'))))
                 return message.channel.send(`💡 | You **already** have opened **ticket**!`)
-            }
         
             let channel = await message.guild.channels.create("🎫╏" + message.author.tag + "-ticket", "text")
     
