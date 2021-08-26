@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
                 return;
             }
 
-            message.member.voice.channelID.updateOverwrite(member, {
+            message.member.voice.channel.updateOverwrite(member, {
                 CONNECT: true,
                 VIEW_CHANNEL: true,
                 STREAM: true,
