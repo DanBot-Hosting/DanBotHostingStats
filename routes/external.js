@@ -4,7 +4,7 @@ const axios = require('axios')
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
 Router.get("/", (req, res) => {
-    res.send('LMAO. what are you doing here...')
+    res.send('Oh, Hello there *waves* <meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ" />')
 });
 
 // Router.get("/fetch", (req, res) => {
