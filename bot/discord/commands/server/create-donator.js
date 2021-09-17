@@ -120,7 +120,7 @@ exports.run = async (client, message, args) => {
                     .addField(`__**Server name:**__`, serverName)
                     .addField(`__**Type:**__`, args[1].toLowerCase())
                     .setFooter('User has ' + (userP.used + 1) + ' out of a max ' + allowed + ' servers')
-                client.channels.cache.get("785236066500083772").send(embed2)
+                client.channels.cache.get("888490610376450048").send(embed2)
 
             }).catch(error => {
                 message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
