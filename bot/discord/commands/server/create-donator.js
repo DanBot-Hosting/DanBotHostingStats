@@ -46,7 +46,7 @@ exports.run = async (client, message, args) => {
         message.channel.send(new Discord.MessageEmbed()
             .setColor("RED")
             .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
-            .addField("__**Grand Theft Auto:**__", "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+            .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
             .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
             .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
             .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
