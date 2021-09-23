@@ -51,7 +51,6 @@ exports.run = async (client, message, args) => {
         java: data.java,
         paper: data.paper,
         forge: data.forge,
-        fivem: data.fivem,
         "alt:v": data.altv,
         multitheftauto: data.multitheftauto,
         "rage.mp": data.ragemp,
