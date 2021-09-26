@@ -7,8 +7,8 @@ const swears = [
     ]
         if (swears.some(x=> message.content.toLowerCase().includes(x))) {
             if(message.author.bot) {
-                message.reply('said a blacklisted word, Its been kicked from the server') 
-                message.delete() 
+                message.reply('said a blacklisted word, Its been kicked from the server')
+                message.delete()
                 return message.member.kick()
             }
             message.reply('Do __NOT__ use that word in this server. You will get muted next time...')
@@ -33,7 +33,7 @@ const swears = [
         }).then(response => { /* If you guys didnt know this. solo sucks */ })
     }
 
-    let whitelisted = ['137624084572798976', '293841631583535106', '251428574119067648'];
+    let whitelisted = ['137624084572798976'];
     if (!whitelisted.includes(message.author.id)) {
         const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
         if (inviteREE.test(message.content.includes())) {

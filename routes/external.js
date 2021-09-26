@@ -7,6 +7,12 @@ Router.get("/", (req, res) => {
     res.send('Oh, Hello there *waves* <meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ" />')
 });
 
+Router.get("/fetch", (req, res) => {
+    if (req.headers.password == config.externalPassword) {
+
+    }
+})
+
 // Router.get("/fetch", (req, res) => {
 //     if (req.headers.password == config.externalPassword) {
 //         if (!req.query.user) {
