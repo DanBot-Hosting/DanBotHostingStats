@@ -18,7 +18,7 @@ const swears = [
           .setTitle('User Said Blacklisted word')
           .setDescription(`User: ${message.author.tag} Has said\n\n**${message.content}**\n\n and It includes a blacklisted word`)
           .setColor('RANDOM')
-            channel.send(bword)
+          return channel.send(bword)
         }
     if (message.channel.id === "781099821561544744") {
         axios({
