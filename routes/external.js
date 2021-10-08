@@ -13,34 +13,53 @@ Router.get("/fetch", (req, res) => {
     }
 })
 
-// Router.get("/fetch", (req, res) => {
-//     if (req.headers.password == config.externalPassword) {
-//         if (!req.query.user) {
-//             res.send('Missing data.')
-//         } else {
-//             const fetchUserData = userData.get(req.query.user);
-//             if (fetchUserData == null) {
-//                 const data = {
-//                     error: "No account found for that user!"
-//                 }
-//                 res.json(data)
-//             } else {
-//                 const data = {
-//                     username: fetchUserData.username,
-//                     email: fetchUserData.email,
-//                     discordID: fetchUserData.discordID,
-//                     consoleID: fetchUserData.consoleID,
-//                     linkTime: fetchUserData.linkTime,
-//                     linkDate: fetchUserData.linkDate
-//                 }
-//                 res.json(data)
-//             }
-//         }
-//     } else {
-//         res.send('Invalid Password!')
-//         console.log(chalk.red('[WARNING] ' + req.headers["x-forwarded-for" || "cf-connecting-ip"] + " tried to access https://danbot.host/external/fetch"))
-//     }
-// });
+ Router.get("/fetch", (req, res) => {
+     if (req.headers.password == config.externalPassword) {
+         if (!req.query.user) {
+             res.send('Missing data.')
+         } else {
+             const fetchUserData = userData.get(req.query.user);
+             if (fetchUserData == null) {
+                 const data = {
+                     error: "No account found for that user!"
+                 }
+                 res.json(data)
+             } else {
+                 const data = {
+                     username: fetchUserData.username,
+                     email: fetchUserData.email,
+                     discordID: fetchUserData.discordID,
+                     consoleID: fetchUserData.consoleID,
+                     linkTime: fetchUserData.linkTime,
+                     linkDate: fetchUserData.linkDate
+                 }
+                 res.json(data)
+             }
+         }
+     } else {
+         res.send('Invalid Password!')
+         console.log(chalk.red('[WARNING] ' + req.headers["x-forwarded-for" || "cf-connecting-ip"] + " tried to access https://danbot.host/external/fetch"))
+    }
+});
+
+Router.get("/premium", (req, res) => {
+    if (req.headers.password == config.externalPassword) {
+        if (!req.query.user) {
+            res.send('Missing data.')
+        } else {
+            let oldBal = userPrem.get(user + '.donated')
+            let setNew = (userid, amount) => {
+                userPrem.set(userid + '.donated', amount)
+            }
+
+            setNew(user, 4 + oldBal);
+
+        }
+    } else {
+        res.send('Invalid Password!')
+        console.log(chalk.red('[WARNING] ' + req.headers["x-forwarded-for" || "cf-connecting-ip"] + " tried to access https://danbot.host/external/premium"))
+    }
+});
 
 // Router.get("/fetch-all", (req, res) => {
 //     if (req.headers.password == config.externalPassword) {
