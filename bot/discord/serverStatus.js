@@ -50,7 +50,7 @@ let nstatus = {
         name: 'Node 15',
         data: 'node15'
     }, {
-        name: 'Dono-01'
+        name: 'Dono-01',
         data: 'dono01'
     }],
 
