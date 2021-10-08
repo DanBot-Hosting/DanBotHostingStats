@@ -42,7 +42,7 @@ Router.get("/fetch", (req, res) => {
     }
 });
 
-Router.post("/premium", (req, res) => {
+Router.post("/prem", (req, res) => {
     if (req.headers.password == config.externalPassword) {
         if (!req.headers.user) {
             console.log(req)
