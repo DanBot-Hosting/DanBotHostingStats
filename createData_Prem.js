@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const gaming = [21]          // Gaming nodes
-const botswebdb = [12]       // Bots, Websites and Databases nodes
+const botswebdb = [26]       // Bots, Websites and Databases nodes
 const storage = [13]         // Storage nodes
 
 /*
