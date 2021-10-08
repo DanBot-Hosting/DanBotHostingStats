@@ -51,7 +51,7 @@ Router.get("/premium", (req, res) => {
             let setNew = (userid, amount) => {
                 userPrem.set(userid + '.donated', amount)
             }
-
+console.log(user + ' adding 4 servers. old bal: ' + oldBal)
             setNew(user, 4 + oldBal);
 
         }
