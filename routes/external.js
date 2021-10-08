@@ -42,7 +42,7 @@ Router.get("/fetch", (req, res) => {
     }
 });
 
-Router.get("/premium", (req, res) => {
+Router.post("/premium", (req, res) => {
     if (req.headers.password == config.externalPassword) {
         if (!req.query.user) {
             res.send('Missing data.')
