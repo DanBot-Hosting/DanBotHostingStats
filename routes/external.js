@@ -44,15 +44,17 @@ Router.get("/fetch", (req, res) => {
 
 Router.post("/premium", (req, res) => {
     if (req.headers.password == config.externalPassword) {
-        if (!req.query.user) {
+        if (!req.headers.user) {
+            console.log(req)
             res.send('Missing data.')
         } else {
-            let oldBal = userPrem.get(user + '.donated')
+            let oldBal = userPrem.get(req.headers.user + '.donated')
             let setNew = (userid, amount) => {
                 userPrem.set(userid + '.donated', amount)
             }
-console.log(user + ' adding 4 servers. old bal: ' + oldBal)
-            setNew(user, 4 + oldBal);
+console.log(req.headers.user + ' adding 4 servers. old bal: ' + oldBal)
+            setNew(req.headers.user, 4 + oldBal);
+            res.send('done')
 
         }
     } else {
