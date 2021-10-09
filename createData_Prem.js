@@ -170,7 +170,7 @@ list.aio = (serverName, userID) => ({
     "user": userID,
     "nest": 5,
     "egg": 46,
-    "docker_image": "danielpmc/discordnode8",
+    "docker_image": "danbothosting/aio",
     "startup": "${STARTUP_CMD}",
     "limits": {
         "memory": 0,
