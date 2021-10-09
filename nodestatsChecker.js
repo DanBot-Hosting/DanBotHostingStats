@@ -96,7 +96,7 @@ let stats = {
     dono01: {
         serverID: '57c62f12',
         IP: '173.208.153.242',
-        ID: '20'
+        ID: '30'
     }
 }
 if (enabled.nodestatsChecker === true) {
