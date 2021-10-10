@@ -44,7 +44,7 @@ exports.run = async (client, message, args) => {
 
                 const embed = new Discord.MessageEmbed()
                 .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
-                .setDescription(`> You **succesfully** made a **ticket**, please **do not** ping staff it will not fix **you're problem** faster.`)
+                .setDescription(`> You **succesfully** made a **ticket**, please **do not** ping staff it will not fix **your problem** faster.`)
                 .addField(`📡 | Account Info`, `> This **account** is not linked with a **console** account.`)
                 .setColor(message.guild.me.displayHexColor)
                 .setTimestamp()
@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
 
                 const embed = new Discord.MessageEmbed()
                 .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
-                .setDescription(`> You **succesfully** made a **ticket**, please **do not** ping staff it will not fix **you're problem** faster.`)
+                .setDescription(`> You **succesfully** made a **ticket**, please **do not** ping staff it will not fix **your problem** faster.`)
                 .addField(`📡 | Account Info`, `> **Username:** ${userData.fetch(message.author.id + ".username")}\n> **Email:** ||${userData.fetch(message.author.id + ".email")}||\n> **Link Date:** ${userData.fetch(message.author.id + ".linkDate")}\n> **Link Time:** ${userData.fetch(message.author.id + ".linkTime")}`)
                 .setColor(message.guild.me.displayHexColor)
                 .setTimestamp()
