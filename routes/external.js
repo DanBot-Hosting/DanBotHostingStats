@@ -63,17 +63,17 @@ console.log(req.headers.user + ' adding 4 servers. old bal: ' + oldBal)
     }
 });
 
-// Router.get("/fetch-all", (req, res) => {
-//     if (req.headers.password == config.externalPassword) {
-//             const data = {
-//                 all: userData.all()
-//             }
-//             res.json(data);
-//     } else {
-//         res.send('Invalid Password!')
-//         console.log(chalk.red('[WARNING] ' + req.headers["x-forwarded-for" || "cf-connecting-ip"] + " tried to access https://danbot.host/external/fetch-all"))
-//     }
-// });
+ Router.get("/fetch-all", (req, res) => {
+     if (req.headers.password == config.externalPassword) {
+             const data = {
+                 all: userData.all()
+             }
+             res.json(data);
+     } else {
+         res.send('Invalid Password!')
+         console.log(chalk.red('[WARNING] ' + req.headers["x-forwarded-for" || "cf-connecting-ip"] + " tried to access https://danbot.host/external/fetch-all"))
+     }
+});
 
 // Router.get("/fetch-all/prem", (req, res) => {
 //     if (req.headers.password == config.externalPassword) {
