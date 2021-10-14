@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 
 exports.run = async (client, message, args) => {
+            return;
             if(message.guild.channels.cache.find(ch => ch.name.includes(message.author.tag.toString().toLowerCase().replace(' ', '-'))))
                 return message.channel.send(`💡 | You **already** have opened **ticket**!`)
         
