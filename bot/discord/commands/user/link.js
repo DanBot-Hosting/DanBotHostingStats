@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         ]).catch(console.error);
         message.reply(`Please check <#${channel.id}> to link your account.`)
 
-        let category = server.channels.cache.find(c => c.id === "738539016688894024" && c.type === "category");
+        let category = server.channels.cache.find(c => c.id === "898041816367128616" && c.type === "category");
         if (!category) throw new Error("Category channel does not exist");
 
         await channel.setParent(category.id);
