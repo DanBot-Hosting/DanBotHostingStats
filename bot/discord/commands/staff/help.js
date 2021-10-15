@@ -26,7 +26,7 @@ let desc = (object) => {
 }
 
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "748117822370086932")) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
 
     let embed = new Discord.MessageEmbed()
         .setColor('RANDOM')

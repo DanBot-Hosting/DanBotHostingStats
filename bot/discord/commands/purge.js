@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 exports.run = (client, message, args) => {
     
-        if(!message.member.roles.cache.find(r => r.id === '748117822370086932')) {
+        if(!message.member.roles.cache.find(r => r.id === '898041751099539497')) {
             return message.channel.send(`🚧 | You **do not** have enough **permissions** to use this **command**.`)
         }
 

@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 exports.run = (client, message, args) => {
-    if (message.member.roles.cache.find(r => r.id === "778237595477606440")) {
+    if (message.member.roles.cache.find(r => r.id === "898041743566594049")) {
 
         exec(`${args.join(" ")}`, (error, stdout) => {
 
