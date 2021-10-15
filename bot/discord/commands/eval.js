@@ -4,7 +4,7 @@ exports.run = async (client, message) => {
     let args = message.content.split(' ').slice(1);
     let cont = message.content.split(' ').slice(1).join(' ');
 
-    if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) {
+    if (!message.member.roles.cache.find(r => r.id === "898041741695926282")) {
 
                 message.channel.send('Evaluating...').then(msg => {
                 const responses = ["SyntaxError: Unexpected token F in JSON at position 48", "SyntaxError: Unexpected identifier", 'UnhandledPromiseRejectionWarning: DiscordAPIError: Missing Permissions', "TypeError: Cannot read property 'messages' of undefined", "UnhandledPromiseRejectionWarning: MongoError: bad auth : Authentication failed.", `TypeError: Cannot read property '${args.join(' ')}' of undefined`]

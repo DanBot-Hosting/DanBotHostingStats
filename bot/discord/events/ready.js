@@ -37,7 +37,7 @@ module.exports = async (client) => {
     //getUsers()
 
     //Check make sure create account channels are closed after a hour
-    guild.channels.cache.filter(x => x.parentID === '738539016688894024' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
+    guild.channels.cache.filter(x => x.parentID === '898041816367128616' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
 
     // setInterval(() => {
     //     let _codes = codes.fetchAll();
@@ -66,7 +66,7 @@ module.exports = async (client) => {
                 if (response.includes("Already up to date.")) {
                     //console.log('Bot already up to date. No changes since last pull')
                 } else {
-                    client.channels.cache.get('766068015686483989').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting bot**")
+                    client.channels.cache.get('898041843902742548').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting bot**")
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
@@ -100,7 +100,7 @@ module.exports = async (client) => {
 
     //Node status channel embed
     if (enabled.NodeStats === true) {
-        let channel = client.channels.cache.get("757949242495991918");
+        let channel = client.channels.cache.get("898041845878247487");
         setInterval(async () => {
             let embed = await nstatus.getEmbed();
 
@@ -115,7 +115,7 @@ module.exports = async (client) => {
     }
 
     if (enabled.NodeStats === true) {
-        let channel = client.channels.cache.get("797438893891911681");
+        let channel = client.channels.cache.get("898041847363035157");
         setInterval(async () => {
             let embed = await nUsage.getEmbed();
 
@@ -132,28 +132,28 @@ module.exports = async (client) => {
     //Voice channel stats updator
     setInterval(async () => {
         let DBHGuild = client.guilds.cache.get("639477525927690240");
-        let roleID1 = '748117822370086932';
+        let roleID1 = '898041751099539497';
         let staffCount = DBHGuild.roles.cache.get(roleID1).members.size;
-        client.channels.cache.get("739821419910791348").edit({
+        client.channels.cache.get("898041828870348800").edit({
             name: `Staff: ${staffCount}`,
             reason: "Staff count update"
         });
 
-        let roleID2 = '639490038434103306';
+        let roleID2 = '898041757168697375';
         let memberCount = DBHGuild.roles.cache.get(roleID2).members.size;
-        client.channels.cache.get("739821366991257621").edit({
+        client.channels.cache.get("898041827561730069").edit({
             name: `Members: ${memberCount}`,
             reason: "Member count update"
         });
 
-        let roleID3 = '704467807122882562';
+        let roleID3 = '898041770082959432';
         let botCount = DBHGuild.roles.cache.get(roleID3).members.size;
-        client.channels.cache.get("739821468296413254").edit({
+        client.channels.cache.get("898041830241882112").edit({
             name: `Bots: ${botCount}`,
             reason: "Bot count update"
         });
 
-        client.channels.cache.get("815242427978743848").edit({
+        client.channels.cache.get("898041826810949632").edit({
             name: `Total Members: ${DBHGuild.memberCount}`,
             reason: "TMembers count update"
         });
@@ -261,19 +261,19 @@ module.exports = async (client) => {
         );
 
         //CPU
-        client.channels.cache.get("872206316280610886").edit({
+        client.channels.cache.get("898041823392587846").edit({
             name: `CPU: ${cpucores} cores`,
             reason: "CPU Cores update"
         });
 
         //RAM
-        client.channels.cache.get("872206213230776380").edit({
+        client.channels.cache.get("898041824730574848").edit({
             name: `RAM: ${getMemory}`,
             reason: "Total Ram Update"
         });
 
         //SSD
-        client.channels.cache.get("872206273616175165").edit({
+        client.channels.cache.get("898041825816879114").edit({
             name: `SSD: ${getDisc1} / ${getDisc2}`,
             reason: "Total Disk Update"
         });
@@ -281,7 +281,7 @@ module.exports = async (client) => {
         //END
 
         const ticketcount = DBHGuild.channels.cache.filter(x => x.name.endsWith("-ticket")).size
-        client.channels.cache.get("739821447924416562").edit({
+        client.channels.cache.get("898041832569700362").edit({
             name: `Tickets: ${ticketcount}`,
             reason: "Ticket count update"
         })
@@ -297,7 +297,7 @@ module.exports = async (client) => {
                 'Accept': 'Application/vnd.pterodactyl.v1+json',
             }
         }).then(response => {
-            client.channels.cache.get("757199549977722890").edit({
+            client.channels.cache.get("898041817503760444").edit({
                 name: `Servers Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Server count update"
             })
@@ -314,31 +314,14 @@ module.exports = async (client) => {
                 'Accept': 'Application/vnd.pterodactyl.v1+json',
             }
         }).then(response => {
-            client.channels.cache.get("757222585015599214").edit({
+            client.channels.cache.get("898041820309778462").edit({
                 name: `Clients Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Client count update"
             })
         });
-        client.channels.cache.get("758746579636191382").edit({
+        client.channels.cache.get("898041831495974983").edit({
             name: `Boosts: ${DBHGuild.premiumSubscriptionCount}`,
             reason: "Boosts count update"
         })
     }, 30000);
-
-
-    setInterval(() => {
-        axios({
-            url: config.DanPterodactyl.hosturl + "/api/client/servers/019b6467/resources",
-            method: 'GET',
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                'Authorization': 'Bearer ' + config.DanPterodactyl.apikeyclient,
-                'Content-Type': 'application/json',
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
-            }
-        }).then(resources => {
-            client.channels.cache.get("817550848343015475").setTopic("Status: " + resources.data.attributes.current_state + " | CPU Usage: " + resources.data.attributes.resources.cpu_absolute + "% | RAM Usage: " + pretty(resources.data.attributes.resources.memory_bytes) + " / 8GB")
-        }).catch(err => { });
-    }, 5000)
 };
