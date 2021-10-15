@@ -1,6 +1,11 @@
 const Discord = require('discord.js')
 
 exports.run = async (client, message, args) => {
+    let category = message.guild.channels.cache.find(c => c.id === "898041813309476874" && c.type === "category");
+            let categorybackup = message.guild.channels.cache.find(c => c.id === "898041814118957057" && c.type === "category");
+            let categorybackup2 = message.guild.channels.cache.find(c => c.id === "898041815192719430" && c.type === "category");
+            if(!category || !categorybackup || !categorybackup2) return;
+
             if(message.guild.channels.cache.find(ch => ch.name.includes(message.author.tag.toString().toLowerCase().replace(' ', '-'))))
                 return message.channel.send(`💡 | You **already** have opened **ticket**!`)
         
@@ -10,10 +15,7 @@ exports.run = async (client, message, args) => {
                 console.log(err)
             })
     
-            let category = message.guild.channels.cache.find(c => c.id === "741082659610034257" && c.type === "category");
-            let categorybackup = message.guild.channels.cache.find(c => c.id === "738538742603841650" && c.type === "category");
-            let categorybackup2 = message.guild.channels.cache.find(c => c.id === "864581561830604810" && c.type === "category");
-            if(!category || !categorybackup || !categorybackup2) return;
+            
         
             await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(channel.setParent(categorybackup2.id).catch(console.error)));  
     
@@ -29,7 +31,7 @@ exports.run = async (client, message, args) => {
                     VIEW_CHANNEL: true
                 });
         
-                channel.updateOverwrite('748117822370086932', {
+                channel.updateOverwrite('898041751099539497', {
                     SEND_MESSAGES: true,
                     VIEW_CHANNEL: true
                 })
