@@ -513,7 +513,7 @@ Router.post("/feedback/post/bug", checkAuth, async (req, res) => {
 });
 
 Router.get(["/discord", "/support"], (req, res) => {
-    res.redirect("//discord.gg/92HBc2Z")
+    res.redirect("//discord.gg/YWwDBysyaF")
 });
 
 Router.get("/partners", async (req, res) => {
