@@ -1,5 +1,5 @@
 let findDuplicates = arr => arr.filter((e, i) => arr.indexOf(e) != i)
-module.exports = async (client, e) => {
+module.exports = async(client, e) => {
     if (e.t == "MESSAGE_REACTION_ADD") {
         let channel = bot.channels.cache.get(e.d.channel_id);
         let message = await channel.messages.fetch(e.d.message_id);

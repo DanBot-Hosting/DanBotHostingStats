@@ -36,7 +36,7 @@ let desc = (object) => {
     return description;
 }
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
 
     let embed = new Discord.MessageEmbed()
         .setColor('BLUE')

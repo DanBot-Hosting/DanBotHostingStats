@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     //Yes i stole this from the createData.js
     const CAPSNUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     var codeGen = () => {

@@ -29,7 +29,7 @@ Router.get("/servers", checkAuth, (req, res) => {
     }).then(response => {
         const preoutput = response.data.attributes.relationships.servers.data
         arr.push(...preoutput)
-        setTimeout(async () => {
+        setTimeout(async() => {
             console.log(arr)
             setTimeout(() => {
                 var clean = arr.map(e => e.attributes.container)
@@ -81,8 +81,8 @@ Router.get("/form/staff-apply", checkAuth, (req, res) => {
 });
 
 Router.post("/form/staff-apply", checkAuth, (req, res) => {
-    
-    if(webSettings.fetch("staff-applications.enabled") == "false") {
+
+    if (webSettings.fetch("staff-applications.enabled") == "false") {
         res.status(500)
         return;
     }

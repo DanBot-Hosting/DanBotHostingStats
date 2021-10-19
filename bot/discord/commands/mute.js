@@ -62,7 +62,7 @@ exports.init = (client) => {
 }
 
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
 
     if (message.member.roles.cache.find(r => r.id === config.DiscordBot.roles.staff) == null) return message.reply("sorry, but it looks like you're too much of a boomer to run this command.");

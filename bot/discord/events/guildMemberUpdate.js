@@ -1,4 +1,4 @@
-module.exports = async (client, oldMember, newMember) => {
+module.exports = async(client, oldMember, newMember) => {
     // If user nickname changes.
     if (oldMember.displayName != newMember.displayName) {
         let displayName = newMember.displayName.toLowerCase();

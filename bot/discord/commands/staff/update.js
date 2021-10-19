@@ -1,5 +1,5 @@
 const exec = require('child_process').exec;
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (message.member.roles.cache.find(r => r.id === "898041743566594049")) {
         exec(`git pull`, (error, stdout) => {
             let response = (error || stdout);
@@ -11,8 +11,7 @@ exports.run = async (client, message, args) => {
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
-                }
-                ;
+                };
             }
         });
     } else {

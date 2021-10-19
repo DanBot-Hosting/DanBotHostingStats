@@ -1,6 +1,6 @@
 const sshClient = require('ssh2').Client;
 const axios = require('axios');
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domain serverid')
     if (!args[1]) {
@@ -60,7 +60,7 @@ exports.run = async (client, message, args) => {
 
                                     //SSH Connection
                                     let conn = new sshClient();
-                                    conn.on('ready', function () {
+                                    conn.on('ready', function() {
                                         console.log('SSH: ready');
                                         sentmsg.edit('Please give me a few seconds! \nProcess: SSH connected. \nNext: Making SSL cert... **This will take a few seconds**')
                                     }).connect({
@@ -70,11 +70,10 @@ exports.run = async (client, message, args) => {
                                         password: config.SSH.Password
                                     });
 
-                                    conn.on('ready', function () {
-                                        conn.exec('certbot certonly -d ' + args[1] + ' --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m proxy@danbot.host', function (err, stream) {
+                                    conn.on('ready', function() {
+                                        conn.exec('certbot certonly -d ' + args[1] + ' --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m proxy@danbot.host', function(err, stream) {
                                             if (err) throw err;
-                                            stream.on('close', function (code, signal) {
-                                            }).on('data', function (data) {
+                                            stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                 if (data.includes("Congratulations!")) {
                                                     sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again**')
                                                     conn.exec(`echo "<VirtualHost *:80>
@@ -96,17 +95,15 @@ exports.run = async (client, message, args) => {
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                      ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                  </Location>
-                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete`, function (err, stream) {
+                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete`, function(err, stream) {
                                                         if (err) throw err;
-                                                        stream.on('close', function (code, signal) {
-                                                        }).on('data', function (data) {
+                                                        stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                             sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
                                                             //console.log('STDOUT: ' + data);
                                                             setTimeout(() => {
-                                                                conn.exec('service apache2 restart && echo "complete', function (err, stream) {
+                                                                conn.exec('service apache2 restart && echo "complete', function(err, stream) {
                                                                     if (err) throw err;
-                                                                    stream.on('close', function (code, signal) {
-                                                                    }).on('data', function (data) {
+                                                                    stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                                         sentmsg.edit('Domain linking complete!')
                                                                         let datalmao = userData.get(message.author.id).domains || []
                                                                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
@@ -142,17 +139,15 @@ exports.run = async (client, message, args) => {
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                      ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                  </Location>
-                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete"`, function (err, stream) {
+                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete"`, function(err, stream) {
                                                         if (err) throw err;
-                                                        stream.on('close', function (code, signal) {
-                                                        }).on('data', function (data) {
+                                                        stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                             sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
                                                             //console.log('STDOUT: ' + data);
                                                             setTimeout(() => {
-                                                                conn.exec('service apache2 restart && echo "complete"', function (err, stream) {
+                                                                conn.exec('service apache2 restart && echo "complete"', function(err, stream) {
                                                                     if (err) throw err;
-                                                                    stream.on('close', function (code, signal) {
-                                                                    }).on('data', function (data) {
+                                                                    stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                                         sentmsg.edit('Domain linking complete!')
                                                                         let datalmao = userData.get(message.author.id).domains || []
                                                                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
@@ -231,7 +226,7 @@ exports.run = async (client, message, args) => {
 
                                 //SSH Connection
                                 let conn = new sshClient();
-                                conn.on('ready', function () {
+                                conn.on('ready', function() {
                                     console.log('SSH: ready');
                                     sentmsg.edit('Please give me a few seconds! \nProcess: SSH connected. \nNext: Making SSL cert... **This will take a few seconds**')
                                 }).connect({
@@ -241,11 +236,10 @@ exports.run = async (client, message, args) => {
                                     password: config.SSH.Password
                                 });
 
-                                conn.on('ready', function () {
-                                    conn.exec('certbot certonly -d ' + args[1] + ' --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m proxy@danbot.host', function (err, stream) {
+                                conn.on('ready', function() {
+                                    conn.exec('certbot certonly -d ' + args[1] + ' --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m proxy@danbot.host', function(err, stream) {
                                         if (err) throw err;
-                                        stream.on('close', function (code, signal) {
-                                        }).on('data', function (data) {
+                                        stream.on('close', function(code, signal) {}).on('data', function(data) {
                                             if (data.includes("Congratulations!")) {
                                                 sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again**')
                                                 conn.exec(`echo "<VirtualHost *:80>
@@ -267,17 +261,15 @@ exports.run = async (client, message, args) => {
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                      ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                  </Location>
-                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete`, function (err, stream) {
+                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete`, function(err, stream) {
                                                     if (err) throw err;
-                                                    stream.on('close', function (code, signal) {
-                                                    }).on('data', function (data) {
+                                                    stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                         sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
                                                         //console.log('STDOUT: ' + data);
                                                         setTimeout(() => {
-                                                            conn.exec('service apache2 restart && echo "complete', function (err, stream) {
+                                                            conn.exec('service apache2 restart && echo "complete', function(err, stream) {
                                                                 if (err) throw err;
-                                                                stream.on('close', function (code, signal) {
-                                                                }).on('data', function (data) {
+                                                                stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                                     sentmsg.edit('Domain linking complete!')
                                                                     let datalmao = userData.get(message.author.id).domains || []
                                                                     userData.set(message.author.id + '.domains', [...new Set(datalmao), {
@@ -313,17 +305,15 @@ exports.run = async (client, message, args) => {
                                                      ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                      ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
                                                  </Location>
-                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete"`, function (err, stream) {
+                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete"`, function(err, stream) {
                                                     if (err) throw err;
-                                                    stream.on('close', function (code, signal) {
-                                                    }).on('data', function (data) {
+                                                    stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                         sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
                                                         //console.log('STDOUT: ' + data);
                                                         setTimeout(() => {
-                                                            conn.exec('service apache2 restart && echo "complete"', function (err, stream) {
+                                                            conn.exec('service apache2 restart && echo "complete"', function(err, stream) {
                                                                 if (err) throw err;
-                                                                stream.on('close', function (code, signal) {
-                                                                }).on('data', function (data) {
+                                                                stream.on('close', function(code, signal) {}).on('data', function(data) {
                                                                     sentmsg.edit('Domain linking complete!')
                                                                     let datalmao = userData.get(message.author.id).domains || []
                                                                     userData.set(message.author.id + '.domains', [...new Set(datalmao), {

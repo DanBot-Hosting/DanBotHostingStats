@@ -1,9 +1,11 @@
 const serverCreateSettings_Prem = require('../../../../createData_Prem');
 const axios = require('axios');
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
 
-    let userP = userPrem.fetch(message.author.id) || { used: 0 };
+    let userP = userPrem.fetch(message.author.id) || {
+        used: 0
+    };
 
     let boosted = await axios({
         url: "http://admin.danbot.host:1029",
@@ -123,8 +125,8 @@ exports.run = async (client, message, args) => {
                 client.channels.cache.get("888490610376450048").send(embed2)
 
             }).catch(error => {
-                message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-            })
+            message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+        })
         return;
     }
 

@@ -1,5 +1,5 @@
 const superagent = require("snekfetch");
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (!args[0]) {
         superagent.get('https://api.danbot.host/total')
             .end((err, response) => {
@@ -12,7 +12,9 @@ exports.run = async (client, message, args) => {
     } else if (args[0] === "dog") {
         superagent.get('https://api.danbot.host/dog')
             .end((response) => {
-                message.channel.send("Random dog image from the DanBot Hosting api!", {file: `${response.body.image}`});
+                message.channel.send("Random dog image from the DanBot Hosting api!", {
+                    file: `${response.body.image}`
+                });
             });
     }
 };

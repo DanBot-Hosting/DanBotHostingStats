@@ -56,7 +56,7 @@ let nstatus = {
     }]
 }
 
-let parse = async () => {
+let parse = async() => {
     let toRetun = {};
 
     for (let [title, data] of Object.entries(nstatus)) {

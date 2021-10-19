@@ -21,8 +21,8 @@ let parse = () => {
 }
 
 
-module.exports = async (client, r, member) => {
-    if(r == null) return;
+module.exports = async(client, r, member) => {
+    if (r == null) return;
     if (member.user.bot == true || r.emoji == null) return;
     let emoji = r.emoji.id != null ? r.emoji.id : r.emoji.name;
 

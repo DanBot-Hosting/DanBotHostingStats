@@ -1,6 +1,6 @@
 const axios = require("axios");
 const validator = require('validator');
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
 
     let getPassword = () => {
 
@@ -17,31 +17,27 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    let questions = [
-        {
-            id: "username",
-            question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
-            filter: (m) => m.author.id === message.author.id, // Filter to use...
-            afterChecks: [{
-                check: (msg) => msg.trim().split(" ").length == 1,
-                errorMessage: "username must not contain any spaces",
-            }],
-            time: 30000, // how much time a user has to answer the question before it times out
-            value: null // The user's response.
-        }, {
-            id: "email",
-            question: "Whats your email? *(must be a valid email)*",
-            filter: (m) => m.author.id === message.author.id,
-            afterChecks: [
-                {
-                    check: (msg) => validator.isEmail(msg.toLowerCase().trim()),
-                    errorMessage: "the email must be valid.",
-                }
-            ],
-            time: 30000,
-            value: null
-        }
-    ]
+    let questions = [{
+        id: "username",
+        question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
+        filter: (m) => m.author.id === message.author.id, // Filter to use...
+        afterChecks: [{
+            check: (msg) => msg.trim().split(" ").length == 1,
+            errorMessage: "username must not contain any spaces",
+        }],
+        time: 30000, // how much time a user has to answer the question before it times out
+        value: null // The user's response.
+    }, {
+        id: "email",
+        question: "Whats your email? *(must be a valid email)*",
+        filter: (m) => m.author.id === message.author.id,
+        afterChecks: [{
+            check: (msg) => validator.isEmail(msg.toLowerCase().trim()),
+            errorMessage: "the email must be valid.",
+        }],
+        time: 30000,
+        value: null
+    }]
 
     // Locate the account creation category
     let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
@@ -52,15 +48,13 @@ exports.run = async (client, message, args) => {
     // Create the channel in which the user will use to create his account
     let channel = await message.guild.channels.create(message.author.tag, {
         parent: category.id,
-        permissionOverwrites: [
-            {
-                id: message.author.id,
-                allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'READ_MESSAGE_HISTORY']
-            },
-            {
-                id: message.guild.id,
-                deny: 0x400
-            }]
+        permissionOverwrites: [{
+            id: message.author.id,
+            allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'READ_MESSAGE_HISTORY']
+        }, {
+            id: message.guild.id,
+            deny: 0x400
+        }]
     }).catch(console.error);
 
     channel.updateOverwrite(message.author, {
@@ -126,8 +120,7 @@ exports.run = async (client, message, args) => {
                     channel.delete();
                 }, 5000);
                 return;
-            }
-            ;
+            };
         }
 
     }
@@ -181,7 +174,7 @@ exports.run = async (client, message, args) => {
 
         channel.send('**You have 30mins to keep note of this info before the channel is deleted.**')
         message.guild.members.cache.get(message.author.id).roles.add("639489891016638496");
-        setTimeout(function () {
+        setTimeout(function() {
             channel.delete();
         }, 1800000);
     }).catch(err => {
@@ -195,12 +188,12 @@ exports.run = async (client, message, args) => {
                     .setDescription("**ERRORS:**\n\n●" + errors.map(error => error.detail.replace('\n', ' ')).join('\n●'))
                     .setTimestamp().setFooter('Deleting in 30 seconds...')
             })
-            setTimeout(function () {
+            setTimeout(function() {
                 channel.delete();
             }, 30000);
         } else {
             channel.send('an unexpected error has occured, please try again later...');
-            setTimeout(function () {
+            setTimeout(function() {
                 channel.delete();
             }, 30000);
         }

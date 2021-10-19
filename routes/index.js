@@ -426,7 +426,7 @@ Router.get("/bots", (req, res) => {
     // ar.sort((a, b) => a.client.username.localeCompare(b.client.username)); causing errors
     // console.log(ar);
 
-    lar.sort(function (a, b) {
+    lar.sort(function(a, b) {
         return b.servers - a.servers;
     });
 
@@ -450,7 +450,7 @@ Router.get("/login", (req, res) => {
     );
 });
 
-Router.get("/logout", function (req, res) {
+Router.get("/logout", function(req, res) {
     req.session.destroy(() => {
         req.logout();
         //     req.flash('success_msg', 'You are logged out');
@@ -458,7 +458,7 @@ Router.get("/logout", function (req, res) {
     });
 });
 
-Router.get("/feedback", async (req, res) => {
+Router.get("/feedback", async(req, res) => {
     let Page = "Feedback";
     let ErrorMessage = null;
     let Error = req.query.error;
@@ -469,7 +469,7 @@ Router.get("/feedback", async (req, res) => {
     });
 });
 
-Router.post("/feedback/post/suggestion", checkAuth, async (req, res) => {
+Router.post("/feedback/post/suggestion", checkAuth, async(req, res) => {
     if (req.body.suggestion) {
 
         // embed
@@ -491,7 +491,7 @@ Router.post("/feedback/post/suggestion", checkAuth, async (req, res) => {
     }
 });
 
-Router.post("/feedback/post/bug", checkAuth, async (req, res) => {
+Router.post("/feedback/post/bug", checkAuth, async(req, res) => {
     if (req.body.bug) {
 
         let Kiro = req.isAuthenticated() ? req.user : null;
@@ -516,19 +516,19 @@ Router.get(["/discord", "/support"], (req, res) => {
     res.redirect("//discord.gg/92HBc2Z")
 });
 
-Router.get("/partners", async (req, res) => {
+Router.get("/partners", async(req, res) => {
     res.render("partners.ejs", {
         user: req.isAuthenticated() ? req.user : null,
     });
 });
 
-Router.get("/terms-of-service", async (req, res) => {
+Router.get("/terms-of-service", async(req, res) => {
     res.render("tos.ejs", {
         user: req.isAuthenticated() ? req.user : null,
     });
 });
 
-Router.get("/privacy-policy", async (req, res) => {
+Router.get("/privacy-policy", async(req, res) => {
     res.render("privacy.ejs", {
         user: req.isAuthenticated() ? req.user : null,
     });
@@ -545,7 +545,9 @@ Router.get("/cams", (req, res) => {
 Router.get('/camera-front.png', (req, res) => {
     if (fs.existsSync('../camera-front.png')) {
         var img = fs.readFileSync('../camera-front.png');
-        res.writeHead(200, {'Content-Type': 'image/gif'});
+        res.writeHead(200, {
+            'Content-Type': 'image/gif'
+        });
         res.end(img, 'binary')
     } else {
         res.send('404')
@@ -555,7 +557,7 @@ Router.get('/camera-front.png', (req, res) => {
 module.exports = Router;
 
 /* Authorization check, if not authorized return them to the login page.
-*/
+ */
 function checkAuth(req, res, next) {
     if (req.isAuthenticated()) {
         return next();

@@ -89,11 +89,10 @@ let nstatus = {
     }, {
         name: 'MySQL Databases',
         data: 'mysqldatabases'
-    }
-    ]
+    }]
 }
 
-let parse = async () => {
+let parse = async() => {
     let toRetun = {};
 
     for (let [title, data] of Object.entries(nstatus)) {
@@ -114,7 +113,7 @@ let parse = async () => {
     return toRetun;
 }
 
-let getEmbed = async () => {
+let getEmbed = async() => {
 
     let status = await parse();
     let desc = ''
@@ -132,8 +131,8 @@ let getEmbed = async () => {
         hr = date.getHours();
     }
 
-    var dateString = "Updated at " + hr + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT) on "
-        + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+    var dateString = "Updated at " + hr + ":" + ("00" + date.getMinutes()).slice(-2) + " (GMT) on " +
+        date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
 
     let embed = new Discord.MessageEmbed()
         .setTitle('DanBot Hosting Status').setFooter(dateString)

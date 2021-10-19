@@ -1,5 +1,5 @@
 const axios = require('axios')
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     const data = {
         max_age: 86400,
         max_uses: 0,

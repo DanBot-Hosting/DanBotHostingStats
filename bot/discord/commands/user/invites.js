@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     let targetUser = null;
     let isAnotherUserLookup = false;
     if (message.mentions.members.first() != null) {

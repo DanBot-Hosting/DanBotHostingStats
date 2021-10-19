@@ -1,5 +1,5 @@
 const ms = require('ms')
-exports.run = async (bot, message, args) => {
+exports.run = async(bot, message, args) => {
     if (message.member.roles.cache.find(r => r.id === "898041743566594049")) {
         message.delete()
         let channel, giveaway;
@@ -24,7 +24,7 @@ exports.run = async (bot, message, args) => {
                 let giveawayMessageID = giveawayMessage.id;
                 channel = message.channel.id;
 
-                let interval = await setInterval(function () {
+                let interval = await setInterval(function() {
                     time = ms(time)
                     time = time - 5000
                     time = ms(time)
@@ -38,7 +38,7 @@ exports.run = async (bot, message, args) => {
                     });
                 }, 5 * 1000);
 
-                giveaway = bot.setTimeout(async () => {
+                giveaway = bot.setTimeout(async() => {
                     let giveawayMessage = await message.channel.messages.fetch(giveawayMessageID);
 
                     let winners = [];
@@ -50,8 +50,7 @@ exports.run = async (bot, message, args) => {
                     while (!winner && winners.length) {
                         winner = winners[Math.floor(Math.random() * winners.length)];
                         winners.splice(winners.indexOf(winner), 1);
-                        winner = await bot.users.fetch(winner).catch(() => {
-                        });
+                        winner = await bot.users.fetch(winner).catch(() => {});
                     }
 
                     if (winner) {
@@ -70,8 +69,7 @@ exports.run = async (bot, message, args) => {
                                 .setTitle("Congratulations")
                                 .setDescription(`You won the giveaway in **${message.guild.name}** Server! And you've been awarded with **${prize}**!`)
                                 .setColor("#0000ff")
-                        }).catch(() => {
-                        });
+                        }).catch(() => {});
                     } else {
                         giveawayMessage.edit("", {
                             embed: new Discord.MessageEmbed()

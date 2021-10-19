@@ -1,5 +1,5 @@
 const axios = require('axios');
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (userData.get(message.author.id) == null) {
 
         const server = message.guild
@@ -8,13 +8,11 @@ exports.run = async (client, message, args) => {
             type: 'role',
             id: message.guild.id,
             deny: 0x400
-        },
-            {
-                type: 'user',
-                id: message.author.id,
-                deny: 1024
-            }
-        ]).catch(console.error);
+        }, {
+            type: 'user',
+            id: message.author.id,
+            deny: 1024
+        }]).catch(console.error);
         message.reply(`Please check <#${channel.id}> to link your account.`)
 
         let category = server.channels.cache.find(c => c.id === "738539016688894024" && c.type === "category");
@@ -78,14 +76,14 @@ exports.run = async (client, message, args) => {
                         }
                     }).then(response => {
                         arr.push(...response.data.data)
-                    }).catch( err => {});
+                    }).catch(err => {});
                     i++
                 }
                 // console.log(resources.data.meta.pagination)
                 let total = resources.data.meta.pagination.total
-            }).catch( err => {});;
+            }).catch(err => {});;
             //Find account then link
-            setTimeout(async () => {
+            setTimeout(async() => {
                 console.log(arr.length)
                 const consoleUser = arr.find(usr => usr.attributes ? usr.attributes.email === messagecollected.content : false);
 
@@ -114,7 +112,7 @@ exports.run = async (client, message, args) => {
                         subject: 'DanBot Hosting - Someone tried to link their Discord account!',
                         html: "Hello, " + message.author.username + " (ID: " + message.author.id + ") just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: " + code
                     };
-                    transport.sendMail(emailmessage, function (err, info) {
+                    transport.sendMail(emailmessage, function(err, info) {
                         if (err) {
                             console.log(err)
                         } else {
@@ -163,8 +161,7 @@ exports.run = async (client, message, args) => {
                         }
                     });
 
-                }
-                ;
+                };
             }, 10000)
 
         })

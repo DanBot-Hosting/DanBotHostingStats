@@ -15,7 +15,9 @@ module.exports = (client, message) => {
             .addField("Message Content:", `${descriptionfix}`)
             .setTimestamp()
             .setFooter("Message delete in " + message.channel.name);
-        client.channels.cache.get(config.DiscordBot.mLogs).send({ embed });
+        client.channels.cache.get(config.DiscordBot.mLogs).send({
+            embed
+        });
 
     }
 

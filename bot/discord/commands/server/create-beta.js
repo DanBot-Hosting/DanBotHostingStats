@@ -1,5 +1,5 @@
 const serverCreateSettings_Beta = require('../../../createData_Beta');
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     // if (client.cooldown[message.author.id] == null) {
     //     client.cooldown[message.author.id] = {
     //         nCreate: null,

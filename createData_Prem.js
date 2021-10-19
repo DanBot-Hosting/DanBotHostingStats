@@ -1,8 +1,8 @@
 const axios = require('axios');
 
-const gaming = [21]          // Gaming nodes
-const botswebdb = [26]       // Bots, Websites and Databases nodes
-const storage = [13]         // Storage nodes
+const gaming = [21] // Gaming nodes
+const botswebdb = [26] // Bots, Websites and Databases nodes
+const storage = [13] // Storage nodes
 
 /*
 Donator Nodes as followed:
@@ -784,8 +784,7 @@ list.lavalink = (serverName, userID) => ({
         "io": 500,
         "cpu": 0
     },
-    "environment": {
-    },
+    "environment": {},
     "feature_limits": {
         "databases": 2,
         "allocations": 1,
@@ -1233,8 +1232,7 @@ list.sharex = (serverName, userID) => ({
         "io": 500,
         "cpu": 0
     },
-    "environment": {
-    },
+    "environment": {},
     "feature_limits": {
         "databases": 2,
         "allocations": 1,

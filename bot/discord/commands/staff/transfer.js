@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
     let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
 
@@ -24,11 +24,23 @@ exports.run = async (client, message, args) => {
             }
 
 
-            let { donated, used } = userPrem.get(args[1]) || { donated: 0, used: 0 };
-            let newM = userPrem.get(args[2]) || { donated: 0, used: 0 };
+            let {
+                donated,
+                used
+            } = userPrem.get(args[1]) || {
+                donated: 0,
+                used: 0
+            };
+            let newM = userPrem.get(args[2]) || {
+                donated: 0,
+                used: 0
+            };
 
 
-            userPrem.set(args[2], { used: used + newM.used, donated: donated + newM.used });
+            userPrem.set(args[2], {
+                used: used + newM.used,
+                donated: donated + newM.used
+            });
 
             userPrem.delete(args[1])
 

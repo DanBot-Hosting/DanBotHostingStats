@@ -1,14 +1,13 @@
 let db = require("quick.db");
 const Discord = require("discord.js");
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
 
     let botID = args[0];
     if (message.mentions.users.first()) {
         let t = message.mentions.users.first();
         botID = t.id;
-    }
-    ;
+    };
 
     if (!botID) return message.channel.send("Error: Invalid command format! \n`" + config.DiscordBot.Prefix + "info botid`");
     let bot = db.get(`${botID}`);

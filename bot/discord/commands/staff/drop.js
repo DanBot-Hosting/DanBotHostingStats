@@ -1,7 +1,7 @@
 const ms = require('ms')
 const humanizeDuration = require('humanize-duration');
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (!['137624084572798976'].includes(message.author.id)) return;
     message.delete();
 
@@ -47,11 +47,15 @@ exports.run = async (client, message, args) => {
     let embed = new Discord.MessageEmbed()
         .setAuthor("Key Drop!")
         .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-        .setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
+        .setDescription("Dropping a premium key in: " + humanizeDuration(time, {
+            round: true
+        }) + "!")
         .setTimestamp(moment + time)
 
     let msg = await message.channel.send("", {
-        embed: embed.setDescription("Dropping a premium key in: " + humanizeDuration(time, { round: true }) + "!")
+        embed: embed.setDescription("Dropping a premium key in: " + humanizeDuration(time, {
+            round: true
+        }) + "!")
     });
 
     codes.set(code.code + ".drop", {
@@ -62,11 +66,15 @@ exports.run = async (client, message, args) => {
     });
 
     setTimeout(() => {
-        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time - (time / 1.2), { round: true }) + "!"));
+        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time - (time / 1.2), {
+            round: true
+        }) + "!"));
     }, time / 1.2);
 
     setTimeout(() => {
-        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, { round: true }) + "!"));
+        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, {
+            round: true
+        }) + "!"));
     }, time / 2);
 
     setTimeout(() => {

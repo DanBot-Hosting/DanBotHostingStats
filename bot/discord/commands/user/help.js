@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .addField("__**Commands**__", "`" + config.DiscordBot.Prefix + "user new` | Create an account \n`" +
             config.DiscordBot.Prefix + "user password` | Reset account password \n`" +

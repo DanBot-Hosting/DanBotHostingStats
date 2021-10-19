@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (!message.member.roles.cache.find(r => ["898041741695926282", "898041747219828796"].some(x => x == r.id))) return;
 
     if (!args[1]) {

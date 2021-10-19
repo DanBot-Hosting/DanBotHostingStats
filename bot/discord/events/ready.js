@@ -5,7 +5,7 @@ const nUsage = require('../serverUsage');
 const db = require("quick.db");
 const pretty = require('prettysize');
 
-module.exports = async (client) => {
+module.exports = async(client) => {
 
     function formatFileSize(bytes, decimalPoint) {
         if (bytes === 0) return "0 Bytes";
@@ -18,7 +18,9 @@ module.exports = async (client) => {
 
     let guild = client.guilds.cache.get("639477525927690240");
 
-    global.browser = await puppeteer.launch({ args: ["--no-sandbox"/*openvz*/] });
+    global.browser = await puppeteer.launch({
+        args: ["--no-sandbox" /*openvz*/ ]
+    });
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     let checkNicks = () => {
@@ -48,12 +50,10 @@ module.exports = async (client) => {
     const activities = [{
         "text": "over DanBot Hosting",
         "type": "WATCHING"
-    },
-    {
+    }, {
         "text": "DanBot FM",
         "type": "LISTENING"
-    }
-    ];
+    }];
 
     //Initializing Cooldown
     client.cooldown = {};
@@ -101,7 +101,7 @@ module.exports = async (client) => {
     //Node status channel embed
     if (enabled.NodeStats === true) {
         let channel = client.channels.cache.get("898041845878247487");
-        setInterval(async () => {
+        setInterval(async() => {
             let embed = await nstatus.getEmbed();
 
             let messages = await channel.messages.fetch({
@@ -116,7 +116,7 @@ module.exports = async (client) => {
 
     if (enabled.NodeStats === true) {
         let channel = client.channels.cache.get("898041847363035157");
-        setInterval(async () => {
+        setInterval(async() => {
             let embed = await nUsage.getEmbed();
 
             let messages = await channel.messages.fetch({
@@ -130,7 +130,7 @@ module.exports = async (client) => {
     }
 
     //Voice channel stats updator
-    setInterval(async () => {
+    setInterval(async() => {
         let DBHGuild = client.guilds.cache.get("639477525927690240");
         let roleID1 = '898041751099539497';
         let staffCount = DBHGuild.roles.cache.get(roleID1).members.size;

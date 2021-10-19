@@ -1,5 +1,5 @@
 const axios = require('axios')
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     message.channel.send('Loading servers...')
     //List servers
     var arr = [];
@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         const preoutput = response.data.attributes.relationships.servers.data
         //console.log(resources.data.meta)
         arr.push(...preoutput)
-        setTimeout(async () => {
+        setTimeout(async() => {
             //console.log(arr.length)
             // console.log(arr)
             setTimeout(() => {

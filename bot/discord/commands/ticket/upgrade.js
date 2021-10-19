@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     let staffRole = message.guild.roles.cache.get('898041751099539497');
 
     if (message.channel.name.includes('-ticket')) {

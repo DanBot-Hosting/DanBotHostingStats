@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     /*
     let user = userPrem.fetch(message.author.id);
 

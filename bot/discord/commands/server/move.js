@@ -2,7 +2,7 @@ const axios = require('axios');
 const exec = require('child_process').exec;
 
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     message.channel.send('Command coming soon! almost finished :D')
     /*
     if (!args[1]) {

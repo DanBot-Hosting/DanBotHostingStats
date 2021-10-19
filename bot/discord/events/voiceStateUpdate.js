@@ -1,5 +1,5 @@
 const transliterate = require('transliteration');
-module.exports = async (client, oldV, newV) => {
+module.exports = async(client, oldV, newV) => {
     let guild = newV.guild;
 
     if (oldV.channelID === newV.channelID || enabled.customVoiceChannels == false) return;

@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     let embed = new Discord.MessageEmbed()
         .addField('__**Commands**__', 'Create a server: `' +
             config.DiscordBot.Prefix + 'server create type servername` \nServer Types: `' +

@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (args.length < 2) {
         message.reply("Incorrect usage. (`DBH!vc <add | remove> <@user | userID>`)")
     }

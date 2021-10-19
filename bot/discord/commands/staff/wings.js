@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "898041741695926282")) return;
 
     if (!['137624084572798976'].includes(message.author.id)) return;

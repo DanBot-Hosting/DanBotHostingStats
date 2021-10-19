@@ -1,5 +1,5 @@
 const axios = require("axios");
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
 
     //Random password gen
     const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

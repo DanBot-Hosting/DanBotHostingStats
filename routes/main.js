@@ -7,7 +7,10 @@ const oauth = new DiscordOauth2({
 });
 
 Router.get("/", (req, res) => {
-    res.json({ error: false, msg: "DanBot Hosting beta API and Animal API" });
+    res.json({
+        error: false,
+        msg: "DanBot Hosting beta API and Animal API"
+    });
 });
 
 Router.get("/stats", (req, res) => {
@@ -62,22 +65,35 @@ Router.get("/stats", (req, res) => {
             Node14: nodeStatus.fetch('node14')
         }
 
-        res.json({ error: false, data: data, status: status });
+        res.json({
+            error: false,
+            data: data,
+            status: status
+        });
     } catch (e) {
-        res.json({ error: true, message: e });
+        res.json({
+            error: true,
+            message: e
+        });
     }
 });
 
 Router.post(
     "/callback",
 
-    async (req, res) => {
+    async(req, res) => {
         try {
             let code = req.query.code;
-            if (!code) return res.json({ error: true, message: "no code" });
+            if (!code) return res.json({
+                error: true,
+                message: "no code"
+            });
 
             let redirect = req.query.redirect;
-            if (!redirect) return res.json({ error: true, message: "no redirect" });
+            if (!redirect) return res.json({
+                error: true,
+                message: "no redirect"
+            });
 
             let info = await oauth.tokenRequest({
                 clientId: config.DiscordBot.clientID,
@@ -102,7 +118,10 @@ Router.post(
             });
         } catch (e) {
             console.log(e)
-            return res.json({ error: true, message: e });
+            return res.json({
+                error: true,
+                message: e
+            });
         }
     }
 );
@@ -110,13 +129,19 @@ Router.post(
 Router.get(
     "/callback",
 
-    async (req, res) => {
+    async(req, res) => {
         try {
             let code = req.query.code;
-            if (!code) return res.json({ error: true, message: "no code" });
+            if (!code) return res.json({
+                error: true,
+                message: "no code"
+            });
 
             let redirect = req.query.redirect;
-            if (!redirect) return res.json({ error: true, message: "no redirect" });
+            if (!redirect) return res.json({
+                error: true,
+                message: "no redirect"
+            });
 
             let info = await oauth.tokenRequest({
                 clientId: config.DiscordBot.clientID,
@@ -138,16 +163,22 @@ Router.get(
             });
         } catch (e) {
             console.log(e)
-            return res.json({ error: true, message: e });
+            return res.json({
+                error: true,
+                message: e
+            });
         }
     }
 );
 
 
-Router.get("/user/:ID", async (req, res) => {
+Router.get("/user/:ID", async(req, res) => {
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({ error: true, message: "no user id" });
+        if (!ID) return res.json({
+            error: true,
+            message: "no user id"
+        });
 
         if (!req.headers.authorization || req.headers.authorization !== config.externalPassword) {
             return res.status(401).send({
@@ -191,10 +222,13 @@ Router.get("/user/:ID", async (req, res) => {
     }
 });
 
-Router.post("/user/:ID/new", async (req, res) => {
+Router.post("/user/:ID/new", async(req, res) => {
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({ error: true, message: "no user id" });
+        if (!ID) return res.json({
+            error: true,
+            message: "no user id"
+        });
 
         // console.log(req.headers)
         // console.log(req.body)
@@ -306,7 +340,10 @@ Router.get("/user/:ID/servers", (req, res) => {
     var arr = [];
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({ error: true, message: "no user id" });
+        if (!ID) return res.json({
+            error: true,
+            message: "no user id"
+        });
         axios({
             url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(ID).consoleID + "?include=servers",
             method: 'GET',
@@ -320,7 +357,7 @@ Router.get("/user/:ID/servers", (req, res) => {
         }).then(response => {
             const preoutput = response.data.attributes.relationships.servers.data
             arr.push(...preoutput)
-            setTimeout(async () => {
+            setTimeout(async() => {
                 // console.log(arr)
                 setTimeout(() => {
                     var clean = arr.map(e => e.attributes.container)
@@ -344,10 +381,13 @@ Router.get("/user/:ID/servers", (req, res) => {
     }
 });
 
-Router.get("/user/:ID/password-reset-code", async (req, res) => {
+Router.get("/user/:ID/password-reset-code", async(req, res) => {
     try {
         let ID = req.params.ID;
-        if (!ID) return res.json({ error: true, message: "no user id" });
+        if (!ID) return res.json({
+            error: true,
+            message: "no user id"
+        });
 
         // console.log(req.headers)
         // console.log(req.body)
@@ -392,7 +432,13 @@ Router.get("/user/:ID/password-reset-code", async (req, res) => {
             };
             transport.sendMail(emailmessage);
 
-            return res.json({ error: false, message: "SENT", data: { code } });
+            return res.json({
+                error: false,
+                message: "SENT",
+                data: {
+                    code
+                }
+            });
 
         })
 
@@ -406,7 +452,7 @@ Router.get("/user/:ID/password-reset-code", async (req, res) => {
 
 });
 
-Router.get("*", async function (req, res) {
+Router.get("*", async function(req, res) {
     res.status(404).send({
         error: true,
         status: 404,

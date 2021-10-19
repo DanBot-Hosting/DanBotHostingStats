@@ -1,6 +1,6 @@
 const serverCreateSettings = require('../../../../createData');
 const humanizeDuration = require('humanize-duration');
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     /*
     if (client.cooldown[message.author.id] == null) {
         client.cooldown[message.author.id] = {

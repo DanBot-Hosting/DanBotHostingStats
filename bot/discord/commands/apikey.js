@@ -1,10 +1,10 @@
 let db = require("quick.db");
 const Discord = require("discord.js");
 
-exports.run = async (client, message, args) => {
-       
+exports.run = async(client, message, args) => {
+
     let startkey = Math.random().toString(36).substring(7);
-       
+
     let key = `danbot-${startkey}`
 
     let keyPool = db.get("apiKeys");
@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
 
     if (!args[0]) {
 
-        if(db.fetch(`${message.author.id}_apikey`)) {
+        if (db.fetch(`${message.author.id}_apikey`)) {
             return message.channel.send(`🚧 | You already have an API key. You can delete it by typing: **DBH!apikey delete**!`)
         }
 
@@ -21,16 +21,18 @@ exports.run = async (client, message, args) => {
         try {
 
             let embed = new Discord.MessageEmbed()
-            .setAuthor(`${client.user.username} | Api Key`, client.user.avatarURL())
-            .setDescription(`> Do not share this key with anyone else!`)
-            .addField(`🔑 | Key:`, `> \`${key}\``)
-            .addField(`❓ | Info`, `> How to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting)\n> Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`)
-            .setColor(message.guild.me.displayHexColor)
-            .setTimestamp()
+                .setAuthor(`${client.user.username} | Api Key`, client.user.avatarURL())
+                .setDescription(`> Do not share this key with anyone else!`)
+                .addField(`🔑 | Key:`, `> \`${key}\``)
+                .addField(`❓ | Info`, `> How to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting)\n> Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`)
+                .setColor(message.guild.me.displayHexColor)
+                .setTimestamp()
             await message.author.send(embed)
-            msg.edit(`🔑 | Check your **DM's** for your **API Key**.`).catch((err) => { message.channel.send(`🔑 | Check your **DM's** for your **API Key**.`)})
+            msg.edit(`🔑 | Check your **DM's** for your **API Key**.`).catch((err) => {
+                message.channel.send(`🔑 | Check your **DM's** for your **API Key**.`)
+            })
 
-        } catch(err) {
+        } catch (err) {
             return message.channel.send(`**An error occupied:**\n\`\`\`js\n${err}\`\`\``)
         }
 
@@ -38,12 +40,12 @@ exports.run = async (client, message, args) => {
         db.set(`${message.author.id}_apikey`, key);
         db.set(`${key}`, message.author.id)
         return;
-        
+
     }
 
     if (args[0] === "delete") {
 
-        if(!db.fetch(`${message.author.id}_apikey`)) {
+        if (!db.fetch(`${message.author.id}_apikey`)) {
             return message.channel.send(`🚧 | You **dont** have an **API key** to delete.`)
         }
 
@@ -52,11 +54,15 @@ exports.run = async (client, message, args) => {
         let token = db.get(`${message.author.id}_apikey`);
 
         let keys = db.get("apiKeys");
-          var filtered = keys.filter(function (el) { return el != `${token}`});
+        var filtered = keys.filter(function(el) {
+            return el != `${token}`
+        });
 
         db.set("apiKeys", filtered);
         db.delete(`${message.author.id}_apikey`);
         db.delete(`${token}`)
-        return msg.edit(`💡 | Your **API Key** has been deleted.`).catch((err) => { message.channel.send(`💡 | Your **API Key** has been deleted.`)})
+        return msg.edit(`💡 | Your **API Key** has been deleted.`).catch((err) => {
+            message.channel.send(`💡 | Your **API Key** has been deleted.`)
+        })
     }
 };

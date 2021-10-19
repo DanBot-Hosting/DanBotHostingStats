@@ -1,3 +1,11 @@
+/*
+    ____              ____        __     __  __           __  _
+   / __ \____ _____  / __ )____  / /_   / / / /___  _____/ /_(_)___  ____ _
+  / / / / __ `/ __ \/ __  / __ \/ __/  / /_/ / __ \/ ___/ __/ / __ \/ __ `/
+ / /_/ / /_/ / / / / /_/ / /_/ / /_   / __  / /_/ (__  ) /_/ / / / / /_/ /
+/_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
+Free Hosting forever!                                            /____/
+*/
 const axios = require('axios');
 
 const gaming = [14] // Gaming nodes
@@ -798,8 +806,7 @@ list.lavalink = (serverName, userID) => ({
         "io": 500,
         "cpu": 0
     },
-    "environment": {
-    },
+    "environment": {},
     "feature_limits": {
         "databases": 2,
         "allocations": 1,
@@ -1247,8 +1254,7 @@ list.sharex = (serverName, userID) => ({
         "io": 500,
         "cpu": 0
     },
-    "environment": {
-    },
+    "environment": {},
     "feature_limits": {
         "databases": 2,
         "allocations": 1,

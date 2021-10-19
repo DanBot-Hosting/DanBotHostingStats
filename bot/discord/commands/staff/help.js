@@ -25,7 +25,7 @@ let desc = (object) => {
     return description;
 }
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
 
     let embed = new Discord.MessageEmbed()

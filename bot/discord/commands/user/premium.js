@@ -1,6 +1,6 @@
 let parser = new Intl.NumberFormat();
 const axios = require('axios');
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     let boosted = await axios({
         url: "http://admin.danbot.host:1029",
         timeout: 3000,

@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     if (!['137624084572798976'].includes(message.author.id)) return;
 
     if (args.length < 4) return;

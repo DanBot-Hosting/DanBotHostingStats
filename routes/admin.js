@@ -5,7 +5,11 @@ const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
 Router.get("/", checkAuth, (req, res) => {
     let bots = db.get(`${req.user.id}.bots`);
-    res.render("admin.ejs", {user: req.isAuthenticated() ? req.user : null, bots, db});
+    res.render("admin.ejs", {
+        user: req.isAuthenticated() ? req.user : null,
+        bots,
+        db
+    });
 });
 
 Router.post("/", checkAuth, (req, res) => {
@@ -18,7 +22,11 @@ Router.post("/", checkAuth, (req, res) => {
 //Settings page
 Router.get("/settings", checkAuth, (req, res) => {
     let bots = db.get(`${req.user.id}.bots`);
-    res.render("admin-settings.ejs", {user: req.isAuthenticated() ? req.user : null, bots, db});
+    res.render("admin-settings.ejs", {
+        user: req.isAuthenticated() ? req.user : null,
+        bots,
+        db
+    });
 });
 
 Router.post("/settings", checkAuth, (req, res) => {
@@ -41,7 +49,9 @@ Router.get("/node1", checkAuth, (req, res) => {
 
     res.render('node1-admin.ejs', {
         table: filteredItems,
-        user: req.isAuthenticated() ? req.user : null, bots, db
+        user: req.isAuthenticated() ? req.user : null,
+        bots,
+        db
     })
 
 });
@@ -60,7 +70,9 @@ Router.get("/node2", checkAuth, (req, res) => {
 
     res.render('node2-admin.ejs', {
         table: filteredItems,
-        user: req.isAuthenticated() ? req.user : null, bots, db
+        user: req.isAuthenticated() ? req.user : null,
+        bots,
+        db
     })
 
 });
@@ -79,7 +91,9 @@ Router.get("/node5", checkAuth, (req, res) => {
 
     res.render('node5-admin.ejs', {
         table: filteredItems,
-        user: req.isAuthenticated() ? req.user : null, bots, db
+        user: req.isAuthenticated() ? req.user : null,
+        bots,
+        db
     })
 
 });
@@ -98,14 +112,20 @@ Router.get("/node7", checkAuth, (req, res) => {
 
     res.render('node7-admin.ejs', {
         table: filteredItems,
-        user: req.isAuthenticated() ? req.user : null, bots, db
+        user: req.isAuthenticated() ? req.user : null,
+        bots,
+        db
     })
 
 });
 //Requests/tickets page
 Router.get("/requests", checkAuth, (req, res) => {
     let bots = db.get(`${req.user.id}.bots`);
-    res.render("requests-admin.ejs", {user: req.isAuthenticated() ? req.user : null, bots, db});
+    res.render("requests-admin.ejs", {
+        user: req.isAuthenticated() ? req.user : null,
+        bots,
+        db
+    });
 });
 
 Router.post("/requests", checkAuth, (req, res) => {

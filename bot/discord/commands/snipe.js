@@ -1,4 +1,4 @@
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
 
     // Lets only staff use the command [useless - never uncomment - i will find you if you do]
     // if (!message.member.roles.cache.get('898041751099539497')) return;
@@ -48,8 +48,7 @@ exports.run = async (client, message, args) => {
             if (target != '*') {
                 file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(messageSnipes.get(message.channel.id).filter(x => x.member == target)), "utf8"), "Snipe-Logs.json");
                 messageSnipes.set(message.channel.id, messageSnipes.get(message.channel.id).filter(x => x.member != target));
-            }
-            else if (message.member.roles.cache.get('898041743566594049') != null && message.member.roles.cache.get('898041743566594049') != null) {
+            } else if (message.member.roles.cache.get('898041743566594049') != null && message.member.roles.cache.get('898041743566594049') != null) {
                 file = new Discord.MessageAttachment(Buffer.from(JSON.stringify(Array.from(messageSnipes)), "utf8"), "Snipe-Logs.json");
 
                 messageSnipes.clear();
@@ -72,7 +71,7 @@ exports.run = async (client, message, args) => {
 
     snipe = [...snipe.values()]
 
-    //Reversing the array 
+    //Reversing the array
     snipe.reverse();
 
     // getting the number

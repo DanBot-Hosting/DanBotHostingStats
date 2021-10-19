@@ -32,7 +32,7 @@ const parse = (string, options) => {
     return toReturn;
 };
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
 
     if (!message.member.roles.cache.find(r => ['898041741695926282', '898041743566594049'].includes(r.id))) return;
 
