@@ -101,12 +101,12 @@ const swears = [
         ]
         //Channel checker
 
-        if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '748117822370086932') == null && message.member.roles.cache.find(x => x.id === '778237595477606440') == null) &&
+        if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '898041751099539497') == null && message.member.roles.cache.find(x => x.id === '898041743566594049') == null) &&
             !(message.channel.id === '738548111323955270' && command === 'info')) return;
 
         //Check if the commands are disabled.
 
-        if (webSettings.get('commands') !== false && message.member.roles.cache.get('639489438036000769') == null) {
+        if (webSettings.get('commands') !== false && message.member.roles.cache.get('898041741695926282') == null) {
             message.channel.send('Discord Bot commands are currently disabled...\n reason: `' + webSettings.get('commands') + '`');
             return;
         }

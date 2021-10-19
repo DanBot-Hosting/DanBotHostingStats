@@ -42,10 +42,10 @@ exports.run = async (client, message, args) => {
         .setColor('BLUE')
         .addField(`__**Users:**__ (${Object.entries(commands.Users).length})`, desc(commands.Users).join('\n'))
 
-    if (message.member.roles.cache.get('748117822370086932') != null)
+    if (message.member.roles.cache.get('898041751099539497') != null)
         embed.addField(`__**Staff Commands:**__ (${Object.entries(commands.Staff).length})`, desc(commands.Staff).join('\n'))
 
-    if (message.member.roles.cache.find(r => r.id === "778237595477606440"))
+    if (message.member.roles.cache.find(r => r.id === "898041743566594049"))
         embed.addField(`__**Developer Commands:**__ (${Object.entries(commands.Owner).length})`, desc(commands.Owner).join('\n'))
 
     message.channel.send(embed)

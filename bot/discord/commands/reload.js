@@ -1,5 +1,5 @@
 exports.run = (client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "778237595477606440")) return message.channel.send("Sorry, No permission :O");
+    if (!message.member.roles.cache.find(r => r.id === "898041743566594049")) return message.channel.send("Sorry, No permission :O");
     try {
         fs.readdir("./bot/discord/commands/", (err, files) => {
             if (err) return console.error(err);

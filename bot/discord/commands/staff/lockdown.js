@@ -1,5 +1,5 @@
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find(r => ["639489438036000769", "639481606112804875"].some(x => x == r.id))) return;
+    if (!message.member.roles.cache.find(r => ["898041741695926282", "898041747219828796"].some(x => x == r.id))) return;
 
     if (!args[1]) {
         message.channel.send('Channel is now locked. Only admins+ can post here \nUse `DBH!staff lockdown unlock` to unlock this channel')

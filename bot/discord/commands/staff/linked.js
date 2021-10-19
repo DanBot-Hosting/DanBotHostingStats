@@ -1,5 +1,5 @@
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "639489438036000769")) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041741695926282")) return;
 
     if (args[1] == null) {
         message.channel.send('Please send a users discord ID to see if they are linked with an account on the host.')
