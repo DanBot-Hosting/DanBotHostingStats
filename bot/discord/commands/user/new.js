@@ -40,7 +40,7 @@ exports.run = async(client, message, args) => {
     }]
 
     // Locate the account creation category
-    let category = message.guild.channels.cache.find(c => c.id === settings.fetch("accountcategory.id") && c.type === "category");
+    let category = message.guild.channels.cache.find(c => c.id === "898041816367128616" && c.type === "category");
 
     // if not found throw an error
     if (!category) throw new Error("Category channel does not exist");
