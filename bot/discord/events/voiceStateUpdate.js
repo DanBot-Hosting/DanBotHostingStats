@@ -12,7 +12,7 @@ module.exports = async(client, oldV, newV) => {
         }
     }
 
-    if (newV.channelID === "757660050977456238") {
+    if (newV.channelID === "898041899854737431") {
         let cleanName = transliterate.slugify(newV.member.user.username);
         if (cleanName == '') cleanName = 'unknown';
         let vc = await guild.channels.create(`${cleanName}'s Room`, {
@@ -27,7 +27,7 @@ module.exports = async(client, oldV, newV) => {
             allow: ["SPEAK", "STREAM", "CONNECT", "VIEW_CHANNEL"]
         }])
 
-        vc.setParent("757659750342197289");
+        vc.setParent("898041899854737431");
         newV.setChannel(vc.id);
         client.pvc.set(vc.id, {
             channelID: vc.id,
