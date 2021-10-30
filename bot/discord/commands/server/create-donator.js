@@ -48,7 +48,7 @@ exports.run = async(client, message, args) => {
         message.channel.send(new Discord.MessageEmbed()
             .setColor("RED")
             .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
-            .addField("__**Grand Theft Auto:**__", "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+            .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
             .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
             .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
             .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
@@ -56,7 +56,7 @@ exports.run = async(client, message, args) => {
             .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
             .addField("__**WebHosting:**__", "Nginx", true)
             .addField("__**Custom Egg:**__", "ShareX", true)
-            .addField("__**Storage:**__", "storage", true)
+//             .addField("__**Storage:**__", "storage", true)
             .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
         return;
     }
@@ -71,7 +71,6 @@ exports.run = async(client, message, args) => {
         java: pServerCreatesettings.java,
         paper: pServerCreatesettings.paper,
         forge: pServerCreatesettings.forge,
-        fivem: pServerCreatesettings.fivem,
         "alt:v": pServerCreatesettings.altv,
         multitheftauto: pServerCreatesettings.multitheftauto,
         "rage.mp": pServerCreatesettings.ragemp,
@@ -134,7 +133,7 @@ exports.run = async(client, message, args) => {
         .setColor("RED")
         .setDescription(`List of servers: (use DBH!server create-donator <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
         .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
-        .addField("__**Grand Theft Auto:**__", "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+        .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
         .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
