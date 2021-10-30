@@ -39,7 +39,7 @@ module.exports = async(client, member, guild) => {
 
         member.roles.add(config.DiscordBot.roles.member)
         if (userData.get(member.id) == null) {
-            welcomeChannel.send("Welcome <@" + member + "> to DanBot Hosting. To get started please read <#738527470164377630>");
+            welcomeChannel.send("Welcome <@" + member + "> to DanBot Hosting. To get started please read <#898041835002400768> and <#898041840954138634>");
         } else {
             member.roles.add(config.DiscordBot.roles.client)
             welcomeChannel.send("Welcome back <@" + member + "> to DanBot Hosting!");
