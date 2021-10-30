@@ -57,7 +57,7 @@ module.exports = (client, message) => {
 
 
     //Auto reactions on suggestions
-    if (message.channel.id === "740302560488980561") {
+    if (message.channel.id === "898041855135068221") {
         if (message.content.includes(">")) {
 
         } else {
