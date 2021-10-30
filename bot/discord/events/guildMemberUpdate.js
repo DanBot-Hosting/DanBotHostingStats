@@ -3,9 +3,9 @@ module.exports = async(client, oldMember, newMember) => {
     if (oldMember.displayName != newMember.displayName) {
         let displayName = newMember.displayName.toLowerCase();
 
-        if (displayName.includes("soloisaslut")) {
-            return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
-        }
+        //if (displayName.includes("soloisaslut")) {
+        //    return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
+        //}
 
         if (displayName.match(/^[a-z0-9]/i) == null) {
             return newMember.setNickname('zHOISTER ALERT');
