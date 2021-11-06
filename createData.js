@@ -63,7 +63,7 @@ list.nginx = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -105,7 +105,7 @@ list.reddiscordbot = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -135,7 +135,7 @@ list.nodejs = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -168,7 +168,7 @@ list.python = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -197,7 +197,7 @@ list.aio = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -226,7 +226,7 @@ list.java = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -264,7 +264,7 @@ list.storage = (serverName, userID) => ({
     "limits": {
         "memory": 1,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 1
     },
@@ -307,7 +307,7 @@ list.spigot = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -339,7 +339,7 @@ list.waterfall = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -372,7 +372,7 @@ list.paper = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -405,7 +405,7 @@ list.forge = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -438,7 +438,7 @@ list.bedrock = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -469,7 +469,7 @@ list.pocketminemp = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -512,7 +512,7 @@ list.fivem = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -549,7 +549,7 @@ list.altv = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -583,7 +583,7 @@ list.multitheftauto = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -613,7 +613,7 @@ list.ragemp = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -645,7 +645,7 @@ list.samp = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -684,7 +684,7 @@ list.gmod = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -720,7 +720,7 @@ list.csgo = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -752,7 +752,7 @@ list.arkse = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -802,7 +802,7 @@ list.lavalink = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -830,7 +830,7 @@ list.ts3 = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -862,7 +862,7 @@ list.mumble = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -907,7 +907,7 @@ list.barotrauma = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -935,7 +935,7 @@ list.avorion = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -980,7 +980,7 @@ list.assettocorsa = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -1016,7 +1016,7 @@ list.arma = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -1060,7 +1060,7 @@ list.daystodie = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -1094,7 +1094,7 @@ list.rust = (serverName, userID) => ({
     "limits": {
         "memory": 2048,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -1148,7 +1148,7 @@ list.mongodb = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -1179,7 +1179,7 @@ list.redis = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -1209,7 +1209,7 @@ list.postgres = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
@@ -1250,7 +1250,7 @@ list.sharex = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 0,
+        "disk": 10240,
         "io": 500,
         "cpu": 0
     },
