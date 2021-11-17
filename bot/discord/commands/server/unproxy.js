@@ -11,60 +11,33 @@ exports.run = async(client, message, args) => {
             return;
         }
 
-        //SSH Connection
-        let conn = new sshClient();
-        conn.on('ready', function() {
-            console.log('SSH: ready');
-        }).connect({
-            host: config.SSH.Host,
-            port: config.SSH.Port,
-            username: config.SSH.User,
-            password: config.SSH.Password
-        });
-
-        conn.on('ready', function() {
-            conn.exec('rm /etc/apache2/sites-enabled/' + args[1] + '.conf && service apache2 restart && sleep 1 && echo "complete"', function(err, stream) {
-                if (err) throw err;
-                stream.on('close', function(code, signal) {
-                    conn.end();
-                }).on('data', function(data) {
-                    message.channel.send('Proxy has been removed from ' + args[1])
-                    userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
-                }).stderr.on('data', function(data) {
-                    message.channel.send('FAILED. **Try using `-force` to force unproxy after the server ID** \nERROR: ' + data)
-                });
-            });
+        axios({
+            url: config.proxy.url + "/api/nginx/proxy-hosts",
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                'Authorization': config.proxy.authKey,
+                'Content-Type': 'application/json',
+            }
+        }).then(response => {
+            //Now delete it
+            axios({
+                url: config.proxy.url + "/api/nginx/proxy-hosts/" + ResponseAfterProxy.data.find(element => element.domain_names[0] == args[1].toLowerCase()).id,
+                method: 'DELETE',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': config.proxy.authKey,
+                    'Content-Type': 'application/json',
+                }
+            }).then(response => {
+                userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
+                message.reply('Domain has been unproxied')
+            })
+        }).catch(error => {
+            message.reply('There has been a error. Please contact Dan or try once more')
         })
-    } else if (args[2] === "-force") {
-        if (userData.get(message.author.id).domains.find(x => x.domain === args[1].toLowerCase()) == null) {
-            message.channel.send("that domain isnt linked.")
-            return;
-        }
 
-        //SSH Connection
-        let conn = new sshClient();
-        conn.on('ready', function() {
-            console.log('SSH: ready');
-        }).connect({
-            host: config.SSH.Host,
-            port: config.SSH.Port,
-            username: config.SSH.User,
-            password: config.SSH.Password
-        });
-
-        conn.on('ready', function() {
-            conn.exec('rm /etc/apache2/sites-enabled/' + args[1] + '.conf && service apache2 restart && sleep 1 && echo "complete"', function(err, stream) {
-                if (err) throw err;
-                stream.on('close', function(code, signal) {
-                    conn.end();
-                }).on('data', function(data) {
-                    message.channel.send('Proxy has been removed from ' + args[1])
-                    userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
-                }).stderr.on('data', function(data) {
-                    userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
-                    message.channel.send('Proxy has been removed from ' + args[1])
-                });
-            });
-        })
     }
 }
