@@ -10,7 +10,7 @@ exports.run = async(client, message, args) => {
         }
     }*/
 
-    /*
+    
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
         .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
@@ -153,7 +153,7 @@ exports.run = async(client, message, args) => {
     }
     await message.channel.send(helpEmbed)
 
-     */
+     
 
-    message.reply('Server creation is currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
+    //message.reply('Server creation is currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
 }
