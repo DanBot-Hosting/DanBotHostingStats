@@ -151,7 +151,7 @@ exports.run = async(client, message, args) => {
         }
         return;
     }
-    await message.channel.send(helpEmbed)
+    message.channel.send(helpEmbed)
 
      
 
