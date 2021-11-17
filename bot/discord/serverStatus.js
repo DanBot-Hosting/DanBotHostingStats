@@ -3,6 +3,9 @@ let nstatus = {
         name: 'Node 1',
         data: 'Node1'
     }, {
+        name: 'Node 2',
+        data: 'Node2'
+    }, {
         name: 'Node 4',
         data: 'Node4'
     }, {

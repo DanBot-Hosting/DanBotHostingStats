@@ -1,16 +1,6 @@
 const serverCreateSettings = require('../../../../createData');
-const humanizeDuration = require('humanize-duration');
 exports.run = async(client, message, args) => {
-    /*
-    if (client.cooldown[message.author.id] == null) {
-        client.cooldown[message.author.id] = {
-            nCreate: null,
-            pCreate: null,
-            delete: null
-        }
-    }*/
 
-    
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
         .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
@@ -146,14 +136,11 @@ exports.run = async(client, message, args) => {
                         .addField(`__**Failed to create a new server**__`, error)
                     message.reply(embed)
                 }
-                client.cooldown[message.author.id].nCreate = Date.now() + (10 * 1000)
             })
         }
-        return;
-    }
     message.channel.send(helpEmbed)
 
-     
 
-    //message.reply('Server creation is currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
+
+    //message.reply('Server creation s currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
 }

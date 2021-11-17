@@ -43,56 +43,6 @@ let stats = {
         IP: '5.196.100.234',
         ID: '17'
     },
-    node9: {
-        serverID: '52428118',
-        IP: '5.196.100.233',
-        ID: '18'
-    },
-    node10: {
-        serverID: '122f1a2b',
-        IP: '5.196.100.235',
-        ID: '20'
-    },
-    node11: {
-        serverID: '11bb30d2',
-        IP: '5.196.100.236',
-        ID: '21'
-    },
-    node12: {
-        serverID: '1c0a7f49',
-        IP: '5.196.100.237',
-        ID: '22'
-    },
-    node13: {
-        serverID: 'b90c157a',
-        IP: '5.196.100.238',
-        ID: '23'
-    },
-    node14: {
-        serverID: '5029e0ef',
-        IP: '5.196.100.239',
-        ID: '24'
-    },
-    node15: {
-        serverID: '37126bc4',
-        IP: '137.74.76.69',
-        ID: '27'
-    },
-    node16: {
-        serverID: 'bfb242d8',
-        IP: '137.74.76.68',
-        ID: '26'
-    },
-    node17: {
-        serverID: 'a73b3514',
-        IP: '137.74.76.70',
-        ID: '28'
-    },
-    node18: {
-        serverID: '058d7a69',
-        IP: '137.74.76.71',
-        ID: '29'
-    },
     dono01: {
         serverID: '0bc9eab5',
         IP: '173.208.153.242',
