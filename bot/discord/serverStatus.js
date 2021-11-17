@@ -1,24 +1,24 @@
 let nstatus = {
     "Nodes": [{
-        name: 'Node 1',
+        name: 'Node 1 ',
         data: 'Node1'
     }, {
-        name: 'Node 2',
+        name: 'Node 2 ',
         data: 'Node2'
     },{
-        name: 'Node 3',
+        name: 'Node 3 ',
         data: 'Node3'
     }, {
-        name: 'Node 4',
+        name: 'Node 4 ',
         data: 'Node4'
     }, {
-        name: 'Node 5 ( Not used )',
+        name: 'Node 5 ',
         data: 'Node5'
     }, {
-        name: 'Node 6 ( Not used ) ',
+        name: 'Node 6 ',
         data: 'Node6'
     }, {
-        name: 'Node 8',
+        name: 'Node 8 ',
         data: 'Node8'
     }, {
         name: 'Node 13',
@@ -50,19 +50,6 @@ let nstatus = {
     "VPS Hosting Servers": [{
         name: 'Server 1',
         data: 'vps-server-01'
-    }],
-
-    "Dan's Panel": [{
-        name: 'Panel',
-        data: 'private.danbot.host'
-    }, {
-        name: 'Node-1',
-        data: 'dan-node1'
-    }],
-
-    "LavaLink": [{
-        name: 'Lava 2',
-        data: 'lava2.danbot.host'
     }],
 
     "Misc": [{
