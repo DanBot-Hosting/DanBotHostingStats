@@ -55,11 +55,7 @@ exports.run = async(client, message, args) => {
                                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                                 }
                             }).then(response => {
-                                message.channel.send('waiting')
-
-                                const axios = require("axios")
-
-                                const domaintolink = args[1].toLowerCase();
+                                message.reply('Waiting...')
 
                                 axios({
                                     url: config.proxy.url + "/api/nginx/proxy-hosts",
@@ -72,7 +68,7 @@ exports.run = async(client, message, args) => {
                                     },
                                     data: {
                                         "domain_names": [
-                                            domaintolink
+                                            args[1].toLowerCase()
                                         ],
                                         "forward_scheme": "http",
                                         "forward_host": response.data.attributes.sftp_details.ip,
@@ -96,7 +92,13 @@ exports.run = async(client, message, args) => {
                                     }
                                 }).then(ResponseAfterProxy => {
                                     //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
-                                    console.log("Proxy ID: " + ResponseAfterProxy.data.id)
+                                    message.reply("Domain has been proxied, It's ID is: " + ResponseAfterProxy.data.id)
+                                    let datalmao = userData.get(message.author.id).domains || []
+                                    userData.set(message.author.id + '.domains', [...new Set(datalmao), {
+                                        domain: args[1].toLowerCase(),
+                                        serverID: args[2],
+                                    }]);
+
                                 }).catch(ErrorAfterProxy => {
                                     if (ErrorAfterProxy == "Error: Request failed with status code 500") { // Domain not pointing and/or other error
                                         //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
@@ -113,7 +115,7 @@ exports.run = async(client, message, args) => {
                                         }).then(response => {
                                             //Now delete it
                                             axios({
-                                                url: config.proxy.url + "/api/nginx/proxy-hosts/" + ResponseAfterProxy.data.find(element => element.domain_names[0] == domaintolink).id,
+                                                url: config.proxy.url + "/api/nginx/proxy-hosts/" + ResponseAfterProxy.data.find(element => element.domain_names[0] == args[1].toLowerCase()).id,
                                                 method: 'DELETE',
                                                 followRedirect: true,
                                                 maxRedirects: 5,
@@ -129,8 +131,8 @@ exports.run = async(client, message, args) => {
                                     }
                                 })
 
-                            }).catch(error => { message.channel.send('error')})
-                        }).catch(error => { message.channel.send('error ')})
+                            })
+                        })
                     }
                 } else {
                     message.channel.send('Sorry, only-fans.club subdomains are only available for boosters and donators. ')
@@ -180,120 +182,80 @@ exports.run = async(client, message, args) => {
                                 'Accept': 'Application/vnd.pterodactyl.v1+json',
                             }
                         }).then(response => {
+                            message.reply('Waiting...')
 
-                            message.reply('Please give me a few seconds! \nProcess: Connecting to SSH...').then(sentmsg => {
+                            axios({
+                                url: config.proxy.url + "/api/nginx/proxy-hosts",
+                                method: 'POST',
+                                followRedirect: true,
+                                maxRedirects: 5,
+                                headers: {
+                                    'Authorization': config.proxy.authKey,
+                                    'Content-Type': 'application/json',
+                                },
+                                data: {
+                                    "domain_names": [
+                                        args[1].toLowerCase()
+                                    ],
+                                    "forward_scheme": "http",
+                                    "forward_host": response.data.attributes.sftp_details.ip,
+                                    "forward_port": response.data.attributes.relationships.allocations.data[0].attributes.port,
+                                    "access_list_id": "0",
+                                    "certificate_id": "new",
+                                    "meta": {
+                                        "letsencrypt_email": "proxy-renew@danbot.host",
+                                        "letsencrypt_agree": true,
+                                        "dns_challenge": false
+                                    },
+                                    "advanced_config": "",
+                                    "locations": [],
+                                    "block_exploits": false,
+                                    "caching_enabled": false,
+                                    "allow_websocket_upgrade": false,
+                                    "http2_support": false,
+                                    "hsts_enabled": false,
+                                    "hsts_subdomains": false,
+                                    "ssl_forced": false
+                                }
+                            }).then(ResponseAfterProxy => {
+                                //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
+                                message.reply("Domain has been proxied, It's ID is: " + ResponseAfterProxy.data.id)
+                                let datalmao = userData.get(message.author.id).domains || []
+                                userData.set(message.author.id + '.domains', [...new Set(datalmao), {
+                                    domain: args[1].toLowerCase(),
+                                    serverID: args[2],
+                                }]);
 
-                                //SSH Connection
-                                let conn = new sshClient();
-                                conn.on('ready', function() {
-                                    console.log('SSH: ready');
-                                    sentmsg.edit('Please give me a few seconds! \nProcess: SSH connected. \nNext: Making SSL cert... **This will take a few seconds**')
-                                }).connect({
-                                    host: config.SSH.Host,
-                                    port: config.SSH.Port,
-                                    username: config.SSH.User,
-                                    password: config.SSH.Password
-                                });
-
-                                conn.on('ready', function() {
-                                    conn.exec('certbot certonly -d ' + args[1] + ' --non-interactive --webroot --webroot-path /var/www/html --agree-tos -m proxy@danbot.host', function(err, stream) {
-                                        if (err) throw err;
-                                        stream.on('close', function(code, signal) {}).on('data', function(data) {
-                                            if (data.includes("Congratulations!")) {
-                                                sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again**')
-                                                conn.exec(`echo "<VirtualHost *:80>
-                                               ServerName ${args[1]}
-                                               RewriteEngine On
-                                               RewriteCond %{HTTPS} !=on
-                                               RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L] 
-                                             </VirtualHost>
-                                             <VirtualHost *:443>
-                                               ServerName ${args[1]}
-                                                 ProxyRequests off
-                                                 SSLProxyEngine on
-                                                 ProxyPreserveHost On
-                                               SSLEngine on
-                                               SSLCertificateFile /etc/letsencrypt/live/${args[1].toLowerCase()} /fullchain.pem
-                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1].toLowerCase()}/privkey.pem
-                                             
-                                                 <Location />
-                                                     ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
-                                                     ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
-                                                 </Location>
-                                             </VirtualHost>" > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete`, function(err, stream) {
-                                                    if (err) throw err;
-                                                    stream.on('close', function(code, signal) {}).on('data', function(data) {
-                                                        sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
-                                                        //console.log('STDOUT: ' + data);
-                                                        setTimeout(() => {
-                                                            conn.exec('service apache2 restart && echo "complete', function(err, stream) {
-                                                                if (err) throw err;
-                                                                stream.on('close', function(code, signal) {}).on('data', function(data) {
-                                                                    sentmsg.edit('Domain linking complete!')
-                                                                    let datalmao = userData.get(message.author.id).domains || []
-                                                                    userData.set(message.author.id + '.domains', [...new Set(datalmao), {
-                                                                        domain: args[1].toLowerCase(),
-                                                                        serverID: args[2],
-                                                                    }]);
-                                                                    conn.end()
-                                                                    //console.log('STDOUT: ' + data);
-                                                                })
-                                                            });
-                                                        })
-                                                    });
-
-                                                }, 2000)
-                                            } else if (data.includes("Certificate not yet due for renewal")) {
-                                                sentmsg.edit('Please give me a few seconds! \nProcess: SSL Complete. \nNext: Write proxy file. **Sometimes this gets stuck, If it takes more than 10seconds run the command again**')
-                                                conn.exec(`echo  "<VirtualHost *:80>
-                                               ServerName ${args[1]}
-                                               RewriteEngine On
-                                               RewriteCond %{HTTPS} !=on
-                                               RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L] 
-                                             </VirtualHost>
-                                             <VirtualHost *:443>
-                                               ServerName ${args[1]}
-                                                 ProxyRequests off
-                                                 SSLProxyEngine on
-                                                 ProxyPreserveHost On
-                                               SSLEngine on
-                                               SSLCertificateFile /etc/letsencrypt/live/${args[1].toLowerCase()}/fullchain.pem
-                                               SSLCertificateKeyFile /etc/letsencrypt/live/${args[1].toLowerCase()}/privkey.pem
-                                             
-                                                 <Location />
-                                                     ProxyPass http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
-                                                     ProxyPassReverse http://${response.data.attributes.sftp_details.ip}:${response.data.attributes.relationships.allocations.data[0].attributes.port}/
-                                                 </Location>
-                                             </VirtualHost> " > /etc/apache2/sites-enabled/${args[1]}.conf && sleep 1 && echo "complete"`, function(err, stream) {
-                                                    if (err) throw err;
-                                                    stream.on('close', function(code, signal) {}).on('data', function(data) {
-                                                        sentmsg.edit('Please give me a few seconds! \nProcess: Proxy file written. \nNext: Reload webserver.')
-                                                        //console.log('STDOUT: ' + data);
-                                                        setTimeout(() => {
-                                                            conn.exec('service apache2 restart && echo "complete"', function(err, stream) {
-                                                                if (err) throw err;
-                                                                stream.on('close', function(code, signal) {}).on('data', function(data) {
-                                                                    sentmsg.edit('Domain linking complete!')
-                                                                    let datalmao = userData.get(message.author.id).domains || []
-                                                                    userData.set(message.author.id + '.domains', [...new Set(datalmao), {
-                                                                        domain: args[1].toLowerCase(),
-                                                                        serverID: args[2],
-                                                                    }]);
-                                                                    conn.end()
-                                                                    //console.log('STDOUT: ' + data);
-                                                                })
-                                                            });
-                                                        })
-                                                    });
-
-                                                }, 2000)
-                                            } else {
-                                                sentmsg.edit('ERROR, SSL failed to connect. Is your domain pointing to the correct ip address? \nReverse Proxy ip is: `' + config.SSH.Host + '`')
+                            }).catch(ErrorAfterProxy => {
+                                if (ErrorAfterProxy == "Error: Request failed with status code 500") { // Domain not pointing and/or other error
+                                    //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
+                                    //Ping and find the ID since it doesnt log when it fails
+                                    axios({
+                                        url: config.proxy.url + "/api/nginx/proxy-hosts",
+                                        method: 'GET',
+                                        followRedirect: true,
+                                        maxRedirects: 5,
+                                        headers: {
+                                            'Authorization': config.proxy.authKey,
+                                            'Content-Type': 'application/json',
+                                        }
+                                    }).then(response => {
+                                        //Now delete it
+                                        axios({
+                                            url: config.proxy.url + "/api/nginx/proxy-hosts/" + ResponseAfterProxy.data.find(element => element.domain_names[0] == args[1].toLowerCase()).id,
+                                            method: 'DELETE',
+                                            followRedirect: true,
+                                            maxRedirects: 5,
+                                            headers: {
+                                                'Authorization': config.proxy.authKey,
+                                                'Content-Type': 'application/json',
                                             }
-                                            //console.log('STDOUT: ' + data);
                                         })
-                                    });
-                                })
+                                    })
+
+                                } else if (ErrorAfterProxy == "Error: Request failed with status code 400") { // Domain Already linked and/or other error
+                                    message.reply('This domain has already been linked, If this is a error please contact Dan')
+                                }
                             })
                         })
                     })
