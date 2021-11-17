@@ -5,42 +5,24 @@ let nstatus = {
     }, {
         name: 'Node 2',
         data: 'Node2'
+    },{
+        name: 'Node 3',
+        data: 'Node3'
     }, {
         name: 'Node 4',
         data: 'Node4'
     }, {
-        name: 'Node 5',
+        name: 'Node 5 ( Not used )',
         data: 'Node5'
     }, {
-        name: 'Node 6',
+        name: 'Node 6 ( Not used ) ',
         data: 'Node6'
     }, {
         name: 'Node 8',
         data: 'Node8'
     }, {
-        name: 'Node 9',
-        data: 'Node9'
-    }, {
-        name: 'Node 10',
-        data: 'Node10'
-    }, {
-        name: 'Node 11',
-        data: 'Node11'
-    }, {
-        name: 'Node 12',
-        data: 'Node12'
-    }, {
         name: 'Node 13',
         data: 'Node13'
-    }, {
-        name: 'Node 14',
-        data: 'Node14'
-    }, {
-        name: 'Node 16',
-        data: 'Node16'
-    }, {
-        name: 'Node 17',
-        data: 'Node17'
     }, {
         name: 'Node 18',
         data: 'Node18'
@@ -58,7 +40,7 @@ let nstatus = {
     }],
 
     "Panel": [{
-        name: 'FR Panel',
+        name: 'UK Panel',
         data: 'panelus1'
     }, {
         name: 'Panel Database',
