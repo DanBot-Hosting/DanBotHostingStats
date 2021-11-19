@@ -43,6 +43,11 @@ let stats = {
         IP: '5.196.100.234',
         ID: '17'
     },
+    node13: {
+        serverID: 'b90c157a',
+        IP: '5.196.100.238',
+        ID: '23'
+    },
     dono01: {
         serverID: '0bc9eab5',
         IP: '173.208.153.242',
