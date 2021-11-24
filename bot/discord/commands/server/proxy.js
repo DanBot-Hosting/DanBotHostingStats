@@ -88,7 +88,7 @@ exports.run = async(client, message, args) => {
                                         "http2_support": false,
                                         "hsts_enabled": false,
                                         "hsts_subdomains": false,
-                                        "ssl_forced": false
+                                        "ssl_forced": true
                                     }
                                 }).then(ResponseAfterProxy => {
                                     //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
