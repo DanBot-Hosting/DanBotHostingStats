@@ -3,7 +3,7 @@ const fs = require('fs')
 
 exports.run = async(client, message, args) => {
 
-    if (!message.channel.name.includes('-ticket')) return message.channel.send(`💡 | You can **only** use this **command** in **ticket channel**!`)
+    if (!message.channel.name.includes('-ticket')) return message.channel.send(`💡 | You can only use this command in a ticket channel.`)
 
     const embed = new Discord.MessageEmbed()
         .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
@@ -28,7 +28,7 @@ exports.run = async(client, message, args) => {
 
         .catch(collected => {
 
-            message.channel.send('🚧 | You **didnt** answer in time im not **closing this ticket!**')
+            message.channel.send('🚧 | Did not receive a reaction in time. This ticket will not be closed.')
 
         })
 
@@ -37,7 +37,7 @@ exports.run = async(client, message, args) => {
 
     if (emojis === '✔️') {
 
-        message.channel.send('🚧 | Im **closing** this **ticket**!').then(
+        message.channel.send('🚧 | I\'m closing this ticket.').then(
 
             setTimeout(() => {
 
@@ -70,7 +70,7 @@ exports.run = async(client, message, args) => {
 
     if (emojis === '❌') {
 
-        message.channel.send('🚧 | **Ticket** is staying **opened**!');
+        message.channel.send('🚧 | The ticket will not be closed.');
 
     }
 }
