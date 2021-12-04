@@ -29,12 +29,11 @@ exports.run = async (client, message, args) => {
         )
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp();
-      await message.author.send(embed);
-      msg.edit(`🔑 | Check your DM's for your API Key.`).catch(() => {
+      message.author.send(embed).catch(() => {
         message.channel.send(
           "Please enable your dms so that i can dm you your apikey."
-        );
-      });
+        )
+      msg.edit(`🔑 | Check your DM's for your API Key.`).catch(() => {});
     } catch (err) {
       return message.channel.send(
         `**An error occupied:**\n\`\`\`js\n${err}\`\`\``
