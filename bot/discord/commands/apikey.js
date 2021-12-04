@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
   if (!args[0]) {
     if (db.fetch(`${message.author.id}_apikey`)) {
       return message.channel.send(
-        "🚧 | You already have an API key. You can delete it by typing: `DBH!apikey delete` or you can view your api key by typing: `DBH!apikey viw`!"
+        "🚧 | You already have an API key. You can delete it by typing: `DBH!apikey delete` or you can view your api key by typing: `DBH!apikey view`!"
       );
     }
 
@@ -30,8 +30,10 @@ exports.run = async (client, message, args) => {
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp();
       await message.author.send(embed);
-      msg.edit(`🔑 | Check your DM's for your API Key.`).catch((err) => {
-        message.channel.send(`🔑 | Check your DM's for your API Key.`);
+      msg.edit(`🔑 | Check your DM's for your API Key.`).catch(() => {
+        message.channel.send(
+          "Please enable your dms so that i can dm you your apikey."
+        );
       });
     } catch (err) {
       return message.channel.send(
