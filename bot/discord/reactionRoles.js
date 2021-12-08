@@ -1,5 +1,5 @@
 let reactionRoles = {
-    '765877675147264000': { //channelID
+    '898041838701781013': { //channelID
         '918240983362183211': { //messageID
             '📣': '898041778471592027', //announcements
             '🕹️': '918235979389730848', //game nights
