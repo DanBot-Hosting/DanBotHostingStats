@@ -1,5 +1,5 @@
 exports.run = async(client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "898041743566594049")) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041747219828796")) return;
 
     message.channel.send("Reloading reaction roles...")
     let reactionRoles = config.DiscordBot.reactionRoles
