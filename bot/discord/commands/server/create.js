@@ -138,9 +138,6 @@ exports.run = async(client, message, args) => {
                 }
             })
         }
-        return message.channel.send(helpEmbed)
-
-
 
     //message.reply('Server creation s currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
 }
