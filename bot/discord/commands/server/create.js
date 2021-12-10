@@ -32,6 +32,11 @@ exports.run = async(client, message, args) => {
         return;
     }
 
+    if(args[1] == "list"){
+        await message.channel.send(helpEmbed)
+        return;    
+    }
+
     let types = {
         storage: data.storage,
         nginx: data.nginx,
