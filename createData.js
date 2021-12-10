@@ -302,7 +302,6 @@ list.spigot = (serverName, userID) => ({
     "user": userID,
     "nest": 1,
     "egg": 58,
-    "docker_image": "quay.io/pterodactyl/core:java-11\n",
     "startup": 'java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}',
     "limits": {
         "memory": 2048,
@@ -367,7 +366,6 @@ list.paper = (serverName, userID) => ({
     "user": userID,
     "nest": 1,
     "egg": 3,
-    "docker_image": "quay.io/pterodactyl/core:java-11",
     "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
     "limits": {
         "memory": 2048,
