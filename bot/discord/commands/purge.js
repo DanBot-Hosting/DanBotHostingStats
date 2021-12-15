@@ -5,12 +5,10 @@ exports.run = (client, message, args) => {
         return message.channel.send(`🚧 | You **do not** have enough **permissions** to use this **command**.`)
     }
 
-    let prefix = config.DiscordBot.prefix
-
     const embed = new Discord.MessageEmbed()
         .setAuthor(`${client.user.username} | Purge`, client.user.avatarURL())
-        .addField(`❓ | Usage:`, `> ${prefix}purge <amount> <@someone>`)
-        .addField(`💡 | Example:`, `> ${prefix}purge 20 @mqrkelich`)
+        .addField(`❓ | Usage:`, `> DBH!purge <amount> <@user>`)
+        .addField(`💡 | Example:`, `> DBH!purge 20 @exampleuser`)
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp()
 
