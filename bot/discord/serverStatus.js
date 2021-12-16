@@ -25,7 +25,7 @@ let nstatus = {
         data: 'Node18'
     }],
 
-    "Game Server Nodes": [{
+    "Gaming Nodes": [{
         name: 'Node 8',
         data: 'Node8'
     }],
