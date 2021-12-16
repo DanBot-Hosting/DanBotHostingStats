@@ -18,9 +18,6 @@ let nstatus = {
         name: 'Node-6',
         data: 'Node6'
     }, {
-        name: 'Node-8',
-        data: 'Node8'
-    }, {
         name: 'Node-9',
         data: 'Node9'
     }, {
@@ -39,6 +36,12 @@ let nstatus = {
         name: 'Node-14',
         data: 'Node14'
     }],
+
+    "Game Server Nodes": [{
+        name: 'Node-8',
+        data: 'node8'
+    }],
+
 
     "Donator Nodes": [{
         name: 'Node-7',
