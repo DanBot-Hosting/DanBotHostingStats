@@ -1,6 +1,9 @@
 const Discord = require('discord.js')
 
 exports.run = async(client, message, args) => {
+
+    return message.channel.send("❌ Tickets are now disabled, new online ticketing system will be coming soon.");
+
     let category = message.guild.channels.cache.find(c => c.id === "898041813309476874" && c.type === "category");
     let categorybackup = message.guild.channels.cache.find(c => c.id === "898041814118957057" && c.type === "category");
     let categorybackup2 = message.guild.channels.cache.find(c => c.id === "898041815192719430" && c.type === "category");
