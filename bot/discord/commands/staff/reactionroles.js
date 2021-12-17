@@ -2,7 +2,7 @@ exports.run = async(client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "898041747219828796")) return;
 
     message.channel.send("Reloading reaction roles...")
-    let reactionRoles = config.DiscordBot.reactionRoles
+    let reactionRoles = require('../../reactionRoles.js');
 
     let reactionRolesChannels = Object.keys(reactionRoles);
     reactionRolesChannels.forEach(c => {
