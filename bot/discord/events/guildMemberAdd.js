@@ -21,6 +21,7 @@ module.exports = async(client, member, guild) => {
 
         if (member.user.bot) {
             let botID = member.id;
+            if(botID == "811616913855610890") return;
             let bot = db.get(`${botID}`);
             if (!bot) {
                 welcomeChannel.send("Bot: <@" + member + ">, tried to join but is not using our API.")
