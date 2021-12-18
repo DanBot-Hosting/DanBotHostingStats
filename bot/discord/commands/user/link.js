@@ -169,7 +169,7 @@ exports.run = async(client, message, args) => {
         let embed = new Discord.MessageEmbed()
             .setColor(`GREEN`)
             .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
-            .addField(`__**Linked Date (DD/MM/YY)**__`, userData.fetch(message.author.id + ".linkDate"))
+            .addField(`__**Linked Date (YYYY/MM/DD)**__`, userData.fetch(message.author.id + ".linkDate"))
             .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"))
         await message.channel.send("This account is linked!", embed)
     }
