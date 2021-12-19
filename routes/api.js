@@ -16,17 +16,17 @@ var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
     "5.196.100.238", "5.196.100.239", "137.74.76.69",
     "137.74.76.68", "137.74.76.70", "137.74.76.71", "51.195.252.9", "173.208.153.242", "176.31.203.22"];
 
-Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // temp remove if ratelimit
+Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { // temp remove if ratelimit
     let ID = req.params.ID;
     if (!ID)
         return res
             .status(400)
-            .send({error: true, message: "Please give a bot ID"});
+            .send({ error: true, message: "Please give a bot ID" });
 
     if (!isSnowflake(ID)) {
         return res
             .status(400)
-            .send({error: true, message: "'bot_id' must be a snowflake"});
+            .send({ error: true, message: "'bot_id' must be a snowflake" });
     }
 
     let data = req.body;
@@ -34,6 +34,8 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
 
     if (keys.includes(data.key)) {
         if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
+            const bot = await client.users.fetch(ID);
+            if (!bot.bot) return res.status(400).send({ error: true, message: "The id you gave is not a bot!" });
             let owner = db.get(`${data.key}`);
             // console.log(data);
             let info = db.get(data.id);
@@ -54,8 +56,8 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
                     mbl: info.mbl || [],
                     lastPost: Date.now()
                 };
-
                 db.set(ID, botData);
+                return res.status(200).send({ error: false, message: "Bot stats have been recorded" });
             } else {
                 let botData = {
                     id: data.id,
@@ -96,7 +98,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
 
                 return res
                     .status(200)
-                    .send({error: false, message: "Bot stats have been recorded"});
+                    .send({ error: false, message: "Bot stats have been recorded" });
             }
         } else {
             console.log(chalk.red(data.id + ' is not hosted on DBH, Banning...'))
@@ -110,7 +112,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
     } else {
         return res
             .status(400)
-            .send({error: true, message: "The API Key you gave is invalid"});
+            .send({ error: true, message: "The API Key you gave is invalid" });
     }
 });
 
@@ -119,17 +121,17 @@ Router.get("/bot/:ID/info", rateLimit(15000, 4), (req, res) => {
     if (!ID)
         return res
             .status(400)
-            .send({error: true, message: "Please give a bot ID"});
+            .send({ error: true, message: "Please give a bot ID" });
 
     if (!isSnowflake(ID)) {
         return res
             .status(400)
-            .send({error: true, message: "'bot_id' must be a snowflake"});
+            .send({ error: true, message: "'bot_id' must be a snowflake" });
     }
 
     let bot = db.get(`${ID}`);
     if (!bot)
-        return res.status(400).send({error: true, message: "bot not found"});
+        return res.status(400).send({ error: true, message: "bot not found" });
 
     let data = {
         id: bot.id,
@@ -153,7 +155,7 @@ Router.get("/bots", rateLimit(15000, 4), (req, res) => {
 
 Router.get(
     "/callback",
-    passport.authenticate("discord", {failureRedirect: "/404"}),
+    passport.authenticate("discord", { failureRedirect: "/404" }),
     (req, res) => {
         console.log(`Testing: ` + req.query.state);
         //  addUser(req.user);
@@ -190,22 +192,22 @@ Router.get("/stats", (req, res) => {
             Node14: nodeData.fetch('Node14')
         }
 
-        res.json({error: false, data: data});
+        res.json({ error: false, data: data });
     } catch (e) {
-        res.json({error: true, message: e});
+        res.json({ error: true, message: e });
     }
 });
 
 Router.use("*", (req, res) => {
     res
         .status(404)
-        .json({error: true, status: 404, message: "Endpoint not found"});
+        .json({ error: true, status: 404, message: "Endpoint not found" });
 });
 
 Router.use("*", (err, req, res) => {
     res
         .status(404)
-        .json({error: true, status: 404, message: "Endpoint not found"});
+        .json({ error: true, status: 404, message: "Endpoint not found" });
 });
 
 module.exports = Router;
