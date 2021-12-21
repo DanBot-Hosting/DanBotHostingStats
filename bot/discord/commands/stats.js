@@ -2,6 +2,7 @@ const {
   MessageEmbed
 } = require("discord.js");
 exports.run = async(client, message) => {
+  return message.reply("This command is currently disabled.")
   // filesize function
   function formatFileSize(bytes, decimalPoint) {
     if (bytes === 0) return "0 Bytes";
