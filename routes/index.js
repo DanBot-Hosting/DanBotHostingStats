@@ -42,7 +42,7 @@ Router.get("/nodeStatus", (req, res) => {
             Node5: nodeStatus.fetch("node5"),
             Node6: nodeStatus.fetch("node6"),
             Node7: nodeStatus.fetch("node7"),
-            Node8: nodeStatus.fetch("node8")
+            Node8: nodeStatus.fetch("node8"),
             Node13: nodeStatus.fetch("node13")
         },
         misc: {
