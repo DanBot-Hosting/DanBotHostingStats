@@ -1,18 +1,18 @@
 const serverCreateSettings = require('../../../../createData');
-exports.run = async(client, message, args) => {
+exports.run = async (client, message, args) => {
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
         .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
         .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
-//        .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
+        //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
         .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
-//         .addField("__**Storage:**__", "storage", true)
+        //.addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
@@ -30,11 +30,6 @@ exports.run = async(client, message, args) => {
     if (!args[1]) {
         await message.channel.send(helpEmbed)
         return;
-    }
-
-    if(args[1] == "list"){
-        await message.channel.send(helpEmbed)
-        return;    
     }
 
     let types = {
@@ -73,76 +68,41 @@ exports.run = async(client, message, args) => {
         sharex: data.sharex
     }
 
-
-        if (args[1] === "aio" | args[1] === "java") {
-            serverCreateSettings.createServer(types[args[1].toLowerCase()])
-                .then(response => {
-                    let embed = new Discord.MessageEmbed()
-                        .setColor(`GREEN`)
-                        .addField(`__**Status:**__`, response.statusText)
-                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                        .addField(`__**Server name:**__`, serverName)
-                        .addField(`__**Type:**__`, args[1].toLowerCase())
-                        .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
-                    message.channel.send(embed)
-                }).catch(error => {
+    if (Object.keys(types).includes(args[1].toLowerCase())) {
+        serverCreateSettings.createServer(types[args[1].toLowerCase()])
+            .then(response => {
+                const embed = new Discord.MessageEmbed()
+                    .setColor(`GREEN`)
+                    .addField(`__**Status:**__`, response.statusText)
+                    .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                    .addField(`__**Server name:**__`, serverName)
+                    .addField(`__**Type:**__`, args[1].toLowerCase())
+                if (args[1] === "aio" || args[1] === "java")
+                    embed.addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
+                message.reply(embed)
+            }).catch(error => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)`)
+                        .addField("__**Failed to create a new server**__", "The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)")
                     message.reply(embed)
                 } else if (error == "Error: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
-                    message.reply(embed)
-                    // console.log(error)
-                } else if (error == "Error: Request failed with status code 429") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again in a minute or two.`)
-                    message.reply(embed)
-                } else {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, error)
-                    message.reply(embed)
-                }
-            })
-        } else {
-            serverCreateSettings.createServer(types[args[1].toLowerCase()])
-                .then(response => {
-                    let embed = new Discord.MessageEmbed()
-                        .setColor(`GREEN`)
-                        .addField(`__**Status:**__`, response.statusText)
-                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                        .addField(`__**Server name:**__`, serverName)
-                        .addField(`__**Type:**__`, args[1].toLowerCase())
-                    message.reply(embed)
-                }).catch(error => {
-                if (error == "Error: Request failed with status code 400") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)`)
-                    message.reply(embed)
-                } else if (error == "Error: Request failed with status code 504") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#898327108898684938>`)
+                        .addField("__**Failed to create a new server**__", "The node is currently offline or having issues, You can check the status of the node in this channel: <#898041845878247487>")
                     message.reply(embed)
                 } else if (error == "Error: Request failed with status code 429") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again.`)
+                        .addField("__**Failed to create a new server**__", "Uh oh, This shouldn't happen, Try again.")
                     message.reply(embed)
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, error)
+                        .addField("__**Failed to create a new server**__", error)
                     message.reply(embed)
                 }
             })
-        }
-
+    } else return await message.channel.send(helpEmbed)
     //message.reply('Server creation s currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
 }
