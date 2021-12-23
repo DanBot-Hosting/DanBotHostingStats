@@ -72,13 +72,13 @@ exports.run = async (client, message, args) => {
         serverCreateSettings.createServer(types[args[1].toLowerCase()])
             .then(response => {
                 const embed = new Discord.MessageEmbed()
-                    .setColor(`GREEN`)
-                    .addField(`__**Status:**__`, response.statusText)
-                    .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                    .addField(`__**Server name:**__`, serverName)
-                    .addField(`__**Type:**__`, args[1].toLowerCase())
+                    .setColor("GREEN")
+                    .addField("__**Status:**__", response.statusText)
+                    .addField("__**Created for user ID:**__", consoleID.consoleID)
+                    .addField("__**Server name:**__", serverName)
+                    .addField("__**Type:**__", args[1].toLowerCase())
                 if (args[1] === "aio" || args[1] === "java")
-                    embed.addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
+                    embed.addField("__**WARNING**__", "**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**")
                 message.reply(embed)
             }).catch(error => {
                 if (error == "Error: Request failed with status code 400") {
