@@ -1,7 +1,9 @@
 const {
   MessageEmbed
 } = require("discord.js");
+
 exports.run = async (client, message) => {
+
   // filesize function
 
   function formatFileSize(bytes, decimalPoint) {
