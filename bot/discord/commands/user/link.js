@@ -126,7 +126,7 @@ exports.run = async(client, message, args) => {
                             collector.on('collect', message => {
                                 if (message.content === code) {
                                     const timestamp = `${moment().format("HH:mm:ss")}`;
-                                    const datestamp = `${moment().format("YYYY-MM-DD")}`;
+                                    const datestamp = `${moment().format("DD-MM-YYYY")}`;
                                     userData.set(`${message.author.id}`, {
                                         discordID: message.author.id,
                                         consoleID: consoleUser.attributes.id,
@@ -169,7 +169,7 @@ exports.run = async(client, message, args) => {
         let embed = new Discord.MessageEmbed()
             .setColor(`GREEN`)
             .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
-            .addField(`__**Linked Date (DD/MM/YY)**__`, userData.fetch(message.author.id + ".linkDate"))
+            .addField(`__**Linked Date (DD/MM/YYYY)**__`, userData.fetch(message.author.id + ".linkDate"))
             .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"))
         await message.channel.send("This account is linked!", embed)
     }
