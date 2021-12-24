@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
     let consoleID = userData.get(message.author.id);
 
     if (consoleID == null) {
-        message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID.\n" +
+        message.reply("Oh no, Seems like you do not have an account linked to your discord ID.\n" +
             "If you have not made an account yet please check out `" +
             config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" +
             config.DiscordBot.Prefix + "user link`");
@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
     let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
 
     if (!args[1]) {
-        await message.channel.send(helpEmbed)
+        await message.reply(helpEmbed)
         return;
     }
 
@@ -74,17 +74,17 @@ exports.run = async (client, message, args) => {
                 const embed = new Discord.MessageEmbed()
                     .setColor("GREEN")
                     .addField("__**Status:**__", response.statusText)
-                    .addField("__**Created for user ID:**__", consoleID.consoleID)
+                    .addField("__**Created for:**__", "Account ID: `" + consoleID.consoleID + "` / <@" + message.author.id + ">")
                     .addField("__**Server name:**__", serverName)
                     .addField("__**Type:**__", args[1].toLowerCase())
                 if (args[1] === "aio" || args[1] === "java")
-                    embed.addField("__**WARNING**__", "**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**")
+                    embed.addField("__**WARNING**__", "**:warning: DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**")
                 message.reply(embed)
             }).catch(error => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField("__**Failed to create a new server**__", "The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)")
+                        .addField("__**Failed to create a new server**__", "The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert the panel admin <@137624084572798976>.")
                     message.reply(embed)
                 } else if (error == "Error: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
@@ -103,6 +103,6 @@ exports.run = async (client, message, args) => {
                     message.reply(embed)
                 }
             })
-    } else return await message.channel.send(helpEmbed)
+    } else return await message.reply(helpEmbed)
     //message.reply('Server creation s currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
 }
