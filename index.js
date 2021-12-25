@@ -33,7 +33,7 @@ const bodyParser = require('body-parser');
 global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
-const axios = require('axios');
+global.axios = require('axios');
 global.pretty = require('prettysize');
 global.transport = nodemailer.createTransport({
     host: config.Email.Host,
