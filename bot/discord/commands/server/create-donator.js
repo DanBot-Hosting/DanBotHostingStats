@@ -7,17 +7,6 @@ exports.run = async(client, message, args) => {
         used: 0
     };
 
-    let boosted = await axios({
-        url: "http://admin.danbot.host:1029",
-        timeout: 3000,
-        method: 'GET',
-        headers: {
-            "password": config.externalPassword
-        },
-    }).catch(e => {
-        console.log(e);
-    })
-
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
     let consoleID = userData.get(message.author.id);
 
@@ -29,7 +18,7 @@ exports.run = async(client, message, args) => {
         return;
     }
 
-    let allowed = Math.floor(userP.donated / config.node7.price) + ((boosted != null && boosted.data[message.author.id] != null) ? Math.floor(boosted.data[message.author.id] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
+    let allowed = Math.floor(userP.donated / config.node7.price);
 
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
