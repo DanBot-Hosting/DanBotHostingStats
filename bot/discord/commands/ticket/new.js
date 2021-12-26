@@ -22,7 +22,7 @@ exports.run = async(client, message, args) => {
         .catch(channel.setParent(categorybackup.id)
                .catch(channel.setParent(categorybackup2.id)
                       .catch(channel.setParent(categorybackup3.id)
-                             .catch(console.error);
+                             .catch(console.error))));
 
     setTimeout(() => {
 
