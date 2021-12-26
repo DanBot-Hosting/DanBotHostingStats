@@ -18,7 +18,11 @@ exports.run = async(client, message, args) => {
 
 
 
-    await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(channel.setParent(categorybackup2.id).catch(channel.setParent(categorybackup3.id).catch(console.error)));
+    await channel.setParent(category.id)
+        .catch(channel.setParent(categorybackup.id)
+               .catch(channel.setParent(categorybackup2.id)
+                      .catch(channel.setParent(categorybackup3.id)
+                             .catch(console.error);
 
     setTimeout(() => {
 
