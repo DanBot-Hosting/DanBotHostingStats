@@ -1280,7 +1280,6 @@ let data = (serverName, userID) => {
         java: null,
         paper: null,
         forge: null,
-        fivem: null,
         altv: null,
         multitheftauto: null,
         ragemp: null,
@@ -1303,7 +1302,6 @@ let data = (serverName, userID) => {
         barotrauma: null,
         waterfall: null,
         spigot: null,
-        lavalink: null,
         sharex: null
     };
 
