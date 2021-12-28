@@ -11,7 +11,7 @@ module.exports = async(client, oldMember, newMember) => {
             return newMember.setNickname('zHOISTER ALERT');
         }
 
-        if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => displayName.includes(r))) {
+        if (['hilter', 'jew', 'discord.gg', 'discordapp','cum'].some(r => displayName.includes(r))) {
             newMember.setNickname('Dan\'s a meany');
         }
 
