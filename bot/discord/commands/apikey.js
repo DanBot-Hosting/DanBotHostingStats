@@ -1,9 +1,16 @@
 let db = require("quick.db");
 const Discord = require("discord.js");
 
+function genorateKey(length = 20) {
+    const charSet = "qwert5yuiopasdfghjklzxcvbnmQWERTYUI8OPOASDFGHJKLZXCVBNM1234567890$%&@";
+    let key = new String();
+    for (let i = 0; i < length; ++i) key = key + charSet[Math.round(Math.random() * charSet.length)];
+    return key;
+};
+
 exports.run = async(client, message, args) => {
 
-    let startkey = Math.random().toString(36).substring(7);
+    let startkey = genorateKey();
 
     let key = `danbot-${startkey}`
 
