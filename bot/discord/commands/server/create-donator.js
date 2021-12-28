@@ -38,15 +38,15 @@ exports.run = async(client, message, args) => {
             .setColor("RED")
             .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
             .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
-            .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
+            .addField("__**Bots:**__", "Python \nJava \naio \nRedDiscordBot", true)
             .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
-            .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
+            .addField("__**Voice Servers:**__", "Mumble", true)
             .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
             .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
             .addField("__**WebHosting:**__", "Nginx", true)
             .addField("__**Custom Egg:**__", "ShareX", true)
 //             .addField("__**Storage:**__", "storage", true)
-            .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
+            .setFooter("Example: DBH!server create-donator aio Testing Server"))
         return;
     }
 
@@ -54,7 +54,6 @@ exports.run = async(client, message, args) => {
         storage: pServerCreatesettings.storage,
         nginx: pServerCreatesettings.nginx,
         reddiscordbot: pServerCreatesettings.reddiscordbot,
-        nodejs: pServerCreatesettings.nodejs,
         python: pServerCreatesettings.python,
         aio: pServerCreatesettings.aio,
         java: pServerCreatesettings.java,
@@ -69,7 +68,6 @@ exports.run = async(client, message, args) => {
         gmod: pServerCreatesettings.gmod,
         "cs:go": pServerCreatesettings.csgo,
         "ark:se": pServerCreatesettings.arkse,
-        ts3: pServerCreatesettings.ts3,
         mumble: pServerCreatesettings.mumble,
         rust: pServerCreatesettings.rust,
         mongodb: pServerCreatesettings.mongodb,
