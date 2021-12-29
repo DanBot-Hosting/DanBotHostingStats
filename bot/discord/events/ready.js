@@ -24,11 +24,11 @@ module.exports = async (client) => {
 
     let checkNicks = () => {
         guild.members.cache.filter(member => member.displayName.match(/^[a-z0-9]/i) == null).forEach(x => {
-            x.setNickname('HOISTER ALERT');
+            x.setNickname('I love Dan <3');
         })
 
-        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.includes(r))).forEach(x => {
-            x.setNickname('No, No name for you');
+        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp', 'zHOISTER ALERT'].some(r => member.displayName.includes(r))).forEach(x => {
+            x.setNickname('I love Dan <3');
         })
     }
 
