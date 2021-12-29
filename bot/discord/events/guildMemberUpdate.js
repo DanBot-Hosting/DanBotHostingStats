@@ -8,7 +8,7 @@ module.exports = async(client, oldMember, newMember) => {
         //}
 
         if (displayName.match(/^[a-z0-9]/i) == null) {
-            return newMember.setNickname('zHOISTER ALERT');
+            return newMember.setNickname('I love Dan <3');
         }
 
         if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => displayName.includes(r))) {
