@@ -116,8 +116,11 @@ module.exports = async (client, message) => {
             console.log(`Command being executed with sudo by ${actualExecutorId}`);
             let userToCopy = sudo.get(actualExecutorId);
 
-            message.member.id = userToCopy;
-            message.user.id = userToCopy;
+            // await message.guild.members.fetch(userToCopy);  //Cache user data
+            // await client.users.fetch(userToCopy); //Cache user data
+
+            message.guild.member.id = userToCopy;
+            message.author.id = userToCopy;
         };
 
         if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "ticket") {
@@ -140,7 +143,7 @@ module.exports = async (client, message) => {
 
     //After command remove all clone traces
     if (actualExecutorId) {
-        message.member.id = actualExecutorId;
-        message.user.id = actualExecutorId;
+        message.guild.member.id = actualExecutorId;
+        message.author.id = actualExecutorId;
     };
 };
