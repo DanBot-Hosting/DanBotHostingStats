@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const axios = require('axios');
-
 module.exports = (client, message) => {
     const swears = [
         'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag'
@@ -13,7 +12,7 @@ module.exports = (client, message) => {
         }
         message.reply('Do __NOT__ use that word in this server. You will get muted next time...')
         message.delete()
-        const channel = client.channels.cache.get('738536205682999407')
+        const channel = client.channels.cache.get(config.DiscordBot.mLogs)
         const bword = new Discord.MessageEmbed()
             .setTitle('User Said Blacklisted word')
             .setDescription(`User: ${message.author.tag} Has said\n\n**${message.content}**\n\n and It includes a blacklisted word`)
