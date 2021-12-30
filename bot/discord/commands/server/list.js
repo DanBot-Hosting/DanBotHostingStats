@@ -4,7 +4,7 @@ exports.run = async(client, message, args) => {
     //List servers
     var arr = [];
     let userID = message.author.id
-    if (message.member.roles.cache.find(r => r.id === "898041747597295667")) userID = args[2] || message.author.id; // Allow devs to lookup a users server list
+    if (message.member.roles.cache.find(r => r.id === "898041747597295667")) userID = args[1] || message.author.id; // Allow devs to lookup a users server list
         
     axios({
         url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(userID).consoleID + "?include=servers",
@@ -25,16 +25,14 @@ exports.run = async(client, message, args) => {
             // console.log(arr)
             setTimeout(() => {
                 var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n");
-                try {
-                     const embed = new Discord.MessageEmbed()
-                        .addField('__**Your Servers:**__', clean)
-                     message.channel.send(embed)
-                } catch(e) {
+                const embed = new Discord.MessageEmbed()
+                            .addField('__**Your Servers:**__', clean)
+                message.channel.send(embed).catch(e => {
                     const embed = new Discord.MessageEmbed()
                         .addField('ERROR', 'Your server list is too long so here is a abstracted version!')
-                        .addField('__**Your Servers:**__', arr.map(e => e.attributes.identifier + "`\n"))
+                        .addField('__**Your Servers:**__', arr.map(e => "`" + e.attributes.identifier + "`"))
                      message.channel.send(embed)
-                };
+                })
                 //console.log(output)
             }, 500)
         }, 5000)

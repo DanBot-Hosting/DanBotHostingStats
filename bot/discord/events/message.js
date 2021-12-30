@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const axios = require('axios');
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
     const swears = [
         'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag'
     ]
@@ -88,6 +88,7 @@ module.exports = (client, message) => {
     const commandargs = message.content.split(' ').slice(1).join(' ');
     const command = args.shift().toLowerCase();
     console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
+    let actualExecutorId;
     try {
         let blacklisted = [
             '739231758087880845', '786363228287664190',
@@ -107,22 +108,42 @@ module.exports = (client, message) => {
         if (webSettings.get('commands') !== false && message.member.roles.cache.get('898041741695926282') == null) {
             message.channel.send('Discord Bot commands are currently disabled...\n reason: `' + webSettings.get('commands') + '`');
             return;
-        }
+        };
+
+        if (sudo.get(message.member.id) && message.member.roles.cache.find(r => r.id === "898041747597295667") && args[0] != "sudo") { //Doubble check the user is deffinaly allowd to use this command
+            actualExecutorId = JSON.parse(JSON.stringify({a: message.member.id})).a; // Deep clone actual sender user ID
+
+            console.log(`Command being executed with sudo by ${actualExecutorId}`);
+            let userToCopy = sudo.get(actualExecutorId);
+
+            // await message.guild.members.fetch(userToCopy);  //Cache user data
+            // await client.users.fetch(userToCopy); //Cache user data
+
+            message.guild.member.id = userToCopy;
+            message.author.id = userToCopy;
+        };
 
         if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "ticket") {
             //Cooldown setting
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
-                commandFile.run(client, message, args);
+                await commandFile.run(client, message, args);
             } else {
                 let commandFile = require(`../commands/${command}/${args[0]}.js`);
-                commandFile.run(client, message, args);
+                await commandFile.run(client, message, args);
             }
         } else {
             let commandFile = require(`../commands/${command}.js`);
-            commandFile.run(client, message, args);
+            await commandFile.run(client, message, args);
         }
+
     } catch (err) {
         console.log(err)
     }
+
+    //After command remove all clone traces
+    if (actualExecutorId) {
+        message.guild.member.id = actualExecutorId;
+        message.author.id = actualExecutorId;
+    };
 };

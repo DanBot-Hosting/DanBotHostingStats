@@ -228,6 +228,8 @@ exports.run = async(client, message, args) => {
 
                             }).catch(ErrorAfterProxy => {
                                 if (ErrorAfterProxy == "Error: Request failed with status code 500") { // Domain not pointing and/or other error
+                                    message.reply('Ohno An error occurred...');
+                                    
                                     //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
                                     //Ping and find the ID since it doesnt log when it fails
                                     axios({
@@ -251,12 +253,16 @@ exports.run = async(client, message, args) => {
                                                 'Content-Type': 'application/json',
                                             }
                                         })
-                                    })
+                                    }).catch(ErrorAfterProxy => {
+                                        message.reply('Sorry but an error occurred whilst trying to proxy your domain, If this is a error please contact Dan');
+                                    });
 
                                 } else if (ErrorAfterProxy == "Error: Request failed with status code 400") { // Domain Already linked and/or other error
                                     message.reply('This domain has already been linked, If this is a error please contact Dan')
                                 }
                             })
+                        }).catch(e => {
+                            message.reply('Sorry but an error occurred whilst trying to proxy your domain (COULD NOT FTECH SERVER), If this is a error please contact Dan');
                         })
                     })
                 }
