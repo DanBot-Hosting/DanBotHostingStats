@@ -1,5 +1,5 @@
 exports.run = async(client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "898041747597295667" | "898041741695926282")) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041747597295667")) return;
 
     if (!args[1]) {
         const userID = sudo.get(message.member.id);
@@ -16,4 +16,4 @@ exports.run = async(client, message, args) => {
         message.channel.send(`You are now sudoing \`${userInfo.tag}\`!`);
         sudo.set(message.member.id, userInfo.id);
     };
-}
+};
