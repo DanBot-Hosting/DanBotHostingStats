@@ -4,7 +4,7 @@ exports.run = async(client, message, args) => {
     //List servers
     var arr = [];
     let userID = message.author.id
-    if (message.member.roles.cache.find(r => r.id === "898041747597295667")) userID = args[1] || message.author.id; // Allow devs to lookup a users server list
+    if (message.member.roles.cache.find(r => r.id === "898041747597295667")) userID = args[2] || message.author.id; // Allow devs to lookup a users server list
         
     axios({
         url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(userID).consoleID + "?include=servers",
