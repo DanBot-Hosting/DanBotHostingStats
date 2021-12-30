@@ -25,16 +25,14 @@ exports.run = async(client, message, args) => {
             // console.log(arr)
             setTimeout(() => {
                 var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n");
-                try {
-                     const embed = new Discord.MessageEmbed()
-                        .addField('__**Your Servers:**__', clean)
-                     message.channel.send(embed)
-                } catch(e) {
+                const embed = new Discord.MessageEmbed()
+                            .addField('__**Your Servers:**__', clean)
+                message.channel.send(embed).catch(e => {
                     const embed = new Discord.MessageEmbed()
                         .addField('ERROR', 'Your server list is too long so here is a abstracted version!')
                         .addField('__**Your Servers:**__', arr.map(e => e.attributes.identifier + "`\n"))
                      message.channel.send(embed)
-                };
+                })
                 //console.log(output)
             }, 500)
         }, 5000)
