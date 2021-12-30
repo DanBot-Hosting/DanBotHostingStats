@@ -11,8 +11,8 @@ module.exports = async(client, oldMember, newMember) => {
             return newMember.setNickname('I love Dan <3');
         }
 
-        if (['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => displayName.includes(r))) {
-            newMember.setNickname('Dan\'s a meany');
+        if (['hilter', 'jew', 'discord.gg', 'discordapp', 'aids'].some(r => displayName.includes(r))) {
+            newMember.setNickname('Moderated Nickname');
         }
 
         // Make a new RichEmbed
