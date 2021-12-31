@@ -14,7 +14,7 @@ async function getNewKey(){
             "secret": config.proxy.pass
         }
     });
-
+    console.log(serverRes)
     return serverRes.data.token;
 };
 
