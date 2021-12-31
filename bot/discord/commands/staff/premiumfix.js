@@ -31,15 +31,15 @@ exports.run = async(client, message, args) => {
             if (premiumNodes.includes(preoutput[index].attributes.node)) ++actualPremiumServersUsed;
         };
 
-        const userPremData = userPrem.get(selectedUser.id, { used: 4, donated: 7 });
+        const userPremData = userPrem.get(selectedUser.id);
 
         const storedPremiumServersUsed = userPremData.used;
 
         if(actualPremiumServersUsed != storedPremiumServersUsed) {
             userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
-            replyMsg.reply(`${selectedUser.tag}'s  premium server count has been fixed!`)
+            replyMsg.edit(`${selectedUser.tag}'s premium server count has been fixed!`)
         } else {
-            replyMsg.reply(`${selectedUser.tag} has the correct premium server count!`)
+            replyMsg.edit(`${selectedUser.tag} has the correct premium server count!`)
         };        
     };
 };
