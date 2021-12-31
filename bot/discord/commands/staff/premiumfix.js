@@ -35,6 +35,7 @@ exports.run = async(client, message, args) => {
 
         const storedPremiumServersUsed = userPremData.used;
 
+        console.log({actualPremiumServersUsed, storedPremiumServersUsed, userPremData})
         if(actualPremiumServersUsed != storedPremiumServersUsed) {
             userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
             replyMsg.edit(`${selectedUser.tag}'s premium server count has been fixed!`)
