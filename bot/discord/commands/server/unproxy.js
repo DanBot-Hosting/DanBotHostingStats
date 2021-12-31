@@ -14,8 +14,7 @@ async function getNewKey(){
             "secret": config.proxy.pass
         }
     });
-    console.log(serverRes)
-    return serverRes.data.token;
+    return "Bearer " + serverRes.data.token;
 };
 
 exports.run = async(client, message, args) => {
