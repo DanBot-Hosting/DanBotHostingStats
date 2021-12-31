@@ -9,7 +9,7 @@ exports.run = async(client, message, args) => {
     } else {
         const replyMsg = await message.channel.send('Staring calculation...');
 
-        let selectedUser = message.mentions.users.first() || client.guild.members.fetch(args[1]);
+        let selectedUser = message.mentions.users.first() || message.guild.members.fetch(args[1]);
         selectedUser = await selectedUser;
 
         const response = await axios({
@@ -35,7 +35,7 @@ exports.run = async(client, message, args) => {
 
         const storedPremiumServersUsed = userPremData.used;
 
-        console.log({actualPremiumServersUsed, storedPremiumServersUsed, userPremData})
+        console.log({actualPremiumServersUsed, storedPremiumServersUsed, userPremData, selectedUser})
         if(actualPremiumServersUsed != storedPremiumServersUsed) {
             userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
             replyMsg.edit(`${selectedUser.tag}'s premium server count has been fixed!`)
