@@ -7,7 +7,7 @@ exports.run = async(client, message, args) => {
             message.channel.send('You are not sudoing anyone!');
         } else {
             const userInfo = await client.users.fetch(userID);
-            message.channel.send(`You will no loger sudo \`${userInfo.tag}\`!`);
+            message.channel.send(`You will no longer sudo \`${userInfo.tag}\`!`);
             sudo.delete(message.member.id);
         };
 

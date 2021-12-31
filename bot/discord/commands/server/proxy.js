@@ -1,5 +1,23 @@
 const sshClient = require('ssh2').Client;
 const axios = require('axios');
+
+async function getNewKey(){
+    const serverRes = await axios({
+        url: config.proxy.url + "/api/tokens",
+        method: 'POST',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: {
+            "identity": config.proxy.email,
+            "secret": config.proxy.pass
+        }
+    });
+    return "Bearer " + serverRes.data.token;
+};
+
 exports.run = async(client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domain serverid')
@@ -9,6 +27,7 @@ exports.run = async(client, message, args) => {
         if (!args[2]) {
             await message.channel.send(embed)
         } else {
+            config.proxy.authKey = await getNewKey();
             if (args[1].toLowerCase().includes('only-fans.club')) {
                 if (message.member.roles.cache.some(r => ['898041754564046869', '710208090741539006'].includes(r.id))) {
                     const linkalready = userData.fetchAll().filter(users => users.data.domains && users.data.domains.filter(x => x.domain === args[1]).length != 0);

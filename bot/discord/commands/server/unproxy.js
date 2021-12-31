@@ -1,4 +1,22 @@
 const sshClient = require('ssh2').Client;
+
+async function getNewKey(){
+    const serverRes = await axios({
+        url: config.proxy.url + "/api/tokens",
+        method: 'POST',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: {
+            "identity": config.proxy.email,
+            "secret": config.proxy.pass
+        }
+    });
+    return "Bearer " + serverRes.data.token;
+};
+
 exports.run = async(client, message, args) => {
     if (!args[1]) {
         const embed = new Discord.MessageEmbed()
@@ -13,6 +31,7 @@ exports.run = async(client, message, args) => {
                 message.channel.send("that domain isnt linked.")
                 return;
             }
+            config.proxy.authKey = await getNewKey();
 
             axios({
                 url: config.proxy.url + "/api/nginx/proxy-hosts",
