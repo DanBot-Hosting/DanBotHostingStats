@@ -1,4 +1,4 @@
-const premiumNodes = [21, 26, 13];
+const premiumNodes = [30];
 
 exports.run = async(client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
@@ -25,9 +25,7 @@ exports.run = async(client, message, args) => {
         });
 
         const preoutput = response.data.attributes.relationships.servers.data;
-        
-        console.log(preoutput)
-        
+
         let actualPremiumServersUsed = 0;
         for (let index = 0; index < preoutput.length; index++) {
             if (premiumNodes.includes(preoutput[index].attributes.node)) ++actualPremiumServersUsed;
