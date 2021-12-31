@@ -6,7 +6,7 @@ const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 const passport = require("passport");
 let Developers = ["137624084572798976"];
 const rateLimitt = require('express-rate-limit');
-
+const fetch = require("node-fetch");
 var axios = require("axios")
 
 var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
@@ -16,7 +16,7 @@ var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
     "5.196.100.238", "5.196.100.239", "137.74.76.69",
     "137.74.76.68", "137.74.76.70", "137.74.76.71", "51.195.252.9", "173.208.153.242", "176.31.203.22"];
 
-Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // temp remove if ratelimit
+Router.post("/bot/:ID/stats", rateLimit(10000, 2) , async (req, res) => { // temp remove if ratelimit
     let ID = req.params.ID;
     if (!ID)
         return res
@@ -29,6 +29,12 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
             .send({error: true, message: "'bot_id' must be a snowflake"});
     }
 
+    fetch('https://api.discordz.xyz/discord/v1/user?id=' + ID).then(a => a.json()).then(async checkIsBot => {
+
+    if(!checkIsBot || !checkIsBot.data || !checkIsBot.data["bot"] || (checkIsBot.data["bot"] !== true)) return res
+            .status(404)
+            .send({error: true, message: "Bot not found"});
+    
     let data = req.body;
     let keys = db.get("apiKeys");
 
@@ -112,6 +118,9 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
             .status(400)
             .send({error: true, message: "The API Key you gave is invalid"});
     }
+}).catch(e => {
+  return null
+})
 });
 
 Router.get("/bot/:ID/info", rateLimit(15000, 4), (req, res) => {
