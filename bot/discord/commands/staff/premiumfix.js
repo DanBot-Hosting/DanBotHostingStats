@@ -26,6 +26,8 @@ exports.run = async(client, message, args) => {
 
         const preoutput = response.data.attributes.relationships.servers.data;
         
+        console.log(preoutput)
+        
         let actualPremiumServersUsed = 0;
         for (let index = 0; index < preoutput.length; index++) {
             if (premiumNodes.includes(preoutput[index].attributes.node)) ++actualPremiumServersUsed;
