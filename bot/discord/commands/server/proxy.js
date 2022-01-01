@@ -35,7 +35,7 @@ exports.run = async (client, message, args) => {
             return message.channel.send('Domain is already linked')
         };
 
-        if (!/[A-Za-z0-9-.]{1, 63}/.test(args[1])) { //Check the provided domain is a valid domain
+        if (!/^[a-zA-Z0-9.-]+$/.test(args[1])) { //Check the provided domain is a valid domain
             return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: https://danbot.host/')
         };
 
