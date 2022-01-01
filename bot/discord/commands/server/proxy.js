@@ -39,14 +39,14 @@ exports.run = async (client, message, args) => {
             return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: https://danbot.host/')
         };
 
-        const pingCheck = await new Promise((res) => {
-            exec(`ping "${args[1]}"`, (error, stdout) => {
-                let response = (error || stdout);
-                res(response);
-            });
-        });
+        // const pingCheck = await new Promise((res, rej) => {
+        //     exec(`ping "${args[1]}"`, (error, stdout) => {
+        //         let response = (error || stdout);
+        //         res(response);
+        //     });
+        // });
 
-        console.log(pingCheck)
+        // console.log(pingCheck)
 
         config.proxy.authKey = await getNewKey();
 
