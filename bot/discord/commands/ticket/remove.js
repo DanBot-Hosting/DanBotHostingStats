@@ -4,8 +4,6 @@ exports.run = async(client, message, args) => {
     let user = message.mentions.users.first() || message.guild.members.cache.get(args[1])
     if (!user) return message.channel.send(`💡 | Please mention or specify the user's ID you want to add to this ticket.`)
 
-    if (user.roles.cache.some(role => role.id === '898041751099539497')) return message.channel.send(`💡 | You can't remove staff from tickets.`)
-
     await message.channel.updateOverwrite(user, {
         VIEW_CHANNEL: false,
         SEND_MESSAGES: false,
