@@ -1,6 +1,6 @@
 const sshClient = require('ssh2').Client;
 const axios = require('axios');
-const exec = require('child_process').exec;
+const dns = require('dns');
 
 async function getNewKey() {
     const serverRes = await axios({
@@ -39,14 +39,21 @@ exports.run = async (client, message, args) => {
             return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: https://danbot.host/')
         };
 
-        // const pingCheck = await new Promise((res, rej) => {
-        //     exec(`ping "${args[1]}"`, (error, stdout) => {
-        //         let response = (error || stdout);
-        //         res(response);
-        //     });
-        // });
+        const dnsCheck = await new Promise((res, rej) => {
+            const options = {
+                // Setting family as 6 i.e. IPv6
+                family: 4,
+                hints: dns.ADDRCONFIG | dns.V4MAPPED,
+            };
+            
+            dns.lookup(args[1], options, (err, address, family) =>
+                res({err, address, family})
+            );
+        });
 
-        // console.log(pingCheck)
+        if(dnsCheck.address != "164.132.74.251"){
+            return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\`! Also if you are using cloudflare make sure the you are using DNS Only mode!')
+        };
 
         config.proxy.authKey = await getNewKey();
 
