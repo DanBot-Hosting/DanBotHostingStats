@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 function genorateKey(length = 40) {
     const charSet = "qwert5yuiopasdfghjklzxcvbnmQWERTYUI8OPOASDFGHJKLZXCVBNM1234567890$%&@";
     let key = new String();
-    for (let i = 0; i < length; ++i) key = key + charSet[Math.round(Math.random() * charSet.length)];
+    for (let i = 0; i < length; ++i) key = key + charSet[Math.round(Math.random() * charSet.length) - 1];
     return key;
 };
 

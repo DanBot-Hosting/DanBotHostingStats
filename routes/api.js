@@ -16,7 +16,7 @@ var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
     "5.196.100.238", "5.196.100.239", "137.74.76.69",
     "137.74.76.68", "137.74.76.70", "137.74.76.71", "51.195.252.9", "173.208.153.242", "176.31.203.22"];
 
-Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // temp remove if ratelimit
+Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { // temp remove if ratelimit
     let ID = req.params.ID;
     if (!ID)
         return res
@@ -35,12 +35,18 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
     if (keys.includes(data.key)) {
         if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
             let owner = db.get(`${data.key}`);
+
             // console.log(data);
             let info = db.get(data.id);
 
             console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
 
             if (info) {
+                if (info.owner != owner) {
+                    console.log(chalk.red(`A bot with a diffrent owner just reied to post! ${owner}`));
+                    return res.status(401).json({error: true, message: "You do not own this bot!"})
+                };
+
                 let botData = {
                     id: data.id,
                     keyLastUsed: data.key,
@@ -57,6 +63,20 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ (req, res) => { // tem
 
                 db.set(ID, botData);
             } else {
+                const logTo = await client.channels.fetch('927292920023904266');
+                
+                let botName = client.users.cache.get(data.id);
+                
+                if(!botName) botName = await client.users.fetch(data.id);
+
+                if (!botName.bot) {
+                    console.log(chalk.red(`${owner} Tried to claim a user!`));
+                    logTo.send(`${owner} Tried to claim a user!`);
+                    return res.status(401).json({error: true, message: "You do not own this bot!"})
+                };
+
+                logTo.send(`${owner} has just claimed ${data.id} ${botName.tag}`);
+
                 let botData = {
                     id: data.id,
                     keyLastUsed: data.key,
