@@ -32,6 +32,8 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { 
     let data = req.body;
     let keys = db.get("apiKeys");
 
+    console.log(keys)
+    
     if (keys.includes(data.key)) {
         if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
             let owner = db.get(`${data.key}`);
