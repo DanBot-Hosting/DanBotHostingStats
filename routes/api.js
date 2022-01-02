@@ -43,10 +43,10 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { 
 
             console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
 
-            if (info) {
+            if (info || info.owner) {
                 if (info.owner != owner) {
                     console.log(chalk.red(`A bot with a diffrent owner just reied to post! ${owner}`));
-                    return res.status(401).json({error: true, message: "You do not own this bot!"})
+                    return res.status(400).json({error: true, message: "You do not own this bot!"})
                 };
 
                 let botData = {
