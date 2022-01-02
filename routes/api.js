@@ -33,7 +33,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { 
     let keys = db.get("apiKeys");
 
     console.log(keys)
-    
+
     if (keys.includes(data.key)) {
         if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
             let owner = db.get(`${data.key}`);
@@ -76,6 +76,13 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { 
                     logTo.send(`${owner} Tried to claim a user!`);
                     return res.status(401).json({error: true, message: "You do not own this bot!"})
                 };
+
+                const lastClaim = lastBotClaim.get(owner);
+
+                if (!lastClaim || Date.now() > (lastClaim + (1000 * 60 * 60 * 24))) {
+                    return res.status(401).json({error: true, message: "You can only claim one bot a day!"})
+                };
+                lastBotClaim.set(owner, Date.now());
 
                 logTo.send(`${owner} has just claimed ${data.id} ${botName.tag}`);
 
