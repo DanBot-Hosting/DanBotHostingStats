@@ -9,12 +9,12 @@ let stats = {
         ID: '1'
     },
     node2: {
-        serverID: 'd9eb9749',
+        serverID: 'ca89e5c6',
         IP: '176.31.203.21',
         ID: '2'
     },
     node3: {
-        serverID: '6bc55b63',
+        serverID: 'a35842f2',
         IP: '176.31.203.22',
         ID: '7'
     },
