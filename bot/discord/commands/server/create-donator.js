@@ -124,7 +124,7 @@ exports.run = async(client, message, args) => {
         //.addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
-        .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
+        .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
         //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
