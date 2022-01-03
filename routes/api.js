@@ -78,8 +78,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { 
                 };
 
                 const lastClaim = lastBotClaim.get(owner) || 0;
-
-                if (Date.now() > (lastClaim + (1000 * 60 * 60 * 24))) {
+                if (Date.now() < (lastClaim + (1000 * 60 * 60 * 24))) {
                     return res.status(401).json({error: true, message: "You can only claim one bot a day!"})
                 };
                 lastBotClaim.set(owner, Date.now());
