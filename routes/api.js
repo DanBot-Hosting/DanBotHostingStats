@@ -35,7 +35,7 @@ const checkRateLimit = async (owner, windowMs, max) => {
         if ( requestData.requestCount >= max ) {
             if (!requestData.sentAbuseLog) {
                 const logTo = await client.channels.fetch('927594428766511124');
-                logTo.send(`[BOT POST STATS] <@${owner}> has send more requests than ${max} in the last ${max}MS!`);
+                logTo.send(`[BOT POST STATS] <@${owner}> has send more requests than ${max} in the last ${windowMs}MS!`);
                 requestData.sentAbuseLog = true;
             };
             limitMap.set(owner, requestData);
@@ -72,7 +72,8 @@ Router.post("/bot/:ID/stats", async (req, res) => {
                 let owner = db.get(`${data.key}`);
                 console.log(owner);
 
-                if (!checkRateLimit(owner, 5 * 60 * 1000, 10)) return res.status(400).json({error: true, message: "You have been rate-limated! Try again later!"});
+                const rateLimitChekup = await checkRateLimit(owner, 5 * 60 * 1000, 10);
+                if (!rateLimitChekup) return res.status(400).json({error: true, message: "You have been rate-limated! Try again later!"});
 
                 console.log(req.body);
 
