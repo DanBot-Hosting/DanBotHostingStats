@@ -22,7 +22,7 @@ exports.run = async(client, message, args) => {
 
     const chosenTemplate = templates[args[2]];
 
-    const cmdArgs = parser(args.join(" ").slice(3));
+    const cmdArgs = parser(args.slice(4));
     cmdArgs.username = DBHUser.username;
     cmdArgs.email = DBHUser.email;
 
