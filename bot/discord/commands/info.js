@@ -33,7 +33,7 @@ exports.run = async(client, message, args) => {
         **Users:** ${bot.users.toLocaleString()}
         `)
         .addField("Owner", `<@${bot.owner}> \`(${bot.owner})\``)
-        .addField("Invite", "[Click Me!](<https://discord.com/oauth2/authorize?client_id=" + bot.id + "&permissions=0&scope=bot>)")
+        .addField("Invite", "[Click Me!](<https://discord.com/oauth2/authorize?client_id=" + bot.id + "&permissions=0&scope=bot%20applications.commands>)")
 
     if (bot) return message.channel.send(infoEmbed)
 
