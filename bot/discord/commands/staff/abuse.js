@@ -25,21 +25,21 @@ exports.run = async(client, message, args) => {
 
     const chosenTemplate = templates[args[2]];
 
-    const args = parser(args.join(" ").slice(3));
-    args.username = DBHUser.username;
-    args.email = DBHUser.email;
+    const cmdArgs = parser(args.join(" ").slice(3));
+    cmdArgs.username = DBHUser.username;
+    cmdArgs.email = DBHUser.email;
 
-    const keys = Array.from(args.keys());
+    const keys = Array.from(cmdArgs.keys());
     for (let index = 0; index < keys.length; index++) {
         const element = keys[index];
-        while (chosenTemplate.message.includes(`{${element}}`)) chosenTemplate.message.replace(`{${element}}`, args[element]);
+        while (chosenTemplate.message.includes(`{${element}}`)) chosenTemplate.message.replace(`{${element}}`, cmdArgs[element]);
     };
 
     const dm = await discordUser.send(`${chosenTemplate.subject}\n${chosenTemplate.message}`);
 
     const emailmessage = {
         from: config.Email.From,
-        to: args.email,
+        to: cmdArgs.email,
         subject: chosenTemplate.subject,
         html: chosenTemplate.message
     };
