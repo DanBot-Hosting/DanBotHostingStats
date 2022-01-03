@@ -26,7 +26,7 @@ exports.run = async(client, message, args) => {
     cmdArgs.username = DBHUser.username;
     cmdArgs.email = DBHUser.email;
 
-    const keys = Array.from(cmdArgs.keys());
+    const keys = Array.from(Object.keys(cmdArgs));
     for (let index = 0; index < keys.length; index++) {
         const element = keys[index];
         while (chosenTemplate.message.includes(`{${element}}`)) chosenTemplate.message.replace(`{${element}}`, cmdArgs[element]);
