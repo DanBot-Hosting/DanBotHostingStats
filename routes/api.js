@@ -17,8 +17,40 @@ var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
     "5.196.100.238", "5.196.100.239", "137.74.76.69",
     "137.74.76.68", "137.74.76.70", "137.74.76.71", "51.195.252.9", "173.208.153.242", "176.31.203.22"];
 
-Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { // temp remove if ratelimit
-    console.log(req.body);
+const botPostLimiter = rateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 15, // Limit each IP to 15 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+const limitMap = new Map();
+
+const checkRateLimit = async (owner, windowMs, max) => {
+    let requestData = limitMap.get(owner);
+    if (!requestData) requestData = { start: Date.now(), requestCount: 0, sentAbuseLog: false }; 
+    requestData.requestCount++;
+
+    if ( Date.now() < (requestData.start + windowMs)) { //If in last rate limit
+        if ( requestData.requestCount >= max ) {
+            if (!requestData.sentAbuseLog) {
+                const logTo = await client.channels.fetch('927594428766511124');
+                logTo.send(`[BOT POST STATS] <@${owner}> has send more requests than ${max} in the last ${max}MS!`);
+                requestData.sentAbuseLog = true;
+            };
+            limitMap.set(owner, requestData);
+            return false;
+        };
+    } else {
+        requestData = { start: Date.now(), requestCount: 0, sentAbuseLog: false }; 
+    };
+    limitMap.set(owner, requestData);
+    return true;
+};
+
+Router.post("/bot/:ID/stats", async (req, res) => {
+   
+    
     try {
         let ID = req.params.ID;
         if (!ID)
@@ -39,6 +71,10 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { 
             if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
                 let owner = db.get(`${data.key}`);
                 console.log(owner);
+
+                if (!checkRateLimit(owner, 5 * 60 * 1000, 10)) return res.status(400).json({error: true, message: "You have been rate-limated! Try again later!"});
+
+                console.log(req.body);
 
                 let info;
                 try {
