@@ -7,7 +7,8 @@ const passport = require("passport");
 let Developers = ["137624084572798976"];
 const rateLimitt = require('express-rate-limit');
 
-var axios = require("axios")
+var axios = require("axios");
+const { compile } = require("ejs");
 
 var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
     "178.33.170.233", "178.33.170.232", "5.196.100.232",
@@ -17,128 +18,139 @@ var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
     "137.74.76.68", "137.74.76.70", "137.74.76.71", "51.195.252.9", "173.208.153.242", "176.31.203.22"];
 
 Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { // temp remove if ratelimit
-    let ID = req.params.ID;
-    if (!ID)
-        return res
-            .status(400)
-            .send({error: true, message: "Please give a bot ID"});
+    console.log(req.data);
+    try {
+        let ID = req.params.ID;
+        if (!ID)
+            return res
+                .status(400)
+                .send({error: true, message: "Please give a bot ID"});
 
-    if (!isSnowflake(ID)) {
-        return res
-            .status(400)
-            .send({error: true, message: "'bot_id' must be a snowflake"});
-    }
+        if (!isSnowflake(ID)) {
+            return res
+                .status(400)
+                .send({error: true, message: "'bot_id' must be a snowflake"});
+        }
 
-    let data = req.body;
-    let keys = db.get("apiKeys");
+        let data = req.body;
+        let keys = db.get("apiKeys");
 
-    console.log(keys)
+        console.log(keys)
 
-    if (keys.includes(data.key)) {
-        if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
-            let owner = db.get(`${data.key}`);
+        if (keys.includes(data.key)) {
+            if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
+                let owner = db.get(`${data.key}`);
+                console.log(owner);
 
-            // console.log(data);
-            let info = db.get(data.id);
-
-            console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
-
-            if (info !== null) {
-                if (info.owner != owner) {
-                    console.log(chalk.red(`A bot with a diffrent owner just reied to post! ${owner}`));
-                    return res.status(400).json({error: true, message: "You do not own this bot!"})
+                let info;
+                try {
+                    info = db.get(data.id); 
+                } catch (error) {
+                    return res.status(400).json({error: true, message: "Invalid bot ID!"});
                 };
 
-                let botData = {
-                    id: data.id,
-                    keyLastUsed: data.key,
-                    servers: data.servers,
-                    users: data.users,
-                    owner: owner,
-                    client: data.clientInfo,
-                    deleted: info.deleted,
-                    added: info.added,
-                    status: info.status || "N/A",
-                    mbl: info.mbl || [],
-                    lastPost: Date.now()
-                };
+                console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
 
-                db.set(ID, botData);
-            } else {
-                const logTo = await client.channels.fetch('927292920023904266');
-                
-                let botName = client.users.cache.get(data.id);
-                
-                if(!botName) botName = await client.users.fetch(data.id);
+                if (info !== null) {
+                    if (info.owner != owner) {
+                        console.log(chalk.red(`A bot with a diffrent owner just reied to post! ${owner}`));
+                        return res.status(400).json({error: true, message: "You do not own this bot!"})
+                    };
 
-                if (!botName.bot) {
-                    console.log(chalk.red(`${owner} Tried to claim a user!`));
-                    logTo.send(`${owner} Tried to claim a user!`);
-                    return res.status(401).json({error: true, message: "You do not own this bot!"})
-                };
+                    let botData = {
+                        id: data.id,
+                        keyLastUsed: data.key,
+                        servers: data.servers,
+                        users: data.users,
+                        owner: owner,
+                        client: data.clientInfo,
+                        deleted: info.deleted,
+                        added: info.added,
+                        status: info.status || "N/A",
+                        mbl: info.mbl || [],
+                        lastPost: Date.now()
+                    };
 
-                const lastClaim = lastBotClaim.get(owner) || 0;
-                if (Date.now() < (lastClaim + (1000 * 60 * 60 * 24))) {
-                    return res.status(401).json({error: true, message: "You can only claim one bot a day!"})
-                };
-                lastBotClaim.set(owner, Date.now());
+                    db.set(ID, botData);
+                } else {
+                    const logTo = await client.channels.fetch('927292920023904266');
+                    
+                    let botName = client.users.cache.get(data.id);
+                    
+                    if(!botName) botName = await client.users.fetch(data.id);
 
-                logTo.send(`${owner} has just claimed ${data.id} ${botName.tag}`);
+                    if (!botName.bot) {
+                        console.log(chalk.red(`${owner} Tried to claim a user!`));
+                        logTo.send(`${owner} Tried to claim a user!`);
+                        return res.status(401).json({error: true, message: "You do not own this bot!"})
+                    };
 
-                let botData = {
-                    id: data.id,
-                    keyLastUsed: data.key,
-                    servers: data.servers,
-                    users: data.users,
-                    owner: owner,
-                    client: data.clientInfo,
-                    deleted: false,
-                    added: Date.now(),
-                    status: "N/A",
-                    mbl: [],
-                    lastPost: Date.now()
-                };
+                    const lastClaim = lastBotClaim.get(owner) || 0;
+                    if (Date.now() < (lastClaim + (1000 * 60 * 60 * 24))) {
+                        return res.status(401).json({error: true, message: "You can only claim one bot a day!"})
+                    };
+                    lastBotClaim.set(owner, Date.now());
 
-                db.set(ID, botData);
+                    logTo.send(`${owner} has just claimed ${data.id} ${botName.tag}`);
 
-                /*   db.fetch(`botIDs`)
-          db.push("botIDs", `${ID}`);
-       */
+                    let botData = {
+                        id: data.id,
+                        keyLastUsed: data.key,
+                        servers: data.servers,
+                        users: data.users,
+                        owner: owner,
+                        client: data.clientInfo,
+                        deleted: false,
+                        added: Date.now(),
+                        status: "N/A",
+                        mbl: [],
+                        lastPost: Date.now()
+                    };
 
-                let ids = db.get("bot.IDs");
-                if (!ids.includes(ID)) {
-                    db.push("bot.IDs", `${ID}`);
-                }
+                    db.set(ID, botData);
 
-                let bots = db.get(`${owner}.bots`);
+                    /*   db.fetch(`botIDs`)
+            db.push("botIDs", `${ID}`);
+        */
 
-                if (bots) {
+                    let ids = db.get("bot.IDs");
+                    if (!ids.includes(ID)) {
+                        db.push("bot.IDs", `${ID}`);
+                    }
 
-                    if (!bots.includes(ID)) {
+                    let bots = db.get(`${owner}.bots`);
+
+                    if (bots) {
+
+                        if (!bots.includes(ID)) {
+                            db.push(`${owner}.bots`, `${ID}`);
+                        }
+
+                    } else {
                         db.push(`${owner}.bots`, `${ID}`);
                     }
 
-                } else {
-                    db.push(`${owner}.bots`, `${ID}`);
+                    return res
+                        .status(200)
+                        .send({error: false, message: "Bot stats have been recorded"});
                 }
-
-                return res
-                    .status(200)
-                    .send({error: false, message: "Bot stats have been recorded"});
+            } else {
+                console.log(chalk.red(data.id + ' is not hosted on DBH, Banning...'))
+                //client.guilds.cache.get("639477525927690240").members.cache.get(data.id).ban({reason: "bot not hosted on DBH"}).catch(err => { return; })
+                return res.status(400).send({ error: true, message: `${data.id} is not hosted on DBH` })
             }
+
+
+
+
         } else {
-            console.log(chalk.red(data.id + ' is not hosted on DBH, Banning...'))
-            //client.guilds.cache.get("639477525927690240").members.cache.get(data.id).ban({reason: "bot not hosted on DBH"}).catch(err => { return; })
-            return res.status(400).send({ error: true, message: `${data.id} is not hosted on DBH` })
+            return res
+                .status(400)
+                .send({error: true, message: "The API Key you gave is invalid"});
         }
-
-
-
-
-    } else {
-        return res
-            .status(400)
-            .send({error: true, message: "The API Key you gave is invalid"});
+        
+    } catch (e) {
+        console.log(e)
     }
 });
 
