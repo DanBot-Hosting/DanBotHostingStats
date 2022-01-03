@@ -18,7 +18,7 @@ var nodeIPS = ["142.54.191.91", "176.31.203.21", "5.39.83.66",
     "137.74.76.68", "137.74.76.70", "137.74.76.71", "51.195.252.9", "173.208.153.242", "176.31.203.22"];
 
 Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { // temp remove if ratelimit
-    console.log(req.bdy);
+    console.log(req.body);
     try {
         let ID = req.params.ID;
         if (!ID)
@@ -34,7 +34,7 @@ Router.post("/bot/:ID/stats", /* rateLimit(10000, 2) , */ async (req, res) => { 
 
         let data = req.body;
         let keys = db.get("apiKeys");
-        
+
         if (keys.includes(data.key)) {
             if (nodeIPS.includes(req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"] || req.ip)) {
                 let owner = db.get(`${data.key}`);
