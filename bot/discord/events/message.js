@@ -1,10 +1,11 @@
 const fetch = require('node-fetch');
 const axios = require('axios');
+const { weirdToNormalChars } = require('weird-to-normal-chars');
 module.exports = async (client, message) => {
     const swears = [
         'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag'
     ]
-    if (swears.some(x => message.content.toLowerCase().includes(x))) {
+    if (swears.some(x => message.content.toLowerCase().includes(weirdToNormalChars(x)))) {
         /*if (message.author.bot) {
             message.reply('said a blacklisted word, Its been kicked from the server')
             message.delete()
