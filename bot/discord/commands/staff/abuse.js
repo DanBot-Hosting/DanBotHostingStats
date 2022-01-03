@@ -6,16 +6,13 @@ exports.run = async(client, message, args) => {
     const templates = {
         ratelimit: {
             subject: 'DBH Rate limit ABUSE',
-            message: 'Hello {username}, we have noiced you have been repididly hitting our ratelimits on the url {url}\nPlease ceice this behavior if you do not comply you will be banned'
-        }
+            message: 'Hello {username}, we have noticed you have been rapidly hitting your rate limits on the url {url}\Please cease this behavior if you do not comply you will be banned'        }
     };
 
     if (!args[1]) {
         return message.channel.send('Please provide a userID!');
     } else if (!args[2]) {
-        return message.channel.send('Please provide a abuse template!');
-    } else if (!templates[args[2]] && args[2] != "info") {
-        return message.channel.send(`Please provide an availible abuse template! ${Array.from(templates.keys()).join(', ')}`);
+        return message.channel.send(`Please provide a abuse template! ${Array.from(templates.keys()).join(', ')}`);
     } else if (!args[3]){
         return message.channel.send(`Template data:\nSubject\n\`${templates[args[2]].subject}\`\n\nMessage\n\`${templates[args[2]].message}\``);
     };
