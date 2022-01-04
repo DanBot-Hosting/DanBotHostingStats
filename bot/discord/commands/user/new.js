@@ -17,7 +17,19 @@ exports.run = async(client, message, args) => {
         return;
     }
 
-    let questions = [{
+    let questions = [
+        {
+            id: "tos",
+            question: "https://docs.google.com/document/d/1BxGFRlH3TEMqfUWBPszsWYudbKmcbM5pkp7bTq4IbHg\nPlease read our TOS, do you accept? (**yes or no**)", // The questions...
+            filter: (m) => m.author.id === message.author.id, // Filter to use...
+            afterChecks: [{
+                check: (msg) => msg.toLowerCase() == "yes",
+                errorMessage: "You must accept our TOS!!!",
+            }],
+            time: 1000 * 60 *  10, // how much time a user has to answer the question before it times out
+            value: null // The user's response.
+        },
+        {
         id: "username",
         question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
         filter: (m) => m.author.id === message.author.id, // Filter to use...
