@@ -23,7 +23,7 @@ exports.run = async(client, message, args) => {
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
     if (allowed === 0) {
-        message.channel.send("You're not a premium user, to get access to premium you can either boost us for 2 **Premium Servers**, or buy a server (1server/$1)")
+        message.channel.send("You're not a premium user, to get access to premium you can buy a server (1server/$1)")
         return;
     }
 
