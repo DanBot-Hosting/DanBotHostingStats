@@ -52,7 +52,7 @@ exports.run = async (client, message, args) => {
         });
 
         if(dnsCheck.address != "164.132.74.251"){
-            return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\`! Also if you are using cloudflare make sure the you are using DNS Only mode!')
+            return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\`! Also if you are using cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working try again later sometimes DNS changes can take a whie to propagate. (Could be 30 seconds could be a day)')
         };
 
         config.proxy.authKey = await getNewKey();
