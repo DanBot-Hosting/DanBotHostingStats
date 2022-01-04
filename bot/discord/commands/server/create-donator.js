@@ -23,7 +23,7 @@ exports.run = async(client, message, args) => {
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
     if (allowed === 0) {
-        message.channel.send("You're not a premium user, to get access to premium you can either boost us for 2 **Premium Servers**, or buy a server (1server/$1)")
+        message.channel.send("You're not a premium user, to get access to premium you can buy a server (1server/$1)")
         return;
     }
 
@@ -45,6 +45,7 @@ exports.run = async(client, message, args) => {
             .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
             .addField("__**WebHosting:**__", "Nginx", true)
             .addField("__**Custom Egg:**__", "ShareX", true)
+            .addField("__**Software:**__", "codeserver", true)
 //             .addField("__**Storage:**__", "storage", true)
             .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
         return;
@@ -82,7 +83,8 @@ exports.run = async(client, message, args) => {
         barotrauma: pServerCreatesettings.barotrauma,
         waterfall: pServerCreatesettings.waterfall,
         spigot: pServerCreatesettings.spigot,
-        sharex: pServerCreatesettings.sharex
+        sharex: pServerCreatesettings.sharex,
+        codeserver: pServerCreatesettings.codeserver
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {

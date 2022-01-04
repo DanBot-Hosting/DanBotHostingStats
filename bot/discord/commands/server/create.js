@@ -12,6 +12,7 @@ exports.run = async(client, message, args) => {
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
+        .addField("__**Software:**__", "codeserver \ngitea", true)
 //         .addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
@@ -28,9 +29,14 @@ exports.run = async(client, message, args) => {
     let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
 
     if (!args[1]) {
-        await message.channel.send(helpEmbed)
+        await message.channel.send(helpEmbed);
         return;
-    }
+    };
+    
+    if(args[1] == "list") {
+        await message.channel.send(helpEmbed);
+        return;
+    } 
 
     let types = {
         storage: data.storage,
@@ -64,8 +70,10 @@ exports.run = async(client, message, args) => {
         barotrauma: data.barotrauma,
         waterfall: data.waterfall,
         spigot: data.spigot,
-        sharex: data.sharex
-    }
+        sharex: data.sharex,
+        codeserver: data.codeserver,
+        gitea: data.gitea
+    };
 
 
         if (args[1] === "aio" | args[1] === "java") {
@@ -137,9 +145,6 @@ exports.run = async(client, message, args) => {
                 }
             })
         }
-        return message.channel.send(helpEmbed)
-
-
 
     //message.reply('Server creation s currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
 }
