@@ -127,7 +127,7 @@ exports.run = async (client, message, args) => {
                         "locations": [],
                         "block_exploits": false,
                         "caching_enabled": false,
-                        "allow_websocket_upgrade": false,
+                        "allow_websocket_upgrade": true,
                         "http2_support": false,
                         "hsts_enabled": false,
                         "hsts_subdomains": false,
