@@ -1324,7 +1324,8 @@ let data = (serverName, userID) => {
         waterfall: null,
         spigot: null,
         lavalink: null,
-        sharex: null
+        sharex: null,
+        codeserver: null
     };
 
     for (let [name, filled] of Object.entries(list)) {
