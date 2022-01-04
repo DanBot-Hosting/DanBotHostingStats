@@ -45,7 +45,7 @@ exports.run = async(client, message, args) => {
             .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
             .addField("__**WebHosting:**__", "Nginx", true)
             .addField("__**Custom Egg:**__", "ShareX", true)
-            .addField("__**Software:**__", "codeserver", true)
+            .addField("__**Software:**__", "codeserver \nGitea", true)
 //             .addField("__**Storage:**__", "storage", true)
             .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
         return;
@@ -84,7 +84,8 @@ exports.run = async(client, message, args) => {
         waterfall: pServerCreatesettings.waterfall,
         spigot: pServerCreatesettings.spigot,
         sharex: pServerCreatesettings.sharex,
-        codeserver: pServerCreatesettings.codeserver
+        codeserver: pServerCreatesettings.codeserver,
+        gitea: pServerCreatesettings.gitea
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
