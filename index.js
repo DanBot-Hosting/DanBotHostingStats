@@ -70,6 +70,7 @@ global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Booste
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
 global.sudo = new db.table("sudoCommands"); //Keep track of staff sudo
+global.lastBotClaim = new db.table("lastBotClaim"); //Keep track of staff sudo
 // Array.from(sudo.all()).forEach(sudo.delete); //On boot remove all sudos
 
 global.client = new Discord.Client({
