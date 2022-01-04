@@ -81,7 +81,7 @@ list.gitea = (serverName, userID) => ({
          "cpu": 0
      },
      "environment": {
-         "DISABLE_SSH": true,
+         "DISABLE_SSH": "true",
          "SSH_PORT": "2020"
      },
      "feature_limits": {
