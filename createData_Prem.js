@@ -24,6 +24,80 @@ var getPassword = () => {
 };
 
 let list = {};
+
+
+/*
+
+Software Eggs
+
+Code-Server
+Gitea
+
+*/
+
+list.codeserver = (serverName, userID) => ({
+    "name": serverName,
+    "user": userID,
+    "nest": 19,
+    "egg": 66,
+    "docker_image": "ghcr.io/parkervcp/yolks:nodejs_17",
+    "startup": `sh .local/lib/code-server-{{VERSION}}/bin/code-server`,
+    "limits": {
+        "memory": 0,
+        "swap": 0,
+        "disk": 10240,
+        "io": 500,
+        "cpu": 0
+    },
+    "environment": {
+        "PASSWORD": getPassword(),
+        "VERSION": "latest"
+    },
+    "feature_limits": {
+        "databases": 2,
+        "allocations": 1,
+        "backups": 10
+    },
+    "deploy": {
+        "locations": botswebdb,
+        "dedicated_ip": false,
+        "port_range": []
+    },
+    "start_on_completion": false
+});
+
+list.gitea = (serverName, userID) => ({
+     "name": serverName,
+     "user": userID,
+     "nest": 19,
+     "egg": 67,
+     "docker_image": "quay.io/parkervcp/pterodactyl-images:base_debian",
+     "startup": `./gitea web -p {{SERVER_PORT}} -c ./app.ini`,
+     "limits": {
+         "memory": 0,
+         "swap": 0,
+         "disk": 10240,
+         "io": 500,
+         "cpu": 0
+     },
+     "environment": {
+         "DISABLE_SSH": "true",
+         "SSH_PORT": "2020"
+     },
+     "feature_limits": {
+         "databases": 2,
+         "allocations": 1,
+         "backups": 10
+     },
+     "deploy": {
+         "locations": botswebdb,
+         "dedicated_ip": false,
+         "port_range": []
+     },
+     "start_on_completion": false
+ });
+
+
 /*
 
 Web Servers
@@ -108,7 +182,7 @@ list.nodejs = (serverName, userID) => ({
     "user": userID,
     "nest": 5,
     "egg": 50,
-    "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_nodejs-12",
+    "docker_image": "ghcr.io/parkervcp/yolks:nodejs_17",
     "startup": `/usr/local/bin/npm i && /usr/local/bin/node /home/container/{{BOT_JS_FILE}}`,
     "limits": {
         "memory": 0,
@@ -1282,7 +1356,9 @@ let data = (serverName, userID) => {
         waterfall: null,
         spigot: null,
         lavalink: null,
-        sharex: null
+        sharex: null,
+        codeserver: null,
+        gitea: null
     };
 
     for (let [name, filled] of Object.entries(list)) {

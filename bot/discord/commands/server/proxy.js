@@ -21,7 +21,8 @@ async function getNewKey() {
 
 exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
-        .setTitle('__**How to link a domain to a website/server**__ \nCommand format: ' + config.DiscordBot.Prefix + 'server proxy domain serverid')
+        .setTitle('__**How to link a domain to your website/server**__')
+        .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`\nMake sure to replace <domain> with your domain and <serverid> with the ID of your server. You can find your server id by running `' + config.DiscordBot.Prefix + 'server list`\nYou can link your own domain by creating a DNS A Record pointing to \`164.132.74.251\`! If you are using Cloudflare make sure the you are using DNS Only mode!\nOr you can use the free Danbot Host domains:\n `*.never-gonna-give-you-up.xyz\n*.never-gonna-let-you-down.xyz\n*.never-gonna-make-you-cry.xyz\n*.never-gonna-run-around-and-desert-you.xyz\n*.never-gonna-say-goodbye.xyz\n*.never-gonna-tell-a-lie-and-hurt-you.xyz\n*.rick-roll.xyz`\nFor donators there is also the domain `*.only-fans.club`.')
     if (!args[1] || !args[2]) {
         await message.channel.send(embed)
     } else {
@@ -36,7 +37,7 @@ exports.run = async (client, message, args) => {
         };
 
         if (!/^[a-zA-Z0-9.-]+$/.test(args[1]) || args[1].length > 253) { //Check the provided domain is a valid domain
-            return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: https://danbot.host/')
+            return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: <https://danbot.host/>')
         };
 
         const dnsCheck = await new Promise((res, rej) => {
@@ -52,7 +53,7 @@ exports.run = async (client, message, args) => {
         });
 
         if(dnsCheck.address != "164.132.74.251"){
-            return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\`! Also if you are using cloudflare make sure the you are using DNS Only mode!')
+            return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)')
         };
 
         config.proxy.authKey = await getNewKey();
@@ -98,7 +99,7 @@ exports.run = async (client, message, args) => {
                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                 }
             }).then(response => {
-                message.reply('Waiting...')
+                message.reply('Proxying your domain... This can take up to 30 seconds.')
 
                 axios({
                     url: config.proxy.url + "/api/nginx/proxy-hosts",
@@ -127,7 +128,7 @@ exports.run = async (client, message, args) => {
                         "locations": [],
                         "block_exploits": false,
                         "caching_enabled": false,
-                        "allow_websocket_upgrade": false,
+                        "allow_websocket_upgrade": true,
                         "http2_support": false,
                         "hsts_enabled": false,
                         "hsts_subdomains": false,
@@ -170,7 +171,7 @@ exports.run = async (client, message, args) => {
                         })
 
                     } else if (ErrorAfterProxy == "Error: Request failed with status code 400") { // Domain Already linked and/or other error
-                        message.reply('This domain has already been linked, If this is a error please contact Dan')
+                        message.reply('This domain has already been linked. If this is an error, please contact an Admin!')
                     }
                 })
 
