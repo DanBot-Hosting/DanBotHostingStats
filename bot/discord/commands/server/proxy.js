@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
         };
 
         if (!/^[a-zA-Z0-9.-]+$/.test(args[1]) || args[1].length > 253) { //Check the provided domain is a valid domain
-            return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: https://danbot.host/')
+            return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: <https://danbot.host/>')
         };
 
         const dnsCheck = await new Promise((res, rej) => {
