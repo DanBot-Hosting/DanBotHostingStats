@@ -31,6 +31,17 @@ Router.get("/Node4", (req, res) => {
     res.redirect("/stats/Node4");
 });
 
+Router.get("/domain", (req, res) => {
+
+    let domain = req.query.d || '[NO DOMAIN]';
+
+    res.render('proxy.ejs', {
+        domain
+    });
+
+});
+
+
 //Node status json format
 Router.get("/nodeStatus", (req, res) => {
     let data = {
