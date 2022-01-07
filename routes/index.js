@@ -36,7 +36,8 @@ Router.get("/domain", (req, res) => {
     let domain = req.query.d || '[NO DOMAIN]';
 
     res.render('proxy.ejs', {
-        domain
+        domain,
+        user: req.isAuthenticated() ? req.user : null
     });
 
 });
