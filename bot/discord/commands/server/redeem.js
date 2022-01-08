@@ -22,7 +22,7 @@ exports.run = async(client, message, args) => {
 
         codes.delete(args[1]);
 
-        message.member.roles.add('788193704014905364');
+        message.member.roles.add('898041754564046869');
         setDonations(message.author.id, oldBal + code.balance);
 
         if (code.drop != null) {
