@@ -92,7 +92,12 @@ exports.run = async(client, message, args) => {
         serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
             .then(response => {
 
-                userPrem.set(message.author.id + '.used', userP.used + 1);
+                userPrem.set(message.author.id + '.used', userP.used + 1).then(() => {
+                 if (!message.member.roles.has(allowedRole.id)) {
+                     let role = message.guild.roles.cache.find(r => r.id === "898041754564046869");
+                     message.author.roles.add(role)
+                 } 
+                })
 
                 let embed = new Discord.MessageEmbed()
                     .setColor(`GREEN`)
@@ -103,7 +108,7 @@ exports.run = async(client, message, args) => {
                     //.addField(`__**Node:**__`, "Node 7 - Boosters/Donators")
                     .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
                 message.channel.send(embed)
-
+                               
                 let embed2 = new Discord.MessageEmbed()
                     .setTitle('New donator node server created!')
                     .addField('User:', message.author.id)
