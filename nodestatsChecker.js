@@ -19,13 +19,13 @@ let stats = {
         ID: '7'
     },
     node4: {
-        serverID: '98ca4dbd',
-        IP: '178.33.170.233',
+        serverID: '7372a1e9',
+        IP: '176.31.203.23',
         ID: '11'
     },
     node5: {
-        serverID: '0cdde57e',
-        IP: '178.33.170.232',
+        serverID: '9f41832d',
+        IP: '176.31.203.24',
         ID: '12'
     },
     node6: {
