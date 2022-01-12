@@ -9,7 +9,7 @@ Free Hosting forever!                                            /____/
 const axios = require('axios');
 
 const gaming = [14] // Gaming nodes
-const botswebdb = [3] // Bots, Websites and Databases nodes
+const botswebdb = [3, 8, 10] // Bots, Websites and Databases nodes
 const storage = [13] // Storage nodes
 
 /*

@@ -56,6 +56,7 @@ require('./nodestatsChecker');
 global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
+global.tcpp = require('tcp-ping');
 
 global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
@@ -71,6 +72,7 @@ global.nodeServers = new db.table("nodeServers"); //Server count for node limits
 global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
 global.sudo = new db.table("sudoCommands"); //Keep track of staff sudo
 global.lastBotClaim = new db.table("lastBotClaim"); //Keep track of staff sudo
+global.nodePing = new db.table("nodePing"); //Node ping response time
 // Array.from(sudo.all()).forEach(sudo.delete); //On boot remove all sudos
 
 global.client = new Discord.Client({

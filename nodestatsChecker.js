@@ -5,7 +5,7 @@ const ping2 = require('ping-tcp-js')
 let stats = {
     node1: {
         serverID: '7c740e8c',
-        IP: '142.54.191.91',
+        IP: '176.31.203.22',
         ID: '1'
     },
     node2: {
@@ -15,17 +15,17 @@ let stats = {
     },
     node3: {
         serverID: 'a35842f2',
-        IP: '176.31.203.22',
+        IP: '176.31.203.25',
         ID: '7'
     },
     node4: {
-        serverID: '98ca4dbd',
-        IP: '178.33.170.233',
+        serverID: '7372a1e9',
+        IP: '176.31.203.23',
         ID: '11'
     },
     node5: {
-        serverID: '0cdde57e',
-        IP: '178.33.170.232',
+        serverID: '9f41832d',
+        IP: '176.31.203.24',
         ID: '12'
     },
     node6: {
@@ -108,6 +108,13 @@ if (enabled.nodestatsChecker === true) {
                     })
                 }).catch(err => {})
             }, 800)
+            
+        tcpp.ping({ address: data.IP, port: 22}, function(err, data) {
+            nodePing.set(node, {
+                ip: data.address,
+                ping: data.avg
+            })
+        });
         }
 
         //Server limit
@@ -258,6 +265,16 @@ if (enabled.nodestatsChecker === true) {
                 status: true
             }))
             .catch((e) => nodeStatus.set("vpsfrance-1", {
+                timestamp: Date.now(),
+                status: false
+            }));
+        
+        ping2.ping('51.222.40.140', 22)
+            .then(() => nodeStatus.set("vpscanada-1", {
+                timestamp: Date.now(),
+                status: true
+            }))
+            .catch((e) => nodeStatus.set("vpscanada-1", {
                 timestamp: Date.now(),
                 status: false
             }));
