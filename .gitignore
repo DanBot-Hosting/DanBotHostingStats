@@ -13,5 +13,6 @@ eng.traineddata
 proxy
 animalAPI/dog/*
 animalAPI/cat/*
+yarn.lock
 
 Test/*
