@@ -108,13 +108,6 @@ if (enabled.nodestatsChecker === true) {
                     })
                 }).catch(err => {})
             }, 800)
-            
-        tcpp.ping({ address: data.IP, port: 22}, function(err, data) {
-            nodePing.set(node, {
-                ip: data.address,
-                ping: data.avg
-            })
-        });
         }
 
         //Server limit
