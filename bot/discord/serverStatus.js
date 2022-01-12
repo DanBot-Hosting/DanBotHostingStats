@@ -33,8 +33,11 @@ let nstatus = {
     }],
 
     "VPS Hosting Servers": [{
-        name: 'Server 1',
-        data: 'vps-server-01'
+        name: 'France 1',
+        data: 'vpsfrance-1'
+    }, {
+        name: 'Canada 1',
+        data: 'vpscanada-1'
     }],
 
     "Misc": [{
