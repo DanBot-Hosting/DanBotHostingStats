@@ -5,16 +5,16 @@ exports.run = async(client, message, args) => {
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
         .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
         .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
-        .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
+        .addField("__**Bots:**__", "Python \nJava \naio \nRedDiscordBot", true)
         .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
-        .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
+        .addField("__**Voice Servers:**__", "Mumble", true)
         .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
         .addField("__**Software:**__", "codeserver \ngitea", true)
 //         .addField("__**Storage:**__", "storage", true)
-        .setFooter("Example: DBH!server create NodeJS Testing Server")
+        .setFooter("Example: DBH!server create aio Testing Server")
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
     let consoleID = userData.get(message.author.id);
@@ -42,7 +42,6 @@ exports.run = async(client, message, args) => {
         storage: data.storage,
         nginx: data.nginx,
         reddiscordbot: data.reddiscordbot,
-        nodejs: data.nodejs,
         python: data.python,
         aio: data.aio,
         java: data.java,
@@ -57,7 +56,6 @@ exports.run = async(client, message, args) => {
         gmod: data.gmod,
         "cs:go": data.csgo,
         "ark:se": data.arkse,
-        ts3: data.ts3,
         mumble: data.mumble,
         rust: data.rust,
         mongodb: data.mongodb,
