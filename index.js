@@ -213,8 +213,8 @@ server.listen(PORT, function() {
 global.nodeData = new db.table("nodeData")
 setInterval(() => {
     for (i = 1; i < 19; i++) {
-        tcpp.ping({ address: 'n' + i + '.danbot.host', port: 22}, function(err, data) {
-            nodePing.set('n' + i + '.danbot.host', {
+        tcpp.ping({ address: `n${i}.danbot.host`, port: 22}, function(err, data) {
+            nodePing.set(data.address, {
                 ip: data.address,
                 ping: data.avg
             })
