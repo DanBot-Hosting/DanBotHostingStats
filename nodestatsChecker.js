@@ -5,7 +5,7 @@ const ping2 = require('ping-tcp-js')
 let stats = {
     node1: {
         serverID: '7c740e8c',
-        IP: '142.54.191.91',
+        IP: '176.31.203.22',
         ID: '1'
     },
     node2: {
