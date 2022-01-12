@@ -268,6 +268,16 @@ if (enabled.nodestatsChecker === true) {
                 timestamp: Date.now(),
                 status: false
             }));
+        
+        ping2.ping('51.222.40.140', 22)
+            .then(() => nodeStatus.set("vpscanada-1", {
+                timestamp: Date.now(),
+                status: true
+            }))
+            .catch((e) => nodeStatus.set("vpscanada-1", {
+                timestamp: Date.now(),
+                status: false
+            }));
 
     }, 10000)
 } else {
