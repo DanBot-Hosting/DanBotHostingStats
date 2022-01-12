@@ -56,7 +56,7 @@ require('./nodestatsChecker');
 global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
-const tcpp = require('tcp-ping');
+global.tcpp = require('tcp-ping');
 
 global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
@@ -213,13 +213,6 @@ server.listen(PORT, function() {
 global.nodeData = new db.table("nodeData")
 setInterval(() => {
     for (i = 1; i < 19; i++) {
-        tcpp.ping({ address: `n${i}.danbot.host`, port: 22}, function(err, data) {
-            nodePing.set(data.address, {
-                ip: data.address,
-                ping: data.avg
-            })
-        });
-
         axios({
             url: "http://n" + i + ".danbot.host:999/stats",
             method: 'GET',
