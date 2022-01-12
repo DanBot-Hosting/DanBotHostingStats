@@ -214,7 +214,7 @@ global.nodeData = new db.table("nodeData")
 setInterval(() => {
     for (i = 1; i < 19; i++) {
         tcpp.ping({ address: `n${i}.danbot.host`, port: 22}, function(err, data) {
-            nodePing.set(data.address, {
+            nodePing.set(`node-${i}`, {
                 ip: data.address,
                 ping: data.avg
             })
