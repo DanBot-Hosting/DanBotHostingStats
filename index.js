@@ -56,6 +56,7 @@ require('./nodestatsChecker');
 global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
+const tcpp = require('tcp-ping');
 
 global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
@@ -71,6 +72,7 @@ global.nodeServers = new db.table("nodeServers"); //Server count for node limits
 global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
 global.sudo = new db.table("sudoCommands"); //Keep track of staff sudo
 global.lastBotClaim = new db.table("lastBotClaim"); //Keep track of staff sudo
+global.nodePing = new db.table("nodePing"); //Node ping response time
 // Array.from(sudo.all()).forEach(sudo.delete); //On boot remove all sudos
 
 global.client = new Discord.Client({
@@ -211,6 +213,13 @@ server.listen(PORT, function() {
 global.nodeData = new db.table("nodeData")
 setInterval(() => {
     for (i = 1; i < 19; i++) {
+        tcpp.ping({ address: 'n' + i + '.danbot.host', port: 22}, function(err, data) {
+            nodePing.set('n' + i + '.danbot.host', {
+                ip: data.address,
+                ping: data.avg
+            })
+        });
+
         axios({
             url: "http://n" + i + ".danbot.host:999/stats",
             method: 'GET',
