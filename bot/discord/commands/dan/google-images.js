@@ -15,8 +15,8 @@ exports.run = async(client, message, args) => {
                     message.channel.send(`⚠️ ${error.message}`);
                 });
                 await page.setViewport({
-                    width: 4096,
-                    height: 2160
+                    width: 1920,
+                    height: 1080
                 });
                 await page.goto(url);
                 let screenshot = await page.screenshot({

@@ -12,7 +12,7 @@ exports.run = async(client, message, args) => {
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
-        .addField("__**Software:**__", "codeserver \ngitea", true)
+        .addField("__**Software:**__", "codeserver \ngitea \nhaste", true)
 //         .addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
@@ -32,11 +32,11 @@ exports.run = async(client, message, args) => {
         await message.channel.send(helpEmbed);
         return;
     };
-    
+
     if(args[1] == "list") {
         await message.channel.send(helpEmbed);
         return;
-    } 
+    }
 
     let types = {
         storage: data.storage,
@@ -72,7 +72,8 @@ exports.run = async(client, message, args) => {
         spigot: data.spigot,
         sharex: data.sharex,
         codeserver: data.codeserver,
-        gitea: data.gitea
+        gitea: data.gitea,
+        haste: data.haste
     };
 
 
