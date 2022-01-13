@@ -1,60 +1,44 @@
 let nstatus = {
-    "Public": [{
-        name: 'Node-1',
-        data: 'Node1'
+    "Nodes": [{
+        name: 'Node 1 ',
+        data: 'node1'
     }, {
-        name: 'Node-2',
-        data: 'Node2'
+        name: 'Node 2 ',
+        data: 'node2'
+    },{
+        name: 'Node 3 ',
+        data: 'node3'
     }, {
-        name: 'Node-3',
-        data: 'Node3'
+        name: 'Node 4 ',
+        data: 'node4'
+    },  {
+        name: 'Node 5 ',
+        data: 'node5'
     }, {
-        name: 'Node-4',
-        data: 'Node4'
-    }, {
-        name: 'Node-5',
-        data: 'Node5'
-    }, {
-        name: 'Node-6',
-        data: 'Node6'
-    }, {
-        name: 'Node-8',
-        data: 'Node8'
-    }, {
-        name: 'Node-9',
-        data: 'Node9'
-    }, {
-        name: 'Node-10',
-        data: 'Node10'
-    }, {
-        name: 'Node-11',
-        data: 'Node11'
-    }, {
-        name: 'Node-12',
-        data: 'Node12'
-    }, {
-        name: 'Node-13',
-        data: 'Node13'
-    }, {
-        name: 'Node-14',
-        data: 'Node14'
+        name: 'Node 8 ',
+        data: 'node8'
     }],
 
     "Donator Nodes": [{
-        name: 'Node-7',
-        data: 'node7'
+        name: 'Dono-01',
+        data: 'dono01'
     }],
 
-    "Storage Nodes": [{
-        name: 'Storage-1',
-        data: 'storage1'
+    "Panel": [{
+        name: 'UK Panel',
+        data: 'panelus1'
+    }, {
+        name: 'Panel Database',
+        data: 'dbhdb'
     }],
 
-    "Dan's Panel": [{
-        name: 'Node-1',
-        data: 'dan-node1'
-    }]
-}
+    "VPS Hosting Servers": [{
+        name: 'France 1',
+        data: 'vpsfrance-1'
+    }, {
+        name: 'Canada 1',
+        data: 'vpscanada-1'
+    }],
 
 let parse = async() => {
     let toRetun = {};
