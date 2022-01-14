@@ -14,6 +14,9 @@ const express = require('express');
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 
+//New functions to clean some code up - Not completed
+require('./functions')
+
 //Main danbot.host app
 const app = express();
 const server = require('http').createServer(app);
