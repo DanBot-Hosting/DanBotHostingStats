@@ -58,7 +58,6 @@ let nstatus = {
         data: 'dan-node1'
     }]
 }
-
 let parse = async() => {
     let toRetun = {};
 
