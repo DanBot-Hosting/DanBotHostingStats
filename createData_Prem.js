@@ -9,9 +9,6 @@ Donator Nodes as followed:
 Dono-01  : 26
 Dono-02  : 27
 Dono-03  : 28
-
-Node 7 - Donator bots, websites and lavalink
-Node 15 - Donator gaming node, Used for games ofc.
 */
 
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
