@@ -1,13 +1,14 @@
 const axios = require('axios');
 
 const gaming = [21] // Gaming nodes
-const botswebdb = [26] // Bots, Websites and Databases nodes
+const botswebdb = [26, 28] // Bots, Websites and Databases nodes
 const storage = [13] // Storage nodes
 
 /*
 Donator Nodes as followed:
-Node 7   : 12
-Node 15  : 21
+Dono-01  : 26
+Dono-02  : 27
+Dono-03  : 28
 
 Node 7 - Donator bots, websites and lavalink
 Node 15 - Donator gaming node, Used for games ofc.
