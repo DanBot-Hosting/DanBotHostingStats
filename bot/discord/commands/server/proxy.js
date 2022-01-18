@@ -46,7 +46,7 @@ exports.run = async (client, message, args) => {
                 family: 4,
                 hints: dns.ADDRCONFIG | dns.V4MAPPED,
             };
-            
+
             dns.lookup(args[1], options, (err, address, family) =>
                 res({err, address, family})
             );
@@ -171,7 +171,7 @@ exports.run = async (client, message, args) => {
                         })
 
                     } else if (ErrorAfterProxy == "Error: Request failed with status code 400") { // Domain Already linked and/or other error
-                        message.reply('This domain has already been linked. If this is an error, please contact an Admin!')
+                        message.reply('This domain has already been linked. If this is an error, please contact a staff member to fix this!')
                     }
                 })
 
