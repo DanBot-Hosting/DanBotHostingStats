@@ -49,12 +49,12 @@ let stats = {
         ID: '23'
     },
     dono01: {
-        serverID: 'ca6dba5a',
+        serverID: '0bc9eab5',
         IP: '173.208.153.242',
         ID: '30'
     },
     dono02: {
-        serverID: '94082df3',
+        serverID: 'ca6dba5a',
         IP: '192.95.42.70',
         ID: '31'
     }
