@@ -22,6 +22,9 @@ let nstatus = {
     "Donator Nodes": [{
         name: 'Dono-01',
         data: 'dono01'
+    }, {
+        name: 'Dono-02',
+        data: 'dono02'
     }],
 
     "Panel": [{
