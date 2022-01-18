@@ -49,9 +49,14 @@ let stats = {
         ID: '23'
     },
     dono01: {
-        serverID: '0bc9eab5',
+        serverID: 'ca6dba5a',
         IP: '173.208.153.242',
         ID: '30'
+    },
+    dono02: {
+        serverID: '94082df3',
+        IP: '192.95.42.70',
+        ID: '31'
     }
 }
 if (enabled.nodestatsChecker === true) {
@@ -108,7 +113,7 @@ if (enabled.nodestatsChecker === true) {
                     })
                 }).catch(err => {})
             }, 800)
-            
+
         tcpp.ping({ address: data.IP, port: 22}, function(err, data) {
             nodePing.set(node, {
                 ip: data.address,
@@ -268,7 +273,7 @@ if (enabled.nodestatsChecker === true) {
                 timestamp: Date.now(),
                 status: false
             }));
-        
+
         ping2.ping('51.222.40.140', 22)
             .then(() => nodeStatus.set("vpscanada-1", {
                 timestamp: Date.now(),
