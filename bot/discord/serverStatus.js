@@ -25,6 +25,9 @@ let nstatus = {
     }, {
         name: 'Dono-02',
         data: 'dono02'
+    }, {
+        name: 'Dono-03',
+        data: 'dono03'
     }],
 
     "Panel": [{
