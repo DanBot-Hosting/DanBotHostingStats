@@ -113,7 +113,11 @@ exports.run = async(client, message, args) => {
                 }
             })
         } else {
-            serverCreateSettings.createServer(types[args[1].toLowerCase()])
+            let serverToCreate = args[1].toLowerCase();
+            if(serverToCreate.toLowerCase() === "postgresql") serverToCreate = "postgres";
+            const ServerTypes = ["forge", "paper", "bedrock", "pocketminemp", "waterfall", "spigot", "alt:v", "multitheftauto", "rage.mp", "sa-mp", "nodejs", "python", "java", "aio", "reddiscordbot", "gmod", "cs:go", "ark:se", "ts3", "mumble", "rust", "daystodie", "arma", "assettocorsa", "avorion", "bauratrauma", "mongodb", "redis", "postgres", "nginx", "codeserver", "gitea", "haste"] 
+            if(!ServerTypes.contains(serverToCreate)) return message.channel.send(helpEmbed);
+            serverCreateSettings.createServer(types[serverToCreate])
                 .then(response => {
                     let embed = new Discord.MessageEmbed()
                         .setColor(`GREEN`)
