@@ -128,7 +128,7 @@ module.exports = async (client) => {
         }, 15000)
     }
 
-    //Voice channel stats updator
+    //Voice channel stats updater
     setInterval(async () => {
         let DBHGuild = client.guilds.cache.get("639477525927690240");
         let roleID1 = '898041751099539497';
