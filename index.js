@@ -224,7 +224,7 @@ global.nodeData = new db.table("nodeData")
             maxRedirects: 5,
         })
         nodes.Nodes.forEach(node => {
-            res.servers.forEach(server => {
+            res.data.servers.forEach(server => {
                 if(server.name === nodes.name) {
                     if(server.online4 === false) return;
                     nodeData.set(response.data.info.servername, {
