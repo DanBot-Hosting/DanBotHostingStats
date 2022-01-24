@@ -223,7 +223,7 @@ setInterval(() => {
           followRedirect: true,
           maxRedirects: 5,
     })
-    nodes.forEach(node => {
+    nodes.Nodes.forEach(node => {
         res.servers.forEach(server => {
             if(server.name === nodes.name) {
                 if(server.online4 === false) return;
