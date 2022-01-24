@@ -216,6 +216,7 @@ server.listen(PORT, function() {
 const { nodes } = require("./bot/discord/serverUsage.js");
 
 global.nodeData = new db.table("nodeData")
+(async () => {
 setInterval(() => {
     let res = await axios({
           url: "https://status.danbot.host/json/stats.json",
@@ -245,6 +246,7 @@ setInterval(() => {
         })
     })
 }, 2000);
+})();
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')
