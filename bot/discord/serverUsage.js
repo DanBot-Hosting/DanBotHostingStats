@@ -1,58 +1,31 @@
 let nstatus = {
-    "Public": [{
-        name: 'Node-1',
+    "Nodes": [{
+        name: 'Node 1',
         data: 'Node1'
     }, {
-        name: 'Node-2',
+        name: 'Node 2',
         data: 'Node2'
     }, {
-        name: 'Node-3',
+        name: 'Node 3',
         data: 'Node3'
     }, {
-        name: 'Node-4',
+        name: 'Node 4',
         data: 'Node4'
     }, {
-        name: 'Node-5',
+        name: 'Node 5',
         data: 'Node5'
-    }, {
-        name: 'Node-6',
-        data: 'Node6'
-    }, {
-        name: 'Node-8',
-        data: 'Node8'
-    }, {
-        name: 'Node-9',
-        data: 'Node9'
-    }, {
-        name: 'Node-10',
-        data: 'Node10'
-    }, {
-        name: 'Node-11',
-        data: 'Node11'
-    }, {
-        name: 'Node-12',
-        data: 'Node12'
-    }, {
-        name: 'Node-13',
-        data: 'Node13'
-    }, {
-        name: 'Node-14',
-        data: 'Node14'
-    }],
-
-    "Donator Nodes": [{
-        name: 'Node-7',
-        data: 'node7'
-    }],
-
-    "Storage Nodes": [{
-        name: 'Storage-1',
-        data: 'storage1'
-    }],
-
-    "Dan's Panel": [{
-        name: 'Node-1',
-        data: 'dan-node1'
+    },
+    {
+        name: 'Dono-01',
+        data: 'dono01'
+    },
+    {
+        name: 'Dono-02',
+        data: 'dono02'
+    },
+    {
+        name: 'Dono-03',
+        data: 'dono03'
     }]
 }
 
@@ -102,6 +75,7 @@ let getEmbed = async () => {
 }
 
 module.exports = {
+    nodes: nstatus,
     parse: parse,
     getEmbed: getEmbed
 }
