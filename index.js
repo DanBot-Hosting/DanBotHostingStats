@@ -217,35 +217,35 @@ const { nodes } = require("./bot/discord/serverUsage.js");
 
 global.nodeData = new db.table("nodeData")
 (async () => {
-setInterval(() => {
-    let res = await axios({
-          url: "https://status.danbot.host/json/stats.json",
-          method: 'GET',
-          followRedirect: true,
-          maxRedirects: 5,
-    })
-    nodes.Nodes.forEach(node => {
-        res.servers.forEach(server => {
-            if(server.name === nodes.name) {
-                if(server.online4 === false) return;
-                nodeData.set(response.data.info.servername, {
-                    servername: server.name,
-                    cpu: server.cpu,
-                    cpuload: server.load,
-                    memused: server.memory_used,
-                    memtotal: server.memory_total,
-                    swapused: server.swap_used,
-                    swaptotal: server.swap_total,
-                    diskused: server.hdd_used,
-                    disktotal: server.hdd_total,
-                    netrx: server.network_rx,
-                    nettx: server.network_tx,
-                    timestamp: res.updated
-                })
-            }
+    setInterval(async() => {
+        let res = await axios({
+            url: "https://status.danbot.host/json/stats.json",
+            method: 'GET',
+            followRedirect: true,
+            maxRedirects: 5,
         })
-    })
-}, 2000);
+        nodes.Nodes.forEach(node => {
+            res.servers.forEach(server => {
+                if(server.name === nodes.name) {
+                    if(server.online4 === false) return;
+                    nodeData.set(response.data.info.servername, {
+                        servername: server.name,
+                        cpu: server.cpu,
+                        cpuload: server.load,
+                        memused: server.memory_used,
+                        memtotal: server.memory_total,
+                        swapused: server.swap_used,
+                        swaptotal: server.swap_total,
+                        diskused: server.hdd_used,
+                        disktotal: server.hdd_total,
+                        netrx: server.network_rx,
+                        nettx: server.network_tx,
+                        timestamp: res.updated
+                    })
+                }
+            })
+        })
+    }, 2000);
 })();
 
 //View engine setup
