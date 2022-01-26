@@ -1,5 +1,5 @@
 exports.run = async(client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "898041747597295667")) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
     let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
 
 
