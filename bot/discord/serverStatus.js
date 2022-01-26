@@ -70,7 +70,7 @@ let parse = async() => {
             let ping = nodePing.fetch(d.data.toLowerCase())
             let serverUsage = d.data.toLowerCase().includes('node') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 1200) [\`${Math.round(ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('dono') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 800) [\`${Math.round(ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('node-8') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 600) [\`${Math.round(ping.ping)}ms\`]` : ''
 
-            da = (da.status === true ? (`🟢 Online ${serverUsage}`) : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **System**") + ` offline ${serverUsage}`))))
+            da = (da.maintenance === true ? (`🟣 Maintenance Mode!`) : da.status === true ? (`🟢 Online ${serverUsage}`) : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **System**") + ` offline ${serverUsage}`))))
 
             temp.push(`**${d.name}:** ${da}`)
         }

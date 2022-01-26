@@ -82,23 +82,36 @@ if (enabled.nodestatsChecker === true) {
                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
                 }).then(response => {
+                    if(nodeStatus.fetch(node + '.maintenance')) {
+                       nodeStatus.set(node, {
+                        timestamp: Date.now(),
+                        status: true,
+                        is_vm_online: true,
+                        maintenance: true
+                    });
+                   } else {
                     nodeStatus.set(node, {
                         timestamp: Date.now(),
                         status: true,
-                        is_vm_online: true
+                        is_vm_online: true,
+                        maintenance: false
                     });
+                   }
                 }).catch(error => {
                     ping2.ping(data.IP, 22)
                         .then(() => nodeStatus.set(node, {
-                            timestamp: Date.now(),
-                            status: false,
-                            is_vm_online: true
-                        }))
-                        .catch((e) => nodeStatus.set(node, {
-                            timestamp: Date.now(),
-                            status: false,
-                            is_vm_online: false
-                        }));
+                        timestamp: Date.now(),
+                        status: false,
+                        is_vm_online: true,
+                        maintenance: false
+                    }))
+                        .catch((e) => 
+                       nodeStatus.set(node, {
+                        timestamp: Date.now(),
+                        status: false,
+                        is_vm_online: false,
+                        maintenance: false
+                    }));
                 })
 
                 axios({

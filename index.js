@@ -213,71 +213,38 @@ server.listen(PORT, function() {
 });
 
 //Fetch node data
+const { nodes } = require("./bot/discord/serverUsage.js");
+
 global.nodeData = new db.table("nodeData")
-setInterval(() => {
-    for (i = 1; i < 19; i++) {
-        axios({
-            url: "http://n" + i + ".danbot.host:999/stats",
+    setInterval(async() => {
+        let res = await axios({
+            url: "https://status.danbot.host/json/stats.json",
             method: 'GET',
             followRedirect: true,
             maxRedirects: 5,
-            headers: {
-                "password": config.externalPassword
-            },
-        }).then(response => {
-            nodeData.set(response.data.info.servername, {
-                servername: response.data.info.servername,
-                cpu: response.data.info.cpu,
-                cpuload: response.data.info.cpuload,
-                cputhreads: response.data.info.cputhreads,
-                cpucores: response.data.info.cpucores,
-                memused: response.data.info.memused,
-                memtotal: response.data.info.memtotal,
-                memusedraw: response.data.info.memusedraw,
-                memtotalraw: response.data.info.memtotalraw,
-                swapused: response.data.info.swapused,
-                swaptotal: response.data.info.swaptotal,
-                swapusedraw: response.data.info.swapusedraw,
-                swaptotalraw: response.data.info.swaptotalraw,
-                diskused: response.data.info.diskused,
-                disktotal: response.data.info.disktotal,
-                diskusedraw: response.data.info.diskusedraw,
-                disktotalraw: response.data.info.disktotalraw,
-                netrx: response.data.info.netrx,
-                nettx: response.data.info.nettx,
-                osplatform: response.data.info.osplatform,
-                oslogofile: response.data.info.oslogofile,
-                osrelease: response.data.info.osrelease,
-                osuptime: response.data.info.osuptime,
-                biosvendor: response.data.info.biosvendor,
-                biosversion: response.data.info.biosversion,
-                biosdate: response.data.info.biosdate,
-                servermonitorversion: response.data.info.servermonitorversion,
-                datatime: response.data.info.datatime,
-                dockercontainers: response.data.info.dockercontainers,
-                dockercontainersrunning: response.data.info.dockercontainersrunning,
-                dockercontainerspaused: response.data.info.dockercontainerspaused,
-                dockercontainersstopped: response.data.info.dockercontainersstopped,
-                updatetime: response.data.info.updatetime,
-                timestamp: Date.now()
-            });
-            nodeData.set(response.data.speedtest.speedname + '-speedtest', {
-                speedname: response.data.speedtest.speedname,
-                ping: response.data.speedtest.ping,
-                download: response.data.speedtest.download,
-                upload: response.data.speedtest.upload,
-                updatetime: response.data.speedtest.updatetime,
-                timestamp: Date.now()
-            });
-            nodeData.set(response.data.info.servername + '-docker', {
-                dockerAll: response.data.docker,
-                timestamp: Date.now()
-            })
-        }).catch(err => {
-
         })
-    }
-}, 2000);
+        nodes.Nodes.forEach(node => {
+            res.data.servers.forEach(server => {
+                if(server.name === nodes.name) {
+                    if(server.online4 === false) return;
+                    nodeData.set(response.data.info.servername, {
+                        servername: server.name,
+                        cpu: server.cpu,
+                        cpuload: server.load,
+                        memused: server.memory_used,
+                        memtotal: server.memory_total,
+                        swapused: server.swap_used,
+                        swaptotal: server.swap_total,
+                        diskused: server.hdd_used,
+                        disktotal: server.hdd_total,
+                        netrx: server.network_rx,
+                        nettx: server.network_tx,
+                        timestamp: res.updated
+                    })
+                }
+            })
+        })
+    }, 2000);
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')

@@ -3,7 +3,7 @@ const axios = require('axios');
 const { weirdToNormalChars } = require('weird-to-normal-chars');
 module.exports = async (client, message) => {
     const swears = [
-        'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928'
+        'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928', 'https://tenor.com/view/potato-dancing-glitch-gif-14354119', 'http://tenor.com/view/potato-dancing-glitch-gif-14354119'
     ]
     if (swears.some(x => message.content.toLowerCase().includes(weirdToNormalChars(x)))) {
         /*if (message.author.bot) {
