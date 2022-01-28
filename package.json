@@ -36,6 +36,7 @@
     "helmet": "^3.23.3",
     "http": "latest",
     "humanize-duration": "^3.24.0",
+    "lodash-es": "^4.17.21",
     "minimist": "^1.2.5",
     "moment": "^2.27.0",
     "node-fetch": "^2.6.0",

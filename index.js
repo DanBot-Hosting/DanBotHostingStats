@@ -97,6 +97,26 @@ fs.readdir('./bot/discord/events/', (err, files) => {
         delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
     });
 });
+global.createList = {}
+
+//Import all create server lists
+fs.readdir('./create-free/', (err, files) => {
+    files = files.filter(f => f.endsWith('.js'));
+    files.forEach(f => {
+        require(`./create-free/${f}`);
+    });
+});
+
+//Global password gen
+const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+global.getPassword = () => {
+
+    var password = "";
+    while (password.length < 16) {
+        password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
+    }
+    return password;
+};
 
 //Bot login
 client.login(config.DiscordBot.Token);
