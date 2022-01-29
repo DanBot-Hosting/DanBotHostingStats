@@ -84,7 +84,8 @@ exports.run = async(client, message, args) => {
         spigot: pServerCreatesettings.spigot,
         sharex: pServerCreatesettings.sharex,
         codeserver: pServerCreatesettings.codeserver,
-        gitea: pServerCreatesettings.gitea
+        gitea: pServerCreatesettings.gitea,
+        haste: pServerCreatesettings.haste
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
