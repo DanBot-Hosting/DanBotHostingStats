@@ -98,9 +98,11 @@ fs.readdir('./bot/discord/events/', (err, files) => {
     });
 });
 global.createList = {}
+global.createListPrem = {};
 
 //Import all create server lists
 fs.readdir('./create-free/', (err, files) => {
+    console.log(files)
     files = files.filter(f => f.endsWith('.js'));
     files.forEach(f => {
         require(`./create-free/${f}`);
