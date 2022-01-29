@@ -6,62 +6,74 @@ let stats = {
     node1: {
         serverID: '7c740e8c',
         IP: '176.31.203.22',
-        ID: '1'
+        ID: '1',
+        Location: "UK"
     },
     node2: {
         serverID: 'ca89e5c6',
         IP: '176.31.203.21',
-        ID: '2'
+        ID: '2',
+        Location: "UK"
     },
     node3: {
         serverID: 'a35842f2',
         IP: '176.31.203.25',
-        ID: '7'
+        ID: '7',
+        Location: "UK"
     },
     node4: {
         serverID: '7372a1e9',
         IP: '176.31.203.23',
-        ID: '11'
+        ID: '11',
+        Location: "UK"
     },
     node5: {
         serverID: '9f41832d',
         IP: '176.31.203.24',
-        ID: '12'
+        ID: '12',
+        Location: "UK"
     },
     node6: {
         serverID: '8565f2e0',
         IP: '5.196.100.232',
-        ID: '13'
+        ID: '13',
+        Location: "UK"
     },
     node7: {
         serverID: '94082df3',
         IP: '51.195.252.9',
-        ID: '14'
+        ID: '14',
+        Location: "UK"
     },
     node8: {
         serverID: '7be82ca6',
         IP: '176.31.203.20',
-        ID: '17'
+        ID: '17',
+        Location: "UK"
     },
     node13: {
         serverID: 'b90c157a',
         IP: '5.196.100.238',
-        ID: '23'
+        ID: '23',
+        Location: "UK"
     },
     dono01: {
         serverID: '0bc9eab5',
         IP: '173.208.153.242',
-        ID: '30'
+        ID: '30',
+        Location: "CA"
     },
     dono02: {
         serverID: 'ca6dba5a',
         IP: '192.95.42.70',
-        ID: '31'
+        ID: '31',
+        Location: "CA"
     },
     dono03: {
         serverID: 'c23f92cb',
         IP: '192.95.42.73',
-        ID: '33'
+        ID: '33',
+        Location: "CA"
     }
 }
 if (enabled.nodestatsChecker === true) {
@@ -105,7 +117,7 @@ if (enabled.nodestatsChecker === true) {
                         is_vm_online: true,
                         maintenance: false
                     }))
-                        .catch((e) => 
+                        .catch((e) =>
                        nodeStatus.set(node, {
                         timestamp: Date.now(),
                         status: false,
