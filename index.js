@@ -113,7 +113,7 @@ fs.readdir('./create-premium/', (err, files) => {
     console.log(files)
     files = files.filter(f => f.endsWith('.js'));
     files.forEach(f => {
-        require(`./create-free/${f}`);
+        require(`./create-premium/${f}`);
     });
 });
 
