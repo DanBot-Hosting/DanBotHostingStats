@@ -19,7 +19,7 @@ createListPrem.sharex = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": botswebdbPrem,
+        "locations": botswebdbPREM,
         "dedicated_ip": false,
         "port_range": []
     },
