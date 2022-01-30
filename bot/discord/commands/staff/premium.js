@@ -23,14 +23,14 @@ exports.run = async(client, message, args) => {
     if (args[1].toLowerCase() === 'add') {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount)
-        message.member.roles.add('788193704014905364');
+        message.guild.members.cache.get(userid).roles.add('788193704014905364').catch(() => null);
     }
 
 
     if (args[1].toLowerCase() === 'set') {
         setDonations(userid, amount);
         sendMessage(userid, amount)
-        message.member.roles.add('788193704014905364');
+        message.guild.members.cache.get(userid).roles.add('788193704014905364').catch(() => null);
     }
 
     if (args[1].toLowerCase() === 'remove') {
