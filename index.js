@@ -154,7 +154,7 @@ animalapp.set('view engine', 'hbs');
 animalapp.use((req, res, next) => {
 
     res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+    res.set("Access-Control-Allow-Methods", "GET");
 
     res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
@@ -172,12 +172,12 @@ animalapp.use((req, res, next) => {
 });
 
 // home page & beta site api
-const home = require("./routes/main.js");
-animalapp.use("/", home);
+//const home = require("./routes/main.js");
+//animalapp.use("/", home);
 
 //Total images
 const totalRoute = require("./animalAPI/total.js");
-animalapp.use("/total", totalRoute);
+animalapp.use("/", totalRoute);
 
 //Dog API
 const dogRoute = require("./animalAPI/dog.js");
