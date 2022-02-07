@@ -35,6 +35,7 @@ let parse = async() => {
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
+            let nodeData = nodeServers.get(d.data.toLowerCase());
 
             let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
 
@@ -69,8 +70,9 @@ let getEmbed = async () => {
         + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
 
     let embed = new Discord.MessageEmbed()
-        .setTitle('Danbot Hosting Status').setFooter(dateString)
-        .setDescription(desc);
+        .setTitle('Danbot Hosting Status')
+        .setDescription(desc)
+        .setFooter(dateString);
     return embed;
 }
 
