@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const axios = require('axios');
 const { weirdToNormalChars } = require('weird-to-normal-chars');
 module.exports = async (client, message) => {
-    if (message.mentions.user.size >= 20) {
+    if (message.mentions.users.size >= 20) {
         message.member.ban({ reason: 'Suspected raid. Pinging more than 20 users.' });
         message.channel.send(`${message.member.toString()} has been banned for pinging more than 20 users`);
     };
