@@ -2,6 +2,11 @@ const fetch = require('node-fetch');
 const axios = require('axios');
 const { weirdToNormalChars } = require('weird-to-normal-chars');
 module.exports = async (client, message) => {
+    if (message.mentions.user.size >= 20) {
+        message.member.ban({ reason: 'Suspected raid. Pinging more than 20 users.' });
+        message.channel.send(`${message.member.toString()} has been banned for pinging more than 20 users`);
+    };
+
     const swears = [
         'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928', 'https://tenor.com/view/potato-dancing-glitch-gif-14354119', 'http://tenor.com/view/potato-dancing-glitch-gif-14354119'
     ]
