@@ -3,7 +3,7 @@ exports.run = async(client, message, args) => {
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
-        .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
+        .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot \nTerraria", true)
         .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
         .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
@@ -73,7 +73,8 @@ exports.run = async(client, message, args) => {
         sharex: data.sharex,
         codeserver: data.codeserver,
         gitea: data.gitea,
-        haste: data.haste
+        haste: data.haste,
+        terraria: data.terraria
     };
 
 
