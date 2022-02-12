@@ -26,7 +26,7 @@ createListPrem.terraria = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": gamingFREE,
+        "locations": gamingPREM,
         "dedicated_ip": false,
         "port_range": []
     },
