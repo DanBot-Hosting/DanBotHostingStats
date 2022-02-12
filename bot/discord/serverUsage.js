@@ -35,12 +35,12 @@ let parse = async() => {
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
-            let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
+            let stats = nodeData.get(d.data);
 
             if(stats == null) {
                temp.push(`**${d.name}:** No Stats available at the moment.`)
             } else {
-               temp.push(`**${d.name}:** ${stats != null ? `**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}` : ''}`)
+               temp.push(`**${d.name}:** **CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}`)
             } 
         }
 
