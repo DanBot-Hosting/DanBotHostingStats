@@ -35,8 +35,6 @@ let parse = async() => {
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
-            let nodeData = nodeServers.get(d.data.toLowerCase());
-
             let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
 
             if(stats == null) {
