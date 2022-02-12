@@ -35,11 +35,15 @@ let parse = async() => {
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
+            let nodeData = nodeServers.get(d.data.toLowerCase());
 
             let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
 
-
-            temp.push(`**${d.name}:** ${stats != null ? `**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}` : ''}`)
+            if(stats == null) {
+               temp.push(`**{$d.name}:** No Stats available at the moment.`)
+            } else {
+               temp.push(`**${d.name}:** ${stats != null ? `**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}` : ''}`)
+            } 
         }
 
         toRetun[title] = temp;
@@ -69,8 +73,9 @@ let getEmbed = async () => {
         + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
 
     let embed = new Discord.MessageEmbed()
-        .setTitle('Danbot Hosting Status').setFooter(dateString)
-        .setDescription(desc);
+        .setTitle('Danbot Hosting Status')
+        .setDescription(desc)
+        .setFooter(dateString);
     return embed;
 }
 
