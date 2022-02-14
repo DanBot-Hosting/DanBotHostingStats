@@ -2,6 +2,7 @@ exports.run = async(client, message, args) => {
 
     // Lets only staff use the command [useless - never uncomment - i will find you if you do]
     // if (!message.member.roles.cache.get('898041751099539497')) return;
+    if(!message.member.roles.cache.has('898041751099539497')) return message.reply('Looks like you\'re too dumb to use this command.')
 
     if (args[0] != null) {
 
