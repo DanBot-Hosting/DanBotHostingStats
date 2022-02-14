@@ -2,78 +2,83 @@ const axios = require('axios');
 var ping = require('ping');
 const ping2 = require('ping-tcp-js')
 
+let pingLocals = {
+    "UK": config.Ping.UK,
+    "CA": config.Ping.CA
+}
+
 let stats = {
     node1: {
         serverID: '7c740e8c',
         IP: '176.31.203.22',
         ID: '1',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node2: {
         serverID: 'ca89e5c6',
         IP: '176.31.203.21',
         ID: '2',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node3: {
         serverID: 'a35842f2',
         IP: '176.31.203.25',
         ID: '7',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node4: {
         serverID: '7372a1e9',
         IP: '176.31.203.23',
         ID: '11',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node5: {
         serverID: '9f41832d',
         IP: '176.31.203.24',
         ID: '12',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node6: {
         serverID: '8565f2e0',
         IP: '5.196.100.232',
         ID: '13',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node7: {
         serverID: '94082df3',
         IP: '51.195.252.9',
         ID: '14',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node8: {
         serverID: '7be82ca6',
         IP: '176.31.203.20',
         ID: '17',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     node13: {
         serverID: 'b90c157a',
         IP: '5.196.100.238',
         ID: '23',
-        Location: "UK"
+        Location: pingLocals.UK
     },
     dono01: {
         serverID: '0bc9eab5',
         IP: '173.208.153.242',
         ID: '30',
-        Location: "CA"
+        Location: pingLocals.CA
     },
     dono02: {
         serverID: 'ca6dba5a',
         IP: '192.95.42.70',
         ID: '31',
-        Location: "CA"
+        Location: pingLocals.CA
     },
     dono03: {
         serverID: 'c23f92cb',
         IP: '192.95.42.73',
         ID: '33',
-        Location: "CA"
+        Location: pingLocals.CA
     }
 }
 if (enabled.nodestatsChecker === true) {
@@ -83,6 +88,19 @@ if (enabled.nodestatsChecker === true) {
         //Public nodes
         for (let [node, data] of Object.entries(stats)) {
             setTimeout(() => {
+                axios({
+                    url: "http://" + data.Location + `?ip=${data.IP}&port=22`,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(response => {
+                    nodePing.set(node, {
+                        ip: response.data.address,
+                        ping: response.data.ping
+                    })
+                })
+
                 axios({
                     url: config.Pterodactyl.hosturl + "/api/client/servers/" + data.serverID + "/resources",
                     method: 'GET',
@@ -143,13 +161,6 @@ if (enabled.nodestatsChecker === true) {
                     })
                 }).catch(err => {})
             }, 800)
-
-        tcpp.ping({ address: data.IP, port: 22}, function(err, data) {
-            nodePing.set(node, {
-                ip: data.address,
-                ping: data.avg
-            })
-        });
         }
 
         //Server limit

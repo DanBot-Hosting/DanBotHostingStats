@@ -1,30 +1,38 @@
 let nstatus = {
     "Nodes": [{
         name: 'Node 1 ',
-        data: 'Node1'
+        data: 'Node1',
+        location: 'UK'
     }, {
         name: 'Node 2 ',
-        data: 'Node2'
+        data: 'Node2',
+        location: 'UK'
     },{
         name: 'Node 3 ',
-        data: 'Node3'
+        data: 'Node3',
+        location: 'UK'
     }, {
         name: 'Node 4 ',
-        data: 'Node4'
+        data: 'Node4',
+        location: 'UK'
     },  {
         name: 'Node 5 ',
-        data: 'Node5'
+        data: 'Node5',
+        location: 'UK'
     }, {
         name: 'Node 8 ',
-        data: 'Node8'
+        data: 'Node8',
+        location: 'UK'
     }, {
         name: 'Node 13 ',
-        data: 'Node13'
+        data: 'Node13',
+        location: 'UK'
     }],
 
     "Donator Nodes": [{
         name: 'Dono-01',
-        data: 'dono01'
+        data: 'dono01',
+        location: 'UK'
     }, {
         name: 'Dono-02',
         data: 'dono02'
