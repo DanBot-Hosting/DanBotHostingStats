@@ -36,12 +36,7 @@ let parse = async() => {
         let temp = [];
         for (let d of data) {
             let stats = nodeData.get(d.data);
-
-            if(stats == null) {
-               temp.push(`**${d.name}:** No Stats available at the moment.`)
-            } else {
-               temp.push(`**${d.name}:** **CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}`)
-            } 
+            temp.push(`**${d.name}:** ${stats != null ? `**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}` : 'No Stats available at the moment.'}`)
         }
 
         toRetun[title] = temp;
