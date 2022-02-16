@@ -79,7 +79,7 @@ let parse = async() => {
             let da = nodeStatus.get(d.data.toLowerCase());
             let nodeData = nodeServers.get(d.data.toLowerCase());
             let ping = nodePing.fetch(d.data.toLowerCase())
-            let serverUsage = d.data.toLowerCase().includes('node') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 1200) [\`${Math.round(ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('dono') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 800) [\`${Math.round(ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('node-8') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 600) [\`${Math.round(ping.ping)}ms\`]` : ''
+            let serverUsage = d.data.toLowerCase().includes('node') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 1200) [\`${Math.round(Number.isNaN(ping.ping) ? 0 :ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('dono') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 800) [\`${Math.round(ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('node-8') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 600) [\`${Math.round(ping.ping)}ms\`]` : ''
 
             da = (da.maintenance === true ? (`🟣 Maintenance Mode!`) : da.status === true ? (`🟢 Online ${serverUsage}`) : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **System**") + ` offline ${serverUsage}`))))
 
