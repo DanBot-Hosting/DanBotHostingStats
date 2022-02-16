@@ -24,7 +24,7 @@ let nstatus = {
         data: 'Node8',
         location: 'UK'
     }, {
-        name: 'Node 13 ',
+        name: 'Node 13 (**Backups Only**) ',
         data: 'Node13',
         location: 'UK'
     }],
