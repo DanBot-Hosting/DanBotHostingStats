@@ -7,7 +7,7 @@ let nstatus = {
         name: 'Node 2 ',
         data: 'Node2',
         location: 'UK'
-    },{
+    }, {
         name: 'Node 3 ',
         data: 'Node3',
         location: 'UK'
@@ -15,7 +15,7 @@ let nstatus = {
         name: 'Node 4 ',
         data: 'Node4',
         location: 'UK'
-    },  {
+    }, {
         name: 'Node 5 ',
         data: 'Node5',
         location: 'UK'
@@ -69,7 +69,7 @@ let nstatus = {
     }]
 }
 
-let parse = async() => {
+let parse = async () => {
     let toRetun = {};
 
     for (let [title, data] of Object.entries(nstatus)) {
@@ -79,7 +79,7 @@ let parse = async() => {
             let da = nodeStatus.get(d.data.toLowerCase());
             let nodeData = nodeServers.get(d.data.toLowerCase());
             let ping = nodePing.fetch(d.data.toLowerCase())
-            let serverUsage = d.data.toLowerCase().includes('node') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 1200) [\`${Math.round(ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('dono') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 800) [\`${Math.round(ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('node-8') ? `(${(nodeData == null || nodeData.servers == null) ? 'N/A' : nodeData.servers} / 600) [\`${Math.round(ping.ping)}ms\`]` : ''
+            let serverUsage = d.data.toLowerCase().includes('node') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 1200) [\`${Math.round(Number.isNaN(ping.ping) ? ping.ping : 0)}ms\`]` : '' || d.data.toLowerCase().includes('dono') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 800) [\`${Math.round(Number.isNaN(ping.ping) ? 0 : ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('node-8') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 600) [\`${Math.round(Number.isNaN(ping.ping) ? ping.ping : 0)}ms\`]` : ''
 
             da = (da.maintenance === true ? (`🟣 Maintenance Mode!`) : da.status === true ? (`🟢 Online ${serverUsage}`) : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **System**") + ` offline ${serverUsage}`))))
 
@@ -91,7 +91,7 @@ let parse = async() => {
     return toRetun;
 }
 
-let getEmbed = async() => {
+let getEmbed = async () => {
 
     let status = await parse();
     let desc = ''
