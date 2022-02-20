@@ -5,10 +5,18 @@ module.exports = async (client, message) => {
     if (message.mentions.users.size >= 20) {
         message.member.ban({ reason: 'Suspected raid. Pinging more than 20 users.' });
         message.channel.send(`${message.member.toString()} has been banned for pinging more than 20 users`);
+        
+        const embed = new Discord.MessageEmbed()
+            .setTitle("User banned for pinging more than 20 users")
+            .addField("User", "Banned " + message.member.toString(), true)
+            .setColor(0xFF7700)
+            .setTimestamp(new Date());
+        
+        client.channels.cache.get(config.DiscordBot.oLogs).send(embed)
     };
 
     const swears = [
-        'nigga', 'nigger', 'darkisthebestpersoneverireallylovehim', 'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928', 'https://tenor.com/view/potato-dancing-glitch-gif-14354119', 'http://tenor.com/view/potato-dancing-glitch-gif-14354119'
+        'nigga', 'nigger', 'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928', 'https://tenor.com/view/potato-dancing-glitch-gif-14354119', 'http://tenor.com/view/potato-dancing-glitch-gif-14354119'
     ]
     if (swears.some(x => message.content.toLowerCase().includes(weirdToNormalChars(x)))) {
         /*if (message.author.bot) {
