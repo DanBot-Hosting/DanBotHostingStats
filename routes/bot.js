@@ -3,7 +3,7 @@ const Router = require("express").Router();
 const db = require("quick.db");
 const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
 
-Router.get("/:ID/", (req, res) => {
+Router.get("/:ID/", checkAuth, (req, res) => {
     /*
     let ID = req.params.ID;
     if (!ID) return res.status(400).send({ error: true, message: "Please give a bot ID" });
@@ -20,6 +20,7 @@ Router.get("/:ID/", (req, res) => {
 
     return res.render("error.ejs", {
         message: "page temporarily deleted."
+        user: req.isAuthenticated() ? req.user : null,
     });
 
 
