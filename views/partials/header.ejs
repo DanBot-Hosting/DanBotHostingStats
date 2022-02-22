@@ -449,7 +449,7 @@
                             <button style="outline: none;" onclick=goto("/cams") class="dropbtn">Server Cams</button>
                         </div>
                     </li>
-                    <% let user = null %>
+                    <% let user %>
                     <% if(user) { %>
 
                         <div class="dropdown">
@@ -481,7 +481,7 @@
             </div>
 
             <ul class="navbar-nav">
-                <% let user = null %>
+                <% let user %>
                 <% if(user) { %>
                     <% let Developers = ["137624084572798976"]; %>
                     <% if(Developers.includes(user.id)) { %>
