@@ -3,15 +3,16 @@ exports.run = async(client, message, args) => {
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
-//        .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
-//        .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+        .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
+        .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
-//        .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
-        .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
-//        .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
+        .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
+        .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
+        .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
+        .addField("__**Software:**__", "codeserver \ngitea \nhaste", true)
 //         .addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
@@ -28,7 +29,12 @@ exports.run = async(client, message, args) => {
     let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
 
     if (!args[1]) {
-        await message.channel.send(helpEmbed)
+        await message.channel.send(helpEmbed);
+        return;
+    };
+
+    if(args[1] == "list") {
+        await message.channel.send(helpEmbed);
         return;
     }
 
@@ -64,9 +70,11 @@ exports.run = async(client, message, args) => {
         barotrauma: data.barotrauma,
         waterfall: data.waterfall,
         spigot: data.spigot,
-        lavalink: data.lavalink,
-        sharex: data.sharex
-    }
+        sharex: data.sharex,
+        codeserver: data.codeserver,
+        gitea: data.gitea,
+        haste: data.haste
+    };
 
 
         if (args[1] === "aio" | args[1] === "java") {
@@ -84,12 +92,12 @@ exports.run = async(client, message, args) => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)`)
+                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)`)
                     message.reply(embed)
                 } else if (error == "Error: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#898327108898684938>`)
+                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
                     message.reply(embed)
                     // console.log(error)
                 } else if (error == "Error: Request failed with status code 429") {
@@ -138,9 +146,6 @@ exports.run = async(client, message, args) => {
                 }
             })
         }
-        return message.channel.send(helpEmbed)
-
-
 
     //message.reply('Server creation s currently disabled. We are upgrading our servers and making lots of new changes to bring new features! Stay tuned by checking News!')
 }
