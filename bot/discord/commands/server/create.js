@@ -1,5 +1,14 @@
 const serverCreateSettings = require('../../../../createData');
 exports.run = async(client, message, args) => {
+    
+    const AllowedChannels = [
+    898041850890440725, //Normal Commands.
+    898041851729305621, //Spam.
+    898041866589700128, //Donator/Booster Commands.
+    898041878447013948, //Beta Commands.
+    ];   
+
+    if(!AllowedChannels.some(c => c == message.channel.id)) return;  
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
