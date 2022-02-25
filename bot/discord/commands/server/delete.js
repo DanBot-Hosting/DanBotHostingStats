@@ -2,7 +2,14 @@ const axios = require('axios');
 
 exports.run = async(client, message, args) => {
 
+        const AllowedChannels = [
+    898041850890440725, //Normal Commands.
+    898041851729305621, //Spam.
+    898041866589700128, //Donator/Booster Commands.
+    898041878447013948, //Beta Commands.
+    ];   
 
+    if(!AllowedChannels.some(c => c == message.channel.id)) return;  
     // uncomment this line if shit goes wrong.
     // if (!message.channel.name.includes('ticket')) return message.channel.send('this is currently disabled')
 
