@@ -20,6 +20,15 @@ async function getNewKey() {
 };
 
 exports.run = async (client, message, args) => {
+        const AllowedChannels = [
+    898041850890440725, //Normal Commands.
+    898041851729305621, //Spam.
+    898041866589700128, //Donator/Booster Commands.
+    898041878447013948, //Beta Commands.
+    ];   
+
+    if(!AllowedChannels.some(c => c == message.channel.id)) return;  
+
     const embed = new Discord.MessageEmbed()
         .setTitle('__**How to link a domain to your website/server**__')
         .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`\nMake sure to replace <domain> with your domain and <serverid> with the ID of your server. You can find your server id by running `' + config.DiscordBot.Prefix + 'server list`\nYou can link your own domain by creating a DNS A Record pointing to \`164.132.74.251\`! If you are using Cloudflare make sure the you are using DNS Only mode!\nOr you can use the free Danbot Host domains:\n `*.never-gonna-give-you-up.xyz\n*.never-gonna-let-you-down.xyz\n*.never-gonna-make-you-cry.xyz\n*.never-gonna-run-around-and-desert-you.xyz\n*.never-gonna-say-goodbye.xyz\n*.never-gonna-tell-a-lie-and-hurt-you.xyz\n*.rick-roll.xyz`\nFor donators there is also the domain `*.only-fans.club`.')
