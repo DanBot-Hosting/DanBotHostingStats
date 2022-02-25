@@ -1,6 +1,14 @@
 const axios = require('axios');
 const pretty = require('prettysize');
 exports.run = async(client, message, args) => {
+    const AllowedChannels = [
+    898041850890440725, //Normal Commands.
+    898041851729305621, //Spam.
+    898041866589700128, //Donator/Booster Commands.
+    898041878447013948, //Beta Commands.
+    ];   
+
+    if(!AllowedChannels.some(c => c == message.channel.id)) return;  
 
     return message.channel.send('This command is currently disabled.')
 
