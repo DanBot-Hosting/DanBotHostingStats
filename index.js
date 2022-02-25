@@ -14,6 +14,9 @@ const express = require('express');
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 
+//New functions to clean some code up - Not completed
+require('./functions')
+
 //Main danbot.host app
 const app = express();
 const server = require('http').createServer(app);
@@ -33,7 +36,7 @@ const bodyParser = require('body-parser');
 global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
-const axios = require('axios');
+global.axios = require('axios');
 global.pretty = require('prettysize');
 global.transport = nodemailer.createTransport({
     host: config.Email.Host,
@@ -56,6 +59,7 @@ require('./nodestatsChecker');
 global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
+global.tcpp = require('tcp-ping');
 
 global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
@@ -69,6 +73,11 @@ global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline
 global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
+global.sudo = new db.table("sudoCommands"); //Keep track of staff sudo
+global.lastBotClaim = new db.table("lastBotClaim"); //Keep track of staff sudo
+global.nodePing = new db.table("nodePing"); //Node ping response time
+// Array.from(sudo.all()).forEach(sudo.delete); //On boot remove all sudos
+
 global.client = new Discord.Client({
     restTimeOffset: 0,
     disableMentions: 'everyone',
@@ -88,6 +97,36 @@ fs.readdir('./bot/discord/events/', (err, files) => {
         delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
     });
 });
+global.createList = {}
+global.createListPrem = {};
+
+//Import all create server lists
+fs.readdir('./create-free/', (err, files) => {
+    console.log(files)
+    files = files.filter(f => f.endsWith('.js'));
+    files.forEach(f => {
+        require(`./create-free/${f}`);
+    });
+});
+
+fs.readdir('./create-premium/', (err, files) => {
+    console.log(files)
+    files = files.filter(f => f.endsWith('.js'));
+    files.forEach(f => {
+        require(`./create-premium/${f}`);
+    });
+});
+
+//Global password gen
+const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+global.getPassword = () => {
+
+    var password = "";
+    while (password.length < 16) {
+        password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
+    }
+    return password;
+};
 
 //Bot login
 client.login(config.DiscordBot.Token);
@@ -115,7 +154,7 @@ animalapp.set('view engine', 'hbs');
 animalapp.use((req, res, next) => {
 
     res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+    res.set("Access-Control-Allow-Methods", "GET");
 
     res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
@@ -133,12 +172,12 @@ animalapp.use((req, res, next) => {
 });
 
 // home page & beta site api
-const home = require("./routes/main.js");
-animalapp.use("/", home);
+//const home = require("./routes/main.js");
+//animalapp.use("/", home);
 
 //Total images
 const totalRoute = require("./animalAPI/total.js");
-animalapp.use("/total", totalRoute);
+animalapp.use("/", totalRoute);
 
 //Dog API
 const dogRoute = require("./animalAPI/dog.js");
@@ -204,71 +243,38 @@ server.listen(PORT, function() {
 });
 
 //Fetch node data
+const { nodes } = require("./bot/discord/serverUsage.js");
+
 global.nodeData = new db.table("nodeData")
-setInterval(() => {
-    for (i = 1; i < 19; i++) {
-        axios({
-            url: "http://n" + i + ".danbot.host:999/stats",
+    setInterval(async() => {
+        let res = await axios({
+            url: "https://status.danbot.host/json/stats.json",
             method: 'GET',
             followRedirect: true,
             maxRedirects: 5,
-            headers: {
-                "password": config.externalPassword
-            },
-        }).then(response => {
-            nodeData.set(response.data.info.servername, {
-                servername: response.data.info.servername,
-                cpu: response.data.info.cpu,
-                cpuload: response.data.info.cpuload,
-                cputhreads: response.data.info.cputhreads,
-                cpucores: response.data.info.cpucores,
-                memused: response.data.info.memused,
-                memtotal: response.data.info.memtotal,
-                memusedraw: response.data.info.memusedraw,
-                memtotalraw: response.data.info.memtotalraw,
-                swapused: response.data.info.swapused,
-                swaptotal: response.data.info.swaptotal,
-                swapusedraw: response.data.info.swapusedraw,
-                swaptotalraw: response.data.info.swaptotalraw,
-                diskused: response.data.info.diskused,
-                disktotal: response.data.info.disktotal,
-                diskusedraw: response.data.info.diskusedraw,
-                disktotalraw: response.data.info.disktotalraw,
-                netrx: response.data.info.netrx,
-                nettx: response.data.info.nettx,
-                osplatform: response.data.info.osplatform,
-                oslogofile: response.data.info.oslogofile,
-                osrelease: response.data.info.osrelease,
-                osuptime: response.data.info.osuptime,
-                biosvendor: response.data.info.biosvendor,
-                biosversion: response.data.info.biosversion,
-                biosdate: response.data.info.biosdate,
-                servermonitorversion: response.data.info.servermonitorversion,
-                datatime: response.data.info.datatime,
-                dockercontainers: response.data.info.dockercontainers,
-                dockercontainersrunning: response.data.info.dockercontainersrunning,
-                dockercontainerspaused: response.data.info.dockercontainerspaused,
-                dockercontainersstopped: response.data.info.dockercontainersstopped,
-                updatetime: response.data.info.updatetime,
-                timestamp: Date.now()
-            });
-            nodeData.set(response.data.speedtest.speedname + '-speedtest', {
-                speedname: response.data.speedtest.speedname,
-                ping: response.data.speedtest.ping,
-                download: response.data.speedtest.download,
-                upload: response.data.speedtest.upload,
-                updatetime: response.data.speedtest.updatetime,
-                timestamp: Date.now()
-            });
-            nodeData.set(response.data.info.servername + '-docker', {
-                dockerAll: response.data.docker,
-                timestamp: Date.now()
-            })
-        }).catch(err => {
-
         })
-    }
-}, 2000);
+        nodes.Nodes.forEach(node => {
+            res.data.servers.forEach(server => {
+                if(server.name === nodes.name) {
+                    if(server.online4 === false) return;
+                    nodeData.set(response.data.info.servername, {
+                        servername: server.name,
+                        cpu: server.cpu,
+                        cpuload: server.load,
+                        memused: server.memory_used,
+                        memtotal: server.memory_total,
+                        swapused: server.swap_used,
+                        swaptotal: server.swap_total,
+                        diskused: server.hdd_used,
+                        disktotal: server.hdd_total,
+                        netrx: server.network_rx,
+                        nettx: server.network_tx,
+                        timestamp: res.updated
+                    })
+                }
+            })
+        })
+    }, 2000);
 
 //View engine setup
 hbs.registerPartials(__dirname + '/views/partials')

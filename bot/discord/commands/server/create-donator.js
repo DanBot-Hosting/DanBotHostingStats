@@ -7,17 +7,6 @@ exports.run = async(client, message, args) => {
         used: 0
     };
 
-    let boosted = await axios({
-        url: "http://admin.danbot.host:1029",
-        timeout: 3000,
-        method: 'GET',
-        headers: {
-            "password": config.externalPassword
-        },
-    }).catch(e => {
-        console.log(e);
-    })
-
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
     let consoleID = userData.get(message.author.id);
 
@@ -29,12 +18,12 @@ exports.run = async(client, message, args) => {
         return;
     }
 
-    let allowed = Math.floor(userP.donated / config.node7.price) + ((boosted != null && boosted.data[message.author.id] != null) ? Math.floor(boosted.data[message.author.id] * 2.5) : ((message.member.roles.cache.get('710208090741539006') != null) ? 2 : 0));
+    let allowed = Math.floor(userP.donated / config.node7.price);
 
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 
     if (allowed === 0) {
-        message.channel.send("You're not a premium user, to get access to premium you can either boost us for 2 **Premium Servers**, or buy a server (1server/$1)")
+        message.channel.send("You're not a premium user, to get access to premium you can buy a server (1server/$1)")
         return;
     }
 
@@ -51,12 +40,12 @@ exports.run = async(client, message, args) => {
             .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
             .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
             .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
-            .addField("__**Voice Servers:**__", "TS3 \nMumble \nLavalink", true)
+            .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
             .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
             .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
             .addField("__**WebHosting:**__", "Nginx", true)
-            .addField("__**Custom Egg:**__", "ShareX", true)
-//             .addField("__**Storage:**__", "storage", true)
+            .addField("__**Custom Eggs:**__", "ShareX", true)
+            .addField("__**Software:**__", "codeserver \ngitea \nhaste", true)
             .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
         return;
     }
@@ -93,8 +82,10 @@ exports.run = async(client, message, args) => {
         barotrauma: pServerCreatesettings.barotrauma,
         waterfall: pServerCreatesettings.waterfall,
         spigot: pServerCreatesettings.spigot,
-        lavalink: pServerCreatesettings.lavalink,
-        sharex: pServerCreatesettings.sharex
+        sharex: pServerCreatesettings.sharex,
+        codeserver: pServerCreatesettings.codeserver,
+        gitea: pServerCreatesettings.gitea,
+        haste: pServerCreatesettings.haste
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {

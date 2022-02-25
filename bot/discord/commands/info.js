@@ -16,8 +16,8 @@ exports.run = async(client, message, args) => {
         .setColor("BLUE")
         .setTitle(`DanBot Hosting`)
         .setDescription("The bot id you provided is not in my database! Confused? Read below.")
-        .addField("Sent data to the website, and it still show this?", "Please ping Dan (if he active) or one of the mods to help you", true)
-        .addField("What database?", "If you looking to add your bot here, you must post your stats to the npm. How to post it? [Click me](https://canary.discord.com/channels/639477525927690240/738548111323955270/738551079343620166)", true)
+        .addField("Sent data to the website, and it still shows this?", "Please ping Dan (if he is active) or one of the mods to help you", true)
+        .addField("What database?", "If you looking to add your bot here, you must post your stats to the npm. How do I post it? [Click me](https://discord.com/channels/639477525927690240/898041853096628267/901319867574124575)", true)
 
     if (!bot) return message.channel.send(sendinfo);
     if (bot.deleted) return message.channel.send("Error: This bot has been deleted.");
@@ -33,7 +33,7 @@ exports.run = async(client, message, args) => {
         **Users:** ${bot.users.toLocaleString()}
         `)
         .addField("Owner", `<@${bot.owner}> \`(${bot.owner})\``)
-        .addField("Invite", "[Click Me!](<https://discord.com/oauth2/authorize?client_id=" + bot.id + "&permissions=0&scope=bot>)")
+        .addField("Invite", "[Click Me!](<https://discord.com/oauth2/authorize?client_id=" + bot.id + "&permissions=0&scope=bot%20applications.commands>)")
 
     if (bot) return message.channel.send(infoEmbed)
 

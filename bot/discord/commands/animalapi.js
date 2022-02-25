@@ -1,8 +1,8 @@
 const superagent = require("snekfetch");
 exports.run = async(client, message, args) => {
     if (!args[0]) {
-        superagent.get('https://api.danbot.host/total')
-            .end((err, response) => {
+        axios.get('https://api.danbot.host/')
+            .then((err, response) => {
                 const embed = new Discord.MessageEmbed()
                     .addField('Dog API:', response.body.dogtotal + " images. \nhttps://api.danbot.host/dog", true)
                     .addField('Cat API:', response.body.cattotal + " images. \nhttps://api.danbot.host/cat", true)
@@ -10,10 +10,11 @@ exports.run = async(client, message, args) => {
                 message.channel.send(embed)
             })
     } else if (args[0] === "dog") {
-        superagent.get('https://api.danbot.host/dog')
-            .end((response) => {
+        axios.get('https://api.danbot.host/dog')
+            .then((response) => {
+                console.log(response)
                 message.channel.send("Random dog image from the DanBot Hosting api!", {
-                    file: `${response.body.image}`
+                    file: response.data.image
                 });
             });
     }

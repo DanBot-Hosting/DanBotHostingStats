@@ -31,26 +31,31 @@ Router.get("/Node4", (req, res) => {
     res.redirect("/stats/Node4");
 });
 
+Router.get("/domain", (req, res) => {
+
+    let domain = req.query.d || '[NO DOMAIN]';
+
+    res.render('proxy.ejs', {
+        domain,
+        user: req.isAuthenticated() ? req.user : null
+    });
+
+});
+
+
 //Node status json format
 Router.get("/nodeStatus", (req, res) => {
     let data = {
         nodestatus: {
             Node1: nodeStatus.fetch("node1"),
+            Node2: nodeStatus.fetch("node2"),
+            Node3: nodeStatus.fetch("node3"),
             Node4: nodeStatus.fetch("node4"),
             Node5: nodeStatus.fetch("node5"),
             Node6: nodeStatus.fetch("node6"),
             Node7: nodeStatus.fetch("node7"),
             Node8: nodeStatus.fetch("node8"),
-            Node9: nodeStatus.fetch("node9"),
-            Node10: nodeStatus.fetch("node10"),
-            Node11: nodeStatus.fetch("node11"),
-            Node12: nodeStatus.fetch("node12"),
-            Node13: nodeStatus.fetch("node13"),
-            Node14: nodeStatus.fetch("node14"),
-            Node15: nodeStatus.fetch("node15"),
-            Node16: nodeStatus.fetch("node16"),
-            Node17: nodeStatus.fetch("node17"),
-            Node18: nodeStatus.fetch("node18")
+            Node13: nodeStatus.fetch("node13")
         },
         misc: {
             Lava2: nodeStatus.fetch("lava2.danbot.host").status,

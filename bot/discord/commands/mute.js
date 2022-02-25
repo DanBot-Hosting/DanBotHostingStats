@@ -41,9 +41,7 @@ exports.init = (client) => {
                             modlog.send("", {
                                 embed: new Discord.MessageEmbed().setTitle("Action: Unmute")
                                     .addField("User", member.user.tag + " (ID: " + member.id + ")")
-                                    .addField("After", ms(x.data.expiresAt - x.data.mutedAt, {
-                                        long: true
-                                    }), true)
+
                                     .setFooter("Time:").setTimestamp()
                             })
                     }

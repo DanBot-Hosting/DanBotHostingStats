@@ -1,11 +1,10 @@
 const exec = require('child_process').exec;
-const axios = require('axios');
 const nstatus = require('../serverStatus');
 const nUsage = require('../serverUsage');
 const db = require("quick.db");
 const pretty = require('prettysize');
 
-module.exports = async(client) => {
+module.exports = async (client) => {
 
     function formatFileSize(bytes, decimalPoint) {
         if (bytes === 0) return "0 Bytes";
@@ -25,11 +24,11 @@ module.exports = async(client) => {
 
     let checkNicks = () => {
         guild.members.cache.filter(member => member.displayName.match(/^[a-z0-9]/i) == null).forEach(x => {
-            x.setNickname('HOISTER ALERT');
+            x.setNickname('I love Dan <3');
         })
 
-        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp'].some(r => member.displayName.includes(r))).forEach(x => {
-            x.setNickname('No, No name for you');
+        guild.members.cache.filter(member => ['hilter', 'jew', 'discord.gg', 'discordapp', 'zHOISTER ALERT'].some(r => member.displayName.includes(r))).forEach(x => {
+            x.setNickname('I love Dan <3');
         })
     }
 
@@ -101,7 +100,7 @@ module.exports = async(client) => {
     //Node status channel embed
     if (enabled.NodeStats === true) {
         let channel = client.channels.cache.get("898041845878247487");
-        setInterval(async() => {
+        setInterval(async () => {
             let embed = await nstatus.getEmbed();
 
             let messages = await channel.messages.fetch({
@@ -116,7 +115,7 @@ module.exports = async(client) => {
 
     if (enabled.NodeStats === true) {
         let channel = client.channels.cache.get("898041847363035157");
-        setInterval(async() => {
+        setInterval(async () => {
             let embed = await nUsage.getEmbed();
 
             let messages = await channel.messages.fetch({
@@ -129,8 +128,8 @@ module.exports = async(client) => {
         }, 15000)
     }
 
-    //Voice channel stats updator
-    setInterval(async() => {
+    //Voice channel stats updater
+    setInterval(async () => {
         let DBHGuild = client.guilds.cache.get("639477525927690240");
         let roleID1 = '898041751099539497';
         let staffCount = DBHGuild.roles.cache.get(roleID1).members.size;
@@ -157,128 +156,6 @@ module.exports = async(client) => {
             name: `Total Members: ${DBHGuild.memberCount}`,
             reason: "TMembers count update"
         });
-
-        /*
-        Node Stats Channels
-        */
-
-        const cpucores =
-            parseFloat(nodeData.fetch("Node1.cputhreads")) +
-            parseFloat(nodeData.fetch("Node2.cputhreads")) +
-            parseFloat(nodeData.fetch("Node3.cputhreads")) +
-            parseFloat(nodeData.fetch("Node4.cputhreads")) +
-            parseFloat(nodeData.fetch("Node5.cputhreads")) +
-            parseFloat(nodeData.fetch("Node6.cputhreads")) +
-            parseFloat(nodeData.fetch("Node7.cputhreads")) +
-            parseFloat(nodeData.fetch("Node8.cputhreads")) +
-            parseFloat(nodeData.fetch("Node9.cputhreads")) +
-            parseFloat(nodeData.fetch("Node10.cputhreads")) +
-            parseFloat(nodeData.fetch("Node11.cputhreads")) +
-            parseFloat(nodeData.fetch("Node12.cputhreads")) +
-            parseFloat(nodeData.fetch("Node13.cputhreads")) +
-            parseFloat(nodeData.fetch("Node14.cputhreads")) +
-            parseFloat(nodeData.fetch("Node15.cputhreads")) +
-            parseFloat(nodeData.fetch("Node16.cputhreads")) +
-            parseFloat(nodeData.fetch("Storage1.cputhreads"));
-        const getMemory =
-            formatFileSize(
-                parseFloat(nodeData.fetch("Node1.memusedraw")) +
-                parseFloat(nodeData.fetch("Node2.memusedraw")) +
-                parseFloat(nodeData.fetch("Node3.memusedraw")) +
-                parseFloat(nodeData.fetch("Node4.memusedraw")) +
-                parseFloat(nodeData.fetch("Node5.memusedraw")) +
-                parseFloat(nodeData.fetch("Node6.memusedraw")) +
-                parseFloat(nodeData.fetch("Node7.memusedraw")) +
-                parseFloat(nodeData.fetch("Node8.memusedraw")) +
-                parseFloat(nodeData.fetch("Node9.memusedraw")) +
-                parseFloat(nodeData.fetch("Node10.memusedraw")) +
-                parseFloat(nodeData.fetch("Node11.memusedraw")) +
-                parseFloat(nodeData.fetch("Node12.memusedraw")) +
-                parseFloat(nodeData.fetch("Node13.memusedraw")) +
-                parseFloat(nodeData.fetch("Node14.memusedraw")) +
-                parseFloat(nodeData.fetch("Node15.memusedraw")) +
-                parseFloat(nodeData.fetch("Storage1.memusedraw"))
-            ) +
-            " / " +
-            formatFileSize(
-                Math.floor(
-                    parseFloat(nodeData.fetch("Node1.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node2.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node3.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node4.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node5.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node6.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node7.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node8.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node9.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node10.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node11.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node12.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node13.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node14.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Node15.memtotalraw")) +
-                    parseFloat(nodeData.fetch("Storage1.memtotalraw"))
-                ),
-                1
-            );
-
-        const getDisc1 = formatFileSize(
-            parseFloat(nodeData.fetch("Node1.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node2.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node3.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node4.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node5.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node6.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node7.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node8.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node9.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node10.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node11.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node12.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node13.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node14.diskusedraw")) +
-            parseFloat(nodeData.fetch("Node15.diskusedraw")) +
-            parseFloat(nodeData.fetch("Storage1.diskusedraw")),
-            2
-        );
-        const getDisc2 = formatFileSize(
-            parseFloat(nodeData.fetch("Node1.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node2.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node3.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node4.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node5.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node7.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node8.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node9.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node10.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node11.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node12.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node13.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node14.disktotalraw")) +
-            parseFloat(nodeData.fetch("Node15.disktotalraw")) +
-            parseFloat(nodeData.fetch("Storage1.disktotalraw")),
-            2
-        );
-
-        //CPU
-        client.channels.cache.get("898041823392587846").edit({
-            name: `CPU: ${cpucores} cores`,
-            reason: "CPU Cores update"
-        });
-
-        //RAM
-        client.channels.cache.get("898041824730574848").edit({
-            name: `RAM: ${getMemory}`,
-            reason: "Total Ram Update"
-        });
-
-        //SSD
-        client.channels.cache.get("898041825816879114").edit({
-            name: `SSD: ${getDisc1} / ${getDisc2}`,
-            reason: "Total Disk Update"
-        });
-
-        //END
 
         const ticketcount = DBHGuild.channels.cache.filter(x => x.name.endsWith("-ticket")).size
         client.channels.cache.get("898041832569700362").edit({

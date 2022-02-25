@@ -1,12 +1,13 @@
 let parse = () => {
     let toReturn = [];
-
-    let channels = Object.keys(config.DiscordBot.reactionRoles);
+    let reactionRoles = require('../reactionRoles.js');
+    
+    let channels = Object.keys(reactionRoles);
 
     for (let channel of channels) {
-        let messages = Object.keys(config.DiscordBot.reactionRoles[channel])
+        let messages = Object.keys(reactionRoles[channel])
         messages.forEach(message => {
-            for (let [reaction, role] of Object.entries(config.DiscordBot.reactionRoles[channel][message])) {
+            for (let [reaction, role] of Object.entries(reactionRoles[channel][message])) {
 
                 toReturn.push({
                     message: message,
@@ -33,7 +34,7 @@ module.exports = async(client, r, member) => {
         found = found[0];
         let role = member.guild.roles.cache.get(found.role);
         if (member.roles.cache.get(found.role) == null) {
-            await member.roles.add([role, '765869330024890378']);
+            await member.roles.add(role.id);
             member.user.send("Gave you the role: `" + role.name + "`!");
         }
     }

@@ -3,8 +3,9 @@ const Discord = require('discord.js')
 exports.run = async(client, message, args) => {
     let category = message.guild.channels.cache.find(c => c.id === "898041813309476874" && c.type === "category");
     let categorybackup = message.guild.channels.cache.find(c => c.id === "898041814118957057" && c.type === "category");
-    let categorybackup2 = message.guild.channels.cache.find(c => c.id === "898041815192719430" && c.type === "category");
-    if (!category || !categorybackup || !categorybackup2) return;
+    let categorybackup2 = message.guild.channels.cache.find(c => c.id === "898041815192719430" && c.type === "category"); 
+    let categorybackup3 = message.guild.channels.cache.find(c => c.id === "924757852504096768" && c.type === "category");
+    if (!category || !categorybackup || !categorybackup2 || !categorybackup3) return;
 
     if (message.guild.channels.cache.find(ch => ch.name.includes(message.author.tag.toString().toLowerCase().replace(' ', '-'))))
         return message.channel.send(`💡 | You already have an opened ticket.`)
@@ -17,7 +18,11 @@ exports.run = async(client, message, args) => {
 
 
 
-    await channel.setParent(category.id).catch(channel.setParent(categorybackup.id).catch(channel.setParent(categorybackup2.id).catch(console.error)));
+    await channel.setParent(category.id)
+        .catch(channel.setParent(categorybackup.id)
+               .catch(channel.setParent(categorybackup2.id)
+                      .catch(channel.setParent(categorybackup3.id)
+                             .catch(console.error))));
 
     setTimeout(() => {
 

@@ -1,58 +1,39 @@
 let nstatus = {
-    "Public": [{
-        name: 'Node-1',
-        data: 'Node1'
+    "Nodes": [{
+        name: 'Node 1',
+        data: 'node1'
     }, {
-        name: 'Node-2',
-        data: 'Node2'
+        name: 'Node 2',
+        data: 'node2'
     }, {
-        name: 'Node-3',
-        data: 'Node3'
+        name: 'Node 3',
+        data: 'node3'
     }, {
-        name: 'Node-4',
-        data: 'Node4'
+        name: 'Node 4',
+        data: 'node4'
     }, {
-        name: 'Node-5',
-        data: 'Node5'
-    }, {
-        name: 'Node-6',
-        data: 'Node6'
-    }, {
-        name: 'Node-8',
-        data: 'Node8'
-    }, {
-        name: 'Node-9',
-        data: 'Node9'
-    }, {
-        name: 'Node-10',
-        data: 'Node10'
-    }, {
-        name: 'Node-11',
-        data: 'Node11'
-    }, {
-        name: 'Node-12',
-        data: 'Node12'
-    }, {
-        name: 'Node-13',
-        data: 'Node13'
-    }, {
-        name: 'Node-14',
-        data: 'Node14'
-    }],
-
-    "Donator Nodes": [{
-        name: 'Node-7',
-        data: 'node7'
-    }],
-
-    "Storage Nodes": [{
-        name: 'Storage-1',
-        data: 'storage1'
-    }],
-
-    "Dan's Panel": [{
-        name: 'Node-1',
-        data: 'dan-node1'
+        name: 'Node 5',
+        data: 'node5'
+    },
+    {
+        name: 'Node 8', 
+        data: 'node8' 
+    },
+    {
+        name: 'Node 13',
+        data: 'node13'
+    }, 
+    {
+        name: 'Dono-01',
+        data: 'dono01'
+    },
+    {
+        name: 'Dono-02',
+        data: 'dono02'
+    },
+    {
+        name: 'Dono-03',
+        data: 'dono03'
     }]
 }
 
@@ -62,11 +43,8 @@ let parse = async() => {
     for (let [title, data] of Object.entries(nstatus)) {
         let temp = [];
         for (let d of data) {
-
-            let stats = ((title == "Public" && d.name.toLowerCase().includes('node') == true) ? nodeData.get(d.data) : null);
-
-
-            temp.push(`**${d.name}:** ${stats != null ? `**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}` : ''}`)
+            let stats = nodeData.get(d.data);
+            temp.push(`**${d.name}:** ${stats != null ? `**CPU**: ${stats.cpuload}, **RAM**: ${stats.memused} / ${stats.memtotal}, **SSD**: ${stats.diskused} / ${stats.disktotal}` : 'No Stats available at the moment.'}`)
         }
 
         toRetun[title] = temp;
@@ -96,12 +74,14 @@ let getEmbed = async () => {
         + date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
 
     let embed = new Discord.MessageEmbed()
-        .setTitle('Danbot Hosting Status').setFooter(dateString)
-        .setDescription(desc);
+        .setTitle('Danbot Hosting Status')
+        .setDescription(desc)
+        .setFooter(dateString);
     return embed;
 }
 
 module.exports = {
+    nodes: nstatus,
     parse: parse,
     getEmbed: getEmbed
 }

@@ -1,5 +1,5 @@
 exports.run = async(client, message, args) => {
-    if (!['137624084572798976'].includes(message.author.id)) return;
+    if (!['137624084572798976', '737603315722092544'].includes(message.author.id)) return;
 
     if (args.length < 4) return;
     let parser = new Intl.NumberFormat();
@@ -23,14 +23,14 @@ exports.run = async(client, message, args) => {
     if (args[1].toLowerCase() === 'add') {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount)
-        message.member.roles.add('788193704014905364');
+        message.guild.members.cache.get(userid).roles.add('788193704014905364').catch(() => null);
     }
 
 
     if (args[1].toLowerCase() === 'set') {
         setDonations(userid, amount);
         sendMessage(userid, amount)
-        message.member.roles.add('788193704014905364');
+        message.guild.members.cache.get(userid).roles.add('788193704014905364').catch(() => null);
     }
 
     if (args[1].toLowerCase() === 'remove') {
