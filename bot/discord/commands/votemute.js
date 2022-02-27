@@ -28,7 +28,7 @@ exports.run = async(client, message, args) => {
 
   scm.react('👍');
 
-  const collected = await .awaitReactions(filter, { time: 120000 }); // Starting votemute
+  const collected = await scm.awaitReactions(filter, { time: 120000 }); // Starting votemute
   const yes = collected.get(yes) || { count: 1 }; // Defining amount reactions
   const yes_count = yes.count - 1 ; // Removing bot's count
     
