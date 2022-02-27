@@ -26,11 +26,11 @@ exports.run = async(client, message, args) => {
   const filter = (reaction, user) => reaction.emoji.name === yes;
   const scm = await message.channel.send("Mute " + target.username + "? 10👍 reactions required to get this user muted!");
 
-  scm.react('👍');
+  scm.react(yes);
 
   const collected = await scm.awaitReactions(filter, { time: 120000 }); // Starting votemute
-  const yes = collected.get(yes) || { count: 1 }; // Defining amount reactions
-  const yes_count = yes.count - 1 ; // Removing bot's count
+  const agree = collected.get(yes) || { count: 1 }; // Defining amount reactions
+  const yes_count = agree.count - 1 ; // Removing bot's count
     
   if (yes_count < 10) return message.channel.send(":x: ***Voting ended with " + yes_count + yes + " reactions. Mentioned user won't be muted!***"); // Voting failed
 
@@ -56,6 +56,7 @@ exports.run = async(client, message, args) => {
         long: true
       }), true)
       .addField("Reason", reason, true)
+      .addField("Reactions", yes_count)
       .setFooter("Time used:").setTimestamp()
     })
   } // Logging a succesful action
