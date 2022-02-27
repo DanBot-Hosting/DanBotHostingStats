@@ -7,6 +7,7 @@ let mutes = {};
 exports.run = async(client, message, args) => {
   let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
   if (!message.guild.me.hasPermission('MANAGE_ROLES')) return message.reply('Sorry, i dont have the perms to do this cmd i need MANAGE_ROLES. :x:');
+  if (message.member.roles.cache.find(r => r.id === "898041754564046869") == null) return message.reply("sorry, but it looks like you're too much of a boomer to run this command.");
   if (args.length < 1) {
       message.channel.send('', {
           embed: new Discord.MessageEmbed().setColor(0x00A2E8)
