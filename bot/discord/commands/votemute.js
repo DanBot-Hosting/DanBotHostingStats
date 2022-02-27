@@ -23,43 +23,40 @@ exports.run = async(client, message, args) => {
   if (time < 5000) time = 5000; // If the time value is less than 5 seconds
 
   const yes = '👍';
-  const filter = (reaction, user) => {
-	  return reaction.emoji.name === yes
-  };
-  message.channel
-    .send("Mute " + target.username + "? 10👍 reactions required to get this user muted!")
-    .then((message) => {
-    message.react('👍');
-    const collected = await sentEmbed.awaitReactions(filter, { time: 120000 }); // Starting votemute
-    const yes = collected.get(yes) || { count: 1 }; // Defining amount reactions
-    const yes_count = yes.count - 1 ; // Removing bot's count
-    
-    if (yes_count < 10) return message.channel.send(":x: ***Voting ended with " + yes_count + yes + " reactions. Mentioned user won't be muted!***"); // Voting failed
+  const filter = (reaction, user) => reaction.emoji.name === yes;
+  const scm = await message.channel.send("Mute " + target.username + "? 10👍 reactions required to get this user muted!");
 
-    message.channel.send(":white_check_mark: ***Voting ended with " + yes_count + yes + " reactions. The user has been successfully muted for " + ms(time, {
-      long: true
-    }) + "!***"); // Voting succeeded
+  scm.react('👍');
+
+  const collected = await .awaitReactions(filter, { time: 120000 }); // Starting votemute
+  const yes = collected.get(yes) || { count: 1 }; // Defining amount reactions
+  const yes_count = yes.count - 1 ; // Removing bot's count
+    
+  if (yes_count < 10) return message.channel.send(":x: ***Voting ended with " + yes_count + yes + " reactions. Mentioned user won't be muted!***"); // Voting failed
+
+  message.channel.send(":white_check_mark: ***Voting ended with " + yes_count + yes + " reactions. The user has been successfully muted for " + ms(time, {
+    long: true
+  }) + "!***"); // Voting succeeded
       
-    mutesData.set(target.id, {
-      mutedAt: Date.now(),
-      expiresAt: Date.now() + time
-    }); // Mute data
+  mutesData.set(target.id, {
+    mutedAt: Date.now(),
+    expiresAt: Date.now() + time
+  }); // Mute data
       
-    await target.roles.add(config.DiscordBot.roles.mute) // Giving a mute role
+  await target.roles.add(config.DiscordBot.roles.mute) // Giving a mute role
       
-    if (modlog != null) {
-      modlog.send('', {
-        embed: new Discord.MessageEmbed()
-        .setColor(0x00A2E8)
-        .setTitle("Action: Vote-Mute")
-        .addField("Asked", message.author.tag + " (ID: " + message.author.id + ")")
-        .addField("User", target.user.tag + " (ID: " + target.id + ")")
-        .addField("Time", ms(time, {
-          long: true
-        }), true)
-        .addField("Reason", reason, true)
-        .setFooter("Time used:").setTimestamp()
-      })
-    } // Logging a succesful action
-  });
+  if (modlog != null) {
+    modlog.send('', {
+      embed: new Discord.MessageEmbed()
+      .setColor(0x00A2E8)
+      .setTitle("Action: Vote-Mute")
+      .addField("Asked", message.author.tag + " (ID: " + message.author.id + ")")
+      .addField("User", target.user.tag + " (ID: " + target.id + ")")
+      .addField("Time", ms(time, {
+        long: true
+      }), true)
+      .addField("Reason", reason, true)
+      .setFooter("Time used:").setTimestamp()
+    })
+  } // Logging a succesful action
 };
