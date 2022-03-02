@@ -12,7 +12,7 @@ const commands = {
         animalapi: "Check out our animal api.",
         apikey: "Generates a(n) (new) API Key",
         domains: "Shows all your proxied domains",
-        help: "Shows this help menu",
+        help: "Shows this menu.",
         vc: "Manage your voice channel"
     },
     Staff: {
