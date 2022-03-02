@@ -11,7 +11,7 @@ const commands = {
         info: "Get a bots info.",
         animalapi: "Check out our animal api.",
         apikey: "Generates a(n) (new) API Key",
-        domains: "Shows all your proxied domains",
+        domains: "Shows all your proxied domains.",
         help: "Shows this menu.",
         vc: "Manage your voice channel"
     },
