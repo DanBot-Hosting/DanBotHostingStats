@@ -11,7 +11,8 @@ const commands = {
         info: "Get a bots info.",
         animalapi: "Check out our animal api.",
         apikey: "Get a (new) API Key",
-        domains: "See all your proxied domains"
+        domains: "See all your proxied domains",
+        help: "Shows this help menu"
     },
     Staff: {
         staff: "See help for that command.",
