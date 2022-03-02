@@ -3,12 +3,12 @@ exports.run = async(client, message, args) => {
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
-        .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
-        .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
+        //.addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
+        //.addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
-        .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
+        //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
-        .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
+        //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
@@ -46,30 +46,30 @@ exports.run = async(client, message, args) => {
         python: data.python,
         aio: data.aio,
         java: data.java,
-        paper: data.paper,
-        forge: data.forge,
-        "alt:v": data.altv,
-        multitheftauto: data.multitheftauto,
-        "rage.mp": data.ragemp,
-        "sa-mp": data.samp,
-        bedrock: data.bedrock,
-        pocketminemp: data.pocketminemp,
-        gmod: data.gmod,
-        "cs:go": data.csgo,
-        "ark:se": data.arkse,
+        //paper: data.paper,
+        //forge: data.forge,
+        //"alt:v": data.altv,
+        //multitheftauto: data.multitheftauto,
+        //"rage.mp": data.ragemp,
+        //"sa-mp": data.samp,
+        //bedrock: data.bedrock,
+        //pocketminemp: data.pocketminemp,
+        //gmod: data.gmod,
+        //"cs:go": data.csgo,
+        //"ark:se": data.arkse,
         ts3: data.ts3,
         mumble: data.mumble,
-        rust: data.rust,
+        //rust: data.rust,
         mongodb: data.mongodb,
         redis: data.redis,
         postgres: data.postgres,
-        daystodie: data.daystodie,
-        arma: data.arma,
-        assettocorsa: data.assettocorsa,
-        avorion: data.avorion,
-        barotrauma: data.barotrauma,
-        waterfall: data.waterfall,
-        spigot: data.spigot,
+        //daystodie: data.daystodie,
+        //arma: data.arma,
+        //assettocorsa: data.assettocorsa,
+        //avorion: data.avorion,
+        //barotrauma: data.barotrauma,
+        //waterfall: data.waterfall,
+        //spigot: data.spigot,
         sharex: data.sharex,
         codeserver: data.codeserver,
         gitea: data.gitea,
