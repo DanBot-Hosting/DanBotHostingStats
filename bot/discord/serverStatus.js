@@ -20,12 +20,16 @@ let nstatus = {
         data: 'Node5',
         location: 'UK'
     }, {
-        name: 'Node 8 ',
-        data: 'Node8',
+        name: 'Node 6 ',
+        data: 'Node6',
         location: 'UK'
     }, {
-        name: 'Node 13 (**Backups Only**) ',
-        data: 'Node13',
+        name: 'Node 7 ',
+        data: 'Node7',
+        location: 'UK'
+    }, {
+        name: 'Node 8 ',
+        data: 'Node8',
         location: 'UK'
     }],
 

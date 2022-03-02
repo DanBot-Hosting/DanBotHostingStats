@@ -40,13 +40,13 @@ let stats = {
     },
     node6: {
         serverID: '8565f2e0',
-        IP: '5.196.100.232',
+        IP: '176.31.203.26',
         ID: '13',
         Location: pingLocals.UK
     },
     node7: {
         serverID: '94082df3',
-        IP: '51.195.252.9',
+        IP: '176.31.203.27',
         ID: '14',
         Location: pingLocals.UK
     },
