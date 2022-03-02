@@ -13,7 +13,7 @@ const commands = {
         apikey: "Generates a(n) (new) API Key",
         domains: "Shows all your proxied domains",
         help: "Shows this help menu",
-        vc: "Manages your voice channel"
+        vc: "Manage your voice channel"
     },
     Staff: {
         staff: "See help for that command.",
