@@ -10,7 +10,7 @@ const commands = {
         vc: "Manage you custom voice channel.",
         info: "Get a bots info.",
         animalapi: "Check out our animal api.",
-        apikey: "Generates a (new) API Key",
+        apikey: "Generates a(n) (new) API Key",
         domains: "Shows all your proxied domains",
         help: "Shows this help menu"
     },
