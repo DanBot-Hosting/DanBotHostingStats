@@ -78,6 +78,18 @@ Router.post("/bot/:ID/stats", async (req, res) => {
                 } catch (error) {
                     return res.status(400).json({error: true, message: "Invalid bot ID!"});
                 };
+                
+                if (!Number.isInteger(data.servers) || data.servers <= 0)
+                   return res
+                    .status(400)
+                    .send({
+                        error: true,
+                        message: "'servers' must be a positive integer.",
+                    });
+                if (!Number.isInteger(data.users) || data.users <= 0)
+                    return res
+                        .status(400)
+                        .send({ error: true, message: "'users' must be a positive integer." });
 
                 console.log(chalk.magenta('[API] ') + chalk.green(`${data.id} just submitted stats`));
 
@@ -86,6 +98,11 @@ Router.post("/bot/:ID/stats", async (req, res) => {
                         console.log(chalk.red(`A bot with a diffrent owner just reied to post! ${owner}`));
                         return res.status(400).json({error: true, message: "You do not own this bot!"})
                     };
+                    
+                    let botName = client.users.cache.get(ID);
+                    if(!botName) botName = await client.users.fetch(ID);
+                    
+                    if (!botName.bot) return res.status(400).send({ error: true, message: "This is a user, not a bot." });
 
                     let botData = {
                         id: data.id,
