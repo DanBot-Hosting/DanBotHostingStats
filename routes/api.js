@@ -79,14 +79,14 @@ Router.post("/bot/:ID/stats", async (req, res) => {
                     return res.status(400).json({error: true, message: "Invalid bot ID!"});
                 };
                 
-                if (!Number.isInteger(data.servers) || data.servers <= 0)
+                if (!Number.isInteger(parseInt(data.servers)) || data.servers <= 0)
                    return res
                     .status(400)
                     .send({
                         error: true,
                         message: "'servers' must be a positive integer.",
                     });
-                if (!Number.isInteger(data.users) || data.users <= 0)
+                if (!Number.isInteger(parseInt(data.users)) || data.users <= 0)
                     return res
                         .status(400)
                         .send({ error: true, message: "'users' must be a positive integer." });
