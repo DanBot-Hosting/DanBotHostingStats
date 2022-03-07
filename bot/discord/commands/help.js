@@ -9,7 +9,11 @@ const commands = {
         uptime: "Shows the bots uptime.",
         vc: "Manage you custom voice channel.",
         info: "Get a bots info.",
-        animalapi: "Check out our animal api."
+        animalapi: "Check out our animal api.",
+        apikey: "Manage your API key.",
+        domains: "Shows all your proxied domains.",
+        help: "Shows this menu.",
+        vc: "Manage your voice channel"
     },
     Staff: {
         staff: "See help for that command.",
