@@ -25,6 +25,10 @@ exports.run = async(client, message, args) => {
         message.channel.send(embed)
     } else if (args[1]) {
         if (args[2] == "-db") {
+            if (userData.get(message.author.id).domains.find(x => x.domain === args[1].toLowerCase()) == null) {
+                message.channel.send("I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is no valid domain!")
+                return;
+            }
             userData.set(message.author.id + '.domains', userData.get(message.author.id).domains.filter(x => x.domain != args[1].toLowerCase()));
             message.reply('Unlinked domain from the database.')
         } else {
