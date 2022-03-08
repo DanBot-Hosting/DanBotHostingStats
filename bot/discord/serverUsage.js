@@ -1,27 +1,27 @@
 let nstatus = {
     "Nodes": [{
         name: 'Node 1',
-        data: 'node1'
+        data: 'Node1'
     }, {
         name: 'Node 2',
-        data: 'node2'
+        data: 'Node2'
     }, {
         name: 'Node 3',
-        data: 'node3'
+        data: 'Node3'
     }, {
         name: 'Node 4',
-        data: 'node4'
+        data: 'Node4'
     }, {
         name: 'Node 5',
-        data: 'node5'
+        data: 'Node5'
     },
     {
         name: 'Node 8', 
-        data: 'node8' 
+        data: 'Node8' 
     },
     {
         name: 'Node 13',
-        data: 'node13'
+        data: 'Node13'
     }, 
     {
         name: 'Dono-01',
