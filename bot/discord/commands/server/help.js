@@ -9,6 +9,6 @@ exports.run = async(client, message, args) => {
             config.DiscordBot.Prefix + 'server proxy <domainhere> <serveridhere> ` \n Unlink domain: `' +
             config.DiscordBot.Prefix + 'server unproxy <domainhere>` \n Delete server: `' +
             config.DiscordBot.Prefix + 'server delete <serveridhere>` \n List servers:' +
-            config.DiscordBot.Prefix + 'server list`' +)
+            config.DiscordBot.Prefix + 'server list`')
     await message.channel.send(embed)
 }
