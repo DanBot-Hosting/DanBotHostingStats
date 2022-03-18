@@ -27,7 +27,8 @@ module.exports = (client, message) => {
         message: message.content,
         member: message.member,
         timestamp: Date.now(),
-        action: "delete"
+        action: "delete",
+        image: message.attachments.first() ? message.attachments.first().proxyURL : null
     };
 
     if (messageSnipes.get(message.channel.id) == null) messageSnipes.set(message.channel.id, [data])
