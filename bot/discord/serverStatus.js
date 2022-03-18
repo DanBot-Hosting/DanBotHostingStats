@@ -23,14 +23,6 @@ let nstatus = {
         name: 'Node 6 ',
         data: 'Node6',
         location: 'UK'
-    }, {
-        name: 'Node 7 ',
-        data: 'Node7',
-        location: 'UK'
-    }, {
-        name: 'Node 8 ',
-        data: 'Node8',
-        location: 'UK'
     }],
 
     "Donator Nodes": [{
