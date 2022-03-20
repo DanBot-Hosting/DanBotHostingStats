@@ -93,6 +93,7 @@ exports.run = async(client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle(`Message ${snipedMessage.action} by ${snipedMessage.member.user.tag}`)
         .setDescription("`" + snipedMessage.message + "`")
+        .setImage(snipedMessage.image)
         .setFooter(`${number + 1}/${snipe.length}`).setTimestamp(snipedMessage.timestamp)
         .setColor("GREEN");
     message.channel.send(embed);
