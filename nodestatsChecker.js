@@ -39,7 +39,7 @@ let stats = {
         Location: pingLocals.UK
     },
     node6: {
-        serverID: '8565f2e0',
+        serverID: 'f9453eca',
         IP: '176.31.203.26',
         ID: '13',
         Location: pingLocals.UK
