@@ -88,12 +88,11 @@ exports.run = async(client, message, args) => {
         haste: pServerCreatesettings.haste
     }
 
+    userPrem.set(message.author.id + '.used', userP.used + 1);
+    
     if (Object.keys(types).includes(args[1].toLowerCase())) {
         serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
             .then(response => {
-
-                userPrem.set(message.author.id + '.used', userP.used + 1);
-
                 let embed = new Discord.MessageEmbed()
                     .setColor(`GREEN`)
                     .addField(`__**Status:**__`, response.statusText)
@@ -116,6 +115,7 @@ exports.run = async(client, message, args) => {
 
             }).catch(error => {
             message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+            userPrem.set(message.author.id + '.used', userP.used - 1);
         })
         return;
     }
