@@ -22,7 +22,7 @@ async function getNewKey() {
 exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle('__**How to link a domain to your website/server**__')
-        .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`\nMake sure to replace <domain> with your domain and <serverid> with the ID of your server. You can find your server id by running `' + config.DiscordBot.Prefix + 'server list`\nYou can link your own domain by creating a DNS A Record pointing to \`164.132.74.251\`! If you are using Cloudflare make sure the you are using DNS Only mode!\nOr you can use the free Danbot Host domains:\n `*.never-gonna-give-you-up.xyz\n*.never-gonna-let-you-down.xyz\n*.never-gonna-make-you-cry.xyz\n*.never-gonna-run-around-and-desert-you.xyz\n*.never-gonna-say-goodbye.xyz\n*.never-gonna-tell-a-lie-and-hurt-you.xyz\n*.rick-roll.xyz`\nFor donators there is also the domain `*.only-fans.club`.')
+        .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`\nTo find out more information, check out this page: https://help.dbh.wtf/beginner/proxying')
     if (!args[1] || !args[2]) {
         await message.channel.send(embed)
     } else {
