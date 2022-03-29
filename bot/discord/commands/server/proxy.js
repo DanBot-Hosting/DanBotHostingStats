@@ -55,7 +55,10 @@ exports.run = async (client, message, args) => {
         if(dnsCheck.address != "164.132.74.251"){
             return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)')
         };
-
+        
+        if (Date.now() < 1648653576000)
+            return message.channel.send('New proxy crearion has been disabled untill 30/03/21 05:21 GMT!'):
+                
         config.proxy.authKey = await getNewKey();
 
         axios({
