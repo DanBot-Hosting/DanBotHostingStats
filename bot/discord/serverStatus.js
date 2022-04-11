@@ -1,9 +1,5 @@
 let nstatus = {
     "Nodes": [{
-        name: 'Node 1 ',
-        data: 'Node1',
-        location: 'UK'
-    }, {
         name: 'Node 2 ',
         data: 'Node2',
         location: 'UK'
@@ -35,14 +31,6 @@ let nstatus = {
     }, {
         name: 'Dono-03',
         data: 'dono03'
-    }],
-
-    "Panel": [{
-        name: 'UK Panel',
-        data: 'panelus1'
-    }, {
-        name: 'Panel Database',
-        data: 'dbhdb'
     }],
 
     "VPS Hosting Servers": [{
