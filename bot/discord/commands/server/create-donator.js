@@ -4,7 +4,8 @@ const axios = require('axios');
 exports.run = async(client, message, args) => {
 
     let userP = userPrem.fetch(message.author.id) || {
-        used: 0
+        used: 0,
+        donated: 0
     };
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
