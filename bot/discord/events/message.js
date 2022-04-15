@@ -33,40 +33,6 @@ module.exports = async (client, message) => {
             .setColor('RANDOM')
         channel.send(bword)
     }
-    if (message.channel.id === "781099821561544744") {
-        axios({
-            url: `https://discord.com/api/v9/channels/${message.channel.id}/messages/${message.id}/crosspost`,
-            method: 'POST',
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                'Authorization': "Bot " + config.DiscordBot.Token,
-                'Content-Type': 'application/json',
-            },
-        }).then(response => { /* If you guys didnt know this. solo sucks */ })
-    }
-
-    let whitelisted = ['137624084572798976'];
-    if (!whitelisted.includes(message.author.id)) {
-        const inviteREE = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g);
-        if (inviteREE.test(message.content.includes())) {
-            const msgcontent = message.content
-            code = msgcontent.replace(/(https:\/\/)?(www\.)?(discord\.gg|discord\.me|discordapp\.com\/invite|discord\.com\/invite)\/?/g, "");
-            console.log(code)
-            fetch(`https://discordapp.com/api/invite/${code}`)
-                .then((res) => res.json())
-                .then((json) => {
-                    if (json.message === 'Unknown Invite') {
-                        //Do nothing
-                        console.log(json.message)
-                    } else {
-                        message.delete()
-                        console.log('uh oh')
-                        console.log(json)
-                    }
-                });
-        }
-    }
 
 
     //Auto reactions on suggestions

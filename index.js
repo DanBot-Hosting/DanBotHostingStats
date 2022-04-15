@@ -10,29 +10,15 @@ Free Hosting forever!                                            /____/
 global.config = require("./config.json");
 global.enabled = require("./enable.json")
 
-const express = require('express');
-const helmet = require("helmet");
-const cookieParser = require("cookie-parser");
-
 //New functions to clean some code up - Not completed
 require('./functions')
 
-//Main danbot.host app
+//Going to be used for the bot's invite api
+const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const PORT = config.Port;
-const hbs = require('hbs');
-const favicon = require('serve-favicon');
-const pat = require("path");
-app.use(favicon(pat.join(__dirname, 'views', 'favicon.ico')))
 
-//Animal API app
-const animalapp = express();
-const animalserver = require('http').createServer(animalapp);
-const APIPORT = config.APIPort;
-const apihbs = require('hbs');
-
-const bodyParser = require('body-parser');
 global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
@@ -46,11 +32,6 @@ global.transport = nodemailer.createTransport({
         pass: config.Email.Password
     }
 });
-
-const isSnowflake = require(process.cwd() + "/util/isSnowflake.js");
-const {
-    getBot
-} = require(process.cwd() + "/util/discordAPI");
 
 // Initialising Node Checker
 require('./nodestatsChecker');
@@ -102,7 +83,6 @@ global.createListPrem = {};
 
 //Import all create server lists
 fs.readdir('./create-free/', (err, files) => {
-    console.log(files)
     files = files.filter(f => f.endsWith('.js'));
     files.forEach(f => {
         require(`./create-free/${f}`);
@@ -110,7 +90,6 @@ fs.readdir('./create-free/', (err, files) => {
 });
 
 fs.readdir('./create-premium/', (err, files) => {
-    console.log(files)
     files = files.filter(f => f.endsWith('.js'));
     files.forEach(f => {
         require(`./create-premium/${f}`);
@@ -132,119 +111,10 @@ global.getPassword = () => {
 client.login(config.DiscordBot.Token);
 global.Allowed = ["137624084572798976"];
 
-//Animal API website
-animalapp.use(helmet({
-    frameguard: false
-}));
-animalapp.use(cookieParser());
-
-animalapp.use(bodyParser.json());
-animalapp.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-animalserver.listen(APIPORT, function() {
-    console.log(chalk.magenta('[api.danbot.host] [WEB] ') + chalk.green("Listening on port " + APIPORT));
-});
-
-//View engine setup
-apihbs.registerPartials(__dirname + '/animalAPI/views/partials')
-animalapp.set('view engine', 'hbs');
-
-animalapp.use((req, res, next) => {
-
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET");
-
-    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
-    console.log('[api.danbot.host] ' +
-        (req.headers["cf-connecting-ip"] ||
-            req.headers["x-forwarded-for"] ||
-            req.ip) +
-        "[" +
-        req.method +
-        "] " +
-        req.url
-    );
-
-    next();
-});
-
-// home page & beta site api
-//const home = require("./routes/main.js");
-//animalapp.use("/", home);
-
-//Total images
-const totalRoute = require("./animalAPI/total.js");
-animalapp.use("/", totalRoute);
-
-//Dog API
-const dogRoute = require("./animalAPI/dog.js");
-animalapp.use("/dog", dogRoute);
-
-//Cat API
-const catRoute = require("./animalAPI/cat.js");
-animalapp.use("/cat", catRoute);
-
-//DanBot.host website
-const passport = require("passport");
-const session = require("express-session");
-const strategy = require("passport-discord").Strategy;
-const MongoStore = require("connect-mongo")(session);
-
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
-});
-
-passport.use(
-    new strategy({
-            clientID: config.DiscordBot.clientID,
-            clientSecret: config.DiscordBot.clientSecret,
-            callbackURL: config.DiscordBot.callbackURL,
-            scope: ["identify"]
-        },
-        (accessToken, refreshToken, profile, done) => {
-            process.nextTick(() => {
-                return done(null, profile);
-            });
-        }
-    )
-);
-
-app.use(
-    session({
-        store: new MongoStore({
-            url: config.DB.MongoDB
-        }),
-        secret: "FROPT",
-        resave: false,
-        saveUninitialized: false
-    })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(helmet({
-    frameguard: false
-}));
-app.use(cookieParser());
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-server.listen(PORT, function() {
-    console.log(chalk.magenta('[danbot.host] [WEB] ') + chalk.green("Listening on port " + PORT));
-});
-
 //Fetch node data
 const { nodes } = require("./bot/discord/serverUsage.js");
 
+/*
 global.nodeData = new db.table("nodeData")
     setInterval(async() => {
         let res = await axios({
@@ -275,160 +145,4 @@ global.nodeData = new db.table("nodeData")
             })
         })
     }, 2000);
-
-//View engine setup
-hbs.registerPartials(__dirname + '/views/partials')
-app.set('view engine', 'hbs');
-
-app.use((req, res, next) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST");
-
-    console.log('[danbot.host] ' +
-        (req.headers["cf-connecting-ip"] ||
-            req.headers["x-forwarded-for"] ||
-            req.ip) +
-        "[" +
-        req.method +
-        "] " +
-        req.url
-    );
-
-    next();
-});
-
-//Routes
-
-
-// DanBot Hosting Stats
-
-const apiRoute = require("./routes/api.js");
-const botRoute = require("./routes/bot.js");
-const indexRoute = require("./routes/index.js");
-const statsRoute = require("./routes/stats.js");
-const meRoute = require("./routes/me.js");
-const adminRoute = require("./routes/admin.js");
-const externalRoute = require("./routes/external.js");
-//const { config } = require("process");
-
-app.use("/api", apiRoute);
-app.use("/bot", botRoute);
-app.use("/", indexRoute);
-app.use("/stats", statsRoute);
-app.use("/me", meRoute);
-app.use("/admin", adminRoute);
-app.use("/external", externalRoute);
-
-app.get('/arc-sw.js', (req, res) => {
-    res.sendFile('./util//arc-sw.js', {
-        root: __dirname
-    });
-});
-
-app.get("/user/:ID", async(req, res) => {
-    let user = req.params.ID;
-    let memberr = "No"
-
-    if (!isSnowflake(user)) {
-        return res.render("error.ejs", {
-            user: req.isAuthenticated() ? req.user : null,
-            message: "Make sure ID is a valid ID"
-        });
-    }
-
-    let [use] = await getBot(user)
-
-    if (use.user_id && use.user_id[0].endsWith("is not snowflake."))
-        return res.render("error.ejs", {
-            user: req.isAuthenticated() ? req.user : null,
-            message: "ID is invalid"
-        });
-
-    if (use.message === "Unknown User")
-        return res.render("error.ejs", {
-            user: req.isAuthenticated() ? req.user : null,
-            message: "Discord API - Unknown User"
-        });
-
-    if (use.bot === true) return res.redirect("/bot/" + user);
-
-    try {
-        bot.users.fetch(user).then(User => {
-            if (User.bot) {
-                return res.redirect("/bot/" + User.id);
-            }
-
-            var member = bot.guilds.cache.get("639477525927690240").members.cache.get(User.id);
-            if (!member) {
-                (pColor = "grey"), (presence = "offline");
-            }
-            let guild = bot.guilds.cache.get("639477525927690240");
-            if (guild.member(User.id)) {
-                memberr = "yes";
-            }
-            if (member) {
-                presence = member.presence.status;
-
-                if (presence) {
-                    if (presence === "offline") {
-                        presence = "Offline";
-                        pColor = "grey";
-                    } else if (presence === "online") {
-                        presence = "Online";
-                        pColor = "#43B581";
-                    } else if (presence === "dnd") {
-                        presence = "DND";
-                        pColor = "#F04747";
-                    } else if (presence === "streaming") {
-                        presence = "Streaming";
-                        pColor = "purple";
-                    } else if (presence === "idle") {
-                        presence = "Idle";
-                        pColor = "#FAA61A";
-                    } else {
-                        (pColor = "grey"), (presence = "Not Available");
-                    }
-                }
-            }
-
-            let avatar = member.user.avatarURL();
-
-            let bots = db.get(`${User.id}.bots`);
-            if (!bots) bots = null;
-
-            // console.log(avatar);
-            // console.log(bots);
-
-            res.render("me/user.ejs", {
-                user: req.isAuthenticated() ? req.user : null,
-                User,
-                avatar,
-                //  Data,
-                pColor,
-                presence,
-                //    info,
-                memberr,
-                use,
-                bots,
-                db,
-                //  Discord,
-                //    pageType: { user: true }
-            });
-        });
-    } catch (e) {
-        return res.render("error.ejs", {
-            user: req.isAuthenticated() ? req.user : null,
-            message: e
-        });
-    }
-
-});
-
-
-//Catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    res.status(404).render("error.ejs", {
-        message: "Page Not Found",
-        user: req.isAuthenticated() ? req.user : null
-    });
-});
+*/

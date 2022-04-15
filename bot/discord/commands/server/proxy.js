@@ -4,7 +4,7 @@ const dns = require('dns');
 
 async function getNewKey() {
     const serverRes = await axios({
-        url: config.proxy.url + "/api/tokens",
+        url: config.FRProxy.url + "/api/tokens",
         method: 'POST',
         followRedirect: true,
         maxRedirects: 5,
@@ -12,8 +12,8 @@ async function getNewKey() {
             'Content-Type': 'application/json',
         },
         data: {
-            "identity": config.proxy.email,
-            "secret": config.proxy.pass
+            "identity": config.FRProxy.email,
+            "secret": config.FRProxy.pass
         }
     });
     return "Bearer " + serverRes.data.token;
@@ -55,7 +55,7 @@ exports.run = async (client, message, args) => {
         if(dnsCheck.address != "164.132.74.251"){
             return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)')
         };
-                
+
         config.proxy.authKey = await getNewKey();
 
         axios({
