@@ -92,12 +92,12 @@ exports.run = async(client, message, args) => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#738530520945786921> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)`)
+                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert the Panel admin (<@137624084572798976>)`)
                     message.reply(embed)
                 } else if (error == "Error: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#757949242495991918>`)
+                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#898041845878247487>`)
                     message.reply(embed)
                     // console.log(error)
                 } else if (error == "Error: Request failed with status code 429") {
