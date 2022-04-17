@@ -33,7 +33,7 @@ exports.run = async(client, message, args) => {
 			    .setDescription(`Server used: ${arr.length}`);
                 if(user.used) {
 			embed.addField(`Premium Servers`, `You currently have ${(user.used || 0)} Premium servers.`)
-			embed.addField(`Free Servers`, `You currently have ${(are.length) - (user.used || 0)} Free servers.`)
+			embed.addField(`Free Servers`, `You currently have ${(arr.length) - (user.used || 0)} Free servers.`)
 		}
                 message.channel.send(embed)
                 //console.log(output)
