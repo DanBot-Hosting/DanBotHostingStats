@@ -1,7 +1,6 @@
 const axios = require('axios');
 exports.run = async (client, message, args) => {
     message.channel.send('Loading servers...');
-    //List servers
     var arr = [];
     let userid = args[1].match(/[0-9]{18}/)?.[0] || message.author.id;
     let user = userPrem.fetch(userid);
@@ -19,10 +18,7 @@ exports.run = async (client, message, args) => {
         }
     }).then(response => {
         const preoutput = response.data.attributes.relationships.servers.data;
-        //console.log(resources.data.meta)
         arr.push(...preoutput);
-        //console.log(arr.length)
-        // console.log(arr)
         setTimeout(() => {
             const embed = new Discord.MessageEmbed()
                 .setDescription([
