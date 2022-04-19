@@ -2,7 +2,7 @@ const axios = require('axios');
 exports.run = async (client, message, args) => {
     message.channel.send('Loading servers...');
     var arr = [];
-    let userid = args[1].match(/[0-9]{18}/)?.[0] || message.author.id;
+    let userid = args[1]?.match(/[0-9]{18}/)?.[0] || message.author.id;
     let user = userPrem.fetch(userid);
     if (!user) user = {};
 
