@@ -20,7 +20,7 @@ exports.run = async(client, message, args) => {
   if (time < 5000) time = 5000; // If the time value is less than 5 seconds
 
   const yes = '👍';
-  const filter = (reaction, user) => reaction.emoji.name === yes;
+  const filter = (reaction, user) => reaction.emoji.name === yes && !user.bot;
   const scm = await message.channel.send("Mute " + target.username + "? 10👍 reactions required to get this user muted!");
 
   scm.react(yes);
