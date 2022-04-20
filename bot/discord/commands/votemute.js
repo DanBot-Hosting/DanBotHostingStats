@@ -1,8 +1,6 @@
 const ms = require('ms');
 const Discord = require('discord.js');
-const db = require('quick.db');
-const mutesData = new db.table("muteData");
-let mutes = {};
+const mutesData = new require('quick.db').table("muteData");
 
 exports.run = async(client, message, args) => {
   let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
