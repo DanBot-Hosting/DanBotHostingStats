@@ -31,6 +31,9 @@ let nstatus = {
     }, {
         name: 'Dono-03',
         data: 'dono03'
+    }, {
+        name: 'Dono-04',
+        data: 'dono04'
     }],
 
     "VPS Hosting Servers": [{
