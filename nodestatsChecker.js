@@ -79,6 +79,12 @@ let stats = {
         IP: '192.95.42.73',
         ID: '33',
         Location: pingLocals.CA
+    },
+    dono04: {
+        serverID: 'c23f92cg',
+        IP: '176.31.203.28',
+        ID: '33',
+        Location: pingLocals.CA
     }
 }
 if (enabled.nodestatsChecker === true) {
