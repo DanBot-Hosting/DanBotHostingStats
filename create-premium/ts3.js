@@ -8,7 +8,7 @@ createListPrem.ts3 = (serverName, userID) => ({
     "limits": {
         "memory": 0,
         "swap": 0,
-        "disk": 10240,
+        "disk": 0,
         "io": 500,
         "cpu": 0
     },

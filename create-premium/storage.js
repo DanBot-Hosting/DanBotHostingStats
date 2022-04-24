@@ -8,7 +8,7 @@ createListPrem.storage = (serverName, userID) => ({
     "limits": {
         "memory": 1,
         "swap": 0,
-        "disk": 10240,
+        "disk": 0,
         "io": 500,
         "cpu": 1
     },

@@ -8,7 +8,7 @@ createListPrem.lavalink = (serverName, userID) => ({
     "limits": {
         "memory": 1024,
         "swap": 0,
-        "disk": 10240,
+        "disk": 0,
         "io": 500,
         "cpu": 0
     },
