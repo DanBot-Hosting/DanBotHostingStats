@@ -84,7 +84,7 @@ let stats = {
         serverID: '9b812dbf',
         IP: '176.31.203.28',
         ID: '35',
-        Location: pingLocals.CA
+        Location: pingLocals.UK
     }
 }
 if (enabled.nodestatsChecker === true) {
