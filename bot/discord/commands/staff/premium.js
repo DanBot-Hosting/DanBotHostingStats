@@ -11,7 +11,7 @@ exports.run = async(client, message, args) => {
     let sendMessage = (userid, amount) => {
         message.delete()
         message.channel.send('Thanks <@' + userid + '> for donating! \nYou can now create donator servers using `' + config.DiscordBot.Prefix + 'server create-donator`')
-        client.channels.cache.get('898041841939783732').send('Thanks, <@' + userid + '> for donating ' + parser.format(amount) + '$!')
+        client.channels.cache.get('898041841939783732').send('Thanks, <@' + userid + '> for donating $' + parser.format(amount))
     }
 
     let userid = message.guild.members.cache.get(args[2].match(/[0-9]{18}/).length == 0 ? args[2] : args[2].match(/[0-9]{18}/)[0]);
