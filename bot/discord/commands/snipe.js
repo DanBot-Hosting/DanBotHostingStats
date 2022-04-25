@@ -86,6 +86,7 @@ exports.run = async(client, message, args) => {
 
     // getting the message
     let snipedMessage = snipe[number];
+    if(snipedMessage.message.includes("(http")) return message.reply("none of those mr egg")
 
     // console.log("SNIPE", snipedMessage, snipe, number);
 
