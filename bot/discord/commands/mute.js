@@ -64,6 +64,7 @@ exports.run = async(client, message, args) => {
     let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
 
     if (message.member.roles.cache.find(r => r.id === config.DiscordBot.roles.staff) == null) return message.reply("sorry, but it looks like you're too much of an egg to run this command. 🥚");
+    if (message.member.roles.cache.find(r => r.id === "248470317540966443")) return message.reply("sorry, but it looks like you're too much of an egg to run this command. 🥚");
     if (!message.guild.me.hasPermission('MANAGE_ROLES')) return message.reply('Sorry, i dont have the perms to do this cmd i need MANAGE_ROLES. :x:');
 
 
