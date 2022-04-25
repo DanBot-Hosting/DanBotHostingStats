@@ -2,6 +2,7 @@ const premiumNodes = [30, 31, 33];
 
 exports.run = async(client, message, args) => {
     if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041745173000303")) return; //Mikes RoleID
 
     if (!args[1]) {
         return message.channel.send('Please provide a user id!');
