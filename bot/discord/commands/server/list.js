@@ -29,7 +29,7 @@ exports.run = async(client, message, args) => {
                             .addField('__**Your Servers:**__', clean)
                 message.channel.send(embed).catch(e => {
                     const embed = new Discord.MessageEmbed()
-                        .addField('ERROR', 'Your server list is too long so here is a abstracted version!')
+                        .setDescription('Your server list is too long so here is a abstracted version!')
                         .addField('__**Your Servers:**__', arr.map(e => "`" + e.attributes.identifier + "`"))
                      message.channel.send(embed)
                 })
