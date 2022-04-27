@@ -1,10 +1,7 @@
 const premiumNodes = [30, 31, 33, 34, 35];
 
 exports.run = async(client, message, args) => {
-    if (![
-        "898041751099539497",  // staff
-        "898041745173000303"   // Mike's role
-    ].some((r) => message.member.roles.cache.has(r))) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
 
     if (!args[1]) {
         return message.channel.send('Please provide a user id!');
@@ -44,6 +41,6 @@ exports.run = async(client, message, args) => {
             replyMsg.edit(`${selectedUser.tag}'s premium server count has been fixed!`)
         } else {
             replyMsg.edit(`${selectedUser.tag} has the correct premium server count!`)
-        };        
+        };
     };
 };
