@@ -1,4 +1,6 @@
 const axios = require('axios');
+const premiumNodes = [30, 31, 33, 34, 35];
+
 exports.run = async (client, message, args) => {
     message.channel.send('Loading servers...');
     var arr = [];
@@ -19,12 +21,13 @@ exports.run = async (client, message, args) => {
     }).then(response => {
         const preoutput = response.data.attributes.relationships.servers.data;
         arr.push(...preoutput);
+        const premiumServers = arr.filter(x => premiumNodes.includes(x.attributes.node)).length
         setTimeout(() => {
             const embed = new Discord.MessageEmbed()
                 .setDescription([
                     `> Total servers: \`${arr.length}\``,
                     `- \`${arr.length - (user.used || 0)}\` are **Free servers**`,
-                    `- \`${user.used || 0}\` are **Premium servers**`,
+                    `- \`${premiumServers}\` are **Premium servers**`,
                 ].join("\n"));
             message.channel.send(embed);
         }, 1000);
