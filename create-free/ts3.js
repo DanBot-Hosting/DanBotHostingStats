@@ -7,7 +7,7 @@ createList.ts3 = (serverName, userID) => ({
     "startup": `./ts3server default_voice_port={{SERVER_PORT}} query_port={{SERVER_PORT}} filetransfer_ip=0.0.0.0 filetransfer_port={{FILE_TRANSFER}} license_accepted=1`,
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 10240,
         "io": 500,
         "cpu": 0

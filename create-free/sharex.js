@@ -7,7 +7,7 @@ createList.sharex = (serverName, userID) => ({
     "startup": `/usr/local/bin/node /home/container/src/index.js`,
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 10240,
         "io": 500,
         "cpu": 0
