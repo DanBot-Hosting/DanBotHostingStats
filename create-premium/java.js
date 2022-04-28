@@ -7,7 +7,7 @@ createListPrem.java = (serverName, userID) => ({
     "startup": "${STARTUP_CMD}",
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 0

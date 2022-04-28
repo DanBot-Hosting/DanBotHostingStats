@@ -7,7 +7,7 @@ createListPrem.reddiscordbot = (serverName, userID) => ({
     "startup": `PATH=$PATH:/home/container/.local/bin redbot pterodactyl --token {{TOKEN}} --prefix {{PREFIX}}`,
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 0

@@ -7,7 +7,7 @@ createListPrem.arma = (serverName, userID) => ({
     "startup": './{{SERVER_BINARY}} -ip=0.0.0.0 -port={{SERVER_PORT}} -profiles=./serverprofile -bepath=./battleye -cfg=\\"{{BASIC}}\\" -config=\\"{{CONFIG}}\\" -mod=\\"{{MODIFICATIONS}}\\" -serverMod=\\"{{SERVERMODS}}\\" {{STARTUP_PARAMS}}',
     "limits": {
         "memory": 2048,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 0

@@ -7,7 +7,7 @@ createListPrem.mumble = (serverName, userID) => ({
     "startup": `./murmur.x86 -fg`,
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 0
