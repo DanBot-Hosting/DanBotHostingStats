@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
             const embed = new Discord.MessageEmbed()
                 .setDescription([
                     `> Total servers: \`${arr.length}\``,
-                    `- \`${arr.length - (user.used || 0)}\` are **Free servers**`,
+                    `- \`${arr.length - premiumServers}\` are **Free servers**`,
                     `- \`${premiumServers}\` are **Premium servers**`,
                 ].join("\n"));
             message.channel.send(embed);
