@@ -7,7 +7,7 @@ exports.run = async(client, message, args) => {
   if (!message.member.roles.cache.find(r => r.id === "898041754564046869")) return message.reply("Sorry, but it looks like you're too much of a boomer to run this command.");
   if (args.length < 2) return message.channel.send('', { embed: new Discord.MessageEmbed().setColor(0x00A2E8).setDescription(`Correct usage ${config.DiscordBot.Prefix}votemute <@user|userID> [Time : 5m] [Reason : unspecified]`).setFooter('<required> [optional]')});
   const allowed_channels = ["898041849783148585", "898041865616650240"];
-  if (allowed_channels.indexOf(client.channels.cache.get('id')) == -1) return; // Only lounge and dono lounge
+  if (!allowed_channels.includes(message.channel.id)) return; // Only lounge and dono lounge
   let target = message.guild.members.cache.get(args[0].match(/[0-9]{18}/).length == 0 ? args[0] : args[0].match(/[0-9]{18}/)[0])
   let reason = args.slice(2).join(' ');
   let time = ms(args[1]) || 300000;
