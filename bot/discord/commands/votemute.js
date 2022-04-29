@@ -42,8 +42,8 @@ exports.run = async(client, message, args) => {
     embed: new Discord.MessageEmbed()
     .setColor(0x00A2E8)
     .setTitle("Action: Vote-Mute")
-    .addField("Asked", message.author.tag + " (ID: " + message.author.id + ")")
-    .addField("User", target.user.tag + " (ID: " + target.id + ")")
+    .addField("Asked", `${message.author.tag} (ID: ${message.author.id})`)
+    .addField("User", `${target.user.tag} (ID: ${target.id})`)
     .addField("Time", ms(time, {
       long: true
     }), true)
