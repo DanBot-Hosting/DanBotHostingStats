@@ -19,7 +19,7 @@ exports.run = async(client, message, args) => {
 
   const yes = '👍';
   const filter = (reaction, user) => reaction.emoji.name === yes && !user.bot;
-  const scm = await message.channel.send("Mute " + target.username + "? 10👍 reactions required to get this user muted!");
+  const scm = await message.channel.send(`Mute ${target.username}? 10${yes} reactions required to get this user muted!`);
 
   scm.react(yes);
 
