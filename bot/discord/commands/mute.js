@@ -93,6 +93,24 @@ exports.run = async(client, message, args) => {
     message.channel.send(":white_check_mark: ***The user has been successfully muted for " + ms(time, {
         long: true
     }) + "!***");
+    
+    let dmEmbed = new Discord.MessageEmbed()
+    .setTitle("Punishment updated in DanBot Hosting")
+    .setColor("#03a9fc")
+    .setDescription("You have received a mute in DanBot Hosting")
+    .setTimestamp()
+    .addField("Mute Reason", `${reason}`)
+    .addField("Time Muted", `${ms(Date.now(), {
+                                    long: true
+                                })}`)
+    .addField("Mute Length", `${ms(time, {
+        long: true
+    })}`)
+    .addField("Mute Ends At", `${ms(Date.now() + time, {
+                                    long: true
+                                })}`)
+    .setThumbnail(message.guild.iconURL())
+    target.send(dmEmbed)
 
     if (mutes[target.id] != null) clearTimeout(mutes[target.id])
     mutes[target.id] = setTimeout(() => {
