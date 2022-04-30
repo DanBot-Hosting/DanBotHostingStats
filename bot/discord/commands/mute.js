@@ -106,7 +106,7 @@ exports.run = async(client, message, args) => {
     })}`)
     .addField("Mute Ends At", `<t:${Math.round((Date.now() + time) / 1000)}:F>`)
     .setThumbnail(message.guild.iconURL())
-    target.send(dmEmbed)
+    target.send(dmEmbed).catch((err) => {console.log("I can't send dms to that person")}
 
     if (mutes[target.id] != null) clearTimeout(mutes[target.id])
     mutes[target.id] = setTimeout(() => {
