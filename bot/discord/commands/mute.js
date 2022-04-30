@@ -100,13 +100,17 @@ exports.run = async(client, message, args) => {
     .setDescription("You have received a mute in DanBot Hosting")
     .setTimestamp()
     .addField("Mute Reason", `${reason}`)
-    .addField("Time Muted", `<t:${Math.round(Date.now() / 1000)}:F>`)
-    .addField("Mute Length", `<t:${Math.round((Date.now() + time) / 1000)}:F>`)
-    .addField("Mute Ends At", `${ms(Date.now() + time, {
-                                    long: true
-                                })}`)
+    .addField("Time Muted", `<t:${Date.now()}>`)
+    .addField("Mute Length", `${ms(time, {
+        long: true
+    })}`)
+    .addField("Mute Ends At", `<t:${Date.now() + time}>`)
     .setThumbnail(message.guild.iconURL())
-    target.send(dmEmbed)
+    try {
+        target.send(dmEmbed)
+    } catch(err) {
+        console.log("Couldn't send a DM to that user...")
+    }
 
     if (mutes[target.id] != null) clearTimeout(mutes[target.id])
     mutes[target.id] = setTimeout(() => {
