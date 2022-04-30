@@ -100,11 +100,11 @@ exports.run = async(client, message, args) => {
     .setDescription("You have received a mute in DanBot Hosting")
     .setTimestamp()
     .addField("Mute Reason", `${reason}`)
-    .addField("Time Muted", `<t:${Date.now()}>`)
+    .addField("Time Muted", `<t:${Date.now() / 1000}>`)
     .addField("Mute Length", `${ms(time, {
         long: true
     })}`)
-    .addField("Mute Ends At", `<t:${Date.now() + time}>`)
+    .addField("Mute Ends At", `<t:${(Date.now() + time) / 1000}>`)
     .setThumbnail(message.guild.iconURL())
     try {
         target.send(dmEmbed)
