@@ -100,12 +100,8 @@ exports.run = async(client, message, args) => {
     .setDescription("You have received a mute in DanBot Hosting")
     .setTimestamp()
     .addField("Mute Reason", `${reason}`)
-    .addField("Time Muted", `${ms(Date.now(), {
-                                    long: true
-                                })}`)
-    .addField("Mute Length", `${ms(time, {
-        long: true
-    })}`)
+    .addField("Time Muted", `<t:${Math.round(Date.now() / 1000)}:F>`)
+    .addField("Mute Length", `<t:${Math.round((Date.now() + time) / 1000)}:F>`)
     .addField("Mute Ends At", `${ms(Date.now() + time, {
                                     long: true
                                 })}`)
