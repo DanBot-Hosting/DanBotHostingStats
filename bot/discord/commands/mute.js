@@ -101,10 +101,10 @@ exports.run = async(client, message, args) => {
     .setTimestamp()
     .addField("Mute Reason", `${reason}`)
     .addField("Time Muted", `<t:${Math.round(Date.now() / 1000)}:F>`)
-    .addField("Mute Length", `<t:${Math.round((Date.now() + time) / 1000)}:F>`)
-    .addField("Mute Ends At", `${ms(Date.now() + time, {
-                                    long: true
-                                })}`)
+    .addField("Mute Length", `${ms(time, {
+        long: true
+    })}`)
+    .addField("Mute Ends At", `<t:${Math.round((Date.now() + time) / 1000)}:F>`)
     .setThumbnail(message.guild.iconURL())
     target.send(dmEmbed)
 
