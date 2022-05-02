@@ -131,7 +131,7 @@ exports.run = async (client, message, args) => {
             }).then(response => {
                 message.reply('Proxying your domain... This can take up to 30 seconds.')
 
-                if(dnsCheck.address != "164.132.74.251") { //France
+                if(dnsCheck.address == "164.132.74.251") { //France
                     axios({
                         url: config.FRProxy.url + "/api/nginx/proxy-hosts",
                         method: 'POST',
@@ -205,7 +205,7 @@ exports.run = async (client, message, args) => {
                             message.reply('This domain has already been linked. If this is an error, please contact a staff member to fix this!')
                         }
                     })
-                } else if (dnsCheck.address != "192.95.42.75") { //Canada
+                } else if (dnsCheck.address == "192.95.42.75") { //Canada
                     axios({
                         url: config.CAProxy.url + "/api/nginx/proxy-hosts",
                         method: 'POST',
