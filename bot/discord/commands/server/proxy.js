@@ -172,6 +172,7 @@ exports.run = async (client, message, args) => {
                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
                             domain: args[1].toLowerCase(),
                             serverID: args[2],
+                            location: "FR"
                         }]);
 
                     }).catch(ErrorAfterProxy => {
@@ -246,6 +247,7 @@ exports.run = async (client, message, args) => {
                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
                             domain: args[1].toLowerCase(),
                             serverID: args[2],
+                            location: "CA"
                         }]);
 
                     }).catch(ErrorAfterProxy => {
