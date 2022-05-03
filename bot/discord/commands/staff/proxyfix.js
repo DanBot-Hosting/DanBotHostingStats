@@ -1,6 +1,6 @@
 async function getNewKey(){
     const serverRes = await axios({
-        url: config.proxy.url + "/api/tokens",
+        url: config.FRProxy.url + "/api/tokens",
         method: 'POST',
         followRedirect: true,
         maxRedirects: 5,
@@ -8,8 +8,8 @@ async function getNewKey(){
             'Content-Type': 'application/json',
         },
         data: {
-            "identity": config.proxy.email,
-            "secret": config.proxy.pass
+            "identity": config.FRProxy.email,
+            "secret": config.FRProxy.pass
         }
     });
     return "Bearer " + serverRes.data.token;
@@ -23,16 +23,16 @@ exports.run = async(client, message, args) => {
 
     } else {
         const replyMsg = await message.channel.send('Trying to fix proxy...');
-        config.proxy.authKey = await getNewKey();
+        config.FRProxy.authKey = await getNewKey();
         replyMsg.edit('Trying to fix proxy...\nAuthenticated')
 
         const listOfUrls = await axios({
-            url: config.proxy.url + "/api/nginx/proxy-hosts?expand=owner,access_list,certificate",
+            url: config.FRProxy.url + "/api/nginx/proxy-hosts?expand=owner,access_list,certificate",
             method: 'GET',
             followRedirect: true,
             maxRedirects: 5,
             headers: {
-                'Authorization': config.proxy.authKey,
+                'Authorization': config.FRProxy.authKey,
                 'Content-Type': 'application/json',
             }
         });
@@ -49,12 +49,12 @@ exports.run = async(client, message, args) => {
             replyMsg.edit(`Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy}, attempting to delete...`)
 
             const deletedObject = await axios({
-                url: config.proxy.url + `/api/nginx/proxy-hosts/${idOfProxy}`,
+                url: config.FRProxy.url + `/api/nginx/proxy-hosts/${idOfProxy}`,
                 method: 'DELETE',
                 followRedirect: true,
                 maxRedirects: 5,
                 headers: {
-                    'Authorization': config.proxy.authKey,
+                    'Authorization': config.FRProxy.authKey,
                     'Content-Type': 'application/json',
                 }
             });
