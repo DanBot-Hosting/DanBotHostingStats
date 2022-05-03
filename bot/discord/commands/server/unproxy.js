@@ -1,8 +1,6 @@
-const sshClient = require('ssh2').Client;
-
 async function getNewKey(){
     const serverRes = await axios({
-        url: config.proxy.url + "/api/tokens",
+        url: config.FRProxy.url + "/api/tokens",
         method: 'POST',
         followRedirect: true,
         maxRedirects: 5,
@@ -10,8 +8,8 @@ async function getNewKey(){
             'Content-Type': 'application/json',
         },
         data: {
-            "identity": config.proxy.email,
-            "secret": config.proxy.pass
+            "identity": config.FRProxy.email,
+            "secret": config.FRProxy.pass
         }
     });
     return "Bearer " + serverRes.data.token;
@@ -32,27 +30,27 @@ exports.run = async(client, message, args) => {
                 message.channel.send("I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is no valid domain!")
                 return;
             }
-            config.proxy.authKey = await getNewKey();
+            config.FRProxy.authKey = await getNewKey();
 
             axios({
-                url: config.proxy.url + "/api/nginx/proxy-hosts",
+                url: config.FRProxy.url + "/api/nginx/proxy-hosts",
                 method: 'GET',
                 followRedirect: true,
                 maxRedirects: 5,
                 headers: {
-                    'Authorization': config.proxy.authKey,
+                    'Authorization': config.FRProxy.authKey,
                     'Content-Type': 'application/json',
                 }
             }).then(response => {
                 console.log(response.data)
                 //Now delete it
                 axios({
-                    url: config.proxy.url + "/api/nginx/proxy-hosts/" + response.data.find(element => element.domain_names[0] == args[1].toLowerCase()).id,
+                    url: config.FRProxy.url + "/api/nginx/proxy-hosts/" + response.data.find(element => element.domain_names[0] == args[1].toLowerCase()).id,
                     method: 'DELETE',
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        'Authorization': config.proxy.authKey,
+                        'Authorization': config.FRProxy.authKey,
                         'Content-Type': 'application/json',
                     }
                 }).then(response => {
