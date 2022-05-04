@@ -7,7 +7,7 @@ createList.codeserver = (serverName, userID) => ({
         "startup": `sh .local/lib/code-server-{{VERSION}}/bin/code-server`,
         "limits": {
             "memory": 0,
-            "swap": 0,
+            "swap": -1,
             "disk": 10240,
             "io": 500,
             "cpu": 0

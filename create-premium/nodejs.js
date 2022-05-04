@@ -7,7 +7,7 @@ createListPrem.nodejs = (serverName, userID) => ({
     "startup": `/usr/local/bin/npm i && /usr/local/bin/node /home/container/{{BOT_JS_FILE}}`,
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 0

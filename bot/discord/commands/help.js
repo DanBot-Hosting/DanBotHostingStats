@@ -8,8 +8,8 @@ const commands = {
         ticket: "Create a ticket for help from the staff team!.",
         uptime: "Shows the bots uptime.",
         vc: "Manage you custom voice channel.",
-        info: "Get a bots info.",
-        animalapi: "Check out our animal api."
+        // info: "Get a bots info.",
+        // animalapi: "Check out our animal api."
     },
     Staff: {
         staff: "See help for that command.",

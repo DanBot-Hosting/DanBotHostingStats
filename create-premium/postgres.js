@@ -7,7 +7,7 @@ createListPrem.postgres = (serverName, userID) => ({
     "startup": `postgres  -D /home/container/postgres_db/`,
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 0

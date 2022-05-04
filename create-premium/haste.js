@@ -7,7 +7,7 @@ createListPrem.haste = (serverName, userID) => ({
     "startup": `npm start`,
     "limits": {
         "memory": 0,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 0

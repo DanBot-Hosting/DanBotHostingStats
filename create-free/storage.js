@@ -7,7 +7,7 @@ createList.storage = (serverName, userID) => ({
     "startup": "${STARTUP_CMD}",
     "limits": {
         "memory": 1,
-        "swap": 0,
+        "swap": -1,
         "disk": 10240,
         "io": 500,
         "cpu": 1

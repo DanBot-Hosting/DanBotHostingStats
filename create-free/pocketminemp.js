@@ -7,7 +7,7 @@ createList.pocketminemp = (serverName, userID) => ({
     "startup": "./bin/php7/bin/php ./PocketMine-MP.phar --no-wizard --disable-ansi",
     "limits": {
         "memory": 2048,
-        "swap": 0,
+        "swap": -1,
         "disk": 10240,
         "io": 500,
         "cpu": 0

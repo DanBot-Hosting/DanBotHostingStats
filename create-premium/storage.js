@@ -7,7 +7,7 @@ createListPrem.storage = (serverName, userID) => ({
     "startup": "${STARTUP_CMD}",
     "limits": {
         "memory": 1,
-        "swap": 0,
+        "swap": -1,
         "disk": 0,
         "io": 500,
         "cpu": 1
