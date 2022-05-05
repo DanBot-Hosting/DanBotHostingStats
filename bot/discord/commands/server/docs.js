@@ -29,7 +29,7 @@ exports.run = async(client, message, args) => {
     const embed = new Discord.MessageEmbed();
     switch(args[1].toLowerCase()) {
        case "aio":
-         embed.setDescription("`All In One`, short `aio` is a unique server type that contains several features that distinguish it from other Development(Bot & Codeserver) server types. This type brings all of the other types in a 1 single type and lets user interact with console. [Source: docs.dbh.wtf](https://docs.dbh.wtf)\nRecommend for beginners, as it is easy to use.\n**Do not use aio to host gameservers. It is not allowed and your server will be deleted.**");
+         embed.setDescription("`All In One`, short `aio` includes Java, Python, NodeJS and more. The user can control his server over a terminal (bash). A package manager like apt can't be used to install programs (npm, pip, etc still works).\nRecommend for beginners, as it is easy to use.\n**Do not use aio to host gameservers. It is not allowed and your server will be deleted.**");
          break;
        case "nodejs":
          embed.setDescription("`Node.js` is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser. Node.js lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser. [Source: Wikipedia](https://en.wikipedia.org/wiki/Node.js)" +
