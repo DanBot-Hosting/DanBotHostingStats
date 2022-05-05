@@ -10,6 +10,7 @@ exports.run = async(client, message, args) => {
             config.DiscordBot.Prefix + 'server unproxy <domainhere>` \n Delete server: `' +
             config.DiscordBot.Prefix + 'server delete <serveridhere>` \n List servers: `' +
             config.DiscordBot.Prefix + 'server list` \n See Servercount: `' +
-            config.DiscordBot.Prefix + 'server count`') 
+            config.DiscordBot.Prefix + 'server count` \n Get Informations about a server type: `' +
+            config.DiscordBot.Prefix + 'server docs <servertype>`') 
     await message.channel.send(embed)
 }
