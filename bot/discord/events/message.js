@@ -16,7 +16,7 @@ module.exports = async (client, message) => {
     };
 
     const swears = [
-        'nigga', 'nigger', 'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928', 'https://tenor.com/view/potato-dancing-glitch-gif-14354119', 'http://tenor.com/view/potato-dancing-glitch-gif-14354119', 'dottomogous'
+        'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928', 'https://tenor.com/view/potato-dancing-glitch-gif-14354119', 'http://tenor.com/view/potato-dancing-glitch-gif-14354119', 'dottomogous'
     ]
     if (swears.some(x => message.content.toLowerCase().includes(weirdToNormalChars(x)))) {
         /*if (message.author.bot) {

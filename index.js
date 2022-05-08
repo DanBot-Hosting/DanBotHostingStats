@@ -10,6 +10,10 @@ Free Hosting forever!                                            /____/
 global.config = require("./config.json");
 global.enabled = require("./enable.json")
 
+//New global cache system (Lazy way)
+global.users = []
+global.servers = []
+
 //New functions to clean some code up - Not completed
 require('./functions')
 
@@ -146,3 +150,39 @@ global.nodeData = new db.table("nodeData")
         })
     }, 2000);
 */
+
+setInterval(async () => {
+    axios({
+        url: "https://panel.danbot.host/api/application/users",
+        method: 'GET',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+            'Content-Type': 'application/json',
+            'Accept': 'Application/vnd.pterodactyl.v1+json',
+        }
+    }).then(resources => {
+        let countmax = resources.data.meta.pagination.total_pages
+        let i2 = countmax++
+
+        let i = 0
+        while (i < i2) {
+            axios({
+                url: "https://panel.danbot.host/api/application/users?page=" + i,
+                method: 'GET',
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+                    'Content-Type': 'application/json',
+                    'Accept': 'Application/vnd.pterodactyl.v1+json',
+                }
+            }).then(response => {
+                users.pop()
+                setTimeout( () => { users.push(...response.data.data) }, 500)
+            }).catch(err => {});
+            i++
+        }
+    }).catch(err => {});;
+}, 60000)
