@@ -35,7 +35,12 @@ module.exports = async(client, r, member) => {
         let role = member.guild.roles.cache.get(found.role);
         if (member.roles.cache.get(found.role) == null) {
             await member.roles.add(role.id);
-            member.user.send("Gave you the role: `" + role.name + "`!");
+            client.channels.cache.get("898041838701781013").send(`<@${member.id}>\nGave you the *${role.name}* role! To remove it click the reaction again.`)
+            .then(msg => {
+               msg.delete(10000)
+            })
+            .catch(e => console.log(e));
+            //member.user.send("Gave you the role: `" + role.name + "`!");
         }
     }
 }
