@@ -1,6 +1,7 @@
 const serverCreateSettings = require('../../../../createData');
+const disbut = require('discord-buttons');
 exports.run = async(client, message, args) => {
-
+    disbut(client);
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
         //.addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
@@ -87,7 +88,12 @@ exports.run = async(client, message, args) => {
                         .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
                         .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
-                    message.channel.send(embed)
+                    const btn1 = new disbut.MessageButton()
+				.setStyle('url')
+				.setLabel('Open the Panel') 
+				.setURL('https://panel.danbot.host')
+				.setDisabled(false); 
+                    message.channel.send({ embed: embed, component: btn1 })
                 }).catch(error => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
@@ -121,7 +127,12 @@ exports.run = async(client, message, args) => {
                         .addField(`__**Created for user ID:**__`, consoleID.consoleID)
                         .addField(`__**Server name:**__`, serverName)
                         .addField(`__**Type:**__`, args[1].toLowerCase())
-                    message.reply(embed)
+                    const btn1 = new disbut.MessageButton()
+				.setStyle('url')
+				.setLabel('Open the Panel') 
+				.setURL('https://panel.danbot.host')
+				.setDisabled(false); 
+                    message.reply({ embed: embed, component: btn1 })
                 }).catch(error => {
                 if (error == "Error: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
