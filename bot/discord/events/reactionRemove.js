@@ -37,7 +37,12 @@ module.exports = async(client, r, member) => {
     let role = member.guild.roles.cache.get(found.role);
     if (member.roles.cache.get(found.role) != null) {
         await member.roles.remove(role);
-        member.user.send("Removed the role: `" + role.name + "`!");
+        client.channels.cache.get("898041838701781013").send(`<@${member.id}>\nRemoved the *${role.name}* role from you! To add it again click the reaction again.`)
+        .then(msg => {
+           msg.delete(10000)
+        })
+        .catch(e => console.log(e));
+        //member.user.send("Removed the role: `" + role.name + "`!");
         let memberRoles = member.roles.cache.map(x => x.id).concat(reactionRole.map(x => x.role))
         let dupped = memberRoles.filter((e, i) => memberRoles.indexOf(e) != i);
         if (dupped.length == 0) member.roles.remove('765869330024890378')
