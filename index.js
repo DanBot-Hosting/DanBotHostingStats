@@ -152,8 +152,10 @@ global.nodeData = new db.table("nodeData")
 */
 
 setInterval(async () => {
+    users.length = 0
+    servers.length = 0
     axios({
-        url: "https://panel.danbot.host/api/application/users",
+        url: "https://panel.danbot.host/api/application/users?per_page=9999999999999",
         method: 'GET',
         followRedirect: true,
         maxRedirects: 5,
@@ -163,26 +165,21 @@ setInterval(async () => {
             'Accept': 'Application/vnd.pterodactyl.v1+json',
         }
     }).then(resources => {
-        let countmax = resources.data.meta.pagination.total_pages
-        let i2 = countmax++
+        users.push(...resources.data.data)
+    }).catch(err => { console.log ('Error fetching users list') });;
 
-        let i = 0
-        while (i < i2) {
-            axios({
-                url: "https://panel.danbot.host/api/application/users?page=" + i,
-                method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                    'Content-Type': 'application/json',
-                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                }
-            }).then(response => {
-                users.pop()
-                setTimeout( () => { users.push(...response.data.data) }, 500)
-            }).catch(err => {});
-            i++
+    axios({
+        url: "https://panel.danbot.host/api/application/servers?per_page=9999999999999",
+        method: 'GET',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+            'Content-Type': 'application/json',
+            'Accept': 'Application/vnd.pterodactyl.v1+json',
         }
-    }).catch(err => {});;
+    }).then(resources => {
+        console.log(resources.data)
+        servers.push(...resources.data.data)
+    }).catch(err => { console.log ('Error fetching servers list') });;
 }, 60000)
