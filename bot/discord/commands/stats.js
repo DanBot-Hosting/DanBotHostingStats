@@ -377,15 +377,15 @@ exports.run = async (client, message) => {
             }
         }).then(res => {
           const json = JSON.parse(res);
-          const newMsg = MessageEmbed()
+          const newMsg = new MessageEmbed()
             .setTitle("Server stats")
             .setDescription("This command currently is on developement stage. If you dont see something here, it is broken.");
-          for(var i = 0; i < json.servers.length: i++) {
+          for(var i = 0; i < json.servers.length; i++) {
             newMsg.addField(`${json.servers[i].name}`, `The server is a ${json.servers[i].type}\More comming soon lul.`)
           }
           msg.edit({ embed: newMsg });
         }).catch(error => {
-          const errorMsg = MessageEmbed()
+          const errorMsg = new MessageEmbed()
             .setTitle("Server stats")
             .setDescription("Couldn't load the server stats.\n```\n" + error + "```");
           msg.edit({ embed: errorMsg });
