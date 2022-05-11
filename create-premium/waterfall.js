@@ -6,7 +6,7 @@ createListPrem.waterfall = (serverName, userID) => ({
     "docker_image": "quay.io/pterodactyl/core:java-11\n",
     "startup": 'java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}',
     "limits": {
-        "memory": 2048,
+        "memory": 4096,
         "swap": -1,
         "disk": 0,
         "io": 500,

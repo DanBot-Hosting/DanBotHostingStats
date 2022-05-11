@@ -6,7 +6,7 @@ createListPrem.bedrock = (serverName, userID) => ({
     "docker_image": "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
     "startup": "./bedrock_server",
     "limits": {
-        "memory": 2048,
+        "memory": 4096,
         "swap": -1,
         "disk": 0,
         "io": 500,

@@ -6,7 +6,7 @@ createListPrem.arma = (serverName, userID) => ({
     "docker_image": "quay.io/parkervcp/pterodactyl-images:game_arma3",
     "startup": './{{SERVER_BINARY}} -ip=0.0.0.0 -port={{SERVER_PORT}} -profiles=./serverprofile -bepath=./battleye -cfg=\\"{{BASIC}}\\" -config=\\"{{CONFIG}}\\" -mod=\\"{{MODIFICATIONS}}\\" -serverMod=\\"{{SERVERMODS}}\\" {{STARTUP_PARAMS}}',
     "limits": {
-        "memory": 2048,
+        "memory": 4096,
         "swap": -1,
         "disk": 0,
         "io": 500,

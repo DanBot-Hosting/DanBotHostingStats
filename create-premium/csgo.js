@@ -6,7 +6,7 @@ createListPrem.csgo = (serverName, userID) => ({
     "docker_image": "quay.io/pterodactyl/core:source",
     "startup": "./srcds_run -game csgo -console -port {{SERVER_PORT}} +ip 0.0.0.0 +map {{SRCDS_MAP}} -strictportbind -norestart +sv_setsteamaccount {{STEAM_ACC}}",
     "limits": {
-        "memory": 2048,
+        "memory": 4096,
         "swap": -1,
         "disk": 0,
         "io": 500,

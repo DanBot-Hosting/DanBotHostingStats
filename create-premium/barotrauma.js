@@ -6,7 +6,7 @@ createListPrem.barotrauma = (serverName, userID) => ({
     "docker_image": "quay.io/parkervcp/pterodactyl-images:ubuntu_source",
     "startup": './DedicatedServer -batchmode',
     "limits": {
-        "memory": 2048,
+        "memory": 4096,
         "swap": -1,
         "disk": 0,
         "io": 500,
