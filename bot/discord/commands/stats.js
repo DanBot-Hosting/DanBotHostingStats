@@ -1,15 +1,15 @@
 const { MessageEmbed } = require("discord.js");
-const axios = require("axios"); 
+const axios = require("axios");
 
-exports.run = async (client, message) => {
-
+exports.run = async (client, message, args) => {
   // filesize function
 
   function formatFileSize(bytes, decimalPoint) {
     if (bytes === 0) return "0 Bytes";
     let k = 1024,
       dm = decimalPoint || 2,
-      sizes = ["Bytes", "KB", "MB", "GB", "TB"],
+      //sizes = ["Bytes", "KB", "MB", "GB", "TB"],
+      sizes = ["KB", "MB", "GB", "TB"],
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
@@ -27,7 +27,7 @@ exports.run = async (client, message) => {
     .setColor(`RANDOM`)
     .addField(
       `__**Please wait...**__`,
-      `Loading all node's stats! (If this takes longer than 5seconds. This command is broken)`,
+      `Loading all node's stats! (If this takes longer than 5 seconds, something went wrong.)`,
       true
     );
   const msg = await message.channel.send({ embed: firstEmb });
@@ -38,7 +38,7 @@ exports.run = async (client, message) => {
     "Node10", "Node11", "Node12",
     "Node13", "Node14", "Node15",
     "Node16", "Storage1"]*/
-   let nodes = ["Node1", "Node2"]; // For now we will try with 2 nodes. Small steps
+   //let nodes = ["Node1", "Node2"]; // For now we will try with 2 nodes. Small steps
 
 
   /*const getData = (key) => nodes.map(node => parseFloat((nodeData.fetch(`${node}.${key}`) || 0))).reduce((oldValue, value) => oldValue + value, 0);
@@ -366,27 +366,36 @@ exports.run = async (client, message) => {
     });*/
 
   // New start
-  axios({
-            url: "https://status.danbot.host/json/stats.json",
-            method: 'GET',
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                'Content-Type': 'application/json',
-                // Todo? 'Accept': 'Application/vnd.pterodactyl.v1+json',
-            }
-        }).then(res => {
-          const json = JSON.parse(res);
+  	axios.get("https://status.danbot.host/json/stats.json")
+        .then((response) => {
+	  //const res = response;
+	  /*if(err) {
+		const errorMsg = new MessageEmbed()
+			.setTitle("Server stats")
+			.setDescription("Couldn't load the server stats.\n```\n" + err + "```");
+		msg.edit({ embed: errorMsg });
+	  }*/
+	  console.log(response)
+
+	  //console.log(res)
+          const json = response.data
+	  //console.log(json)
           const newMsg = new MessageEmbed()
             .setTitle("Server stats")
             .setDescription("This command currently is on developement stage. If you dont see something here, it is broken.");
           for(var i = 0; i < json.servers.length; i++) {
-            newMsg.addField(`${json.servers[i].name}`, `The server is a ${json.servers[i].type}\More comming soon lul.`)
+	    if((json.servers[i].online6 == false && json.servers[i].online4 == false) || json.servers[i].memory_total == null) {
+		newMsg.addField(`${json.servers[i].name}`,`Offline`)
+	    } else {
+            newMsg.addField(`${json.servers[i].name} (${json.servers[i].type}, ${json.servers[i].location})`, `CPU: ${json.servers[i].cpu}% ` +
+		`RAM: ${formatFileSize(json.servers[i].memory_used)} / ${formatFileSize(json.servers[i].memory_total, 1)} ` +
+		`Disk: ${formatFileSize(json.servers[i].hdd_used, 1)} / ${formatFileSize(json.servers[i].hdd_total, 1)}`, true)
+	    }
           }
           msg.edit({ embed: newMsg });
         }).catch(error => {
           const errorMsg = new MessageEmbed()
-            .setTitle("Server stats")
+            .setTitle("Server stats - Error")
             .setDescription("Couldn't load the server stats.\n```\n" + error + "```");
           msg.edit({ embed: errorMsg });
    })
@@ -394,4 +403,4 @@ exports.run = async (client, message) => {
   /*msg.edit({
     embed: newEmbed
   });*/
-};
+}
