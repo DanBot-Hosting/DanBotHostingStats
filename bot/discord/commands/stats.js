@@ -389,7 +389,7 @@ exports.run = async (client, message, args) => {
 	    } else {
             newMsg.addField(`${json.servers[i].name} (${json.servers[i].type}, ${json.servers[i].location})`, `CPU: ${json.servers[i].cpu}% ` +
 		`RAM: ${formatFileSize(json.servers[i].memory_used)} / ${formatFileSize(json.servers[i].memory_total, 1)} ` +
-		`Disk: ${formatFileSize(json.servers[i].hdd_used, 1)} / ${formatFileSize(json.servers[i].hdd_total, 1)}`, true)
+		`Disk: ${formatFileSize(json.servers[i].hdd_used * 1000, 1)} / ${formatFileSize(json.servers[i].hdd_total * 1000, 1)}`, true)
 	    }
           }
           msg.edit({ embed: newMsg });
