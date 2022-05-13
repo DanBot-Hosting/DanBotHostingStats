@@ -1,6 +1,5 @@
 const exec = require('child_process').exec;
 const nstatus = require('../serverStatus');
-const nUsage = require('../serverUsage');
 
 module.exports = async (client) => {
 
@@ -93,21 +92,6 @@ module.exports = async (client) => {
         let channel = client.channels.cache.get("898041845878247487");
         setInterval(async () => {
             let embed = await nstatus.getEmbed();
-
-            let messages = await channel.messages.fetch({
-                limit: 10
-            })
-            messages = messages.filter(x => x.author.id === client.user.id).last();
-            if (messages == null) channel.send(embed)
-            else messages.edit(embed)
-
-        }, 15000)
-    }
-
-    if (enabled.NodeStats === true) {
-        let channel = client.channels.cache.get("898041847363035157");
-        setInterval(async () => {
-            let embed = await nUsage.getEmbed();
 
             let messages = await channel.messages.fetch({
                 limit: 10
