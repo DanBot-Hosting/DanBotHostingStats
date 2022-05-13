@@ -59,8 +59,7 @@
     "transliteration": "^2.2.0",
     "unirest": "^0.6.0",
     "validator": "^13.1.1",
-    "weird-to-normal-chars": "^1.8.1",
-    "discord-buttons": "4.0.0-deprecated" 
+    "weird-to-normal-chars": "^1.8.1"
   },
   "devDependencies": {
     "opusscript": "0.0.7",
