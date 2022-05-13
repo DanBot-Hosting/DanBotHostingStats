@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
-  if(!args[0] || args[0] != "confirm") { 
+  /*if(!args[0] || args[0] != "confirm") { 
     const disEmbed = new MessageEmbed()
       .setTitle("Server Stats")
       .setDescription("This command is currently not working as expected.\nIf you still want to run this command please type `DBH!stats confirm`.")
@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
       .setColor("RED")
       .setFooter("Do not report unnecessary bug. This command is broken. We know that. And we would fix it if we would know how.")
     return message.channel.send(disEmbed);
-  }
+  }*/
 
   const firstEmb = new MessageEmbed()
     .setColor(`RANDOM`)
