@@ -6,7 +6,7 @@ createListPrem.avorion = (serverName, userID) => ({
     "docker_image": "quay.io/pterodactyl/core:source",
     "startup": './server.sh --galaxy-name \\"{{GALAXY_NAME}}\\" --admin {{ADMIN_ID}} --datapath galaxy --port {{SERVER_PORT}} --query-port {{QUERY_PORT}} --steam-master-port {{STEAM_MASTER_PORT}} --steam-query-port {{STEAM_QUERY_PORT}} --max-players {{MAX_PLAYERS}} --difficulty {{DIFFICULTY}} --collision-damage {{COLLISION_DMG}} --save-interval {{SAVE_INTERVAL}} --same-start-sector {{SAME_START_SECTOR}} --server-name \\"{{SERVER_NAME}}\\" --threads {{GAME_THREADS}} --listed {{SERVER_LISTED}}',
     "limits": {
-        "memory": 2048,
+        "memory": 4096,
         "swap": -1,
         "disk": 0,
         "io": 500,

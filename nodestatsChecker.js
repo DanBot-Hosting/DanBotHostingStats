@@ -290,27 +290,6 @@ if (enabled.nodestatsChecker === true) {
             });
         })
 
-        //Lavalink chercker
-        ping2.ping('lava.danbot.host', 2333)
-            .then(() => nodeStatus.set("lava.danbot.host", {
-                timestamp: Date.now(),
-                status: true
-            }))
-            .catch((e) => nodeStatus.set("lava.danbot.host", {
-                timestamp: Date.now(),
-                status: false
-            }));
-
-        ping2.ping('lava2.danbot.host', 2333)
-            .then(() => nodeStatus.set("lava2.danbot.host", {
-                timestamp: Date.now(),
-                status: true
-            }))
-            .catch((e) => nodeStatus.set("lava2.danbot.host", {
-                timestamp: Date.now(),
-                status: false
-            }));
-
         ping2.ping('176.31.125.135', 22)
             .then(() => nodeStatus.set("vpsfrance-1", {
                 timestamp: Date.now(),

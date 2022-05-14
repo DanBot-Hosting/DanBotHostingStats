@@ -1,19 +1,10 @@
 const exec = require('child_process').exec;
 const nstatus = require('../serverStatus');
-const nUsage = require('../serverUsage');
-const db = require("quick.db");
-const pretty = require('prettysize');
 
 module.exports = async (client) => {
 
-    function formatFileSize(bytes, decimalPoint) {
-        if (bytes === 0) return "0 Bytes";
-        let k = 1024,
-            dm = decimalPoint || 2,
-            sizes = ["Bytes", "KB", "MB", "GB", "TB"],
-            i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-    }
+    setInterval(() => { console.log("Users cached: " + users.length);}, 30000)
+    setInterval(() => { console.log("Servers cached: " + servers.length);}, 30000)
 
     let guild = client.guilds.cache.get("639477525927690240");
 
@@ -46,8 +37,11 @@ module.exports = async (client) => {
         "text": "over DanBot Hosting",
         "type": "WATCHING"
     }, {
-        "text": "DanBot FM",
-        "type": "LISTENING"
+        "text": "free servers be created!",
+        "type": "WATCHING"
+    }, {
+        "text": "over " + users.length + " happy clients",
+        "type": "WATCHING"
     }];
 
     //Initializing Cooldown
@@ -98,21 +92,6 @@ module.exports = async (client) => {
         let channel = client.channels.cache.get("898041845878247487");
         setInterval(async () => {
             let embed = await nstatus.getEmbed();
-
-            let messages = await channel.messages.fetch({
-                limit: 10
-            })
-            messages = messages.filter(x => x.author.id === client.user.id).last();
-            if (messages == null) channel.send(embed)
-            else messages.edit(embed)
-
-        }, 15000)
-    }
-
-    if (enabled.NodeStats === true) {
-        let channel = client.channels.cache.get("898041847363035157");
-        setInterval(async () => {
-            let embed = await nUsage.getEmbed();
 
             let messages = await channel.messages.fetch({
                 limit: 10

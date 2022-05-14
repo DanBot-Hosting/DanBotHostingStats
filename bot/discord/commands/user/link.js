@@ -45,47 +45,9 @@ exports.run = async(client, message, args) => {
                 return msg.edit("Request to link your account canceled.", null).then(channel.delete())
             }
 
-            const axios = require('axios');
-            let arr = [];
-
-            axios({
-                url: "https://panel.danbot.host" + "/api/application/users",
-                method: 'GET',
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                    'Content-Type': 'application/json',
-                    'Accept': 'Application/vnd.pterodactyl.v1+json',
-                }
-            }).then(resources => {
-                let countmax = resources.data.meta.pagination.total_pages
-                let i2 = countmax++
-
-                let i = 0
-                while (i < i2) {
-                    axios({
-                        url: "https://panel.danbot.host" + "/api/application/users?page=" + i,
-                        method: 'GET',
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                            'Content-Type': 'application/json',
-                            'Accept': 'Application/vnd.pterodactyl.v1+json',
-                        }
-                    }).then(response => {
-                        arr.push(...response.data.data)
-                    }).catch(err => {});
-                    i++
-                }
-                // console.log(resources.data.meta.pagination)
-                let total = resources.data.meta.pagination.total
-            }).catch(err => {});;
             //Find account then link
             setTimeout(async() => {
-                console.log(arr.length)
-                const consoleUser = arr.find(usr => usr.attributes ? usr.attributes.email === messagecollected.content : false);
+                const consoleUser = users.find(usr => usr.attributes ? usr.attributes.email === messagecollected.content : false);
 
                 if (!consoleUser) {
                     channel.send('I can\'t find a user with that account! \nRemoving channel!')
@@ -146,7 +108,7 @@ exports.run = async(client, message, args) => {
                                         .addField('__**Linked Console ID:**__', consoleUser.attributes.id)
 
                                     channel.send("Account linked!").then(
-                                        client.channels.get(config.DiscordBot.oLogs).send(`<@${message.author.id}> linked their account. Heres some info: `, embedstaff),
+                                        client.channels.cache.get(config.DiscordBot.oLogs).send(`<@${message.author.id}> linked their account. Heres some info: `, embedstaff),
                                         setTimeout(() => {
                                             channel.delete();
                                         }, 5000)

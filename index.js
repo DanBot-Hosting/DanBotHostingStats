@@ -10,6 +10,10 @@ Free Hosting forever!                                            /____/
 global.config = require("./config.json");
 global.enabled = require("./enable.json")
 
+//New global cache system (Lazy way)
+global.users = []
+global.servers = []
+
 //New functions to clean some code up - Not completed
 require('./functions')
 
@@ -146,3 +150,36 @@ global.nodeData = new db.table("nodeData")
         })
     }, 2000);
 */
+
+setInterval(async () => {
+    users.length = 0
+    servers.length = 0
+    axios({
+        url: "https://panel.danbot.host/api/application/users?per_page=9999999999999",
+        method: 'GET',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+            'Content-Type': 'application/json',
+            'Accept': 'Application/vnd.pterodactyl.v1+json',
+        }
+    }).then(resources => {
+        users.push(...resources.data.data)
+    }).catch(err => { console.log ('Error fetching users list') });;
+
+    axios({
+        url: "https://panel.danbot.host/api/application/servers?per_page=9999999999999",
+        method: 'GET',
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
+            'Content-Type': 'application/json',
+            'Accept': 'Application/vnd.pterodactyl.v1+json',
+        }
+    }).then(resources => {
+        console.log(resources.data)
+        servers.push(...resources.data.data)
+    }).catch(err => { console.log ('Error fetching servers list') });;
+}, 60000)
