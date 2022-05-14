@@ -35,7 +35,7 @@ exports.run = async(client, message, args) => {
          embed.setDescription("`Node.js` is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser. Node.js lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser. [Source: Wikipedia](https://en.wikipedia.org/wiki/Node.js)" +
          "\n**If you are a starter, it is easier to use aio!**")
          break;
-       case ("reddiscordbot" || "rdb"):
+       case "reddiscordbot": case "rdb":
          embed.setDescription("RedDiscordBot is an open-source Discord Bot written in Python. Many commands and functions can be added trough Discord." + 
          "\nThe installation is easy, and you do NOT need to know anything about coding! Aside from installing and updating, every part of the bot can be controlled from within Discord. [Source: RedDiscordBot Github](https://github.com/Cog-Creators/Red-DiscordBot)")
          break;
@@ -51,10 +51,10 @@ exports.run = async(client, message, args) => {
        case "haste":
          embed.setDescription("Haste is an open-source pastebin software written in node.js, which is easily installable in any network. It can be backed by either redis or filesystem, and has a very easy adapter interface for other stores. A publicly available version can be found at hastebin.com. [Source: Hastebin Github](https://github.com/toptal/haste)")
          break;
-       case ("ts3" || "mumble"):
+       case "ts3": case "mumble":
          embed.setDescription("TeamSpeak3 and Mumble are voice-servers to communicate with friends.")
          break;
-       case ("mongodb" || "redis" || "postgres"):
+       case "mongodb": case "redis": case "postgres":
          embed.setDescription("MongoDB, Redis and PostgreSQL are Databases. Use them to store data.\nFor MySQL you can create databases under the Databases Tab in the panel.")
          break;
        case "nginx":
