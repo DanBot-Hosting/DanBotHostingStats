@@ -1,5 +1,5 @@
 exports.run = async(client, message, args) => {
-    if (message.member.roles.cache.find(r => r.id === config.DiscordBot.roles.staff) == null) return message.reply("Sorry but this command is now staff only. <3");
+    if (message.member.roles.cache.find(r => r.id === config.DiscordBot.roles.staff) == null) return message.reply("Sorry but this command is now for :egg:'s only. <3");
 
     // Lets only staff use the command [useless - never uncomment - i will find you if you do]
     // if (!message.member.roles.cache.get('898041751099539497')) return;
