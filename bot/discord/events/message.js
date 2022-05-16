@@ -59,6 +59,8 @@ module.exports = async (client, message) => {
             }
         }
     };
+    
+    if (message.content?.toLowerCase().includes("egg")) return message.reply("no 🥚 for you :)");
 
     if (message.author.bot) return; // to stop bots from creating accounts, tickets and more.
     if (message.channel.type === "dm") return; //stops commands working in dms
