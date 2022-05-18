@@ -51,13 +51,18 @@ let nstatus = {
         name: 'Canada 1',
         data: 'vpscanada-1'
     }],
-
+    
+    "Reverse Proxys": [{
+        name: 'France Proxy',
+        data: '164.132.74.251'
+    }, {
+        name: 'Canada Proxy',
+        data: '192.95.42.75'
+    }],
+    
     "Misc": [{
         name: 'Mail Server',
         data: 'mail.danbot.host'
-    }, {
-        name: 'Reverse Proxy',
-        data: '164.132.74.251'
     }, {
         name: 'MySQL Databases',
         data: 'mysqldatabases'
