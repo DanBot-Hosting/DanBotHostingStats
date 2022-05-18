@@ -30,19 +30,7 @@ module.exports = async (client) => {
     // setInterval(() => {
     //     let _codes = codes.fetchAll();
     //     client.guilds.cache.get('639477525927690240').channels.cache.get('795884677688721448').setTopic(`There's a total of ${_codes.length} active codes (${_codes.map(x => typeof x.data == 'string'? JSON.parse(x.data).balance : x.data.balance).reduce((a, b) => a + b, 0)} servers)`)
-    // }, 60000);
-
-    //Auto Activities List
-    const activities = [{
-        "text": "over DanBot Hosting",
-        "type": "WATCHING"
-    }, {
-        "text": "free servers be created!",
-        "type": "WATCHING"
-    }, {
-        "text": "over " + users.length + " happy clients",
-        "type": "WATCHING"
-    }];
+    // }, 60000);v
 
     //Initializing Cooldown
     client.cooldown = {};
@@ -65,6 +53,18 @@ module.exports = async (client) => {
     }, 30000)
 
     setInterval(() => {
+        //Auto Activities List
+        const activities = [{
+            "text": "over DanBot Hosting",
+            "type": "WATCHING"
+        }, {
+            "text": "free servers be created!",
+            "type": "WATCHING"
+        }, {
+            "text": "over " + users.length + " happy clients",
+            "type": "WATCHING"
+        }];
+
         const activity = activities[Math.floor(Math.random() * activities.length)];
         client.user.setActivity(activity.text, {
             type: activity.type
