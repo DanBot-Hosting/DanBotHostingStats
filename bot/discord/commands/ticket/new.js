@@ -27,12 +27,14 @@ exports.run = async(client, message, args) => {
 
         channel.updateOverwrite(message.author.id, {
             SEND_MESSAGES: true,
-            VIEW_CHANNEL: true
+            VIEW_CHANNEL: true,
+            READ_MESSAGE_HISTORY: true
         });
 
         channel.updateOverwrite('898041751099539497', {
             SEND_MESSAGES: true,
-            VIEW_CHANNEL: true
+            VIEW_CHANNEL: true,
+            READ_MESSAGE_HISTORY: true
         })
 
     }, 1000);
