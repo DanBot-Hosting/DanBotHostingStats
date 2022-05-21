@@ -50,24 +50,28 @@ module.exports = async (client, message) => {
     let actualExecutorId;
     try {
         let blacklisted = [
-            '739231758087880845', '786363228287664190',
-            '738839334333186068', '738840097218101309',
-            '738844675372482720', '738846229919825992',
-            '738548111323955270', '739175011721413009',
-            '738785336187945051', '793547999753666620',
-            '853645123748495382'
+            '898041849783148585', //Lounge
+            '898041854262648842', //Thank-you-dan
+            '898041855135068221', //Suggestions
+            '898041853096628267', //Invite-bot
+            '928029676209852517', //Egg-bugs
+            '951252958316728340', //Egg-suggestions
+            '898041857550995506', //Memes
+            '898041859681701948', //Movie-night
+            '898041861040664576', //Setups
+            '898041858666668092', //Pets
+            '898041892279836692', //Hosting
+            '898041894746066985', //Python
+            '898041895987585024', //Javascript
+            '898041896956469249', //HTML-and-CSS
+            '898041898835509328', //Java
+            '919995547358744576', //x86-assembly
+            '938630088256286720'  //VPS Hosting
         ]
         //Channel checker
 
         if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '898041751099539497') == null && message.member.roles.cache.find(x => x.id === '898041743566594049') == null) &&
-            !(message.channel.id === '738548111323955270' && command === 'info')) return;
-
-        //Check if the commands are disabled.
-
-        if (webSettings.get('commands') !== false && message.member.roles.cache.get('898041741695926282') == null) {
-            message.channel.send('Discord Bot commands are currently disabled...\n reason: `' + webSettings.get('commands') + '`');
-            return;
-        };
+            !(message.channel.id === '898041853096628267' && command === 'info')) return;
 
         if (sudo.get(message.member.id) && message.member.roles.cache.find(r => r.id === "898041747597295667") && args[0] != "sudo") { //Doubble check the user is deffinaly allowd to use this command
             actualExecutorId = JSON.parse(JSON.stringify({a: message.member.id})).a; // Deep clone actual sender user ID
