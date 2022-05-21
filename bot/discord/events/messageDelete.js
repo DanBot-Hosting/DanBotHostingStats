@@ -14,7 +14,8 @@ module.exports = (client, message) => {
             .addField("Author ", `${message.author.tag} (ID: ${message.author.id})`)
             .addField("Message Content:", `${descriptionfix}`)
             .setTimestamp()
-            .setFooter("Message delete in " + message.channel.name);
+            .setFooter("Message delete in " + message.channel.name)
+            .setImage(message.attachments.first() ? message.attachments.first().proxyURL : null)
         client.channels.cache.get(config.DiscordBot.mLogs).send({
             embed
         });
