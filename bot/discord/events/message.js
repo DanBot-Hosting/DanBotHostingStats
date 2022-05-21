@@ -14,27 +14,6 @@ module.exports = async (client, message) => {
 
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed)
     };
-
-    const swears = [
-        'faggot', 'fag', 'https://tenor.com/view/dance-potato-gif-19158928', 'http://tenor.com/view/dance-potato-gif-19158928', 'https://tenor.com/view/potato-dancing-glitch-gif-14354119', 'http://tenor.com/view/potato-dancing-glitch-gif-14354119', 'dottomogous'
-    ]
-    if (swears.some(x => message.content.toLowerCase().includes(weirdToNormalChars(x)))) {
-        /*if (message.author.bot) {
-            message.reply('said a blacklisted word, Its been kicked from the server')
-            message.delete()
-            return message.member.kick()
-        }*/
-        message.reply('Do __NOT__ use that word in this server. You will get muted next time...')
-        message.delete()
-        const channel = client.channels.cache.get(config.DiscordBot.mLogs)
-        const bword = new Discord.MessageEmbed()
-            .setTitle('User Said Blacklisted word')
-            .setDescription(`User: ${message.author.tag} Has said\n\n**${message.content}**\n\n and It includes a blacklisted word`)
-            .setColor('RANDOM')
-        channel.send(bword)
-    }
-
-
     //Auto reactions on suggestions
     if (message.channel.id === "898041855135068221" || message.channel.id === "951252958316728340") {
         if (message.content.includes(">")) {
