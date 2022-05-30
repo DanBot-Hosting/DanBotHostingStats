@@ -7,19 +7,19 @@ exports.run = async(client, message, args) => {
 
     const embed = new Discord.MessageEmbed()
         .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
-        .setDescription(`> ❓ | Are you sure you want to close this ticket?\n> 💡 | React with emojis to **open/close** this ticket!`)
+        .setDescription(`> ❓ | Are you sure you want to close this ticket?\n> React with ✅ to close this ticket, react with ❎ to keep the ticket open.`)
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp()
 
     const msg = await message.channel.send(`${message.author}`, embed)
-    await msg.react('✔️').catch((err) => {
+    await msg.react('✅').catch((err) => {
         message.channel.send(err)
     })
-    await msg.react('❌').catch((err) => {
+    await msg.react('❎').catch((err) => {
         message.channel.send(err)
     })
 
-    const filter = (rect, usr) => ['✔️', '❌'].includes(rect.emoji.name) && usr.id === message.author.id
+    const filter = (rect, usr) => ['✅', '❎'].includes(rect.emoji.name) && usr.id === message.author.id
     const response = await msg.awaitReactions(filter, {
         max: 1,
         time: 30000,
