@@ -4,7 +4,7 @@ const { weirdToNormalChars } = require('weird-to-normal-chars');
 module.exports = async (client, message) => {
 
 
-    if (message.mentions.users.size >= 20) {
+    if (message.mentions.users.size > 0 && [...new Set(message.mentions.users.map(x => x.id))].size >= 20) {
         message.member.ban({ reason: 'Suspected raid. Pinging more than 20 users.' });
         message.channel.send(`${message.member.toString()} has been banned for pinging more than 20 users`);
 
@@ -15,7 +15,7 @@ module.exports = async (client, message) => {
             .setTimestamp());
     };
 
-    
+
     //Auto reactions on suggestions
     if ((message.channel.id === "898041855135068221" || message.channel.id === "951252958316728340") && !message.content.includes(">")) {
         await message.react('👍');
@@ -38,7 +38,10 @@ module.exports = async (client, message) => {
 
     if (message.author.bot) return; // to stop bots from creating accounts, tickets and more.
     if (message.channel.type === "dm") return; //stops commands working in dms
+
     const prefix = config.DiscordBot.Prefix;
+
+
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const commandargs = message.content.split(' ').slice(1).join(' ');
