@@ -28,7 +28,7 @@ module.exports = async (client, message) => {
     if (message.channel.type == "dm") {
         if (message.author.id == "137624084572798976")
             client.channels.cache.get(args[0]).send(message.content.split(' ').slice(1).join(' '))
-        else if (message.author.id != "640161047671603205")
+        else if (message.author.id != client.user.id)
             client.channels.cache.get('898041919022723072').send(message.author.username + " (ID: " + message.author.id +
                 ", PING: <@" + message.author.id + ">)" + "\n" + message.content.replace('@', '@|'))
     }
