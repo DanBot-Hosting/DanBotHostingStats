@@ -1,6 +1,3 @@
-const fetch = require('node-fetch');
-const axios = require('axios');
-const { weirdToNormalChars } = require('weird-to-normal-chars');
 module.exports = async (client, message) => {
 
 
