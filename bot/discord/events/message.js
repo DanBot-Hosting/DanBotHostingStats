@@ -1,5 +1,15 @@
 const prefix = config.DiscordBot.Prefix;
 
+const whitelisted = { // commands inside the array means only said commands are whitelisted. if empty then all commands are allowed
+    '898041849783148585': ['snipe'], // lounge
+    '898041853096628267': ['info'], // add bot channel
+    '898041866589700128': [], // command channel
+    '898041878447013948': [], // command channel
+    '898041850890440725': [], // command channel
+}
+
+const whitelistedKeys = Object.keys(whitelisted);
+
 module.exports = async (client, message) => {
 
 
@@ -44,15 +54,6 @@ module.exports = async (client, message) => {
 
     let actualExecutorId;
     try {
-        let whitelisted = { // commands inside the array means only said commands are whitelisted. if empty then all commands are allowed
-            '898041849783148585': ['snipe'], // lounge
-            '898041853096628267': ['info'], // add bot channel
-            '898041866589700128': [], // command channel
-            '898041878447013948': [], // command channel
-            '898041850890440725': [], // command channel
-        }
-
-        let whitelistedKeys = Object.keys(whitelisted);
 
         //Channel checker
         if (!(['898041751099539497', '898041743566594049'].some(allowed => message.member.roles.cache.has(allowed))) || // user is not a staff member
