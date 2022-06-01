@@ -44,26 +44,20 @@ module.exports = async (client, message) => {
 
     let actualExecutorId;
     try {
-        let blacklisted = [
-            '898041849783148585', //Lounge
-            '898041854262648842', //Thank-you-dan
-            '898041855135068221', //Suggestions
-            '898041853096628267', //Invite-bot
-            '928029676209852517', //Egg-bugs
-            '951252958316728340', //Egg-suggestions
-            '898041857550995506', //Memes
-            '898041859681701948', //Movie-night
-            '898041861040664576', //Setups
-            '898041858666668092', //Pets
-            '898041892279836692', //Hosting
-            '898041894746066985', //Python
-            '898041895987585024', //Javascript
-            '898041896956469249', //HTML-and-CSS
-            '898041898835509328', //Java
-            '919995547358744576', //x86-assembly
-            '938630088256286720'  //VPS Hosting
-        ]
+        let whitelisted = { // commands inside the array means only said commands are whitelisted. if empty then all commands are allowed
+            '898041849783148585': ['snipe'], // lounge
+            '898041853096628267': ['info'], // add bot channel
+            '898041866589700128': [], // command channel
+            '898041878447013948': [], // command channel
+            '898041850890440725': [], // command channel
+        }
+
+        let whitelistedKeys = Object.keys(whitelisted);
+
         //Channel checker
+        if (!(['898041751099539497', '898041743566594049'].some(allowed => message.member.roles.cache.has(allowed))) || // user is not a staff member
+            !(whitelistedKeys.includes(message.channel.id) && (whitelisted[message.channel.id].length == 0 || whitelisted[message.channel.id].includes(command)))) return;
+
 
         if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '898041751099539497') == null && message.member.roles.cache.find(x => x.id === '898041743566594049') == null) &&
             !(message.channel.id === '898041853096628267' && command === 'info')) return;
