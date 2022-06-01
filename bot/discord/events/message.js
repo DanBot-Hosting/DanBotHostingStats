@@ -15,15 +15,10 @@ module.exports = async (client, message) => {
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed)
     };
     //Auto reactions on suggestions
-    if (message.channel.id === "898041855135068221" || message.channel.id === "951252958316728340") {
-        if (message.content.includes(">")) {
+    if ((message.channel.id === "898041855135068221" || message.channel.id === "951252958316728340") && !message.content.includes(">")) {
+        await message.react('👍')
+        message.react('👎')
 
-        } else {
-            message.react('👍')
-            setTimeout(() => {
-                message.react('👎')
-            }, 200);
-        }
     }
 
     if (message.channel.type === "dm") {
@@ -74,7 +69,7 @@ module.exports = async (client, message) => {
             !(message.channel.id === '898041853096628267' && command === 'info')) return;
 
         if (sudo.get(message.member.id) && message.member.roles.cache.find(r => r.id === "898041747597295667") && args[0] != "sudo") { //Doubble check the user is deffinaly allowd to use this command
-            actualExecutorId = JSON.parse(JSON.stringify({a: message.member.id})).a; // Deep clone actual sender user ID
+            actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone actual sender user ID
 
             console.log(`Command being executed with sudo by ${actualExecutorId}`);
             let userToCopy = sudo.get(actualExecutorId);
