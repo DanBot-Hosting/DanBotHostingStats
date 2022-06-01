@@ -58,10 +58,6 @@ module.exports = async (client, message) => {
         if (!(['898041751099539497', '898041743566594049'].some(allowed => message.member.roles.cache.has(allowed))) || // user is not a staff member
             !(whitelistedKeys.includes(message.channel.id) && (whitelisted[message.channel.id].length == 0 || whitelisted[message.channel.id].includes(command)))) return;
 
-
-        if ((blacklisted.includes(message.channel.id) || (message.channel.id == '754441222424363088' && command != 'snipe')) && (message.member.roles.cache.find(x => x.id === '898041751099539497') == null && message.member.roles.cache.find(x => x.id === '898041743566594049') == null) &&
-            !(message.channel.id === '898041853096628267' && command === 'info')) return;
-
         if (sudo.get(message.member.id) && message.member.roles.cache.find(r => r.id === "898041747597295667") && args[0] != "sudo") { //Doubble check the user is deffinaly allowd to use this command
             actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone actual sender user ID
 
