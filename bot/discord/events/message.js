@@ -1,7 +1,6 @@
 const prefix = config.DiscordBot.Prefix;
 
 const whitelisted = { // commands inside the array means only said commands are whitelisted. if empty then all commands are allowed
-    '898041849783148585': ['snipe'], // lounge
     '898041853096628267': ['info'], // add bot channel
     '898041866589700128': [], // command channel
     '898041878447013948': [], // command channel
