@@ -39,7 +39,9 @@ module.exports = async (client, message) => {
     const command = args.shift().toLowerCase();
 
 
-    console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
+    console.log(chalk.magenta("[DISCORD]"),
+        chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`));
+
     let actualExecutorId;
     try {
         let blacklisted = [
