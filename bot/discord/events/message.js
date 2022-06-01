@@ -2,22 +2,24 @@ const fetch = require('node-fetch');
 const axios = require('axios');
 const { weirdToNormalChars } = require('weird-to-normal-chars');
 module.exports = async (client, message) => {
+
+
     if (message.mentions.users.size >= 20) {
         message.member.ban({ reason: 'Suspected raid. Pinging more than 20 users.' });
         message.channel.send(`${message.member.toString()} has been banned for pinging more than 20 users`);
 
-        const embed = new Discord.MessageEmbed()
+        client.channels.cache.get(config.DiscordBot.oLogs).send(new Discord.MessageEmbed()
             .setTitle("User banned for pinging more than 20 users")
             .addField("User", "Banned " + message.member.toString(), true)
             .setColor(0xFF7700)
-            .setTimestamp(new Date());
-
-        client.channels.cache.get(config.DiscordBot.oLogs).send(embed)
+            .setTimestamp());
     };
+
+    
     //Auto reactions on suggestions
     if ((message.channel.id === "898041855135068221" || message.channel.id === "951252958316728340") && !message.content.includes(">")) {
-        await message.react('👍')
-        message.react('👎')
+        await message.react('👍');
+        message.react('👎');
 
     }
 
