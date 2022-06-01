@@ -72,7 +72,7 @@ module.exports = async (client, message) => {
             message.author.id = userToCopy;
         };
 
-        if (command === "server" || command === "user" || command === "staff" || command === "dan" || command === "ticket") {
+        if (['server', 'user', 'staff', 'dan', 'ticket'].some(x => x == command)) {
             //Cooldown setting
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
