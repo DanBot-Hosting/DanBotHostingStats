@@ -93,7 +93,7 @@ exports.run = async(client, message, args) => {
         serverCreateSettings_Prem.createServer(types[args[1].toLowerCase()])
             .then(response => {
 
-                userPrem.set(message.author.id + '.used', userP.used + 1);
+                userPrem.add(message.author.id + '.used', 1);
 
                 let embed = new Discord.MessageEmbed()
                     .setColor(`GREEN`)
