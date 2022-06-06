@@ -72,9 +72,9 @@ module.exports = async(client, member, guild) => {
             .addField(`Invite code used:`, '`' + invite.code + '`', true)
             .addField(`Invite used`, invite.uses + ' times', true);
 
-        client.channels.cache.get(config.DiscordBot.invitechannel).send(embed)
+        client.channels.cache.get('898041916732604436').send(embed)
 
-        let inviteChannel = client.channels.cache.get(config.DiscordBot.inviterewmsg);
+        let inviteChannel = client.channels.cache.get('898041844871618600');
 
         if (Object.keys(config.DiscordBot.invites).includes(invite.uses.toString())) {
             await inviter.removeRoles(Object.values(config.DiscordBot.invites))
