@@ -59,7 +59,7 @@ exports.run = async(client, message, args) => {
             .addField(`📡 | Account Info`, `> **Username:** ${userData.fetch(message.author.id + ".username")}\n> **Email:** ||${userData.fetch(message.author.id + ".email")}||\n> **Link Date:** ${userData.fetch(message.author.id + ".linkDate")}\n> **Link Time:** ${userData.fetch(message.author.id + ".linkTime")}`)
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp()
-        channel.send(`${message.author}`, embed)
+        channel.send(`${message.author} <@&983825037050142782>`, embed)
 
     }
 }
