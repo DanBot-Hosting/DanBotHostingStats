@@ -35,7 +35,7 @@ exports.run = async(client, message, args) => {
     
     const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
-        .setDescription(`List of servers: (use DBH!server create-donator <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
+        .setDescription(`List of servers: (use DBH!server create-donator <type> <name>)\n\n*Please note that bot may fail to connect to nodes which may lead into this process giving out an error.*\n`)
         .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
         .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
