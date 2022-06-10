@@ -25,29 +25,25 @@ module.exports = {
     usage: "new",
     example: "new",
     requiredPermissions: [],
-    checks: [],
+    checks: [{
+        check: () => config.discord.commands.userCommandsEnabled,
+        error: "The user commands are disabled!"
+    }],
     /**
      * @param {Client} client 
      * @param {Message} message 
      * @param {Array} args 
      */
     run: async (client, message, args) => {
-        
-        
-        if (!config.discord.commands.userCommandsEnabled) {
-            message.reply("The user commands are disabled!");
-            return;
-        }
-        
-        const userCategory = client.channels.cache.get(config.discord.categories.userCreation);      
-        
+        const userCategory = client.channels.cache.get(config.discord.categories.userCreation);
+
         if (!userCategory) {
             message.reply("The user category does not exist! Please contact a admin!");
             return;
         }
-        
+
         const user = await UserSchema.findOne({ userId: message.author.id });
-        
+
         if (user) {
             message.reply("You already have an account!");
             return;
@@ -58,7 +54,7 @@ module.exports = {
 
             chan.delete()
         }
-        
+
         const chan = await userCategory.createChannel(`${message.author.username}-${message.author.discriminator}`, {
             type: "text",
             permissionOverwrites: [

@@ -20,7 +20,10 @@ module.exports = {
     usage: "resetpassword",
     example: "resetpassword",
     requiredPermissions: [],
-    checks: [],
+    checks: [{
+        check: () => config.discord.commands.userCommandsEnabled,
+        error: "The user commands are disabled!"
+    }],
     /** 
      * @param {Client} client 
      * @param {Message} message 

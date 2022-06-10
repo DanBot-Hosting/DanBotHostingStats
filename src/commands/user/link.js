@@ -29,7 +29,10 @@ module.exports = {
     usage: "link",
     example: "link",
     requiredPermissions: [],
-    checks: [],
+    checks: [{
+        check: () => config.discord.commands.userCommandsEnabled,
+        error: "The user commands are disabled!"
+    }],
     /**
      * @param {Client} client 
      * @param {Message} message 
