@@ -1,5 +1,7 @@
 const { Client, Message, MessageEmbed } = require("discord.js");
-const config = require("../config.json")
+const config = require("../config.json");
+const chalk = require("chalk");
+
 
 module.exports = {
     event: "messageCreate",
@@ -54,6 +56,7 @@ module.exports = {
                     }
                 }
 
+                console.log(chalk.green('[Discord]'), `${message.author.tag} (${message.author.id}) used the command`, chalk.blue(command.name), `from subgroup ${chalk.blue(args[0])}`);
                 command.run(client, message, args.slice(2));
             }
         } else {
@@ -75,7 +78,7 @@ module.exports = {
                     }
                 }
             }
-
+            console.log(chalk.green('[Discord]'), `${message.author.tag} (${message.author.id}) used the command`, chalk.blue(cmdD.name));
             cmdD.run(client, message, args.slice(1));
         }
     }
