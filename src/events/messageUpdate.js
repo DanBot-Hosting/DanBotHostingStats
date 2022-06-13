@@ -14,6 +14,9 @@ module.exports = {
            return
         }
 
+        if (oldMessage.channel.parentId == config.discord.categories.userCreation) return;
+
+
         if (oldMessage.author.bot) return;
 
         if (oldMessage.embeds.length !== newMessage.embeds.length) return;

@@ -117,6 +117,12 @@ module.exports = {
         for (const question of questions) {
 
             if (question?.id == "verify") {
+
+                creationEmbed.description = `Sending Verification Email...`
+
+                await msg.edit({ embeds: [creationEmbed] })
+
+
                 const emailData = {
                     from: config.mail.from,
                     to: questions[0]?.value,
@@ -185,6 +191,11 @@ module.exports = {
             }
 
         }
+
+        creationEmbed.description = `Linking Account..`
+
+        await msg.edit({ embeds: [creationEmbed] })
+
 
         const salt = await bycrypt.genSalt(15);
 

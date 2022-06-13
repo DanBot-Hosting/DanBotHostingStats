@@ -210,6 +210,11 @@ module.exports = {
         creationEmbed.footer = null;
 
         await msg.edit({ embeds: [creationEmbed] })
+        message.author.send({ embeds: [creationEmbed] })
+
+        setTimeout(() => {
+            chan.delete();
+        }, 600000)
 
         return;
     },

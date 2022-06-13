@@ -1,3 +1,4 @@
+const config = require("../../config.json");
 const { Client, Message, MessageEmbed } = require("discord.js");
 const resetPassword = require("../../utils/pterodactyl/user/resetPassword");
 const UserSchema = require("../../utils/Schemas/User");

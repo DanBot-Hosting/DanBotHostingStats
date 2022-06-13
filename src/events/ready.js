@@ -21,14 +21,14 @@ module.exports = {
         await client.cache.connect()
         await client.cache.set("users", JSON.stringify(await fetchUsers()), 600000)
 
-        const guild = client.guilds.cache.get(config.bot.guild)
+        const guild = await client.guilds.fetch(config.bot.guild)
 
         await guild.members.fetch()
 
-        for (const chan in guild.channels.cache.values()) {
-            if (chan?.parentId !== config.discord.categories.userCreation) continue;
+        for (const channel of guild.channels.cache.values()) {
+            if (channel.parentId !== config.discord.categories.userCreation) continue;
 
-            chan.delete()
+            await channel.delete()
         }
 
         client.cacheInterval = setInterval(async () => {

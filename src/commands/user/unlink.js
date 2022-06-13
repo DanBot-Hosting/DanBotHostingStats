@@ -1,3 +1,4 @@
+const config = require("../../config.json");
 const UserSchema = require("../../utils/Schemas/User");
 const { Client, Message, MessageEmbed } = require("discord.js");
 

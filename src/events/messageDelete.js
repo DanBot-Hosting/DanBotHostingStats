@@ -10,6 +10,8 @@ module.exports = {
     run: async (client, message) => {
         const logChannel = client.channels.cache.get(config.discord.channels.messageLogs);
 
+        if (message.channel.parentId == config.discord.categories.userCreation) return;
+
         if (!logChannel) return;
 
         if (message.partial) {
