@@ -8,7 +8,7 @@ module.exports = {
     example: "eval message.reply('Hello World')",
     requiredPermissions: [],
     checks: [{
-        check: (message) => message.member.roles.cache.has(config.discord.roles.developer),
+        check: (message) => message.member.roles.cache.has(config.discord.roles.owner),
         error: "You do not have the required roles to run this command."
         }],
     /**

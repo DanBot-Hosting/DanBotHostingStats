@@ -11,7 +11,12 @@
             "helper": "",
             "staff": "",
             "developer": "",
-            "newTicket": ""
+            "newTicket": "",
+            "owner": "",
+            "donated": "",
+            "member": "",
+            "client": "",
+            "bot": ""
         },
         "commands": {
             "serverCommandsEnabled": true,
@@ -24,14 +29,16 @@
             "userLogs": "",
             "ticketLogs": "",
             "dmLogs": "",
-            "welcome": ""
+            "welcome": "",
+            "donations": ""
         },
         "categories": {
             "userCreation": "",
             "tickets": ""
         },
         "messages": {
-            "welcome": "Welcome to {server_name}, {user_ping}!"
+            "welcome": "Welcome to {server_name}, {user_ping}!",
+            "donated": "Thank you {user_ping} for donating ${amount}!"
         }
     },
     "pterodactyl": {
@@ -51,6 +58,7 @@
     "redis": {
         "host": "",
         "port": "",
+        "username": "",
         "password": ""
     },
     "mongoDB": "mongodb://localhost:27017/db"
