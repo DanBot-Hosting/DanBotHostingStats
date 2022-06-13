@@ -182,7 +182,9 @@ module.exports = {
         }
 
         creationEmbed.description = "Creating Account Please wait...";
-        creationEmbed.footer = null
+        creationEmbed.footer = null;
+
+        await msg.edit({ embeds: [creationEmbed] })
 
         const resData = await createUser(data);
 
@@ -202,12 +204,22 @@ module.exports = {
             username: questions[1].value.toLowerCase(),
             domains: [],
             linkDate: Date.now(),
-            premiumCount: 0,
-            premiumUsed: 0,
         })
 
+        const logEmbed = new MessageEmbed()
+            .setColor("GREEN")
+            .setTitle("User Created")
+            .setDescription(`${message.author} has created an account!`)
+            .addField("Username", questions[1].value.toString())
+
+        const logChan = message.guild.channels.cache.get(config.discord.channels.userLogs)
+
+        if (logChan) {
+            logChan.send({ embeds: [logEmbed] })
+        }
+
         creationEmbed.description = `Panel: ${config.pterodactyl.panelUrl}\nUsername: ${data.username}\nEmail: ${data.email}\nPassword: ${data.password}`;
-        creationEmbed.footer = null;
+        creationEmbed.footer = { text: `A dm with this info has also been sent` };
 
         await msg.edit({ embeds: [creationEmbed] })
         message.author.send({ embeds: [creationEmbed] })

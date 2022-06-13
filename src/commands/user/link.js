@@ -216,6 +216,18 @@ module.exports = {
             premiumUsed: 0,
         })
 
+        const logEmbed = new MessageEmbed()
+            .setColor("GREEN")
+            .setTitle("User linked")
+            .setDescription(`${message.author} has linked an account!`)
+            .addField("Username", user.username.toString())
+
+        const logChan = message.guild.channels.cache.get(config.discord.channels.userLogs)
+
+        if (logChan) {
+            logChan.send({ embeds: [logEmbed] })
+        }
+
         creationEmbed.description = `Account Linked! Successfully linked ${user.username} to your account!`;
         creationEmbed.footer = null;
 

@@ -26,6 +26,18 @@ module.exports = {
             return;
         }
 
+        const logEmbed = new MessageEmbed()
+            .setColor("GREEN")
+            .setTitle("User unlinked")
+            .setDescription(`${message.author} has unlinked an account!`)
+            .addField("Username", User.username.toString())
+
+        const logChan = message.guild.channels.cache.get(config.discord.channels.userLogs)
+
+        if (logChan) {
+            logChan.send({ embeds: [logEmbed] })
+        }
+
         message.reply("You have been unlinked from your panel account.");
     },
 }
