@@ -39,7 +39,22 @@
         "messages": {
             "welcome": "Welcome to {server_name}, {user_ping}!",
             "donated": "Thank you {user_ping} for donating ${amount}!"
-        }
+        },
+        "reactionRoles": [
+            {
+                "messageId": "",
+                "reactions": [
+                    {
+                        "roles": "",
+                        "emoji": ""
+                    },
+                    {
+                        "roles": "",
+                        "emoji": ""
+                    }
+                ]
+            }
+        ]
     },
     "pterodactyl": {
         "panelUrl": "",

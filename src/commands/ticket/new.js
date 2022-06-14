@@ -56,6 +56,19 @@ module.exports = {
 
         message.channel.send(`Your ticket has been created! Please check ${ticket} to view your ticket!`);
 
+        const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
+
+        if (ticketLoggingChannel) {
+            const embed = new MessageEmbed()
+            .setTitle(`Ticket Created`)
+            .setDescription(`**Created By**: ${message.author.tag} (${message.author.id})\n**Ticket**: ${ticket} (${message.channel.id})`)
+            .setTimestamp()
+            .setColor('GREEN')
+            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+
+            return ticketLoggingChannel.send({ embeds: [embed] });
+        }
+
         return;
     },
 }

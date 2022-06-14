@@ -23,7 +23,6 @@ module.exports = {
      * @param {Array} args 
      */
     run: async (client, message, args) => {
-
         const user = message.mentions.members.first() || message.guild.members.cache.get(args[0])
 
         if (!user) {
@@ -41,5 +40,18 @@ module.exports = {
         });
 
         message.channel.send(`${user} has been added to this ticket.`);
+
+        const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
+
+        if (ticketLoggingChannel) {
+            const embed = new MessageEmbed()
+            .setTitle('User Added to Ticket')
+            .setDescription(`**User**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})\n**Added By**: ${message.author.tag} (${message.author.id})`)
+            .setTimestamp()
+            .setColor('GREEN')
+            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+
+            ticketLoggingChannel.send({ embeds: [embed] });
+        }
     },
 }
