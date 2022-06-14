@@ -25,5 +25,18 @@ module.exports = {
         });
 
         message.channel.send(`This ticket has been downgraded to normal staff.`);
+
+        const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
+
+        if (ticketLoggingChannel) {
+            const embed = new MessageEmbed()
+            .setTitle('Ticket Downgraded')
+            .setDescription(`**By**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
+            .setTimestamp()
+            .setColor('RED')
+            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+
+            ticketLoggingChannel.send({ embeds: [embed] });
+        }
     },
 }

@@ -46,5 +46,18 @@ module.exports = {
         });
 
         message.channel.send(`${user} has been remove from the ticket.`);
+
+        const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
+
+        if (ticketLoggingChannel) {
+            const embed = new MessageEmbed()
+            .setTitle('User Removed from Ticket')
+            .setDescription(`**User**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})\n**Removed By**: ${message.author.tag} (${message.author.id})`)
+            .setTimestamp()
+            .setColor('RED')
+            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+
+            ticketLoggingChannel.send({ embeds: [embed] });
+        }
     },
 }
