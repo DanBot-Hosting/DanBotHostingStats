@@ -21,7 +21,7 @@ module.exports = {
 		if (!reason) return message.reply('Please specify a reason.');
 
 		const user = await message.guild.members.fetch(userId).catch(() => null);
-		if (user === 'invalidMember') return message.reply('Are you sure that user ID is correct?');
+		if (!user) return message.reply('Are you sure that user ID is correct?');
 
 		const embed = new MessageEmbed()
 			.setTitle('Report')
