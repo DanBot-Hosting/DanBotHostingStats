@@ -1,0 +1,65 @@
+{
+    "bot": {
+        "token": "",
+        "prefix": "",
+        "guild": ""
+    },
+    "discord": {
+        "roles": {
+            "admin": "",
+            "mod": "",
+            "helper": "",
+            "staff": "",
+            "developer": "",
+            "newTicket": "",
+            "owner": "",
+            "donated": "",
+            "member": "",
+            "client": "",
+            "bot": ""
+        },
+        "commands": {
+            "serverCommandsEnabled": true,
+            "userCommandsEnabled": true,
+            "ticketCommandsEnabled": true
+        },
+        "channels": {
+            "messageLogs": "",
+            "moderationLogs": "",
+            "userLogs": "",
+            "ticketLogs": "",
+            "dmLogs": "",
+            "welcome": "",
+            "donations": ""
+        },
+        "categories": {
+            "userCreation": "",
+            "tickets": ""
+        },
+        "messages": {
+            "welcome": "Welcome to {server_name}, {user_ping}!",
+            "donated": "Thank you {user_ping} for donating ${amount}!"
+        }
+    },
+    "pterodactyl": {
+        "panelUrl": "",
+        "adminKey": "",
+        "userKey": ""
+    },
+    "mail": {
+        "host": "",
+        "port": "",
+        "auth": {
+            "user": "",
+            "pass": ""
+        },
+        "from": ""
+    },
+    "redis": {
+        "host": "",
+        "port": "",
+        "username": "",
+        "password": ""
+    },
+    "mongoDB": "mongodb://localhost:27017/db"
+}
