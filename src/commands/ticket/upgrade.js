@@ -1,3 +1,4 @@
+const punishmentsSchema = require("../../utils/Schemas/Punishments");
 const config = require("../../config.json");
 const { Client, Message, MessageEmbed } = require("discord.js");
 
@@ -20,6 +21,14 @@ module.exports = {
      * @param {Array} args 
      */
     run: async (client, message, args) => {
+
+        const userData = await punishmentsSchema.findOne({ userId: message.author.id })
+
+        if (userData && userData.ticketBanned) {
+            message.channel.send("You have been banned from making a ticket.");
+            return;
+        }
+
         await message.channel.permissionOverwrites.edit(config.discord.roles.staff, {
             VIEW_CHANNEL: false,
         });
@@ -34,11 +43,11 @@ module.exports = {
 
         if (ticketLoggingChannel) {
             const embed = new MessageEmbed()
-            .setTitle('Ticket Upgraded')
-            .setDescription(`**By**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
-            .setTimestamp()
-            .setColor('RED')
-            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+                .setTitle('Ticket Upgraded')
+                .setDescription(`**By**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
+                .setTimestamp()
+                .setColor('RED')
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 
             ticketLoggingChannel.send({ embeds: [embed] });
         }

@@ -11,13 +11,15 @@ module.exports = {
     run: async (client, oldMessage, newMessage) => {
 
         if (oldMessage.partial || newMessage.partial) {
-           return
+            await newMessage.fetch();
+            await oldMessage.fetch();
         }
 
-        if (oldMessage.channel.parentId == config.discord.categories.userCreation) return;
+        if (oldMessage?.channel?.parentId == config.discord.categories.userCreation) return;
 
+        if (!oldMessage?.content || !newMessage?.content) return;
 
-        if (oldMessage.author.bot) return;
+        if (oldMessage?.author?.bot) return;
 
         if (oldMessage.embeds.length !== newMessage.embeds.length) return;
 

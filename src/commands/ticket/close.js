@@ -1,3 +1,4 @@
+const punishmentsSchema = require("../../utils/Schemas/Punishments");
 const config = require("../../config.json");
 const { Client, Message, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 
@@ -20,6 +21,14 @@ module.exports = {
      * @param {Array} args 
      */
     run: async (client, message, args) => {
+
+        const userData = await punishmentsSchema.findOne({ userId: message.author.id })
+
+        if (userData && userData.ticketBanned) {
+            message.channel.send("You have been banned from making a ticket.");
+            return;
+        }
+
         const row = new MessageActionRow().addComponents(
             new MessageButton()
             .setCustomId("close")
@@ -46,8 +55,10 @@ module.exports = {
 
         const collector = msg.createMessageComponentCollector({ componentType: 'BUTTON', time: 30000 });
 
-        collector
-            .on('collect', i => {
+        collector.on('collect', async i => {
+
+            const user = i.user;
+
             if (i.user.id !== message.author.id) return i.reply('Only the user who invoked this command can close the ticket.');
 
             if (i.customId === "close") {
@@ -60,19 +71,19 @@ module.exports = {
                 }, 5000);
 
                 const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
-            
+
                 if (ticketLoggingChannel) {
                     const messages = await message.channel.messages.fetch({ limit: 100, after: 0 })
                     const transformedMessages = [...messages.mapValues((m) => `${m.author.tag}: ${m.cleanContent}`).reverse()]
 
                     const embed = new MessageEmbed()
-                    .setTitle('Ticket closed')
-                    .setDescription(`**By**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
-                    .setTimestamp()
-                    .setColor('RED')
-                    .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
-        
-                    ticketLoggingChannel.send({ embeds: [embed], attachments: [{ name: 'transcript.txt', attachment: Buffer.from(transformedMessages) }] });
+                        .setTitle('Ticket closed')
+                        .setDescription(`**By**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
+                        .setTimestamp()
+                        .setColor('RED')
+                        .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+
+                    ticketLoggingChannel.send({ embeds: [embed] })
                 }
             } else {
                 i.reply({
@@ -80,8 +91,7 @@ module.exports = {
                 });
                 return;
             }
-        })
-        .on('end', (collected, reason) => {
+        }).on('end', (collected, reason) => {
             if (!collected.size && reason === 'time') msg.edit({ content: 'You ran out of time.', components: [] })
         })
     }

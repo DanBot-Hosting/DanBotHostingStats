@@ -1,7 +1,6 @@
 const { Client, MessageReaction, User } = require("discord.js");
-const { discord: { reactionRoles } } = require('../config.json');
+const config = require('../config.json');
 
-// TODO: test this
 module.exports = {
     event: "messageReactionRemove",
     /**
@@ -18,14 +17,26 @@ module.exports = {
         if (reaction.partial) await reaction.fetch();
         if (message.partial) await message.fetch();
 
-        const rrObject = reactionRoles.find(m => m.messageId === message.id);
+        const rrObject = config.discord.reactionRoles.find(m => m.messageId === message.id);
         if (!rrObject) return;
-        
+
         const reactionObject = rrObject.reactions.find(m => m.emoji === emoji.name || m.emoji === emoji.id);
         if (!reactionObject) return;
 
+        const placeholders = {
+            "{role_name}": message.guild.roles.cache.get(reactionObject.roleId).name,
+            "{server_name}": message.guild.name,
+        }
+
+        let msg = config.discord.messages.roleRemoved;
+
+        for (const placeholder in placeholders) {
+            msg = msg.replace(placeholder, placeholders[placeholder]);
+        }
+
         try {
             await member.roles.remove(reactionObject.roleId, 'Reaction role');
+            await member.send(msg);
         } catch (err) {
             throw new Error(`Failed to remove role ${reactionObject.roleId} to ${member.user.tag}`, err.message);
         }

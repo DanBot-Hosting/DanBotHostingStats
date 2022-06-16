@@ -30,7 +30,8 @@
             "ticketLogs": "",
             "dmLogs": "",
             "welcome": "",
-            "donations": ""
+            "donations": "",
+            "suggestions": ""
         },
         "categories": {
             "userCreation": "",
@@ -38,18 +39,20 @@
         },
         "messages": {
             "welcome": "Welcome to {server_name}, {user_ping}!",
-            "donated": "Thank you {user_ping} for donating ${amount}!"
+            "donated": "Thank you {user_ping} for donating ${amount}!",
+            "roleAdded": "You have been given the role {role_name}!",
+            "roleRemoved": "You have been removed from the role {role_name}!"
         },
         "reactionRoles": [
             {
                 "messageId": "",
                 "reactions": [
                     {
-                        "roles": "",
+                        "roleId": "",
                         "emoji": ""
                     },
                     {
-                        "roles": "",
+                        "roleId": "",
                         "emoji": ""
                     }
                 ]
@@ -58,8 +61,7 @@
     },
     "pterodactyl": {
         "panelUrl": "",
-        "adminKey": "",
-        "userKey": ""
+        "adminKey": ""
     },
     "mail": {
         "host": "",

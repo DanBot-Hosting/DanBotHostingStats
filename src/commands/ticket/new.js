@@ -1,3 +1,4 @@
+const punishmentsSchema = require("../../utils/Schemas/Punishments");
 const config = require("../../config.json");
 const { Client, Message, MessageEmbed } = require("discord.js");
 
@@ -17,6 +18,13 @@ module.exports = {
      * @param {Array} args 
      */
     run: async (client, message, args) => {
+
+        const userData = await punishmentsSchema.findOne({ userId: message.author.id })
+
+        if (userData && userData.ticketBanned) {
+            message.channel.send("You have been banned from making a ticket.");
+            return;
+        }
 
         const category = message.guild.channels.cache.get(config.discord.categories.tickets);
 
@@ -60,11 +68,11 @@ module.exports = {
 
         if (ticketLoggingChannel) {
             const embed = new MessageEmbed()
-            .setTitle(`Ticket Created`)
-            .setDescription(`**Created By**: ${message.author.tag} (${message.author.id})\n**Ticket**: ${ticket} (${message.channel.id})`)
-            .setTimestamp()
-            .setColor('GREEN')
-            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+                .setTitle(`Ticket Created`)
+                .setDescription(`**Created By**: ${message.author.tag} (${message.author.id})\n**Ticket**: ${ticket} (${message.channel.id})`)
+                .setTimestamp()
+                .setColor('GREEN')
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 
             return ticketLoggingChannel.send({ embeds: [embed] });
         }

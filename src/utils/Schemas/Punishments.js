@@ -12,22 +12,36 @@ const PunishmentsSchema = new mongoose.Schema({
     // The logs of mutes they have
     mutes: {
         type: Array,
-        required: true,
+        required: false,
         default: []
     },
 
     // The logs of bans they have
     bans: {
         type: Array,
-        required: true,
+        required: false,
         default: []
     },
 
     // The logs of kicks they have
     kicks: {
         type: Array,
-        required: true,
+        required: false,
         default: []
+    },
+
+    // If the user is Ticket Banned
+    ticketBanned: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+
+    // If the user is suggestion banned
+    suggestionBanned: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 });
 
