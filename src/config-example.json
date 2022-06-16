@@ -63,6 +63,10 @@
         "panelUrl": "",
         "adminKey": "",
         "aplicationKey": "",
+        "freeNodes": [1,3,4,5],
+        "freeGamingNodes": [],
+        "donatorNodes": [2],
+        "donatorGamingNodes": [],
         "serverCreationData": [
             {
                 "name": "AIO",
@@ -74,9 +78,10 @@
                 "disk": 0,
                 "swap": 0,
                 "io": 500,
+                "databases": 2,
                 "allocations": 1,
                 "backups": 10,
-                "allowedNodes": [1,2,3,4,5]
+                "gaming": false
             }
         ]
     },
