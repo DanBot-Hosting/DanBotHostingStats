@@ -30,6 +30,13 @@ const PunishmentsSchema = new mongoose.Schema({
         default: []
     },
 
+    // The warns they have
+    warnings: {
+        type: Array,
+        required: false,
+        default: []
+    },
+
     // If the user is Ticket Banned
     ticketBanned: {
         type: Boolean,

@@ -1,6 +1,9 @@
 const { Client, Message, MessageEmbed } = require("discord.js");
 const ms = require("ms");
 const config = require("../../config.json");
+const punishmentsSchema = require("../../utils/Schemas/Punishments");
+
+
 module.exports = {
     name: "mute",
     description: "Mute someone when they break a rule",

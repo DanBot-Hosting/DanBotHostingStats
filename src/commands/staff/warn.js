@@ -1,3 +1,7 @@
+const config = require("../../config.json");
+const punishmentsSchema = require("../../utils/Schemas/Punishments");
+const { Client, Message, MessageEmbed } = require("discord.js");
+
 module.exports = {
     name: "warn",
     description: "Warn a user",
@@ -35,5 +39,58 @@ module.exports = {
             message.channel.send("You cannot warn yourself.");
             return;
         }
+
+        const punishments = await punishmentsSchema.findOne({ userId: user?.user?.id });
+
+        if (!punishments) {
+            await punishmentsSchema.create({
+                userId: user?.user?.id,
+                warnings: [{
+                    moderator: message.author.id,
+                    reason: reason,
+                    date: new Date()
+                }]
+            });
+        } else {
+            await punishmentsSchema.updateOne({ userId: user?.user?.id }, {
+                $push: {
+                    warnings: {
+                        moderator: message.author.id,
+                        reason: reason,
+                        date: new Date()
+                    }
+                }
+            });
+        }
+
+        message.channel.send(`${user} has been warned.`);
+
+        const embed = new MessageEmbed()
+            .setColor("#ff0000")
+            .setTitle("Warning")
+            .addField("User", user?.user?.tag)
+            .addField("Moderator", message.author.tag)
+            .addField("Reason", reason)
+            .setTimestamp();
+
+        const modChannel = message.guild.channels.cache.get(config.discord.channels.moderationLogs);
+
+        if (modChannel) {
+            modChannel.send({
+                embeds: [embed]
+            });
+        }
+
+        const userEmbed = new MessageEmbed()
+            .setTitle("New Warning")
+            .addField("Reason", reason)
+            .setColor("#ff0000")
+            .setTimestamp();
+
+        user?.user?.send({
+            embeds: [userEmbed],
+        }).catch(() => {
+            console.log("Failed to send warning message to user.");
+        })
     }
 }

@@ -1,5 +1,6 @@
 const { Client, Message, MessageEmbed } = require("discord.js");
 const config = require("../../config.json");
+const punishmentsSchema = require("../../utils/Schemas/Punishments");
 
 module.exports = {
     name: "ban",
@@ -71,5 +72,30 @@ module.exports = {
         await user.ban({ reason: reason });
 
         message.channel.send(`${user.user.toString()} has been banned from the server.`);
+
+        const punishment = await punishmentsSchema.findOne({
+            userId: user.user.id,
+        });
+
+        if (!punishment) {
+            await punishmentsSchema.create({
+                userId: user?.user?.id,
+                bans: [{
+                    moderator: message.author.id,
+                    reason: reason,
+                    date: new Date()
+                }]
+            });
+        } else {
+            await punishment.update({
+                $push: {
+                    bans: {
+                        moderator: message.author.id,
+                        reason: reason,
+                        date: new Date()
+                    }
+                }
+            });
+        }
     },
 }
