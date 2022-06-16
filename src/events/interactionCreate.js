@@ -11,6 +11,9 @@ module.exports = {
     run: async (client, interaction) => {
 
         if (interaction.isButton()) {
+
+            if (!["downvote", "upvote"].includes(interaction.customId)) return;
+
             const suggestion = await Suggestions.findOne({ messageId: interaction.message.id });
 
             if (!suggestion) {

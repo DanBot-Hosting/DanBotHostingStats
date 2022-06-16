@@ -23,7 +23,7 @@ const fetchUsers = async () => {
             lastName: user.attributes.last_name,
             createdAt: user.attributes.created_at,
             updatedAt: user.attributes.updated_at,
-        }
+        } 
     })
 }
 

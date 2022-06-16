@@ -61,7 +61,24 @@
     },
     "pterodactyl": {
         "panelUrl": "",
-        "adminKey": ""
+        "adminKey": "",
+        "aplicationKey": "",
+        "serverCreationData": [
+            {
+                "name": "AIO",
+                "description": "AIO is a All In one server with nodejs, python ruby and more.",
+                "nestId": 5,
+                "eggId": 15,
+                "cpu": 0,
+                "ram": 1024,
+                "disk": 0,
+                "swap": 0,
+                "io": 500,
+                "allocations": 1,
+                "backups": 10,
+                "allowedNodes": [1,2,3,4,5]
+            }
+        ]
     },
     "mail": {
         "host": "",

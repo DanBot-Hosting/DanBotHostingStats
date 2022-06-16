@@ -16,10 +16,10 @@ const passwordGen = (length) => {
 }
 
 module.exports = {
-    name: "resetpassword",
+    name: "password",
     description: "reset user password",
-    usage: "resetpassword",
-    example: "resetpassword",
+    usage: "password",
+    example: "password",
     requiredPermissions: [],
     checks: [{
         check: () => config.discord.commands.userCommandsEnabled,
