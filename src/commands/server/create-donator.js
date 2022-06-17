@@ -7,7 +7,7 @@ const Premium = require("../../utils/Schemas/Premium");
 
 module.exports = {
     name: "create-donator",
-    description: "Create a new server.",
+    description: "Create a Donator new server.",
     usage: "create-donator <type> [name]",
     example: "create-donator NodeJS Example",
     requiredPermissions: [],
@@ -119,9 +119,6 @@ module.exports = {
 
             return;
         }
-
-
-
 
         const embed = new MessageEmbed()
             .setTitle("Server Created")
