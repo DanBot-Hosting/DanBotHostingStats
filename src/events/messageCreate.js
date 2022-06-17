@@ -58,22 +58,22 @@ module.exports = {
 
                 if (command?.cooldown) {
                     let cooldown = await client.cache.get("cooldowns")
-    
+
                     if (cooldown) {
                         cooldown = JSON.parse(cooldown)
-    
+
                         const userCooldowns = cooldown?.find(c => c.userId === message.author.id)
-    
+
                         if (!userCooldowns) {
                             cooldown.push({ userId: message.author.id, cooldowns: [{ toplevelCommand: args[0], subcommand: command.name, time: Date.now() + command.cooldown }] })
                             await client.cache.set("cooldowns", JSON.stringify(cooldown))
                         }
-    
-                        const cooldownData = userCooldowns?.cooldowns?.find(c => c.toplevelCommand === command.name && c.subcommand === command.name)
-    
+
+                        const cooldownData = userCooldowns?.cooldowns?.find(c => c.toplevelCommand === args[0] && c.subcommand === command.name)
+
                         if (cooldownData) {
                             const time = cooldownData.time - Date.now()
-    
+
                             if (time > 0) {
                                 message.reply(config.discord.messages.coolDown.replace("{time}", `${time / 1000}`))
                                 return
@@ -83,7 +83,6 @@ module.exports = {
                                 await client.cache.set("cooldowns", JSON.stringify(cooldown), config.bot.cooldownCacheTTL)
                             }
                         } else {
-                            console.log("Setting cooldown")
                             userCooldowns?.cooldowns.push({ toplevelCommand: args[0], subcommand: command.name, time: Date.now() + command.cooldown })
                             await client.cache.set("cooldowns", JSON.stringify(cooldown), config.bot.cooldownCacheTTL)
                         }
@@ -145,7 +144,6 @@ module.exports = {
                             await client.cache.set("cooldowns", JSON.stringify(cooldown), config.bot.cooldownCacheTTL)
                         }
                     } else {
-                        console.log("Setting cooldown")
                         userCooldowns?.cooldowns.push({ toplevelCommand: command.name, subcommand: null, time: Date.now() + command.cooldown })
                         await client.cache.set("cooldowns", JSON.stringify(cooldown), config.bot.cooldownCacheTTL)
                     }
