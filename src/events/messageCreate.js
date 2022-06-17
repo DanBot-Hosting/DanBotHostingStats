@@ -67,7 +67,7 @@ module.exports = {
                             const time = cooldownData.time - Date.now()
 
                             if (time > 0) {
-                                message.reply(`Sorry, You have to wait ${time / 1000} seconds before using this command again.`)
+                                message.reply(config.discord.messages.coolDown.replace("{time}", `${time / 1000}`))
                                 return
                             } else {
                                 cooldown.splice(cooldown.indexOf(cooldownData), 1)
@@ -118,7 +118,7 @@ module.exports = {
                         const time = cooldownData.time - Date.now()
 
                         if (time > 0) {
-                            message.reply(`Sorry, You have to wait ${time / 1000} seconds before using this command again.`)
+                            message.reply(config.discord.messages.coolDown.replace("{time}", `${time / 1000}`))
                             return
                         } else {
                             cooldown.splice(cooldown.indexOf(cooldownData), 1)

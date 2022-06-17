@@ -41,7 +41,8 @@
             "welcome": "Welcome to {server_name}, {user_ping}!",
             "donated": "Thank you {user_ping} for donating ${amount}!",
             "roleAdded": "You have been given the role {role_name}!",
-            "roleRemoved": "You have been removed from the role {role_name}!"
+            "roleRemoved": "You have been removed from the role {role_name}!",
+            "coolDown": "Sorry, You have to wait {time} seconds before using this command again."
         },
         "reactionRoles": [
             {
