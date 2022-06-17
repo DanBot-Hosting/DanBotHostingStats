@@ -28,5 +28,7 @@ module.exports = {
         if (channel) {
             channel.send(msg);
         }
+
+        member.roles.add(config.discord.roles.member).catch(console.error);
     }
 }

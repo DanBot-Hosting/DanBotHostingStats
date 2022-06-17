@@ -39,5 +39,7 @@ module.exports = {
         }
 
         message.reply("You have been unlinked from your panel account.");
+
+        message.member.roles.remove(config.discord.roles.client).catch(console.error);
     },
 }

@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     consoleId: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
 
     // The Email of the User (hashed)
@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: false
     },
 
     // The Domains of the user

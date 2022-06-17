@@ -49,12 +49,6 @@ module.exports = {
             return;
         }
 
-        for (const chan of message.guild.channels.cache.values()) {
-            if (chan.name !== `${message.author.tag.replace("#", "-").toLowerCase()}` && chan?.parentId !== config.discord.categories.userCreation) continue;
-
-            chan.delete()
-        }
-
         const chan = await userCategory.createChannel(`${message.author.username}-${message.author.discriminator}`, {
             type: "text",
             permissionOverwrites: [
@@ -227,7 +221,7 @@ module.exports = {
         await msg.edit({ embeds: [creationEmbed] })
         message.author.send({ embeds: [creationEmbed] })
 
-        message.member.roles.add(config.discord.roles.client)
+        message.member.roles.add(config.discord.roles.client).catch(console.error);
 
         setTimeout(() => {
             chan.delete();

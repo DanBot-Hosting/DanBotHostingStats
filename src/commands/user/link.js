@@ -51,11 +51,6 @@ module.exports = {
             return;
         }
 
-        for (const chan of message.guild.channels.cache.values()) {
-            if (chan.name !== `${message.author.tag.replace("#", "-").toLowerCase()}` && chan?.parentId !== config.discord.categories.userCreation) continue;
-
-            chan.delete()
-        }
 
         const chan = await userCategory.createChannel(`${message.author.username}-${message.author.discriminator}`, {
             type: "text",
@@ -201,6 +196,16 @@ module.exports = {
 
         const hash = await bycrypt.hash(questions[0].value, salt);
 
+        if (await UserSchema.findOne({ email: hash })) {
+            chan.send("This email is already in use!");
+            chan.send(`Account Linking failed!`);
+
+            setTimeout(() => {
+                chan.delete();
+            }, 5000);
+            return;
+        }
+
         const userData = JSON.parse(await client.cache.get("users"));
 
         const user = userData.find(u => u.email === questions[0].value);
@@ -232,6 +237,8 @@ module.exports = {
         creationEmbed.footer = null;
 
         await msg.edit({ embeds: [creationEmbed] })
+
+        message.member.roles.add(config.discord.roles.client).catch(console.error);
 
         return;
 
