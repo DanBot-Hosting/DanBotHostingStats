@@ -2,7 +2,8 @@
     "bot": {
         "token": "",
         "prefix": "",
-        "guild": ""
+        "guild": "",
+        "cooldownCacheTTL": 259200
     },
     "discord": {
         "roles": {

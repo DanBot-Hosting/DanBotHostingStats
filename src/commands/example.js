@@ -10,6 +10,7 @@ module.exports = {
         check: (message, args) => message.channel.name !== "example", // check should return true and or false. The arguments it has is the message and the args.
         error: "You can't run this in a channel called example" // Error is the message it should respond with if the user failed the check.
     }],
+    cooldown: 30000,
     /**
      * @param {Client} client 
      * @param {Message} message 
