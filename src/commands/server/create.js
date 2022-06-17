@@ -99,6 +99,15 @@ module.exports = {
             return;
         }
 
+        const logEmbed = new MessageEmbed()
+            .setTitle("Server Created")
+            .setDescription(`Server **${serverData.data.attributes.name}** has been created.`)
+            .addField("Server ID", serverData.data.attributes.id.toString())
+            .addField("Server Name", serverData.data.attributes.name.toString())
+            .addField("Server Creator", message.author.tag)
+            .setTimestamp()
+
+
         const embed = new MessageEmbed()
             .setTitle("Server Created")
             .setDescription(`Server created successfully!`)
@@ -111,6 +120,14 @@ module.exports = {
         message.reply({
             embeds: [embed]
         })
+
+        const chan = message.guild.channels.cache.get(config.discord.channels.serverLogs);
+
+        if (chan) {
+            chan.send({
+                embeds: [logEmbed]
+            })
+        }
 
         return;
     }

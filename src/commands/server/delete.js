@@ -102,6 +102,13 @@ module.exports = {
                         content: "Server deleted.",
                     })
 
+                    const logEmbed = new MessageEmbed()
+                        .setTitle("Server deleted")
+                        .setDescription(`Server \`${server.attributes.name}\` was deleted.`)
+                        .addField("Owner", message.author.tag)
+                        .setTimestamp()
+                        .setColor("BLURPLE")
+
                     const locations = (await getLocations())?.data;
 
                     if (!locations) return;
@@ -124,6 +131,9 @@ module.exports = {
                         await Premium.updateOne({ userId: message.author.id }, { $inc: { premiumUsed: -1 } })
                     }
 
+                    client.channels.cache.get(config.discord.channels.serverLogs)?.send({
+                        embeds: [logEmbed]
+                    })
                 }
 
                 i?.message?.delete().catch(e => {
