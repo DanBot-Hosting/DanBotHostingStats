@@ -7,6 +7,7 @@ const getNodes = require("../utils/pterodactyl/nodes/getNodes");
 const getAllocations = require("../utils/pterodactyl/nodes/getAllocations");
 const axios = require("axios");
 const tcpPing = require("ping-tcp-js");
+const getServers = require("../utils/pterodactyl/nodes/getServers");
 
 module.exports = {
     event: "ready",
@@ -42,6 +43,8 @@ module.exports = {
         const statusMessage = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.messages?.fetch(config.bot.nodeStatus.messageId);
 
         setInterval(async () => {
+            if (!statusMessage) return console.log(chalk.red("[ERROR]"), "Failed to fetch status message!");
+
             const nodes = await getNodes();
 
 
@@ -100,25 +103,13 @@ module.exports = {
             for (const n in nodeStatus) {
                 const node = nodeStatus[n];
 
-                const allications = await getAllocations(node.id)
-
-                let used = 0;
-                let amount = 0;
-
-                if (allications?.data) {
-                    for (const allocation of allications.data) {
-                        amount++;
-                        if (allocation.attributes.assigned) used++
-                    }
-                }
+                const amount = ((await getAllocations(node.id))?.data?.length) || "N/A";
+                const used = ((await getServers(node.id))?.attributes?.relationships?.servers?.data?.length) || "N/A";
 
                 const status = node.status === "online" ? "🟢 Online" : node.status === "wings offline" ? "🟠 Wings" : "🔴 Offline";
 
                 statusEmbed.description = `${statusEmbed?.description ?? ""}\n**${node.name}**: ${status} (${used}/${amount})`;
             }
-
-
-            if (!statusMessage) return console.log("Failed to fetch message")
 
             statusMessage.edit({
                 embeds: [statusEmbed]
