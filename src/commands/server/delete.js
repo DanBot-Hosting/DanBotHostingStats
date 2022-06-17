@@ -37,7 +37,7 @@ module.exports = {
             return;
         }
 
-        const server = usersServers.find(s => s.attributes.identifier === serverId);
+        const server = usersServers.find(s => s.attributes.identifier === serverId || serverId.startsWith(s.attributes.identifier));
 
         if (!server) {
             message.reply("You don't have a server with that ID.");
