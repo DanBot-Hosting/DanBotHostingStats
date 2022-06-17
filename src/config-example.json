@@ -67,6 +67,7 @@
         "freeGamingNodes": [],
         "donatorNodes": [2],
         "donatorGamingNodes": [],
+        "__comment__": "The above 'nodes' should be the location IDs, the donator nodes and free nodes (and gaming) should be in their own locations if not it will mess this up",
         "serverCreationData": [
             {
                 "name": "AIO",

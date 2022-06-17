@@ -1,8 +1,9 @@
 const config = require("../../config.json");
 const { Client, Message, MessageEmbed } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
-const getEgg = require("../../utils/pterodactyl/server/getEgg");
+const getEgg = require("../../utils/pterodactyl/eggs/getEgg");
 const createServer = require("../../utils/pterodactyl/server/createServer");
+const Premium = require("../../utils/Schemas/Premium");
 
 module.exports = {
     name: "create-donator",
@@ -14,12 +15,25 @@ module.exports = {
         check: () => config.discord.commands.serverCommandsEnabled,
         error: "The server commands are disabled!"
     }],
+    cooldown: 5000,
     /**
      * @param {Client} client 
      * @param {Message} message 
      * @param {string[]} args 
      */
     run: async (client, message, args) => {
+        const premiumData = await Premium.findOne({ userId: message.author.id });
+
+        if (!premiumData) {
+            message.reply("You are not a donator");
+            return;
+        }
+
+        if (premiumData.premiumCount <= premiumData.premiumUsed) {
+            message.reply("You have used all of your premium servers.");
+            return;
+        }
+
         const user = await UserSchema.findOne({ userId: message.author.id });
 
         if (!user) {
@@ -28,7 +42,7 @@ module.exports = {
         }
 
         const type = args[0];
-        if (!args) return message.reply('Please specify a server type.')
+        if (!type) return message.reply('Please specify a server type.')
 
         const name = args?.slice(1)?.join(" ") || "change me! (Settings -> SERVER NAME)";
 
@@ -84,13 +98,21 @@ module.exports = {
             "start_on_completion": false
         }
 
+
+        await Premium.updateOne({ userId: message.author.id }, { $inc: { premiumUsed: 1 } });
+
         const serverData = await createServer(serverCreationData);
 
         if (serverData.error) {
+
+            await Premium.updateOne({ userId: message.author.id }, { $inc: { premiumUsed: -1 } });
+
             const embed = new MessageEmbed()
                 .setTitle("Failed to create server")
                 .setDescription(`Failed to Create the server, Please contact a staff member.`)
-
+                .setFooter({
+                    text: "You've been given back your premium server."
+                })
             message.reply({
                 embeds: [embed]
             })

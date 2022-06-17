@@ -1,7 +1,7 @@
 const config = require("../../config.json");
 const { Client, Message, MessageEmbed } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
-const getEgg = require("../../utils/pterodactyl/server/getEgg");
+const getEgg = require("../../utils/pterodactyl/eggs/getEgg");
 const createServer = require("../../utils/pterodactyl/server/createServer");
 
 module.exports = {
@@ -14,6 +14,7 @@ module.exports = {
         check: () => config.discord.commands.serverCommandsEnabled,
         error: "The server commands are disabled!"
     }],
+    cooldown: 30000,
     /**
      * @param {Client} client 
      * @param {Message} message 
@@ -28,7 +29,7 @@ module.exports = {
         }
 
         const type = args[0];
-        if (!args) return message.reply('Please specify a server type.')
+        if (!type) return message.reply('Please specify a server type.')
 
         const name = args?.slice(1)?.join(" ") || "change me! (Settings -> SERVER NAME)";
 

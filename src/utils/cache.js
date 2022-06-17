@@ -45,7 +45,11 @@ class PterodactylCache {
     }
 
     async set(key, value, expire) {
-        return await this.redis.SETEX(key, expire, value);
+        if (!expire) {
+            return await this.redis.set(key, value);
+        } else {
+            return await this.redis.SETEX(key, expire, value);
+        }
     }
 
     async delete(key) {

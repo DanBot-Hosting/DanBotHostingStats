@@ -3,6 +3,9 @@ const { Client, Message, MessageEmbed, MessageActionRow, MessageButton } = requi
 const UserSchema = require("../../utils/Schemas/User");
 const servers = require("../../utils/pterodactyl/server/servers");
 const deleteServer = require("../../utils/pterodactyl/server/deleteServer");
+const Premium = require("../../utils/Schemas/Premium");
+const getLocations = require("../../utils/pterodactyl/locations/getLocations");
+
 module.exports = {
     name: "delete",
     description: "delete a server.",
@@ -13,6 +16,7 @@ module.exports = {
         check: () => config.discord.commands.serverCommandsEnabled,
         error: "The server commands are disabled!"
     }],
+    cooldown: 15000,
     /**
      * @param {Client} client 
      * @param {Message} message 
@@ -89,7 +93,6 @@ module.exports = {
 
                 const response = await deleteServer(server.attributes.id)
 
-
                 if (response.error) {
                     i.editReply({
                         content: "An error occurred while deleting the server.",
@@ -98,6 +101,29 @@ module.exports = {
                     i.editReply({
                         content: "Server deleted.",
                     })
+
+                    const locations = (await getLocations())?.data;
+
+                    if (!locations) return;
+
+                    const location = locations.find(l => l?.attributes?.short == server?.attributes?.container?.environment?.P_SERVER_LOCATION);
+
+                    if (!location) return;
+
+                    const locationNodes = location?.attributes?.relationships?.nodes?.data;
+
+                    if (!locationNodes) return;
+
+                    const node = locationNodes.find(n => n.attributes.id == server.attributes.node);
+
+                    if (!node) return;
+
+                    const locationId = node?.attributes?.location_id;
+
+                    if (config.pterodactyl.donatorGamingNodes.includes(locationId) || config.pterodactyl.donatorNodes.includes(locationId)) {
+                        await Premium.updateOne({ userId: message.author.id }, { $inc: { premiumUsed: -1 } })
+                    }
+
                 }
 
                 i?.message?.delete().catch(e => {

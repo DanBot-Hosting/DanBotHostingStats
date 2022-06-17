@@ -56,13 +56,41 @@ module.exports = {
                     }
                 }
 
+                if (command?.cooldown) {
+                    let cooldown = await client.cache.get(message.author.id)
+
+                    if (cooldown) {
+                        cooldown = JSON.parse(cooldown)
+                        const cooldownData = cooldown?.find(c => c.toplevelCommand === args[0] && c.subcommand === command.name)
+
+                        if (cooldownData) {
+                            const time = cooldownData.time - Date.now()
+
+                            if (time > 0) {
+                                message.reply(`Sorry, You have to wait ${time / 1000} seconds before using this command again.`)
+                                return
+                            } else {
+                                cooldown.splice(cooldown.indexOf(cooldownData), 1)
+                                cooldown.push({ toplevelCommand: args[0], subcommand: command.name, time: Date.now() + command.cooldown })
+                                await client.cache.set(message.author.id, JSON.stringify(cooldown))
+                            }
+                        } else {
+                            console.log("Setting cooldown")
+                            cooldown.push({ toplevelCommand: args[0], subcommand: command.name, time: Date.now() + command.cooldown })
+                            await client.cache.set(message.author.id, JSON.stringify(cooldown))
+                        }
+                    } else {
+                        await client.cache.set(message.author.id, JSON.stringify([{ toplevelCommand: args[0], subcommand: command.name, time: Date.now() + command.cooldown }]))
+                    }
+                }
+
                 console.log(chalk.green('[Discord]'), `${message.author.tag} (${message.author.id}) used the command`, chalk.blue(command.name), `from subgroup ${chalk.blue(args[0])}`);
                 command.run(client, message, args.slice(2));
             }
         } else {
-            const cmdD = client.commands.get(args[0]);
-            if (cmdD?.requiredPermissions) {
-                for (const permission of cmdD.requiredPermissions) {
+            const command = client.commands.get(args[0]);
+            if (command?.requiredPermissions) {
+                for (const permission of command.requiredPermissions) {
                     if (!message.member.permissions.has(permission)) {
                         message.reply(`Sorry, You don't have the \`${permission}\` permission to use this command.`);
                         return;
@@ -70,16 +98,45 @@ module.exports = {
                 }
             }
 
-            if (cmdD?.checks) {
-                for (const check of cmdD.checks) {
+            if (command?.checks) {
+                for (const check of command.checks) {
                     if (!check.check(message, args.slice(1))) {
                         message.reply(check?.error?.toString() || "You Failed the check.");
                         return;
                     }
                 }
             }
-            console.log(chalk.green('[Discord]'), `${message.author.tag} (${message.author.id}) used the command`, chalk.blue(cmdD.name));
-            cmdD.run(client, message, args.slice(1));
+
+            if (command?.cooldown) {
+                let cooldown = await client.cache.get(message.author.id)
+
+                if (cooldown) {
+                    cooldown = JSON.parse(cooldown)
+                    const cooldownData = cooldown?.find(c => c.toplevelCommand === command.name)
+
+                    if (cooldownData) {
+                        const time = cooldownData.time - Date.now()
+
+                        if (time > 0) {
+                            message.reply(`Sorry, You have to wait ${time / 1000} seconds before using this command again.`)
+                            return
+                        } else {
+                            cooldown.splice(cooldown.indexOf(cooldownData), 1)
+                            cooldown.push({ toplevelCommand: command.name, subcommand: null, time: Date.now() + command.cooldown })
+                            await client.cache.set(message.author.id, JSON.stringify(cooldown))
+                        }
+                    } else {
+                        console.log("Setting cooldown")
+                        cooldown.push({ toplevelCommand: command.name, subcommand: null, time: Date.now() + command.cooldown })
+                        await client.cache.set(message.author.id, JSON.stringify(cooldown))
+                    }
+                } else {
+                    await client.cache.set(message.author.id, JSON.stringify([{ toplevelCommand: command.name, subcommand: null, time: Date.now() + command.cooldown }]))
+                }
+            }
+
+            console.log(chalk.green('[Discord]'), `${message.author.tag} (${message.author.id}) used the command`, chalk.blue(command.name));
+            command.run(client, message, args.slice(1));
         }
     }
 }
