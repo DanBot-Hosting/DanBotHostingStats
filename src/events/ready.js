@@ -39,6 +39,8 @@ module.exports = {
             await client.cache.set("users", JSON.stringify(await fetchUsers()), 600000)
         }, 600000);
 
+        const statusMessage = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.messages?.fetch(config.bot.nodeStatus.messageId);
+
         setInterval(async () => {
             const nodes = await getNodes();
 
@@ -115,13 +117,13 @@ module.exports = {
                 statusEmbed.description = `${statusEmbed?.description ?? ""}\n**${node.name}**: ${status} (${used}/${amount})`;
             }
 
-            const mg = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.messages?.fetch(config.bot.nodeStatus.messageId);
 
-            if (!mg) return console.log("Failed to fetch message")
+            if (!statusMessage) return console.log("Failed to fetch message")
 
-            mg.edit({
+            statusMessage.edit({
                 embeds: [statusEmbed]
             });
+
         }, config.bot.nodeStatus.refreshInterval);
 
     }

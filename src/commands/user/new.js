@@ -124,6 +124,9 @@ module.exports = {
 
             if (collectedMsg.toLowerCase() === "cancel") {
                 chan.send("You have cancelled the creation process!");
+                setTimeout(() => {
+                    chan.delete();
+                }, 5000);
                 return;
             }
 
@@ -223,6 +226,8 @@ module.exports = {
 
         await msg.edit({ embeds: [creationEmbed] })
         message.author.send({ embeds: [creationEmbed] })
+
+        message.member.roles.add(config.discord.roles.client)
 
         setTimeout(() => {
             chan.delete();
