@@ -3,7 +3,12 @@
         "token": "",
         "prefix": "",
         "guild": "",
-        "cooldownCacheTTL": 259200
+        "cooldownCacheTTL": 259200,
+        "nodeStatus": {
+            "channelId": "",
+            "messageId": "",
+            "refreshInterval": 20000
+        }
     },
     "discord": {
         "roles": {

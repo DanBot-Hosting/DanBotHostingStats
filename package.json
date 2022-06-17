@@ -25,6 +25,7 @@
         "mongoose": "^6.3.5",
         "nodemailer": "^6.7.5",
         "ping-tcp-js": "^1.4.1",
-        "redis": "^4.1.0"
+        "redis": "^4.1.0",
+        "undici": "^5.5.1"
     }
 }
