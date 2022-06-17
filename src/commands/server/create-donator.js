@@ -15,7 +15,7 @@ module.exports = {
         check: () => config.discord.commands.serverCommandsEnabled,
         error: "The server commands are disabled!"
     }],
-    cooldown: 5000,
+    cooldown: 30000,
     /**
      * @param {Client} client 
      * @param {Message} message 
