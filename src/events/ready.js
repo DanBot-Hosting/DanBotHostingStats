@@ -3,10 +3,6 @@ const mongoose = require("mongoose");
 const chalk = require("chalk");
 const config = require("../config.json");
 const fetchUsers = require("../utils/pterodactyl/user/fetch");
-const getNodes = require("../utils/pterodactyl/nodes/getNodes");
-const getAllocations = require("../utils/pterodactyl/nodes/getAllocations");
-const axios = require("axios");
-const tcpPing = require("ping-tcp-js");
 
 module.exports = {
     event: "ready",
@@ -35,7 +31,7 @@ module.exports = {
             await channel.delete()
         }
 
-        client.cacheInterval = setInterval(async () => {
+        setInterval(async () => {
             await client.cache.set("users", JSON.stringify(await fetchUsers()), 600000)
         }, 600000);
     }
