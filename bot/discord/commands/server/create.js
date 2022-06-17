@@ -1,7 +1,7 @@
 const serverCreateSettings = require('../../../../createData');
 exports.run = async(client, message, args) => {
     
-    return message.channel.send('Server creation is disabled until further notice! Please try again later');    
+    return message.channel.send('Server creation is disabled until further notice! Please try again later. More information regarding server creation being disabled here: https://discord.com/channels/639477525927690240/898041849783148585/981975067330232340');    
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED").setDescription(`List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`)
