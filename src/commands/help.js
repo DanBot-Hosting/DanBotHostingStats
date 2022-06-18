@@ -15,11 +15,45 @@ module.exports = {
         const command = args[0];
         const subcommand = args?.[1];
 
-        if (!subcommand) {
+        if (!command) {
+
+            const embed = new MessageEmbed()
+                .setTitle("All Commands")
+                .setColor("BLURPLE")
+
+            for (const key of client.commands.keys()) {
+                const cmd = client.commands.get(key);
+                let ad = ""
+                if (!cmd.name) {
+                    for (const subcmd of cmd) {
+                        ad += `${subcmd.name},`
+                    }
+
+                    embed.addField(`${key}`, `\`${ad.slice(0, -1)}\``)
+                } else {
+                    const normalCmds = embed.fields.find(f => f.name === `Normal Commands`)
+
+                    if (normalCmds) {
+                        embed.fields.splice(embed.fields.indexOf(normalCmds), 1)
+                    } else {
+                        embed.addField(`Normal Commands`, `\`${cmd.name}\``)
+                        continue;
+                    }
+
+                    embed.addField("Normal Commands", normalCmds.value + `, \`${cmd.name}\``)
+                }
+            }
+
+            message.reply({
+                embeds: [embed]
+            })
+        }
+
+        if (!subcommand && command) {
             const cmd = client.commands.get(command);
 
             if (!cmd) {
-                message.reply("That command/subbcommand group doesn't exist.");
+                message.reply("That command/Subcommand group doesn't exist.");
                 return;
             }
 
@@ -42,7 +76,7 @@ module.exports = {
                 .setTimestamp()
 
             for (const comd of cmd) {
-                embed.description = `${embed?.description ?? ""}\n**${comd.name}** - ${comd.description?.toString() ?? "No Description"}`;
+                embed.addField(comd.name, comd.description?.toString() ?? "No Description")
             }
 
 
