@@ -14,6 +14,9 @@ module.exports = {
     checks: [{
         check: () => config.discord.commands.serverCommandsEnabled,
         error: "The server commands are disabled!"
+    }, {
+        check: (message, args) => args.length >= 1,
+        error: "You must specify a type!"
     }],
     cooldown: 30000,
     /**
@@ -42,7 +45,6 @@ module.exports = {
         }
 
         const type = args[0];
-        if (!type) return message.reply('Please specify a server type.')
 
         const name = args?.slice(1)?.join(" ") || "change me! (Settings -> SERVER NAME)";
 

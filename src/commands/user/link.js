@@ -167,6 +167,10 @@ module.exports = {
 
             if (collectedMsg.toLowerCase() === "cancel") {
                 chan.send("You have cancelled the linking process!");
+
+                setTimeout(() => {
+                    chan.delete();
+                }, 5000);
                 return;
             }
 
