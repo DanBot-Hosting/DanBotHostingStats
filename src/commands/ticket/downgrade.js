@@ -40,7 +40,7 @@ module.exports = {
         if (ticketLoggingChannel) {
             const embed = new MessageEmbed()
                 .setTitle('Ticket Downgraded')
-                .setDescription(`**By**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
+                .setDescription(`**By**: ${message.author.tag} (${message.author.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
                 .setTimestamp()
                 .setColor('RED')
                 .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })

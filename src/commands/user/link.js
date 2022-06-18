@@ -65,7 +65,7 @@ module.exports = {
             ],
         }).catch(console.error);
 
-        message.reply(`Please check ${chan} to create an account!`)
+        message.reply(`Please check ${chan} to link an account!`)
 
         const verification = passwordGen(15);
 
