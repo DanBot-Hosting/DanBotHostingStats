@@ -27,7 +27,7 @@ module.exports = {
             }
         }
 
-        if (!message.content.startsWith(config.bot.prefix)) return
+        if (!message.content?.toLowerCase()?.startsWith(config.bot.prefix.toLowerCase())) return
 
         const args = message.content.slice(config.bot.prefix.length).trim().split(/ +/g);
 
