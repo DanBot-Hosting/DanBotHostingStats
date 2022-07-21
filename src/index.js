@@ -1,4 +1,4 @@
-const { Client, Collection, Intents } = require("discord.js");
+const { Client, Collection, GatewayIntentBits, Partials } = require("discord.js");
 const config = require("./config.json");
 const PterodactylCache = require("./utils/cache");
 const commandLoader = require("./utils/commandLoader");
@@ -6,17 +6,18 @@ const eventLoader = require("./utils/eventLoader");
 
 const client = new Client({
     intents: [
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_BANS,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildBans,
+        GatewayIntentBits.GuildMessageReactions
     ],
     allowedMentions: {
         parse: ["users", "roles"],
     },
-    partials: ["MESSAGE", "CHANNEL", "REACTION", "USER"],
+    partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.User],
 })
 
 client.commands = new Collection();
