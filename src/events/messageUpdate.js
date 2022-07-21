@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const config = require("../config.json")
 
 module.exports = {
@@ -28,14 +28,16 @@ module.exports = {
 
             if (!logChannel) return;
 
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setAuthor({
                     name: `Message Edited By ${newMessage.author.tag}`,
                     iconURL: newMessage.author.displayAvatarURL()
                 })
-                .addField("Old Message", `${oldMessage.content.slice(0, oldMessage.content.length > 1024 ? 1024 : oldMessage.content.length) || "No Content"}`)
-                .addField("New Message", `${newMessage.content.slice(0, newMessage.content.length > 1024 ? 1024 : newMessage.content.length) || "No Content"}`)
-                .setColor("BLUE")
+                .addFields(
+                    { name: "Old Message", value: `${oldMessage.content.slice(0, oldMessage.content.length > 1024 ? 1024 : oldMessage.content.length) || "No Content"}` },
+                    { name: "New Message", value: `${newMessage.content.slice(0, newMessage.content.length > 1024 ? 1024 : newMessage.content.length) || "No Content"}` }
+                )
+                .setColor(Colors.Blue)
                 .setTimestamp()
                 .setFooter({
                     text: `Edited in: ${newMessage.channel.name}`,

@@ -1,4 +1,4 @@
-const { Client, MessageEmbed } = require("discord.js");
+const { Client, EmbedBuilder } = require("discord.js");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const config = require("../config.json");
@@ -96,7 +96,7 @@ module.exports = {
                 }
             }
 
-            const statusEmbed = new MessageEmbed()
+            const statusEmbed = new EmbedBuilder()
                 .setTitle("Node Status's")
                 .setTimestamp()
 
