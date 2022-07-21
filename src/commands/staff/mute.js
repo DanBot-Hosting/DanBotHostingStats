@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const ms = require("ms");
 const config = require("../../config.json");
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
@@ -48,12 +48,14 @@ module.exports = {
             return message.reply("I was unable to mute that user.");
         })
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`${user.user.username} has been muted`)
             .setDescription(`Reason: ${reason}`)
-            .addField("Time", `${ms(time, { long: true })} (<t:${Math.round((Date.now() + time) / 1000)}:F>)`)
-            .addField("Moderator", `${message.author.tag} (${message.author.id})`)
-            .setColor("BLUE")
+            .addFields(
+                { name: "Time", value: `${ms(time, { long: true })} (<t:${Math.round((Date.now() + time) / 1000)}:F>)` },
+                { name: "Moderator", value: `${message.author.tag} (${message.author.id})` }
+            )
+            .setColor(Colors.Blue)
             .setTimestamp()
 
         const modchan = message.guild.channels.cache.get(config.discord.channels.moderationLogs);

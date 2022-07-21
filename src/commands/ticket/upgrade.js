@@ -1,6 +1,6 @@
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 
 module.exports = {
     name: "upgrade",
@@ -30,11 +30,11 @@ module.exports = {
         }
 
         await message.channel.permissionOverwrites.edit(config.discord.roles.staff, {
-            VIEW_CHANNEL: false,
+            ViewChannel: false,
         });
 
         await message.channel.permissionOverwrites.edit(config.discord.roles.admin, {
-            VIEW_CHANNEL: true,
+            ViewChannel: true,
         });
 
         message.channel.send(`This ticket has been upgraded to admin only.`);
@@ -42,11 +42,11 @@ module.exports = {
         const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
 
         if (ticketLoggingChannel) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle('Ticket Upgraded')
                 .setDescription(`**By**: ${message.author.tag} (${message.author.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
                 .setTimestamp()
-                .setColor('RED')
+                .setColor(Colors.Red)
                 .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 
             ticketLoggingChannel.send({ embeds: [embed] });

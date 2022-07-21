@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const PremiumSchema = require("../../utils/Schemas/Premium");
 
 module.exports = {
@@ -22,10 +22,10 @@ module.exports = {
 
         const userData = await PremiumSchema.findOne({ userId: user?.id });
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`${user?.tag || `Wumpus#0000`}'s Premium Count`)
             .setDescription(`${userData?.premiumUsed || 0} out of ${userData?.premiumCount || 0} used`)
-            .setColor("BLURPLE")
+            .setColor(Colors.Blurple)
 
         message.reply({ embeds: [embed] })
     }

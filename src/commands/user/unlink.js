@@ -1,6 +1,6 @@
 const config = require("../../config.json");
 const UserSchema = require("../../utils/Schemas/User");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 
 module.exports = {
     name: "unlink",
@@ -26,11 +26,11 @@ module.exports = {
             return;
         }
 
-        const logEmbed = new MessageEmbed()
-            .setColor("GREEN")
+        const logEmbed = new EmbedBuilder()
+            .setColor(Colors.Green)
             .setTitle("User unlinked")
             .setDescription(`${message.author} has unlinked an account!`)
-            .addField("Username", User.username.toString())
+            .addFields({ name: "Username", value: User.username.toString() })
 
         const logChan = message.guild.channels.cache.get(config.discord.channels.userLogs)
 

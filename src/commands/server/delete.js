@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { Client, Message, EmbedBuilder, Color, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const servers = require("../../utils/pterodactyl/server/servers");
 const deleteServer = require("../../utils/pterodactyl/server/deleteServer");
@@ -49,26 +49,26 @@ module.exports = {
         }
 
 
-        const row = new MessageActionRow()
+        const row = new ActionRowBuilder()
             .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                 .setLabel("Confirm")
-                .setStyle("SUCCESS")
+                .setStyle(ButtonStyle.Success)
                 .setCustomId("confirm")
                 .setEmoji("✅")
             ).addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                 .setLabel("Cancel")
-                .setStyle("DANGER")
+                .setStyle(ButtonStyle.Danger)
                 .setCustomId("cancel")
                 .setEmoji("✖️")
             )
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle("Are you sure?")
             .setDescription(`Are you sure you want to delete the server \`${server.attributes.name}\`?`)
             .setTimestamp()
-            .setColor("BLURPLE")
+            .setColor(Colors.Blurple)
 
         const msg = await message.reply({
             embeds: [embed],
@@ -76,6 +76,7 @@ module.exports = {
         })
 
         const collector = msg.createMessageComponentCollector({
+            componentType: ComponentType.Button,
             time: 30000,
         })
 
@@ -102,12 +103,12 @@ module.exports = {
                         content: "Server deleted.",
                     })
 
-                    const logEmbed = new MessageEmbed()
+                    const logEmbed = new EmbedBuilder()
                         .setTitle("Server deleted")
                         .setDescription(`Server \`${server.attributes.name}\` was deleted.`)
-                        .addField("Owner", message.author.tag)
+                        .addFields({ name: "Owner", value: message.author.tag })
                         .setTimestamp()
-                        .setColor("BLURPLE")
+                        .setColor(Colors.Blurple)
 
                     const locations = (await getLocations())?.data;
 

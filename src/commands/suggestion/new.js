@@ -1,6 +1,6 @@
 const config = require("../../config.json")
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
-const { Client, Message, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const suggestionsSchema = require("../../utils/Schemas/Suggestions");
 
 module.exports = {
@@ -32,26 +32,26 @@ module.exports = {
 
         const suggestionCount = await suggestionsSchema.countDocuments();
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`Suggestion #${suggestionCount + 1}`)
             .setDescription(args.join(" "))
-            .setColor("DARK_GOLD")
+            .setColor(Colors.DarkGold)
             .setFooter({ text: `Suggested by ${message.author.tag}` })
 
 
-        const row = new MessageActionRow()
+        const row = new ActionRowBuilder()
             .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                 .setCustomId("upvote")
                 .setLabel(`0`)
-                .setStyle("SUCCESS")
+                .setStyle(ButtonStyle.Success)
                 .setEmoji("⬆️")
             )
             .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                 .setCustomId("downvote")
                 .setLabel(`0`)
-                .setStyle("DANGER")
+                .setStyle(ButtonStyle.Danger)
                 .setEmoji("⬇️")
             )
 

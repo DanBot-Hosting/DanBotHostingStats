@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require('discord.js');
+const { Client, Message, EmbedBuilder } = require('discord.js');
 const { discord } = require('../config.json');
 
 module.exports = {
@@ -23,10 +23,10 @@ module.exports = {
 		const user = await message.guild.members.fetch(userId).catch(() => null);
 		if (!user) return message.reply('Are you sure that user ID is correct?');
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setTitle('Report')
 			.setDescription(`${user} (${user.id}) has been reported for: \n\`\`\`${reason}\`\`\``)
-			.setColor('RANDOM')
+			.setColor('Random')
 			.setAuthor({ name: `Report from: ${message.author.tag} (${message.author.id})`, iconURL: message.author.displayAvatarURL() });
 
 		try {

@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 
 module.exports = {
     name: "eval",
@@ -31,18 +31,18 @@ module.exports = {
                 evaled = require("util").inspect(evaled);
             }
 
-            const embed = new MessageEmbed()
-                .setColor("DARK_BLUE")
+            const embed = new EmbedBuilder()
+                .setColor(Colors.DarkBlue)
                 .setTitle("Eval")
-                .addField(`Output`, `\`\`\`js\n${evaled}\`\`\``)
+                .addFields({ name: `Output`, value:  `\`\`\`js\n${evaled}\`\`\`` })
                 .setDescription(`\`\`\`js\n${code}\n\`\`\``)
                 .setFooter({ text: `Evaled by ${message.author.tag}` });
             try {
                 await message.channel.send({ embeds: [embed] });
             } catch (e) {}
         } catch (e) {
-            const embed = new MessageEmbed()
-                .setColor("#ff0000")
+            const embed = new EmbedBuilder()
+                .setColor(0xFF0000)
                 .setTitle("Eval")
                 .setDescription(`\`\`\`\n${e}\n\`\`\``)
                 .setFooter({ text: `Evaled by ${message.author.tag}` });

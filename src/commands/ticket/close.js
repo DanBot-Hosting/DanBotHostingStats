@@ -1,6 +1,6 @@
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
 
 module.exports = {
     name: "close",
@@ -29,21 +29,21 @@ module.exports = {
             return;
         }
 
-        const row = new MessageActionRow().addComponents(
-            new MessageButton()
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
             .setCustomId("close")
             .setEmoji("✅")
             .setLabel("Close")
-            .setStyle("SUCCESS")
+            .setStyle(ButtonStyle.Success)
         ).addComponents(
-            new MessageButton()
+            new ButtonBuilder()
             .setCustomId("cancel")
             .setEmoji("✖️")
             .setLabel("Cancel")
-            .setStyle("DANGER")
+            .setStyle(ButtonStyle.Danger)
         )
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle("Close Ticket")
             .setDescription("Are you sure you want to close this ticket?")
             .setFooter({
@@ -53,7 +53,7 @@ module.exports = {
 
         const msg = await message.channel.send({ embeds: [embed], components: [row] });
 
-        const collector = msg.createMessageComponentCollector({ componentType: 'BUTTON', time: 30000 });
+        const collector = msg.createMessageComponentCollector({ componentType: ComponentType.Button, time: 30000 });
 
         collector.on('collect', async i => {
 
@@ -76,11 +76,11 @@ module.exports = {
                     const messages = await message.channel.messages.fetch({ limit: 100, after: 0 })
                     const transformedMessages = [...messages.mapValues((m) => `${m.author.tag}: ${m.cleanContent}`).reverse()]
 
-                    const embed = new MessageEmbed()
+                    const embed = new EmbedBuilder()
                         .setTitle('Ticket closed')
                         .setDescription(`**By**: ${user.tag} (${user.id})\n**Ticket**: ${message.channel} (${message.channelId})`)
                         .setTimestamp()
-                        .setColor('RED')
+                        .setColor(Colors.Red)
                         .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 
                     ticketLoggingChannel.send({ embeds: [embed] })

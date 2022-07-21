@@ -1,6 +1,6 @@
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ChannelType } = require("discord.js");
 
 module.exports = {
     name: "new",
@@ -33,32 +33,33 @@ module.exports = {
             return;
         }
 
-        const ticket = await category.createChannel(`🎫-${message.author.username}-${message.author.discriminator}-ticket`, {
-            type: "text",
+        const ticket = await category.createChannel({
+            name: `🎫-${message.author.username}-${message.author.discriminator}-ticket`,
+            type: ChannelType.GuildText,
             permissionOverwrites: [
                 {
                     id: message.guild.id,
-                    deny: ["VIEW_CHANNEL"],
+                    deny: ["ViewChannel"],
                 }, {
                     id: message.author.id,
-                    allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "ATTACH_FILES", "ADD_REACTIONS", "READ_MESSAGE_HISTORY"],
+                    allow: ["ViewChannel", "SendMessages", "AttachFiles", "AddReactions", "ReadMessageHistory"],
                 }, {
                     id: config.discord.roles.staff,
-                    allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "ATTACH_FILES", "ADD_REACTIONS", "READ_MESSAGE_HISTORY"],
+                    allow: ["ViewChannel", "SendMessages", "AttachFiles", "AddReactions", "ReadMessageHistory"],
                 },
             ],
         }).catch(console.error);
 
         ticket.setTopic(`${message.author.id}`);
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`${client.user.username} | Ticket`)
             .setDescription(`> Please do not ping staff members, This won't help you in the long run\n\nPlease Ask your question below in as much detail as you can!`)
             .setFooter({
                 text: `${message.author.tag} | ${message.author.id}`,
             })
             .setTimestamp()
-            .setColor("DARK_BLUE")
+            .setColor(Colors.DarkBlue)
 
         await ticket.send({ content: `${message.author.toString()} <@&${config.discord.roles.newTicket}>`, embeds: [embed] });
 
@@ -67,11 +68,11 @@ module.exports = {
         const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
 
         if (ticketLoggingChannel) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle(`Ticket Created`)
                 .setDescription(`**Created By**: ${message.author.tag} (${message.author.id})\n**Ticket**: ${ticket} (${message.channel.id})`)
                 .setTimestamp()
-                .setColor('GREEN')
+                .setColor(Colors.Green)
                 .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 
             return ticketLoggingChannel.send({ embeds: [embed] });

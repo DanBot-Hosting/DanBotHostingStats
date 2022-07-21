@@ -1,6 +1,6 @@
 const config = require("../../config.json");
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 
 module.exports = {
     name: "warn",
@@ -65,12 +65,14 @@ module.exports = {
 
         message.channel.send(`${user} has been warned.`);
 
-        const embed = new MessageEmbed()
-            .setColor("#ff0000")
+        const embed = new EmbedBuilder()
+            .setColor(0xFF0000)
             .setTitle("Warning")
-            .addField("User", user?.user?.tag)
-            .addField("Moderator", message.author.tag)
-            .addField("Reason", reason)
+            .addFields(
+                { name: "User", value: user?.user?.tag },
+                { name: "Moderator", value: message.author.tag },
+                { name: "Reason", value: reason }
+            )
             .setTimestamp();
 
         const modChannel = message.guild.channels.cache.get(config.discord.channels.moderationLogs);
@@ -81,10 +83,10 @@ module.exports = {
             });
         }
 
-        const userEmbed = new MessageEmbed()
+        const userEmbed = new EmbedBuilder()
             .setTitle("New Warning")
-            .addField("Reason", reason)
-            .setColor("#ff0000")
+            .addFields({ name: "Reason", value: reason })
+            .setColor(0xFF0000)
             .setTimestamp();
 
         user?.user?.send({

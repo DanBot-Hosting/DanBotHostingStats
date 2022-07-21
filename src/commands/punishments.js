@@ -1,6 +1,6 @@
 const config = require("../config.json");
 const punishmentsSchema = require("../utils/Schemas/Punishments");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "punishments",

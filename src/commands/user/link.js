@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Color, ChannelType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const mailer = require("nodemailer")
 const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -52,15 +52,16 @@ module.exports = {
         }
 
 
-        const chan = await userCategory.createChannel(`${message.author.username}-${message.author.discriminator}`, {
-            type: "text",
+        const chan = await userCategory.create({
+            name: `${message.author.username}-${message.author.discriminator}`,
+            type: ChannelType.GuildText,
             permissionOverwrites: [
                 {
                     id: message.guild.id,
-                    deny: ["VIEW_CHANNEL", "SEND_MESSAGES"],
+                    deny: ["ViewChannel", "SendMessages"],
                 }, {
                     id: message.author.id,
-                    allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY"],
+                    allow: ["ViewChannel", "SendMessages", "ReadMessageHistory"],
                 },
             ],
         }).catch(console.error);
@@ -101,8 +102,8 @@ module.exports = {
             }]
         }]
 
-        let creationEmbed = new MessageEmbed()
-            .setColor("GREEN")
+        let creationEmbed = new EmbedBuilder()
+            .setColor(Colors.Green)
             .setFooter({
                 text: "You can type 'cancel' to cancel the creation process!",
             })
