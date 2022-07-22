@@ -1,4 +1,4 @@
-const { Client, Interaction, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { Client, BaseInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const Suggestions = require("../utils/Schemas/Suggestions");
 
 
@@ -6,7 +6,7 @@ module.exports = {
     event: "interactionCreate",
     /**
      * @param {Client} client 
-     * @param {Interaction} interaction 
+     * @param {BaseInteraction} interaction 
      */
     run: async (client, interaction) => {
 
