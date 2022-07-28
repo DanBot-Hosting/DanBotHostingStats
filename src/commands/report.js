@@ -1,4 +1,4 @@
-const { Client, Message, EmbedBuilder } = require('discord.js');
+const { Client, Message, EmbedBuilder, ChannelType } = require('discord.js');
 const { discord } = require('../config.json');
 
 module.exports = {
@@ -30,7 +30,8 @@ module.exports = {
 			.setAuthor({ name: `Report from: ${message.author.tag} (${message.author.id})`, iconURL: message.author.displayAvatarURL() });
 
 		try {
-			const channel = message.guild.channels.cache.get(discord.channels.report);
+			const channel = await message.guild.channels.fetch(discord.channels.report);
+			if (channel.type !== ChannelType.GuildText) console.log("The provided report channel isn't a text-based channel.");
 			if (!channel) message.reply('Could not find the report channel for this server.');
 
 			await channel.send({ embeds: [embed] }).catch(() => null);
