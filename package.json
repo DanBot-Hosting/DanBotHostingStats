@@ -20,7 +20,7 @@
     "dependencies": {
         "axios": "^0.27.2",
         "bcrypt": "^5.0.1",
-        "chalk": "^5.0.1",
+        "chalk": "^4.1.2",
         "discord.js": "^14.0.3",
         "mongoose": "^6.4.6",
         "nodemailer": "^6.7.7",
