@@ -33,8 +33,9 @@ module.exports = {
             return;
         }
 
-        const ticket = await category.createChannel({
+        const ticket = await message.guild.channels.create({
             name: `🎫-${message.author.username}-${message.author.discriminator}-ticket`,
+            parent: category,
             type: ChannelType.GuildText,
             permissionOverwrites: [
                 {
