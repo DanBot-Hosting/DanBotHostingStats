@@ -1,4 +1,4 @@
-const { Client, Interaction, MessageActionRow, MessageButton } = require("discord.js");
+const { Client, BaseInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const Suggestions = require("../utils/Schemas/Suggestions");
 
 
@@ -6,7 +6,7 @@ module.exports = {
     event: "interactionCreate",
     /**
      * @param {Client} client 
-     * @param {Interaction} interaction 
+     * @param {BaseInteraction} interaction 
      */
     run: async (client, interaction) => {
 
@@ -40,19 +40,19 @@ module.exports = {
                         suggestion.voted.push({ userId: interaction.user.id, vote: "upvote" });
                     }
 
-                    const row = new MessageActionRow()
+                    const row = new ActionRowBuilder()
                         .addComponents(
-                            new MessageButton()
+                            new ButtonBuilder()
                             .setCustomId("upvote")
                             .setLabel(`${suggestion.upvotes}`)
-                            .setStyle("SUCCESS")
+                            .setStyle(ButtonStyle.Success)
                             .setEmoji("⬆️")
                         )
                         .addComponents(
-                            new MessageButton()
+                            new ButtonBuilder()
                             .setCustomId("downvote")
                             .setLabel(`${suggestion.downvotes}`)
-                            .setStyle("DANGER")
+                            .setStyle(ButtonStyle.Danger)
                             .setEmoji("⬇️")
                         )
 
@@ -83,19 +83,19 @@ module.exports = {
                 await suggestion.save();
             }
 
-            const row = new MessageActionRow()
+            const row = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                     .setCustomId("upvote")
                     .setLabel(`${suggestion.upvotes}`)
-                    .setStyle("SUCCESS")
+                    .setStyle(ButtonStyle.Success)
                     .setEmoji("⬆️")
                 )
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                     .setCustomId("downvote")
                     .setLabel(`${suggestion.downvotes}`)
-                    .setStyle("DANGER")
+                    .setStyle(ButtonStyle.Danger)
                     .setEmoji("⬇️")
                 )
 

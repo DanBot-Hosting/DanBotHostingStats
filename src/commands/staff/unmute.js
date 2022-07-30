@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const config = require("../../config.json");
 
 module.exports = {
@@ -31,11 +31,11 @@ module.exports = {
             return message.reply("I was unable to unmute that user.");
         })
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`${user.username} has been unmuted`)
             .setDescription(`Reason: ${reason}`)
-            .addField("Moderator", `${message.author.tag} (${message.author.id})`)
-            .setColor("BLUE")
+            .addFields({ name: "Moderator", value: `${message.author.tag} (${message.author.id})` })
+            .setColor(Colors.Blue)
             .setTimestamp()
 
         const modchan = message.guild.channels.cache.get(config.discord.channels.moderationLogs);

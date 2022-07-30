@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require('discord.js');
+const { Client, Message, EmbedBuilder, ChannelType } = require('discord.js');
 const { discord } = require('../config.json');
 
 module.exports = {
@@ -23,14 +23,15 @@ module.exports = {
 		const user = await message.guild.members.fetch(userId).catch(() => null);
 		if (!user) return message.reply('Are you sure that user ID is correct?');
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setTitle('Report')
 			.setDescription(`${user} (${user.id}) has been reported for: \n\`\`\`${reason}\`\`\``)
-			.setColor('RANDOM')
+			.setColor('Random')
 			.setAuthor({ name: `Report from: ${message.author.tag} (${message.author.id})`, iconURL: message.author.displayAvatarURL() });
 
 		try {
-			const channel = message.guild.channels.cache.get(discord.channels.report);
+			const channel = await message.guild.channels.fetch(discord.channels.report);
+			if (channel.type !== ChannelType.GuildText) console.log("The provided report channel isn't a text-based channel.");
 			if (!channel) message.reply('Could not find the report channel for this server.');
 
 			await channel.send({ embeds: [embed] }).catch(() => null);

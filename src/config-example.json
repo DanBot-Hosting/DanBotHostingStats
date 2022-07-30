@@ -38,7 +38,8 @@
             "welcome": "",
             "donations": "",
             "suggestions": "",
-            "serverLogs": ""
+            "serverLogs": "",
+            "report": ""
         },
         "categories": {
             "userCreation": "",
@@ -79,7 +80,7 @@
         "serverCreationData": [
             {
                 "name": "AIO",
-                "description": "AIO is a All In one server with nodejs, python ruby and more.",
+                "description": "AIO is an all-in-one server with nodejs, python, ruby & more.",
                 "nestId": 5,
                 "eggId": 15,
                 "cpu": 0,

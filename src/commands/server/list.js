@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const servers = require("../../utils/pterodactyl/server/servers");
 
@@ -45,25 +45,25 @@ module.exports = {
         if (args[0] && !isNaN(args[0])) page = Math.max(1, Math.min(args[0], Math.ceil(serverList.length / 10)));
 
 
-        const row = new MessageActionRow()
+        const row = new ActionRowBuilder()
             .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                 .setCustomId("prev")
                 .setLabel("Previous")
-                .setStyle('PRIMARY')
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji('⬅')
             )
             .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                 .setCustomId("next")
                 .setLabel("Next")
-                .setStyle('PRIMARY')
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji('➡')
             )
 
 
-        let embed = new MessageEmbed()
-            .setColor("BLURPLE")
+        let embed = new EmbedBuilder()
+            .setColor(Colors.Blurple)
             .setTitle("Your Servers")
             .setDescription(serverList.slice((page - 1) * 10, page * 10).join("\n"))
             .setFooter({
@@ -77,6 +77,7 @@ module.exports = {
         })
 
         const collector = msg.createMessageComponentCollector({
+            componentType: ComponentType.Button,
             time: 300000,
         })
 

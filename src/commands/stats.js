@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const User = require("../utils/Schemas/User");
 
 module.exports = {
@@ -34,16 +34,19 @@ module.exports = {
 
         const cachePing = Math.round(Date.now() - cacheThen);
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`${client.user.username} | Stats`)
-            .addField("Ram Usage", `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`, true)
-            .addField("Bot Uptime", `${Math.round(client.uptime / 1000)}s`, true)
-            .addField("WS Ping", `${Math.round(client.ws.ping)}ms`, true)
-            .addField("Cache Ping", `${cachePing}ms`, true)
-            .addField("Database Ping", `${dbPing}ms`, true)
-            .addField("Message Ping", `${msgPing}ms`, true)
+            .addFields(
+                { name: "Ram Usage", value: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`, inline: true },
+                { name: "Bot Uptime", value: `${Math.round(client.uptime / 1000)}s`, inline: true },
+                { name: "WS Ping", value: `${Math.round(client.ws.ping)}ms`, inline: true },
+                { name: "Cache Ping", value: `${cachePing}ms`, inline: true },
+                { name: "Database Ping", value: `${dbPing}ms`, inline: true },
+                { name: "Message Ping", value: `${msgPing}ms`, inline: true }
+
+            )
             .setTimestamp()
-            .setColor("BLUE")
+            .setColor(Colors.Blue)
 
         msg.edit({ content: " ", embeds: [embed] });
     },

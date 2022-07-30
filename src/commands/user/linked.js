@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 
 module.exports = {
@@ -26,9 +26,9 @@ module.exports = {
             return;
         }
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`${message.author.tag}'s Linked Data`)
-            .addFields([{
+            .addFields({
                 name: "Console ID",
                 value: `${data.consoleId}`,
             }, {
@@ -37,7 +37,7 @@ module.exports = {
             }, {
                 name: "Link Date",
                 value: `<t:${Math.round(new Date(data.linkDate) / 1000)}:F>`,
-            }])
+            })
 
         message.reply({ embeds: [embed] });
     },

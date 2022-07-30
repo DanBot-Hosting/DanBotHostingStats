@@ -1,5 +1,5 @@
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message } = require("discord.js");
 const suggestionsSchema = require("../../utils/Schemas/Suggestions");
 const config = require("../../config.json");
 module.exports = {

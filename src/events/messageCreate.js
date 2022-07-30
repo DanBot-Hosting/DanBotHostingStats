@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ChannelType } = require("discord.js");
 const config = require("../config.json");
 const chalk = require("chalk");
 
@@ -12,12 +12,12 @@ module.exports = {
     run: async (client, message) => {
         if (message.author.bot) return;
 
-        if (message?.channel?.type == "DM") {
+        if (message?.channel?.type == ChannelType.DM) {
             const chan = client.channels.cache.get(config.discord.channels.dmLogs)
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle(`Dm From ${message.author.tag}`)
                 .setDescription(`${message?.content || "No Content"}`)
-                .setColor("BLUE")
+                .setColor(Colors.Blue)
                 .setTimestamp()
 
             if (chan) {

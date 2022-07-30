@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 
 module.exports = {
     name: "help",
@@ -17,9 +17,9 @@ module.exports = {
 
         if (!command) {
 
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle("All Commands")
-                .setColor("BLURPLE")
+                .setColor(Colors.Blurple)
 
             for (const key of client.commands.keys()) {
                 const cmd = client.commands.get(key);
@@ -29,18 +29,18 @@ module.exports = {
                         ad += `${subcmd.name},`
                     }
 
-                    embed.addField(`${key}`, `\`${ad.slice(0, -1)}\``)
+                    embed.addFields({ name: `${key}`, value: `\`${ad.slice(0, -1)}\`` })
                 } else {
                     const normalCmds = embed.fields.find(f => f.name === `Normal Commands`)
 
                     if (normalCmds) {
                         embed.fields.splice(embed.fields.indexOf(normalCmds), 1)
                     } else {
-                        embed.addField(`Normal Commands`, `\`${cmd.name}\``)
+                        embed.addFields({ name: `Normal Commands`, value: `\`${cmd.name}\`` })
                         continue;
                     }
 
-                    embed.addField("Normal Commands", normalCmds.value + `, \`${cmd.name}\``)
+                    embed.addFields({ name: "Normal Commands", value: normalCmds.value + `, \`${cmd.name}\`` })
                 }
             }
 

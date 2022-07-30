@@ -21,11 +21,11 @@
         "axios": "^0.27.2",
         "bcrypt": "^5.0.1",
         "chalk": "^4.1.2",
-        "discord.js": "^13.8.0",
-        "mongoose": "^6.3.5",
-        "nodemailer": "^6.7.5",
+        "discord.js": "^14.1.1",
+        "mongoose": "^6.4.6",
+        "nodemailer": "^6.7.7",
         "ping-tcp-js": "^1.4.1",
-        "redis": "^4.1.0",
-        "undici": "^5.5.1"
+        "redis": "^4.2.0",
+        "undici": "^5.8.0"
     }
 }

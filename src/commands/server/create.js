@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const getEgg = require("../../utils/pterodactyl/eggs/getEgg");
 const createServer = require("../../utils/pterodactyl/server/createServer");
@@ -38,7 +38,7 @@ module.exports = {
         const serverType = config.pterodactyl.serverCreationData.find(st => st.name.toLowerCase() === type.toLowerCase());
 
         if (!serverType) {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle("Invalid Server Types")
                 .setDescription(`${config.pterodactyl.serverCreationData.map(st => `\`${st.name}\` - \`${st.description}\``).join(", ")}`)
                 .setTimestamp()
@@ -101,22 +101,27 @@ module.exports = {
             return;
         }
 
-        const logEmbed = new MessageEmbed()
+        const logEmbed = new EmbedBuilder()
             .setTitle("Server Created")
             .setDescription(`Server **${serverData.data.attributes.name}** has been created.`)
-            .addField("Server ID", serverData.data.attributes.id.toString())
-            .addField("Server Name", serverData.data.attributes.name.toString())
-            .addField("Server Creator", message.author.tag)
+            .addFields(
+                { name: "Server ID", value: serverData.data.attributes.id.toString() },
+                { name: "Server Name", value: serverData.data.attributes.name.toString() },
+                { name: "Server Creator", value: message.author.tag }
+
+            )
             .setTimestamp()
 
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle("Server Created")
             .setDescription(`Server created successfully!`)
-            .addField("Name", `\`${serverData.data.attributes.name.toString()}\``)
-            .addField("ID", `\`${serverData.data.attributes.identifier.toString()}\``)
-            .addField("Type", `\`${type.toString()}\``)
-            .setColor("GREEN")
+            .addFields(
+                { name: "Name", value: `\`${serverData.data.attributes.name.toString()}\`` },
+                { name: "ID", value: `\`${serverData.data.attributes.identifier.toString()}\`` },
+                { name: "Type", value: `\`${type.toString()}\`` }
+            )
+            .setColor(Colors.Green)
             .setTimestamp()
 
         message.reply({
