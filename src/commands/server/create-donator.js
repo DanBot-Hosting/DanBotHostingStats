@@ -1,4 +1,5 @@
 const config = require("../../config.json");
+const serverConfig = require("../../server-config.json")
 const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const getEgg = require("../../utils/pterodactyl/eggs/getEgg");
@@ -48,12 +49,12 @@ module.exports = {
 
         const name = args?.slice(1)?.join(" ") || "change me! (Settings -> SERVER NAME)";
 
-        const serverType = config.pterodactyl.serverCreationData.find(st => st.name.toLowerCase() === type.toLowerCase());
+        const serverType = serverConfig.serverCreationData.find(st => st.name.toLowerCase() === type.toLowerCase());
 
         if (!serverType) {
             const embed = new EmbedBuilder()
                 .setTitle("Invalid Server Types")
-                .setDescription(`${config.pterodactyl.serverCreationData.map(st => `\`${st.name}\` - \`${st.description}\``).join(", ")}`)
+                .setDescription(`${serverConfig.serverCreationData.map(st => `\`${st.name}\` - \`${st.description}\``).join(", ")}`)
                 .setTimestamp()
 
             message.reply({
@@ -93,7 +94,7 @@ module.exports = {
                 "backups": serverType.backups,
             },
             "deploy": {
-                "locations": serverType.gaming ? config.pterodactyl.donatorGamingNodes : config.pterodactyl.donatorNodes,
+                "locations": serverType.gaming ? serverConfig.donatorGamingNodes : serverConfig.donatorNodes,
                 "dedicated_ip": false,
                 "port_range": []
             },
