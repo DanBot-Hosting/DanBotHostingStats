@@ -1,7 +1,7 @@
 # Webserver for DBH bot rewrite
 
-2 more dependencies: fastify, pino-pretty
+3 more dependencies: fastify, pino-pretty, tiny-glob
 
 Added custom logger via pino-pretty similar to DarkerInk's
 
-Includes routing
+Includes route handler: src/webserver/routes
