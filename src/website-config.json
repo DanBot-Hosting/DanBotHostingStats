@@ -1,0 +1,10 @@
+{
+    "port": 3000,
+    "address": "0.0.0.0",
+    "log": {
+        "logger": true,
+        "__comment__logger": "If enabled it will log everything",
+        "logRequestsResponse": true,
+        "__comment__logRequestsResponse": "If enabled it will log every request and response, won't work if logger is disabled"
+    }
+}

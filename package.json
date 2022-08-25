@@ -22,10 +22,13 @@
         "bcrypt": "^5.0.1",
         "chalk": "^4.1.2",
         "discord.js": "^14.1.1",
+        "fastify": "^4.5.2",
         "mongoose": "^6.4.6",
         "nodemailer": "^6.7.7",
         "ping-tcp-js": "^1.4.1",
+        "pino-pretty": "^9.1.0",
         "redis": "^4.2.0",
+        "tiny-glob": "^0.2.9",
         "undici": "^5.8.0"
     }
 }
