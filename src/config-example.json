@@ -1,0 +1,92 @@
+{
+    "bot": {
+        "token": "",
+        "prefix": "",
+        "guild": "",
+        "cooldownCacheTTL": 259200,
+        "nodeStatus": {
+            "channelId": "",
+            "messageId": "",
+            "refreshInterval": 20000
+        }
+    },
+    "discord": {
+        "roles": {
+            "admin": "",
+            "mod": "",
+            "helper": "",
+            "staff": "",
+            "developer": "",
+            "newTicket": "",
+            "owner": "",
+            "donated": "",
+            "member": "",
+            "client": "",
+            "bot": ""
+        },
+        "commands": {
+            "serverCommandsEnabled": true,
+            "userCommandsEnabled": true,
+            "ticketCommandsEnabled": true
+        },
+        "channels": {
+            "messageLogs": "",
+            "moderationLogs": "",
+            "userLogs": "",
+            "ticketLogs": "",
+            "dmLogs": "",
+            "welcome": "",
+            "donations": "",
+            "suggestions": "",
+            "serverLogs": "",
+            "report": ""
+        },
+        "categories": {
+            "userCreation": "",
+            "tickets": ""
+        },
+        "messages": {
+            "welcome": "Welcome to {server_name}, {user_ping}!",
+            "donated": "Thank you {user_ping} for donating ${amount}!",
+            "roleAdded": "You have been given the role {role_name}!",
+            "roleRemoved": "You have been removed from the role {role_name}!",
+            "coolDown": "Sorry, You have to wait {time} seconds before using this command again."
+        },
+        "reactionRoles": [
+            {
+                "messageId": "",
+                "reactions": [
+                    {
+                        "roleId": "",
+                        "emoji": ""
+                    },
+                    {
+                        "roleId": "",
+                        "emoji": ""
+                    }
+                ]
+            }
+        ]
+    },
+    "pterodactyl": {
+        "panelUrl": "",
+        "adminKey": "",
+        "aplicationKey": ""
+    },
+    "mail": {
+        "host": "",
+        "port": "",
+        "auth": {
+            "user": "",
+            "pass": ""
+        },
+        "from": ""
+    },
+    "redis": {
+        "host": "",
+        "port": "",
+        "username": "",
+        "password": ""
+    },
+    "mongoDB": "mongodb://localhost:27017/db"
+}
