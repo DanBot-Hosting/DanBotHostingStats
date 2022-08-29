@@ -6,8 +6,11 @@ module.exports = async(client, oldMember, newMember) => {
         //if (displayName.includes("soloisaslut")) {
         //    return newMember.setNickname(newMember.displayName.replace(/soloisaslut/i, "SoloIsAHottie"), "Naughty...");
         //}
+        
+        const hoisting = new RegExp("^[a-z0-9]", "i");
+        const website = new RegExp("(((?!\-))(xn\-\-)?[a-z0-9\-_]{0,61}[a-z0-9]{1,1}\.)*(xn\-\-)?([a-z0-9\-]{1,61}|[a-z0-9\-]{1,30})\.[a-z]{2,}", "i");
 
-        if (displayName.match(/^[a-z0-9]/i) == null) {
+        if (!displayName.match(hoisting) || displayName.match(website)) {
             return newMember.setNickname('I love Dan <3');
         }
 
