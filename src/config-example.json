@@ -71,7 +71,8 @@
     "pterodactyl": {
         "panelUrl": "",
         "adminKey": "",
-        "aplicationKey": ""
+        "aplicationKey": "",
+        "salt": ""
     },
     "mail": {
         "host": "",

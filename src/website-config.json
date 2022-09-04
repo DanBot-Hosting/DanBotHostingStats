@@ -1,10 +1,13 @@
 {
-    "port": 3000,
-    "address": "0.0.0.0",
+    "fastifyOptions": {
+        "ignoreTrailingSlash": true
+    },
     "log": {
         "logger": true,
-        "__comment__logger": "If enabled it will log everything",
-        "logRequestsResponse": true,
-        "__comment__logRequestsResponse": "If enabled it will log every request and response, won't work if logger is disabled"
+        "logRequestsResponse": true
+    },
+    "listenOptions": {
+        "port": 3000,
+        "host": "0.0.0.0"
     }
 }

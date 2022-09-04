@@ -1,14 +1,12 @@
-module.exports = function (fastify, opts, next) {
+module.exports = function (fastify, opts, done) {
 
-    // Removing cache control for each request
-    fastify.addHook("onRequest", async (req, res) => {
-		res.headers({
-			"Cache-Control": "no-store, max-age=0, must-revalidate",
-			Expires: "0",
-			Pragma: "no-cache",
-			"Surrogate-Control": "no-store",
-		});
-	});
+	fastify.get('/', (req, res) => {
+		let code = 200;
+		res.code(code).send({
+			data: 'Nothing in there yet',
+			statusCode: code
+		})
+	})
     
-    next();
+    done();
 }

@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+
 module.exports = () => require('pino-pretty')({
     colorize: true,
     // format translateTime
