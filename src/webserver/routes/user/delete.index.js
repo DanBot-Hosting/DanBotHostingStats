@@ -2,8 +2,6 @@ const { EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../../utils/Schemas/User");
 const config = require('../../../config.json');
 const bycrypt = require('bcrypt');
-const ptero = require('jspteroapi');
-const application = new ptero.Application(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
 
 module.exports = function (fastify, opts, done) {
 
@@ -71,7 +69,7 @@ module.exports = function (fastify, opts, done) {
 			return;
 		}
 
-		let pteroData = await application.getUserInfo(userId);
+		let pteroData = await opts.pteroApp.getUserInfo(userId);
 		if (!pteroData) {
 			code = 404;
 			res.code(code).send({
@@ -87,7 +85,7 @@ module.exports = function (fastify, opts, done) {
 			});
 			return;
         }
-		await application.deleteUser(userId);
+		await opts.pteroApp.deleteUser(userId);
 
 		const logEmbed = new EmbedBuilder()
 			.setColor(Colors.Green)
@@ -96,6 +94,10 @@ module.exports = function (fastify, opts, done) {
 			.addFields({ name: "User ID", value: userId })
 
 		const logChan = opts.client.channels.cache.get(config.discord.channels.userLogs);
+
+		if (logChan) {
+			logChan.send({ embeds: [logEmbed] })
+		}
 
 		res.code(code).send({
 			db: user,

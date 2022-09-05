@@ -1,6 +1,10 @@
 const { white } = require('chalk');
-const config = require('./website-config.json');
-const logger = config.log.logger ? {
+const webConfig = require('./website-config.json');
+const config = require('./config.json');
+const ptero = require('jspteroapi');
+const pteroApp = new ptero.Application(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
+const pteroClient = new ptero.Client(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
+const logger = webConfig.log.logger ? {
     transport: {
         target: './webserver/logger',
         options: {}
@@ -8,8 +12,8 @@ const logger = config.log.logger ? {
 } : false;
 const fastify = require('fastify')({
     logger: logger,
-    disableRequestLogging: !config.log.logRequestsResponse,
-    ...config.fastifyOptions
+    disableRequestLogging: !webConfig.log.logRequestsResponse,
+    ...webConfig.fastifyOptions
 });
 
 module.exports = client => {
@@ -22,7 +26,11 @@ module.exports = client => {
 
     // Content-Type parser won't work if you register it via fastify
     require('./webserver/typeParser')(fastify);
-    fastify.register(require('./webserver/routeHandler'), client);
+    fastify.register(require('./webserver/routeHandler'), {
+        client: client,
+        pteroApp: pteroApp,
+        pteroClient: pteroClient
+    });
 
     fastify.register((instance, opts, done) => {
         instance.setNotFoundHandler((req, res) => {
@@ -55,7 +63,7 @@ module.exports = client => {
         });
     });
 
-    fastify.listen(config.listenOptions, err => {
+    fastify.listen(webConfig.listenOptions, err => {
         if (err) throw err;
     });
 }

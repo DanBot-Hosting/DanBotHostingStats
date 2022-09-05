@@ -29,7 +29,9 @@ module.exports = async (fastify, opts, done) => {
         fastify.register(route, {
             path: replacedPrefix,
             prefix: prefix,
-            client: opts
+            client: opts.client,
+            pteroApp: opts.pteroApp,
+            pteroClient: opts.pteroClient
         });
     });
     done();

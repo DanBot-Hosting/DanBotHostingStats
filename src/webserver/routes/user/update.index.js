@@ -2,8 +2,6 @@ const { EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../../utils/Schemas/User");
 const bycrypt = require("bcrypt");
 const config = require('../../../config.json');
-const ptero = require('jspteroapi');
-const application = new ptero.Application(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
 
 module.exports = function (fastify, opts, done) {
 
@@ -76,7 +74,7 @@ module.exports = function (fastify, opts, done) {
 		const emailhash = await bycrypt.hash(body.email, salt);
 		const passwordhash = await bycrypt.hash(body.password, salt);
 
-		const resData = await application.editUser(userId, {
+		const resData = await opts.pteroApp.editUser(userId, {
 			username: body.username.toLowerCase(),
 			firstName: body.userTag,
 			lastName: userId,
@@ -85,7 +83,7 @@ module.exports = function (fastify, opts, done) {
 			language: "en",
 		}).catch(err => {
 			code = 400;
-			res.code(code).send({
+			return res.code(code).send({
 				error: {
 					name: 'EpicFail',
 					message: 'Could not update an account!',
@@ -93,7 +91,6 @@ module.exports = function (fastify, opts, done) {
 					statusCode: code
 				}
 			});
-			return;
 		});
 
 		const userNew = await UserSchema.findOneAndUpdate({ userId: userId}, {

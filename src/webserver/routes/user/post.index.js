@@ -2,8 +2,6 @@ const { EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../../utils/Schemas/User");
 const bycrypt = require("bcrypt");
 const config = require('../../../config.json');
-const ptero = require('jspteroapi');
-const application = new ptero.Application(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
 
 const passwordGen = (length) => {
     const CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -105,7 +103,7 @@ module.exports = function (fastify, opts, done) {
             return;
         }
 
-		const resData = await application.createUser({
+		const resData = await opts.pteroApp.createUser({
 			username: body.username.toLowerCase(),
 			firstName: body.userTag,
 			lastName: userId,

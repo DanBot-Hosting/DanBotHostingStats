@@ -1,7 +1,4 @@
 const UserSchema = require("../../../utils/Schemas/User");
-const config = require('../../../config.json')
-const ptero = require('jspteroapi');
-const application = new ptero.Application(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
 
 module.exports = function (fastify, opts, done) {
 
@@ -25,7 +22,7 @@ module.exports = function (fastify, opts, done) {
             user = {}
         }
 
-		let pteroData = await application.getUserInfo(userId);
+		let pteroData = await opts.pteroApp.getUserInfo(userId);
 		if (!pteroData) {
 			code = 404;
 			pteroData = {}
