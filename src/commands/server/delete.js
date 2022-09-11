@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, EmbedBuilder, Color, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const servers = require("../../utils/pterodactyl/server/servers");
 const deleteServer = require("../../utils/pterodactyl/server/deleteServer");

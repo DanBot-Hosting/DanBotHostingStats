@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, EmbedBuilder, Color, ChannelType } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ChannelType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const bycrypt = require("bcrypt");
 const createUser = require("../../utils/pterodactyl/user/create");
