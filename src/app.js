@@ -1,9 +1,5 @@
 const { white } = require('chalk');
 const webConfig = require('./website-config.json');
-const config = require('./config.json');
-const ptero = require('jspteroapi');
-const pteroApp = new ptero.Application(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
-const pteroClient = new ptero.Client(config.pterodactyl.panelUrl, config.pterodactyl.adminKey);
 const logger = webConfig.log.logger ? {
     transport: {
         target: './webserver/logger',
@@ -27,9 +23,7 @@ module.exports = client => {
     // Content-Type parser won't work if you register it via fastify
     require('./webserver/typeParser')(fastify);
     fastify.register(require('./webserver/routeHandler'), {
-        client: client,
-        pteroApp: pteroApp,
-        pteroClient: pteroClient
+        client: client
     });
 
     fastify.register((instance, opts, done) => {

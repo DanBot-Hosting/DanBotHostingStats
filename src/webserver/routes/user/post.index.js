@@ -2,6 +2,7 @@ const { EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../../utils/Schemas/User");
 const bycrypt = require("bcrypt");
 const config = require('../../../config.json');
+const createUser = require("../../../utils/pterodactyl/user/create");
 
 const passwordGen = (length) => {
     const CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -103,7 +104,7 @@ module.exports = function (fastify, opts, done) {
             return;
         }
 
-		const resData = await opts.pteroApp.createUser({
+		const resData = await createUser({
 			username: body.username.toLowerCase(),
 			firstName: body.userTag,
 			lastName: userId,
@@ -112,22 +113,24 @@ module.exports = function (fastify, opts, done) {
 			isAdmin: false,
 			language: "en",
 			externalId: undefined
-		}).catch(err => {
+		});
+
+		if (resData.error) {
 			code = 400;
 			return res.code(code).send({
 				error: {
 					name: 'EpicFail',
 					message: 'Account creation failed!',
-					data: err,
+					data: resData.data,
 					statusCode: code
 				}
 			});
-		});
+		}
 
 		const linkDate = Date.now();
 		const data = {
 			userId: userId,
-			consoleId: resData.attributes.id,
+			consoleId: resData.data.attributes.id,
 			email: emailhash,
 			password: passwordhash,
 			username: body.username.toLowerCase(),

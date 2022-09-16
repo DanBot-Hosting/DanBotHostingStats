@@ -1,10 +1,10 @@
 const config = require("../../../config.json");
 const axios = require("axios");
 
-const userDetails = async (userId) => {
+const deleteUser = async (userId) => {
 
     const res = await axios({
-        method: "delete",
+        method: "DELETE",
         url: `${config.pterodactyl.panelUrl}/api/application/users/${userId}`,
         headers: {
             "Authorization": `Bearer ${config.pterodactyl.adminKey}`,
@@ -16,4 +16,4 @@ const userDetails = async (userId) => {
     return res.data.attributes;
 }
 
-module.exports = userDetails;
+module.exports = deleteUser;

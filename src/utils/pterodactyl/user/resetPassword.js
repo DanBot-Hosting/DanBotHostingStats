@@ -5,7 +5,7 @@ const resetPassword = async (userData, password) => {
     try {
 
         const res = await axios({
-            method: "patch",
+            method: "PATCH",
             url: `${config.pterodactyl.panelUrl}/api/application/users/${userData.id}`,
             headers: {
                 "Authorization": `Bearer ${config.pterodactyl.adminKey}`,

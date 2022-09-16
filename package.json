@@ -24,7 +24,6 @@
         "chalk": "^4.1.2",
         "discord.js": "^14.1.1",
         "fastify": "^4.5.2",
-        "jspteroapi": "^1.10.1",
         "mongoose": "^6.4.6",
         "nodemailer": "^6.7.7",
         "ping-tcp-js": "^1.4.1",

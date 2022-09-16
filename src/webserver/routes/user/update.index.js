@@ -1,5 +1,6 @@
 const { EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../../utils/Schemas/User");
+const updateUser = require('../../../utils/pterodactyl/user/update');
 const bycrypt = require("bcrypt");
 const config = require('../../../config.json');
 
@@ -74,26 +75,28 @@ module.exports = function (fastify, opts, done) {
 		const emailhash = await bycrypt.hash(body.email, salt);
 		const passwordhash = await bycrypt.hash(body.password, salt);
 
-		const resData = await opts.pteroApp.editUser(userId, {
+		const resData = await updateUser(userId, {
 			username: body.username.toLowerCase(),
-			firstName: body.userTag,
-			lastName: userId,
+			first_name: body.userTag,
+			last_name: userId,
 			email: body.email,
 			password: body.password,
 			language: "en",
-		}).catch(err => {
+		});
+
+		if (resData.error) {
 			code = 400;
 			return res.code(code).send({
 				error: {
 					name: 'EpicFail',
 					message: 'Could not update an account!',
-					data: err,
+					data: resData.data,
 					statusCode: code
 				}
 			});
-		});
+		}
 
-		const userNew = await UserSchema.findOneAndUpdate({ userId: userId}, {
+		const userNew = await UserSchema.findOneAndUpdate({ userId: userId }, {
 			username: body.username.toLowerCase(),
 			email: emailhash,
 			password: passwordhash
@@ -103,10 +106,15 @@ module.exports = function (fastify, opts, done) {
 			.setColor(Colors.Green)
 			.setTitle("User Updated")
 			.setDescription('Webserver has updated an account!')
-			.addFields(
-				{ name: "Old Username", value: user.username },
-				{ name: 'New Username', value: userNew.username }
-			)
+
+		if (user.username !== userNew.username) {
+			logEmbed.addFields(
+				{name: "Old Username", value: user.username},
+				{name: 'New Username', value: userNew.username}
+			);
+		} else {
+			logEmbed.addFields({name: "Username", value: user.username});
+		}
 
 		const logChan = opts.client.channels.cache.get(config.discord.channels.userLogs);
 
@@ -115,7 +123,7 @@ module.exports = function (fastify, opts, done) {
 		}
 
 		res.code(code).send({
-			data: resData,
+			data: resData.data,
 			statusCode: code
 		});
 	});

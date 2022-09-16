@@ -1,4 +1,5 @@
 const UserSchema = require("../../../utils/Schemas/User");
+const userDetails = require("../../../utils/pterodactyl/user/details");
 
 module.exports = function (fastify, opts, done) {
 
@@ -22,7 +23,8 @@ module.exports = function (fastify, opts, done) {
             user = {}
         }
 
-		let pteroData = await opts.pteroApp.getUserInfo(userId);
+		let pteroData = await userDetails(userId);
+
 		if (!pteroData) {
 			code = 404;
 			pteroData = {}

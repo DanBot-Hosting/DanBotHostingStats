@@ -4,7 +4,7 @@ const axios = require("axios");
 const userDetails = async (userId) => {
 
     const res = await axios({
-        method: "get",
+        method: "GET",
         url: `${config.pterodactyl.panelUrl}/api/application/users/${userId}`,
         headers: {
             "Authorization": `Bearer ${config.pterodactyl.adminKey}`,

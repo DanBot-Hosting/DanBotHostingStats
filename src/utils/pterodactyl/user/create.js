@@ -1,6 +1,5 @@
 const config = require("../../../config.json");
 const axios = require("axios");
-const UserSchema = require("../../Schemas/User");
 
 const createUser = async (data) => {
     try {

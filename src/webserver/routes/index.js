@@ -6,7 +6,7 @@ module.exports = function (fastify, opts, done) {
 			data: 'Nothing in there yet',
 			statusCode: code
 		})
-	})
+	});
     
     done();
 }
