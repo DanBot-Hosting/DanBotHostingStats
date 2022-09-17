@@ -2,12 +2,10 @@ const { Client, EmbedBuilder } = require("discord.js");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const config = require("../config.json");
-const fetchUsers = require("../utils/pterodactyl/user/fetch");
-const getNodes = require("../utils/pterodactyl/nodes/getNodes");
-const getAllocations = require("../utils/pterodactyl/nodes/getAllocations");
 const axios = require("axios");
 const tcpPing = require("ping-tcp-js");
-const getServers = require("../utils/pterodactyl/nodes/getServers");
+const Pterodactyl = require('../utils/pterodactyl/index');
+const ptero = new Pterodactyl();
 
 module.exports = {
     event: "ready",
@@ -24,7 +22,7 @@ module.exports = {
         })
 
         await client.cache.connect()
-        await client.cache.set("users", JSON.stringify(await fetchUsers()), 600000)
+        await client.cache.set("users", JSON.stringify(await ptero.fetchUsers()), 600000)
 
         const guild = await client.guilds.fetch(config.bot.guild)
 
@@ -37,7 +35,7 @@ module.exports = {
         }
 
         setInterval(async () => {
-            await client.cache.set("users", JSON.stringify(await fetchUsers()), 600000)
+            await client.cache.set("users", JSON.stringify(await ptero.fetchUsers()), 600000)
         }, 600000);
 
         const statusMessage = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.messages?.fetch(config.bot.nodeStatus.messageId);
@@ -45,7 +43,7 @@ module.exports = {
         setInterval(async () => {
             if (!statusMessage) return console.log(chalk.red("[ERROR]"), "Failed to fetch status message!");
 
-            const nodes = await getNodes();
+            const nodes = await ptero.getNodes();
 
 
             const nodeDataParsed = nodes.data.map(node => {
@@ -103,8 +101,8 @@ module.exports = {
             for (const n in nodeStatus) {
                 const node = nodeStatus[n];
 
-                const amount = ((await getAllocations(node.id))?.data?.length) || "N/A";
-                const used = ((await getServers(node.id))?.attributes?.relationships?.servers?.data?.length) || "N/A";
+                const amount = ((await ptero.getAllocations(node.id))?.data?.length) || "N/A";
+                const used = ((await ptero.getServers(node.id))?.attributes?.relationships?.servers?.data?.length) || "N/A";
 
                 const status = node.status === "online" ? "🟢 Online" : node.status === "wings offline" ? "🟠 Wings" : "🔴 Offline";
 

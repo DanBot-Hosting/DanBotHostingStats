@@ -2,7 +2,8 @@ const config = require("../../config.json");
 const { Client, Message, EmbedBuilder, Colors, ChannelType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const bycrypt = require("bcrypt");
-const createUser = require("../../utils/pterodactyl/user/create");
+const Pterodactyl = require('../../utils/pterodactyl/index');
+const ptero = new Pterodactyl();
 
 const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 const userRegex = /^[a-zA-Z0-9_]+$/;
@@ -184,7 +185,7 @@ module.exports = {
 
         await msg.edit({ embeds: [creationEmbed] })
 
-        const resData = await createUser(data);
+        const resData = await ptero.createUser(data);
 
         if (resData.error) {
             chan.send(`Account creation failed!\n\n${resData.data}`);

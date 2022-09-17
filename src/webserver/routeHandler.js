@@ -30,8 +30,7 @@ module.exports = async (fastify, opts, done) => {
             path: replacedPrefix,
             prefix: prefix,
             client: opts.client,
-            pteroApp: opts.pteroApp,
-            pteroClient: opts.pteroClient
+            ptero: opts.ptero
         });
     });
     done();

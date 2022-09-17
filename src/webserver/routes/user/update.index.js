@@ -1,6 +1,5 @@
 const { EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../../utils/Schemas/User");
-const updateUser = require('../../../utils/pterodactyl/user/update');
 const bycrypt = require("bcrypt");
 const config = require('../../../config.json');
 
@@ -75,7 +74,7 @@ module.exports = function (fastify, opts, done) {
 		const emailhash = await bycrypt.hash(body.email, salt);
 		const passwordhash = await bycrypt.hash(body.password, salt);
 
-		const resData = await updateUser(userId, {
+		const resData = await opts.ptero.updateUser(userId, {
 			username: body.username.toLowerCase(),
 			first_name: body.userTag,
 			last_name: userId,

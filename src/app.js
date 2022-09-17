@@ -11,6 +11,8 @@ const fastify = require('fastify')({
     disableRequestLogging: !webConfig.log.logRequestsResponse,
     ...webConfig.fastifyOptions
 });
+const Pterodactyl = require('./utils/pterodactyl/index');
+const ptero = new Pterodactyl();
 
 module.exports = client => {
     // Logging registered paths in console
@@ -23,7 +25,8 @@ module.exports = client => {
     // Content-Type parser won't work if you register it via fastify
     require('./webserver/typeParser')(fastify);
     fastify.register(require('./webserver/routeHandler'), {
-        client: client
+        client: client,
+        ptero: ptero
     });
 
     fastify.register((instance, opts, done) => {

@@ -2,9 +2,9 @@ const config = require("../../config.json");
 const serverConfig = require("../../server-config.json")
 const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
-const getEgg = require("../../utils/pterodactyl/eggs/getEgg");
-const createServer = require("../../utils/pterodactyl/server/createServer");
 const Premium = require("../../utils/Schemas/Premium");
+const Pterodactyl = require('../../utils/pterodactyl/index');
+const ptero = new Pterodactyl();
 
 module.exports = {
     name: "create-donator",
@@ -64,7 +64,7 @@ module.exports = {
             return;
         }
 
-        const eggData = await getEgg(serverType.nestId, serverType.eggId);
+        const eggData = await ptero.getEgg(serverType.nestId, serverType.eggId);
 
         const envs = {}
 
@@ -104,7 +104,7 @@ module.exports = {
 
         await Premium.updateOne({ userId: message.author.id }, { $inc: { premiumUsed: 1 } });
 
-        const serverData = await createServer(serverCreationData);
+        const serverData = await ptero.createServer(serverCreationData);
 
         if (serverData.error) {
 
