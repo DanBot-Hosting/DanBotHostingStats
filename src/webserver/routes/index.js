@@ -1,4 +1,4 @@
-module.exports = function (fastify, opts, done) {
+module.exports = (fastify, opts, done) => {
 
 	fastify.get('/', (req, res) => {
 		let code = 200;

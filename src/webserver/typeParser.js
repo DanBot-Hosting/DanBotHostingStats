@@ -1,11 +1,8 @@
-
 // Used to handle most of the FastifyError related to application/json Content-Type
 // Instead of using fastify's json parser it uses JSON.parse() function: line 20
 module.exports = (fastify) => {
-    fastify.addContentTypeParser(
-        'application/json',
-        { parseAs: 'string' },
-        function (req, body, done) {
+    fastify.addContentTypeParser('application/json', { parseAs: 'string' },
+        (req, body, done) => {
             if (!body) {
                 return done({
                     name: "Missing",

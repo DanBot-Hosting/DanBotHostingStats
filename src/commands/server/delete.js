@@ -91,7 +91,7 @@ module.exports = {
             if (i.customId == "confirm") {
                 await i.deferReply({ ephemeral: true })
 
-                const response = await ptero.deleteServer(server.attributes.id)
+                const response = await ptero.server.deleteServer(server.attributes.id)
 
                 if (response.error) {
                     i.editReply({
@@ -109,7 +109,7 @@ module.exports = {
                         .setTimestamp()
                         .setColor(Colors.Blurple)
 
-                    const locations = (await ptero.getLocations())?.data;
+                    const locations = (await ptero.locations.getLocations())?.data;
 
                     if (!locations) return;
 

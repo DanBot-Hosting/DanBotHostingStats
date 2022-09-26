@@ -27,7 +27,7 @@ module.exports = {
             return;
         }
 
-        const usersServers = (await ptero.servers(user.consoleId))?.data?.attributes?.relationships?.servers?.data;
+        const usersServers = (await ptero.server.servers(user.consoleId))?.data?.attributes?.relationships?.servers?.data;
 
         if (!usersServers) {
             message.reply("You don't have any servers.");

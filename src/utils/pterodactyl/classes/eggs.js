@@ -1,18 +1,23 @@
 module.exports = class eggsClass {
     constructor(pterodactyl) {
-        this.getEgg = async (nestId, eggId) => {
-            const response = await pterodactyl.request(
-                `/api/application/nests/${nestId}/eggs/${eggId}?include=variables`,
-                'GET'
-            );
-            return response;
-        }
-        this.getEggs = async nestId => {
-            const response = await pterodactyl.request(
-                `/api/application/nests/${nestId}/eggs`,
-                'GET'
-            );
-            return response;
-        }
+        this.pterodactyl = pterodactyl;
+    }
+
+    async getEgg(nestId, eggId) {
+        const response = await this.pterodactyl.request(
+            `/api/application/nests/${nestId}/eggs/${eggId}?include=variables`,
+            'GET'
+        );
+
+        return response;
+    }
+
+    async getEggs(nestId) {
+        const response = await this.pterodactyl.request(
+            `/api/application/nests/${nestId}/eggs`,
+            'GET'
+        );
+
+        return response;
     }
 }

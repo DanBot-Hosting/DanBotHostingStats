@@ -64,7 +64,7 @@ module.exports = {
             return;
         }
 
-        const eggData = await ptero.getEgg(serverType.nestId, serverType.eggId);
+        const eggData = await ptero.eggs.getEgg(serverType.nestId, serverType.eggId);
 
         const envs = {}
 
@@ -104,7 +104,7 @@ module.exports = {
 
         await Premium.updateOne({ userId: message.author.id }, { $inc: { premiumUsed: 1 } });
 
-        const serverData = await ptero.createServer(serverCreationData);
+        const serverData = await ptero.server.createServer(serverCreationData);
 
         if (serverData.error) {
 

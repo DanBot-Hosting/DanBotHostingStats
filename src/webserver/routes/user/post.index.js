@@ -15,7 +15,7 @@ const passwordGen = (length) => {
     return password;
 }
 
-module.exports = function (fastify, opts, done) {
+module.exports = (fastify, opts, done) => {
 
     // Removing cache control for each request
     fastify.addHook("onRequest", async (req, res) => {
@@ -103,7 +103,7 @@ module.exports = function (fastify, opts, done) {
             return;
         }
 
-		const resData = await opts.ptero.createUser({
+		const resData = await opts.ptero.user.createUser({
 			username: body.username.toLowerCase(),
 			firstName: body.userTag,
 			lastName: userId,

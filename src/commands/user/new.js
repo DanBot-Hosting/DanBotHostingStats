@@ -185,7 +185,7 @@ module.exports = {
 
         await msg.edit({ embeds: [creationEmbed] })
 
-        const resData = await ptero.createUser(data);
+        const resData = await ptero.user.createUser(data);
 
         if (resData.error) {
             chan.send(`Account creation failed!\n\n${resData.data}`);

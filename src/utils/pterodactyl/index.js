@@ -8,27 +8,6 @@ const config = require("../../config.json");
 
 module.exports = class Pterodactyl {
     constructor() {
-        // Later I'll add jsdoc
-        const eggs = new eggsClass(this);
-        this.getEgg = eggs.getEgg;
-        this.getEggs = eggs.getEggs;
-        const locations = new locationClass(this);
-        this.getLocations = locations.getLocations;
-        const nodes = new nodeClass(this);
-        this.getAllocations = nodes.getAllocations;
-        this.getNodes = nodes.getNodes;
-        this.getServers = nodes.getServers;
-        const server = new serverClass(this);
-        this.createServer = server.createServer;
-        this.deleteServer = server.deleteServer;
-        this.servers = server.servers;
-        const user = new userClass(this);
-        this.createUser = user.createUser;
-        this.deleteUser = user.deleteUser;
-        this.userDetails = user.userDetails;
-        this.fetchUsers = user.fetchUsers;
-        this.resetPassword = user.resetPassword;
-        this.updateUser = user.updateUser;
 
         /**
          * @param {String} endpoint - Pterodactyl panel endpoint (starting with "/")
@@ -36,11 +15,7 @@ module.exports = class Pterodactyl {
          * @param {Object} data - An object with several keys depending on endpoint
          * @returns an object with 2 keys: "error" (boolean) and "data" (object)
          */
-        this.request = async (
-            endpoint,
-            method,
-            data = {}
-        ) => {
+        this.request = async (endpoint, method, data = {}) => {
             try {
                 const response = await axios({
                     url: config.pterodactyl.panelUrl + endpoint,
@@ -48,7 +23,7 @@ module.exports = class Pterodactyl {
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        'Authorization': `Bearer ${config.pterodactyl.adminKey}`,
+                        'Authorization': `Bearer ${config.pterodactyl.apiKey}`,
                         'Content-Type': 'application/json',
                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                     },
@@ -65,5 +40,15 @@ module.exports = class Pterodactyl {
                 }
             }
         }
+
+        this.eggs = new eggsClass(this);
+
+        this.locations = new locationClass(this);
+
+        this.nodes = new nodeClass(this);
+
+        this.server = new serverClass(this);
+
+        this.user = new userClass(this);
     }
 }

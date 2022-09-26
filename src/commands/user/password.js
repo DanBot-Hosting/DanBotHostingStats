@@ -45,7 +45,7 @@ module.exports = {
 
         const userData = fetchedData.find(u => u.id == user.consoleId);
 
-        await ptero.resetPassword(userData, password);
+        await ptero.user.resetPassword(userData, password);
 
         message.author.send(`Your Password Has Been Reset!\n\nNew Password: ||${password}||`).catch(() => {
             return message.channel.send("Please Enable DMs to Receive Your New Password!");

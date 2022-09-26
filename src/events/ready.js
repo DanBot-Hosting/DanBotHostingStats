@@ -1,4 +1,4 @@
-const { Client, EmbedBuilder } = require("discord.js");
+const { Client, EmbedBuilder, Colors } = require("discord.js");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const config = require("../config.json");
@@ -22,7 +22,7 @@ module.exports = {
         })
 
         await client.cache.connect()
-        await client.cache.set("users", JSON.stringify(await ptero.fetchUsers()), 600000)
+        await client.cache.set("users", JSON.stringify(await ptero.user.fetchUsers()), 600000)
 
         const guild = await client.guilds.fetch(config.bot.guild)
 
@@ -35,7 +35,7 @@ module.exports = {
         }
 
         setInterval(async () => {
-            await client.cache.set("users", JSON.stringify(await ptero.fetchUsers()), 600000)
+            await client.cache.set("users", JSON.stringify(await ptero.nodes.fetchUsers()), 600000)
         }, 600000);
 
         const statusMessage = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.messages?.fetch(config.bot.nodeStatus.messageId);
@@ -43,10 +43,9 @@ module.exports = {
         setInterval(async () => {
             if (!statusMessage) return console.log(chalk.red("[ERROR]"), "Failed to fetch status message!");
 
-            const nodes = await ptero.getNodes();
+            const nodes = await ptero.nodes.getNodes();
 
-
-            const nodeDataParsed = nodes.data.map(node => {
+            const nodeDataParsed = nodes.data.data.map(node => {
                 return {
                     id: node.attributes.id,
                     name: node.attributes.name,
@@ -84,6 +83,7 @@ module.exports = {
 
             for (const n in nodeStatus) {
                 const node = nodeStatus[n];
+
                 if (node.status === "wings offline") {
                     tcpPing.ping(node.fqdn, 80).catch(() => {
                         nodeStatus[n] = {
@@ -94,15 +94,18 @@ module.exports = {
                 }
             }
 
-            const statusEmbed = new EmbedBuilder()
-                .setTitle("Node Status's")
-                .setTimestamp()
+            const statusEmbed = {
+                title: "Node Status",
+                description: '',
+                timestamp: new Date(),
+                color: Colors.Orange
+            }
 
             for (const n in nodeStatus) {
                 const node = nodeStatus[n];
 
-                const amount = ((await ptero.getAllocations(node.id))?.data?.length) || "N/A";
-                const used = ((await ptero.getServers(node.id))?.attributes?.relationships?.servers?.data?.length) || "N/A";
+                const amount = ((await ptero.nodes.getAllocations(node.id))?.data?.data?.length) ?? "N/A";
+                const used = ((await ptero.nodes.getServers(node.id))?.data?.attributes?.relationships?.servers?.data?.length) ?? "N/A";
 
                 const status = node.status === "online" ? "🟢 Online" : node.status === "wings offline" ? "🟠 Wings" : "🔴 Offline";
 

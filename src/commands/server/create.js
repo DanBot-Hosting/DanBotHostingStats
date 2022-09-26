@@ -51,7 +51,7 @@ module.exports = {
             return;
         }
 
-        const eggData = await ptero.getEgg(serverType.nestId, serverType.eggId);
+        const eggData = await ptero.eggs.getEgg(serverType.nestId, serverType.eggId);
 
         const envs = {}
 
@@ -88,7 +88,7 @@ module.exports = {
             "start_on_completion": false
         }
 
-        const serverData = await ptero.createServer(serverCreationData);
+        const serverData = await ptero.server.createServer(serverCreationData);
 
         if (serverData.error) {
             const embed = new MessageEmbed()
