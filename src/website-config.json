@@ -1,0 +1,13 @@
+{
+    "fastifyOptions": {
+        "ignoreTrailingSlash": true
+    },
+    "log": {
+        "logger": true,
+        "logRequestsResponse": true
+    },
+    "listenOptions": {
+        "port": 3000,
+        "host": "0.0.0.0"
+    }
+}

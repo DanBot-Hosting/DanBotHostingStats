@@ -1,7 +1,8 @@
 const config = require("../../config.json");
 const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
-const servers = require("../../utils/pterodactyl/server/servers");
+const Pterodactyl = require('../../utils/pterodactyl/index');
+const ptero = new Pterodactyl();
 
 module.exports = {
     name: "list",
@@ -26,7 +27,7 @@ module.exports = {
             return;
         }
 
-        const usersServers = (await servers(user.consoleId))?.data?.attributes?.relationships?.servers?.data;
+        const usersServers = (await ptero.server.servers(user.consoleId))?.data?.attributes?.relationships?.servers?.data;
 
         if (!usersServers) {
             message.reply("You don't have any servers.");

@@ -18,6 +18,7 @@ module.exports = {
             .setDescription(`API Latency: ${client.ws.ping}ms`)
             .setColor(Colors.Blue)
             .setTimestamp()
+
         message.reply({ embeds: [embed] });
     },
 }

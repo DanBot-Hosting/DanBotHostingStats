@@ -1,5 +1,5 @@
 const config = require("../../config.json");
-const { Client, Message, EmbedBuilder, Color, ChannelType } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ChannelType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
 const mailer = require("nodemailer")
 const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -227,10 +227,13 @@ module.exports = {
         })
 
         const logEmbed = new MessageEmbed()
-            .setColor("GREEN")
+            .setColor(Colors.Green)
             .setTitle("User linked")
             .setDescription(`${message.author} has linked an account!`)
-            .addField("Username", user.username.toString())
+            .addFields({
+                name: "Username",
+                value: user.username.toString()
+            })
 
         const logChan = message.guild.channels.cache.get(config.discord.channels.userLogs)
 

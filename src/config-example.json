@@ -70,8 +70,8 @@
     },
     "pterodactyl": {
         "panelUrl": "",
-        "adminKey": "",
-        "aplicationKey": ""
+        "apiKey": "",
+        "salt": ""
     },
     "mail": {
         "host": "",

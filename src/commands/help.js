@@ -26,15 +26,15 @@ module.exports = {
                 let ad = ""
                 if (!cmd.name) {
                     for (const subcmd of cmd) {
-                        ad += `${subcmd.name},`
+                        ad += `\`${subcmd.name}\`, `
                     }
 
-                    embed.addFields({ name: `${key}`, value: `\`${ad.slice(0, -1)}\`` })
+                    embed.addFields({ name: key.toString(), value: ad.slice(0, -2) })
                 } else {
-                    const normalCmds = embed.fields.find(f => f.name === `Normal Commands`)
+                    const normalCmds = embed.data.fields.find(f => f.name === `Normal Commands`)
 
                     if (normalCmds) {
-                        embed.fields.splice(embed.fields.indexOf(normalCmds), 1)
+                        embed.data.fields.splice(embed.data.fields.indexOf(normalCmds), 1)
                     } else {
                         embed.addFields({ name: `Normal Commands`, value: `\`${cmd.name}\`` })
                         continue;
@@ -58,25 +58,39 @@ module.exports = {
             }
 
             if (!cmd?.length) {
-                const embed = new MessageEmbed()
+                const embed = new EmbedBuilder()
                     .setTitle(`Info on ${cmd.name}`)
-                    .addField("Description", cmd.description?.toString() ?? "No Description")
-                    .addField("Usage", cmd.usage?.toString() ?? "No Usage")
-                    .addField("Example", cmd.example?.toString() ?? "No Example")
-                    .setColor("BLUE")
+                    .addFields(
+                        {
+                            name: "Description",
+                            value: cmd.description?.toString() ?? "No Description"
+                        },
+                        {
+                            name: "Usage",
+                            value: cmd.usage?.toString() ?? "No Usage"
+                        },
+                        {
+                            name: "Example",
+                            value: cmd.example?.toString() ?? "No Example"
+                        }
+                    )
+                    .setColor(Colors.Blue)
                     .setTimestamp()
 
-                message.reply({ embeds: [embed] });
+                message.reply({ embeds: [info] });
                 return;
             }
 
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setTitle(`Commands on SubGroup ${command}`)
-                .setColor("BLUE")
+                .setColor(Colors.Blue)
                 .setTimestamp()
 
             for (const comd of cmd) {
-                embed.addField(comd.name, comd.description?.toString() ?? "No Description")
+                embed.addFields({
+                    name: comd.name,
+                    value: comd.description?.toString() ?? "No Description"
+                })
             }
 
 
@@ -87,12 +101,23 @@ module.exports = {
             for (const cmd of client.commands.get(command)) {
                 if (cmd.name !== subcommand) continue;
 
-                const embed = new MessageEmbed()
+                const embed = new EmbedBuilder()
                     .setTitle(`Info on ${cmd.name}`)
-                    .addField("Description", cmd.description?.toString() ?? "No Description")
-                    .addField("Usage", cmd.usage?.toString() ?? "No Usage")
-                    .addField("Example", cmd.example?.toString() ?? "No Example")
-                    .setColor("BLUE")
+                    .addFields(
+                        {
+                            name: "Description",
+                            value: cmd.description?.toString() ?? "No Description"
+                        },
+                        {
+                            name: "Usage",
+                            value: cmd.usage?.toString() ?? "No Usage"
+                        },
+                        {
+                            name: "Example",
+                            value: cmd.example?.toString() ?? "No Example"
+                        }
+                    )
+                    .setColor(Colors.Blue)
                     .setTimestamp()
 
                 message.reply({ embeds: [embed] });

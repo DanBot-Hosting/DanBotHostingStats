@@ -2,8 +2,8 @@ const config = require("../../config.json");
 const serverConfig = require("../../server-config.json")
 const { Client, Message, EmbedBuilder, Colors } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
-const getEgg = require("../../utils/pterodactyl/eggs/getEgg");
-const createServer = require("../../utils/pterodactyl/server/createServer");
+const Pterodactyl = require('../../utils/pterodactyl/index');
+const ptero = new Pterodactyl();
 
 module.exports = {
     name: "create",
@@ -51,7 +51,7 @@ module.exports = {
             return;
         }
 
-        const eggData = await getEgg(serverType.nestId, serverType.eggId);
+        const eggData = await ptero.eggs.getEgg(serverType.nestId, serverType.eggId);
 
         const envs = {}
 
@@ -88,7 +88,7 @@ module.exports = {
             "start_on_completion": false
         }
 
-        const serverData = await createServer(serverCreationData);
+        const serverData = await ptero.server.createServer(serverCreationData);
 
         if (serverData.error) {
             const embed = new MessageEmbed()

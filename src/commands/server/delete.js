@@ -1,10 +1,9 @@
 const config = require("../../config.json");
-const { Client, Message, EmbedBuilder, Color, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
 const UserSchema = require("../../utils/Schemas/User");
-const servers = require("../../utils/pterodactyl/server/servers");
-const deleteServer = require("../../utils/pterodactyl/server/deleteServer");
 const Premium = require("../../utils/Schemas/Premium");
-const getLocations = require("../../utils/pterodactyl/locations/getLocations");
+const Pterodactyl = require('../../utils/pterodactyl/index');
+const ptero = new Pterodactyl();
 
 module.exports = {
     name: "delete",
@@ -34,7 +33,7 @@ module.exports = {
 
         if (!serverId) return message.reply('Please specify a server ID.')
 
-        const usersServers = (await servers(user.consoleId))?.data?.attributes?.relationships?.servers?.data;
+        const usersServers = (await ptero.servers(user.consoleId))?.data?.attributes?.relationships?.servers?.data;
 
         if (!usersServers) {
             message.reply("You don't have any servers.");
@@ -92,7 +91,7 @@ module.exports = {
             if (i.customId == "confirm") {
                 await i.deferReply({ ephemeral: true })
 
-                const response = await deleteServer(server.attributes.id)
+                const response = await ptero.server.deleteServer(server.attributes.id)
 
                 if (response.error) {
                     i.editReply({
@@ -110,7 +109,7 @@ module.exports = {
                         .setTimestamp()
                         .setColor(Colors.Blurple)
 
-                    const locations = (await getLocations())?.data;
+                    const locations = (await ptero.locations.getLocations())?.data;
 
                     if (!locations) return;
 
