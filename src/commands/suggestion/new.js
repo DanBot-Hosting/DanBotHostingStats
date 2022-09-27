@@ -19,7 +19,7 @@ module.exports = {
         const userData = await punishmentsSchema.findOne({ userId: message.author.id })
 
         if (userData && userData.suggestionBanned) {
-            message.channel.send("You have been banned from making a ticket.");
+            message.channel.send("You have been banned from making a suggestion.");
             return;
         }
 
