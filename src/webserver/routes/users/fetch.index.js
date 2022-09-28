@@ -1,4 +1,5 @@
 const UserSchema = require("../../../utils/Schemas/User");
+const bycrypt = require('bcrypt');
 
 module.exports = (fastify, opts, done) => {
 
@@ -12,17 +13,18 @@ module.exports = (fastify, opts, done) => {
         });
     });
 
-    fastify.get('/:userId', async (req, res) => {
-        const userId = req.params.userId;
+    fastify.get('/:username', async (req, res) => {
+        const username = req.params.username;
+        console.log(username)
         let code = 200;
 
-        let user = await UserSchema.findOne({ userId: userId });
+        let user = await UserSchema.findOne({ username });
         if (!user) {
             code = 404;
             user = {}
         }
 
-        let pteroData = await opts.ptero.user.userDetails(userId);
+        let pteroData = await opts.ptero.user.userDetails(user.consoleId);
 
         if (!pteroData) {
             code = 404;

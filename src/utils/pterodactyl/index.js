@@ -36,7 +36,7 @@ module.exports = class Pterodactyl {
             } catch (error) {
                 return {
                     error: true,
-                    data: error?.response?.data?.message
+                    data: error.response.data
                 }
             }
         }
