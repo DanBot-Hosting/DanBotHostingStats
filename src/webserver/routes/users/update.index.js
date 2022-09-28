@@ -15,7 +15,7 @@ module.exports = (fastify, opts, done) => {
         });
     });
 
-    fastify.put('/:userId', async (req, res) => {
+    fastify.patch('/:username', async (req, res) => {
         let code = 200;
 
         // Required keys
@@ -42,9 +42,9 @@ module.exports = (fastify, opts, done) => {
         }
 
         const body = req.body;
-        const userId = req.params.userId;
+        const username = req.params.username;
 
-        const user = await UserSchema.findOne({ userId: userId });
+        const user = await UserSchema.findOne({ username });
         if (!user) {
             code = 404;
             res.code(code).send({
@@ -57,27 +57,15 @@ module.exports = (fastify, opts, done) => {
             return;
         }
 
-        if (bycrypt.compare(body.password, user.password)) {
-            code = 403;
-            res.code(code).send({
-                error: {
-                    name: 'Forbidden',
-                    message: `Password does not match`,
-                    statusCode: code
-                }
-            });
-            return;
-        }
-
-        const salt = config.pterodactyl.salt;
+        const salt = await bycrypt.genSalt(10);
 
         const emailhash = await bycrypt.hash(body.email, salt);
         const passwordhash = await bycrypt.hash(body.password, salt);
 
-        const resData = await opts.ptero.user.updateUser(userId, {
+        const resData = await opts.ptero.user.updateUser(user.consoleId, {
             username: body.username.toLowerCase(),
-            first_name: body.userTag,
-            last_name: userId,
+            first_name: body.firstName,
+            last_name: body.lastName,
             email: body.email,
             password: body.password,
             language: "en",
@@ -95,8 +83,8 @@ module.exports = (fastify, opts, done) => {
             });
         }
 
-        const userNew = await UserSchema.findOneAndUpdate({ userId: userId }, {
-            username: body.username.toLowerCase(),
+        const userNew = await UserSchema.findOneAndUpdate({ username }, {
+            username: body.username,
             email: emailhash,
             password: passwordhash
         });

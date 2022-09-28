@@ -27,16 +27,15 @@ module.exports = (fastify, opts, done) => {
 		});
 	});
     
-	fastify.post('/:userId', async (req, res) => {
+	fastify.post('/', async (req, res) => {
 		let code = 200;
 
 		// Required keys
-		const keys = ['email', 'username', 'userTag'];
-
+		const keys = ['email', 'username', 'password', 'firstName', 'lastName'];
 		// Find missing keys
 		let missingKeys = [];
 		keys.forEach(item => {
-			if (req.body.hasOwnProperty(item)) missingKeys.push(item);
+			if (!req.body.hasOwnProperty(item)) missingKeys.push(item);
 		});
 
 		// Check if all keys are there
@@ -54,87 +53,56 @@ module.exports = (fastify, opts, done) => {
 		}
 
 		const body = req.body;
-		const userId = req.params.userId;
+		const salt = await bycrypt.genSalt(10);
+		const hashedEmail = await bycrypt.hash(body.email, salt);
 
-		const user = await UserSchema.findOne({ userId: userId });
+		const user = await UserSchema.findOne({ username: body.username });
 
 		if (user) {
 			code = 400;
             res.code(code).send({
 				error: {
 					name: 'AlreadyExists',
-					message: 'Account already exists!',
+					message: 'Account with that username already exists!',
 					statusCode: code
 				}
 			});
             return;
         }
 
-		const salt = config.pterodactyl.salt;
 		const password = passwordGen(12);
-
-        const emailhash = await bycrypt.hash(body.email, salt);
-		const passwordhash = await bycrypt.hash(password, salt);
-
-        const emailCheck = await UserSchema.findOne({ email: emailhash });
-        const usernameCheck = await UserSchema.findOne({ username: body.username });
-
-        if (emailCheck) {
-			code = 400;
-            res.code(code).send({
-				error: {
-					name: 'AlreadyExists',
-					message: 'That email is already in use!',
-					statusCode: code
-				}
-			});
-            return;
-        }
-
-        if (usernameCheck) {
-			code = 400;
-            res.code(code).send({
-				error: {
-					name: 'AlreadyExists',
-					message: 'That username is already in use!',
-					statusCode: code
-				}
-			});
-            return;
-        }
+		const hashedPassword = await bycrypt.hash(password, salt);
 
 		const resData = await opts.ptero.user.createUser({
-			username: body.username.toLowerCase(),
-			firstName: body.userTag,
-			lastName: userId,
+			username: body.username,
+			first_name: body.firstName,
+			last_name: body.lastName,
 			email: body.email,
-			password: password,
+			password: body.password,
 			isAdmin: false,
 			language: "en",
 			externalId: undefined
 		});
 
 		if (resData.error) {
-			code = 400;
+			code = 500;
 			return res.code(code).send({
 				error: {
-					name: 'EpicFail',
+					name: 'Failed',
 					message: 'Account creation failed!',
-					data: resData.data,
-					statusCode: code
+					statusCode: code,
+					errors: resData.data.errors
 				}
 			});
 		}
 
-		const linkDate = Date.now();
 		const data = {
-			userId: userId,
 			consoleId: resData.data.attributes.id,
-			email: emailhash,
-			password: passwordhash,
-			username: body.username.toLowerCase(),
+			email: hashedEmail,
+			password: hashedPassword,
+			username: body.username,
 			domains: [],
-			linkDate: linkDate,
+			linkDate: null
 		}
 		await UserSchema.create(data);
 
@@ -151,7 +119,11 @@ module.exports = (fastify, opts, done) => {
         }
 
 		res.code(code).send({
-			data: data,
+			data: {
+				consoleId: resData.data.attributes.id,
+				email: body.email,
+				username: body.username.toLowerCase(),
+			},
 			statusCode: code
 		});
 	});

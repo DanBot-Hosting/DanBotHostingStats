@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
     // The Discord ID of the user
     userId: {
         type: String,
-        required: true,
+        required: false,
         unique: true
     },
 
@@ -38,8 +38,7 @@ const UserSchema = new mongoose.Schema({
     // The Date the user linked their account
     linkDate: {
         type: Date,
-        required: true,
-        default: Date.now
+        required: false
     },
 })
 

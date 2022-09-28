@@ -15,7 +15,9 @@ module.exports = (fastify, opts, done) => {
         });
     });
 
-    fastify.delete('/:userId', async (req, res) => {
+    fastify.delete('/:username', async (req, res) => {
+        const username = req.params.username;
+
         let code = 200;
         if (!req.body) {
             code = 400;
@@ -28,23 +30,9 @@ module.exports = (fastify, opts, done) => {
             });
         }
 
-        const password = req.body.password;
-
-        if (!password) {
-            code = 400;
-            res.code(code).send({
-                error: {
-                    name: 'Missing',
-                    message: 'Missing keys: password',
-                    statusCode: code
-                }
-            });
-            return;
-        }
-
-
-        const userId = req.params.userId;
-        let user = await UserSchema.findOneAndDelete({ userId: userId });
+        const user = await UserSchema.findOne({ username });
+        const { email, password } = req.body;
+        
         if (!user) {
             code = 404;
             res.code(code).send({
@@ -57,19 +45,33 @@ module.exports = (fastify, opts, done) => {
             return;
         }
 
-        if (bycrypt.compare(password, user.password)) {
-            code = 403;
+        if (!(await bycrypt.compare(email, user.email))) {
+            code = 400;
             res.code(code).send({
                 error: {
-                    name: 'Forbidden',
-                    message: `Password does not match`,
+                    name: 'NoMatch',
+                    message: 'Email does not match',
                     statusCode: code
                 }
             });
             return;
         }
 
-        let pteroData = await opts.ptero.user.userDetails(userId);
+        if (!bycrypt.compare(password, user.password)) {
+            code = 400;
+            res.code(code).send({
+                error: {
+                    name: 'NoMatch',
+                    message: 'Password does not match',
+                    statusCode: code
+                }
+            });
+            return;
+        }
+
+        await user.delete();
+
+        let pteroData = await opts.ptero.user.userDetails(user.consoleId);
         if (!pteroData) {
             code = 404;
             res.code(code).send({
@@ -85,13 +87,13 @@ module.exports = (fastify, opts, done) => {
             });
             return;
         }
-        await opts.ptero.user.deleteUser(userId);
+        await opts.ptero.user.deleteUser(user.consoleId);
 
         const logEmbed = new EmbedBuilder()
             .setColor(Colors.Green)
             .setTitle("User Deleted")
             .setDescription('Webserver has deleted an account!')
-            .addFields({ name: "User ID", value: userId })
+            .addFields({ name: "Console ID", value: user.consoleId })
 
         const logChan = opts.client.channels.cache.get(config.discord.channels.userLogs);
 
