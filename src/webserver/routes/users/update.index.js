@@ -15,7 +15,7 @@ module.exports = (fastify, opts, done) => {
         });
     });
 
-    fastify.put('/username', async (req, res) => {
+    fastify.patch('/:username', async (req, res) => {
         let code = 200;
 
         // Required keys

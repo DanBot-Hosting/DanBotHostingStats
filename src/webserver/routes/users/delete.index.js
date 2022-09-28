@@ -31,7 +31,6 @@ module.exports = (fastify, opts, done) => {
         }
 
         const user = await UserSchema.findOne({ username });
-        console.log(username, user)
         const { email, password } = req.body;
         
         if (!user) {

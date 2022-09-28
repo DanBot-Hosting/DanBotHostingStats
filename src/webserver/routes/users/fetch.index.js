@@ -15,7 +15,6 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get('/:username', async (req, res) => {
         const username = req.params.username;
-        console.log(username)
         let code = 200;
 
         let user = await UserSchema.findOne({ username });
