@@ -60,7 +60,7 @@ exports.run = async(client, message, args) => {
                                     max: 2
                                 });
                                 collector.on('collect', message => {
-                                    if (message.content === "confirm") {
+                                    if (message.content.toLowerCase === "confirm") {
                                         message.delete()
                                         msg.edit('Working...')
                                         axios({
