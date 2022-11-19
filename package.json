@@ -31,5 +31,6 @@
         "redis": "^4.2.0",
         "tiny-glob": "^0.2.9",
         "undici": "^5.8.0"
-    }
+    },
+    "packageManager": "yarn@3.3.0"
 }

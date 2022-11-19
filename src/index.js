@@ -35,6 +35,3 @@ process.on("uncaughtException", err => {
 })
 
 client.login(config.bot.token);
-
-// Start the webserver
-require('./app')(client);

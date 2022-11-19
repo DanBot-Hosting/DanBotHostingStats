@@ -4,3 +4,7 @@ package-lock.json
 request.http
 db/
 *test*
+yarn.lock
+.yarnrc.yml
+.yarn
+.idea
