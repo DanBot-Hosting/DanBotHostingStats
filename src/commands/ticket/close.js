@@ -1,6 +1,6 @@
 const punishmentsSchema = require("../../utils/Schemas/Punishments");
 const config = require("../../config.json");
-const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const { Client, Message, EmbedBuilder, Colors, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, AttachmentBuilder } = require("discord.js");
 
 module.exports = {
     name: "close",
@@ -73,8 +73,28 @@ module.exports = {
                 const ticketLoggingChannel = message.guild.channels.cache.get(config.discord.channels.ticketLogs);
 
                 if (ticketLoggingChannel) {
-                    const messages = await message.channel.messages.fetch({ limit: 100, after: 0 })
-                    const transformedMessages = [...messages.mapValues((m) => `${m.author.tag}: ${m.cleanContent}`).reverse()]
+                    const messages = [
+                        await message.channel.messages.fetch({ limit: 100 }),
+                    ]
+        
+                    while(messages[messages.length - 1].size === 100) {
+                        const lastMessage = messages[messages.length - 1].last();
+        
+                        if (messages[messages.length - 1].size !== 100) break;
+                        if (!lastMessage) break;
+        
+                        messages.push(await message.channel.messages.fetch({ limit: 100, before: lastMessage.id }));
+
+                        console.log('Fetching more messages...');
+                    }
+
+                    const transformedMessages = [];
+
+                    for (const messageArray of messages) {
+                        for (const message of messageArray.reverse().values()) {
+                            transformedMessages.push(`[${message.createdAt.toUTCString()}] ${message.author.tag}: ${message.cleanContent} ${message.attachments.first()?.url || ""}`);
+                        }
+                    }
 
                     const embed = new EmbedBuilder()
                         .setTitle('Ticket closed')
@@ -83,7 +103,11 @@ module.exports = {
                         .setColor(Colors.Red)
                         .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 
-                    ticketLoggingChannel.send({ embeds: [embed] })
+                    const Attachment = new AttachmentBuilder(Buffer.from(transformedMessages.join("\n")), {
+                        name: `${message.channel.name}.txt`
+                    });
+
+                    ticketLoggingChannel.send({ embeds: [embed], files: [Attachment] });
                 }
             } else {
                 i.reply({

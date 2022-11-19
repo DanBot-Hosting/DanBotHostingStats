@@ -22,7 +22,8 @@
             "donated": "",
             "member": "",
             "client": "",
-            "bot": ""
+            "bot": "",
+            "donatorAllowed": ""
         },
         "commands": {
             "serverCommandsEnabled": true,

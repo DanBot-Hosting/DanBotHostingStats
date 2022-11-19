@@ -9,7 +9,7 @@ module.exports = {
     example: "donate add @Wumpus#0000 2",
     requiredPermissions: [],
     checks: [{
-        check: (message) => message.member.roles.cache.has(config.discord.roles.admin),
+        check: (message) => message.member.roles.cache.has(config.discord.roles.donatorAllowed),
         error: "You do not have permission to use this command."
     }, {
         check: (message, args) => ["add", "remove", "set"].includes(args[0]),
@@ -18,7 +18,7 @@ module.exports = {
         check: (message, args) => args?.[1] !== undefined,
         error: "Please mention a user or provide a valid user ID."
     }, {
-        check: (message, args) => !isNaN(args?.[2]),
+        check: (message, args) => !isNaN(args?.[2]) || args?.[2] > 0,
         error: "Please provide a valid amount."
     }],
     /**

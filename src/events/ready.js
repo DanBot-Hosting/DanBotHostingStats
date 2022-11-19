@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { Client, EmbedBuilder, Colors } = require("discord.js");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
@@ -38,10 +39,16 @@ module.exports = {
             await client.cache.set("users", JSON.stringify(await ptero.nodes.fetchUsers()), 600000)
         }, 600000);
 
-        const statusMessage = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.messages?.fetch(config.bot.nodeStatus.messageId);
+        let statusMessage = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.messages?.fetch(config.bot.nodeStatus.messageId);
 
         setInterval(async () => {
-            if (!statusMessage) return console.log(chalk.red("[ERROR]"), "Failed to fetch status message!");
+            if (!statusMessage) {
+                statusMessage = await client.guilds.cache.get(config.bot.guild)?.channels?.cache?.get(config.bot.nodeStatus.channelId)?.send('Waiting...')
+
+                config.bot.nodeStatus.messageId = statusMessage.id;
+
+                fs.writeFileSync('./config.json', JSON.stringify(config, null, 4))
+            }
 
             const nodes = await ptero.nodes.getNodes();
 
