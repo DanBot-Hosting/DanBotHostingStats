@@ -51,7 +51,7 @@ module.exports = {
             ],
         }).catch(console.error);
 
-        ticket.setTopic(`${message.author.id}`);
+        ticket.setTopic(`The user that made the ticket is <@${message.author.id}> (${message.author.id})`);
 
         const embed = new EmbedBuilder()
             .setTitle(`${client.user.username} | Ticket`)

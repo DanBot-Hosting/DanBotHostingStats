@@ -59,7 +59,10 @@ module.exports = {
 
             const user = i.user;
 
-            if (i.user.id !== message.author.id) return i.reply('Only the user who invoked this command can close the ticket.');
+            if (i.user.id !== message.author.id) return i.reply({
+                content: 'Only the user who invoked this command can close the ticket.',
+                ephemeral: true
+            });
 
             if (i.customId === "close") {
                 i.reply({
@@ -84,8 +87,6 @@ module.exports = {
                         if (!lastMessage) break;
         
                         messages.push(await message.channel.messages.fetch({ limit: 100, before: lastMessage.id }));
-
-                        console.log('Fetching more messages...');
                     }
 
                     const transformedMessages = [];
@@ -116,7 +117,7 @@ module.exports = {
                 return;
             }
         }).on('end', (collected, reason) => {
-            if (!collected.size && reason === 'time') msg.edit({ content: 'You ran out of time.', components: [] })
+            if (!collected.size && reason === 'time') msg.edit({ content: 'You ran out of time.', components: [], embeds: [] });
         })
     }
 }

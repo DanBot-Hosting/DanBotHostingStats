@@ -26,7 +26,6 @@ module.exports = {
                 iconURL: message.author.displayAvatarURL()
             })
             .setDescription(`${message.content || "No Content"}`)
-            .setImage(message.attachments.first()?.url || "")
             .setColor(Colors.Red)
             .setTimestamp()
             .setFooter({
