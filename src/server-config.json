@@ -1,0 +1,24 @@
+{
+    "freeNodes": [1, 3, 4, 5],
+    "freeGamingNodes": [],
+    "donatorNodes": [2],
+    "donatorGamingNodes": [],
+    "__comment__": "The above 'nodes' should be the location IDs, the donator nodes and free nodes (and gaming) should be in their own locations if not it will mess this up",
+    "serverCreationData": [
+        {
+            "name": "AIO",
+            "description": "AIO is an all-in-one server with nodejs, python, ruby & more.",
+            "nestId": 5,
+            "eggId": 15,
+            "cpu": 0,
+            "ram": 1024,
+            "disk": 0,
+            "swap": 0,
+            "io": 500,
+            "databases": 2,
+            "allocations": 1,
+            "backups": 10,
+            "gaming": false
+            }
+        ]
+}
