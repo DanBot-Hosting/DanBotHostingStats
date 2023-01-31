@@ -1,6 +1,6 @@
 const axios = require('axios')
 exports.run = async(client, message, args) => {
-    const loadingMsg = message.channel.send('Loading servers...')
+    const loadingMsg = await message.channel.send('Loading servers...')
     //List servers
     var arr = [];
     let userID = message.author.id
