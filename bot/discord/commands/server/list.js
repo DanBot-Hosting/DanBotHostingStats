@@ -1,6 +1,6 @@
 const axios = require('axios')
 exports.run = async(client, message, args) => {
-    message.channel.send('Loading servers...')
+    const loadingMsg = message.channel.send('Loading servers...')
     //List servers
     var arr = [];
     let userID = message.author.id
@@ -26,14 +26,15 @@ exports.run = async(client, message, args) => {
             setTimeout(() => {
                 var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n");
                 const embed = new Discord.MessageEmbed()
-                            .addField('__**Your Servers:**__', clean)
+                    .setDescription('You have a total of ' + arr.length + ' servers.' 
+                    .addField('__**Your Servers:**__', clean)
                 message.channel.send(embed).catch(e => {
                     const embed = new Discord.MessageEmbed()
-                        .setDescription('Your server list is too long so here is a abstracted version!')
+                        .setDescription('Your server list is too long so here is a abstracted version!\nYou have a total of ' + arr.length + ' servers!')
                         .addField('__**Your Servers:**__', arr.map(e => "`" + e.attributes.identifier + "`"))
-                     message.channel.send(embed)
+                    message.channel.send(embed)
                 })
-                //console.log(output)
+                loadingMsg.delete();
             }, 500)
         }, 5000)
     }).catch(err => {});

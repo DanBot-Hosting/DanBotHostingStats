@@ -4,6 +4,9 @@ const axios = require("axios");
 exports.run = async (client, message, args) => {
   // filesize function
 
+  message.channel.send('This command is currently disabled. You can see the current server status here:\n- https://status.danbot.host\n- https://uptime.danbot.host');
+  return;
+
   function formatFileSize(bytes, decimalPoint) {
     if (bytes === 0) return "0 Bytes";
     let k = 1024,

@@ -1,7 +1,7 @@
 let db = require("quick.db");
 const Discord = require("discord.js");
 
-function genorateKey(length = 40) {
+function generateKey(length = 40) {
     const charSet = "qwert5yuiopasdfghjklzxcvbnmQWERTYUI8OPOASDFGHJKLZXCVBNM1234567890$%&@";
     let key = new String();
     for (let i = 0; i < length; ++i) key = key + charSet[Math.round(Math.random() * charSet.length) - 1];
@@ -10,7 +10,7 @@ function genorateKey(length = 40) {
 
 exports.run = async(client, message, args) => {
 
-    let startkey = genorateKey();
+    let startkey = generateKey();
 
     let key = `danbot-${startkey}`
 
@@ -31,7 +31,7 @@ exports.run = async(client, message, args) => {
                 .setAuthor(`${client.user.username} | Api Key`, client.user.avatarURL())
                 .setDescription(`> Do not share this key with anyone else!`)
                 .addField(`🔑 | Key:`, `> \`${key}\``)
-                .addField(`❓ | Info`, `> How to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting)\n> Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`)
+                .addField(`❓ | Info`, `> How to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting)\n> Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)\n> **The API is currently disabled.**`)
                 .setColor(message.guild.me.displayHexColor)
                 .setTimestamp()
             await message.author.send(embed)
@@ -106,7 +106,7 @@ exports.run = async(client, message, args) => {
                 .setAuthor(`${client.user.username} | Api Key`, client.user.avatarURL())
                 .setDescription(`> Do not share this key with anyone else!`)
                 .addField(`🔑 | Key:`, `> \`${key}\``)
-                .addField(`❓ | Info`, `> How to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting)\n> Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)`)
+                .addField(`❓ | Info`, `> How to Post stats? [Visit This Site](https://www.npmjs.com/package/danbot-hosting)\n> Package Github: [Click Here](https://github.com/danbot-devs/danbot-hosting)\n> **The API is currently disabled.**`)
                 .setColor(message.guild.me.displayHexColor)
                 .setTimestamp()
             await message.author.send(embed)
