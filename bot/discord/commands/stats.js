@@ -4,8 +4,8 @@ const axios = require("axios");
 exports.run = async (client, message, args) => {
   // filesize function
 
-  message.channel.send('This command is currently disabled. You can see the current server status here:\n- https://status.danbot.host\n- https://uptime.danbot.host');
-  return;
+  //message.channel.send('This command is currently disabled. You can see the current server status here:\n- https://status.danbot.host\n- https://uptime.danbot.host');
+  //return;
 
   function formatFileSize(bytes, decimalPoint) {
     if (bytes === 0) return "0 Bytes";
@@ -369,15 +369,15 @@ exports.run = async (client, message, args) => {
     });*/
 
   // New start
-  	axios.get("https://status.danbot.host/json/stats.json")
+  	/*axios.get("https://status.danbot.host/json/stats.json")
         .then((response) => {
 	  //const res = response;
-	  /*if(err) {
+	  if(err) {
 		const errorMsg = new MessageEmbed()
 			.setTitle("Server stats")
 			.setDescription("Couldn't load the server stats.\n```\n" + err + "```");
 		msg.edit({ embed: errorMsg });
-	  }*/
+	  }
 	  console.log(response)
 
 	  //console.log(res)
@@ -401,6 +401,40 @@ exports.run = async (client, message, args) => {
             .setTitle("Server stats - Error")
             .setDescription("Couldn't load the server stats.\n```\n" + error + "```");
           msg.edit({ embed: errorMsg });
+   })*/
+
+  // New start from 02.2023
+  const firstEmbed = new Discord.MessageEmbed()
+    .setTitle("Loading")
+    .setDescription("This may take a few seconds. If it doesn't load in time, something broke.");
+
+  let firstMsg = await message.channel.send(firstEmbed);
+
+  axios.get("https://status-api.danbot.host/data")
+    .then((response) => {
+	  //console.log(response)
+
+	  //console.log(res)
+	 //console.log(response.data)
+          const json = JSON.parse(JSON.stringify(response.data));
+          const newMsg = new Discord.MessageEmbed()
+            .setTitle("Server stats")
+            .setDescription("This command is currently in beta. May not all servers are listed below.\nLive-Stats: [DBH Status](https://status.danbot.host) [DBH Uptime](https://uptime.danbot.host)");
+          for(var i = 0; i < json.length; i++) {
+	    if(json[i].online == false) {
+		newMsg.addField(`🔴 ${json[i].servername}`,`Offline`)
+	    } else {
+            newMsg.addField(`🟢 ${json[i].servername} (${json[i].dockercontainersrunning} / ${json[i].dockercontainers} running)`, `CPU: ${json[i].cpuload}% (${json[i].cpu})\n` +
+		`RAM: ${json[i].memused} / ${json[i].memtotal} \n` +
+		`Disk: ${json[i].diskused} / ${json[i].disktotal}`, true)
+	    }
+          }
+          firstMsg.edit({ embed: newMsg });
+        }).catch(error => {
+          const errorMsg = new Discord.MessageEmbed()
+            .setTitle("Server stats - Error")
+            .setDescription("Couldn't load the server stats.\n```\n" + error + "```");
+          firstMsg.edit({ embed: errorMsg });
    })
   // New end
   /*msg.edit({
