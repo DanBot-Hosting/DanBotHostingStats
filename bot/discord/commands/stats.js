@@ -404,7 +404,7 @@ exports.run = async (client, message, args) => {
    })*/
 
   // New start from 02.2023
-  const firstEmbed = new Discord.MessageEmbed()
+  const firstEmbed = new MessageEmbed()
     .setTitle("Loading")
     .setDescription("This may take a few seconds. If it doesn't load in time, something broke.");
 
@@ -416,8 +416,8 @@ exports.run = async (client, message, args) => {
 
 	  //console.log(res)
 	 //console.log(response.data)
-          const json = JSON.parse(JSON.stringify(response.data));
-          const newMsg = new Discord.MessageEmbed()
+          const json = response.data;
+          const newMsg = new MessageEmbed()
             .setTitle("Server stats")
             .setDescription("This command is currently in beta. May not all servers are listed below.\nLive-Stats: [DBH Status](https://status.danbot.host) [DBH Uptime](https://uptime.danbot.host)");
           for(var i = 0; i < json.length; i++) {
@@ -431,7 +431,7 @@ exports.run = async (client, message, args) => {
           }
           firstMsg.edit({ embed: newMsg });
         }).catch(error => {
-          const errorMsg = new Discord.MessageEmbed()
+          const errorMsg = new MessageEmbed()
             .setTitle("Server stats - Error")
             .setDescription("Couldn't load the server stats.\n```\n" + error + "```");
           firstMsg.edit({ embed: errorMsg });
