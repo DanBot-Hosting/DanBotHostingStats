@@ -3,7 +3,7 @@ createList.postgres = (serverName, userID) => ({
     "user": userID,
     "nest": 12,
     "egg": 37,
-    "docker_image": "quay.io/parkervcp/pterodactyl-images:db_postgres",
+    "docker_image": "ghcr.io\/parkervcp\/yolks:postgres_14",
     "startup": `postgres  -D /home/container/postgres_db/`,
     "limits": {
         "memory": 0,
@@ -13,10 +13,8 @@ createList.postgres = (serverName, userID) => ({
         "cpu": 0
     },
     "environment": {
-        "PGPASSWORD": "P@55word",
-        "PGROOT": "ZPWgpMN4hETqjXAV",
-        "PGUSER": "pterodactyl",
-        "PGDATABASE": "pterodactyl"
+        "PGPASSWORD": "Pl3453Ch4n63M3",
+        "PGUSER": "pterodactyl"
     },
     "feature_limits": {
         "databases": 2,
