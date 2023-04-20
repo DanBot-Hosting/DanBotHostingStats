@@ -1,7 +1,12 @@
 const serverCreateSettings_Prem = require('../../../../createData_Prem');
 const axios = require('axios');
+const createServerEnabled = false; //false if the feature is disabled and true if enabled
 
 exports.run = async(client, message, args) => {
+    if (createServerEnabled === false) {
+        message.channel.send("❌ This feature is currently disabled. Please **DON'T** create a ticket, ask for help or spam others! This is because me (Dan) disabled it.")
+        return;
+    }
 
     let userP = userPrem.fetch(message.author.id) || {
         used: 0,
