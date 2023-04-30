@@ -1,7 +1,7 @@
 let parser = new Intl.NumberFormat();
 exports.run = async(client, message, args) => {
 
-    let userid = args[1] == null ? (message.author.id) : (args[1].match(/[0-9]{18}/).length == 0 ? args[1] : args[1].match(/[0-9]{18}/)[0]);
+    let userid = args[1] == null ? (message.author.id) : (args[1].match(/[0-9]{18,19}/).length == 0 ? args[1] : args[1].match(/[0-9]{18,19}/)[0]);
 
 
     let user = userPrem.fetch(userid);
