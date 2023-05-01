@@ -24,11 +24,16 @@ let nstatus = {
         data: 'Node7',
         location: 'UK'
     }, {
-        name: 'Node 8 ',
+        name: 'Node 8',
         data: 'Node8',
         location: 'UK'
     }],
 
+     "Performance Nodes": [{
+        name: 'PNode1',
+        data: 'pnode1'
+    }],
+    
     "Donator Nodes": [{
         name: 'Dono-01',
         data: 'dono01',
@@ -51,21 +56,13 @@ let nstatus = {
         name: 'Canada 1',
         data: 'vpscanada-1'
     }],
-    
-    "Reverse Proxys": [{
-        name: 'France Proxy',
-        data: '164.132.74.251'
+
+    "VPN Servers": [{
+        name: 'Canada 1',
+        data: 'canada1'
     }, {
-        name: 'Canada Proxy',
-        data: '192.95.42.75'
-    }],
-    
-    "Misc": [{
-        name: 'Mail Server',
-        data: 'mail.danbot.host'
-    }, {
-        name: 'MySQL Databases',
-        data: 'mysqldatabases'
+        name: 'France 1',
+        data: 'france1'
     }]
 }
 
@@ -79,7 +76,7 @@ let parse = async () => {
             let da = nodeStatus.get(d.data.toLowerCase());
             let nodeData = nodeServers.get(d.data.toLowerCase());
             let ping = nodePing.fetch(d.data.toLowerCase())
-            let serverUsage = d.data.toLowerCase().includes('node') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 1200) [\`${Math.round(Number.isNaN(ping.ping) ? 0 : ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('dono') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 300) [\`${Math.round(Number.isNaN(ping.ping) ? 0 : ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('Node8') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 600) [\`${Math.round(Number.isNaN(ping.ping) ? ping.ping : 0)}ms\`]` : ''
+            let serverUsage = d.data.toLowerCase().startsWith('node') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 1200) [\`${Math.round(Number.isNaN(ping.ping) ? 0 : ping.ping)}ms\`]` : '' || d.data.toLowerCase().includes('dono') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 500) [\`${Math.round(Number.isNaN(ping.ping) ? 0 : ping.ping)}ms\`]` : '' || d.data.toLowerCase().startsWith('pnode') ? `(${!nodeData?.servers ? 'N/A' : nodeData.servers} / 3000) [\`${Math.round(Number.isNaN(ping.ping) ? 0 : ping.ping)}ms\`]` : '' 
 
             da = (da.maintenance === true ? (`🟣 Maintenance Mode!`) : da.status === true ? (`🟢 Online ${serverUsage}`) : ((da.is_vm_online == null ? "🔴 **Offline**" : ((da.is_vm_online === true ? "🟠 Wings" : "🔴 **System**") + ` offline ${serverUsage}`))))
 
