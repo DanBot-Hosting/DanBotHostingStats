@@ -1,5 +1,7 @@
 const axios = require('axios')
 exports.run = async(client, message, args) => {
+    return message.channel.send("This command is temporarily disabled."); //As the command no longer properly works.
+
     const loadingMsg = await message.channel.send('Loading servers...')
     //List servers
     var arr = [];
