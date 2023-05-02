@@ -30,7 +30,7 @@ let nstatus = {
     }],
 
      "Performance Nodes": [{
-        name: 'PNode1',
+        name: 'PNode 1',
         data: 'pnode1'
     }],
     
