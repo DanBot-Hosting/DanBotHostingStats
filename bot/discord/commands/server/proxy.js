@@ -243,7 +243,7 @@ exports.run = async (client, message, args) => {
                         }
                     }).then(ResponseAfterProxy => {
                         //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
-                        message.reply("Domain has been proxied, It's ID is: " + ResponseAfterProxy.data.id)
+                        message.reply("Domain has been proxied, its ID is: " + ResponseAfterProxy.data.id)
                         let datalmao = userData.get(message.author.id).domains || []
                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
                             domain: args[1].toLowerCase(),
