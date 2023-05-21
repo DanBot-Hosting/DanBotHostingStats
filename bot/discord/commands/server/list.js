@@ -29,7 +29,7 @@ exports.run = async(client, message, args) => {
             setTimeout(() => {
                 var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n");
                 const embed = new Discord.MessageEmbed()
-                    .setDescription('You have a total of ' + arr.length + ' servers.' 
+                    .setDescription('You have a total of ' + arr.length + ' servers.')
                     .addField('__**Your Servers:**__', clean)
                 message.channel.send(embed).catch(e => {
                     const embed = new Discord.MessageEmbed()
