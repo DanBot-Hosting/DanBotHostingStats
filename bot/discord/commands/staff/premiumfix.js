@@ -9,7 +9,7 @@ exports.run = async(client, message, args) => {
     } else {
         const replyMsg = await message.channel.send('Staring calculation...');
 
-        let selectedUser = message.mentions.users.first() || message.guild.members.fetch(args[1]);
+        let selectedUser = message.mentions.users.first() || message.guild.members.fetch(args[1]); || message.client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
         selectedUser = await selectedUser;
 
         const response = await axios({
