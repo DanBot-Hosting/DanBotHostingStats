@@ -43,7 +43,7 @@ exports.run = async(client, message, args) => {
                     loadingMsg.delete();
                 }, 500)
             }, 5000)
-        }).catch(err => {
+        }).catch(() => {
             const embed = new Discord.MessageEmbed()
                         .setDescription('You have no servers!')
             message.channel.send(embed)
