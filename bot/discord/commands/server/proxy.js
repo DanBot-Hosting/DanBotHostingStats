@@ -151,7 +151,7 @@ exports.run = async (client, message, args) => {
                     'Accept': 'Application/vnd.pterodactyl.v1+json',
                 }
             }).then(response => {
-                message.reply('Proxying your domain... This can take up to 30 seconds.')
+                message.reply('Proxying your domain... This can take up to 30 seconds.');
 
                 if(dnsCheck.address == "164.132.74.251") { //France
                     axios({
@@ -189,7 +189,7 @@ exports.run = async (client, message, args) => {
                         }
                     }).then(ResponseAfterProxy => {
                         //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
-                        message.reply("Domain has been proxied, It's ID is: " + ResponseAfterProxy.data.id)
+                        message.reply("Domain has been proxied, Its ID is: " + ResponseAfterProxy.data.id)
                         let datalmao = userData.get(message.author.id).domains || []
                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
                             domain: args[1].toLowerCase(),
@@ -263,8 +263,7 @@ exports.run = async (client, message, args) => {
                             "ssl_forced": true
                         }
                     }).then(ResponseAfterProxy => {
-                        //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
-                        message.reply("Domain has been proxied, It's ID is: " + ResponseAfterProxy.data.id)
+                        message.reply("Domain has been proxied, Its ID is: " + ResponseAfterProxy.data.id)
                         let datalmao = userData.get(message.author.id).domains || []
                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
                             domain: args[1].toLowerCase(),
@@ -339,7 +338,7 @@ exports.run = async (client, message, args) => {
                         }
                     }).then(ResponseAfterProxy => {
                         //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
-                        message.reply("Domain has been proxied, It's ID is: " + ResponseAfterProxy.data.id)
+                        message.reply("Domain has been proxied, Its ID is: " + ResponseAfterProxy.data.id)
                         let datalmao = userData.get(message.author.id).domains || []
                         userData.set(message.author.id + '.domains', [...new Set(datalmao), {
                             domain: args[1].toLowerCase(),
@@ -375,7 +374,7 @@ exports.run = async (client, message, args) => {
                             })
 
                         } else if (ErrorAfterProxy == "Error: Request failed with status code 400") { // Domain Already linked and/or other error
-                            message.reply('This domain has already been linked. If this is an error, please contact a staff member to fix this!')
+                            message.reply('This domain has already been linked. If this is an error, please contact a staff member to fix this!');
                         }
                     })
                 }
