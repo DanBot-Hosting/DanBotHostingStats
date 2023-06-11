@@ -23,29 +23,36 @@ exports.run = async(client, message, args) => {
                 'Accept': 'Application/vnd.pterodactyl.v1+json',
             }
         }).then(response => {
-            const preoutput = response.data.attributes.relationships.servers.data
-            //console.log(resources.data.meta)
+
+            const preoutput = response.data.attributes.relationships.servers.data;
             arr.push(...preoutput)
+
             setTimeout(async() => {
-                //console.log(arr.length)
-                // console.log(arr)
+
                 setTimeout(() => {
                     var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n");
-                    const embed = new Discord.MessageEmbed()
-                        .setDescription('You have a total of ' + arr.length + ' servers.')
-                        .addField('__**Your Servers:**__', clean)
-                    message.channel.send(embed).catch(e => {
-                        const embed = new Discord.MessageEmbed()
-                            .setDescription('Your server list is too long so here is a abstracted version!\nYou have a total of ' + arr.length + ' servers!')
-                            .addField('__**Your Servers:**__', arr.map(e => "`" + e.attributes.identifier + "`"))
-                        message.channel.send(embed)
-                    })
+
+                    if (clean.length == 0) {
+                        message.channel.send("You don't have any servers unfortunately.");
+                    } else if (clean.length > 75) {
+                        message.channel.send("You have way too many servers to display!");
+                    } else if (clean.length > 25) {
+                        const ServerListEmbed = new Discord.MessageEmbed();
+                        ServerListEmbed.setDescription('Your server list is too long so here is a abstracted version!\nYou have a total of ' + arr.length + ' servers!');
+                        ServerListEmbed.addField('__**Your Servers:**__', arr.map(e => "`" + e.attributes.identifier + "`"));
+                        message.channel.send(embed);
+                    } else { 
+                        const ServerListEmbed = new Discord.MessageEmbed();
+                        ServerListEmbed.setDescription('You have a total of ' + arr.length + ' servers.');
+                        ServerListEmbed.addField('__**Your Servers:**__', clean);
+                    }; 
+
                     loadingMsg.delete();
-                }, 500)
-            }, 5000)
+                }, 500);
+            }, 5000);
         }).catch(err => {});
 
     } catch (Error) {
         message.channel.send(Error);
-    }
+    };
 }
