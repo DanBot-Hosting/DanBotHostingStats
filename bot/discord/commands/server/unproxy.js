@@ -62,7 +62,7 @@ exports.run = async(client, message, args) => {
         UnproxyEmbed.setTimestamp();
         UnproxyEmbed.setFooter('DanBot Hosting');
 
-        await message.channel.send(embed);
+        await message.channel.send(UnproxyEmbed);
 
     //Arguement was provided. 
     } else if (args[1]) {
