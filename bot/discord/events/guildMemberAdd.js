@@ -19,19 +19,6 @@ module.exports = async(client, member, guild) => {
             welcomeChannel.send(member.user.tag + ` has been auto-kicked as account is under 10days old.\nThat account was created ${humanizeDuration(Date.now() - member.user.createdAt, {round: true})}, ago`)
         }
 
-        if (member.user.bot) {
-            let botID = member.id;
-            if(botID == "811616913855610890") return;
-            let bot = db.get(`${botID}`);
-            if (!bot) {
-                welcomeChannel.send("Bot: <@" + member + ">, tried to join but is not using our API.")
-                member.kick();
-            } else {
-                member.roles.add(config.DiscordBot.roles.bot);
-                welcomeChannel.send("Welcome <@" + member + ">, More bot friends :D \nBot owned by: <@" + bot.owner + ">");
-            }
-            return;
-        }
         if (userPrem.get(member.id) == null)
             userPrem.set(member.id, {
                 used: 0,
