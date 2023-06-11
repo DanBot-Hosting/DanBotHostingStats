@@ -7,9 +7,7 @@ const commands = {
         ping: "Shows the bots ping.",
         ticket: "Create a ticket for help from the staff team!.",
         uptime: "Shows the bots uptime.",
-        vc: "Manage you custom voice channel.",
-        // info: "Get a bots info.",
-        // animalapi: "Check out our animal api."
+        vc: "Manage you custom voice channel."
     },
     Staff: {
         staff: "See help for that command.",
@@ -18,12 +16,8 @@ const commands = {
         kick: "Kick da user."
     },
     Owner: {
-        reload: "Reloads all commands on the bot.",
-        'staff update': "Pull latest git commit.",
         eval: "Eval some code.",
-        exec: "Run some system commands.",
-        giveaway: "Launch a giveaway.",
-        announce: "Announce something."
+        exec: "Run some system commands."
     }
 }
 
