@@ -27,11 +27,6 @@ module.exports = async (client) => {
     //Check make sure create account channels are closed after a hour
     guild.channels.cache.filter(x => x.parentID === '898041816367128616' && (Date.now() - x.createdAt) > 1800000).forEach(x => x.delete())
 
-    // setInterval(() => {
-    //     let _codes = codes.fetchAll();
-    //     client.guilds.cache.get('639477525927690240').channels.cache.get('795884677688721448').setTopic(`There's a total of ${_codes.length} active codes (${_codes.map(x => typeof x.data == 'string'? JSON.parse(x.data).balance : x.data.balance).reduce((a, b) => a + b, 0)} servers)`)
-    // }, 60000);v
-
     //Initializing Cooldown
     client.cooldown = {};
 
@@ -50,7 +45,7 @@ module.exports = async (client) => {
                 }
             }
         })
-    }, 30000)
+    }, 30000);
 
     setInterval(() => {
         //Auto Activities List
@@ -72,11 +67,9 @@ module.exports = async (client) => {
     }, 30000);
 
     // Voice-Channels:
-
     client.pvc = new Discord.Collection();
 
     // end of Voice-Channels
-
     global.invites = {};
     client.guilds.cache.forEach(g => {
         g.fetchInvites().then(guildInvites => {
@@ -95,15 +88,16 @@ module.exports = async (client) => {
 
             let messages = await channel.messages.fetch({
                 limit: 10
-            })
+            });
+
             messages = messages.filter(x => x.author.id === client.user.id).last();
-            if (messages == null) channel.send(embed)
-            else messages.edit(embed)
+            if (messages == null) channel.send(embed);
+            else messages.edit(embed);
 
-        }, 15000)
-    }
+        }, 15000);
+    };
 
-    //Voice channel stats updater
+    //Updating voice channels with proper counters.
     setInterval(async () => {
         let DBHGuild = client.guilds.cache.get("639477525927690240");
         let roleID1 = '898041751099539497';
@@ -136,7 +130,7 @@ module.exports = async (client) => {
         client.channels.cache.get("898041832569700362").edit({
             name: `Tickets: ${ticketcount}`,
             reason: "Ticket count update"
-        })
+        });
 
         axios({
             url: config.Pterodactyl.hosturl + "/api/application/servers",
@@ -152,7 +146,7 @@ module.exports = async (client) => {
             client.channels.cache.get("898041817503760444").edit({
                 name: `Servers Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Server count update"
-            })
+            });
         });
 
         axios({
@@ -169,11 +163,12 @@ module.exports = async (client) => {
             client.channels.cache.get("898041820309778462").edit({
                 name: `Clients Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Client count update"
-            })
+            })l
         });
+
         client.channels.cache.get("898041831495974983").edit({
             name: `Boosts: ${DBHGuild.premiumSubscriptionCount}`,
             reason: "Boosts count update"
-        })
+        });
     }, 30000);
 };
