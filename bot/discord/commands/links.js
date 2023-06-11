@@ -14,5 +14,4 @@ exports.run = async(client, message, args) => {
         .setTimestamp();
 
     return message.channel.send(LinksEmbed);
-
 };
