@@ -59,9 +59,9 @@ exports.run = async (client, message, args) => {
         .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`' +
             '\nMake sure to replace <domain> with your domain and <serverid> with the ID of your server. ' +
             'You can find your server id by running `' + config.DiscordBot.Prefix + 'server list`' +
-            '\nYou can link your own domain by creating a DNS A Record pointing either \`164.132.74.251\` or \`192.95.42.75\`! ' +
+            '\nYou can link your own domain by creating a DNS A Record pointing either \`164.132.74.251\` or \`192.95.42.75\` or \`5.196.239.158\`! ' +
             'If you are using Cloudflare make sure the you are using DNS Only mode!' +
-            '\nOr you can use the free Danbot Host domains:' +
+            '\nor you can use the free Danbot Host domains:' +
             '\n `*.never-gonna-give-you-up.xyz' +
             '\n*.never-gonna-let-you-down.xyz' +
             '\n*.never-gonna-make-you-cry.xyz' +
@@ -101,7 +101,7 @@ exports.run = async (client, message, args) => {
         });
 
         if(!["164.132.74.251", "192.95.42.75", "5.196.239.158"].includes(dnsCheck.address)) {
-            return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\` or \`192.95.42.75\` ot \`5.196.239.158\`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)');
+            return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\` or \`192.95.42.75\` or \`5.196.239.158\`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)');
         };
 
         if (!message.member.roles.cache.some(r => ['898041754564046869', '710208090741539006'].includes(r.id)) && "5.196.239.158" == dnsCheck.address) return message.channel.send('Sorry, this proxy location is only available for boosters and donators.');
@@ -154,6 +154,7 @@ exports.run = async (client, message, args) => {
                 message.reply('Proxying your domain... This can take up to 30 seconds.');
 
                 if(dnsCheck.address == "164.132.74.251") { //France
+                    message.channel.send("Domain found on France...");
                     axios({
                         url: config.FRProxy.url + "/api/nginx/proxy-hosts",
                         method: 'POST',
@@ -229,6 +230,7 @@ exports.run = async (client, message, args) => {
                         }
                     })
                 } else if (dnsCheck.address == "192.95.42.75") { //Canada
+                    message.channel.send("Domain found on Canada...");
                     axios({
                         url: config.CAProxy.url + "/api/nginx/proxy-hosts",
                         method: 'POST',
@@ -299,10 +301,11 @@ exports.run = async (client, message, args) => {
                             })
 
                         } else if (ErrorAfterProxy == "Error: Request failed with status code 400") { // Domain Already linked and/or other error
-                            message.reply('This domain has already been linked. If this is an error, please contact a staff member to fix this!')
+                            message.reply('This domain has already been linked. If this is an error, please contact a staff member to fix this!');
                         }
                     })
                 } else if (dnsCheck.address == "5.196.239.158") { //Donator
+                    message.channel.send("Domain found on Donator...");
                     axios({
                         url: config.DonatorProxy.url + "/api/nginx/proxy-hosts",
                         method: 'POST',
