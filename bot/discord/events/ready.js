@@ -163,7 +163,7 @@ module.exports = async (client) => {
             client.channels.cache.get("898041820309778462").edit({
                 name: `Clients Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Client count update"
-            })l
+            });
         });
 
         client.channels.cache.get("898041831495974983").edit({
