@@ -3,7 +3,6 @@ const commands = {
     Users: {
         user: "See help for that command.",
         server: "See help for that command.",
-        stats: "Shows the stats of each hosting node.",
         ping: "Shows the bots ping.",
         ticket: "Create a ticket for help from the staff team!.",
         uptime: "Shows the bots uptime.",
