@@ -40,11 +40,12 @@ exports.run = async(client, message, args) => {
                         const ServerListEmbed = new Discord.MessageEmbed();
                         ServerListEmbed.setDescription('Your server list is too long so here is a abstracted version!\nYou have a total of ' + arr.length + ' servers!');
                         ServerListEmbed.addField('__**Your Servers:**__', arr.map(e => "`" + e.attributes.identifier + "`"));
-                        message.channel.send(embed);
+                        message.channel.send(ServerListEmbed);
                     } else { 
                         const ServerListEmbed = new Discord.MessageEmbed();
                         ServerListEmbed.setDescription('You have a total of ' + arr.length + ' servers.');
                         ServerListEmbed.addField('__**Your Servers:**__', clean);
+                        message.channel.send(ServerListEmbed);
                     }; 
 
                     loadingMsg.delete();
