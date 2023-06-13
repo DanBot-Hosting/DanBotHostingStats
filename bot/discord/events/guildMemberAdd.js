@@ -38,7 +38,7 @@ module.exports = async(client, member, guild) => {
         }
 
         //Invites
-
+        /*
         let guildInvites = await member.guild.cache.fetchInvites()
 
         const ei = invites[member.guild.id];
@@ -69,5 +69,6 @@ module.exports = async(client, member, guild) => {
                 inviteChannel.send(`<@${inviter.id}> just hit ${invite.uses} invites! Here's a role for you :)`);
             })
         }
+        */
     }
 }
