@@ -8,9 +8,6 @@ module.exports = async (client) => {
 
     let guild = client.guilds.cache.get("639477525927690240");
 
-    global.browser = await puppeteer.launch({
-        args: ["--no-sandbox" /*openvz*/ ]
-    });
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
 
     let checkNicks = () => {

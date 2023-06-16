@@ -41,7 +41,6 @@ global.transport = nodemailer.createTransport({
 require('./nodestatsChecker');
 
 //Discord Bot
-global.puppeteer = require("puppeteer");
 let db = require("quick.db");
 global.Discord = require("discord.js");
 global.tcpp = require('tcp-ping');
