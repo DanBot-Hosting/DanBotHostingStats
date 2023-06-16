@@ -1,5 +1,4 @@
 const humanizeDuration = require('humanize-duration');
-const db = require("quick.db");
 module.exports = async(client, member, guild) => {
     if (enabled.Welcome === true) {
         let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
@@ -36,6 +35,6 @@ module.exports = async(client, member, guild) => {
         if (mutesData.get(member.id) != null) {
             member.roles.add(config.DiscordBot.roles.mute)
         }
-        
+
     }
 }
