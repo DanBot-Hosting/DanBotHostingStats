@@ -17,12 +17,6 @@ global.servers = []
 //New functions to clean some code up - Not completed
 require('./functions')
 
-//Going to be used for the bot's invite api
-const express = require('express');
-const app = express();
-const server = require('http').createServer(app);
-const PORT = config.Port;
-
 global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
