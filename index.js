@@ -108,42 +108,6 @@ global.getPassword = () => {
 client.login(config.DiscordBot.Token);
 global.Allowed = ["137624084572798976"];
 
-//Fetch node data
-const { nodes } = require("./bot/discord/serverUsage.js");
-
-/*
-global.nodeData = new db.table("nodeData")
-    setInterval(async() => {
-        let res = await axios({
-            url: "https://status.danbot.host/json/stats.json",
-            method: 'GET',
-            followRedirect: true,
-            maxRedirects: 5,
-        })
-        nodes.Nodes.forEach(node => {
-            res.data.servers.forEach(server => {
-                if(server.name === nodes.name) {
-                    if(server.online4 === false) return;
-                    nodeData.set(response.data.info.servername, {
-                        servername: server.name,
-                        cpu: server.cpu,
-                        cpuload: server.load,
-                        memused: server.memory_used,
-                        memtotal: server.memory_total,
-                        swapused: server.swap_used,
-                        swaptotal: server.swap_total,
-                        diskused: server.hdd_used,
-                        disktotal: server.hdd_total,
-                        netrx: server.network_rx,
-                        nettx: server.network_tx,
-                        timestamp: res.updated
-                    })
-                }
-            })
-        })
-    }, 2000);
-*/
-
 setInterval(async () => {
 
     users.length = 0
