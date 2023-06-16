@@ -36,39 +36,6 @@ module.exports = async(client, member, guild) => {
         if (mutesData.get(member.id) != null) {
             member.roles.add(config.DiscordBot.roles.mute)
         }
-
-        //Invites
-        /*
-        let guildInvites = await member.guild.cache.fetchInvites()
-
-        const ei = invites[member.guild.id];
-        invites[member.guild.id] = guildInvites;
-        const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
-        const inviter = member.guild.members.get(invite.inviter.id);
-        if (inviter == null) return;
-
-        let embed = new Discord.MessageEmbed()
-            .setColor(`GREEN`)
-            .addField(`New Members Username:`, member.user.tag, true)
-            .addField(`New Members ID:`, '`' + member.id + '`', true)
-            .addField('Account created:', member.user.createdAt.toDateString(), true)
-            .addField("Members Status", member.user.presence !== null && member.user.presence.status !== null ? member.user.presence.status : "Offline")
-            .addField('\u200b', '\u200b')
-            .addField(`Invited by:`, inviter.user.tag, true)
-            .addField(`Inviter's ID:`, '`' + inviter.id + '`', true)
-            .addField(`Invite code used:`, '`' + invite.code + '`', true)
-            .addField(`Invite used`, invite.uses + ' times', true);
-
-        client.channels.cache.get('898041916732604436').send(embed)
-
-        let inviteChannel = client.channels.cache.get('898041844871618600');
-
-        if (Object.keys(config.DiscordBot.invites).includes(invite.uses.toString())) {
-            await inviter.removeRoles(Object.values(config.DiscordBot.invites))
-            inviter.addRole(config.DiscordBot.invites[invite.uses.toString()]).then(() => {
-                inviteChannel.send(`<@${inviter.id}> just hit ${invite.uses} invites! Here's a role for you :)`);
-            })
-        }
-        */
+        
     }
 }
