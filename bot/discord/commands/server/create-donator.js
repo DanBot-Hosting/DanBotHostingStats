@@ -138,6 +138,7 @@ exports.run = async(client, message, args) => {
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, error)
                     message.channel.send(embed)
+                }
             })
         return;
     }
