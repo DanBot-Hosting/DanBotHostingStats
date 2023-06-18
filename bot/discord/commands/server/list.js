@@ -30,7 +30,16 @@ exports.run = async(client, message, args) => {
             setTimeout(async() => {
 
                 setTimeout(() => {
-                    var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n");
+                    //var clean = arr.map(e => "Server Name: `" + e.attributes.name + "`, Server ID: `" + e.attributes.identifier + "`\n");
+                        
+                    const DonoNodes = [34, 31, 33, 35];
+                    const clean = arr.map(Server => {
+                      if (DonoNodes.includes(Server.attributes.node)) {
+                        return "[Premium] Server Name: `" + Server.attributes.name + "`, Server ID: `" + Server.attributes.identifier + "`\n";
+                      } else {
+                        return "Server Name: `" + Server.attributes.name + "`, Server ID: `" + Server.attributes.identifier + "`\n";
+                      };
+                    });
 
                     if (clean.length == 0) {
                         message.channel.send("You don't have any servers unfortunately.");
