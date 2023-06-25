@@ -151,7 +151,7 @@ if (enabled.nodestatsChecker === true) {
 
                 setTimeout(() => {
                     axios({
-                        url: config.Pterodactyl.hosturl + "/api/application/nodes/" + data.ID + "?include=servers",
+                        url: config.Pterodactyl.hosturl + "/api/application/nodes/" + data.ID + "/allocations?per_page=5000",
                         method: 'GET',
                         followRedirect: true,
                         maxRedirects: 5,
@@ -161,7 +161,7 @@ if (enabled.nodestatsChecker === true) {
                             'Accept': 'Application/vnd.pterodactyl.v1+json',
                         }
                     }).then(response => {
-                        const servercount = response.data.attributes.relationships.servers.data;
+                        const servercount = response.data.data.filter(m => m.attributes.assigned == true).length;
                         nodeServers.set(node, {
                             servers: servercount.length
                         })
