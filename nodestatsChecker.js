@@ -163,7 +163,7 @@ if (enabled.nodestatsChecker === true) {
                     }).then(response => {
                         const servercount = response.data.data.filter(m => m.attributes.assigned == true).length;
                         nodeServers.set(node, {
-                            servers: servercount.length
+                            servers: servercount
                         })
                     }).catch(err => {})
                 }, 2000)
