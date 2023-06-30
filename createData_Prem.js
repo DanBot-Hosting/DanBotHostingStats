@@ -25,7 +25,6 @@ let data = (serverName, userID) => {
         forge: null,
         altv: null,
         multitheftauto: null,
-        ragemp: null,
         samp: null,
         bedrock: null,
         pocketminemp: null,
