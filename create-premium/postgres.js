@@ -4,7 +4,7 @@ createListPrem.postgres = (serverName, userID) => ({
     "nest": 12,
     "egg": 37,
     "docker_image": "ghcr.io\/parkervcp\/yolks:postgres_14",
-    "startup": `postgres  -D /home/container/postgres_db/`,
+    "startup": "postgres  -D /home/container/postgres_db/",
     "limits": {
         "memory": 0,
         "swap": -1,

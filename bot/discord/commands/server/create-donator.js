@@ -63,7 +63,6 @@ exports.run = async(client, message, args) => {
         forge: pServerCreatesettings.forge,
         "alt:v": pServerCreatesettings.altv,
         multitheftauto: pServerCreatesettings.multitheftauto,
-        "rage.mp": pServerCreatesettings.ragemp,
         "sa-mp": pServerCreatesettings.samp,
         bedrock: pServerCreatesettings.bedrock,
         pocketminemp: pServerCreatesettings.pocketminemp,
