@@ -52,7 +52,6 @@ exports.run = async(client, message, args) => {
         //forge: data.forge,
         //"alt:v": data.altv,
         //multitheftauto: data.multitheftauto,
-        //"rage.mp": data.ragemp,
         //"sa-mp": data.samp,
         //bedrock: data.bedrock,
         //pocketminemp: data.pocketminemp,
