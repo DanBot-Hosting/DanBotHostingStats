@@ -89,6 +89,7 @@ fs.readdir('./create-free/', (err, files) => {
 fs.readdir('./create-premium/', (err, files) => {
     files = files.filter(f => f.endsWith('.js'));
     files.forEach(f => {
+        delete require.cache[require.resolve(`./create-premium/${f}`)];
         require(`./create-premium/${f}`);
     });
 });
