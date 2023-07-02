@@ -13,7 +13,7 @@ createListPrem.postgres = (serverName, userID) => ({
         "cpu": 0
     },
     "environment": {
-        "PGPASSWORD": "Pl3453Ch4n63M3",
+        "PGPASSWORD": getPassword(),
         "PGUSER": "pterodactyl"
     },
     "feature_limits": {
