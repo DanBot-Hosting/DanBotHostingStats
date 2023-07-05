@@ -104,7 +104,7 @@ exports.run = async (client, message, args) => {
             return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\` or \`192.95.42.75\` or \`5.196.239.158\`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)');
         };
     
-        if(!["164.132.74.251", "192.95.42.75"].includes(dnsCheck.address)) {
+        if(["164.132.74.251", "192.95.42.75"].includes(dnsCheck.address)) {
             return message.channel.send('Canada and France Proxy locations have been disabled until further notice.');
         };
 
