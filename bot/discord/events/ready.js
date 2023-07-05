@@ -3,9 +3,6 @@ const nstatus = require('../serverStatus');
 
 module.exports = async (client) => {
 
-    setInterval(() => { console.log("Users cached: " + users.length);}, 30000)
-    setInterval(() => { console.log("Servers cached: " + servers.length);}, 30000)
-
     let guild = client.guilds.cache.get("639477525927690240");
 
     console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
