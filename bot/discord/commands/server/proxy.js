@@ -103,11 +103,15 @@ exports.run = async (client, message, args) => {
         if(!["164.132.74.251", "192.95.42.75", "5.196.239.158"].includes(dnsCheck.address)) {
             return message.channel.send('ERROR: You must have a DNS A Record pointing to \`164.132.74.251\` or \`192.95.42.75\` or \`5.196.239.158\`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it\'s still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)');
         };
+    
+        if(!["164.132.74.251", "192.95.42.75"].includes(dnsCheck.address)) {
+            return message.channel.send('Canada and France Proxy locations have been disabled until further notice.');
+        };
 
         if (!message.member.roles.cache.some(r => ['898041754564046869', '710208090741539006'].includes(r.id)) && "5.196.239.158" == dnsCheck.address) return message.channel.send('Sorry, this proxy location is only available for boosters and donators.');
 
-        config.FRProxy.authKey = await getNewKeyFR();
-        config.CAProxy.authKey = await getNewKeyCA();
+        //config.FRProxy.authKey = await getNewKeyFR();
+        //config.CAProxy.authKey = await getNewKeyCA();
         config.DonatorProxy.authKey = await getNewKeyDonator();
 
         axios({
