@@ -117,53 +117,60 @@ if (enabled.nodestatsChecker === true) {
                         'Accept': 'Application/vnd.pterodactyl.v1+json',
                     }
                 }).then(response => {
-                    if(nodeStatus.fetch(node + '.maintenance')) {
-                       nodeStatus.set(node, {
-                        timestamp: Date.now(),
-                        status: true,
-                        is_vm_online: true,
-                        maintenance: true
-                    });
+                    //Node is online and is working. Just checking if it's in maintenance or not.
+
+                    if (nodeStatus.fetch(node + '.maintenance')) {
+                        nodeStatus.set(node, {
+                            timestamp: Date.now(),
+                            status: true,
+                            is_vm_online: true,
+                            maintenance: true
+                        });
                    } else {
-                    nodeStatus.set(node, {
-                        timestamp: Date.now(),
-                        status: true,
-                        is_vm_online: true,
-                        maintenance: false
-                    });
-                   }
+                        nodeStatus.set(node, {
+                            timestamp: Date.now(),
+                            status: true,
+                            is_vm_online: true,
+                            maintenance: false
+                        });
+                   };
                 }).catch(error => {
+                    //Node is either offline or wings are offline. Checks if it's maintenance, and then checks for wings.
+
                     if(nodeStatus.fetch(node + '.maintenance')){
-                        ping2.ping(data.IP, 22)
-                            .then(() => nodeStatus.set(node, {
-                            timestamp: Date.now(),
-                            status: false,
-                            is_vm_online: true,
-                            maintenance: true
-                        })).catch((e) =>
-                           nodeStatus.set(node, {
-                            timestamp: Date.now(),
-                            status: false,
-                            is_vm_online: false,
-                            maintenance: true
-                        }));
+                        ping2.ping(data.IP, 22).then(() => {
+                            nodeStatus.set(node, {
+                                timestamp: Date.now(),
+                                status: false,
+                                is_vm_online: true,
+                                maintenance: true
+                            });
+                        }).catch((e) => {
+                            nodeStatus.set(node, {
+                                timestamp: Date.now(),
+                                status: false,
+                                is_vm_online: false,
+                                maintenance: true
+                            });
+                        });
                     } else {
-                        ping2.ping(data.IP, 22)
-                            .then(() => nodeStatus.set(node, {
-                            timestamp: Date.now(),
-                            status: false,
-                            is_vm_online: true,
-                            maintenance: false
-                        }))
-                            .catch((e) =>
-                           nodeStatus.set(node, {
-                            timestamp: Date.now(),
-                            status: false,
-                            is_vm_online: false,
-                            maintenance: false
-                        }));
-                    }
-                })
+                        ping2.ping(data.IP, 22).then(() => {
+                            nodeStatus.set(node, {
+                                timestamp: Date.now(),
+                                status: false,
+                                is_vm_online: true,
+                                maintenance: false
+                            });
+                        }).catch((e) => {
+                            nodeStatus.set(node, {
+                                timestamp: Date.now(),
+                                status: false,
+                                is_vm_online: false,
+                                maintenance: false
+                            });
+                        });
+                    };
+                });
 
                 setTimeout(() => {
                     axios({
