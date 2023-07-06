@@ -138,7 +138,7 @@ exports.run = async(client, message, args) => {
                     console.log(error);
                 });
             } else if (domainData.location == "CA") {
-                config.DonatorProxy.authKey = await getCanadaNewKey();
+                config.CAProxy.authKey = await getCanadaNewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
@@ -181,7 +181,7 @@ exports.run = async(client, message, args) => {
                     console.log(error);
                 });
             } else if (domainData.location == "Donator") {
-                config.Donator.authKey = await getNewKeyDonator();
+                config.DonatorProxy.authKey = await getNewKeyDonator();
                 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
