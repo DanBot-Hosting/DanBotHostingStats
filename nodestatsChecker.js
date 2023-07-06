@@ -133,20 +133,37 @@ if (enabled.nodestatsChecker === true) {
                     });
                    }
                 }).catch(error => {
-                    ping2.ping(data.IP, 22)
-                        .then(() => nodeStatus.set(node, {
-                        timestamp: Date.now(),
-                        status: false,
-                        is_vm_online: true,
-                        maintenance: false
-                    }))
-                        .catch((e) =>
-                       nodeStatus.set(node, {
-                        timestamp: Date.now(),
-                        status: false,
-                        is_vm_online: false,
-                        maintenance: false
-                    }));
+                    if(nodeStatus.fetch(node + '.maintenance')){
+                        ping2.ping(data.IP, 22)
+                            .then(() => nodeStatus.set(node, {
+                            timestamp: Date.now(),
+                            status: false,
+                            is_vm_online: true,
+                            maintenance: true
+                        }))
+                            .catch((e) =>
+                           nodeStatus.set(node, {
+                            timestamp: Date.now(),
+                            status: false,
+                            is_vm_online: false,
+                            maintenance: false
+                        }));
+                    } else {
+                        ping2.ping(data.IP, 22)
+                            .then(() => nodeStatus.set(node, {
+                            timestamp: Date.now(),
+                            status: false,
+                            is_vm_online: true,
+                            maintenance: false
+                        }))
+                            .catch((e) =>
+                           nodeStatus.set(node, {
+                            timestamp: Date.now(),
+                            status: false,
+                            is_vm_online: false,
+                            maintenance: false
+                        }));
+                    }
                 })
 
                 setTimeout(() => {
