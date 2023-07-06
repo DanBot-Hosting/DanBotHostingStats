@@ -59,22 +59,15 @@ exports.run = async (client, message, args) => {
         .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`' +
             '\nMake sure to replace <domain> with your domain and <serverid> with the ID of your server. ' +
             'You can find your server id by running `' + config.DiscordBot.Prefix + 'server list`' +
-            '\nYou can link your own domain by creating a DNS A Record pointing either \`164.132.74.251\` or \`192.95.42.75\` or \`5.196.239.158\`! ' +
-            'If you are using Cloudflare make sure the you are using DNS Only mode!' +
-            '\nor you can use the free Danbot Host domains:' +
-            '\n `*.never-gonna-give-you-up.xyz' +
-            '\n*.never-gonna-let-you-down.xyz' +
-            '\n*.never-gonna-make-you-cry.xyz' +
-            '\n*.never-gonna-run-around-and-desert-you.xyz' +
-            '\n*.never-gonna-say-goodbye.xyz' +
-            '\n*.never-gonna-tell-a-lie-and-hurt-you.xyz' +
-            '\n*.rick-roll.xyz`' +
-            '\nFor donators there is also the domain `*.only-fans.club`.');
+            '\nYou can link your own domain by creating a DNS A Record pointing either \`164.132.74.251\` or \`192.95.42.75\`! [DISABLED]' +
+            '\nIf you are a donator, you have the option to use the donator proxy \`5.196.239.158\`! ' +
+            '\nIf you are using Cloudflare make sure the you are using DNS only mode!' +
+            '\nFor donators there is the free domain `*.only-fans.club`.');
 
     if (!args[1] || !args[2]) {
         await message.channel.send(embed);
     } else {
-
+        
         if (args[1].toLowerCase().includes('only-fans.club')) {
             if (!message.member.roles.cache.some(r => ['898041754564046869', '710208090741539006'].includes(r.id))) return message.channel.send('Sorry, only-fans.club subdomains are only available for boosters and donators.');
         };
