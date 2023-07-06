@@ -55,7 +55,17 @@ async function getNewKeyDonator() {
 exports.run = async (client, message, args) => {
 
     const embed = new Discord.MessageEmbed()
-        .setTitle('__**How to link a domain to your website/server**__')
+        .setTitle('**DanBot Hosting Proxy System')
+        .setDescription('The DanBot Hosting proxy systems allows users to proxy their domains to their servers with simple commands.\n\n' +
+        'The command format: `' + config.DiscordBot.Prefix + 'server proxy <Domain> <serverId>`' + 
+        'You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:\n\n' +
+        '`164.132.74.251` [FRANCE]\n' + '`192.95.42.75` [CANADA]' + '`5.196.239.158` [Donator Exclusive]\n\n' +
+        'If you are using Cloudflare, make sure you are using DNS only mode, and disabling always use HTTPS.' +
+        'Donators can use the `*.only-fans.club` subdomains! Replace <Domain> with the subdomain.only-fans.club to use it! Please note these domains are proxied through France, and will not work if France is disabled.'
+        );
+        .setColor('BLUE');
+
+        /*
         .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`' +
             '\nMake sure to replace <domain> with your domain and <serverid> with the ID of your server. ' +
             'You can find your server id by running `' + config.DiscordBot.Prefix + 'server list`' +
@@ -63,6 +73,7 @@ exports.run = async (client, message, args) => {
             '\nIf you are a donator, you have the option to use the donator proxy \`5.196.239.158\`! ' +
             '\nIf you are using Cloudflare make sure the you are using DNS only mode!' +
             '\nFor donators there is the free domain `*.only-fans.club`.');
+        */
 
     if (!args[1] || !args[2]) {
         await message.channel.send(embed);
@@ -78,7 +89,7 @@ exports.run = async (client, message, args) => {
         };
 
         if (!/^[a-zA-Z0-9.-]+$/.test(args[1]) || args[1].length > 253) { //Check the provided domain is a valid domain
-            return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: <https://danbot.host/>')
+            return message.channel.send('That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: <https://danbot.host/>');
         };
 
         const dnsCheck = await new Promise((res, rej) => {
