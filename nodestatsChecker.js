@@ -140,13 +140,12 @@ if (enabled.nodestatsChecker === true) {
                             status: false,
                             is_vm_online: true,
                             maintenance: true
-                        }))
-                            .catch((e) =>
+                        })).catch((e) =>
                            nodeStatus.set(node, {
                             timestamp: Date.now(),
                             status: false,
                             is_vm_online: false,
-                            maintenance: false
+                            maintenance: true
                         }));
                     } else {
                         ping2.ping(data.IP, 22)
