@@ -62,7 +62,7 @@ exports.run = async (client, message, args) => {
         '`164.132.74.251` [FRANCE]\n' + '`192.95.42.75` [CANADA]' + '`5.196.239.158` [Donator Exclusive]\n\n' +
         'If you are using Cloudflare, make sure you are using DNS only mode, and disabling always use HTTPS.' +
         'Donators can use the `*.only-fans.club` subdomains! Replace <Domain> with the subdomain.only-fans.club to use it! Please note these domains are proxied through France, and will not work if France is disabled.'
-        );
+        )
         .setColor('BLUE');
 
         /*
