@@ -124,7 +124,7 @@ setInterval(async () => {
         }
     }).then(resources => {
         users.push(...resources.data.data)
-    }).catch(err => { console.log ('Error fetching users list') });;
+    }).catch(err => { console.log ('Error fetching users list') });
     
     /*
     axios({
@@ -142,4 +142,4 @@ setInterval(async () => {
         servers.push(...resources.data.data)
     }).catch(err => { console.log ('Error fetching servers list') });;
     */
-}, 60000);
+}, 10 * 60 * 1000);
