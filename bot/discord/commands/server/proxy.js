@@ -57,10 +57,10 @@ exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
         .setTitle('**DanBot Hosting Proxy System**')
         .setDescription('The DanBot Hosting proxy systems allows users to proxy their domains to their servers with simple commands.\n\n' +
-        'The command format: `' + config.DiscordBot.Prefix + 'server proxy <Domain> <serverId>`' + 
+        'The command format: `' + config.DiscordBot.Prefix + 'server proxy <Domain> <serverId>`\n' + 
         'You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:\n\n' +
         '`164.132.74.251` - [FRANCE]\n' + '`192.95.42.75` - [CANADA]\n' + '`5.196.239.158` - [Donator Exclusive]\n\n' +
-        'If you are using Cloudflare, make sure you are using DNS only mode, and disabling always use HTTPS.' +
+        'If you are using Cloudflare, make sure you are using DNS only mode, and disabling always use HTTPS.\n' +
         'Donators can use the `*.only-fans.club` subdomains! Replace <Domain> with the subdomain.only-fans.club to use it! Please note these domains are proxied through France, and will not work if France is disabled.'
         )
         .setColor('BLUE');
