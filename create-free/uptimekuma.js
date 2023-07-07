@@ -13,6 +13,7 @@ createList.uptimekuma = (serverName, userID) => ({
             "cpu": 0
         },
         "environment": {
+          "GIT_ADDRESS": "https://github.com/louislam/uptime-kuma",
           "AUTO_UPDATE": "1",
           "JS_FILE": "server/server.js"
         },
