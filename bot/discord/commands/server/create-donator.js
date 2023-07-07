@@ -85,8 +85,7 @@ exports.run = async(client, message, args) => {
         sharex: pServerCreatesettings.sharex,
         codeserver: pServerCreatesettings.codeserver,
         gitea: pServerCreatesettings.gitea,
-        haste: pServerCreatesettings.haste,
-        uptimekuma: pServerCreatesettings.uptimekuma
+        haste: pServerCreatesettings.haste
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
