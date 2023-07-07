@@ -74,8 +74,7 @@ exports.run = async(client, message, args) => {
         sharex: data.sharex,
         codeserver: data.codeserver,
         gitea: data.gitea,
-        haste: data.haste,
-        uptimekuma: data.uptimekuma
+        haste: data.haste
     };
 
 
