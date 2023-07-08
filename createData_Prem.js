@@ -48,7 +48,8 @@ let data = (serverName, userID) => {
         codeserver: null,
         gitea: null,
         haste: null,
-        uptimekuma: null
+        uptimekuma: null,
+        rustc: null
     };
 
     for (let [name, filled] of Object.entries(createListPrem)) {
