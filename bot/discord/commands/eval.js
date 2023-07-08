@@ -4,7 +4,7 @@ exports.run = async(client, message) => {
     let args = message.content.split(' ').slice(1);
     let cont = message.content.split(' ').slice(1).join(' ');
 
-    if (message.member.roles.cache.find(r => r.id === "1117240787881689250") || message.member.roles.cache.find(r => r.id === "898041741695926282")) {
+    if (message.member.roles.cache.find(r => r.id === "898041743566594049") || message.member.roles.cache.find(r => r.id === "898041741695926282")) {
         function clean(text) {
             if (typeof text !== 'string')
                 text = require('util').inspect(text, {
