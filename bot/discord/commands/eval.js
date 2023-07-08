@@ -72,7 +72,7 @@ exports.run = async(client, message) => {
                     .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} `);
                 msg.edit({
                     embed: errorcode
-                }).catch(e => logger.error(e));
+                }).catch(e => {});
             }
         });
 
