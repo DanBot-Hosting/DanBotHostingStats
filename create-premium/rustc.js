@@ -21,7 +21,7 @@ createListPrem.rustc = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [botswebdbPREM],
+        "locations": botswebdbPREM,
         "dedicated_ip": false,
         "port_range": []
     },
