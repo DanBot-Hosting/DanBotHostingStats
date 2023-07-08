@@ -4,7 +4,7 @@ createListPrem.rustc = (serverName, userID) => ({
     "nest": 5,
     "egg": 71,
     "docker_image": "ghcr.io/parkervcp/yolks:rust_latest",
-    "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == \"1\" ]]; then git pull; fi; cargo run --release",
+    "startup": `if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then git pull; fi; cargo run --release`,
     "limits": {
         "memory": 0,
         "swap": -1,
