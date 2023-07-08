@@ -21,7 +21,7 @@ createList.rustc = (serverName, userID) => ({
         "backups": 10
     },
     "deploy": {
-        "locations": [botswebdbFREE],
+        "locations": botswebdbFREE,
         "dedicated_ip": false,
         "port_range": []
     },
