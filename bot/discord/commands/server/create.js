@@ -81,7 +81,6 @@ exports.run = async(client, message, args) => {
 
 
         if (args[1].toLowerCase() === "aio" | args[1].toLowerCase() === "java") {
-            console.log(types);
             serverCreateSettings.createServer(types[args[1].toLowerCase()])
                 .then(response => {
                     let embed = new Discord.MessageEmbed()
@@ -117,7 +116,8 @@ exports.run = async(client, message, args) => {
                 }
             })
         } else {
-            console.log(types);
+            console.log(args[1].toLowerCase());
+            console.log(types[args[1].toLowerCase()]);
             serverCreateSettings.createServer(types[args[1].toLowerCase()])
                 .then(response => {
                     let embed = new Discord.MessageEmbed()
