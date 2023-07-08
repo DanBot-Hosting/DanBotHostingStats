@@ -14,7 +14,7 @@ exports.run = async(client, message, args) => {
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
-        .addField("__**Software:**__", "codeserver \ngitea \nhaste", true)
+        .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma", true)
 //         .addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
