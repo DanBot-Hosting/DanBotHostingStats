@@ -1,5 +1,5 @@
 exports.run = async(client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "1117240787881689250")) return;
+    if (!message.member.roles.cache.find(r => r.id === "898041743566594049")) return;
 
     if (!args[1]) {
         const userID = sudo.get(message.member.id);
