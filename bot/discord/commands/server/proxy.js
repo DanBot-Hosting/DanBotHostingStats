@@ -60,7 +60,7 @@ exports.run = async (client, message, args) => {
         'The command format: `' + config.DiscordBot.Prefix + 'server proxy <domain> <serverId>`\n\n' + 
         'You can find your server ID by running the following command: `' + config.DiscordBot.Prefix + 'server list`\n\n' +
         'You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:\n\n' +
-        '> `164.132.74.251` - [France] *Disabled\n' + '> `192.95.42.75` - [Canada] *Disabled\n' + '> `5.196.239.158` - [Donator Exclusive]\n\n' +
+        '> `164.132.74.251` - [France] \*Disabled\n' + '> `192.95.42.75` - [Canada] \*Disabled\n' + '> `5.196.239.158` - [Donator Exclusive]\n\n' +
         'If you are using Cloudflare, make sure you are using **DNS only mode**, and disabling **always use HTTPS**.\n\n' +
         'Donators can use the `*.only-fans.club` subdomains! Replace `<domain>` with the `your-subdomain.only-fans.club` to use it! Please note these domains are proxied through France, and will not work if France is disabled.'
         )
