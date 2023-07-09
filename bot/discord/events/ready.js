@@ -50,7 +50,7 @@ module.exports = async (client) => {
             "text": "free servers be created!",
             "type": "WATCHING"
         }, {
-            "text": "over " + users.length + " happy clients",
+            "text": "over " + guild.memberCount + " happy clients",
             "type": "WATCHING"
         }];
 
