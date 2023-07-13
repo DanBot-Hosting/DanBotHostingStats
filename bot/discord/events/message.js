@@ -100,8 +100,10 @@ module.exports = async (client, message) => {
             await commandFile.run(client, message, args);
         }
 
-    } catch (err) {
-        console.log(err)
+    } catch (Error) {
+        if (!Error.message.startsWith('Cannot find module')) {
+            console.log('Error loading module:', Error);
+        }
     }
 
     //After command remove all clone traces
