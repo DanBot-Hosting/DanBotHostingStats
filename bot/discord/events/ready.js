@@ -5,8 +5,6 @@ module.exports = async (client) => {
 
     let guild = client.guilds.cache.get("639477525927690240");
 
-    console.log(chalk.magenta('[DISCORD] ') + chalk.green("Chromium launched"));
-
     let checkNicks = () => {
         guild.members.cache.filter(member => member.displayName.match(/^[a-z0-9]/i) == null).forEach(x => {
             x.setNickname('I love Dan <3');
@@ -70,9 +68,6 @@ module.exports = async (client) => {
             invites[g.id] = guildInvites;
         });
     });
-
-    //Music stuffs
-    global.guilds = {};
 
     //Node status channel embed
     if (enabled.NodeStats === true) {
