@@ -53,6 +53,7 @@ async function getNewKeyDonator() {
 }
 
 exports.run = async (client, message, args) => {
+    return message.channel.send('This command is tempoarily disabled. Check for updates in dono news or news!');    
 
     const embed = new Discord.MessageEmbed()
         .setTitle('**DanBot Hosting Proxy System**')
