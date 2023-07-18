@@ -14,7 +14,7 @@ exports.run = async(client, message, args) => {
         client.channels.cache.get('898041841939783732').send('Thanks, <@' + userid + '> for donating $' + parser.format(amount))
     }
 
-    let userid = message.guild.members.cache.get(args[2].match(/[0-9]{18,19}/).length == 0 ? args[2] : args[2].match(/[0-9]{18,19}/)[0]);
+    let userid = message.guild.members.cache.get(args[2].match(/[0-9]{17,19}/).length == 0 ? args[2] : args[2].match(/[0-9]{17,19}/)[0]);
     let amount = Number.parseInt(args[3])
     if (isNaN(amount)) return;
 
