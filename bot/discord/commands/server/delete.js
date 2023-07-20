@@ -75,7 +75,7 @@ exports.run = async(client, message, args) => {
                                             }
                                         }).then(response => {
                                             msg.edit('Server deleted!')
-                                            console.log(output.attributes.node)
+                                            //console.log(output.attributes.node)
 
                                             if (output.attributes.node === 31 || output.attributes.node === 33 || output.attributes.node === 34 || output.attributes.node === 35)
                                                 userPrem.set(message.author.id + '.used', userPrem.fetch(message.author.id).used - 1);
