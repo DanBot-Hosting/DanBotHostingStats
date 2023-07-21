@@ -76,7 +76,7 @@ module.exports = async (client, message) => {
         if (sudo.get(message.member.id) && message.member.roles.cache.find(r => r.id === "898041747597295667") && args[0] != "sudo") { //Doubble check the user is deffinaly allowd to use this command
             actualExecutorId = JSON.parse(JSON.stringify({a: message.member.id})).a; // Deep clone actual sender user ID
 
-            console.log(`Command being executed with sudo by ${actualExecutorId}`);
+            console.log(chalk.magenta("[DISCORD] ") + chalk.yellow(`Command being executed with sudo by ${actualExecutorId}`));
             let userToCopy = sudo.get(actualExecutorId);
 
             // await message.guild.members.fetch(userToCopy);  //Cache user data
