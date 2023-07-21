@@ -15,7 +15,6 @@ Dono-04  : 29
 let data = (serverName, userID) => {
     let toReturn = {
         nginx: null,
-        reddiscordbot: null,
         nodejs: null,
         python: null,
         aio: null,
