@@ -43,7 +43,6 @@ exports.run = async(client, message, args) => {
     let types = {
         storage: data.storage,
         nginx: data.nginx,
-        reddiscordbot: data.reddiscordbot,
         nodejs: data.nodejs,
         python: data.python,
         aio: data.aio,

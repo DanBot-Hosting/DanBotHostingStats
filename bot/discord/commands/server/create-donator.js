@@ -54,7 +54,6 @@ exports.run = async(client, message, args) => {
     let types = {
         storage: pServerCreatesettings.storage,
         nginx: pServerCreatesettings.nginx,
-        reddiscordbot: pServerCreatesettings.reddiscordbot,
         nodejs: pServerCreatesettings.nodejs,
         python: pServerCreatesettings.python,
         aio: pServerCreatesettings.aio,
