@@ -39,7 +39,7 @@ exports.run = async(client, message, args) => {
             .setColor("RED")
             .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
             .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
-            .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot\n Rust (use rustc to create)", true)
+            .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nredbot\n Rust (use rustc to create)", true)
             .addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
             .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
             .addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
@@ -86,7 +86,8 @@ exports.run = async(client, message, args) => {
         gitea: pServerCreatesettings.gitea,
         haste: pServerCreatesettings.haste,
         uptimekuma: pServerCreatesettings.uptimekuma,
-        rustc: pServerCreatesettings.rustc
+        rustc: pServerCreatesettings.rustc,
+        redbot: pServerCreatesettings.redbot
     }
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
