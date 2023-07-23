@@ -1,4 +1,4 @@
-createList.redbot = (serverName, userID) => ({
+createListPrem.redbot = (serverName, userID) => ({
     "name": serverName,
     "user": userID,
     "nest": 5,
