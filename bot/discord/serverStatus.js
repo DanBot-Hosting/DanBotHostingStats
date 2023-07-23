@@ -54,7 +54,7 @@ let nstatus = {
     }, {
         name: 'Dono-03',
         data: 'dono03',
-        maxCount: 500
+        maxCount: 600
     }, {
         name: 'Dono-04',
         data: 'dono04',
