@@ -46,7 +46,7 @@ let nstatus = {
         name: 'Dono-01',
         data: 'dono01',
         location: 'UK',
-        maxCount: 403
+        maxCount: 404
     }, {
         name: 'Dono-02',
         data: 'dono02',
