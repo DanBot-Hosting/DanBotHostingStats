@@ -193,30 +193,6 @@ if (enabled.nodestatsChecker === true) {
             }, 2000)
         }
 
-        //Backup Storage
-        axios({
-            url: config.DanPterodactyl.hosturl + "/api/client/servers/6aa54402/resources",
-            method: 'GET',
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                'Authorization': 'Bearer ' + config.DanPterodactyl.apikeyclient,
-                'Content-Type': 'application/json',
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
-            }
-        }).then(response => {
-            nodeStatus.set("backups1", {
-                timestamp: Date.now(),
-                status: true
-            });
-        }).catch(error => {
-            nodeStatus.set("backups1", {
-                timestamp: Date.now(),
-                status: false
-            });
-        })
-
-
         //France 1 VPS Server
         ping2.ping('176.31.125.135', 22)
             .then(() => nodeStatus.set("vpsfrance-1", {
