@@ -1,5 +1,3 @@
-const e = require("express");
-
 module.exports = (client, oldMessage, newMessage) => {
 
 
