@@ -69,9 +69,9 @@ let stats = {
     },
     dono03: {
         serverID: 'c23f92cb',
-        IP: '192.95.42.73',
+        IP: '5.196.239.154',
         ID: '33',
-        Location: pingLocals.CA
+        Location: pingLocals.UK
     },
     dono04: {
         serverID: '9b812dbf',
