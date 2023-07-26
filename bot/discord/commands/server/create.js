@@ -113,6 +113,8 @@ exports.run = async(client, message, args) => {
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, error)
                     message.reply(embed)
+
+                    console.log(error);
                 }
             })
         } else {
@@ -146,6 +148,8 @@ exports.run = async(client, message, args) => {
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, error)
                     message.reply(embed)
+
+                    console.log(error);
                 }
             })
         }
