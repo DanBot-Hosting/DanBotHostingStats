@@ -125,21 +125,4 @@ setInterval(async () => {
     }).then(resources => {
         users.push(...resources.data.data)
     }).catch(err => { console.log ('Error fetching users list') });
-    
-    /*
-    axios({
-        url: "https://panel.danbot.host/api/application/servers?per_page=9999999999999",
-        method: 'GET',
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-            'Content-Type': 'application/json',
-            'Accept': 'Application/vnd.pterodactyl.v1+json',
-        }
-    }).then(resources => {
-        console.log(resources.data)
-        servers.push(...resources.data.data)
-    }).catch(err => { console.log ('Error fetching servers list') });;
-    */
 }, 10 * 60 * 1000);
