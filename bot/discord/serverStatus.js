@@ -64,17 +64,11 @@ let nstatus = {
     "VPS Hosting Servers": [{
         name: 'France 1',
         data: 'vpsfrance-1'
-    }, {
-        name: 'Canada 1',
-        data: 'vpscanada-1'
     }],
 
     "VPN Servers": [{
         name: 'Canada 1',
         data: 'canada1'
-    }, {
-        name: 'France 1',
-        data: 'france1'
     }]
 }
 
