@@ -114,7 +114,7 @@ exports.run = async(client, message, args) => {
                         .addField(`__**Failed to create a new server**__`, error)
                     message.reply(embed)
 
-                    console.log(error.response);
+                    console.log(error.response.data.errors);
                 }
             })
         } else {
@@ -149,7 +149,7 @@ exports.run = async(client, message, args) => {
                         .addField(`__**Failed to create a new server**__`, error)
                     message.reply(embed)
 
-                    console.log(error.response);
+                    console.log(error.response.data.errors);
                 }
             })
         }
