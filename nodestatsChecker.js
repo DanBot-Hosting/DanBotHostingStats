@@ -204,19 +204,6 @@ if (enabled.nodestatsChecker === true) {
                 status: false
             }));
 
-
-        //Canada 1 VPS Server
-        ping2.ping('51.222.40.140', 22)
-            .then(() => nodeStatus.set("vpscanada-1", {
-                timestamp: Date.now(),
-                status: true
-            }))
-            .catch((e) => nodeStatus.set("vpscanada-1", {
-                timestamp: Date.now(),
-                status: false
-            }));
-
-
         //Germany 1 VPN Server
         ping2.ping('51.89.32.64', 22)
             .then(() => nodeStatus.set("germany1", {
@@ -236,18 +223,6 @@ if (enabled.nodestatsChecker === true) {
                 status: true
             }))
             .catch((e) => nodeStatus.set("france1", {
-                timestamp: Date.now(),
-                status: false
-            }));
-
-
-        //Canada 1 VPN Server
-        ping2.ping('51.222.40.140', 22)
-            .then(() => nodeStatus.set("canada1", {
-                timestamp: Date.now(),
-                status: true
-            }))
-            .catch((e) => nodeStatus.set("canada1", {
                 timestamp: Date.now(),
                 status: false
             }));
