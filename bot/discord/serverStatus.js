@@ -67,8 +67,8 @@ let nstatus = {
     }],
 
     "VPN Servers": [{
-        name: 'Canada 1',
-        data: 'canada1'
+        name: 'France 1',
+        data: 'france1'
     }]
 }
 
