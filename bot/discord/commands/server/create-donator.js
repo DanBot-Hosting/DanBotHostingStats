@@ -117,19 +117,17 @@ exports.run = async(client, message, args) => {
                 client.channels.cache.get("898041923544162324").send(embed2)
 
             }).catch(error => {
-            //message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
-
-            if (error == "Error: Request failed with status code 400") {
+            if (error == "AxiosError: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The Donator node(s) are currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)`)
                     message.channel.send(embed)
-                } else if (error == "Error: Request failed with status code 504") {
+                } else if (error == "AxiosError: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `The Donator node(s) are currently offline or having issues, You can check the status of the node in this channel: <#898327108898684938>`)
                     message.channel.send(embed)
-                } else if (error == "Error: Request failed with status code 429") {
+                } else if (error == "AxiosError: Request failed with status code 429") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
                         .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again.`)
@@ -142,9 +140,8 @@ exports.run = async(client, message, args) => {
                 }
             })
         return;
-    }
-
-    message.channel.send(new Discord.MessageEmbed()
+    } else {
+        message.channel.send(new Discord.MessageEmbed()
         .setColor("RED")
             .addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
             .addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
@@ -157,4 +154,5 @@ exports.run = async(client, message, args) => {
             .addField("__**Custom Eggs:**__", "ShareX", true)
             .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma", true)
             .setFooter("Example: DBH!server create-donator NodeJS Testing Server"))
+    }
 }
