@@ -80,77 +80,53 @@ exports.run = async(client, message, args) => {
     };
 
 
-        if (args[1].toLowerCase() === "aio" | args[1].toLowerCase() === "java") {
-            serverCreateSettings.createServer(types[args[1].toLowerCase()])
-                .then(response => {
-                    let embed = new Discord.MessageEmbed()
-                        .setColor(`GREEN`)
-                        .addField(`__**Status:**__`, response.statusText)
-                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                        .addField(`__**Server name:**__`, serverName)
-                        .addField(`__**Type:**__`, args[1].toLowerCase())
-                        .addField(`__**WARNING**__`, `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`)
-                    message.channel.send(embed)
-                }).catch(error => {
+    function createServerAndSendResponse(type, message) {
+        serverCreateSettings.createServer(types[type])
+            .then(response => {
+                let embed = new Discord.MessageEmbed()
+                    .setColor(`GREEN`)
+                    .addField(`__**Status:**__`, response.statusText)
+                    .addField(`__**Created for user ID:**__`, consoleID.consoleID)
+                    .addField(`__**Server name:**__`, serverName)
+                    .addField(`__**Type:**__`, type);
+    
+                if (type === "aio" || type === "java") {
+                    embed.addField(
+                        `__**WARNING**__`,
+                        `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`
+                    );
+                }
+    
+                message.channel.send(embed);
+            }).catch(error => {
                 if (error == "AxiosError: Request failed with status code 400") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert the Panel admin (<@137624084572798976>)`)
-                    message.reply(embed)
+                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert the Panel admin (<@137624084572798976>)`);
+                    message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#898041845878247487>`)
-                    message.reply(embed)
-                    // console.log(error)
+                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#898041845878247487>`);
+                    message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 429") {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again in a minute or two.`)
-                    message.reply(embed)
+                        .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again in a minute or two.`);
+                    message.reply(embed);
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, error)
-                    message.reply(embed)
-
-                    console.log(error.response.data.errors);
+                        .addField(`__**Failed to create a new server**__`, error);
+                    message.reply(embed);
                 }
-            })
-        } else {
-            serverCreateSettings.createServer(types[args[1].toLowerCase()])
-                .then(response => {
-                    let embed = new Discord.MessageEmbed()
-                        .setColor(`GREEN`)
-                        .addField(`__**Status:**__`, response.statusText)
-                        .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                        .addField(`__**Server name:**__`, serverName)
-                        .addField(`__**Type:**__`, args[1].toLowerCase())
-                    message.reply(embed)
-                }).catch(error => {
-                if (error == "AxiosError: Request failed with status code 400") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently full, Please check <#898327108898684938> for updates. \nIf there is no updates please alert one of the Panel admins (Dan)`)
-                    message.reply(embed)
-                } else if (error == "AxiosError: Request failed with status code 504") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `The node is currently offline or having issues, You can check the status of the node in this channel: <#898327108898684938>`)
-                    message.reply(embed)
-                } else if (error == "AxiosError: Request failed with status code 429") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, `Uh oh, This shouldn\'t happen, Try again.`)
-                    message.reply(embed)
-                } else {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('RED')
-                        .addField(`__**Failed to create a new server**__`, error)
-                    message.reply(embed)
-
-                    console.log(error.response.data.errors);
-                }
-            })
-        }
+            });
+    }
+    
+    const type = args[1].toLowerCase();
+    if (type === "aio" || type === "java") {
+        createServerAndSendResponse(type, message);
+    } else {
+        createServerAndSendResponse(type, message);
+    }
 }
