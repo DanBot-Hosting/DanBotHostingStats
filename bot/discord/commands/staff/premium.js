@@ -18,19 +18,22 @@ exports.run = async(client, message, args) => {
     let amount = Number.parseInt(args[3])
     if (isNaN(amount)) return;
 
-    let oldBal = userPrem.get(userid + '.donated') || 0
+    let oldBal = userPrem.get(userid + '.donated') || 0;
 
     if (args[1].toLowerCase() === 'add') {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount)
-        message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
+        
+        await message.member.roles.add('898041754564046869').catch(() => null); 
+        //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
     }
-
 
     if (args[1].toLowerCase() === 'set') {
         setDonations(userid, amount);
-        sendMessage(userid, amount)
-        message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
+        sendMessage(userid, amount);
+
+        await message.member.roles.add('898041754564046869').catch(() => null); 
+        //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
     }
 
     if (args[1].toLowerCase() === 'remove') {
