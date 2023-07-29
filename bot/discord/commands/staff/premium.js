@@ -24,7 +24,7 @@ exports.run = async(client, message, args) => {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount)
         
-        await message.member.roles.add('898041754564046869').catch(() => null); 
+        await message.guild.members.cache.get(userid).roles.add('898041754564046869');
         //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
     }
 
@@ -32,7 +32,7 @@ exports.run = async(client, message, args) => {
         setDonations(userid, amount);
         sendMessage(userid, amount);
 
-        await message.member.roles.add('898041754564046869').catch(() => null); 
+        await message.guild.members.cache.get(userid).roles.add('898041754564046869'); 
         //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
     }
 
