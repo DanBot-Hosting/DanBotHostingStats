@@ -23,7 +23,9 @@ exports.run = async(client, message, args) => {
     if (args[1].toLowerCase() === 'add') {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount)
-        
+
+        console.log(userid);        
+
         await message.guild.members.cache.get(userid).roles.add('898041754564046869');
         //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
     }
@@ -31,6 +33,8 @@ exports.run = async(client, message, args) => {
     if (args[1].toLowerCase() === 'set') {
         setDonations(userid, amount);
         sendMessage(userid, amount);
+    
+        console.log(userid);
 
         await message.guild.members.cache.get(userid).roles.add('898041754564046869'); 
         //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
