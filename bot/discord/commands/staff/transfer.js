@@ -3,7 +3,7 @@ exports.run = async(client, message, args) => {
     let modlog = message.guild.channels.cache.find(channel => channel.id === config.DiscordBot.modLogs);
 
 
-    if (args.lenght < 3) {
+    if (args.length < 3) {
         message.channel.send('usage: DBH!staff transfer <OLDUSERID> <NEWUSERID>.')
     } else {
         let old = userData.get(args[1])
