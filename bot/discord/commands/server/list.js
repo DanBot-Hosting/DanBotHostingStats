@@ -2,11 +2,9 @@ const axios = require('axios')
 exports.run = async(client, message, args) => {
         
     try {
-        let consoleID = userData.get(message.author.id);
+        let userAccount = userData.get(message.author.id);
 
-        console.log(consoleID);
-
-        if (consoleID == null) {
+        if (userAccount == null) {
             message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID.\n" +
                 "If you have not made an account yet please check out `" +
                 config.DiscordBot.Prefix + "user new` to create an account \nIf you already have an account link it using `" +
@@ -23,7 +21,7 @@ exports.run = async(client, message, args) => {
         if (message.member.roles.cache.find(r => r.id === "898041747597295667")) userID = args[1] || message.author.id; // Allow devs to lookup a users server list;
 
         axios({
-            url: "https://panel.danbot.host" + "/api/application/users/" + consoleID + "?include=servers",
+            url: "https://panel.danbot.host" + "/api/application/users/" + userAccount.consoleID + "?include=servers",
             method: 'GET',
             followRedirect: true,
             maxRedirects: 5,
