@@ -4,6 +4,8 @@ exports.run = async(client, message, args) => {
     try {
         let consoleID = userData.get(message.author.id);
 
+        console.log(consoleID);
+
         if (consoleID == null) {
             message.channel.send("Oh no, Seems like you do not have an account linked to your discord ID.\n" +
                 "If you have not made an account yet please check out `" +
