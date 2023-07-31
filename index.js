@@ -14,9 +14,6 @@ global.enabled = require("./enable.json")
 global.users = []
 global.servers = []
 
-//New functions to clean some code up - Not completed
-require('./functions')
-
 global.fs = require("fs");
 global.chalk = require('chalk');
 const nodemailer = require('nodemailer');
