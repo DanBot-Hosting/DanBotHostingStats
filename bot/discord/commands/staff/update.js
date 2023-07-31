@@ -9,6 +9,7 @@ exports.run = async(client, message, args) => {
             let response = (error || stdout);
             if (!error) {
                 if (response.includes("Already up to date.")) {
+                    message.channel.send('All files are already up to date.');
                 } else {
                     client.channels.cache.get('898041843902742548').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling Files. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting Discord Bot.**");
 
