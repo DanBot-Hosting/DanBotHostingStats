@@ -25,7 +25,6 @@ exports.run = async(client, message, args) => {
         sendMessage(userid, amount)
 
         await message.guild.members.cache.get(userid.id).roles.add('898041754564046869');
-        //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
     }
 
     if (args[1].toLowerCase() === 'set') {
@@ -33,7 +32,6 @@ exports.run = async(client, message, args) => {
         sendMessage(userid, amount);
     
         await message.guild.members.cache.get(userid.id).roles.add('898041754564046869'); 
-        //message.guild.members.cache.get(userid).roles.add('898041754564046869').catch(() => null);
     }
 
     if (args[1].toLowerCase() === 'remove') {
