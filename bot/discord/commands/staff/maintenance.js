@@ -17,15 +17,13 @@ exports.run = async(client, message, args) => {
               if (!Result) return message.channel.send(`Unable to put ${args[1]} out of maintainance mode.`);
 
               message.channel.send(`Successfully put ${args[1]} out of maintainance mode.`);
-            } else {
+            } else if (Data.maintenance == false) {
               const Result = await nodeStatus.set(`${args[1]}.maintenance`, true);
               
               if (!Result) return message.channel.send(`Unable to put ${args[1]} into maintainance mode.`);
 
-              message.channel.send(`Successfully put ${args[1]} out of maintainance mode.`);
+              message.channel.send(`Successfully put ${args[1]} into maintainance mode.`);
             }
-        }
-        
-        nodeStatus.set(`${args[1]}.maintenance`, true)
+        }        
     };
 };
