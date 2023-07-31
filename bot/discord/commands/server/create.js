@@ -15,7 +15,6 @@ exports.run = async(client, message, args) => {
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma", true)
-//         .addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server")
 
     const serverName = message.content.split(' ').slice(3).join(' ') || "change me! (Settings -> SERVER NAME)";
@@ -78,7 +77,10 @@ exports.run = async(client, message, args) => {
         rustc: data.rustc,
         redbot: data.redbot
     };
-
+    
+    if(!Object.keys(types).includes(args[1].toLowerCase())){
+        return message.channel.send(helpEmbed);
+    };
 
     function createServerAndSendResponse(type, message) {
         serverCreateSettings.createServer(types[type])
@@ -121,12 +123,8 @@ exports.run = async(client, message, args) => {
                     message.reply(embed);
                 }
             });
-    }
+    };
     
     const type = args[1].toLowerCase();
-    if (type === "aio" || type === "java") {
-        createServerAndSendResponse(type, message);
-    } else {
-        createServerAndSendResponse(type, message);
-    }
+    createServerAndSendResponse(type, message);    
 }
