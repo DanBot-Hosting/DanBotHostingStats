@@ -73,7 +73,7 @@ exports.run = async(client, message, args) => {
         })
         return;
     }
-    let target = message.guild.members.cache.get(args[0].match(/[0-9]{18}/).length == 0 ? args[0] : args[0].match(/[0-9]{18}/)[0])
+    let target = message.guild.members.cache.get(args[0].match(/[0-9]{17,19}/).length == 0 ? args[0] : args[0].match(/[0-9]{17,19}/)[0])
     let reason = args.slice(2).join(' ') || `unspecified`;
     let time = ms(args[1]) || 300000;
 
@@ -110,7 +110,7 @@ exports.run = async(client, message, args) => {
     mutes[target.id] = setTimeout(() => {
         delete mutes[target.id];
         mutesData.delete(target.id);
-        if (message.guild.members.cache.find(x => x.id == args[0].match(/[0-9]{18}/)[0]) != null) {
+        if (message.guild.members.cache.find(x => x.id == args[0].match(/[0-9]{17,19}/)[0]) != null) {
             target.roles.remove(config.DiscordBot.roles.mute);
             if (modlog != null)
                 modlog.send("", {
