@@ -43,18 +43,26 @@ exports.run = async(client, message, args) => {
 
                     if (clean.length == 0) {
                         message.channel.send("You don't have any servers unfortunately.");
+
+                        console.log('1');
                     } else if (clean.length > 70) {
                         message.channel.send("You have way too many servers to display!");
+
+                        console.log('2');
                     } else if (clean.length > 20) {
                         const ServerListEmbed = new Discord.MessageEmbed();
                         ServerListEmbed.setDescription('Your server list is too long so here is a abstracted version!\nYou have a total of ' + arr.length + ' servers!');
                         ServerListEmbed.addField('__**Your Servers:**__', arr.map(e => "`" + e.attributes.identifier + "`"));
                         message.channel.send(ServerListEmbed);
+
+                        console.log('3');
                     } else { 
                         const ServerListEmbed = new Discord.MessageEmbed();
                         ServerListEmbed.setDescription('You have a total of ' + arr.length + ' servers.');
                         ServerListEmbed.addField('__**Your Servers:**__', clean);
                         message.channel.send(ServerListEmbed);
+
+                        console.log('4');
                     }; 
 
                     loadingMsg.delete();
