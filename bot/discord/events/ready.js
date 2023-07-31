@@ -30,7 +30,7 @@ module.exports = async (client) => {
                 if (response.includes("Already up to date.")) {
                     //console.log('Bot already up to date. No changes since last pull')
                 } else {
-                    client.channels.cache.get('898041843902742548').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting bot**")
+                    client.channels.cache.get('898041843902742548').send('**[AUTOMATIC]** \nNew update on GitHub. Pulling Files. \n\nLogs: \n```' + response + "```" + "\n\n\n**Restarting Discord Bot.**");
                     setTimeout(() => {
                         process.exit();
                     }, 1000)
