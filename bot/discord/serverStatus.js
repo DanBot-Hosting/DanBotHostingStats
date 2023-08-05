@@ -1,31 +1,31 @@
 let nstatus = {
     "Nodes": [{
-        name: 'Node 2 ',
+        name: 'Node 2',
         data: 'Node2',
         location: 'UK',
         maxCount: 1200
     }, {
-        name: 'Node 3 ',
+        name: 'Node 3',
         data: 'Node3',
         location: 'UK',
         maxCount: 1200
     }, {
-        name: 'Node 4 ',
+        name: 'Node 4',
         data: 'Node4',
         location: 'UK',
         maxCount: 1200
     }, {
-        name: 'Node 5 ',
+        name: 'Node 5',
         data: 'Node5',
         location: 'UK',
         maxCount: 1200
     }, {
-        name: 'Node 6 ',
+        name: 'Node 6',
         data: 'Node6',
         location: 'UK',
         maxCount: 1200
     }, {
-        name: 'Node 7 ',
+        name: 'Node 7',
         data: 'Node7',
         location: 'UK',
         maxCount: 1200
