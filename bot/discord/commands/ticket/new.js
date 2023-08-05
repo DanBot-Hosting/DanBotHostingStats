@@ -49,7 +49,7 @@ exports.run = async(client, message, args) => {
             .addField(`📡 | Account Info`, `> This account is not linked with a console account.`)
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp()
-        channel.send(`${message.author}`, embed)
+        channel.send(`${message.author} <@&983825037050142782>`, embed)
 
     } else {
 
