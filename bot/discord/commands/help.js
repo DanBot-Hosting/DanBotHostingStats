@@ -4,8 +4,11 @@ const commands = {
         user: "See help for that command.",
         server: "See help for that command.",
         ping: "Shows the bots ping.",
-        ticket: "Create a ticket for help from the staff team!.",
-        uptime: "Shows the bots uptime."
+        ticket: "Create a ticket for help from the staff team!",
+        uptime: "Shows the bots uptime.",
+        domains: "Show all of your linked domains.",
+        links: "Show links to some DBH sites.",
+        help: "Brings up this menu."
     },
     Staff: {
         staff: "See help for that command.",
@@ -15,7 +18,8 @@ const commands = {
     },
     Owner: {
         eval: "Eval some code.",
-        exec: "Run some system commands."
+        exec: "Run some system commands.",
+        reload: "Reload commands."
     }
 }
 
