@@ -79,6 +79,12 @@ let stats = {
         ID: '35',
         Location: pingLocals.UK
     },
+    dono05: {
+        serverID: 'b06ae45f',
+        IP: '169.155.244.165',
+        ID: '39',
+        Location: pingLocals.UK
+    },
      pnode1: {
         serverID: '1f6b4ee2',
         IP: '176.31.203.30',
