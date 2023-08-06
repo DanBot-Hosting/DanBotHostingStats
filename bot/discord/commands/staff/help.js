@@ -3,7 +3,7 @@ let subcommands = {
         lockdown: ["Allows the channel to be locked or unlocked", '']
     },
     admin: {
-        linked: ["Shows if the users account is linked.", 'linked <USERID>']
+        linked: ["Shows if the users account is linked.", '<USERID>']
     }
 }
 
