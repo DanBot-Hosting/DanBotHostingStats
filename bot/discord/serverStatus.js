@@ -59,6 +59,10 @@ let nstatus = {
         name: 'Dono-04',
         data: 'dono04',
         maxCount: 500
+    }, {
+        name: 'Dono-05',
+        data: 'dono05',
+        maxCount: 200
     }],
 
     "VPS Hosting Servers": [{
