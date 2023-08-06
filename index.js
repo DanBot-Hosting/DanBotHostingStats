@@ -60,7 +60,7 @@ global.client = new Discord.Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 global.bot = client;
-global.suggestionLog = new Discord.WebhookClient(config.DiscordSuggestions.channelID, config.DiscordSuggestions.channelID)
+
 require('./bot/discord/commands/mute').init(client)
 
 //Event handler
@@ -104,11 +104,9 @@ global.getPassword = () => {
 
 //Bot login
 client.login(config.DiscordBot.Token);
-global.Allowed = ["137624084572798976"];
 
 setInterval(async () => {
     users.length = 0
-    servers.length = 0
     axios({
         url: "https://panel.danbot.host/api/application/users?per_page=9999999999999",
         method: 'GET',
@@ -127,16 +125,16 @@ setInterval(async () => {
 process.on('unhandledRejection', (reason, p) => {
 		console.log(' [antiCrash] :: Unhandled Rejection/Catch');
 		console.log(reason, p);
-	});
-	process.on('uncaughtException', (err, origin) => {
-		console.log(' [antiCrash] :: Uncaught Exception/Catch');
-		console.log(err, origin);
-	});
-	process.on('uncaughtExceptionMonitor', (err, origin) => {
-		console.log(' [antiCrash] :: Uncaught Exception/Catch (MONITOR)');
-		console.log(err, origin);
-	});
-	process.on('multipleResolves', (type, promise, reason) => {
-		console.log(' [antiCrash] :: Multiple Resolves');
-		console.log(type, promise, reason);
-	});
+});
+process.on('uncaughtException', (err, origin) => {
+	console.log(' [antiCrash] :: Uncaught Exception/Catch');
+	console.log(err, origin);
+});
+process.on('uncaughtExceptionMonitor', (err, origin) => {
+	console.log(' [antiCrash] :: Uncaught Exception/Catch (MONITOR)');
+	console.log(err, origin);
+});
+process.on('multipleResolves', (type, promise, reason) => {
+	console.log(' [antiCrash] :: Multiple Resolves');
+	console.log(type, promise, reason);
+});
