@@ -25,7 +25,7 @@ let desc = (object) => {
     let description = [];
     let entries = Object.entries(object);
     for (const [subCommand, [desc, usage]] of entries) {
-        description.push(`**${subCommand}** - ${desc} (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`)
+        description.push(`**${subCommand}** - ${desc}\n (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`)
     }
     return description;
 }
