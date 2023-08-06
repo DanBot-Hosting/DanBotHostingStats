@@ -1,5 +1,5 @@
 const axios = require('axios');
-const premiumNodes = [30, 31, 33, 34, 35];
+const premiumNodes = [31, 33, 34, 35, 39];
 
 exports.run = async (client, message, args) => {
     message.channel.send('Loading servers...');
