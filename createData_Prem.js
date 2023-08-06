@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 global.gamingPREM = [27] // Gaming nodes
-global.botswebdbPREM = [26, 28, 29] // Bots, Websites and Databases nodes
+global.botswebdbPREM = [26, 28, 29, 31] // Bots, Websites and Databases nodes
 global.storagePREM = [13] // Storage nodes
 
 /*
@@ -10,6 +10,7 @@ Dono-01  : 26
 Dono-02  : 27
 Dono-03  : 28
 Dono-04  : 29
+Dono-05  : 31
 */
 
 let data = (serverName, userID) => {
