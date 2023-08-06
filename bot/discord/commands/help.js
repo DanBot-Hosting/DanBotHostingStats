@@ -18,8 +18,7 @@ const commands = {
     },
     Owner: {
         eval: "Eval some code.",
-        exec: "Run some system commands.",
-        reload: "Reload commands."
+        exec: "Run some system commands."
     }
 }
 
