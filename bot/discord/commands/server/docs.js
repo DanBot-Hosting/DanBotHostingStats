@@ -4,14 +4,15 @@ exports.run = async(client, message, args) => {
         .setColor("RED").setDescription(`List of servers:\n`)
         //.addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
         //.addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
-        .addField("__**Bots:**__", "NodeJS \nPython \nJava \naio \nRedDiscordBot", true)
+        .addField("__**Languages:**__", "NodeJS \nPython \nJava \naio \nrustc", true)
+        .addField("__**Bots:**__", "redbot", true)
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
         //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
-        .addField("__**Software:**__", "codeserver \ngitea \nhaste", true)
+        .addField("__**Software:**__", "codeserver \ngitea \nhaste \nuptimekuma", true)
         //.addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server docs NodeJS")
 
@@ -35,7 +36,7 @@ exports.run = async(client, message, args) => {
          embed.setDescription("`Node.js` is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser. Node.js lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser. [Source: Wikipedia](https://en.wikipedia.org/wiki/Node.js)" +
          "\n**If you are a starter, it is easier to use aio!**")
          break;
-       case "reddiscordbot": case "rdb":
+       case "redbot": case "rdb":
          embed.setDescription("RedDiscordBot is an open-source Discord Bot written in Python. Many commands and functions can be added trough Discord." + 
          "\nThe installation is easy, and you do NOT need to know anything about coding! Aside from installing and updating, every part of the bot can be controlled from within Discord. [Source: RedDiscordBot Github](https://github.com/Cog-Creators/Red-DiscordBot)")
          break;
@@ -65,6 +66,12 @@ exports.run = async(client, message, args) => {
          break;
        case "python":
          embed.setDescription("Python is a programming language that lets you work quickly and integrate systems more effectively. [Source: python.org](https://www.python.org/)")
+         break;
+       case "uptimekuma":
+         embed.setDescription("`Uptime Kuma` is an easy-to-use self-hosted monitoring tool. [Source: Uptime Kuma](https://github.com/louislam/uptime-kuma)")
+         break;
+       case "rustc":
+         embed.setDescription("Rust is a powerful and modern programming language designed to deliver high performance and safety. [rust-lang.org][https://www.rust-lang.org/]")
          break;
        default:
          return message.channel.send(helpEmbed.setDescription("**This server type does not exist. Here is a list.**"))
