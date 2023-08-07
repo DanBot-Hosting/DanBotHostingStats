@@ -38,7 +38,7 @@ exports.run = async(client, message, args) => {
          break;
        case "redbot": case "rdb":
          embed.setDescription("RedDiscordBot is an open-source Discord Bot written in Python. Many commands and functions can be added trough Discord." + 
-         "\nThe installation is easy, and you do NOT need to know anything about coding! Aside from installing and updating, every part of the bot can be controlled from within Discord. [Source: RedDiscordBot Github](https://github.com/Cog-Creators/Red-DiscordBot)")
+         "\nThe installation is easy, and you do NOT need to know anything about coding! Aside from installing and updating, every part of the bot can be controlled from within Discord. Source: [RedDiscordBot Github](https://github.com/Cog-Creators/Red-DiscordBot)")
          break;
        case "codeserver":
          embed.setDescription("`codeserver` is a free and open-source IDE running in your web browser.")
@@ -65,13 +65,13 @@ exports.run = async(client, message, args) => {
          embed.setDescription("Can be used to host bots in Java.\n**Do not use java to host gameservers. It is not allowed and your server will be deleted.**")
          break;
        case "python":
-         embed.setDescription("Python is a programming language that lets you work quickly and integrate systems more effectively. [Source: python.org](https://www.python.org/)")
+         embed.setDescription("Python is a programming language that lets you work quickly and integrate systems more effectively. Source: [python.org](https://www.python.org/)")
          break;
        case "uptimekuma":
-         embed.setDescription("`Uptime Kuma` is an easy-to-use self-hosted monitoring tool. [Source: Uptime Kuma](https://github.com/louislam/uptime-kuma)")
+         embed.setDescription("`Uptime Kuma` is an easy-to-use self-hosted monitoring tool. Source: [Uptime Kuma](https://github.com/louislam/uptime-kuma)")
          break;
        case "rustc":
-         embed.setDescription("Rust is a powerful and modern programming language designed to deliver high performance and safety. [rust-lang.org][https://www.rust-lang.org/]")
+         embed.setDescription("Rust is a powerful and modern programming language designed to deliver high performance and safety. Source: [rust-lang.org](https://www.rust-lang.org/)")
          break;
        default:
          return message.channel.send(helpEmbed.setDescription("**This server type does not exist. Here is a list.**"))
