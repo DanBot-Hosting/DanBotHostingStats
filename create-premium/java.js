@@ -3,7 +3,7 @@ createListPrem.java = (serverName, userID) => ({
     "user": userID,
     "nest": 5,
     "egg": 25,
-    "docker_image": "quay.io/parkervcp/pterodactyl-images:debian_openjdk-8-jre",
+    "docker_image": "ghcr.io/parkervcp/yolks:java_17",
     "startup": "${STARTUP_CMD}",
     "limits": {
         "memory": 0,
