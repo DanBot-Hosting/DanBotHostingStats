@@ -71,7 +71,7 @@ exports.run = async(client, message, args) => {
          embed.setDescription("`Uptime Kuma` is an easy-to-use self-hosted monitoring tool. [Source: Uptime Kuma](https://github.com/louislam/uptime-kuma)")
          break;
        case "rustc":
-         embed.setDescription("Rust is a powerful and modern programming language designed to deliver high performance and safety. [rust-lang.org][https://www.rust-lang.org/]")
+         embed.setDescription("Rust is a powerful and modern programming language designed to deliver high performance and safety. [rust-lang.org](https://www.rust-lang.org/)")
          break;
        default:
          return message.channel.send(helpEmbed.setDescription("**This server type does not exist. Here is a list.**"))
