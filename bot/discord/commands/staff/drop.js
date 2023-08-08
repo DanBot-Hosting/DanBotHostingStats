@@ -1,8 +1,8 @@
-const ms = require('ms')
-const humanizeDuration = require('humanize-duration');
+const ms = require("ms");
+const humanizeDuration = require("humanize-duration");
 
-exports.run = async(client, message, args) => {
-    if (!['137624084572798976', '737603315722092544', '405771597761216522'].includes(message.author.id)) return;
+exports.run = async (client, message, args) => {
+    if (!["137624084572798976", "737603315722092544", "405771597761216522"].includes(message.author.id)) return;
     message.delete();
 
     if (args[1] == null) {
@@ -25,7 +25,6 @@ exports.run = async(client, message, args) => {
 
     let moment = Date.now();
 
-
     if (!args[2]) {
         let random = codeGen();
 
@@ -33,51 +32,75 @@ exports.run = async(client, message, args) => {
             code: random,
             createdBy: message.author.id,
             balance: 1,
-            createdAt: moment + time
-        })
+            createdAt: moment + time,
+        });
     } else {
         code = codes.get(args[2]);
         if (code == null) {
-            message.reply("That's not a code you scammer")
+            message.reply("That's not a code you scammer");
             return;
         }
     }
 
-
     let embed = new Discord.MessageEmbed()
         .setAuthor("Key Drop!")
-        .setColor("BLUE").setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
-        .setDescription("Dropping a premium key in: " + humanizeDuration(time, {
-            round: true
-        }) + "!")
-        .setTimestamp(moment + time)
+        .setColor("BLUE")
+        .setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
+        .setDescription(
+            "Dropping a premium key in: " +
+                humanizeDuration(time, {
+                    round: true,
+                }) +
+                "!"
+        )
+        .setTimestamp(moment + time);
 
-    let msg = await message.channel.send("", {
-        embed: embed.setDescription("Dropping a premium key in: " + humanizeDuration(time, {
-            round: true
-        }) + "!")
+    let msg = await message.reply("", {
+        embed: embed.setDescription(
+            "Dropping a premium key in: " +
+                humanizeDuration(time, {
+                    round: true,
+                }) +
+                "!"
+        ),
     });
 
     codes.set(code.code + ".drop", {
         message: {
             ID: msg.id,
-            channel: msg.channel.id
-        }
+            channel: msg.channel.id,
+        },
     });
 
     setTimeout(() => {
-        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time - (time / 1.2), {
-            round: true
-        }) + "!"));
+        msg.edit(
+            embed.setDescription(
+                "Dropping a premium key in: " +
+                    humanizeDuration(time - time / 1.2, {
+                        round: true,
+                    }) +
+                    "!"
+            )
+        );
     }, time / 1.2);
 
     setTimeout(() => {
-        msg.edit(embed.setDescription("Dropping a premium key in: " + humanizeDuration(time / 2, {
-            round: true
-        }) + "!"));
+        msg.edit(
+            embed.setDescription(
+                "Dropping a premium key in: " +
+                    humanizeDuration(time / 2, {
+                        round: true,
+                    }) +
+                    "!"
+            )
+        );
     }, time / 2);
 
     setTimeout(() => {
-        msg.edit(embed.setDescription(`**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#898041850890440725>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`));
+        msg.edit(
+            embed.setDescription(
+                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#898041850890440725>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`
+            )
+        );
     }, time);
-}
+};

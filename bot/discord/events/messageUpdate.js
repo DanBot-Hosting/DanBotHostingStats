@@ -1,23 +1,26 @@
 module.exports = (client, oldMessage, newMessage) => {
-
-
-    // Snipe Command:
-
-    if (oldMessage.author == null || oldMessage.author.bot == true || !oldMessage.content || newMessage == null || oldMessage.content == newMessage.content) return;
+    // Snipe Command
+    if (
+        oldMessage.author == null ||
+        oldMessage.author.bot == true ||
+        !oldMessage.content ||
+        newMessage == null ||
+        oldMessage.content == newMessage.content
+    )
+        return;
 
     let data = {
         message: oldMessage.content,
         member: oldMessage.member,
         timestamp: Date.now(),
-        action: "edit"
+        action: "edit",
     };
 
-    if (messageSnipes.get(oldMessage.channel.id) == null) messageSnipes.set(oldMessage.channel.id, [data])
+    if (messageSnipes.get(oldMessage.channel.id) == null) messageSnipes.set(oldMessage.channel.id, [data]);
     else messageSnipes.set(oldMessage.channel.id, [...messageSnipes.get(oldMessage.channel.id), data]);
 
-    messageSnipes.set(oldMessage.channel.id, messageSnipes.get(oldMessage.channel.id).filter(x => (Date.now() - x.timestamp) < 300000 && x != null));
-
-    // --------------
-
-
-}
+    messageSnipes.set(
+        oldMessage.channel.id,
+        messageSnipes.get(oldMessage.channel.id).filter((x) => Date.now() - x.timestamp < 300000 && x != null)
+    );
+};

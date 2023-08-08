@@ -1,8 +1,8 @@
-const axios = require('axios');
+const axios = require("axios");
 
-global.gamingPREM = [27] // Gaming nodes
-global.botswebdbPREM = [26, 28, 29, 31] // Bots, Websites and Databases nodes
-global.storagePREM = [13] // Storage nodes
+global.gamingPREM = [27]; // Gaming nodes
+global.botswebdbPREM = [26, 28, 29, 31]; // Bots, Websites and Databases nodes
+global.storagePREM = [13]; // Storage nodes
 
 /*
 Donator Nodes as followed:
@@ -50,7 +50,7 @@ let data = (serverName, userID) => {
         haste: null,
         uptimekuma: null,
         rustc: null,
-        redbot: null
+        redbot: null,
     };
 
     for (let [name, filled] of Object.entries(createListPrem)) {
@@ -62,19 +62,19 @@ let data = (serverName, userID) => {
 let createServer = (data) => {
     return axios({
         url: config.Pterodactyl.hosturl + "/api/application/servers",
-        method: 'POST',
+        method: "POST",
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-            'Content-Type': 'application/json',
-            'Accept': 'Application/vnd.pterodactyl.v1+json',
+            Authorization: "Bearer " + config.Pterodactyl.apikey,
+            "Content-Type": "application/json",
+            Accept: "Application/vnd.pterodactyl.v1+json",
         },
         data: data,
-    })
-}
+    });
+};
 
 module.exports = {
     createParams: data,
-    createServer: createServer
+    createServer: createServer,
 };
