@@ -38,7 +38,7 @@ exports.run = async(client, message, args) => {
             setTimeout(async() => {
 
                 setTimeout(() => {                        
-                    const DonoNodes = [34, 31, 33, 35];
+                    const DonoNodes = [34, 31, 33, 35, 39];
                     const clean = arr.map(Server => {
                       if (DonoNodes.includes(Server.attributes.node)) {
                         return "[PREMIUM] Server Name: `" + Server.attributes.name + "`, Server ID: `" + Server.attributes.identifier + "`\n";
