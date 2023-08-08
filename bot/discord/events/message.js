@@ -42,7 +42,7 @@ module.exports = async (client, message) => {
     if (message.author.bot) return; // to stop bots from creating accounts, tickets and more.
     if (message.channel.type === "dm") return; //stops commands working in dms
     const prefix = config.DiscordBot.Prefix;
-    if (!message.content.startsWith(prefix.toLowerCase())) return;
+    if (!message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const commandargs = message.content.split(' ').slice(1).join(' ');
     const command = args.shift().toLowerCase();
