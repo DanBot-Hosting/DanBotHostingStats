@@ -89,6 +89,9 @@ exports.run = async (client, message, args) => {
         });
         return;
     }
+
+    console.log(args[0].match(/[0-9]{17,19}/).length == 0 ? args[0] : args[0].match(/[0-9]{17,19}/)[0]);
+
     let target = message.guild.members.cache.get(
         args[0].match(/[0-9]{17,19}/).length == 0 ? args[0] : args[0].match(/[0-9]{17,19}/)[0]
     );
