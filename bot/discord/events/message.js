@@ -31,6 +31,7 @@ module.exports = async (client, message) => {
         if (message.author.id === "137624084572798976" || message.author.id === "853158265466257448") {
             const args = message.content.trim().split(/ +/g);
             client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
+            message.react("<:DBH_Check:1124437152625868810>");
         } else {
             if (message.author.id === "640161047671603205") {
             } else {
