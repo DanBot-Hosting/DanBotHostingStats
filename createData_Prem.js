@@ -51,6 +51,7 @@ let data = (serverName, userID) => {
         uptimekuma: null,
         rustc: null,
         redbot: null,
+        grafana: null
     };
 
     for (let [name, filled] of Object.entries(createListPrem)) {
