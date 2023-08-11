@@ -51,7 +51,7 @@ exports.run = async (client, message, args) => {
                 .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
                 .addField("__**WebHosting:**__", "Nginx", true)
                 .addField("__**Custom Eggs:**__", "ShareX", true)
-                .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma", true)
+                .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
                 .setFooter("Example: DBH!server create-donator NodeJS Testing Server")
         );
         return;
@@ -94,6 +94,7 @@ exports.run = async (client, message, args) => {
         uptimekuma: pServerCreatesettings.uptimekuma,
         rustc: pServerCreatesettings.rustc,
         redbot: pServerCreatesettings.redbot,
+        grafana: pServerCreatesettings.grafana
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
@@ -169,7 +170,7 @@ exports.run = async (client, message, args) => {
                 .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
                 .addField("__**WebHosting:**__", "Nginx", true)
                 .addField("__**Custom Eggs:**__", "ShareX", true)
-                .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma", true)
+                .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
                 .setFooter("Example: DBH!server create-donator NodeJS Testing Server")
         );
     }
