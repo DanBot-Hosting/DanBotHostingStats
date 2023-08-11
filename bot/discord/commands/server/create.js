@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
-        .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma", true)
+        .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
 
     const serverName = message.content.split(" ").slice(3).join(" ") || "change me! (Settings -> SERVER NAME)";
@@ -83,6 +83,7 @@ exports.run = async (client, message, args) => {
         uptimekuma: data.uptimekuma,
         rustc: data.rustc,
         redbot: data.redbot,
+        grafana: data.grafana
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {
