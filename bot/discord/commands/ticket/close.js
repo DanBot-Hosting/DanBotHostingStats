@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp();
 
-    const msg = await message.reply(`${message.author}`, embed);
+    const msg = await message.channel.send(`${message.author}`, embed);
     await msg.react("✔️").catch((err) => {
         message.reply(err);
     });
