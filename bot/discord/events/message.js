@@ -28,7 +28,7 @@ module.exports = async (client, message) => {
     }
 
     if (message.channel.type === "dm") {
-        if (message.author.id === "137624084572798976") {
+        if (message.author.id === "137624084572798976" || message.author.id === "853158265466257448") {
             const args = message.content.trim().split(/ +/g);
             client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
         } else {
