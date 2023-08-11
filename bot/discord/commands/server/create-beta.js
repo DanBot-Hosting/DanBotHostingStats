@@ -1,5 +1,8 @@
 const serverCreateSettings_Beta = require("../../../createData_Beta");
+
 exports.run = async (client, message, args) => {
+    message.reply("There is currently not a beta at the moment. Keep an eye out in <#898041876219830442>!");
+
     // if (client.cooldown[message.author.id] == null) {
     //     client.cooldown[message.author.id] = {
     //         nCreate: null,
@@ -76,5 +79,4 @@ exports.run = async (client, message, args) => {
         }
 
          */
-    message.reply("There is currently no beta happening right now. Keep an eye out for updates :)");
 };

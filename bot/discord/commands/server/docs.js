@@ -98,6 +98,11 @@ exports.run = async (client, message, args) => {
                 "Rust is a powerful and modern programming language designed to deliver high performance and safety. [rust-lang.org](https://www.rust-lang.org/)"
             );
             break;
+        case "grafana":
+            embed.setDescription(
+                "Grafana is an open-source platform for monitoring and observability, enabling users to visualize and analyze real-time data from various sources through customizable dashboards and graphs."
+            );
+            break;
         default:
             return message.reply(helpEmbed.setDescription("**This server type does not exist. Here is a list.**"));
             break;
