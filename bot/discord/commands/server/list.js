@@ -25,7 +25,7 @@ exports.run = async (client, message, args) => {
             userID = args[1] || message.author.id; // Allow devs to lookup a users server list;
 
         axios({
-            url: "https://panel.danbot.host" + "/api/application/users/" + userAccount.consoleID + "?include=servers",
+            url: "https://panel.danbot.host/api/application/users/" + userAccount.consoleID + "?include=servers",
             method: "GET",
             followRedirect: true,
             maxRedirects: 5,
