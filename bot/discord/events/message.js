@@ -37,16 +37,7 @@ module.exports = async (client, message) => {
             } else {
                 client.channels.cache
                     .get("898041919022723072")
-                    .send(
-                        message.author.username +
-                            " (ID: " +
-                            message.author.id +
-                            ", PING: <@" +
-                            message.author.id +
-                            ">)" +
-                            "\n" +
-                            message.content.replace("@", "@|")
-                    );
+                    .send(`${message.author}:\n${message.content.replace("@", "(at)")}`);
             }
         }
     }
