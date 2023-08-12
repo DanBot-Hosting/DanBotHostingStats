@@ -7,7 +7,7 @@ exports.run = (client, message) => {
 
     const embed = new MessageEmbed()
         .setTitle("DBH VPN Files")
-        .setDescription("**CDN URL**: https://cdn.wdh.gg/DBH-VPN/\n\n**Username**: `dbh`\n**Password**: `betatesters`\n\n**Important Links**:\n[OVPN Profiles](https://cdn.wdh.gg/DBH-VPN/OVPN-Profiles/) **|** [Releases](https://cdn.wdh.gg/DBH-VPN/Releases/)\n\n*Hosted by [William Harrison](https://discord.com/users/853158265466257448).*")
+        .setDescription("**URL**: https://cdn.wdh.gg/DBH-VPN/\n**Username**: `dbh`\n**Password**: `betatesters`\n\n**Important Links**:\n[Releases](https://cdn.wdh.gg/DBH-VPN/Releases/) **|** [OVPN Profiles](https://cdn.wdh.gg/DBH-VPN/OVPN-Profiles/)\n\n*Files hosted by [**William Harrison**](https://discord.com/users/853158265466257448).*")
         .setFooter("Do not share these details with anyone else!")
         .setColor("BLUE");
 
