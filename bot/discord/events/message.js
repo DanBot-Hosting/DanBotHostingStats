@@ -67,10 +67,7 @@ module.exports = async (client, message) => {
         let blacklisted = [
             "898041849783148585", //Lounge
             "898041854262648842", //Thank-you-dan
-            "898041855135068221", //Suggestions
-            "898041853096628267", //Invite-bot
             "928029676209852517", //Egg-bugs
-            "951252958316728340", //Egg-suggestions
             "898041857550995506", //Memes
             "898041859681701948", //Movie-night
             "898041861040664576", //Setups
@@ -80,7 +77,6 @@ module.exports = async (client, message) => {
             "898041895987585024", //Javascript
             "898041896956469249", //HTML-and-CSS
             "898041898835509328", //Java
-            "919995547358744576", //x86-assembly
             "938630088256286720", //VPS Hosting
         ];
         //Channel checker
