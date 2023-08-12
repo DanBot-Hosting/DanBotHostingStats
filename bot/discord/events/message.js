@@ -12,12 +12,7 @@ module.exports = async (client, message) => {
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed);
     }
     //Auto reactions on suggestions
-    if (
-        message.channel.id === "898041855135068221" ||
-        message.channel.id === "951252958316728340" ||
-        message.channel.id === "980595293768802327" ||
-        message.channel.id === "976371313901965373"
-    ) {
+    if (message.channel.id === "980595293768802327" || message.channel.id === "976371313901965373") {
         if (!message.content.includes(">")) {
             message.react("👍");
 
