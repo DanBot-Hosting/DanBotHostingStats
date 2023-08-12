@@ -65,22 +65,24 @@ module.exports = async (client, message) => {
     let actualExecutorId;
     try {
         let blacklisted = [
-            "898041849783148585", //Lounge
-            "898041854262648842", //Thank-you-dan
-            "928029676209852517", //Egg-bugs
-            "898041857550995506", //Memes
-            "898041859681701948", //Movie-night
-            "898041861040664576", //Setups
-            "898041858666668092", //Pets
-            "898041892279836692", //Hosting
-            "898041894746066985", //Python
-            "898041895987585024", //Javascript
-            "898041896956469249", //HTML-and-CSS
-            "898041898835509328", //Java
-            "938630088256286720", //VPS Hosting
+            "898041849783148585", // lounge
+            "898041854262648842", // thank-you-dan
+            "928029676209852517", // egg-bugs
+            "898041857550995506", // memes
+            "898041859681701948", // movie-night
+            "898041861040664576", // setups
+            "898041858666668092", // pets
+            "898041865616650240", // dono-lounge
+            "898041892279836692", // hosting
+            "898041894746066985", // python
+            "898041895987585024", // javascript
+            "898041896956469249", // web-dev
+            "938630088256286720", // vps-hosting
+            "1056858054819336192", // node-bot-outages
+            "1138925759264739398" // vpn
         ];
-        //Channel checker
 
+        // Channel checker
         if (
             (blacklisted.includes(message.channel.id) ||
                 (message.channel.id == "754441222424363088" && command != "snipe")) &&
