@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     if (!args[1]) {
         return message.reply("Please provide a user id!");
     } else {
-        const replyMsg = await message.reply("Staring calculation...");
+        const replyMsg = await message.reply("Starting calculation...");
 
         let selectedUser =
             message.mentions.users.first() ||
