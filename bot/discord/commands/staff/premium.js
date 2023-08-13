@@ -1,5 +1,5 @@
 exports.run = async (client, message, args) => {
-    if (!["137624084572798976", "737603315722092544", "459025800633647116", "853158265466257448"].includes(message.author.id)) return;
+    if (!["137624084572798976", "737603315722092544", "459025800633647116"].includes(message.author.id)) return;
 
     if (args.length < 4) return;
     let parser = new Intl.NumberFormat();
