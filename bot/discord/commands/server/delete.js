@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
     } else {
         if (args[1].match(/[0-9a-z]+/i) == null) return message.reply("lol only use english characters.");
 
-        args[1] = args[1].match(/[0-9a-z]+/i)[0];
+        args[1] = args[1].match(/[0-9a-z]+/i)[0].replace("https://panel.danbot.host/server/", "");
 
         message.reply("Checking server `" + args[1] + "`\nPlease allow me 2 seconds to fetch this.").then((msg) => {
             axios({
