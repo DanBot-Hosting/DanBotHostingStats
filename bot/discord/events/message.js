@@ -32,7 +32,7 @@ module.exports = async (client, message) => {
             } else {
                 client.channels.cache
                     .get("898041919022723072")
-                    .send(`${message.author}\n\`\`\`${message.content.replace("@", "(at)")}\`\`\``);
+                    .send(`${message.author}:\n${message.content.replace("@", "(at)")}`);
             }
         }
     }
