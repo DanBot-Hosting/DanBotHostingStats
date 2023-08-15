@@ -1,4 +1,4 @@
-const serverCreateSettings_Beta = require("../../../createData_Beta");
+//const serverCreateSettings_Beta = require("../../../createData_Beta");
 
 exports.run = async (client, message, args) => {
     message.reply("There is currently not a beta at the moment. Keep an eye out in <#898041876219830442>!");
