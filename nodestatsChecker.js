@@ -111,6 +111,8 @@ if (enabled.nodestatsChecker === true) {
                         ip: response.data.address,
                         ping: response.data.ping,
                     });
+                }).catch((Error) => {
+                    //Handling errors? You mean just ignoring them of course.
                 });
 
                 axios({
