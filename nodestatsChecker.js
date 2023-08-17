@@ -111,6 +111,8 @@ if (enabled.nodestatsChecker === true) {
                         ip: response.data.address,
                         ping: response.data.ping,
                     });
+                }).catch((Error) => {
+                    //Handling errors? You mean just ignoring them of course.
                 });
 
                 axios({
@@ -126,65 +128,26 @@ if (enabled.nodestatsChecker === true) {
                 })
                     .then((response) => {
                         //Node is online and is working. Just checking if it's in maintenance or not.
-
-                        if (nodeStatus.fetch(node + ".maintenance")) {
-                            nodeStatus.set(node, {
-                                timestamp: Date.now(),
-                                status: true,
-                                is_vm_online: true,
-                                maintenance: true,
-                            });
-                        } else {
-                            nodeStatus.set(node, {
-                                timestamp: Date.now(),
-                                status: true,
-                                is_vm_online: true,
-                                maintenance: false,
-                            });
-                        }
+                        
+                        nodeStatus.set(`${node.timestamp}`, Date.now());
+                        nodeStatus.set(`${node.status}`, true);
+                        nodeStatus.set(`${node.is_vm_online}`, true);
                     })
                     .catch((error) => {
                         //Node is either offline or wings are offline. Checks if it's maintenance, and then checks for wings.
 
-                        if (nodeStatus.fetch(node + ".maintenance")) {
                             ping2
                                 .ping(data.IP, 22)
                                 .then(() => {
-                                    nodeStatus.set(node, {
-                                        timestamp: Date.now(),
-                                        status: false,
-                                        is_vm_online: true,
-                                        maintenance: true,
-                                    });
+                                    nodeStatus.set(`${node.timestamp}`, Date.now());
+                                    nodeStatus.set(`${node.status}`, false);
+                                    nodeStatus.set(`${node.is_vm_online}`, true);
                                 })
                                 .catch((e) => {
-                                    nodeStatus.set(node, {
-                                        timestamp: Date.now(),
-                                        status: false,
-                                        is_vm_online: false,
-                                        maintenance: true,
-                                    });
+                                    nodeStatus.set(`${node.timestamp}`, Date.now());
+                                    nodeStatus.set(`${node.status}`, false);
+                                    nodeStatus.set(`${node.is_vm_online}`, false);
                                 });
-                        } else {
-                            ping2
-                                .ping(data.IP, 22)
-                                .then(() => {
-                                    nodeStatus.set(node, {
-                                        timestamp: Date.now(),
-                                        status: false,
-                                        is_vm_online: true,
-                                        maintenance: false,
-                                    });
-                                })
-                                .catch((e) => {
-                                    nodeStatus.set(node, {
-                                        timestamp: Date.now(),
-                                        status: false,
-                                        is_vm_online: false,
-                                        maintenance: false,
-                                    });
-                                });
-                        }
                     });
 
                 setTimeout(() => {
