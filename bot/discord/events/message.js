@@ -27,14 +27,7 @@ module.exports = async (client, message) => {
             const args = message.content.trim().split(/ +/g);
             client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
             message.react("<:DBH_Check:1124437152625868810>");
-        } else {
-            if (message.author.id === "640161047671603205") {
-            } else {
-                client.channels.cache
-                    .get("898041919022723072")
-                    .send(`${message.author}:\n${message.content.replace("@", "(at)")}`);
-            }
-        }
+        };
     }
 
     if (message.author.bot) return; // to stop bots from creating accounts, tickets and more.
