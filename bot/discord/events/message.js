@@ -1,6 +1,5 @@
 module.exports = async (client, message) => {
-
-    //Checks the amount of member pinged in a message.
+    // Checks the amount of member pinged in a message.
     if (message.mentions.users.size >= 20) {
         message.member.ban({ reason: "Suspected raid. Pinging more than 20 users." });
         message.reply(`${message.member.toString()} has been banned for pinging more than 20 users`);
@@ -14,14 +13,14 @@ module.exports = async (client, message) => {
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed);
     };
 
-    //Auto reactions on suggestions channels.
-    const SuggestionChannels = [
-        "980595293768802327", //Staff Suggestions
-        "976371313901965373" //VPN Suggestions
+    // Auto reactions on suggestions channels
+    const suggestionChannels = [
+        "980595293768802327", // Staff Suggestions
+        "976371313901965373" // VPN Suggestions
     ];
 
-    if (SuggestionChannels.some(Channel => Channel == message.channel.id)) {
-        if (!message.content.includes(">")) {
+    if (suggestionChannels.some(channel => channel == message.channel.id)) {
+        if (!message.content.startsWith(">")) {
             message.react("👍");
 
             setTimeout(() => {
@@ -30,36 +29,46 @@ module.exports = async (client, message) => {
         }
     }
 
-    //Handles direct messages.
-    const BotSudo = [
-        "137624084572798976", //Dan
-        "853158265466257448", //William
-        "757296951925538856", //DIBSTER
-        "459025800633647116"  //Avixity
+    // Handles direct messages
+    const dmAllowedUsers = [
+        "137624084572798976", // Dan
+        "853158265466257448", // William
+        "757296951925538856", // DIBSTER
+        "459025800633647116"  // AVIXITY
     ];
 
     if (message.channel.type === "dm") {
-        
-        //Checks if the member is one of the members allowed. If it is, allows the member to send messages on behalf of the bot.
-        if (BotSudo.some(Member => Member == message.author.id)) {
+        // Checks if the member is one of the members allowed. If it is, allows the member to send messages on behalf of the bot.
+        if (dmAllowedUsers.some(member => member == message.author.id)) {
             const args = message.content.trim().split(/ +/g);
-            client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
-            message.react("<:DBH_Check:1124437152625868810>");
+
+            try {
+                await client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
+                message.react("<:Yes:768256004655677451>");
+            } catch(err) {
+                message.react("<:No:768256005426511912>");
+                message.channel.send(`\`\`\`${err.message}\`\`\``);
+            }
         };
     };
 
-    if (message.author.bot) return; // to stop bots from creating accounts, tickets and more.
-    if (message.channel.type === "dm") return; //stops commands working in dms
+    if (message.author.bot) return; // To stop bots from creating accounts, tickets and more.
+    if (message.channel.type === "dm") return; // Stops commands working in dms
+
     const prefix = config.DiscordBot.Prefix;
     if (!message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
+
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const commandargs = message.content.split(" ").slice(1).join(" ");
     const command = args.shift().toLowerCase();
+
     console.log(
         chalk.magenta("[DISCORD] ") +
             chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`)
     );
+
     let actualExecutorId;
+
     try {
         let blacklisted = [
             "898041849783148585", // lounge
@@ -81,20 +90,18 @@ module.exports = async (client, message) => {
 
         // Channel checker
         if (
-            (blacklisted.includes(message.channel.id) ||
-                (message.channel.id == "754441222424363088" && command != "snipe")) &&
-            message.member.roles.cache.find((x) => x.id === "898041751099539497") == null &&
-            message.member.roles.cache.find((x) => x.id === "898041743566594049") == null &&
+            blacklisted.includes(message.channel.id) &&
+            !message.member.roles.cache.find((x) => x.id === "898041751099539497") &&
+            !message.member.roles.cache.find((x) => x.id === "898041743566594049") &&
             !(message.channel.id === "898041853096628267" && command === "info")
-        )
-            return;
+        ) return;
 
         if (
             sudo.get(message.member.id) &&
             message.member.roles.cache.find((r) => r.id === "898041747597295667") &&
             args[0] != "sudo"
         ) {
-            //Double check the user is deffinaly allowd to use this command.
+            // Double check the user is deffinaly allowd to use this command.
             actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone actual sender user ID
 
             console.log(
@@ -102,8 +109,8 @@ module.exports = async (client, message) => {
             );
             let userToCopy = sudo.get(actualExecutorId);
 
-            // await message.guild.members.fetch(userToCopy);  //Cache user data
-            // await client.users.fetch(userToCopy); //Cache user data
+            // await message.guild.members.fetch(userToCopy);  // Cache user data
+            // await client.users.fetch(userToCopy); // Cache user data
 
             message.guild.member.id = userToCopy;
             message.author.id = userToCopy;
@@ -115,7 +122,7 @@ module.exports = async (client, message) => {
             command === "staff" ||
             command === "ticket"
         ) {
-            //Cooldown setting
+            // Cooldown setting
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
                 await commandFile.run(client, message, args);
