@@ -1,4 +1,6 @@
 module.exports = async (client, message) => {
+
+    //Checks the amount of member pinged in a message.
     if (message.mentions.users.size >= 20) {
         message.member.ban({ reason: "Suspected raid. Pinging more than 20 users." });
         message.reply(`${message.member.toString()} has been banned for pinging more than 20 users`);
@@ -10,9 +12,15 @@ module.exports = async (client, message) => {
             .setTimestamp(new Date());
 
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed);
-    }
-    //Auto reactions on suggestions
-    if (message.channel.id === "980595293768802327" || message.channel.id === "976371313901965373") {
+    };
+
+    //Auto reactions on suggestions channels.
+    const SuggestionChannels = [
+        "980595293768802327", //Staff Suggestions
+        "976371313901965373" //VPN Suggestions
+    ];
+
+    if (SuggestionChannels.some(Channel => Channel == message.channel.id)) {
         if (!message.content.includes(">")) {
             message.react("👍");
 
@@ -22,13 +30,23 @@ module.exports = async (client, message) => {
         }
     }
 
+    //Handles direct messages.
+    const BotSudo = [
+        "137624084572798976", //Dan
+        "853158265466257448", //William
+        "757296951925538856", //DIBSTER
+        "459025800633647116"  //Avixity
+    ];
+
     if (message.channel.type === "dm") {
-        if (message.author.id === "137624084572798976" || message.author.id === "853158265466257448" || message.author.id === "757296951925538856" || message.author.id === "459025800633647116") {
+        
+        //Checks if the member is one of the members allowed. If it is, allows the member to send messages on behalf of the bot.
+        if (BotSudo.some(Member => Member == message.author.id)) {
             const args = message.content.trim().split(/ +/g);
             client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
             message.react("<:DBH_Check:1124437152625868810>");
         };
-    }
+    };
 
     if (message.author.bot) return; // to stop bots from creating accounts, tickets and more.
     if (message.channel.type === "dm") return; //stops commands working in dms
@@ -76,7 +94,7 @@ module.exports = async (client, message) => {
             message.member.roles.cache.find((r) => r.id === "898041747597295667") &&
             args[0] != "sudo"
         ) {
-            //Doubble check the user is deffinaly allowd to use this command
+            //Double check the user is deffinaly allowd to use this command.
             actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone actual sender user ID
 
             console.log(
@@ -95,7 +113,6 @@ module.exports = async (client, message) => {
             command === "server" ||
             command === "user" ||
             command === "staff" ||
-            command === "dan" ||
             command === "ticket"
         ) {
             //Cooldown setting
