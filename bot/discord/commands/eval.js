@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 exports.run = async (client, message) => {
     let args = message.content.split(" ").slice(1);
     let cont = message.content.split(" ").slice(1).join(" ");
