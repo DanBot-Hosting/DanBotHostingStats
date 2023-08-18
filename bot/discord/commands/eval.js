@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 exports.run = async (client, message) => {
     let args = message.content.split(" ").slice(1);
     let cont = message.content.split(" ").slice(1).join(" ");
@@ -88,7 +90,7 @@ exports.run = async (client, message) => {
                     .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`);
                 msg.edit({
                     embed: evalcode,
-                }).catch((e) => logger.error(e));
+                }).catch((e) => {});
             } catch (err) {
                 let errorcode = new Discord.MessageEmbed()
                     .setAuthor(
