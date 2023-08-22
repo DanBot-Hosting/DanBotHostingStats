@@ -109,7 +109,7 @@ if (enabled.nodestatsChecker === true) {
                 }).then((response) => {
                     let pingData = response.data.ping;
 
-                    if(pingData == "NaN"){
+                    if(isNaN(pingData)){
                         pingData = "0";
                     };
 
