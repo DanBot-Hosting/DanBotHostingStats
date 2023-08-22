@@ -108,7 +108,7 @@ let parse = async () => {
                   )}ms\`]`
                 : "" || d.data.toLowerCase().startsWith("pnode")
                 ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
-                      Number.isNaN(ping.ping) ? 0 : ping.ping
+                      isNaN(ping.ping) ? 0 : ping.ping
                   )}ms\`]`
                 : "";
 
