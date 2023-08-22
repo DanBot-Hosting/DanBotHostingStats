@@ -101,15 +101,15 @@ let parse = async () => {
             let serverUsage = d.data.toLowerCase().startsWith("node")
                 ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
                       Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms\`]`
+                  ).replace('NaN', '0')}ms\`]`
                 : "" || d.data.toLowerCase().includes("dono")
                 ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
                       Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms\`]`
+                  ).replace('NaN', '0')}ms\`]`
                 : "" || d.data.toLowerCase().startsWith("pnode")
                 ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
                       Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms\`]`
+                  ).replace('NaN', '0')}ms\`]`
                 : "";
 
             da =
