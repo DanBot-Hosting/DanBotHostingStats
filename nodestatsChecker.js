@@ -107,9 +107,15 @@ if (enabled.nodestatsChecker === true) {
                         "Content-Type": "application/json",
                     },
                 }).then((response) => {
+                    let pingData = response.data.ping;
+
+                    if(pingData == "NaN"){
+                        pingData = "0";
+                    };
+
                     nodePing.set(node, {
                         ip: response.data.address,
-                        ping: response.data.ping,
+                        ping: pingData,
                     });
                 }).catch((Error) => {
                     //Handling errors? You mean just ignoring them of course.
