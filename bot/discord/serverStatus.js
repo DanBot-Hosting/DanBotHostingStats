@@ -98,13 +98,18 @@ let parse = async () => {
             let da = nodeStatus.get(d.data.toLowerCase());
             let nodeData = nodeServers.get(d.data.toLowerCase());
             let ping = nodePing.fetch(d.data.toLowerCase());
-            let nodePing1 = Math.round(isNaN(ping.ping) ? 0 : ping.ping);
             let serverUsage = d.data.toLowerCase().startsWith("node")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing1}ms\`]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
+                      Number.isNaN(ping.ping) ? 0 : ping.ping
+                  )}ms\`]`
                 : "" || d.data.toLowerCase().includes("dono")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing1}ms\`]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
+                      Number.isNaN(ping.ping) ? 0 : ping.ping
+                  )}ms\`]`
                 : "" || d.data.toLowerCase().startsWith("pnode")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing1}ms\`]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
+                      Number.isNaN(ping.ping) ? 0 : ping.ping
+                  )}ms\`]`
                 : "";
 
             da =
