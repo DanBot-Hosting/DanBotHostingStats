@@ -100,11 +100,11 @@ let parse = async () => {
             let ping = nodePing.fetch(d.data.toLowerCase());
             let nodePing1 = Math.round(isNaN(ping.ping) ? 0 : ping.ping);
             let serverUsage = d.data.toLowerCase().startsWith("node")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing}ms\`]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing1}ms\`]`
                 : "" || d.data.toLowerCase().includes("dono")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing}ms\`]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing1}ms\`]`
                 : "" || d.data.toLowerCase().startsWith("pnode")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing}ms\`]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${nodePing1}ms\`]`
                 : "";
 
             da =
