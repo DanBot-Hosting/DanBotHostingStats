@@ -129,9 +129,9 @@ if (enabled.nodestatsChecker === true) {
                     .then((response) => {
                         //Node is online and is working. Just checking if it's in maintenance or not.
                         
-                        nodeStatus.set(`${node.timestamp}`, Date.now());
-                        nodeStatus.set(`${node.status}`, true);
-                        nodeStatus.set(`${node.is_vm_online}`, true);
+                        nodeStatus.set(`${node}.timestamp`, Date.now());
+                        nodeStatus.set(`${node}.status`, true);
+                        nodeStatus.set(`${node}.is_vm_online`, true);
                     })
                     .catch((error) => {
                         //Node is either offline or wings are offline. Checks if it's maintenance, and then checks for wings.
@@ -139,14 +139,14 @@ if (enabled.nodestatsChecker === true) {
                             ping2
                                 .ping(data.IP, 22)
                                 .then(() => {
-                                    nodeStatus.set(`${node.timestamp}`, Date.now());
-                                    nodeStatus.set(`${node.status}`, false);
-                                    nodeStatus.set(`${node.is_vm_online}`, true);
+                                    nodeStatus.set(`${node}.timestamp`, Date.now());
+                                    nodeStatus.set(`${node}.status`, false);
+                                    nodeStatus.set(`${node}.is_vm_online`, true);
                                 })
                                 .catch((e) => {
-                                    nodeStatus.set(`${node.timestamp}`, Date.now());
-                                    nodeStatus.set(`${node.status}`, false);
-                                    nodeStatus.set(`${node.is_vm_online}`, false);
+                                    nodeStatus.set(`${node}.timestamp`, Date.now());
+                                    nodeStatus.set(`${node}.status`, false);
+                                    nodeStatus.set(`${node}.is_vm_online`, false);
                                 });
                     });
 
