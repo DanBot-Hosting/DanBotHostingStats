@@ -81,13 +81,6 @@ let nstatus = {
         },
     ],
 
-    "VPS Hosting Servers": [
-        {
-            name: "France 1",
-            data: "vpsfrance-1",
-        },
-    ],
-
     "VPN Servers": [
         {
             name: "France 1",
