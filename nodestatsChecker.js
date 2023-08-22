@@ -177,22 +177,6 @@ if (enabled.nodestatsChecker === true) {
             }, 2000);
         }
 
-        //France 1 VPS Server
-        ping2
-            .ping("176.31.125.135", 22)
-            .then(() =>
-                nodeStatus.set("vpsfrance-1", {
-                    timestamp: Date.now(),
-                    status: true,
-                })
-            )
-            .catch((e) =>
-                nodeStatus.set("vpsfrance-1", {
-                    timestamp: Date.now(),
-                    status: false,
-                })
-            );
-
         //Germany 1 VPN Server
         ping2
             .ping("51.89.32.64", 22)
