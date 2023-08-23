@@ -21,7 +21,7 @@
     "better-sqlite3": "^8.5.0",
     "body-parser": "^1.20.2",
     "chalk": "^3.0.0",
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.13.0",
     "humanize-duration": "^3.28.0",
     "lodash-es": "^4.17.21",
     "minimist": "^1.2.8",
