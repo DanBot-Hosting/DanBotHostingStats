@@ -4,7 +4,7 @@
   / / / / __ `/ __ \/ __  / __ \/ __/  / /_/ / __ \/ ___/ __/ / __ \/ __ `/
  / /_/ / /_/ / / / / /_/ / /_/ / /_   / __  / /_/ (__  ) /_/ / / / / /_/ /
 /_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
-                                                                 /____/
+Free Hosting forever!                                            /____/
 */
 
 global.config = require("./config.json");
@@ -18,6 +18,7 @@ global.fs = require("fs");
 global.chalk = require("chalk");
 const nodemailer = require("nodemailer");
 global.axios = require("axios");
+global.pretty = require("prettysize");
 global.transport = nodemailer.createTransport({
     host: config.Email.Host,
     port: config.Email.Port,
@@ -33,6 +34,7 @@ require("./nodestatsChecker");
 //Discord Bot
 let db = require("quick.db");
 global.Discord = require("discord.js");
+global.tcpp = require("tcp-ping");
 
 global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
@@ -59,15 +61,15 @@ global.client = new Discord.Client({
 });
 global.bot = client;
 
-require("./bot/commands/mute").init(client);
+require("./bot/discord/commands/mute").init(client);
 
 //Event handler
-fs.readdir("./bot/events/", (err, files) => {
+fs.readdir("./bot/discord/events/", (err, files) => {
     files = files.filter((f) => f.endsWith(".js"));
     files.forEach((f) => {
-        const event = require(`./bot/events/${f}`);
+        const event = require(`./bot/discord/events/${f}`);
         client.on(f.split(".")[0], event.bind(null, client));
-        delete require.cache[require.resolve(`./bot/events/${f}`)];
+        delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
     });
 });
 global.createList = {};
