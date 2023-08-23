@@ -18,7 +18,6 @@ global.fs = require("fs");
 global.chalk = require("chalk");
 const nodemailer = require("nodemailer");
 global.axios = require("axios");
-global.pretty = require("prettysize");
 global.transport = nodemailer.createTransport({
     host: config.Email.Host,
     port: config.Email.Port,
@@ -34,7 +33,6 @@ require("./nodestatsChecker");
 //Discord Bot
 let db = require("quick.db");
 global.Discord = require("discord.js");
-global.tcpp = require("tcp-ping");
 
 global.fs = require("fs");
 global.moment = require("moment");

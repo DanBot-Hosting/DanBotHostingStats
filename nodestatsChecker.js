@@ -58,7 +58,7 @@ let stats = {
     },
     dono01: {
         serverID: "bd9d3ad6",
-        IP: "149.56.23.207",
+        IP: "69.30.240.86",
         ID: "34",
         Location: pingLocals.CA,
     },
@@ -107,9 +107,15 @@ if (enabled.nodestatsChecker === true) {
                         "Content-Type": "application/json",
                     },
                 }).then((response) => {
+                    let pingData = response.data.ping;
+
+                    if(isNaN(pingData)){
+                        pingData = "0";
+                    };
+
                     nodePing.set(node, {
                         ip: response.data.address,
-                        ping: response.data.ping,
+                        ping: pingData,
                     });
                 }).catch((Error) => {
                     //Handling errors? You mean just ignoring them of course.
@@ -129,9 +135,9 @@ if (enabled.nodestatsChecker === true) {
                     .then((response) => {
                         //Node is online and is working. Just checking if it's in maintenance or not.
                         
-                        nodeStatus.set(`${node.timestamp}`, Date.now());
-                        nodeStatus.set(`${node.status}`, true);
-                        nodeStatus.set(`${node.is_vm_online}`, true);
+                        nodeStatus.set(`${node}.timestamp`, Date.now());
+                        nodeStatus.set(`${node}.status`, true);
+                        nodeStatus.set(`${node}.is_vm_online`, true);
                     })
                     .catch((error) => {
                         //Node is either offline or wings are offline. Checks if it's maintenance, and then checks for wings.
@@ -139,14 +145,14 @@ if (enabled.nodestatsChecker === true) {
                             ping2
                                 .ping(data.IP, 22)
                                 .then(() => {
-                                    nodeStatus.set(`${node.timestamp}`, Date.now());
-                                    nodeStatus.set(`${node.status}`, false);
-                                    nodeStatus.set(`${node.is_vm_online}`, true);
+                                    nodeStatus.set(`${node}.timestamp`, Date.now());
+                                    nodeStatus.set(`${node}.status`, false);
+                                    nodeStatus.set(`${node}.is_vm_online`, true);
                                 })
                                 .catch((e) => {
-                                    nodeStatus.set(`${node.timestamp}`, Date.now());
-                                    nodeStatus.set(`${node.status}`, false);
-                                    nodeStatus.set(`${node.is_vm_online}`, false);
+                                    nodeStatus.set(`${node}.timestamp`, Date.now());
+                                    nodeStatus.set(`${node}.status`, false);
+                                    nodeStatus.set(`${node}.is_vm_online`, false);
                                 });
                     });
 
@@ -176,22 +182,6 @@ if (enabled.nodestatsChecker === true) {
                 }, 2000);
             }, 2000);
         }
-
-        //France 1 VPS Server
-        ping2
-            .ping("176.31.125.135", 22)
-            .then(() =>
-                nodeStatus.set("vpsfrance-1", {
-                    timestamp: Date.now(),
-                    status: true,
-                })
-            )
-            .catch((e) =>
-                nodeStatus.set("vpsfrance-1", {
-                    timestamp: Date.now(),
-                    status: false,
-                })
-            );
 
         //Germany 1 VPN Server
         ping2

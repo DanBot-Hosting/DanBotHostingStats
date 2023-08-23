@@ -1,3 +1,4 @@
+const cap = require("../../util/cap");
 const exec = require("child_process").exec;
 
 exports.run = async (client, message, args) => {
@@ -12,12 +13,7 @@ exports.run = async (client, message, args) => {
             } else {
                 client.channels.cache
                     .get("898041843902742548")
-                    .send(
-                        "**[AUTOMATIC]** \nNew update on GitHub. Pulling Files. \n\nLogs: \n```" +
-                            response +
-                            "```" +
-                            "\n\n\n**Restarting Discord Bot.**"
-                    );
+                    .send(`<t:${Date.now().toString().slice(0, -3)} Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``);
 
                 message.reply("Pulling files from GitHub.");
                 setTimeout(() => {
