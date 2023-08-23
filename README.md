@@ -2,7 +2,7 @@
 
 The Discord bot for DBH.
 
-# Maintainers
+## Maintainers
 
 - **DIBSTER** - dibster@danbot.host
 - **William** - william@danbot.host
