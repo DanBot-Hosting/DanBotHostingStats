@@ -1,5 +1,6 @@
 const exec = require("child_process").exec;
 const nstatus = require("../serverStatus");
+const cap = require("../util/cap");
 
 module.exports = async (client) => {
     let guild = client.guilds.cache.get("639477525927690240");
