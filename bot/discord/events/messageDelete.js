@@ -1,9 +1,6 @@
 module.exports = (client, message) => {
-    if (!message.attachments.size > 0) {
+    if (!message.attachments.size > 0 && message.channel.type === "text" && message.author) {
         //if (message.author.bot) return;
-        if (message.channel.type === "dm") return;
-        if (message.channel.type !== "text") return;
-        if (message.author == null) return;
 
         const description = message.cleanContent || "*No message content*";
         const descriptionfix = description.substr(0, 600);
@@ -19,6 +16,4 @@ module.exports = (client, message) => {
             embed,
         });
     }
-
-    if (message.author.bot || !message.content) return;
 };
