@@ -1,8 +1,8 @@
-# DanBotHostingStats
+# Official DBH Bot
 
-The Discord Bot for DBH.
+The Discord bot for DBH.
 
-# Developers/Maintainers:
+# Maintainers
 
-- **DIBSTER**: *(dibster@danbot.host)*
-- **William**: *(william@danbot.host)*
+- **DIBSTER** - dibster@danbot.host
+- **William** - william@danbot.host
