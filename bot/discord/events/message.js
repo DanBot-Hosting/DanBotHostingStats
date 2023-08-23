@@ -63,7 +63,8 @@ module.exports = async (client, message) => {
 
         // Channel checker
         if (
-            (blacklisted.includes(message.channel.id) &&
+            (blacklisted.includes(message.channel.id) ||
+                (message.channel.id == "754441222424363088" && command != "snipe")) &&
             message.member.roles.cache.find((x) => x.id === "898041751099539497") == null &&
             message.member.roles.cache.find((x) => x.id === "898041743566594049") == null &&
             !(message.channel.id === "898041853096628267" && command === "info")
@@ -94,6 +95,7 @@ module.exports = async (client, message) => {
             command === "server" ||
             command === "user" ||
             command === "staff" ||
+            command === "dan" ||
             command === "ticket"
         ) {
             //Cooldown setting
