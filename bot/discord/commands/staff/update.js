@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
             } else {
                 client.channels.cache
                     .get("898041843902742548")
-                    .send(`<t:${Date.now().toString().slice(0, -3)} Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``);
+                    .send(`<t:${Date.now().toString().slice(0, -3)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``);
 
                 message.reply("Pulling files from GitHub.");
                 setTimeout(() => {
