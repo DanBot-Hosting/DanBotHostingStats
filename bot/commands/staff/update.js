@@ -1,4 +1,5 @@
 const exec = require("child_process").exec;
+const cap = require("../../util/cap");
 
 exports.run = async (client, message, args) => {
     //Checks if the user has the Bot System Administrator Role or is William
@@ -12,12 +13,7 @@ exports.run = async (client, message, args) => {
             } else {
                 client.channels.cache
                     .get("898041843902742548")
-                    .send(
-                        "**[AUTOMATIC]** \nNew update on GitHub. Pulling Files. \n\nLogs: \n```" +
-                            response +
-                            "```" +
-                            "\n\n\n**Restarting Discord Bot.**"
-                    );
+                    .send(`**Update requested by <@${message.author.id}>, pulling files.**\n\`\`\`${cap(response, 1900)}\`\`\``);
 
                 message.reply("Pulling files from GitHub.");
                 setTimeout(() => {

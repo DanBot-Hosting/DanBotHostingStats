@@ -35,12 +35,7 @@ module.exports = async (client) => {
                 } else {
                     client.channels.cache
                         .get("898041843902742548")
-                        .send(
-                            "**[AUTOMATIC]** \nNew update on GitHub. Pulling Files. \n\nLogs: \n```" +
-                                response +
-                                "```" +
-                                "\n\n\n**Restarting Discord Bot.**"
-                        );
+                        .send(`**Automatic update from GitHub, pulling files.**\n\`\`\`${cap(response, 1900)}\`\`\``);
                     setTimeout(() => {
                         process.exit();
                     }, 1000);
