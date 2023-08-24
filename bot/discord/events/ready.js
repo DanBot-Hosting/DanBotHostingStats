@@ -17,7 +17,7 @@ module.exports = async (client) => {
 
     console.log(chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " has logged in!"));
 
-    //Check make sure create account channels are closed after a hour
+    // Close create account channels after a hour
     guild.channels.cache
         .filter((x) => x.parentID === "898041816367128616" && Date.now() - x.createdAt > 1800000)
         .forEach((x) => x.delete());
@@ -67,7 +67,7 @@ module.exports = async (client) => {
         });
     }, 30000);
 
-    //Something to do with invites.
+    // Fetch and store guild invites
     global.invites = {};
     client.guilds.cache.forEach((g) => {
         g.fetchInvites().then((guildInvites) => {
@@ -75,7 +75,7 @@ module.exports = async (client) => {
         });
     });
 
-    //Node Status Channel Embed.
+    // Node status embed
     if (enabled.NodeStats === true) {
         let channel = client.channels.cache.get("898041845878247487");
         setInterval(async () => {

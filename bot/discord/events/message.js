@@ -1,5 +1,5 @@
 module.exports = async (client, message) => {
-    // Checks the amount of member pinged in a message.
+    // Ban members which ping 20+ users
     if (message.mentions.users.size >= 20) {
         message.member.ban({ reason: "Suspected raid. Pinging more than 20 users." });
         message.reply(`${message.member.toString()} has been banned for pinging more than 20 users`);
@@ -13,7 +13,7 @@ module.exports = async (client, message) => {
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed);
     };
 
-    // Auto reactions on suggestions channels
+    // Suggestions channels reactions
     const suggestionChannels = [
         "980595293768802327", // Staff Suggestions
         "976371313901965373" // VPN Suggestions
@@ -38,7 +38,7 @@ module.exports = async (client, message) => {
     ];
 
     if (message.channel.type === "dm") {
-        // Checks if the member is one of the members allowed. If it is, allows the member to send messages on behalf of the bot.
+        // Allow users to send messages on behalf of the bot if they are allowed
         if (dmAllowedUsers.some(member => member == message.author.id)) {
             const args = message.content.trim().split(/ +/g);
 
@@ -52,8 +52,8 @@ module.exports = async (client, message) => {
         };
     };
 
-    if (message.author.bot) return; // To stop bots from creating accounts, tickets and more.
-    if (message.channel.type === "dm") return; // Stops commands working in dms
+    if (message.author.bot) return; // Stop bots from running commands
+    if (message.channel.type === "dm") return; // Stop commands in DMs
 
     const prefix = config.DiscordBot.Prefix;
     if (!message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
@@ -101,7 +101,7 @@ module.exports = async (client, message) => {
             message.member.roles.cache.find((r) => r.id === "898041747597295667") &&
             args[0] != "sudo"
         ) {
-            // Double check the user is allowed to use this command.
+            // Double check the user is allowed to use this command
             actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone sender user ID
 
             console.log(
@@ -141,7 +141,7 @@ module.exports = async (client, message) => {
         }
     }
 
-    // After command remove all clone traces
+    // Remove all clone traces after running command
     if (actualExecutorId) {
         message.guild.member.id = actualExecutorId;
         message.author.id = actualExecutorId;
