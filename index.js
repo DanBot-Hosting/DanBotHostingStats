@@ -34,7 +34,6 @@ require("./nodestatsChecker");
 let db = require("quick.db");
 global.Discord = require("discord.js");
 
-global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
 global.moment = require("moment");
 global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID

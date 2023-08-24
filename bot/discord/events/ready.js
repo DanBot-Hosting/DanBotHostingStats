@@ -16,9 +16,8 @@ module.exports = async (client) => {
     checkNicks();
 
     console.log(chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " has logged in!"));
-    //getUsers()
 
-    //Check make sure create account channels are closed after a hour
+    // Close create account channels after a hour
     guild.channels.cache
         .filter((x) => x.parentID === "898041816367128616" && Date.now() - x.createdAt > 1800000)
         .forEach((x) => x.delete());
@@ -68,10 +67,7 @@ module.exports = async (client) => {
         });
     }, 30000);
 
-    // Voice-Channels:
-    client.pvc = new Discord.Collection();
-
-    // end of Voice-Channels
+    // Fetch and store guild invites
     global.invites = {};
     client.guilds.cache.forEach((g) => {
         g.fetchInvites().then((guildInvites) => {
@@ -79,7 +75,7 @@ module.exports = async (client) => {
         });
     });
 
-    //Node status channel embed
+    // Node status embed
     if (enabled.NodeStats === true) {
         let channel = client.channels.cache.get("898041845878247487");
         setInterval(async () => {
@@ -100,35 +96,36 @@ module.exports = async (client) => {
         let DBHGuild = client.guilds.cache.get("639477525927690240");
         let roleID1 = "898041751099539497";
         let staffCount = DBHGuild.roles.cache.get(roleID1).members.size;
+
         client.channels.cache.get("898041828870348800").edit({
             name: `Staff: ${staffCount}`,
             reason: "Staff count update",
-        });
+        }).catch((error) => {});
 
         let roleID2 = "898041757168697375";
         let memberCount = DBHGuild.roles.cache.get(roleID2).members.size;
         client.channels.cache.get("898041827561730069").edit({
             name: `Members: ${memberCount}`,
             reason: "Member count update",
-        });
+        }).catch((error) => {});
 
         let roleID3 = "898041770082959432";
         let botCount = DBHGuild.roles.cache.get(roleID3).members.size;
         client.channels.cache.get("898041830241882112").edit({
             name: `Bots: ${botCount}`,
             reason: "Bot count update",
-        });
+        }).catch((error) => {});
 
         client.channels.cache.get("898041826810949632").edit({
             name: `Total Members: ${DBHGuild.memberCount}`,
             reason: "TMembers count update",
-        });
+        }).catch((error) => {});
 
         const ticketcount = DBHGuild.channels.cache.filter((x) => x.name.endsWith("-ticket")).size;
         client.channels.cache.get("898041832569700362").edit({
             name: `Tickets: ${ticketcount}`,
             reason: "Ticket count update",
-        });
+        }).catch((error) => {});
 
         axios({
             url: config.Pterodactyl.hosturl + "/api/application/servers",
@@ -144,7 +141,7 @@ module.exports = async (client) => {
             client.channels.cache.get("898041817503760444").edit({
                 name: `Servers Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Server count update",
-            });
+            }).catch((error) => {});
         });
 
         axios({
@@ -161,12 +158,12 @@ module.exports = async (client) => {
             client.channels.cache.get("898041820309778462").edit({
                 name: `Clients Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Client count update",
-            });
+            }).catch((error) => {});
         });
 
         client.channels.cache.get("898041831495974983").edit({
             name: `Boosts: ${DBHGuild.premiumSubscriptionCount}`,
             reason: "Boosts count update",
-        });
+        }).catch((error) => {});
     }, 30000);
 };

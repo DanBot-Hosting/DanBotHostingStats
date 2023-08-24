@@ -1,6 +1,7 @@
 const cap = require("../util/cap");
 
 module.exports = async (client, message) => {
+    // Ban members which ping 20+ users
     if (message.mentions.users.size >= 20) {
         message.member.ban({ reason: "Suspected raid. Pinging more than 20 users." });
         message.reply(`${message.member.toString()} has been banned for pinging more than 20 users`);
@@ -12,10 +13,16 @@ module.exports = async (client, message) => {
             .setTimestamp(new Date());
 
         client.channels.cache.get(config.DiscordBot.oLogs).send(embed);
-    }
-    //Auto reactions on suggestions
-    if (message.channel.id === "980595293768802327" || message.channel.id === "976371313901965373") {
-        if (!message.content.includes(">")) {
+    };
+
+    // Suggestions channels reactions
+    const suggestionChannels = [
+        "980595293768802327", // Staff Suggestions
+        "976371313901965373" // VPN Suggestions
+    ];
+
+    if (suggestionChannels.some(channel => channel == message.channel.id)) {
+        if (!message.content.startsWith(">")) {
             message.react("👍");
 
             setTimeout(() => {
@@ -24,8 +31,17 @@ module.exports = async (client, message) => {
         }
     }
 
+    // Handles direct messages
+    const dmAllowedUsers = [
+        "137624084572798976", // Dan
+        "853158265466257448", // William
+        "757296951925538856", // DIBSTER
+        "459025800633647116"  // AVIXITY
+    ];
+
     if (message.channel.type === "dm") {
-        if (message.author.id === "137624084572798976" || message.author.id === "853158265466257448" || message.author.id === "757296951925538856" || message.author.id === "459025800633647116") {
+        // Allow users to send messages on behalf of the bot if they are allowed
+        if (dmAllowedUsers.some(member => member == message.author.id)) {
             const args = message.content.trim().split(/ +/g);
 
             try {
@@ -36,20 +52,25 @@ module.exports = async (client, message) => {
                 message.channel.send(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
             }
         };
-    }
+    };
 
-    if (message.author.bot) return; // to stop bots from creating accounts, tickets and more.
-    if (message.channel.type === "dm") return; //stops commands working in dms
+    if (message.author.bot) return; // Stop bots from running commands
+    if (message.channel.type === "dm") return; // Stop commands in DMs
+
     const prefix = config.DiscordBot.Prefix;
     if (!message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
+
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const commandargs = message.content.split(" ").slice(1).join(" ");
     const command = args.shift().toLowerCase();
+
     console.log(
         chalk.magenta("[DISCORD] ") +
             chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`)
     );
+
     let actualExecutorId;
+
     try {
         let blacklisted = [
             "898041849783148585", // lounge
@@ -72,27 +93,27 @@ module.exports = async (client, message) => {
         // Channel checker
         if (
             blacklisted.includes(message.channel.id) &&
-            message.member.roles.cache.find((x) => x.id === "898041751099539497") == null &&
-            message.member.roles.cache.find((x) => x.id === "898041743566594049") == null &&
+            !message.member.roles.cache.find((x) => x.id === "898041751099539497") &&
+            !message.member.roles.cache.find((x) => x.id === "898041743566594049") &&
             !(message.channel.id === "898041853096628267" && command === "info")
-        )
-            return;
+        ) return;
 
         if (
             sudo.get(message.member.id) &&
             message.member.roles.cache.find((r) => r.id === "898041747597295667") &&
             args[0] != "sudo"
         ) {
-            //Doubble check the user is deffinaly allowd to use this command
-            actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone actual sender user ID
+            // Double check the user is allowed to use this command
+            actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone sender user ID
 
             console.log(
                 chalk.magenta("[DISCORD] ") + chalk.yellow(`Command being executed with sudo by ${actualExecutorId}`)
             );
+
             let userToCopy = sudo.get(actualExecutorId);
 
-            // await message.guild.members.fetch(userToCopy);  //Cache user data
-            // await client.users.fetch(userToCopy); //Cache user data
+            // await message.guild.members.fetch(userToCopy);  // Cache user data
+            // await client.users.fetch(userToCopy); // Cache user data
 
             message.guild.member.id = userToCopy;
             message.author.id = userToCopy;
@@ -104,7 +125,7 @@ module.exports = async (client, message) => {
             command === "staff" ||
             command === "ticket"
         ) {
-            //Cooldown setting
+            // Cooldown setting
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
                 await commandFile.run(client, message, args);
@@ -122,7 +143,7 @@ module.exports = async (client, message) => {
         }
     }
 
-    //After command remove all clone traces
+    // Remove all clone traces after running command
     if (actualExecutorId) {
         message.guild.member.id = actualExecutorId;
         message.author.id = actualExecutorId;
