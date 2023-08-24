@@ -31,7 +31,7 @@ module.exports = async (client, message) => {
                 message.react("<:Yes:768256004655677451>");
             } catch(err) {
                 message.react("<:No:768256005426511912>");
-                message.channel.send(`\`\`\`${err.message}\`\`\``);
+                message.channel.send(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
             }
         };
     }
