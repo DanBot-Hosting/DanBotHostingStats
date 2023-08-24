@@ -25,8 +25,14 @@ module.exports = async (client, message) => {
     if (message.channel.type === "dm") {
         if (message.author.id === "137624084572798976" || message.author.id === "853158265466257448" || message.author.id === "757296951925538856" || message.author.id === "459025800633647116") {
             const args = message.content.trim().split(/ +/g);
-            client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
-            message.react("<:DBH_Check:1124437152625868810>");
+
+            try {
+                await client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
+                message.react("<:Yes:768256004655677451>");
+            } catch(err) {
+                message.react("<:No:768256005426511912>");
+                message.channel.send(`\`\`\`${err.message}\`\`\``);
+            }
         };
     }
 
