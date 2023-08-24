@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
         donated: 0,
     };
 
-    const serverName = message.content.split(" ").slice(3).join(" ") || "change me! (Settings -> SERVER NAME)";
+    const serverName = message.content.split(" ").slice(3).join(" ") || "Untitled Server (settings -> server name)";
     let consoleID = userData.get(message.author.id);
 
     if (consoleID == null) {
