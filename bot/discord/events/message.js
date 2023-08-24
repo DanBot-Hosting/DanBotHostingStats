@@ -28,7 +28,7 @@ module.exports = async (client, message) => {
 
             try {
                 await client.channels.cache.get(args[0]).send(message.content.split(" ").slice(1).join(" "));
-                message.react("<:Yes:768256004655677451>");
+                // message.react("<:Yes:768256004655677451>");
             } catch(err) {
                 message.channel.send(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
             }
