@@ -6,11 +6,11 @@ exports.run = async (client, message, args) => {
         if (userAccount == null) {
             message.reply(
                 "Oh no, Seems like you do not have an account linked to your discord ID.\n" +
-                    "If you have not made an account yet please check out `" +
-                    config.DiscordBot.Prefix +
-                    "user new` to create an account \nIf you already have an account link it using `" +
-                    config.DiscordBot.Prefix +
-                    "user link`"
+                "If you have not made an account yet please check out `" +
+                config.DiscordBot.Prefix +
+                "user new` to create an account \nIf you already have an account link it using `" +
+                config.DiscordBot.Prefix +
+                "user link`"
             );
             return;
         }
@@ -38,55 +38,46 @@ exports.run = async (client, message, args) => {
             const preoutput = response.data.attributes.relationships.servers.data;
             arr.push(...preoutput);
 
-            setTimeout(async () => {
-                setTimeout(() => {
-                    const DonoNodes = [34, 31, 33, 35, 39];
-                    const clean = arr.map((Server) => {
-                        if (DonoNodes.includes(Server.attributes.node)) {
-                            return (
-                                ":money_with_wings: Server Name: `" +
-                                Server.attributes.name +
-                                "`, Server ID: `" +
-                                Server.attributes.identifier
-                            );
-                        } else {
-                            return (
-                                ":free: Server Name: `" +
-                                Server.attributes.name +
-                                "`, Server ID: `" +
-                                Server.attributes.identifier
-                            );
-                        }
-                    });
+            const donoNodes = [34, 31, 33, 35, 39];
+            const clean = arr.map((server) => {
+                const prefix = donoNodes.includes(server.attributes.node) ? ":money_with_wings: " : ":free: ";
 
-                    if (clean.length == 0) {
-                        message.reply("You don't have any servers unfortunately.");
-                    } else if (clean.length > 70) {
-                        message.reply("You have way too many servers to display!");
-                    } else if (clean.length > 20) {
-                        const ServerListEmbed = new Discord.MessageEmbed();
-                        ServerListEmbed.setDescription(
-                            "Your server list is too long so here is a abstracted version!\nYou have a total of " +
-                                arr.length +
-                                " servers!"
-                        );
-                        ServerListEmbed.addField(
-                            "__**Your Servers:**__",
-                            arr.map((e) => "`" + e.attributes.identifier + "`")
-                        );
-                        message.reply(ServerListEmbed);
-                    } else {
-                        const ServerListEmbed = new Discord.MessageEmbed();
-                        ServerListEmbed.setDescription("You have a total of " + arr.length + " servers.");
-                        ServerListEmbed.addField("__**Your Servers:**__", clean);
-                        message.reply(ServerListEmbed);
-                    }
+                return (
+                    prefix +
+                    "Server Name: `" +
+                    server.attributes.name +
+                    "`, Server ID: `" +
+                    server.attributes.identifier +
+                    "`"
+                );
+            });
 
-                    loadingMsg.delete();
-                }, 500);
-            }, 5000);
+            if (clean.length == 0) {
+                message.reply("You don't have any servers unfortunately.");
+            } else if (clean.length > 70) {
+                message.reply("You have way too many servers to display!");
+            } else if (clean.length > 20) {
+                const serverListEmbed = new Discord.MessageEmbed();
+                serverListEmbed.setDescription(
+                    "Your server list is too long so here is a abstracted version!\nYou have a total of " +
+                    arr.length +
+                    " servers!"
+                );
+                serverListEmbed.addField(
+                    "__**Your Servers:**__",
+                    arr.map((e) => "`" + e.attributes.identifier + "`")
+                );
+                message.reply(serverListEmbed);
+            } else {
+                const serverListEmbed = new Discord.MessageEmbed();
+                serverListEmbed.setDescription("You have a total of " + arr.length + " servers.");
+                serverListEmbed.addField("__**Your Servers:**__", clean);
+                message.reply(serverListEmbed);
+            }
+
+            loadingMsg.delete();
         });
-    } catch (Error) {
-        console.log(Error);
+    } catch (error) {
+        console.log(error);
     }
 };
