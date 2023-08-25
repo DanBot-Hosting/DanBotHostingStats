@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
     let user = userPrem.fetch(userid);
     if (!user) user = {};
 
-    message.reply(`Loading servers for <\u200B@${userid}>...`);
+    message.reply("Loading servers...");
 
     axios({
         url:
