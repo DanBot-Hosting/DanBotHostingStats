@@ -2,11 +2,14 @@ const axios = require("axios");
 const premiumNodes = [31, 33, 34, 35, 39];
 
 exports.run = async (client, message, args) => {
-    message.reply("Loading servers...");
     var arr = [];
     let userid = args[1]?.match(/[0-9]{17,19}/)?.[0] || message.author.id;
     let user = userPrem.fetch(userid);
     if (!user) user = {};
+
+    if(!userData.get(userid).consoleID) return message.reply(`<@\u200B${userid}> has no panel account linked!`);
+
+    message.reply("Loading servers...");
 
     axios({
         url:
