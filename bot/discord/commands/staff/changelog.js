@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 exports.run = (client, message, args) => {
     // Check if user has the staff role
     if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
