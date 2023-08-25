@@ -30,13 +30,13 @@ exports.run = async (client, message, args) => {
             setTimeout(() => {
                 const embed = new Discord.MessageEmbed().setDescription(
                     [
-                        `> Total servers: \`${arr.length}\``,
-                        `- \`${arr.length - premiumServers}\` are **Free servers**`,
-                        `- \`${premiumServers}\` are **Premium servers**`,
+                        `**Total**: \`${arr.length}\` server(s)`,
+                        `:free: \`${arr.length - premiumServers}\` server(s)`,
+                        `:money_with_wings: \`${premiumServers}\` server(s)`,
                     ].join("\n")
                 );
-                message.reply(embed);
+                message.edit(embed);
             }, 1000);
         })
-        .catch(() => {});
+        .catch(() => message.edit("<:No:768256005426511912> An error occurred while loading servers."));
 };
