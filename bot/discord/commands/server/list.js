@@ -1,7 +1,12 @@
 const axios = require("axios");
 exports.run = async (client, message, args) => {
     try {
-        let userAccount = userData.get(message.author.id);
+        let userID = message.author.id;
+
+        if (message.member.roles.cache.find((r) => r.id === "898041747597295667"))
+            userID = args[1] || message.author.id; // Allow devs to lookup a users server list;
+
+        const userAccount = userData.get(userID);
 
         if (userAccount == null) {
             message.reply(
@@ -19,10 +24,6 @@ exports.run = async (client, message, args) => {
 
         //List servers
         var arr = [];
-        let userID = message.author.id;
-
-        if (message.member.roles.cache.find((r) => r.id === "898041747597295667"))
-            userID = args[1] || message.author.id; // Allow devs to lookup a users server list;
 
         axios({
             url: "https://panel.danbot.host/api/application/users/" + userAccount.consoleID + "?include=servers",
