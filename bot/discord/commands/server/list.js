@@ -47,7 +47,7 @@ exports.run = async (client, message, args) => {
                                 ":money_with_wings: Server Name: `" +
                                 Server.attributes.name +
                                 "`, Server ID: `" +
-                                Server.attributes.identifier,
+                                Server.attributes.identifier +
                                 "`"
                             );
                         } else {
@@ -55,7 +55,7 @@ exports.run = async (client, message, args) => {
                                 ":free: Server Name: `" +
                                 Server.attributes.name +
                                 "`, Server ID: `" +
-                                Server.attributes.identifier,
+                                Server.attributes.identifier +
                                 "`"
                             );
                         }
