@@ -7,7 +7,8 @@ exports.run = async (client, message, args) => {
     let user = userPrem.fetch(userid);
     if (!user) user = {};
 
-    if(!userData.get(userid).consoleID) return message.reply(`<@\u200B${userid}> has no panel account linked!`);
+    message.channel.send(`Console ID: ${userData.get(userid).consoleID}`);
+    if(userData.get(userid).consoleID == null) return message.reply("That user has no panel account linked!");
 
     message.reply("Loading servers...");
 
