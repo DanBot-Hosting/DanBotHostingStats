@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
             setTimeout(() => {
                 const embed = new Discord.MessageEmbed().setDescription(
                     [
-                        `You own ${arr.length} server${arr.length === 1 ? "" : "s"}.\n`,
+                        `**<@${userid}> owns ${arr.length} server${arr.length === 1 ? "" : "s"}.**\n`,
                         `:free: ${arr.length - premiumServers} free server${arr.length - premiumServers === 1 ? "" : "s"}`,
                         `:money_with_wings: ${premiumServers} premium server${premiumServers === 1 ? "" : "s"}`,
                     ].join("\n")
