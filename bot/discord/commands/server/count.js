@@ -30,9 +30,9 @@ exports.run = async (client, message, args) => {
             setTimeout(() => {
                 const embed = new Discord.MessageEmbed().setDescription(
                     [
-                        `**Total**: \`${arr.length}\` server(s)`,
-                        `:free: \`${arr.length - premiumServers}\` server(s)`,
-                        `:money_with_wings: \`${premiumServers}\` server(s)`,
+                        `You own ${arr.length} server${arr.length === 1 ? "" : "s"}.\n`,
+                        `:free: ${arr.length - premiumServers} free server${arr.length - premiumServers === 1 ? "" : "s"}`,
+                        `:money_with_wings: ${premiumServers} premium server${premiumServers === 1 ? "" : "s"}`,
                     ].join("\n")
                 );
                 message.reply(embed);
