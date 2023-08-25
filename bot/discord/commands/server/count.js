@@ -2,7 +2,7 @@ const axios = require("axios");
 const premiumNodes = [31, 33, 34, 35, 39];
 
 exports.run = async (client, message, args) => {
-    message.reply("Loading servers...");
+    const msg = message.reply("Loading servers...");
     var arr = [];
     let userid = args[1]?.match(/[0-9]{17,19}/)?.[0] || message.author.id;
     let user = userPrem.fetch(userid);
@@ -35,8 +35,8 @@ exports.run = async (client, message, args) => {
                         `:money_with_wings: \`${premiumServers}\` server(s)`,
                     ].join("\n")
                 );
-                message.edit(embed);
+                msg.edit(embed);
             }, 1000);
         })
-        .catch(() => message.edit("<:No:768256005426511912> An error occurred while loading servers."));
+        .catch(() => msg.edit("<:No:768256005426511912> An error occurred while loading servers."));
 };
