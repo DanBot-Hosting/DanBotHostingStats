@@ -44,7 +44,7 @@ exports.run = async (client, message, args) => {
                     const clean = arr.map((Server) => {
                         if (DonoNodes.includes(Server.attributes.node)) {
                             return (
-                                "[PREMIUM] Server Name: `" +
+                                ":money_with_wings: Server Name: `" +
                                 Server.attributes.name +
                                 "`, Server ID: `" +
                                 Server.attributes.identifier +
@@ -52,7 +52,7 @@ exports.run = async (client, message, args) => {
                             );
                         } else {
                             return (
-                                "Server Name: `" +
+                                ":free: Server Name: `" +
                                 Server.attributes.name +
                                 "`, Server ID: `" +
                                 Server.attributes.identifier +
