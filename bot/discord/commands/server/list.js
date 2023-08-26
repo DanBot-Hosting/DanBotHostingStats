@@ -52,8 +52,8 @@ exports.run = async (client, message, args) => {
             message.reply("You have too many servers to display!");
         } else if (clean.length > 20) {
             const serverListEmbed = new Discord.MessageEmbed()
-                .setTitle("Server List (shortened)")
-                .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``).join("\n"));
+                .setTitle("Shortened Server List")
+                .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``).join(", "));
             message.reply(serverListEmbed);
         } else {
             const serverListEmbed = new Discord.MessageEmbed()
