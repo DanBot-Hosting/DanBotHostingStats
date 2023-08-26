@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
         const clean = arr.map((server) => {
             const emoji = donoNodes.includes(server.attributes.node) ? ":money_with_wings:" : ":free:";
 
-            return `${emoji} **${server.attributes.name}** (\`${server.attributes.identifier}\`)`;
+            return `${emoji} [\`${server.attributes.identifier}\`] **${server.attributes.name}**`;
         });
 
         if (clean.length == 0) {
