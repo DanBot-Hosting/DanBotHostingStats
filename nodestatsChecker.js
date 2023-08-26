@@ -171,14 +171,12 @@ if (enabled.nodestatsChecker === true) {
                             "Content-Type": "application/json",
                             Accept: "Application/vnd.pterodactyl.v1+json",
                         },
-                    })
-                        .then((response) => {
+                    }).then((response) => {
                             const servercount = response.data.data.filter((m) => m.attributes.assigned == true).length;
                             nodeServers.set(node, {
                                 servers: servercount,
                             });
-                        })
-                        .catch((err) => {});
+                    }).catch((err) => {});
                 }, 2000);
             }, 2000);
         }
