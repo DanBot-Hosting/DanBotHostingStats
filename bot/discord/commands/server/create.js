@@ -1,6 +1,8 @@
 const serverCreateSettings = require("../../../../createData");
 exports.run = async (client, message, args) => {
-    //return message.reply('Server creation is disabled until further notice! Please try again later');
+
+    return message.reply("This command is temporarily disabled.");
+
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
