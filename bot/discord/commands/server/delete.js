@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
 
         args[1] = args[1].replace("https://panel.danbot.host/server/", "").match(/[0-9a-z]+/i)[0];
 
-        message.reply("Checking server `" + args[1] + "`\nPlease allow me 2 seconds to fetch this.").then((msg) => {
+        message.reply("Please wait while the server `" + args[1] + "` is checked.").then((msg) => {
             axios({
                 url:
                     "https://panel.danbot.host" +
@@ -102,7 +102,7 @@ exports.run = async (client, message, args) => {
                                         collector.stop();
                                     })
                                     .catch((err) => {
-                                        msg.edit("Error with the node. Please try again later");
+                                        msg.edit("An error occurred with the node. Please try again later.");
                                         collector.stop();
                                     });
                             } else {
@@ -112,11 +112,11 @@ exports.run = async (client, message, args) => {
                             }
                         });
                     } else {
-                        message.reply("You do not own that server. You can't delete it.");
+                        msg.edit("You do not own that server so you cannot delete it.");
                     }
                 }
             })
-            .catch(() => message.reply("An error occurred while fetching that server."))
+            .catch(() => msg.edit("An error occurred while fetching that server."))
         });
     }
 };
