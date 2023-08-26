@@ -54,13 +54,13 @@ exports.run = async (client, message, args) => {
             } else if (clean.length > 70) {
                 message.reply("You have too many servers to display!");
             } else if (clean.length > 20) {
-                const serverListEmbed = new Discord.MessageEmbed();
+                const serverListEmbed = new Discord.MessageEmbed()
                     .setDescription(`You have too many servers to display, here is a shortened version.\nYou have ${arr.length} servers.`)
-                    .addField("Your Servers", arr.map((i) => `\`${i.attributes.identifier}\``).join("\n"));
+                    .addField("Your Servers", arr.map((i) => `\`${i.attributes.identifier}\``));
                 message.reply(serverListEmbed);
             } else {
-                const serverListEmbed = new Discord.MessageEmbed();
-                    .setDescription(`You have ${arr.length} servers.`);
+                const serverListEmbed = new Discord.MessageEmbed()
+                    .setDescription(`You have ${arr.length} servers.`)
                     .addField("Your Servers", clean);
                 message.reply(serverListEmbed);
             }
