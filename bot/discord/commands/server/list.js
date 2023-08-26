@@ -5,7 +5,7 @@ exports.run = async (client, message, args) => {
     let userID = message.author.id;
 
     // Allow developers to lookup a user's server list
-    if (message.member.roles.cache.find((r) => r.id === "898041747597295667") || message.author.id === "853158265466257448") userID = args[1] || message.author.id;
+    if (message.member.roles.cache.find((r) => r.id === "898041747597295667")) userID = args[1] || message.author.id;
 
     const userAccount = userData.get(userID);
 
