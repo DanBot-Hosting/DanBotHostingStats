@@ -1,4 +1,6 @@
 const axios = require("axios");
+const Discord = require("discord.js");
+
 exports.run = async (client, message, args) => {
     try {
         let userID = message.author.id;
@@ -40,6 +42,7 @@ exports.run = async (client, message, args) => {
             arr.push(...preoutput);
 
             const donoNodes = [34, 31, 33, 35, 39];
+
             const clean = arr.map((server) => {
                 const emoji = donoNodes.includes(server.attributes.node) ? ":money_with_wings:" : ":free:";
 
@@ -47,12 +50,12 @@ exports.run = async (client, message, args) => {
             });
 
             if (clean.length == 0) {
-                message.reply("You don't have any servers unfortunately.");
+                message.reply("You do not have any servers.");
             } else if (clean.length > 70) {
-                message.reply("You too many servers to display!");
+                message.reply("You have too many servers to display!");
             } else if (clean.length > 20) {
                 const serverListEmbed = new Discord.MessageEmbed();
-                    .setDescription(`You have too many servers to display, here is a shortened list.\nYou have ${arr.length} servers.`)
+                    .setDescription(`You have too many servers to display, here is a shortened version.\nYou have ${arr.length} servers.`)
                     .addField("Your Servers", arr.map((i) => `\`${i.attributes.identifier}\``));
                 message.reply(serverListEmbed);
             } else {
