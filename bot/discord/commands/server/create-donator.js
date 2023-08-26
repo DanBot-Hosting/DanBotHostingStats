@@ -2,7 +2,9 @@ const serverCreateSettings_Prem = require("../../../../createData_Prem");
 const axios = require("axios");
 
 exports.run = async (client, message, args) => {
-    return message.reply("This command is temporarily disabled.");
+
+    //return message.reply("This command is temporarily disabled.");
+
     let userP = userPrem.fetch(message.author.id) || {
         used: 0,
         donated: 0,
