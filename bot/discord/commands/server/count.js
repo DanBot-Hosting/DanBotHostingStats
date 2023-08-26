@@ -21,21 +21,17 @@ exports.run = async (client, message, args) => {
             "Content-Type": "application/json",
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
+    }).then((response) => {
+        const preoutput = response.data.attributes.relationships.servers.data;
+
+        arr.push(...preoutput);
+
+        const premiumServers = arr.filter((x) => premiumNodes.includes(x.attributes.node)).length;
+        setTimeout(() => {
+            const embed = new Discord.MessageEmbed()
+                .setDescription(`:free: ${arr.length - premiumServers} free server${arr.length - premiumServers === 1 ? "" : "s"}\n:money_with_wings: ${premiumServers} premium server${premiumServers === 1 ? "" : "s"}`);
+            message.reply(embed);
+        }, 1000);
     })
-        .then((response) => {
-            const preoutput = response.data.attributes.relationships.servers.data;
-            arr.push(...preoutput);
-            const premiumServers = arr.filter((x) => premiumNodes.includes(x.attributes.node)).length;
-            setTimeout(() => {
-                const embed = new Discord.MessageEmbed().setDescription(
-                    [
-                        `**<@${userid}> owns ${arr.length} server${arr.length === 1 ? "" : "s"}.**\n`,
-                        `:free: ${arr.length - premiumServers} free server${arr.length - premiumServers === 1 ? "" : "s"}`,
-                        `:money_with_wings: ${premiumServers} premium server${premiumServers === 1 ? "" : "s"}`,
-                    ].join("\n")
-                );
-                message.reply(embed);
-            }, 1000);
-        })
-        .catch(() => message.reply("An error occurred while loading servers."));
+    .catch(() => message.reply("An error occurred while loading servers."));
 };
