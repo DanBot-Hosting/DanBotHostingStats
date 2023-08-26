@@ -142,7 +142,7 @@ module.exports = async (client) => {
                 name: `Servers Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Server count update",
             }).catch((error) => {});
-        });
+        }).catch((error) => {});
 
         axios({
             url: config.Pterodactyl.hosturl + "/api/application/users",
@@ -159,7 +159,7 @@ module.exports = async (client) => {
                 name: `Clients Hosting: ${response.data.meta.pagination.total}`,
                 reason: "Client count update",
             }).catch((error) => {});
-        });
+        }).catch((error) => {});
 
         client.channels.cache.get("898041831495974983").edit({
             name: `Boosts: ${DBHGuild.premiumSubscriptionCount}`,
