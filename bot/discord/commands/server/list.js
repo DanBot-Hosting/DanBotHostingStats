@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
 
         const userAccount = userData.get(userID);
 
-        if (userAccount == null) {
+        if (userAccount == null || userAccount.consoleID == null) {
             message.reply(
                 "You do not have an panel account linked to your Discord account.\n" +
                 "If you have not made an account yet please check out `" +
