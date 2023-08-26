@@ -3,5 +3,5 @@ exports.run = async (client, message, args) => {
         return message.reply("Only beta testers can use this command!");
     }
 
-    return message.reply("Information on accessing the DBH VPN can be found here: https://discord.com/channels/639477525927690240/898354771927400538/1138808051055476896");
+    return message.reply("Information on accessing the DBH VPN can be found here: https://discord.com/channels/639477525927690240/898041876219830442/1144890259633602570");
 };
