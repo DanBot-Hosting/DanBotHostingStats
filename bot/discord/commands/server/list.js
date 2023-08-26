@@ -22,8 +22,6 @@ exports.run = async (client, message, args) => {
             return;
         }
 
-        const loadingMsg = await message.reply("Loading servers...");
-
         // List servers
         var arr = [];
 
@@ -46,7 +44,7 @@ exports.run = async (client, message, args) => {
             const clean = arr.map((server) => {
                 const emoji = donoNodes.includes(server.attributes.node) ? ":money_with_wings:" : ":free:";
 
-                return `${emoji} ${server.attributes.name} (\`${server.attributes.identifier}\`)`;
+                return `${emoji} **${server.attributes.name}** (\`${server.attributes.identifier}\`)`;
             });
 
             if (clean.length == 0) {
@@ -55,17 +53,17 @@ exports.run = async (client, message, args) => {
                 message.reply("You have too many servers to display!");
             } else if (clean.length > 20) {
                 const serverListEmbed = new Discord.MessageEmbed()
-                    .setDescription(`You have too many servers to display, here is a shortened version.\nYou have ${arr.length} servers.`)
-                    .addField("Your Servers", arr.map((i) => `\`${i.attributes.identifier}\``));
+                    .setTitle("Server List (shortened)")
+                    .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``))
+                    .setFooter(`${arr.length} servers`);
                 message.reply(serverListEmbed);
             } else {
                 const serverListEmbed = new Discord.MessageEmbed()
-                    .setDescription(`You have ${arr.length} servers.`)
-                    .addField("Your Servers", clean);
+                    .setTitle("Server List")
+                    .setDescription(clean)
+                    .setFooter(`${arr.length} servers`);
                 message.reply(serverListEmbed);
             }
-
-            loadingMsg.delete();
         });
     } catch (error) {
         console.log(error);
