@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
                     "Content-Type": "application/json",
                     Accept: "Application/vnd.pterodactyl.v1+json",
                 },
-            }).then((response) => {
+            }).then(async (response) => {
                 const preoutput = response.data.attributes.relationships.servers.data;
                 const output = preoutput.find((srv) => (srv.attributes ? srv.attributes.identifier == args[1] : false));
 
@@ -56,6 +56,7 @@ exports.run = async (client, message, args) => {
                                 output.attributes.name.split("@").join("@​") + // Uses an invisible character (U+200B) after the @
                                 "`?\nPlease type `confirm` to delete this server. You have 1 minute until this prompt will expire.\n\n**You can not restore the server once it has been deleted and/or its !files**"
                         );
+
                         const collector = await message.channel.createMessageCollector(
                             (m) => m.author.id === message.author.id,
                             {
