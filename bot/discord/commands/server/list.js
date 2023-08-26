@@ -54,14 +54,12 @@ exports.run = async (client, message, args) => {
             } else if (clean.length > 20) {
                 const serverListEmbed = new Discord.MessageEmbed()
                     .setTitle("Server List (shortened)")
-                    .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``))
-                    .setFooter(`${arr.length} servers`);
+                    .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``));
                 message.reply(serverListEmbed);
             } else {
                 const serverListEmbed = new Discord.MessageEmbed()
                     .setTitle("Server List")
-                    .setDescription(clean)
-                    .setFooter(`${arr.length} servers`);
+                    .setDescription(clean);
                 message.reply(serverListEmbed);
             }
         });
