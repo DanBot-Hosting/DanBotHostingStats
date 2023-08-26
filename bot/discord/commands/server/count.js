@@ -7,8 +7,6 @@ exports.run = async (client, message, args) => {
     let user = userPrem.fetch(userid);
     if (!user) user = {};
 
-    message.reply("Loading servers...");
-
     axios({
         url:
             "https://panel.danbot.host" +
@@ -39,5 +37,5 @@ exports.run = async (client, message, args) => {
                 message.reply(embed);
             }, 1000);
         })
-        .catch(() => message.reply("<:No:768256005426511912> An error occurred while loading servers."));
+        .catch(() => message.reply("An error occurred while loading servers."));
 };
