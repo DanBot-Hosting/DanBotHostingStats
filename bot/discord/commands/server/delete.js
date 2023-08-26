@@ -102,7 +102,7 @@ exports.run = async (client, message, args) => {
                                         collector.stop();
                                     })
                                     .catch((err) => {
-                                        msg.edit("An error occurred with the node. Please try again later.");
+                                        msg.edit("An error occurred with the Panel. Please try again later.");
                                         collector.stop();
                                     });
                             } else {
