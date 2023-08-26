@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
         let userID = message.author.id;
 
         // Allow developers to lookup a user's server list
-        if (message.member.roles.cache.find((r) => r.id === "898041747597295667")) userID = args[1] || message.author.id;
+        if (message.member.roles.cache.find((r) => r.id === "898041747597295667") || message.author.id === "853158265466257448") userID = args[1] || message.author.id;
 
         const userAccount = userData.get(userID);
 
@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
             } else if (clean.length > 20) {
                 const serverListEmbed = new Discord.MessageEmbed()
                     .setTitle("Server List (shortened)")
-                    .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``));
+                    .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``).join("\n"));
                 message.reply(serverListEmbed);
             } else {
                 const serverListEmbed = new Discord.MessageEmbed()
