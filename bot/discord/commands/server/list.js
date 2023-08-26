@@ -38,13 +38,16 @@ exports.run = async (client, message, args) => {
         const preoutput = response.data.attributes.relationships.servers.data;
         arr.push(...preoutput);
 
+        const format = (server) => {
+            return arr.length > 20
+                ? `\`${server.attributes.identifier}\``
+                : `**${server.attributes.name}** (ID: \`${server.attributes.identifier}\`)`;
+        };
+
         const donoNodes = [34, 31, 33, 35, 39];
 
-        const clean = arr.map((server) => {
-            const emoji = donoNodes.includes(server.attributes.node) ? ":money_with_wings:" : ":free:";
-
-            return `${emoji} **${server.attributes.name}** (ID: \`${server.attributes.identifier}\`)`;
-        });
+        const freeServers = arr.filter((server) => !donoNodes.includes(server.attributes.node)).map(format);
+        const donoServers = arr.filter((server) => donoNodes.includes(server.attributes.node)).map(format);
 
         if (clean.length == 0) {
             message.reply(`${userID === message.author.id ? "You do" : "That user does"} not have any servers.`);
@@ -52,15 +55,29 @@ exports.run = async (client, message, args) => {
             message.reply(`${userID === message.author.id ? "You have" : "That user has"} too many servers to display!`);
         } else if (clean.length > 20) {
             const serverListEmbed = new Discord.MessageEmbed()
-                .setTitle(`Server List (${arr.length})`)
-                .setDescription(arr.map((i) => `\`${i.attributes.identifier}\``).join(", "));
+                .setTitle(`Server List (${arr.length})`);
+
+            if (freeServers.length > 0) {
+                serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join(", "));
+            };
+            if (donoServers.length > 0) {
+                serverListEmbed.addField(`:money_with_wings: Dono (${donoServers.length})`, donoServers.join(", "));
+            };
+
             message.reply(serverListEmbed);
         } else {
             const serverListEmbed = new Discord.MessageEmbed()
-                .setTitle(`Server List (${arr.length})`)
-                .setDescription(clean);
+                .setTitle(`Server List (${arr.length})`);
+
+            if (freeServers.length > 0) {
+                serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join("\n"));
+            };
+            if (donoServers.length > 0) {
+                serverListEmbed.addField(`:money_with_wings: Dono (${donoServers.length})`, donoServers.join("\n"));
+            };
+
             message.reply(serverListEmbed);
         }
     })
-    .catch(() => message.reply("An error occurred while loading servers."));
+        .catch(() => message.reply("An error occurred while loading servers."));
 };
