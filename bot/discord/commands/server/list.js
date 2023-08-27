@@ -53,18 +53,6 @@ exports.run = async (client, message, args) => {
             message.reply(`${userID === message.author.id ? "You do" : "That user does"} not have any servers.`);
         } else if (clean.length > 70) {
             message.reply(`${userID === message.author.id ? "You have" : "That user has"} too many servers to display!`);
-        } else if (clean.length > 20) {
-            const serverListEmbed = new Discord.MessageEmbed()
-                .setTitle(`Server List (${arr.length})`);
-
-            if (freeServers.length > 0) {
-                serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join(", "));
-            };
-            if (donoServers.length > 0) {
-                serverListEmbed.addField(`:money_with_wings: Dono (${donoServers.length})`, donoServers.join(", "));
-            };
-
-            message.reply(serverListEmbed);
         } else {
             const serverListEmbed = new Discord.MessageEmbed()
                 .setTitle(`Server List (${arr.length})`);
