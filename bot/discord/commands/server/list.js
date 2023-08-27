@@ -10,15 +10,11 @@ exports.run = async (client, message, args) => {
     const userAccount = userData.get(userID);
 
     if (userAccount == null || userAccount.consoleID == null) {
-        message.reply(
-            "You do not have an panel account linked to your Discord account.\n" +
-            "If you have not made an account yet please check out `" +
-            config.DiscordBot.Prefix +
-            "user new` to create an account.\nIf you already have an account link it using `" +
-            config.DiscordBot.Prefix +
-            "user link`"
-        );
-        return;
+        if(userID === message.author.id) {
+            return message.reply(`You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`)
+        } else {
+            return message.reply("That user does not have a panel account linked.");
+        }
     }
 
     // List servers
@@ -57,12 +53,8 @@ exports.run = async (client, message, args) => {
             const serverListEmbed = new Discord.MessageEmbed()
                 .setTitle(`Server List (${arr.length})`);
 
-            if (freeServers.length > 0) {
-                serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join("\n"));
-            };
-            if (donoServers.length > 0) {
-                serverListEmbed.addField(`:money_with_wings: Dono (${donoServers.length})`, donoServers.join("\n"));
-            };
+            if (freeServers.length > 0) serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join("\n"));
+            if (donoServers.length > 0) serverListEmbed.addField(`:money_with_wings: Premium (${donoServers.length})`, donoServers.join("\n"));
 
             message.reply(serverListEmbed);
         }
