@@ -2,6 +2,7 @@ const axios = require("axios");
 const Discord = require("discord.js");
 
 exports.run = async (client, message, args) => {
+    let user = message.author;
     let userID = message.author.id;
 
     // Allow developers to lookup a user's server list
@@ -15,6 +16,10 @@ exports.run = async (client, message, args) => {
         } else {
             return message.reply("That user does not have a panel account linked.");
         }
+    }
+
+    if (userID !== message.author.id) {
+        user = client.users.cache.get(userID);
     }
 
     // List servers
@@ -53,7 +58,7 @@ exports.run = async (client, message, args) => {
             const serverListEmbed = new Discord.MessageEmbed()
                 .setTitle(`Server List (${arr.length})`);
 
-            if (userID !== message.author.id) serverListEmbed.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: "png", dynamic: true }), `https://discord.com/users/${message.author.id}`);
+            if (userID !== message.author.id) serverListEmbed.setAuthor(user.tag, user.displayAvatarURL({ format: "png", dynamic: true }), `https://discord.com/users/${user.id}`);
             if (freeServers.length > 0) serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join(", "));
             if (donoServers.length > 0) serverListEmbed.addField(`:money_with_wings: Premium (${donoServers.length})`, donoServers.join(", "));
 
@@ -62,7 +67,7 @@ exports.run = async (client, message, args) => {
             const serverListEmbed = new Discord.MessageEmbed()
                 .setTitle(`Server List (${arr.length})`);
 
-            if (userID !== message.author.id) serverListEmbed.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: "png", dynamic: true }), `https://discord.com/users/${message.author.id}`);
+            if (userID !== message.author.id) serverListEmbed.setAuthor(user.tag, user.displayAvatarURL({ format: "png", dynamic: true }), `https://discord.com/users/${user.id}`);
             if (freeServers.length > 0) serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join("\n"));
             if (donoServers.length > 0) serverListEmbed.addField(`:money_with_wings: Premium (${donoServers.length})`, donoServers.join("\n"));
 
