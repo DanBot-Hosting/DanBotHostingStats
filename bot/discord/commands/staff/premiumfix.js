@@ -3,12 +3,13 @@ const premiumNodes = [31, 33, 34, 35, 39];
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
 
-    if (!args[1]) {
+    let selectedUser = message.client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
+
+    selectedUser = await selectedUser;
+
+    if (!args[1] || !selectedUser) {
         return message.reply("Please specify a user!");
     } else {
-        let selectedUser = message.client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
-
-        selectedUser = await selectedUser;
         const userAccount = userData.get(selectedUser.id);
 
         if (userAccount == null || userAccount.consoleID == null) {
