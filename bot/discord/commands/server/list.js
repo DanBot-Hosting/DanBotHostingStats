@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
     const userAccount = userData.get(userID);
 
     if (userAccount == null || userAccount.consoleID == null) {
-        if(userID === message.author.id) {
+        if (userID === message.author.id) {
             return message.reply(`You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`)
         } else {
             return message.reply("That user does not have a panel account linked.");
@@ -53,6 +53,7 @@ exports.run = async (client, message, args) => {
             const serverListEmbed = new Discord.MessageEmbed()
                 .setTitle(`Server List (${arr.length})`);
 
+            if (userID !== message.author.id) serverListEmbed.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: "png", dynamic: true }), `https://discord.com/users/${message.author.id}`);
             if (freeServers.length > 0) serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join(", "));
             if (donoServers.length > 0) serverListEmbed.addField(`:money_with_wings: Premium (${donoServers.length})`, donoServers.join(", "));
 
@@ -61,6 +62,7 @@ exports.run = async (client, message, args) => {
             const serverListEmbed = new Discord.MessageEmbed()
                 .setTitle(`Server List (${arr.length})`);
 
+            if (userID !== message.author.id) serverListEmbed.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: "png", dynamic: true }), `https://discord.com/users/${message.author.id}`);
             if (freeServers.length > 0) serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join("\n"));
             if (donoServers.length > 0) serverListEmbed.addField(`:money_with_wings: Premium (${donoServers.length})`, donoServers.join("\n"));
 
