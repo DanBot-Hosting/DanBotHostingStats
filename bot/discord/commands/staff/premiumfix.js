@@ -3,8 +3,16 @@ const premiumNodes = [31, 33, 34, 35, 39];
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
 
+    const userAccount = userData.get(userID);
+
     if (!args[1]) {
         return message.reply("Please specify a user!");
+    } else if (userAccount == null || userAccount.consoleID == null) {
+        if (userID === message.author.id) {
+            return message.reply(`You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`)
+        } else {
+            return message.reply("That user does not have a panel account linked.");
+        }
     } else {
         const replyMsg = await message.reply("Starting calculation...");
 
