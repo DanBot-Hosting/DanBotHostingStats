@@ -59,5 +59,8 @@ exports.run = async (client, message, args) => {
             message.reply(serverListEmbed);
         }
     })
-        .catch(() => message.reply("An error occurred while loading servers."));
+        .catch((error) => {
+            console.log(error);
+            message.reply("An error occurred while loading servers.");
+        });
 };
