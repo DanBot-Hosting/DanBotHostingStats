@@ -49,9 +49,9 @@ exports.run = async (client, message, args) => {
 
         if (actualPremiumServersUsed != storedPremiumServersUsed) {
             userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
-            replyMsg.edit(`${selectedUser.user.tag}'s premium server count has been fixed!`);
+            replyMsg.edit(`**${selectedUser.user.username}**'s premium server count has been fixed!`);
         } else {
-            replyMsg.edit(`${selectedUser.user.tag} has the correct premium server count!`);
+            replyMsg.edit(`**${selectedUser.user.username}** has the correct premium server count!`);
         }
     }
 };
