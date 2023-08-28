@@ -53,14 +53,10 @@ exports.run = async (client, message, args) => {
             const serverListEmbed = new Discord.MessageEmbed()
                 .setTitle(`Server List (${arr.length})`);
 
-            if (freeServers.length > 0) serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join("\n"));
-            if (donoServers.length > 0) serverListEmbed.addField(`:money_with_wings: Premium (${donoServers.length})`, donoServers.join("\n"));
+            if (freeServers.length > 0) serverListEmbed.addField(`:free: Free (${freeServers.length})`, freeServers.join(", "));
+            if (donoServers.length > 0) serverListEmbed.addField(`:money_with_wings: Premium (${donoServers.length})`, donoServers.join(", "));
 
             message.reply(serverListEmbed);
         }
-    })
-        .catch((error) => {
-            console.log(error);
-            message.reply("An error occurred while loading servers.");
-        });
+    }).catch(() => message.reply("An error occurred while loading servers."));
 };
