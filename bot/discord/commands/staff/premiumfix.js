@@ -6,12 +6,7 @@ exports.run = async (client, message, args) => {
     if (!args[1]) {
         return message.reply("Please specify a user!");
     } else {
-        let selectedUser =
-            message.mentions.users.first() ||
-            message.guild.members.fetch(args[1]) ||
-            message.client.users.cache.get(
-                args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]
-            );
+        let selectedUser = message.client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
 
         selectedUser = await selectedUser;
         const userAccount = userData.get(selectedUser.id);
