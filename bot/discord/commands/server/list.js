@@ -45,9 +45,9 @@ exports.run = async (client, message, args) => {
         const freeServers = arr.filter((server) => !donoNodes.includes(server.attributes.node)).map(format);
         const donoServers = arr.filter((server) => donoNodes.includes(server.attributes.node)).map(format);
 
-        if (clean.length == 0) {
+        if (arr.length == 0) {
             message.reply(`${userID === message.author.id ? "You do" : "That user does"} not have any servers.`);
-        } else if (clean.length > 70) {
+        } else if (arr.length > 70) {
             message.reply(`${userID === message.author.id ? "You have" : "That user has"} too many servers to display!`);
         } else {
             const serverListEmbed = new Discord.MessageEmbed()
