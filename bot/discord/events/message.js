@@ -121,6 +121,7 @@ module.exports = async (client, message) => {
         }
 
         if (
+            command === "info" ||
             command === "server" ||
             command === "user" ||
             command === "staff" ||
