@@ -88,7 +88,7 @@ let stats = {
     },
     pnode1: {
         serverID: "1f6b4ee2",
-        IP: "176.31.203.30",
+        IP: "51.68.201.44",
         ID: "38",
         Location: pingLocals.UK,
     },
