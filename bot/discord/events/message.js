@@ -59,7 +59,7 @@ module.exports = async (client, message) => {
             try {
                 const msg = await client.channels.cache.get(args[0]).send(cap(message.content.split(" ").slice(1).join(" "), 2000));
                 // message.react("<:Yes:768256004655677451>");
-                message.channel.send(`<:Yes:768256004655677451> Message sent: ${msg.url}`);
+                message.channel.send(`<:Yes:768256004655677451> The message has been sent\n${msg.url}`);
             } catch(err) {
                 message.channel.send(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
             }
