@@ -53,9 +53,9 @@ exports.run = async (client, message, args) => {
 
             if (actualPremiumServersUsed != storedPremiumServersUsed) {
                 userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
-                replyMsg.edit(`**${selectedUser.username}**'s premium server count has been fixed!`);
+                replyMsg.edit("That user's premium server count has been fixed!");
             } else {
-                replyMsg.edit(`**${selectedUser.username}** has the correct premium server count!`);
+                replyMsg.edit("That user has the correct premium server count!");
             }
         } catch(err) {
             replyMsg.edit(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
