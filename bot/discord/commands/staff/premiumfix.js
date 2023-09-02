@@ -9,8 +9,7 @@ exports.run = async (client, message, args) => {
         const replyMsg = await message.reply("Starting calculation...");
 
         try {
-            let selectedUser = client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
-            selectedUser = await selectedUser;
+            let selectedUser = await client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
 
             const userAccount = userData.get(selectedUser.id);
 
