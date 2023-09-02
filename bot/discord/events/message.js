@@ -2,7 +2,7 @@ const cap = require("../util/cap");
 
 module.exports = async (client, message) => {
     // Ban members which ping 20+ users
-    if (message.mentions.users.size >= 20) {
+    if (message.mentions.users.size >= 20 && !message.member.roles.cache.find((r) => r.id === "898041751099539497")) {
         message.member.ban({ reason: "Suspected raid. Pinging more than 20 users." });
         message.reply(`${message.member.toString()} has been banned for pinging more than 20 users`);
 
@@ -59,7 +59,7 @@ module.exports = async (client, message) => {
             try {
                 const msg = await client.channels.cache.get(args[0]).send(cap(message.content.split(" ").slice(1).join(" "), 2000));
                 // message.react("<:Yes:768256004655677451>");
-                message.channel.send(`<:Yes:768256004655677451> The message has been sent\n${msg.url}`);
+                message.channel.send(`<:Yes:768256004655677451> Message sent\n${msg.url}`);
             } catch(err) {
                 message.channel.send(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
             }
