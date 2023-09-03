@@ -1,80 +1,80 @@
 {
-  "Port": 1144,
-  "APIPort": 1145,
-  "externalPassword": "This should be the same password as the one thats in the daemon config.json (This is how they talk together)",
-  "node7": {
-    "price": 1
-  },
-  "DiscordBot": {
-    "Token": "Bot token",
-    "Prefix": "Bot Prefix",
-    "clientID": "Bot client ID",
-    "clientSecret": "Bot client secret",
-    "callbackURL": "callback url after logging into the site. should end with /api/callback",
-    "ownerID": "Owner ID (For owner only commands)",
-    "mainGuild": "Main guild the bot will be used in",
-    "mLogs": "Message logs channel ID",
-    "oLogs": "Other logs channel ID",
-    "modLogs": "Mod logs channel ID",
-    "requestsChannel": "Channel that request are in. This isnt used yet but will be soon",
-    "welcome": "Welcome channel ID",
-    "roles": {
-      "member": "Member role ID",
-      "client": "Client role ID",
-      "bot": "Bot role ID",
-      "staff": "Staff role ID (Used for staff commands)",
-      "mute": "Muted role ID"
+    "Port": 1144,
+    "APIPort": 1145,
+    "externalPassword": "This should be the same password as the one thats in the daemon config.json (This is how they talk together)",
+    "node7": {
+        "price": 1
     },
-    "invitechannel": "Invite logs channel ID",
-    "inviterewmsg": "Invite reward message channel ID",
-    "invites": {
-      "5": "5+ invites role ID",
-      "10": "10+ invites role ID",
-      "25": "25+ invites role ID",
-      "50": "50+ invites role ID",
-      "100": "100+ invites role ID",
-      "150": "150+ invites role ID",
-      "200": "200+ invites role ID"
-    },
-    "reactionRoles": {
-      "765877675147264000": {
-        "767897280401375244": {
-          "📣": "767845918350376960"
+    "DiscordBot": {
+        "Token": "Bot token",
+        "Prefix": "Bot Prefix",
+        "clientID": "Bot client ID",
+        "clientSecret": "Bot client secret",
+        "callbackURL": "callback url after logging into the site. should end with /api/callback",
+        "ownerID": "Owner ID (For owner only commands)",
+        "mainGuild": "Main guild the bot will be used in",
+        "mLogs": "Message logs channel ID",
+        "oLogs": "Other logs channel ID",
+        "modLogs": "Mod logs channel ID",
+        "requestsChannel": "Channel that request are in. This isnt used yet but will be soon",
+        "welcome": "Welcome channel ID",
+        "roles": {
+            "member": "Member role ID",
+            "client": "Client role ID",
+            "bot": "Bot role ID",
+            "staff": "Staff role ID (Used for staff commands)",
+            "mute": "Muted role ID"
         },
-        "767897353721086012": {
-          "🕹️": "760207814546817085",
-          "🎥": "758020921939460166",
-          "🎉": "765865412725440522",
-          "❔": "767846121195175938",
-          "⌛": "745358424883200210"
+        "invitechannel": "Invite logs channel ID",
+        "inviterewmsg": "Invite reward message channel ID",
+        "invites": {
+            "5": "5+ invites role ID",
+            "10": "10+ invites role ID",
+            "25": "25+ invites role ID",
+            "50": "50+ invites role ID",
+            "100": "100+ invites role ID",
+            "150": "150+ invites role ID",
+            "200": "200+ invites role ID"
+        },
+        "reactionRoles": {
+            "765877675147264000": {
+                "767897280401375244": {
+                    "📣": "767845918350376960"
+                },
+                "767897353721086012": {
+                    "🕹️": "760207814546817085",
+                    "🎥": "758020921939460166",
+                    "🎉": "765865412725440522",
+                    "❔": "767846121195175938",
+                    "⌛": "745358424883200210"
+                }
+            },
+            "754441222424363088": {
+                "770046936957845514": {
+                    "🔪": "772945148937109546"
+                }
+            }
         }
-      },
-      "754441222424363088": {
-        "770046936957845514": {
-          "🔪": "772945148937109546"
-        }
-      }
+    },
+    "DB": {
+        "MongoDB": "the mongodb connection URL used for storing logged in users, this will be moved to a local db soon"
+    },
+    "Pterodactyl": {
+        "hosturl": "Your pterodactyl panel. dont forget the https",
+        "apikey": "your admin api key",
+        "apikeyclient": "your client api key"
+    },
+    "Email": {
+        "Host": "SMTP url",
+        "Port": "587",
+        "User": "SMTP Username",
+        "Password": "SMTP password",
+        "From": "Email sent from"
+    },
+    "SSH": {
+        "Host": "Reverse proxy IP",
+        "User": "root",
+        "Password": "Reverse proxy root password",
+        "Port": 22
     }
-  },
-  "DB": {
-    "MongoDB": "the mongodb connection URL used for storing logged in users, this will be moved to a local db soon"
-  },
-  "Pterodactyl": {
-    "hosturl": "Your pterodactyl panel. dont forget the https",
-    "apikey": "your admin api key",
-    "apikeyclient": "your client api key"
-  },
-  "Email": {
-    "Host": "SMTP url",
-    "Port": "587",
-    "User": "SMTP Username",
-    "Password": "SMTP password",
-    "From": "Email sent from"
-  },
-  "SSH": {
-    "Host": "Reverse proxy IP",
-    "User": "root",
-    "Password": "Reverse proxy root password",
-    "Port": 22
-  }
 }

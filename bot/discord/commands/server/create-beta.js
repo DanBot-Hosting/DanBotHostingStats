@@ -1,5 +1,8 @@
-const serverCreateSettings_Beta = require('../../../createData_Beta');
-exports.run = async(client, message, args) => {
+//const serverCreateSettings_Beta = require("../../../createData_Beta");
+
+exports.run = async (client, message, args) => {
+    message.reply("There is currently not a beta at the moment. Keep an eye out in <#898041876219830442>!");
+
     // if (client.cooldown[message.author.id] == null) {
     //     client.cooldown[message.author.id] = {
     //         nCreate: null,
@@ -14,7 +17,7 @@ exports.run = async(client, message, args) => {
 
             //Do server creation things
             if (!args[1]) {
-                message.channel.send(new Discord.MessageEmbed()
+                message.reply(new Discord.MessageEmbed()
                     .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
                     .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
                     .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
@@ -57,15 +60,15 @@ exports.run = async(client, message, args) => {
                             .addField(`__**Server name:**__`, serverName)
                             .addField(`__**Type:**__`, args[1].toLowerCase())
                             .addField(`__**Node:**__`, "Node 8 - BETA")
-                        message.channel.send(embed)
+                        message.reply(embed)
 
                     }).catch(error => {
-                    message.channel.send(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
+                    message.reply(new Discord.MessageEmbed().setColor(`RED`).addField(`__**FAILED:**__`, "Please contact a host admin. \n\nError: `" + error + "`"))
                 })
                 return;
             }
 
-            message.channel.send(new Discord.MessageEmbed()
+            message.reply(new Discord.MessageEmbed()
                 .setColor(`RED`).setDescription(`List of servers: (use ${config.DiscordBot.Prefix}server create <type> <name>)`)
                 .addField(`__**Minecraft:**__`, "Forge \nPaper \nBedrock \nPocketmineMP", true)
                 .addField(`__**Grand Theft Auto:**__`, "FiveM \nalt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
@@ -76,5 +79,4 @@ exports.run = async(client, message, args) => {
         }
 
          */
-    message.channel.send('There is currently no beta happening right now. Keep an eye out for updates :)')
-}
+};

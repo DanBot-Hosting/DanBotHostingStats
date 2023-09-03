@@ -1,46 +1,65 @@
 const premiumNodes = [31, 33, 34, 35, 39];
 
-exports.run = async(client, message, args) => {
-    if (!message.member.roles.cache.find(r => r.id === "898041751099539497")) return;
+exports.run = async (client, message, args) => {
+    if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
 
     if (!args[1]) {
-        return message.channel.send('Please provide a user id!');
-
+        return message.reply("Please specify a user!");
     } else {
-        const replyMsg = await message.channel.send('Staring calculation...');
+        const replyMsg = await message.reply("Starting calculation...");
 
-        let selectedUser = message.mentions.users.first() || message.guild.members.fetch(args[1]) || message.client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
-        selectedUser = await selectedUser;
+        try {
+            let selectedUser = client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
+            selectedUser = await selectedUser;
 
-        const response = await axios({
-            url: "https://panel.danbot.host" + "/api/application/users/" + userData.get(selectedUser.id).consoleID + "?include=servers",
-            method: 'GET',
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-                'Content-Type': 'application/json',
-                'Accept': 'Application/vnd.pterodactyl.v1+json',
+            const userAccount = userData.get(selectedUser.id);
+
+            if (userAccount == null || userAccount.consoleID == null) {
+                if (selectedUser.id === message.author.id) {
+                    return message.reply(`You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`)
+                } else {
+                    return message.reply("That user does not have a panel account linked.");
+                }
             }
-        });
 
-        const preoutput = response.data.attributes.relationships.servers.data;
+            const response = await axios({
+                url:
+                    "https://panel.danbot.host" +
+                    "/api/application/users/" +
+                    userData.get(selectedUser.id).consoleID +
+                    "?include=servers",
+                method: "GET",
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    Authorization: "Bearer " + config.Pterodactyl.apikey,
+                    "Content-Type": "application/json",
+                    Accept: "Application/vnd.pterodactyl.v1+json",
+                },
+            });
 
-        let actualPremiumServersUsed = 0;
-        for (let index = 0; index < preoutput.length; index++) {
-            if (premiumNodes.includes(preoutput[index].attributes.node)) ++actualPremiumServersUsed;
-        };
+            const preoutput = response.data.attributes.relationships.servers.data;
 
-        const userPremData = userPrem.get(selectedUser.id);
+            let actualPremiumServersUsed = 0;
 
-        const storedPremiumServersUsed = userPremData.used;
+            for (let index = 0; index < preoutput.length; index++) {
+                if (premiumNodes.includes(preoutput[index].attributes.node)) ++actualPremiumServersUsed;
+            }
 
-        console.log({actualPremiumServersUsed, storedPremiumServersUsed, userPremData, selectedUser})
-        if(actualPremiumServersUsed != storedPremiumServersUsed) {
-            userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
-            replyMsg.edit(`${selectedUser.tag}'s premium server count has been fixed!`)
-        } else {
-            replyMsg.edit(`${selectedUser.tag} has the correct premium server count!`);
-        };
-    };
+            const userPremData = userPrem.get(selectedUser.id);
+
+            const storedPremiumServersUsed = userPremData.used;
+
+            console.log({ actualPremiumServersUsed, storedPremiumServersUsed, userPremData, selectedUser });
+
+            if (actualPremiumServersUsed != storedPremiumServersUsed) {
+                userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
+                replyMsg.edit("That user's premium server count has been fixed!");
+            } else {
+                replyMsg.edit("That user has the correct premium server count!");
+            }
+        } catch(err) {
+            replyMsg.edit(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
+        }
+    }
 };

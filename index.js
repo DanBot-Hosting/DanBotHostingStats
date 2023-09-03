@@ -8,35 +8,32 @@ Free Hosting forever!                                            /____/
 */
 
 global.config = require("./config.json");
-global.enabled = require("./enable.json")
+global.enabled = require("./enable.json");
 
 //New global cache system (Lazy way)
-global.users = []
-global.servers = []
+global.users = [];
+global.servers = [];
 
 global.fs = require("fs");
-global.chalk = require('chalk');
-const nodemailer = require('nodemailer');
-global.axios = require('axios');
-global.pretty = require('prettysize');
+global.chalk = require("chalk");
+const nodemailer = require("nodemailer");
+global.axios = require("axios");
 global.transport = nodemailer.createTransport({
     host: config.Email.Host,
     port: config.Email.Port,
     auth: {
         user: config.Email.User,
-        pass: config.Email.Password
-    }
+        pass: config.Email.Password,
+    },
 });
 
 // Initialising Node Checker
-require('./nodestatsChecker');
+require("./nodestatsChecker");
 
 //Discord Bot
 let db = require("quick.db");
 global.Discord = require("discord.js");
-global.tcpp = require('tcp-ping');
 
-global.messageSnipes = new Discord.Collection();
 global.fs = require("fs");
 global.moment = require("moment");
 global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
@@ -55,37 +52,37 @@ global.nodePing = new db.table("nodePing"); //Node ping response time
 
 global.client = new Discord.Client({
     restTimeOffset: 0,
-    disableMentions: 'everyone',
+    disableMentions: "everyone",
     restWsBridgetimeout: 100,
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION']
+    partials: ["MESSAGE", "CHANNEL", "REACTION"],
 });
 global.bot = client;
 
-require('./bot/discord/commands/mute').init(client)
+require("./bot/discord/commands/mute").init(client);
 
 //Event handler
-fs.readdir('./bot/discord/events/', (err, files) => {
-    files = files.filter(f => f.endsWith('.js'));
-    files.forEach(f => {
+fs.readdir("./bot/discord/events/", (err, files) => {
+    files = files.filter((f) => f.endsWith(".js"));
+    files.forEach((f) => {
         const event = require(`./bot/discord/events/${f}`);
-        client.on(f.split('.')[0], event.bind(null, client));
+        client.on(f.split(".")[0], event.bind(null, client));
         delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
     });
 });
-global.createList = {}
+global.createList = {};
 global.createListPrem = {};
 
 //Import all create server lists
-fs.readdir('./create-free/', (err, files) => {
-    files = files.filter(f => f.endsWith('.js'));
-    files.forEach(f => {
+fs.readdir("./create-free/", (err, files) => {
+    files = files.filter((f) => f.endsWith(".js"));
+    files.forEach((f) => {
         require(`./create-free/${f}`);
     });
 });
 
-fs.readdir('./create-premium/', (err, files) => {
-    files = files.filter(f => f.endsWith('.js'));
-    files.forEach(f => {
+fs.readdir("./create-premium/", (err, files) => {
+    files = files.filter((f) => f.endsWith(".js"));
+    files.forEach((f) => {
         delete require.cache[require.resolve(`./create-premium/${f}`)];
         require(`./create-premium/${f}`);
     });
@@ -94,7 +91,6 @@ fs.readdir('./create-premium/', (err, files) => {
 //Global password gen
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 global.getPassword = () => {
-
     var password = "";
     while (password.length < 16) {
         password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
@@ -106,35 +102,39 @@ global.getPassword = () => {
 client.login(config.DiscordBot.Token);
 
 setInterval(async () => {
-    users.length = 0
+    users.length = 0;
     axios({
         url: "https://panel.danbot.host/api/application/users?per_page=9999999999999",
-        method: 'GET',
+        method: "GET",
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-            'Content-Type': 'application/json',
-            'Accept': 'Application/vnd.pterodactyl.v1+json',
-        }
-    }).then(resources => {
-        users.push(...resources.data.data)
-    }).catch(err => { console.log ('Error fetching users list') });
+            Authorization: "Bearer " + config.Pterodactyl.apikey,
+            "Content-Type": "application/json",
+            Accept: "Application/vnd.pterodactyl.v1+json",
+        },
+    })
+        .then((resources) => {
+            users.push(...resources.data.data);
+        })
+        .catch((err) => {
+            console.log("Error fetching users list");
+        });
 }, 10 * 60 * 1000);
 
-process.on('unhandledRejection', (reason, p) => {
-		console.log(' [antiCrash] :: Unhandled Rejection/Catch');
-		console.log(reason, p);
+process.on("unhandledRejection", (reason, p) => {
+    console.log(" [antiCrash] :: Unhandled Rejection/Catch");
+    console.log(reason, p);
 });
-process.on('uncaughtException', (err, origin) => {
-	console.log(' [antiCrash] :: Uncaught Exception/Catch');
-	console.log(err, origin);
+process.on("uncaughtException", (err, origin) => {
+    console.log(" [antiCrash] :: Uncaught Exception/Catch");
+    console.log(err, origin);
 });
-process.on('uncaughtExceptionMonitor', (err, origin) => {
-	console.log(' [antiCrash] :: Uncaught Exception/Catch (MONITOR)');
-	console.log(err, origin);
+process.on("uncaughtExceptionMonitor", (err, origin) => {
+    console.log(" [antiCrash] :: Uncaught Exception/Catch (MONITOR)");
+    console.log(err, origin);
 });
-process.on('multipleResolves', (type, promise, reason) => {
-	console.log(' [antiCrash] :: Multiple Resolves');
-	console.log(type, promise, reason);
+process.on("multipleResolves", (type, promise, reason) => {
+    console.log(" [antiCrash] :: Multiple Resolves");
+    console.log(type, promise, reason);
 });

@@ -6,11 +6,11 @@
 /_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
 Free Hosting forever!                                            /____/
 */
-const axios = require('axios');
+const axios = require("axios");
 
-global.gamingFREE = [14] // Gaming nodes
-global.botswebdbFREE = [14, 12] // Bots, Websites and Databases nodes
-global.storageFREE = [13] // Storage nodes
+global.gamingFREE = [14]; // Gaming nodes
+global.botswebdbFREE = [14, 12]; // Bots, Websites and Databases nodes
+global.storageFREE = [13]; // Storage nodes
 
 /*
 Node 1   : 9
@@ -71,7 +71,8 @@ let data = (serverName, userID) => {
         haste: null,
         uptimekuma: null,
         rustc: null,
-        redbot: null
+        redbot: null,
+        grafana: null
     };
 
     for (let [name, filled] of Object.entries(createList)) {
@@ -83,19 +84,19 @@ let data = (serverName, userID) => {
 let createServer = (data) => {
     return axios({
         url: config.Pterodactyl.hosturl + "/api/application/servers",
-        method: 'POST',
+        method: "POST",
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            'Authorization': 'Bearer ' + config.Pterodactyl.apikey,
-            'Content-Type': 'application/json',
-            'Accept': 'Application/vnd.pterodactyl.v1+json',
+            Authorization: "Bearer " + config.Pterodactyl.apikey,
+            "Content-Type": "application/json",
+            Accept: "Application/vnd.pterodactyl.v1+json",
         },
         data: data,
-    })
-}
+    });
+};
 
 module.exports = {
     createParams: data,
-    createServer: createServer
+    createServer: createServer,
 };
