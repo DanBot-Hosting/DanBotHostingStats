@@ -44,7 +44,6 @@ exports.run = async (client, message, args) => {
             max: 1,
         });
         collector.on("collect", (messagecollected) => {
-            //console.log(message.content)
 
             if (messagecollected.content === "cancel") {
                 return msg.edit("Request to link your account canceled.", null).then(channel.delete());
@@ -90,7 +89,8 @@ exports.run = async (client, message, args) => {
                         if (err) {
                             console.log(err);
                         } else {
-                            console.log(info);
+
+
                             channel.send(
                                 "Please check the email account for a verification code to complete linking. You have 2mins"
                             );
