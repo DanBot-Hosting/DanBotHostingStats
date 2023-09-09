@@ -14,5 +14,5 @@ exports.run = (client, message, args) => {
         .setTimestamp();
     const channel = client.channels.cache.get("960242064338092202");
     const sentMsg = channel.send(embed);
-    message.reply(`Changelog sent: ${sentMsg.url}`);
+    message.reply(`Changelog sent: https://discord.com/channels/${sentMsg.guild.id}/${sentMsg.channel.id}/${sentMsg.id}`);
 };
