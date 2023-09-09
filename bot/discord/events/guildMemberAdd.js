@@ -4,13 +4,7 @@ module.exports = async (client, member, guild) => {
         let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
 
         if (Date.now() - member.user.createdAt < 432000000) {
-            (await member.kick({
-                reason:
-                    "Account created under 5 days ago. Created: " +
-                    humanizeDuration(Date.now() - member.user.createdAt, {
-                        round: true,
-                    }),
-            })) &&
+            (await member.kick("Account created under 5 days ago. Created: " + humanizeDuration(Date.now() - member.user.createdAt)) &&
                 welcomeChannel.send(
                     `${member} created under 5 days ago. Created: ` +
                         humanizeDuration(Date.now() - member.user.createdAt, {
