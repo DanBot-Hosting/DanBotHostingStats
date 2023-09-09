@@ -12,6 +12,6 @@ exports.run = (client, message, args) => {
         .setAuthor(message.author.tag.endsWith("#0") ? message.author.username : message.author.tag, message.author.displayAvatarURL({ format: "png", dynamic: true }), `https://discord.com/users/${message.author.id}`)
         .setDescription(msg)
         .setTimestamp();
-    client.channels.cache.get("960242064338092202").send(embed);
-    message.reply("Changelog sent!");
+    const msg = client.channels.cache.get("960242064338092202").send(embed);
+    message.reply(`Changelog sent: ${msg.url}`);
 };
