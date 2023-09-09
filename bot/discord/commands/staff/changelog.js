@@ -5,7 +5,7 @@ exports.run = (client, message, args) => {
 
     if(!args[1]) return message.reply("Please provide a message!");
 
-    const msg = message.content.split(" ").slice(1).join(" ");
+    const msg = message.content.split(" ").slice(2).join(" ");
 
     const embed = new Discord.MessageEmbed()
         .setColor("GREEN")
