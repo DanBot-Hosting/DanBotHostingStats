@@ -13,6 +13,6 @@ exports.run = (client, message, args) => {
         .setDescription(msg)
         .setTimestamp();
     const channel = client.channels.cache.get("960242064338092202");
-    const msg = channel.send(embed);
-    message.reply(`Changelog sent: ${msg.url}`);
+    const sentMsg = channel.send(embed);
+    message.reply(`Changelog sent: ${sentMsg.url}`);
 };
