@@ -93,6 +93,7 @@ exports.run = async (client, message, args) => {
     let target = message.guild.members.cache.get(
         args[0].match(/[0-9]{17,19}/).length == 0 ? args[0] : args[0].match(/[0-9]{17,19}/)[0]
     );
+    if(target.id === "853158265466257448") return message.reply("Don't you dare mute master Willy!");
     let reason = args.slice(2).join(" ") || `unspecified`;
     let time = ms(args[1]) || 300000;
 
