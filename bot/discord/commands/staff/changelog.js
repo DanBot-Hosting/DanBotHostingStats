@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 exports.run = (client, message, args) => {
-    // Check if user has the staff role
-    if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
+    // Check if user has the dev role
+    if (!message.member.roles.cache.find((r) => r.id === "898041747597295667")) return;
 
     if(!args[1]) return message.reply("Please provide a message!");
 
