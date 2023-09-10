@@ -12,7 +12,6 @@ global.enabled = require("./enable.json");
 
 //New global cache system (Lazy way)
 global.users = [];
-global.servers = [];
 
 global.fs = require("fs");
 global.chalk = require("chalk");
@@ -118,7 +117,7 @@ setInterval(async () => {
             users.push(...resources.data.data);
         })
         .catch((err) => {
-            console.log("Error fetching users list");
+
         });
 }, 10 * 60 * 1000);
 
