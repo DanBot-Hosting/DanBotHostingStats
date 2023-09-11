@@ -3,34 +3,22 @@ module.exports = async (client, member, guild) => {
     if (enabled.Welcome === true) {
         let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
 
-        if (Date.now() - member.user.createdAt < 432000000) {
-            (await member.ban({
-                reason:
-                    "Account created under 5 days ago. Created: " +
-                    humanizeDuration(Date.now() - member.user.createdAt, {
-                        round: true,
-                    }),
-            })) &&
-                welcomeChannel.send(
-                    `${member} created under 5 days ago. Created: ` +
-                        humanizeDuration(Date.now() - member.user.createdAt, {
-                            round: true,
-                        })
-                );
-        } else if (Date.now() - member.user.createdAt < 863136000) {
+        if (Date.now() - member.user.createdAt < 863136000) {
             await member.user.send(
                 `Sorry! We only allow accounts over the age of 10 days to join.\nYour account was created ${humanizeDuration(
                     Date.now() - member.user.createdAt,
                     { round: true }
-                )} ago.\n\nYou are welcome to join again once this account is over 10days old!`
+                )} ago.\n\nYou are welcome to join again once your account is over 10 days old!`
             );
+
             await member.kick();
+
             welcomeChannel.send(
                 member.user.tag +
-                    ` has been auto-kicked as account is under 10 days old.\nThat account was created ${humanizeDuration(
+                    ` has been auto-kicked as account is under 10 days old.\nTheir account was created ${humanizeDuration(
                         Date.now() - member.user.createdAt,
                         { round: true }
-                    )}, ago`
+                    )} ago.`
             );
         } else {
             member.roles.add(config.DiscordBot.roles.member);

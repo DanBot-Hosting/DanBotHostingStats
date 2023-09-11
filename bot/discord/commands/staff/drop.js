@@ -19,14 +19,14 @@ exports.run = async (client, message, args) => {
         return password;
     };
 
-    let time = ms(args[1]) || 300000;
+    const time = ms(args[1]) || 300000;
 
     let code;
 
     let moment = Date.now();
 
     if (!args[2]) {
-        let random = codeGen();
+        const random = codeGen();
 
         code = codes.set(random, {
             code: random,
@@ -42,7 +42,7 @@ exports.run = async (client, message, args) => {
         }
     }
 
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
         .setAuthor("Key Drop!")
         .setColor("BLUE")
         .setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
