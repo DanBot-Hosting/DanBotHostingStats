@@ -99,9 +99,9 @@ exports.run = async (client, message, args) => {
     // Mike
     if(target.id === "405771597761216522") return message.reply("Sadly I can't mute Mike (I wish I could mute him, he is very annoying)");
     // Caliwyr
-    if(target.id === "218023395965665281") return message.reply("Got it! But i cannot mute my dad sorry for that :cry:");
+    if(target.id === "218023395965665281") return message.reply("Got it! But I cannot mute my dad sorry about that :cry:");
     // Bocon
-    if(target.id === "714860155183038495") return message.reply("Girl why you trying to mute <@714860155183038495> ?");
+    if(target.id === "714860155183038495") return message.reply("Girl, why you trying to mute the amazing <@714860155183038495>?");
 
     if (message.member.roles.cache.find((r) => r.id === config.DiscordBot.roles.staff) == null)
         return message.reply("It looks like you're too much of a boomer to run this command.");
