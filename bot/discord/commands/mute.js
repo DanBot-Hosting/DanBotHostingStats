@@ -92,9 +92,13 @@ exports.run = async (client, message, args) => {
     );
 
     // Easter eggs
+    // User who ran command
     if(target.id === message.author.id) return message.channel.send(`Hey everyone, <@${message.author.id}> is really trying to take away his own freedom of speech!`);
+    // William
     if(target.id === "853158265466257448") return message.reply("Please mute Willy he keeps breaking me!");
+    // Mike
     if(target.id === "405771597761216522") return message.reply("Sadly I can't mute Mike (I wish I could mute him, he is very annoying)");
+    // Caliwyr
     if(target.id === "218023395965665281") return message.reply("Got it! I have muted Caliwyr for **the rest of his life** (not long, I'm in his walls and am going to attack at any moment now)");
 
     if (message.member.roles.cache.find((r) => r.id === config.DiscordBot.roles.staff) == null)
