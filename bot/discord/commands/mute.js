@@ -75,9 +75,6 @@ exports.init = (client) => {
 exports.run = async (client, message, args) => {
     let modlog = message.guild.channels.cache.find((channel) => channel.id === config.DiscordBot.modLogs);
 
-    if (message.member.roles.cache.find((r) => r.id === config.DiscordBot.roles.staff) == null)
-        return message.reply("sorry, but it looks like you're too much of a boomer to run this command.");
-
     if (args.length < 1) {
         message.reply("", {
             embed: new Discord.MessageEmbed()
@@ -93,10 +90,16 @@ exports.run = async (client, message, args) => {
     let target = message.guild.members.cache.get(
         args[0].match(/[0-9]{17,19}/).length == 0 ? args[0] : args[0].match(/[0-9]{17,19}/)[0]
     );
+
+    // Easter eggs
     if(target.id === message.author.id) return message.channel.send(`Hey everyone, <@${message.author.id}> is really trying to take away his own freedom of speech!`);
     if(target.id === "853158265466257448") return message.reply("Don't you dare mute master Willy!");
     if(target.id === "405771597761216522") return message.reply("Sadly I can't mute Mike (I wish I could mute him, he is very annoying)");
     if(target.id === "218023395965665281") return message.reply("Got it! I have muted Caliwyr for **the rest of his pathetic life** (not long, I'm in his walls and am going to attack at any moment now)");
+
+    if (message.member.roles.cache.find((r) => r.id === config.DiscordBot.roles.staff) == null)
+        return message.reply("It looks like you're too much of a boomer to run this command.");
+
     let reason = args.slice(2).join(" ") || `unspecified`;
     let time = ms(args[1]) || 300000;
 
