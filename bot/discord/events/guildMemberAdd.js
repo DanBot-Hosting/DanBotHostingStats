@@ -3,24 +3,24 @@ module.exports = async (client, member, guild) => {
     if (enabled.Welcome === true) {
         let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
 
-        if (Date.now() - member.user.createdAt < 863136000) {
-            await member.user.send(
-                `Sorry! We only allow accounts over the age of 10 days to join.\nYour account was created ${humanizeDuration(
-                    Date.now() - member.user.createdAt,
-                    { round: true }
-                )} ago.\n\nYou are welcome to join again once your account is over 10 days old!`
-            );
+        // if (Date.now() - member.user.createdAt < 863136000) {
+            // await member.user.send(
+            //     `Sorry! We only allow accounts over the age of 10 days to join.\nYour account was created ${humanizeDuration(
+            //         Date.now() - member.user.createdAt,
+            //         { round: true }
+            //     )} ago.\n\nYou are welcome to join again once your account is over 10 days old!`
+            // );
 
-            await member.kick();
+            // await member.kick();
 
-            welcomeChannel.send(
-                member.user.tag +
-                    ` has been auto-kicked as account is under 10 days old.\nTheir account was created ${humanizeDuration(
-                        Date.now() - member.user.createdAt,
-                        { round: true }
-                    )} ago.`
-            );
-        } else {
+            // welcomeChannel.send(
+            //     member.user.tag +
+            //         ` has been auto-kicked as account is under 10 days old.\nTheir account was created ${humanizeDuration(
+            //             Date.now() - member.user.createdAt,
+            //             { round: true }
+            //         )} ago.`
+            // );
+        // } else {
             member.roles.add(config.DiscordBot.roles.member);
 
             if (userPrem.get(member.id) == null) {
@@ -44,6 +44,6 @@ module.exports = async (client, member, guild) => {
             if (mutesData.get(member.id) != null) {
                 member.roles.add(config.DiscordBot.roles.mute);
             }
-        }
+        // }
     }
 };
