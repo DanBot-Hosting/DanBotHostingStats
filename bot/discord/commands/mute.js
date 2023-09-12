@@ -100,6 +100,8 @@ exports.run = async (client, message, args) => {
     if(target.id === "405771597761216522") return message.reply("Sadly I can't mute Mike (I wish I could mute him, he is very annoying)");
     // Caliwyr
     if(target.id === "218023395965665281") return message.reply("Got it! But I cannot mute my dad sorry about that :cry:");
+    // Wizq
+    if(target.id === "778254181303451658") return message.reply("Nah! He is too busy losing Valorant matches YET AT IRON <:lmao:756245103449866260>");
     // Bocon
     if(target.id === "714860155183038495") return message.reply("Girl, why you trying to mute the amazing <@714860155183038495>?");
 
