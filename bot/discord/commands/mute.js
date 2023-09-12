@@ -101,7 +101,7 @@ exports.run = async (client, message, args) => {
     // Caliwyr
     if(target.id === "218023395965665281") return message.reply("Got it! I have muted Caliwyr for **the rest of his life** (not long, I'm in his walls and am going to attack at any moment now)");
     // Wizq
-    if(target.id === "778254181303451658") return message.reply("Nah! He Busy Losing Valorant Matches YET AT IRON :lmao:");
+    if(target.id === "778254181303451658") return message.reply("Nah! He is too busy losing Valorant matches YET AT IRON <:lmao:756245103449866260>");
 
     if (message.member.roles.cache.find((r) => r.id === config.DiscordBot.roles.staff) == null)
         return message.reply("It looks like you're too much of a boomer to run this command.");
