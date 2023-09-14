@@ -76,5 +76,9 @@
         "User": "root",
         "Password": "Reverse proxy root password",
         "Port": 22
+    },
+    "BotApi": {
+        "Url": "Bot API Url",
+        "AdminKey": "The API's admin key!"
     }
 }
