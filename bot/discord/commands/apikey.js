@@ -30,7 +30,8 @@ exports.run = async (client, message, args) => {
         message.reply("I could not DM you!");
       }
     }
-  } catch (error) {
-    console.log(error.message);
+  } catch (err) {
+    message.reply(`\`\`\`${err.message}\`\`\``);
+    console.error(err);
   }
 };
