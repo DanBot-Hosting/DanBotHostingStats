@@ -18,18 +18,15 @@ exports.run = async (client, message, args) => {
     });
 
     if (request.data.error !== null) {
-      const embed = new Discord.MessageEmbed()
-        .setColor("RED")
-        .setTitle("DanBot Hosting - Api Key")
-        .setDescription(
-          `An error occured while getting your API key: ${request.data.error}!`,
-        )
-        .setTimestamp();
-      message.reply(embed);
+      message.reply(`An error occured while getting your API key: ${request.data.error}!`);
     } else {
-      message.author.send(`Your API key is: \`${request.data.result}\``);
+      try {
+        message.author.send(`Your API key is: \`${request.data.result}\``);
+      } catch(err) {
+        message.reply("I could not DM you!");
+      }
     }
   } catch (error) {
-    console.log("wow the bot tried committing self death - " + error);
+    console.log(error.message);
   }
 };
