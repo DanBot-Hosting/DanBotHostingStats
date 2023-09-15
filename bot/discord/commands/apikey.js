@@ -27,13 +27,7 @@ exports.run = async (client, message, args) => {
         .setTimestamp();
       message.reply(embed);
     } else {
-      client.users.cache
-        .get(message.user.id)
-        .send(
-          "Your api key is " +
-            request.data.result +
-            ". (Without the dot at the end).",
-        );
+      message.author.send(`Your API key is: \`${request.data.result}\``);
     }
   } catch (error) {
     console.log("wow the bot tried committing self death - " + error);
