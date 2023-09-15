@@ -2,6 +2,10 @@ const Discord = require("discord.js");
 const axios = require("axios");
 
 exports.run = async (client, message, args) => {
+  if(!message.member.roles.cache.find((r) => r.id === "898041755419693126")) {
+      return message.reply("Only beta testers can use this command!");
+  }
+
   try {
     const request = await axios({
       url: config.BotApi.Url,
