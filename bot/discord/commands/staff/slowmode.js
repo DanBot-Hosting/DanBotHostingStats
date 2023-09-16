@@ -3,9 +3,9 @@ exports.run = (client, message, args) => {
     // Check if user has the mod role
     if (!message.member.roles.cache.find((r) => r.id === "898041748817842176")) return;
 
-    if(!args[2]) return message.reply("Please provide a time!");
+    if(!args[1]) return message.reply("Please provide a time!");
 
-    const slowmode = args[2];
+    const slowmode = args[1];
 
     if(slowmode <= 0 || slowmode === "off" || slowmode === "disable") {
         message.channel.setRateLimitPerUser(0);
@@ -18,10 +18,6 @@ exports.run = (client, message, args) => {
     if(slowmode > 21600) return message.reply("You can only set the slowmode between \`0\` and \`21600\` seconds!");
 
     message.channel.setRateLimitPerUser(slowmode);
-
-    const set = new Discord.EmbedBuilder()
-        .setColor(client.config_embeds.default)
-        .setDescription(`${emoji.successful} `)
 
     message.reply(`Slowmode has been set to \`${slowmode}\` second${slowmode === 1 ? "" : "s"}.`);
   } catch(err) {
