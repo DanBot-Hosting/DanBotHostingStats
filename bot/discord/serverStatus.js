@@ -1,5 +1,5 @@
 let nstatus = {
-    Nodes: [
+    "Free Nodes": [
         {
             name: "Node 2",
             data: "Node2",
@@ -127,14 +127,14 @@ let parse = async () => {
 
             da =
                 da.maintenance === true
-                    ? `🟣 Maintenance Mode!`
+                    ? `🟣 Maintenance`
                     : da.status === true
                     ? `🟢 Online ${serverUsage}`
                     : da.is_vm_online == null
                     ? "🔴 **Offline**"
-                    : (da.is_vm_online === true ? "🟠 Wings" : "🔴 **System**") + ` offline ${serverUsage}`;
+                    : (da.is_vm_online === true ? "🟠 **Wings**" : "🔴 **System**") + ` **offline** ${serverUsage}`;
 
-            temp.push(`**${d.name}:** ${da}`);
+            temp.push(`${d.name}: ${da}`);
         }
 
         toRetun[title] = temp;
@@ -147,31 +147,10 @@ let getEmbed = async () => {
     let desc = "";
 
     for (let [title, d] of Object.entries(status)) {
-        desc = `${desc}**__${title}:__**\n${d.join("\n")}\n\n`;
+        desc = `${desc}***${title}***\n${d.join("\n")}\n\n`;
     }
 
-    date = new Date();
-    var hr;
-    monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    if (date.getHours() < 10) {
-        hr = `0${date.getHours()}`;
-    } else {
-        hr = date.getHours();
-    }
-
-    var dateString =
-        "Updated at " +
-        hr +
-        ":" +
-        ("00" + date.getMinutes()).slice(-2) +
-        " (GMT) on " +
-        date.getDate() +
-        " " +
-        monthNames[date.getMonth()] +
-        " " +
-        date.getFullYear();
-
-    let embed = new Discord.MessageEmbed().setTitle("DanBot Hosting Status").setFooter(dateString).setDescription(desc);
+    let embed = new Discord.MessageEmbed().setTitle("DBH Status").setDescription(desc).setTimestamp();
     return embed;
 };
 

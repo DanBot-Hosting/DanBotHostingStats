@@ -1,6 +1,5 @@
 const axios = require("axios");
-var ping = require("ping");
-const ping2 = require("ping-tcp-js");
+const ping = require("ping-tcp-js");
 
 let pingLocals = {
     UK: config.Ping.UK,
@@ -8,12 +7,6 @@ let pingLocals = {
 };
 
 let stats = {
-    node1: {
-        serverID: "7c740e8c",
-        IP: "176.31.203.22",
-        ID: "1",
-        Location: pingLocals.UK,
-    },
     node2: {
         serverID: "ca89e5c6",
         IP: "176.31.203.21",
@@ -100,7 +93,7 @@ let stats = {
     },
 };
 if (enabled.nodestatsChecker === true) {
-    console.log(chalk.magenta("[Nodes Checker] ") + chalk.green("Enabled and Online"));
+    console.log(chalk.magenta("[Node Checker] ") + chalk.green("Enabled and Online"));
     //Node status
     setInterval(() => {
         //Public nodes
@@ -148,7 +141,7 @@ if (enabled.nodestatsChecker === true) {
                     .catch((error) => {
                         //Node is either offline or wings are offline. Checks if it's maintenance, and then checks for wings.
 
-                            ping2
+                            ping
                                 .ping(data.IP, 22)
                                 .then(() => {
                                     nodeStatus.set(`${node}.timestamp`, Date.now());
@@ -188,7 +181,7 @@ if (enabled.nodestatsChecker === true) {
         }
 
         // AU 1 VPN Server
-        ping2
+        ping
             .ping("139.99.171.195", 22)
             .then(() =>
                 nodeStatus.set("au1", {
@@ -204,7 +197,7 @@ if (enabled.nodestatsChecker === true) {
             );
 
         // FR 1 VPN Server
-        ping2
+        ping
             .ping("176.31.125.135", 22)
             .then(() =>
                 nodeStatus.set("fr1", {
@@ -220,7 +213,7 @@ if (enabled.nodestatsChecker === true) {
             );
 
         // US 1 VPN Server
-        ping2
+        ping
             .ping("69.197.129.206", 22)
             .then(() =>
                 nodeStatus.set("us1", {
@@ -236,5 +229,5 @@ if (enabled.nodestatsChecker === true) {
             );
     }, 10000);
 } else {
-    console.log(chalk.magenta("[Nodes Checker] ") + chalk.red("Disabled"));
+    console.log(chalk.magenta("[Node Checker] ") + chalk.red("Disabled"));
 }
