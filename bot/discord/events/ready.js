@@ -1,5 +1,5 @@
 const cap = require("../util/cap");
-const exec = require("child_process").exec;
+const { exec } = require("child_process");
 const nstatus = require("../serverStatus");
 
 module.exports = async (client) => {

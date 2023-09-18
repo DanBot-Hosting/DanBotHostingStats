@@ -112,17 +112,17 @@ let parse = async () => {
             let nodeData = nodeServers.get(d.data.toLowerCase());
             let ping = nodePing.fetch(d.data.toLowerCase());
             let serverUsage = d.data.toLowerCase().startsWith("node")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [${Math.round(
                       Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms\`]`
+                  )}ms]`
                 : "" || d.data.toLowerCase().includes("dono")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [${Math.round(
                       Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms\`]`
+                  )}ms]`
                 : "" || d.data.toLowerCase().startsWith("pnode")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [\`${Math.round(
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [${Math.round(
                       Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms\`]`
+                  )}ms]`
                 : "";
 
             da =
@@ -150,7 +150,7 @@ let getEmbed = async () => {
         desc = `${desc}***${title}***\n${d.join("\n")}\n\n`;
     }
 
-    let embed = new Discord.MessageEmbed().setTitle("DBH Status").setDescription(desc).setTimestamp();
+    let embed = new Discord.MessageEmbed().setTitle("DanBot Status").setDescription(desc).setTimestamp();
     return embed;
 };
 

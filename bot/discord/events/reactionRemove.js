@@ -34,7 +34,7 @@ module.exports = async (client, r, member) => {
     let role = member.guild.roles.cache.get(found.role);
     if (member.roles.cache.get(found.role) != null) {
         await member.roles.remove(role);
-        member.user.send("Removed the role: `" + role.name + "`!");
+        member.user.send("Removed the role: `" + role.name + "`!").catch(() => {});
         let memberRoles = member.roles.cache.map((x) => x.id).concat(reactionRole.map((x) => x.role));
         let dupped = memberRoles.filter((e, i) => memberRoles.indexOf(e) != i);
         if (dupped.length == 0) member.roles.remove("765869330024890378");

@@ -93,7 +93,7 @@ let stats = {
     },
 };
 if (enabled.nodestatsChecker === true) {
-    console.log(chalk.magenta("[Node Checker] ") + chalk.green("Enabled and Online"));
+    console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled / Online"));
     //Node status
     setInterval(() => {
         //Public nodes
@@ -229,5 +229,5 @@ if (enabled.nodestatsChecker === true) {
             );
     }, 10000);
 } else {
-    console.log(chalk.magenta("[Node Checker] ") + chalk.red("Disabled"));
+    console.log(chalk.magenta("[NODE CHECKER] ") + chalk.red("Disabled"));
 }

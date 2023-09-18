@@ -1,8 +1,8 @@
-let reactionRoles = {
+module.exports = {
+    // Channel ID
     "898041838701781013": {
-        // Channel ID
+        // Message ID
         "918240983362183211": {
-            // Message ID
             "📣": "898041778471592027", // Announcements
             "🎉": "898041781445337098", // Giveaways
             "❔": "898041781927682090", // Polls
@@ -10,20 +10,18 @@ let reactionRoles = {
             "🧾": "898041784867913758", // Other
             "📰": "898041779696312320", // Changelogs
         },
+        // Message ID
         "918242254018199633": {
-            // Message ID
             "📘": "898041773203550209", // Python
             "📗": "898041774373748796", // Java
             "📙": "898041776114372648", // JavaScript
             "📕": "918241546497818684", // HTML
             "📔": "898041776970010655", // C#
         },
+        // Message ID
         "918288000071381002": {
-            // Message ID
             "🕹️": "918235979389730848", // Game Nights
             "🎥": "898041783135645756", // Movie Night
         },
     },
 };
-
-module.exports = reactionRoles;
