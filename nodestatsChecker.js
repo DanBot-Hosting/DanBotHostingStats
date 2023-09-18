@@ -187,33 +187,49 @@ if (enabled.nodestatsChecker === true) {
             }, 2000);
         }
 
-        //Germany 1 VPN Server
+        // AU 1 VPN Server
         ping2
-            .ping("51.89.32.64", 22)
+            .ping("139.99.171.195", 22)
             .then(() =>
-                nodeStatus.set("germany1", {
+                nodeStatus.set("au1", {
                     timestamp: Date.now(),
                     status: true,
                 })
             )
             .catch((e) =>
-                nodeStatus.set("germany1", {
+                nodeStatus.set("au1", {
                     timestamp: Date.now(),
                     status: false,
                 })
             );
 
-        //France 1 VPN Server
+        // FR 1 VPN Server
         ping2
             .ping("176.31.125.135", 22)
             .then(() =>
-                nodeStatus.set("france1", {
+                nodeStatus.set("fr1", {
                     timestamp: Date.now(),
                     status: true,
                 })
             )
             .catch((e) =>
-                nodeStatus.set("france1", {
+                nodeStatus.set("fr1", {
+                    timestamp: Date.now(),
+                    status: false,
+                })
+            );
+
+        // US 1 VPN Server
+        ping2
+            .ping("69.197.129.206", 22)
+            .then(() =>
+                nodeStatus.set("us1", {
+                    timestamp: Date.now(),
+                    status: true,
+                })
+            )
+            .catch((e) =>
+                nodeStatus.set("us1", {
                     timestamp: Date.now(),
                     status: false,
                 })
