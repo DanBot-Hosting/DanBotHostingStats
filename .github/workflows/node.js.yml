@@ -1,8 +1,9 @@
 name: Node.js CI
 
 on:
+  workflow-dispatch:
   push:
-    branches: "main"
+    branches: ["main"]
 
 jobs:
   build:
