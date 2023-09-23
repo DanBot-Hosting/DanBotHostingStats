@@ -4,9 +4,9 @@ exports.run = (client, message, args) => {
         // Check if user is William
         if (message.author.id !== "853158265466257448") return;
 
-        if(!args[2]) return message.reply("Please provide a message!");
+        if(!args[1]) return message.reply("Please provide a message!");
 
-        const newNick = message.content.split(" ").slice(2).join(" ");
+        const newNick = message.content.split(" ").slice(1).join(" ");
 
         message.guild.me.setNickname(newNick);
         message.reply(`Bot nickname set to \`${newNick}\``);
