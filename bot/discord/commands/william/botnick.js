@@ -8,7 +8,7 @@ exports.run = (client, message, args) => {
 
         const newNick = message.content.split(" ").slice(2).join(" ");
 
-        message.guild.members.get(client.user.id).setNickname(newNick);
+        message.guild.me.setNickname(newNick);
         message.reply(`Bot nickname set to \`${newNick}\``);
     } catch(err) {
         message.reply(err.message);
