@@ -49,20 +49,20 @@ module.exports = async (client) => {
         const activities = [
             {
                 text: "with Willy",
-                type: "PLAYING",
+                type: "PLAYING"
             },
             {
                 text: "over DanBot Hosting",
-                type: "WATCHING",
+                type: "WATCHING"
             },
             {
                 text: "free servers being created",
-                type: "WATCHING",
+                type: "WATCHING"
             },
             {
                 text: "over " + users.length + " happy clients",
-                type: "WATCHING",
-            },
+                type: "WATCHING"
+            }
         ];
 
         const activity = activities[Math.floor(Math.random() * activities.length)];
