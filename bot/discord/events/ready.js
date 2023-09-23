@@ -48,10 +48,6 @@ module.exports = async (client) => {
         //Auto Activities List
         const activities = [
             {
-                text: "with Willy",
-                type: "PLAYING"
-            },
-            {
                 text: "over DanBot Hosting",
                 type: "WATCHING"
             },
