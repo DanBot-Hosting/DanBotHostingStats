@@ -141,7 +141,8 @@ module.exports = async (client, message) => {
             command === "server" ||
             command === "user" ||
             command === "staff" ||
-            command === "ticket"
+            command === "ticket" ||
+            command === "william"
         ) {
             // Cooldown setting
             if (!args[0]) {
