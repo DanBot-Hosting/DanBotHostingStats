@@ -1,18 +1,6 @@
 let nstatus = {
     "Free Nodes": [
         {
-            name: "Node 2",
-            data: "Node2",
-            location: "UK",
-            maxCount: 1200,
-        },
-        {
-            name: "Node 3",
-            data: "Node3",
-            location: "UK",
-            maxCount: 1200,
-        },
-        {
             name: "Node 4",
             data: "Node4",
             location: "UK",
@@ -53,7 +41,7 @@ let nstatus = {
         {
             name: "PNode 2",
             data: "pnode2",
-            maxCount: 1200,
+            maxCount: 3000,
         },
     ],
 
