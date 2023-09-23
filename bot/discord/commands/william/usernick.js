@@ -10,7 +10,9 @@ exports.run = (client, message, args) => {
         const userId = args[2];
         const newNick = message.content.split(" ").slice(3).join(" ");
 
-        message.guild.members.cache.get(userId).setNickname(newNick);
+        const user = message.guild.members.cache.get(userId);
+
+        user.setNickname(newNick);
         message.reply(`User nickname set to \`${newNick}\``);
     } catch(err) {
         message.reply(err.message);
