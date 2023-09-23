@@ -7,18 +7,6 @@ let pingLocals = {
 };
 
 let stats = {
-    node2: {
-        serverID: "ca89e5c6",
-        IP: "176.31.203.21",
-        ID: "2",
-        Location: pingLocals.UK,
-    },
-    node3: {
-        serverID: "a35842f2",
-        IP: "176.31.203.25",
-        ID: "7",
-        Location: pingLocals.UK,
-    },
     node4: {
         serverID: "7372a1e9",
         IP: "176.31.203.23",
