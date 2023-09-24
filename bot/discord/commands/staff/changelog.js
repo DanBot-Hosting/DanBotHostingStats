@@ -3,7 +3,7 @@ exports.run = (client, message, args) => {
     // Check if user has the dev role
     if (!message.member.roles.cache.find((r) => r.id === "898041747597295667")) return;
 
-    if(!args[2]) return message.reply("Please provide a message!");
+    if(!args[1]) return message.reply("Please provide a message!");
 
     const msg = message.content.split(" ").slice(2).join(" ");
 
