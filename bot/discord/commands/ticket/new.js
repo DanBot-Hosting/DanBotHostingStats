@@ -6,13 +6,13 @@ exports.run = async (client, message, args) => {
 
     if (
         message.guild.channels.cache.find((ch) =>
-            ch.name.includes(message.author.tag.toString().toLowerCase().replace(" ", "-"))
+            ch.name.includes(message.author.username.toLowerCase().replace(" ", "-"))
         )
     )
-        return message.reply(`💡 | You already have an opened ticket.`);
+        return message.reply(`You already have an open ticket.`);
 
     let channel = await message.guild.channels
-        .create("🎫╏" + message.author.tag + "-ticket", "text")
+        .create("🎫╏" + message.author.username + "-ticket", "text")
 
         .catch((err) => {
             console.log(err);
@@ -39,12 +39,12 @@ exports.run = async (client, message, args) => {
         });
     }, 1000);
 
-    message.reply(`🎫 | A ticket has been opened for you, check it out here: ${channel}.`);
+    message.reply(`A ticket has been opened for you, check it out here: ${channel}`);
 
     if (userData.get(message.author.id) == null) {
         const embed = new Discord.MessageEmbed()
             .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
-            .setDescription(`> Please do not ping staff, it will not solve your problem faster.`)
+            .setDescription("Please do not ping staff, it will not solve your problem faster.")
             .addField(`📡 | Account Info`, `> This account is not linked with a console account.`)
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp();
@@ -52,7 +52,7 @@ exports.run = async (client, message, args) => {
     } else {
         const embed = new Discord.MessageEmbed()
             .setAuthor(`${client.user.username} | Tickets`, client.user.avatarURL())
-            .setDescription(`> Please do not ping staff, it will not solve your problem faster.`)
+            .setDescription(`Please do not ping staff, it will not solve your problem faster.`)
             .addField(
                 `📡 | Account Info`,
                 `> **Username:** ${userData.fetch(message.author.id + ".username")}\n> **Email:** ||${userData.fetch(
