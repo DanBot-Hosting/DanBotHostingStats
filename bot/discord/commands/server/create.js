@@ -1,8 +1,6 @@
 const serverCreateSettings = require("../../../../createData");
 exports.run = async (client, message, args) => {
-
-    return message.reply("This command is temporarily disabled. Node is under maintenance at the moment **We don't have an ETA when it will be enable**, Please check <#898041845878247487> or <#898327108898684938> for updates.");
-
+    return message.reply("This command is temporarily disabled. The nodes are under maintenance at the moment. **We don't have an ETA when it will be re-enabled**, Please check <#898041845878247487>, <#898327108898684938> or <#898041862160527440> for updates.");
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
