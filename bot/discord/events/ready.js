@@ -1,5 +1,5 @@
 const cap = require("../util/cap");
-const exec = require("child_process").exec;
+const { exec } = require("child_process");
 const nstatus = require("../serverStatus");
 
 module.exports = async (client) => {
@@ -49,16 +49,16 @@ module.exports = async (client) => {
         const activities = [
             {
                 text: "over DanBot Hosting",
-                type: "WATCHING",
+                type: "WATCHING"
             },
             {
-                text: "free servers be created!",
-                type: "WATCHING",
+                text: "free servers being created",
+                type: "WATCHING"
             },
             {
                 text: "over " + users.length + " happy clients",
-                type: "WATCHING",
-            },
+                type: "WATCHING"
+            }
         ];
 
         const activity = activities[Math.floor(Math.random() * activities.length)];

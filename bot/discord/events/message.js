@@ -58,10 +58,9 @@ module.exports = async (client, message) => {
 
             try {
                 const msg = await client.channels.cache.get(args[0]).send(cap(message.content.split(" ").slice(1).join(" "), 2000));
-                // message.react("<:Yes:768256004655677451>");
-                message.channel.send(`<:Yes:768256004655677451> Message sent\n${msg.url}`);
+                message.reply(msg.url);
             } catch(err) {
-                message.channel.send(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
+                message.channel.send(`\`\`\`${err.message}\`\`\``);
             }
         };
     };
@@ -94,13 +93,18 @@ module.exports = async (client, message) => {
             "898041851729305621", // spam
             "898041858666668092", // pets
             "898041865616650240", // dono-lounge
+            "898041875192234054", // vps-chat
+            "898354771927400538", // beta-lounge
+            "976371313901965373", // vpn-suggestions
+            "964215219968696390", // vpn-bugs
             "898041892279836692", // hosting
             "898041894746066985", // python
             "898041895987585024", // javascript
             "898041896956469249", // web-dev
             "938630088256286720", // vps-hosting
             "1056858054819336192", // node-bot-outages
-            "1138925759264739398" // vpn
+            "1138925759264739398", // vpn
+            "945031368675582023" // dans-birthday
         ];
 
         // Channel checker
@@ -137,7 +141,8 @@ module.exports = async (client, message) => {
             command === "server" ||
             command === "user" ||
             command === "staff" ||
-            command === "ticket"
+            command === "ticket" ||
+            command === "william"
         ) {
             // Cooldown setting
             if (!args[0]) {

@@ -1,6 +1,5 @@
 const axios = require("axios");
-var ping = require("ping");
-const ping2 = require("ping-tcp-js");
+const ping = require("ping-tcp-js");
 
 let pingLocals = {
     UK: config.Ping.UK,
@@ -8,24 +7,6 @@ let pingLocals = {
 };
 
 let stats = {
-    node1: {
-        serverID: "7c740e8c",
-        IP: "176.31.203.22",
-        ID: "1",
-        Location: pingLocals.UK,
-    },
-    node2: {
-        serverID: "ca89e5c6",
-        IP: "176.31.203.21",
-        ID: "2",
-        Location: pingLocals.UK,
-    },
-    node3: {
-        serverID: "a35842f2",
-        IP: "176.31.203.25",
-        ID: "7",
-        Location: pingLocals.UK,
-    },
     node4: {
         serverID: "7372a1e9",
         IP: "176.31.203.23",
@@ -92,9 +73,15 @@ let stats = {
         ID: "38",
         Location: pingLocals.UK,
     },
+    pnode2: {
+        serverID: "2358ca8e",
+        IP: "51.89.140.125",
+        ID: "40",
+        Location: pingLocals.UK,
+    },
 };
 if (enabled.nodestatsChecker === true) {
-    console.log(chalk.magenta("[Nodes Checker] ") + chalk.green("Enabled and Online"));
+    console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled / Online"));
     //Node status
     setInterval(() => {
         //Public nodes
@@ -142,7 +129,7 @@ if (enabled.nodestatsChecker === true) {
                     .catch((error) => {
                         //Node is either offline or wings are offline. Checks if it's maintenance, and then checks for wings.
 
-                            ping2
+                            ping
                                 .ping(data.IP, 22)
                                 .then(() => {
                                     nodeStatus.set(`${node}.timestamp`, Date.now());
@@ -181,38 +168,54 @@ if (enabled.nodestatsChecker === true) {
             }, 2000);
         }
 
-        //Germany 1 VPN Server
-        ping2
-            .ping("51.89.32.64", 22)
+        // AU 1 VPN Server
+        ping
+            .ping("139.99.171.195", 22)
             .then(() =>
-                nodeStatus.set("germany1", {
+                nodeStatus.set("au1", {
                     timestamp: Date.now(),
                     status: true,
                 })
             )
             .catch((e) =>
-                nodeStatus.set("germany1", {
+                nodeStatus.set("au1", {
                     timestamp: Date.now(),
                     status: false,
                 })
             );
 
-        //France 1 VPN Server
-        ping2
+        // FR 1 VPN Server
+        ping
             .ping("176.31.125.135", 22)
             .then(() =>
-                nodeStatus.set("france1", {
+                nodeStatus.set("fr1", {
                     timestamp: Date.now(),
                     status: true,
                 })
             )
             .catch((e) =>
-                nodeStatus.set("france1", {
+                nodeStatus.set("fr1", {
+                    timestamp: Date.now(),
+                    status: false,
+                })
+            );
+
+        // US 1 VPN Server
+        ping
+            .ping("69.197.129.206", 22)
+            .then(() =>
+                nodeStatus.set("us1", {
+                    timestamp: Date.now(),
+                    status: true,
+                })
+            )
+            .catch((e) =>
+                nodeStatus.set("us1", {
                     timestamp: Date.now(),
                     status: false,
                 })
             );
     }, 10000);
 } else {
-    console.log(chalk.magenta("[Nodes Checker] ") + chalk.red("Disabled"));
+    console.log(chalk.magenta("[NODE CHECKER] ") + chalk.red("Disabled"));
 }
