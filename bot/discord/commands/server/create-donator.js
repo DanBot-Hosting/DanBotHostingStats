@@ -3,7 +3,7 @@ const axios = require("axios");
 
 exports.run = async (client, message, args) => {
 
-    return message.reply("This command is temporarily disabled.");
+    return message.reply("This command is temporarily disabled. Node is under maintenance at the moment **We don't have an ETA when it will be enable**, Please check <#898041845878247487> or <#898327108898684938> or <#898041862160527440> for updates.");
 
     let userP = userPrem.fetch(message.author.id) || {
         used: 0,
