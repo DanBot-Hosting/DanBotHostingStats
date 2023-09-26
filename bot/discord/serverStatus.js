@@ -1,38 +1,5 @@
 let nstatus = {
-    "Free Nodes": [
-        {
-            name: "Node 4",
-            data: "Node4",
-            location: "UK",
-            maxCount: 1200,
-        },
-        {
-            name: "Node 5",
-            data: "Node5",
-            location: "UK",
-            maxCount: 1200,
-        },
-        {
-            name: "Node 6",
-            data: "Node6",
-            location: "UK",
-            maxCount: 1200,
-        },
-        {
-            name: "Node 7",
-            data: "Node7",
-            location: "UK",
-            maxCount: 1200,
-        },
-        {
-            name: "Node 8",
-            data: "Node8",
-            location: "UK",
-            maxCount: 600,
-        },
-    ],
-
-    "Performance Nodes": [
+    "Performance Nodes (Free Nodes)": [
         {
             name: "PNode 1",
             data: "pnode1",
