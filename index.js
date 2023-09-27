@@ -57,6 +57,8 @@ global.client = new Discord.Client({
 });
 global.bot = client;
 
+global.pollPingLastUsed = 0;
+
 require("./bot/discord/commands/mute").init(client);
 
 //Event handler
