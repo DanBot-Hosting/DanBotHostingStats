@@ -2,7 +2,7 @@ const cap = require("../../util/cap");
 const exec = require("child_process").exec;
 
 exports.run = async (client, message, args) => {
-    //Checks if the user has the Bot System Administrator Role or is William
+    // Checks if the user has the Bot System Administrator Role or is William
     if (!message.member.roles.cache.find((r) => r.id === "898041743566594049") && message.author.id !== "853158265466257448") return;
 
     exec(`git pull`, (error, stdout) => {

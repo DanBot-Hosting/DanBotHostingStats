@@ -91,27 +91,13 @@ exports.run = async (client, message, args) => {
         args[0].match(/[0-9]{17,19}/).length == 0 ? args[0] : args[0].match(/[0-9]{17,19}/)[0]
     );
 
-    // Easter eggs
-    // User who ran command
-    if(target.id === message.author.id) return message.channel.send(`Hey everyone, <@${message.author.id}> is really trying to take away his own freedom of speech!`);
-    // William
-    if(target.id === "853158265466257448") return message.reply("Please mute Willy he keeps breaking me!");
-    // Mike
-    if(target.id === "405771597761216522") return message.reply("Sadly I can't mute Mike (I wish I could mute him, he is very annoying)");
-    // Caliwyr
-    if(target.id === "218023395965665281") return message.reply("Got it! But I cannot mute my dad sorry about that :cry:");
-    // Wizq
-    if(target.id === "778254181303451658") return message.reply("Nah! He is too busy losing Valorant matches YET AT IRON <:lmao:756245103449866260>");
-    // Bocon
-    if(target.id === "714860155183038495") return message.reply("Girl, why you trying to mute the amazing <@714860155183038495>?");
-
     if (message.member.roles.cache.find((r) => r.id === config.DiscordBot.roles.staff) == null)
-        return message.reply("It looks like you're too much of a boomer to run this command.");
+        return message.reply("You do not have permission to run this command.");
 
     let reason = args.slice(2).join(" ") || `unspecified`;
     let time = ms(args[1]) || 300000;
 
-    if (target == null) return message.reply("please specify a valid user.");
+    if (target == null) return message.reply("Please specify a valid user.");
     if (time < 5000) time = 5000; //5seconds
 
     await target.roles.add(config.DiscordBot.roles.mute);

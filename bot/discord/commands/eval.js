@@ -69,10 +69,7 @@ exports.run = async (client, message) => {
                                 true
                             )
                             .setColor(0xff0000)
-                            .setFooter(
-                                `Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms `,
-                                `https://images-ext-2.discordapp.net/eyJ1cmwiOiJodHRwczovL2Euc2FmZS5tb2UvVUJFVWwucG5nIn0.LbWCXwiUul3udoS7s20IJYW8xus`
-                            );
+                            .setFooter(`${Date.now() - message.createdTimestamp}ms`);
                         msg.edit({
                             embed: errorcode1,
                         });
@@ -87,7 +84,7 @@ exports.run = async (client, message) => {
                     .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                     .addField(`\u200b`, `**:outbox_tray: Output:**\n\n\`\`\`js\n${clean(evaled)}\`\`\``, true)
                     .setColor(0x00ff00)
-                    .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`);
+                    .setFooter(`${Date.now() - message.createdTimestamp}ms`);
                 msg.edit({
                     embed: evalcode,
                 }).catch((e) => {});
@@ -100,7 +97,7 @@ exports.run = async (client, message) => {
                     .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                     .addField(`\u200b`, `**:outbox_tray: Output:**\`\`\`js\n${clean(err)}\`\`\``, true)
                     .setColor(0xff0000)
-                    .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp}ms`);
+                    .setFooter(`${Date.now() - message.createdTimestamp}ms`);
                 msg.edit({
                     content: "",
                     embed: errorcode,
@@ -111,25 +108,25 @@ exports.run = async (client, message) => {
         message.reply("Evaluating...").then((msg) => {
             const responses = [
                 "SyntaxError: Unexpected token F in JSON at position 48",
+                "SyntaxError: Unexpected token L in JSON at position 69",
                 "SyntaxError: Unexpected identifier",
                 "UnhandledPromiseRejectionWarning: DiscordAPIError: Missing Permissions",
                 "TypeError: Cannot read property 'messages' of undefined",
-                "UnhandledPromiseRejectionWarning: MongoError: bad auth : Authentication failed.",
-                `TypeError: Cannot read property '${args.join(" ")}' of undefined`,
-                "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start."
+                "UnhandledPromiseRejectionWarning: MongoError: bad auth: Authentication failed.",
+                `TypeError: Cannot read property '${args.join(" ")}' of undefined`
             ];
             var randomResponse =
                 responses[Math.floor(Math.random() * responses.length)];
             let errorcodefake = new Discord.MessageEmbed()
-                .setAuthor(`Eval by ${message.author.tag}`, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
-                .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+                .setAuthor(message.author.tag, `https://cdn.discordapp.com/emojis/314405560701419520.png`)
+                .setDescription(`:inbox_tray: **Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                 .addField(
                     `\u200b`,
-                    `**:outbox_tray: Output:**\`\`\`\n${randomResponse}\`\`\``,
+                    `:outbox_tray: **Output:**\`\`\`\n${randomResponse}\`\`\``,
                     true
                 )
                 .setColor(0xff0000)
-                .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp}ms`);
+                .setFooter(`${Date.now() - message.createdTimestamp}ms`);
             msg.edit({
                 content: "",
                 embed: errorcodefake,

@@ -2,9 +2,8 @@ const Discord = require("discord.js");
 const axios = require("axios");
 
 exports.run = async (client, message, args) => {
-  if(!message.member.roles.cache.find((r) => r.id === "898041755419693126")) {
-      return message.reply("Only beta testers can use this command!");
-  }
+  if(!message.member.roles.cache.find((r) => r.id === "898041755419693126")) return;
+  return message.reply("This command is temporarily disabled until the API is finished.");
 
   try {
     const request = await axios({
