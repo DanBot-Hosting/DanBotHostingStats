@@ -10,6 +10,16 @@ let nstatus = {
             data: "pnode2",
             maxCount: 3000,
         },
+        {
+            name: "PNode 3",
+            data: "pnode3",
+            maxCount: 3000,
+        },
+        {
+            name: "PNode 4",
+            data: "pnode4",
+            maxCount: 3000,
+        },
     ],
 
     "Donator Nodes": [

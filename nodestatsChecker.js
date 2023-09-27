@@ -79,6 +79,18 @@ let stats = {
         ID: "40",
         Location: pingLocals.UK,
     },
+    pnode3: {
+        serverID: "e611fc3f",
+        IP: "51.89.140.124",
+        ID: "40",
+        Location: pingLocals.UK,
+    },
+    pnode4: {
+        serverID: "e611fc3f",
+        IP: "51.89.140.126",
+        ID: "40",
+        Location: pingLocals.UK,
+    },
 };
 if (enabled.nodestatsChecker === true) {
     console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled / Online"));
