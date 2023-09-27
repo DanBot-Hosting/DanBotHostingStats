@@ -11,6 +11,7 @@ exports.run = (client, message, args) => {
         return;
     }
 
-    message.reply("im not pinging poll ping lol");
+    message.delete();
+    message.reply("<@&898041781927682090> New developer poll!");
     global.pollPingLastUsed = Date.now();
 };
