@@ -12,6 +12,6 @@ exports.run = (client, message, args) => {
     }
 
     message.delete();
-    message.reply("<@&898041781927682090> New developer poll!");
+    message.channel.send("<@&898041781927682090>");
     global.pollPingLastUsed = Date.now();
 };
