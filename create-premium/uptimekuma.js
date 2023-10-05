@@ -14,6 +14,7 @@ createListPrem.uptimekuma = (serverName, userID) => ({
         cpu: 0,
     },
     environment: {
+        GIT_ADDRESS: "https://github.com/louislam/uptime-kuma",
         JS_FILE: "server/server.js"
     },
     feature_limits: {
