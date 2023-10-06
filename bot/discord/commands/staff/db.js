@@ -3,7 +3,9 @@ exports.run = async (client, message, args) => {
 
     try {
         const db = require("quick.db");
-        db.fetchAll().then((data) => { console.log(data) });
+        db.all().forEach((x) => {
+            console.log(x.ID + " | " + x.data);
+        });
         message.reply("Check console for data.");
     } catch(err) {
         message.reply("Error: " + err.message);
