@@ -4,7 +4,7 @@ exports.run = (client, message, args) => {
         return message.reply(`🚧 | You do not have permission to use this command.`);
     }
 
-    let prefix = config.DiscordBot.prefix;
+    let prefix = config.DiscordBot.Prefix;
 
     const embed = new Discord.MessageEmbed()
         .setAuthor(`${client.user.username} | Purge`, client.user.avatarURL())
