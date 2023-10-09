@@ -27,7 +27,7 @@
     "minimist": "^1.2.8",
     "moment": "^2.29.4",
     "node-fetch": "^2.6.12",
-    "nodemailer": "^6.9.3",
+    "nodemailer": "^6.9.6",
     "path": "^0.12.7",
     "ping": "^0.4.4",
     "ping-tcp-js": "^1.5.0",
