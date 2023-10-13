@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
 
     const embed = new Discord.MessageEmbed()
         .setColor("BLUE")
-        .addField("Premium servers used:", (user.used || 0) + " out of  " + parser.format(allowed) + " servers used");
+        .addField("Premium servers used:", (user.used || 0) + " out of " + parser.format(allowed) + " servers used");
 
     await message.reply(embed);
 };
