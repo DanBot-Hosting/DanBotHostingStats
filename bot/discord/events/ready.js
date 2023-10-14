@@ -67,14 +67,6 @@ module.exports = async (client) => {
         });
     }, 30000);
 
-    // Fetch and store guild invites
-    global.invites = {};
-    client.guilds.cache.forEach((g) => {
-        g.fetchInvites().then((guildInvites) => {
-            invites[g.id] = guildInvites;
-        });
-    });
-
     // Node status embed
     if (enabled.NodeStats === true) {
         let channel = client.channels.cache.get("898041845878247487");
