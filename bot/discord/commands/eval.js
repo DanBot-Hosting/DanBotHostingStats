@@ -5,8 +5,8 @@ exports.run = async (client, message) => {
     let cont = message.content.split(" ").slice(1).join(" ");
 
     if (
-        message.member.roles.cache.find((r) => r.id === "898041743566594049") ||
-        message.member.roles.cache.find((r) => r.id === "898041741695926282")
+        message.member.roles.cache.find((r) => r.id === "898041743566594049") || // Bot Admin
+        message.member.roles.cache.find((r) => r.id === "898041741695926282") // Owner
     ) {
         function clean(text) {
             if (typeof text !== "string")
