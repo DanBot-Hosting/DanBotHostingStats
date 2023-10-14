@@ -4,7 +4,7 @@ exports.run = (client, message, args) => {
         exec(`${args.join(" ")}`, (error, stdout) => {
             let response = error || stdout;
 
-            if (response.length > 5000) console.log(response), (response = "Output too long.");
+            if (response.length > 4000) console.log(response), (response = "Output too long.");
 
             message.reply("", {
                 embed: new Discord.MessageEmbed()
