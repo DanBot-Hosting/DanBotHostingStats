@@ -22,8 +22,7 @@
             "member": "Member role ID",
             "client": "Client role ID",
             "bot": "Bot role ID",
-            "staff": "Staff role ID (Used for staff commands)",
-            "mute": "Muted role ID"
+            "staff": "Staff role ID (Used for staff commands)"
         },
         "invitechannel": "Invite logs channel ID",
         "inviterewmsg": "Invite reward message channel ID",

@@ -25,10 +25,6 @@ module.exports = async (client, member, guild) => {
                 member.roles.add(config.DiscordBot.roles.client);
                 welcomeChannel.send("Welcome back <@" + member + "> to DanBot Hosting!");
             }
-
-            if (mutesData.get(member.id) != null) {
-                member.roles.add(config.DiscordBot.roles.mute);
-            }
         }
     }
 };

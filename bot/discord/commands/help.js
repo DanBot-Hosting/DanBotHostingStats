@@ -11,10 +11,7 @@ const commands = {
         help: "Brings up this menu.",
     },
     Staff: {
-        staff: "See help for that command.",
-        purge: "Delete messages in a channel.",
-        mute: "Mute da user .",
-        kick: "Kick da user.",
+        staff: "See help for that command."
     },
     Owner: {
         eval: "Eval some code.",

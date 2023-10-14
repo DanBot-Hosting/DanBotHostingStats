@@ -116,27 +116,6 @@ module.exports = async (client, message) => {
         ) return;
 
         if (
-            sudo.get(message.member.id) &&
-            message.member.roles.cache.find((r) => r.id === "898041747597295667") &&
-            args[0] != "sudo"
-        ) {
-            // Double check the user is allowed to use this command
-            actualExecutorId = JSON.parse(JSON.stringify({ a: message.member.id })).a; // Deep clone sender user ID
-
-            console.log(
-                chalk.magenta("[DISCORD] ") + chalk.yellow(`Command being executed with sudo by ${actualExecutorId}`)
-            );
-
-            let userToCopy = sudo.get(actualExecutorId);
-
-            // await message.guild.members.fetch(userToCopy);  // Cache user data
-            // await client.users.fetch(userToCopy); // Cache user data
-
-            message.guild.member.id = userToCopy;
-            message.author.id = userToCopy;
-        }
-
-        if (
             command === "info" ||
             command === "server" ||
             command === "user" ||

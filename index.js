@@ -38,16 +38,13 @@ global.moment = require("moment");
 global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
 global.settings = new db.table("settings"); //Admin settings
 global.webSettings = new db.table("webSettings"); //Web settings (forgot what this is even for)
-global.mutesData = new db.table("muteData"); //Mutes, Stores current muted people and unmute times
 global.domains = new db.table("linkedDomains"); //Linked domains for unproxy and proxy cmd
 global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline nodes
 global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
-global.sudo = new db.table("sudoCommands"); //Keep track of staff sudo
-global.lastBotClaim = new db.table("lastBotClaim"); //Keep track of staff sudo
+global.lastBotClaim = new db.table("lastBotClaim"); //lastBotClaim
 global.nodePing = new db.table("nodePing"); //Node ping response time
-// Array.from(sudo.all()).forEach(sudo.delete); //On boot remove all sudos
 
 global.client = new Discord.Client({
     restTimeOffset: 0,
@@ -58,8 +55,6 @@ global.client = new Discord.Client({
 global.bot = client;
 
 global.pollPingLastUsed = 0;
-
-require("./bot/discord/commands/mute").init(client);
 
 //Event handler
 fs.readdir("./bot/discord/events/", (err, files) => {

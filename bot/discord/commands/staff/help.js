@@ -9,7 +9,6 @@ let subcommands = {
     },
     botdev: {
         linked: ["Shows if the users account is linked.", "<userid>"],
-        sudo: ["Send messages on behalf of another user.", "<userid>"],
         maintenance: ["Set a Node into maintenance for Node Status.", "<nodeName>"],
         update: ["Pulls files from GitHub manaully.", ""],
     },
