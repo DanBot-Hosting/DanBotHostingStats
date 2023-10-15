@@ -21,10 +21,6 @@ module.exports = async (client, message) => {
         "976371313901965373" // VPN Suggestions
     ];
 
-    const publishedChannels = [
-        "898327108898684938" // Server Status
-    ];
-
     if (suggestionChannels.some(channel => channel == message.channel.id)) {
         if (!message.content.startsWith(">")) {
             message.react("👍");
@@ -32,14 +28,6 @@ module.exports = async (client, message) => {
             setTimeout(() => {
                 message.react("👎");
             }, 200);
-        }
-    }
-
-    if(publishedChannels.some(channel => channel == message.channel.id)) {
-        try {
-            message.crosspost();
-        } catch(Error) {
-            console.log("Error crossposting message:", Error);
         }
     }
 
