@@ -49,6 +49,7 @@ exports.run = async (client, message) => {
                             .setColor(0x00ff00)
                             .setFooter(`Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`);
                         msg.edit({
+                            content: "",
                             embed: evalcode1,
                         }),
                             fs.writeFile(`eval.txt`, `${clean(evaled)}`),
@@ -71,6 +72,7 @@ exports.run = async (client, message) => {
                             .setColor(0xff0000)
                             .setFooter(`${Date.now() - message.createdTimestamp}ms`);
                         msg.edit({
+                            content: "",
                             embed: errorcode1,
                         });
                         return fs.writeFile(`eval.txt`, `${clean(err)}`);
@@ -86,6 +88,7 @@ exports.run = async (client, message) => {
                     .setColor(0x00ff00)
                     .setFooter(`${Date.now() - message.createdTimestamp}ms`);
                 msg.edit({
+                    content: "",
                     embed: evalcode,
                 }).catch((e) => {});
             } catch (err) {
