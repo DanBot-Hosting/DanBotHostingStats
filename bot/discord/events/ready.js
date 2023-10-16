@@ -48,7 +48,7 @@ module.exports = async (client) => {
         //Auto Activities List
         const activities = [
             {
-                text: "over DanBot Hosting",
+                text: "over DBH",
                 type: "WATCHING"
             },
             {
@@ -56,11 +56,15 @@ module.exports = async (client) => {
                 type: "WATCHING"
             },
             {
-                text: "over " + users.length + " happy clients",
+                text: "over 14,000+ happy clients",
                 type: "WATCHING"
             },
             {
-                text: "my impending doom",
+                text: "with the ban hammer over abusers",
+                type: "PLAYING"
+            },
+            {
+                text: "powerful servers doing work",
                 type: "WATCHING"
             }
         ];
@@ -69,7 +73,7 @@ module.exports = async (client) => {
         client.user.setActivity(activity.text, {
             type: activity.type,
         });
-    }, 30000);
+    }, 15000);
 
     // Node status embed
     if (enabled.NodeStats === true) {
