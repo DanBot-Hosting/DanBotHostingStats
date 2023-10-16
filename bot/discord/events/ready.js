@@ -58,6 +58,10 @@ module.exports = async (client) => {
             {
                 text: "over " + users.length + " happy clients",
                 type: "WATCHING"
+            },
+            {
+                text: "my impending doom",
+                type: "WATCHING"
             }
         ];
 
