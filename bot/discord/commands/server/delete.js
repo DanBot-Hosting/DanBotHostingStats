@@ -85,7 +85,6 @@ exports.run = async (client, message, args) => {
                                 })
                                     .then((response) => {
                                         msg.edit("Server deleted!");
-                                        //console.log(output.attributes.node)
 
                                         if (
                                             output.attributes.node === 31 ||

@@ -1,6 +1,6 @@
 const humanizeDuration = require("humanize-duration");
 module.exports = async (client, member, guild) => {
-    if (enabled.Welcome === true) {
+    if (enabled.Welcome) {
         let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
 
         if (Date.now() - member.user.createdAt < 863136000) {

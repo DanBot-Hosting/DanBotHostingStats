@@ -92,8 +92,8 @@ let stats = {
         Location: pingLocals.UK,
     },
 };
-if (enabled.nodestatsChecker === true) {
-    console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled / Online"));
+if (enabled.nodestatsChecker) {
+    console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled"));
     //Node status
     setInterval(() => {
         //Public nodes

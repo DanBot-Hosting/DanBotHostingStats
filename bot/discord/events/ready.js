@@ -30,9 +30,7 @@ module.exports = async (client) => {
         exec(`git pull`, (error, stdout) => {
             let response = error || stdout;
             if (!error) {
-                if (response.includes("Already up to date.")) {
-                    //console.log('Bot already up to date. No changes since last pull')
-                } else {
+                if (!response.includes("Already up to date.")) {
                     client.channels.cache
                         .get("898041843902742548")
                         .send(`<t:${Date.now().toString().slice(0, -3)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``);
@@ -76,7 +74,7 @@ module.exports = async (client) => {
     }, 15000);
 
     // Node status embed
-    if (enabled.NodeStats === true) {
+    if (enabled.NodeStats) {
         let channel = client.channels.cache.get("898041845878247487");
         setInterval(async () => {
             let embed = await nstatus.getEmbed();

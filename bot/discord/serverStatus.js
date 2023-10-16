@@ -91,13 +91,13 @@ let parse = async () => {
                 : "";
 
             da =
-                da.maintenance === true
+                da.maintenance
                     ? `🟣 Maintenance`
-                    : da.status === true
+                    : da.status
                     ? `🟢 Online ${serverUsage}`
                     : da.is_vm_online == null
                     ? "🔴 **Offline**"
-                    : (da.is_vm_online === true ? "🟠 **Wings**" : "🔴 **System**") + ` **offline** ${serverUsage}`;
+                    : (da.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") + ` **offline** ${serverUsage}`;
 
             temp.push(`${d.name}: ${da}`);
         }

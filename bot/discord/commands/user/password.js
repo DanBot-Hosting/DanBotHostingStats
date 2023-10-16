@@ -22,7 +22,6 @@ exports.run = async (client, message, args) => {
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
     }).then((fetch) => {
-        console.log(fetch.data.attributes);
         const data = {
             email: fetch.data.attributes.email,
             username: fetch.data.attributes.username,

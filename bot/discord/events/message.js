@@ -1,20 +1,6 @@
 const cap = require("../util/cap");
 
 module.exports = async (client, message) => {
-    // Ban members which ping 20+ users
-    if (message.mentions.users.size >= 20 && !message.member.roles.cache.find((r) => r.id === "898041751099539497")) {
-        message.member.ban({ reason: "Suspected raid. Pinging more than 20 users." });
-        message.reply(`${message.member.toString()} has been banned for pinging more than 20 users`);
-
-        const embed = new Discord.MessageEmbed()
-            .setTitle("User banned for pinging more than 20 users")
-            .addField("User", "Banned " + message.member.toString(), true)
-            .setColor(0xff7700)
-            .setTimestamp(new Date());
-
-        client.channels.cache.get(config.DiscordBot.oLogs).send(embed);
-    };
-
     // Suggestions channels reactions
     const suggestionChannels = [
         "980595293768802327", // Staff Suggestions
@@ -23,11 +9,8 @@ module.exports = async (client, message) => {
 
     if (suggestionChannels.some(channel => channel == message.channel.id)) {
         if (!message.content.startsWith(">")) {
-            message.react("👍");
-
-            setTimeout(() => {
-                message.react("👎");
-            }, 200);
+            await message.react("👍");
+            await message.react("👎");
         }
     }
 
@@ -35,13 +18,12 @@ module.exports = async (client, message) => {
     const dmAllowedUsers = [
         "137624084572798976", // Dan
         "853158265466257448", // William
-        "757296951925538856", // DIBSTER
-        "459025800633647116"  // AVIXITY
+        "757296951925538856" // DIBSTER
     ];
 
     if (message.channel.type === "dm") {
         // Allow users to send messages on behalf of the bot if they are allowed
-        if (dmAllowedUsers.some(member => member == message.author.id)) {
+        if (dmAllowedUsers.includes(message.author.id)) {
             const args = message.content.trim().split(/ +/g);
 
             try {
@@ -99,17 +81,14 @@ module.exports = async (client, message) => {
         if (
             blacklisted.includes(message.channel.id) &&
             !message.member.roles.cache.find((x) => x.id === "898041751099539497") &&
-            !message.member.roles.cache.find((x) => x.id === "898041743566594049") &&
-            !(message.channel.id === "898041853096628267" && command === "info")
+            !message.member.roles.cache.find((x) => x.id === "898041743566594049")
         ) return;
 
         if (
-            command === "info" ||
             command === "server" ||
             command === "user" ||
             command === "staff" ||
-            command === "ticket" ||
-            command === "william"
+            command === "ticket"
         ) {
             // Cooldown setting
             if (!args[0]) {
@@ -127,11 +106,5 @@ module.exports = async (client, message) => {
         if (!Error.message.startsWith("Cannot find module")) {
             console.log("Error loading module:", Error);
         }
-    }
-
-    // Remove all clone traces after running command
-    if (actualExecutorId) {
-        message.guild.member.id = actualExecutorId;
-        message.author.id = actualExecutorId;
     }
 };

@@ -3,7 +3,6 @@ exports.run = async (client, message, args) => {
     let isAnotherUserLookup = false;
     if (message.mentions.members.first() != null) {
         targetUser = message.mentions.members.first().user;
-        console.log(targetUser.user);
         isAnotherUserLookup = true;
     } else targetUser = message.author;
 

@@ -89,8 +89,6 @@ exports.run = async (client, message, args) => {
                         if (err) {
                             console.log(err);
                         } else {
-
-
                             channel.send(
                                 "Please check the email account for a verification code to complete linking. You have 2mins"
                             );
