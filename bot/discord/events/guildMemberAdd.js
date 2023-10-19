@@ -1,8 +1,6 @@
 const humanizeDuration = require("humanize-duration");
 module.exports = async (client, member, guild) => {
     if (enabled.Welcome) {
-        let welcomeChannel = client.channels.cache.get(config.DiscordBot.welcome);
-
         if (Date.now() - member.user.createdAt < 863136000) {
             return;
         } else {
@@ -15,11 +13,8 @@ module.exports = async (client, member, guild) => {
                 });
             }
 
-            if (userData.get(member.id) == null) {
-                welcomeChannel.send(`Welcome ${member} to DanBot Hosting! To get started please read <#898041835002400768> and <#898041837535776788>`);
-            } else {
+            if (!userData.get(member.id) == null) {
                 member.roles.add(config.DiscordBot.roles.client);
-                welcomeChannel.send(`Welcome back <@${member}> to DanBot Hosting!`);
             }
         }
     }
