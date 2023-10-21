@@ -4,8 +4,6 @@ module.exports = async (client, member, guild) => {
         if (Date.now() - member.user.createdAt < 863136000) {
             return;
         } else {
-            member.roles.add(config.DiscordBot.roles.member);
-
             if (userPrem.get(member.id) == null) {
                 userPrem.set(member.id, {
                     used: 0,
