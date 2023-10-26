@@ -5,8 +5,7 @@ exports.run = async (client, message) => {
     let cont = message.content.split(" ").slice(1).join(" ");
 
     if (
-        message.member.roles.cache.find((r) => r.id === "898041743566594049") || // Bot Admin
-        message.member.roles.cache.find((r) => r.id === "898041741695926282") // Owner
+        message.member.roles.cache.find((r) => r.id === "898041743566594049") // Bot Admin
     ) {
         function clean(text) {
             if (typeof text !== "string")
@@ -107,10 +106,10 @@ exports.run = async (client, message) => {
                 }).catch((e) => {});
             }
         });
-    } else if (!message.member.roles.cache.find((r) => r.id === "898041741695926282")) {
+    } else {
         message.reply("Evaluating...").then((msg) => {
             const responses = [
-                "SyntaxError: Unexpected token F in JSON at position 48",
+                "SyntaxError: Unexpected token F in JSON at position 420",
                 "SyntaxError: Unexpected token L in JSON at position 69",
                 "SyntaxError: Unexpected identifier",
                 "UnhandledPromiseRejectionWarning: DiscordAPIError: Missing Permissions",
