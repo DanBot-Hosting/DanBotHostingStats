@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
         //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
-        .addField("__**WebHosting:**__", "Nginx", true)
+        .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
