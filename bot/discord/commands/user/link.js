@@ -125,7 +125,7 @@ exports.run = async (client, message, args) => {
 
                                     channel.send("Account linked!").then(
                                         client.channels.cache
-                                            .get(config.DiscordBot.oLogs)
+                                            .get("1168034234179539044")
                                             .send(
                                                 `<@${message.author.id}> linked their account. Heres some info: `,
                                                 embedstaff
@@ -135,7 +135,7 @@ exports.run = async (client, message, args) => {
                                         }, 5000)
                                     );
                                 } else {
-                                    channel.send("Code is incorrect. Linking cancelled! \n\nRemoving channel!");
+                                    channel.send("Code is incorrect. Linking cancelled!\n\nRemoving channel!");
                                     setTimeout(() => {
                                         channel.delete();
                                     }, 2000);
