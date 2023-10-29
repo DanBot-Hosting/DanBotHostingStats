@@ -7,36 +7,6 @@ let pingLocals = {
 };
 
 let stats = {
-    node4: {
-        serverID: "7372a1e9",
-        IP: "176.31.203.23",
-        ID: "11",
-        Location: pingLocals.UK,
-    },
-    node5: {
-        serverID: "9f41832d",
-        IP: "176.31.203.24",
-        ID: "12",
-        Location: pingLocals.UK,
-    },
-    node6: {
-        serverID: "f9453eca",
-        IP: "176.31.203.26",
-        ID: "13",
-        Location: pingLocals.UK,
-    },
-    node7: {
-        serverID: "e611fc3f",
-        IP: "176.31.203.20",
-        ID: "36",
-        Location: pingLocals.UK,
-    },
-    node8: {
-        serverID: "de45b1f4",
-        IP: "176.31.203.27",
-        ID: "37",
-        Location: pingLocals.UK,
-    },
     dono01: {
         serverID: "bd9d3ad6",
         IP: "63.141.249.43",
@@ -53,18 +23,6 @@ let stats = {
         serverID: "c23f92cb",
         IP: "51.68.194.254",
         ID: "33",
-        Location: pingLocals.UK,
-    },
-    dono04: {
-        serverID: "9b812dbf",
-        IP: "51.68.209.0",
-        ID: "35",
-        Location: pingLocals.UK,
-    },
-    dono05: {
-        serverID: "b06ae45f",
-        IP: "54.38.75.143",
-        ID: "39",
         Location: pingLocals.UK,
     },
     pnode1: {
