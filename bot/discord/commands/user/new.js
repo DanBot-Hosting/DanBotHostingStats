@@ -24,7 +24,7 @@ exports.run = async (client, message, args) => {
             afterChecks: [
                 {
                     check: (msg) => msg.toLowerCase() == "yes",
-                    errorMessage: "You must accept our TOS!!!",
+                    errorMessage: "You must accept our TOS!",
                 },
             ],
             time: 1000 * 60 * 10, // how much time a user has to answer the question before it times out
@@ -32,7 +32,7 @@ exports.run = async (client, message, args) => {
         },
         {
             id: "username",
-            question: "What should your username be? (**Please dont use spaces or special characters**)", // The questions...
+            question: "What should your username be? (**Please don't use spaces or special characters**)", // The questions...
             filter: (m) => m.author.id === message.author.id, // Filter to use...
             afterChecks: [
                 {
@@ -45,12 +45,12 @@ exports.run = async (client, message, args) => {
         },
         {
             id: "email",
-            question: "Whats your email? *(must be a valid email)*",
+            question: "What's your email? *(must be a valid email)*",
             filter: (m) => m.author.id === message.author.id,
             afterChecks: [
                 {
                     check: (msg) => validator.isEmail(msg.toLowerCase().trim()),
-                    errorMessage: "the email must be valid.",
+                    errorMessage: "The email must be valid.",
                 },
             ],
             time: 30000,
@@ -115,7 +115,7 @@ exports.run = async (client, message, args) => {
                 errors: ["time"],
             })
             .catch((x) => {
-                channel.send("User failed to provide an input!\nAccount Cancelled! :thumbsup:");
+                channel.send("User failed to provide an input!\nAccount creation cancelled!");
                 setTimeout(() => {
                     channel.delete();
                 }, 5000);
@@ -128,7 +128,7 @@ exports.run = async (client, message, args) => {
 
         if (question.value == "cancel") {
             msg.delete();
-            channel.send("Cancelled! :thumbsup:");
+            channel.send("Cancelled!");
 
             setTimeout(() => {
                 channel.delete();
@@ -139,7 +139,7 @@ exports.run = async (client, message, args) => {
         for (const aftercheck of question.afterChecks) {
             if (aftercheck.check(question.value) == false) {
                 channel.send(aftercheck.errorMessage);
-                channel.send("Account Cancelled! :thumbsup:");
+                channel.send("Account creation cancelled!");
                 setTimeout(() => {
                     channel.delete();
                 }, 5000);
@@ -191,7 +191,7 @@ exports.run = async (client, message, args) => {
                 domains: [],
             });
 
-            msg.edit("Hello! You created an new account, Heres the login information", {
+            msg.edit("Hello! You created an new account, Here's the login information", {
                 embed: new Discord.MessageEmbed()
                     .setColor("GREEN")
                     .setDescription(
@@ -207,7 +207,7 @@ exports.run = async (client, message, args) => {
                     .setFooter("Please note: It is recommended that you change the password"),
             });
 
-            channel.send("**You have 30mins to keep note of this info before the channel is deleted.**");
+            channel.send("**You have 30 minutes to keep note of this info before the channel is deleted.**");
             message.guild.members.cache.get(message.author.id).roles.add("898041758527651850");
             setTimeout(function () {
                 channel.delete();
@@ -222,7 +222,7 @@ exports.run = async (client, message, args) => {
                         .setColor("RED")
                         .setTitle("An error has occured:")
                         .setDescription(
-                            "**ERRORS:**\n\n●" + errors.map((error) => error.detail.replace("\n", " ")).join("\n●")
+                            "**ERRORS:**\n\n- " + errors.map((error) => error.detail.replace("\n", " ")).join("\n- ")
                         )
                         .setTimestamp()
                         .setFooter("Deleting in 30 seconds..."),
@@ -231,7 +231,7 @@ exports.run = async (client, message, args) => {
                     channel.delete();
                 }, 30000);
             } else {
-                channel.send("an unexpected error has occured, please try again later...");
+                channel.send("An unexpected error has occured, please try again later...");
                 setTimeout(function () {
                     channel.delete();
                 }, 30000);
