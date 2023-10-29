@@ -38,17 +38,7 @@ let nstatus = {
             name: "Dono-03",
             data: "dono03",
             maxCount: 1200,
-        },
-        {
-            name: "Dono-04",
-            data: "dono04",
-            maxCount: 500,
-        },
-        {
-            name: "Dono-05",
-            data: "dono05",
-            maxCount: 300,
-        },
+        }
     ],
 
     "VPN Servers": [
