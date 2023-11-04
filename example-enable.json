@@ -1,0 +1,6 @@
+{
+  "NodeStats": true,
+  "Welcome": true,
+  "nodestatsChecker": true,
+  "outageChecker": true 
+}
