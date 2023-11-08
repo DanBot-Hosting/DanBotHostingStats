@@ -38,9 +38,9 @@ let stats = {
         Location: pingLocals.UK,
     },
     pnode3: {
-        serverID: "e611fc3f",
+        serverID: "4222f0a1",
         IP: config.Nodes.PNode3,
-        ID: "40",
+        ID: "42",
         Location: pingLocals.UK,
     },
     pnode4: {
