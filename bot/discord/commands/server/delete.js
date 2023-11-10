@@ -98,11 +98,11 @@ exports.run = async (client, message, args) => {
                                                 userPrem.fetch(message.author.id).used - 1
                                             );
 
-                                        collector.stop();
+                                        // collector.stop();
                                     })
                                     .catch((err) => {
                                         msg.edit("An error occurred with the Panel. Please try again later.");
-                                        collector.stop();
+                                        // collector.stop();
                                     });
                             // } else {
                             //     message.delete();
