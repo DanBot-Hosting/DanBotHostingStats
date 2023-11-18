@@ -36,19 +36,7 @@ let stats = {
         IP: config.Nodes.PNode2,
         ID: "40",
         Location: pingLocals.UK,
-    },
-    pnode3: {
-        serverID: "4222f0a1",
-        IP: config.Nodes.PNode3,
-        ID: "42",
-        Location: pingLocals.UK,
-    },
-    pnode4: {
-        serverID: "e611fc3f",
-        IP: config.Nodes.PNode4,
-        ID: "40",
-        Location: pingLocals.UK,
-    },
+    }
 };
 if (enabled.nodestatsChecker) {
     console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled"));
