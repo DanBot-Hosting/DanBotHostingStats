@@ -110,7 +110,7 @@ exports.run = async (client, message, args) => {
                             //     msg.edit("Request cancelled!");
                             //     collector.stop();
                             // }
-                        });
+                        // });
                     } else {
                         msg.edit("You do not own that server so you cannot delete it.");
                     }
