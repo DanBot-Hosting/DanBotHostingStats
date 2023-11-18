@@ -52,22 +52,22 @@ exports.run = async (client, message, args) => {
                     msg.edit("I cannot find that server.");
                 } else {
                     if (output.attributes.user === userData.get(message.author.id).consoleID) {
-                        msg.edit(
-                            "Are you sure you want to delete `" +
-                                output.attributes.name.split("@").join("@​") + // Uses an invisible character (U+200B) after the @
-                                "`?\nPlease type `confirm` to delete this server. You have 1 minute until this prompt will expire.\n\n**You can not restore the server once it has been deleted and/or its files**"
-                        );
+                        // msg.edit(
+                        //     "Are you sure you want to delete `" +
+                        //         output.attributes.name.split("@").join("@​") + // Uses an invisible character (U+200B) after the @
+                        //         "`?\nPlease type `confirm` to delete this server. You have 1 minute until this prompt will expire.\n\n**You can not restore the server once it has been deleted and/or its files**"
+                        // );
 
-                        const collector = await message.channel.createMessageCollector(
-                            (m) => m.author.id === message.author.id,
-                            {
-                                time: 60000,
-                                max: 2,
-                            }
-                        );
-                        collector.on("collect", (message) => {
-                            if (message.content === "confirm") {
-                                message.delete();
+                        // const collector = await message.channel.createMessageCollector(
+                        //     (m) => m.author.id === message.author.id,
+                        //     {
+                        //         time: 60000,
+                        //         max: 2,
+                        //     }
+                        // );
+                        // collector.on("collect", (message) => {
+                        //     if (message.content === "confirm") {
+                        //         message.delete();
                                 msg.edit("Working...");
                                 axios({
                                     url:
@@ -99,17 +99,17 @@ exports.run = async (client, message, args) => {
                                                 userPrem.fetch(message.author.id).used - 1
                                             );
 
-                                        collector.stop();
+                                        // collector.stop();
                                     })
                                     .catch((err) => {
                                         msg.edit("An error occurred with the Panel. Please try again later.");
-                                        collector.stop();
+                                        // collector.stop();
                                     });
-                            } else {
-                                message.delete();
-                                msg.edit("Request cancelled!");
-                                collector.stop();
-                            }
+                            // } else {
+                            //     message.delete();
+                            //     msg.edit("Request cancelled!");
+                            //     collector.stop();
+                            // }
                         });
                     } else {
                         msg.edit("You do not own that server so you cannot delete it.");
