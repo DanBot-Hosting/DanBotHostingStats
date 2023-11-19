@@ -5,7 +5,7 @@ createList.openx = (serverName, userID) => ({
     egg: 79,
     docker_image: "quay.io/parkervcp/pterodactyl-images:debian_nodejs-16",
     startup:
-        "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then git pull; fi; /usr/local/bin/node /home/container/Src/index.js",
+        'if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then git pull; fi; /usr/local/bin/node /home/container/Src/index.js',
     limits: {
         memory: 0,
         swap: -1,
