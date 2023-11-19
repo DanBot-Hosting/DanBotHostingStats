@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
         //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
         .addField("__**Web Hosting:**__", "Nginx", true)
-        .addField("__**Custom Eggs:**__", "ShareX", true)
+        .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
 
@@ -81,7 +81,8 @@ exports.run = async (client, message, args) => {
         uptimekuma: data.uptimekuma,
         rustc: data.rustc,
         redbot: data.redbot,
-        grafana: data.grafana
+        grafana: data.grafana,
+        openx: data.openx
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {
