@@ -9,6 +9,11 @@ let nstatus = {
             name: "PNode 2",
             data: "pnode2",
             maxCount: 5000,
+        },
+        {
+            name: "PNode 3",
+            data: "pnode3",
+            maxCount: 5000,
         }
     ],
 
