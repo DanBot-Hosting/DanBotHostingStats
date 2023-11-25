@@ -17,7 +17,7 @@ let stats = {
         serverID: "ca6dba5a",
         IP: config.Nodes.Dono2,
         ID: "31",
-        Location: pingLocals.CA,
+        Location: pingLocals.UK,
     },
     dono03: {
         serverID: "c23f92cb",
