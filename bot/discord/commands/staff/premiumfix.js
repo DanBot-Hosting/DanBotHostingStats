@@ -1,4 +1,4 @@
-const premiumNodes = [31, 33, 34, 35, 39];
+const premiumNodes = [31, 33];
 
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
