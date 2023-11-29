@@ -89,10 +89,7 @@ exports.run = async (client, message, args) => {
 
                                         if (
                                             output.attributes.node === 31 ||
-                                            output.attributes.node === 33 ||
-                                            output.attributes.node === 34 ||
-                                            output.attributes.node === 35 ||
-                                            output.attributes.node === 39
+                                            output.attributes.node === 33
                                         )
                                             userPrem.set(
                                                 message.author.id + ".used",
