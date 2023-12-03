@@ -88,8 +88,9 @@ exports.run = async (client, message, args) => {
                                         msg.edit("Server deleted!");
 
                                         if (
-                                            output.attributes.node === 31 ||
-                                            output.attributes.node === 33
+                                            output.attributes.node === 31 || // Dono2
+                                            output.attributes.node === 34 || // Dono1
+                                            output.attributes.node === 33    // Dono3
                                         )
                                             userPrem.set(
                                                 message.author.id + ".used",
