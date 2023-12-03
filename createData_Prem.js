@@ -9,8 +9,6 @@ Donator Nodes as followed:
 Dono-01  : 26
 Dono-02  : 27
 Dono-03  : 28
-Dono-04  : 29
-Dono-05  : 31
 */
 
 let data = (serverName, userID) => {
