@@ -30,16 +30,7 @@ let nstatus = {
             maxCount: 3000,
         }
     ],
-
     "VPN Servers": [
-        {
-            name: "AU 1",
-            data: "au1",
-        },
-        {
-            name: "FR 1",
-            data: "fr1",
-        },
         {
             name: "US 1",
             data: "us1",
@@ -54,6 +45,24 @@ let nstatus = {
             name: "EU 1",
             data: "vm-eu-1",
         }
+    ],
+    "DBH Services": [
+        {
+            name: "Grafana (Monitoring)",
+            data: "grafana",
+        },
+        {
+            name: "Pterodactyl (Public)",
+            data: "pterodactylpublic",
+        },
+        {
+            name: "Pterodactyl (Core)",
+            data: "pterodactylcore",
+        },
+        {
+            name: "Proxmox",
+            data: "proxmox",
+        },
     ],
 };
 

@@ -205,6 +205,67 @@ if (enabled.nodestatsChecker) {
                     status: false,
                 })
             );
+
+            // Proxmox
+            ping
+                .ping(config.Servers.US1, 8006)
+                .then(() =>
+                    nodeStatus.set("proxmox", {
+                        timestamp: Date.now(),
+                        status: true,
+                    })
+                )
+                .catch((e) =>
+                    nodeStatus.set("proxmox", {
+                        timestamp: Date.now(),
+                        status: false,
+                    })
+                );
+            // Grafana
+            ping
+                .ping(config.Services.grafana, 443)
+                .then(() =>
+                    nodeStatus.set("grafana", {
+                        timestamp: Date.now(),
+                        status: true,
+                    })
+                )
+                .catch((e) =>
+                    nodeStatus.set("grafana", {
+                        timestamp: Date.now(),
+                        status: false,
+                    })
+                );
+            // Ptero - Public
+            ping
+                .ping(config.Services.pteropublic, 443)
+                .then(() =>
+                    nodeStatus.set("pterodactylpublic", {
+                        timestamp: Date.now(),
+                        status: true,
+                    })
+                )
+                .catch((e) =>
+                    nodeStatus.set("pterodactylpublic", {
+                        timestamp: Date.now(),
+                        status: false,
+                    })
+                );
+            // Ptero - Core
+            ping
+                .ping(config.Services.pterocore, 443)
+                .then(() =>
+                    nodeStatus.set("pterodactylcore", {
+                        timestamp: Date.now(),
+                        status: true,
+                    })
+                )
+                .catch((e) =>
+                    nodeStatus.set("pterodactylcore", {
+                        timestamp: Date.now(),
+                        status: false,
+                    })
+                );
     }, 10000);
 } else {
     console.log(chalk.magenta("[NODE CHECKER] ") + chalk.red("Disabled"));
