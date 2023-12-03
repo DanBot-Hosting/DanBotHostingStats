@@ -127,7 +127,7 @@ if (enabled.nodestatsChecker) {
 
         // AU 1 VPN Server
         ping
-            .ping(config.VPN.AU - 1, 22)
+            .ping(config.VPN.AU1 - 1, 22)
             .then(() =>
                 nodeStatus.set("au1", {
                     timestamp: Date.now(),
@@ -143,7 +143,7 @@ if (enabled.nodestatsChecker) {
 
         // FR 1 VPN Server
         ping
-            .ping(config.VPN.FR - 1, 22)
+            .ping(config.VPN.FR1 - 1, 22)
             .then(() =>
                 nodeStatus.set("fr1", {
                     timestamp: Date.now(),
@@ -159,7 +159,7 @@ if (enabled.nodestatsChecker) {
 
         // US 1 VPN Server
         ping
-            .ping(config.VPN.US - 1, 22)
+            .ping(config.VPN.US1 - 1, 22)
             .then(() =>
                 nodeStatus.set("us1", {
                     timestamp: Date.now(),
