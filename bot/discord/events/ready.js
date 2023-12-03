@@ -54,7 +54,7 @@ module.exports = async (client) => {
                 type: "WATCHING"
             },
             {
-                text: "over 14,000+ happy clients",
+                text: "over 15,000+ happy clients",
                 type: "WATCHING"
             },
             {
