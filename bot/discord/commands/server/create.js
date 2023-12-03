@@ -103,7 +103,7 @@ exports.run = async (client, message, args) => {
                 if (type === "aio" || type === "java") {
                     embed.addField(
                         `__**WARNING**__`,
-                        `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE MAKE A TICKET**`
+                        `Please do not host game servers on java or AIO servers. If you need a gameserver, You need to use Dono2. Slots are 1$ for 2 servers!`
                     );
                 }
 
