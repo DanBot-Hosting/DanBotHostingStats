@@ -179,7 +179,7 @@ if (enabled.nodestatsChecker) {
         ping
             .ping(config.Servers.US1 - 1, 22)
             .then(() =>
-                nodeStatus.set("vm-us1", {
+                nodeStatus.set("vm-us-1", {
                     timestamp: Date.now(),
                     status: true,
                 })
