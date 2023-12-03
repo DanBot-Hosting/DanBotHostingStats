@@ -137,7 +137,7 @@ exports.run = async (client, message, args) => {
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor("RED")
-                        .addField(`__**Failed to create a new server**__`, error);
+                        .addField(`__**Failed to create a new server**__`, `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`);
                     message.reply(embed);
                 }
             });
