@@ -118,7 +118,7 @@ let getEmbed = async () => {
         desc = `${desc}***${title}***\n${d.join("\n")}\n\n`;
     }
 
-    let embed = new Discord.MessageEmbed().setTitle("DanBot Status").setDescription(desc).setTimestamp();
+    let embed = new Discord.MessageEmbed().setTitle("DBH Service Status").setDescription(desc).setTimestamp();
     return embed;
 };
 
