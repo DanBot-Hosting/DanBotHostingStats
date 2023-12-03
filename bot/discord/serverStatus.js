@@ -82,7 +82,7 @@ let parse = async () => {
 
             da =
                 da.maintenance
-                    ? `🟣 Maintenance`
+                    ? `🟣 Maintenance ~ Returning Soon!`
                     : da.status
                     ? `🟢 Online ${serverUsage}`
                     : da.is_vm_online == null
