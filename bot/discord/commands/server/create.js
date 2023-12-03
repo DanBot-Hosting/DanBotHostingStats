@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
 
-    const serverName = message.content.split(" ").slice(3).join(" ") || "Untitled Server (settings -> server name)";
+    const serverName = message.content.split(" ").slice(3).join(" ") || "Change Me! (settings -> server name)";
     let consoleID = userData.get(message.author.id);
 
     if (consoleID == null) {
