@@ -113,7 +113,7 @@ exports.run = async (client, message, args) => {
                     //.addField(`Node`, "Node 7 - Boosters/Donators")
                     .addField(
                         `__**WARNING**__`,
-                        `**DO NOT USE JAVA TO RUN GAMESERVERS. IF THERE IS A GAME YOU ARE WANTING TO HOST AND IT DOES NOT HAVE A SERVER PLEASE OPEN A TICKET**`
+                        `Please do not host game servers on java or AIO servers. If you need a gameserver, You need to use Dono2. Slots are 1$ for 2 servers!`
                     );
                 message.reply(embed);
 
@@ -152,7 +152,7 @@ exports.run = async (client, message, args) => {
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor("RED")
-                        .addField(`__**Failed to create a new server**__`, error);
+                        .addField(`__**Failed to create a new server**__`, `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`);
                     message.reply(embed);
                 }
             });
