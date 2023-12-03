@@ -172,6 +172,37 @@ if (enabled.nodestatsChecker) {
                     status: false,
                 })
             );
+
+        // US 1 - VM Host
+        ping
+            .ping(config.Servers.US1 - 1, 22)
+            .then(() =>
+                nodeStatus.set("vmus1", {
+                    timestamp: Date.now(),
+                    status: true,
+                })
+            )
+            .catch((e) =>
+                nodeStatus.set("vm-us-1", {
+                    timestamp: Date.now(),
+                    status: false,
+                })
+            );
+        // EU 1 - VM Host
+        ping
+            .ping(config.Servers.EU1 - 1, 22)
+            .then(() =>
+                nodeStatus.set("vm-eu-1", {
+                    timestamp: Date.now(),
+                    status: true,
+                })
+            )
+            .catch((e) =>
+                nodeStatus.set("vm-eu-1", {
+                    timestamp: Date.now(),
+                    status: false,
+                })
+            );
     }, 10000);
 } else {
     console.log(chalk.magenta("[NODE CHECKER] ") + chalk.red("Disabled"));

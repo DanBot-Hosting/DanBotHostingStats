@@ -1,5 +1,5 @@
 let nstatus = {
-    "Performance Nodes (Free Nodes)": [
+    "Performance Nodes": [
         {
             name: "PNode 1",
             data: "pnode1",
@@ -44,6 +44,16 @@ let nstatus = {
             name: "US 1",
             data: "us1",
         },
+    ],
+    "Dedicated Servers (VPS/VM Hosts)": [
+        {
+            name: "US 1",
+            data: "vm-us-1",
+        },
+        {
+            name: "EU 1",
+            data: "vm-eu-1",
+        }
     ],
 };
 
