@@ -50,7 +50,7 @@ exports.run = async (client, message, args) => {
                 .addField("SteamCMD", "Rust\nDaystodie\nArma\nAssettocorsa\nAvorion\nBarotrauma", true)
                 .addField("Databases", "MongoDB\nRedis\nPostgres", true)
                 .addField("WebHosting", "Nginx", true)
-                .addField("Custom Eggs", "ShareX \n~~OpenX~~", true)
+                .addField("Custom Eggs", "ShareX \nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
                 .setFooter("Example: DBH!server create-donator aio My AIO Server")
         );
@@ -95,7 +95,7 @@ exports.run = async (client, message, args) => {
         rustc: pServerCreatesettings.rustc,
         redbot: pServerCreatesettings.redbot,
         grafana: pServerCreatesettings.grafana,
-        // openx: pServerCreatesettings.openx
+        openx: pServerCreatesettings.openx
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
