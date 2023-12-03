@@ -63,6 +63,10 @@ let nstatus = {
             name: "Proxmox",
             data: "proxmox",
         },
+        {
+            name: "VPN API",
+            data: "vpnapi",
+        },
     ],
 };
 

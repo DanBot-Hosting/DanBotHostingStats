@@ -266,6 +266,21 @@ if (enabled.nodestatsChecker) {
                         status: false,
                     })
                 );
+            // VPN API
+            ping
+                .ping(config.Services.vpnapi, 1110)
+                .then(() =>
+                    nodeStatus.set("vpnapi", {
+                        timestamp: Date.now(),
+                        status: true,
+                    })
+                )
+                .catch((e) =>
+                    nodeStatus.set("vpnapi", {
+                        timestamp: Date.now(),
+                        status: false,
+                    })
+                );
     }, 10000);
 } else {
     console.log(chalk.magenta("[NODE CHECKER] ") + chalk.red("Disabled"));
