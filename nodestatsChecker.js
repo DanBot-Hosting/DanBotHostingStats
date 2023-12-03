@@ -124,7 +124,9 @@ if (enabled.nodestatsChecker) {
                 }, 2000);
             }, 2000);
         }
+    }, 10000);
 
+        setInterval(() => {
         // AU 1 VPN Server
         ping
             .ping(config.VPN.AU1 - 1, 22)
