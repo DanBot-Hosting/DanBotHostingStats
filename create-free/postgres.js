@@ -3,7 +3,7 @@ createList.postgres = (serverName, userID) => ({
     user: userID,
     nest: 12,
     egg: 37,
-    docker_image: "ghcr.io/parkervcp/yolks:postgres_14",
+    docker_image: "ghcr.io/parkervcp/yolks:postgres_16",
     startup: `postgres  -D /home/container/postgres_db/`,
     limits: {
         memory: 0,
