@@ -3,7 +3,7 @@ createListPrem.nodejs = (serverName, userID) => ({
     user: userID,
     nest: 5,
     egg: 50,
-    docker_image: "quay.io/parkervcp/pterodactyl-images:debian_nodejs-16",
+    docker_image: "ghcr.io/parkervcp/yolks:nodejs_20",
     startup: `/usr/local/bin/npm i && /usr/local/bin/node /home/container/{{BOT_JS_FILE}}`,
     limits: {
         memory: 0,
