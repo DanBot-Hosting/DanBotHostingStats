@@ -12,13 +12,13 @@ exports.run = async (client, message, args) => {
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
         //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
-        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
+        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16", true)
         .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
 
-    const serverName = message.content.split(" ").slice(3).join(" ") || "Change Me! (settings -> server name)";
+    const serverName = message.content.split(" ").slice(3).join(" ") || "Untitled Server (settings -> server name)";
     let consoleID = userData.get(message.author.id);
 
     if (consoleID == null) {
