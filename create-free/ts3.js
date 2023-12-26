@@ -16,6 +16,9 @@ createList.ts3 = (serverName, userID) => ({
         TS_VERSION: "latest",
         FILE_TRANSFER: "30033",
         QUERY_PORT: "10011",
+        QUERY_PROTOCOLS_VAR: "raw,http,ssh",
+        QUERY_SSH: "10022",
+        QUERY_HTTP: "10080",
     },
     feature_limits: {
         databases: 2,
