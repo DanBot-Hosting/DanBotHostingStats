@@ -4,8 +4,7 @@ createListPrem.uptimekuma = (serverName, userID) => ({
     nest: 19,
     egg: 70,
     docker_image: "ghcr.io/parkervcp/apps:uptimekuma",
-    startup:
-        'node /home/container/server/server.js --port={{SERVER_PORT}}',
+    startup: 'if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then npm run setup; fi; /usr/local/bin/node /home/container/server/server.js --port={{SERVER_PORT}}',
     limits: {
         memory: 0,
         swap: -1,
@@ -15,7 +14,8 @@ createListPrem.uptimekuma = (serverName, userID) => ({
     },
     environment: {
         GIT_ADDRESS: "https://github.com/louislam/uptime-kuma",
-        JS_FILE: "server/server.js"
+        JS_FILE: "server/server.js",
+        AUTO_UPDATE: 1,
     },
     feature_limits: {
         databases: 2,
