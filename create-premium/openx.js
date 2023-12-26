@@ -1,4 +1,4 @@
-createList.openx = (serverName, userID) => ({
+createListPrem.openx = (serverName, userID) => ({
     name: serverName,
     user: userID,
     nest: 17,

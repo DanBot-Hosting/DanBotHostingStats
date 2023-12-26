@@ -1,4 +1,4 @@
-createList.mariadb = (serverName, userID) => ({
+createListPrem.mariadb = (serverName, userID) => ({
     name: serverName,
     user: userID,
     nest: 12,
@@ -8,7 +8,7 @@ createList.mariadb = (serverName, userID) => ({
     limits: {
         memory: 0,
         swap: -1,
-        disk: 10240,
+        disk: 0,
         io: 500,
         cpu: 0,
     },
