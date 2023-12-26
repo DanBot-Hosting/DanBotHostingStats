@@ -60,7 +60,7 @@ let data = (serverName, userID) => {
         grafana: null,
         openx: null,
         mariadb: null,
-        minio: null,
+        // minio: null,
     };
 
     for (let [name, filled] of Object.entries(createList)) {

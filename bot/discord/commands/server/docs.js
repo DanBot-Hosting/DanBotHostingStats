@@ -106,11 +106,11 @@ exports.run = async (client, message, args) => {
                 "Grafana is an open-source platform for monitoring and observability, enabling users to visualize and analyze real-time data from various sources through customizable dashboards and graphs."
             );
             break;
-        case "minio":
-            embed.setDescription(
-                "MinIO is a cloud storage server compatible with Amazon S3, released under Apache License v2. As an object store, MinIO can store unstructured data such as photos, videos, log files, backups and container images. The maximum size of an object is 5TB."
-            );
-            break;
+        // case "minio":
+        //     embed.setDescription(
+        //         "MinIO is a cloud storage server compatible with Amazon S3, released under Apache License v2. As an object store, MinIO can store unstructured data such as photos, videos, log files, backups and container images. The maximum size of an object is 5TB."
+        //     );
+        //     break;
         default:
             return message.reply(helpEmbed.setDescription("**This server type does not exist. Here is a list.**"));
     }

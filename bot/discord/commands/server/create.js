@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
-        .addField("__**Storage:**__", "Minio", true)
+        // .addField("__**Storage:**__", "Minio", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
 
     const serverName = message.content.split(" ").slice(3).join(" ") || "Untitled Server (settings -> server name)";
@@ -86,7 +86,7 @@ exports.run = async (client, message, args) => {
         grafana: data.grafana,
         openx: data.openx,
         mariadb: data.mariadb,
-        minio: data.minio,
+        // minio: data.minio,
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {

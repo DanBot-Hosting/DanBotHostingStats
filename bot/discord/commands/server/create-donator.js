@@ -52,7 +52,7 @@ exports.run = async (client, message, args) => {
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX \nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
-                .addField("Storage", "Minio", true)
+                // .addField("Storage", "Minio", true)
                 .setFooter("Example: DBH!server create-donator aio My AIO Server")
         );
         return;
@@ -99,7 +99,7 @@ exports.run = async (client, message, args) => {
         grafana: pServerCreatesettings.grafana,
         openx: pServerCreatesettings.openx,
         mariadb: pServerCreatesettings.mariadb,
-        minio: pServerCreatesettings.minio,
+        // minio: pServerCreatesettings.minio,
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
@@ -176,7 +176,7 @@ exports.run = async (client, message, args) => {
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
-                .addField("Storage", "Minio", true)
+                // .addField("Storage", "Minio", true)
                 .setFooter("Example: DBH!server create-donator aio My AIO Server")
         );
     }
