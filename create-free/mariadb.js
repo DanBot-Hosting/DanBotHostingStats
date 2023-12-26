@@ -2,7 +2,7 @@ createList.mariadb = (serverName, userID) => ({
     name: serverName,
     user: userID,
     nest: 12,
-    egg: 81,
+    egg: 69,
     docker_image: "quay.io/parkervcp/pterodactyl-images:db_mariadb",
     startup: `{ /usr/sbin/mysqld & } && sleep 5 && mysql -u root`,
     limits: {
