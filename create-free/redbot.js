@@ -15,6 +15,7 @@ createList.redbot = (serverName, userID) => ({
     environment: {
         TOKEN: "FILL_THIS_OUT",
         PREFIX: "FILL_THIS_OUT",
+        OWNER: "FILL_THIS_OUT",
     },
     feature_limits: {
         databases: 2,
