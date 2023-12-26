@@ -51,7 +51,8 @@ let data = (serverName, userID) => {
         rustc: null,
         redbot: null,
         grafana: null,
-        openx: null
+        openx: null,
+        mariadb: null,
     };
 
     for (let [name, filled] of Object.entries(createListPrem)) {

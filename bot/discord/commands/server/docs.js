@@ -9,7 +9,7 @@ exports.run = async (client, message, args) => {
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
         //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
-        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres", true)
+        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste \nuptimekuma", true)
@@ -69,6 +69,9 @@ exports.run = async (client, message, args) => {
         case "mongodb":
         case "redis":
         case "postgres":
+        case "postgres14":
+        case "postgres16":
+        case "mariadb":
             embed.setDescription(
                 "MongoDB, Redis and PostgreSQL are Databases. Use them to store data.\nFor MySQL you can create databases under the Databases Tab in the panel."
             );
@@ -105,7 +108,6 @@ exports.run = async (client, message, args) => {
             break;
         default:
             return message.reply(helpEmbed.setDescription("**This server type does not exist. Here is a list.**"));
-            break;
     }
     return message.reply(embed);
 };

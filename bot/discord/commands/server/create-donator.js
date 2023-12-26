@@ -48,7 +48,7 @@ exports.run = async (client, message, args) => {
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble", true)
                 .addField("SteamCMD", "Rust\nDaystodie\nArma\nAssettocorsa\nAvorion\nBarotrauma", true)
-                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16", true)
+                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX \nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
@@ -96,7 +96,8 @@ exports.run = async (client, message, args) => {
         rustc: pServerCreatesettings.rustc,
         redbot: pServerCreatesettings.redbot,
         grafana: pServerCreatesettings.grafana,
-        openx: pServerCreatesettings.openx
+        openx: pServerCreatesettings.openx,
+        mariadb: pServerCreatesettings.mariadb,
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
@@ -169,7 +170,7 @@ exports.run = async (client, message, args) => {
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble", true)
                 .addField("SteamCMD", "Rust\nDaystodie\nArma\nAssettocorsa\nAvorion\nBarotrauma", true)
-                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16", true)
+                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)

@@ -12,7 +12,7 @@ exports.run = async (client, message, args) => {
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
         //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
-        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16", true)
+        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
         .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
@@ -83,7 +83,8 @@ exports.run = async (client, message, args) => {
         rustc: data.rustc,
         redbot: data.redbot,
         grafana: data.grafana,
-        openx: data.openx
+        openx: data.openx,
+        mariadb: data.mariadb,
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {
