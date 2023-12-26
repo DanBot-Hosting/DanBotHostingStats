@@ -12,7 +12,9 @@ createListPrem.minio = (serverName, userID) => ({
         io: 500,
         cpu: 0,
     },
-    environment: {},
+    environment: {
+        STARTUP_TYPE: "normal",
+    },
     feature_limits: {
         databases: 2,
         allocations: 1,
