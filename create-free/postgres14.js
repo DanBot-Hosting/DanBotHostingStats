@@ -1,4 +1,4 @@
-createListPrem.postgres = (serverName, userID) => ({
+createList.postgres14 = (serverName, userID) => ({
     name: serverName,
     user: userID,
     nest: 12,
@@ -8,12 +8,12 @@ createListPrem.postgres = (serverName, userID) => ({
     limits: {
         memory: 0,
         swap: -1,
-        disk: 0,
+        disk: 10240,
         io: 500,
         cpu: 0,
     },
     environment: {
-        PGPASSWORD: getPassword(),
+        PGPASSWORD: "Pl3453Ch4n63M3",
         PGUSER: "pterodactyl",
     },
     feature_limits: {
@@ -22,7 +22,7 @@ createListPrem.postgres = (serverName, userID) => ({
         backups: 10,
     },
     deploy: {
-        locations: botswebdbPREM,
+        locations: botswebdbFREE,
         dedicated_ip: false,
         port_range: [],
     },
