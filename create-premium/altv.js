@@ -3,8 +3,8 @@ createListPrem.altv = (serverName, userID) => ({
     user: userID,
     nest: 9,
     egg: 42,
-    docker_image: "quay.io/parkervcp/pterodactyl-images:debian_dotnet",
-    startup: `sleep 2 && ./altv-server`,
+    docker_image: "ghcr.io/parkervcp/games:altv",
+    startup: `./altv-server`,
     limits: {
         memory: 4096,
         swap: -1,
@@ -16,7 +16,6 @@ createListPrem.altv = (serverName, userID) => ({
         LD_LIBRARY_PATH: ".",
         BUILD: "release",
         PASSWORD: "changeme",
-        FIVEM_VERSION: "latest",
         SERVER_DESC: "A alt:v server hosted for free by DanBot Hosting!",
     },
     feature_limits: {
