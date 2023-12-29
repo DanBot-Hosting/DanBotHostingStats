@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Bots:**__", "redbot", true)
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
-        //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
+        //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)

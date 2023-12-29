@@ -37,7 +37,6 @@ let data = (serverName, userID) => {
         postgres14: null,
         postgres16: null,
         daystodie: null,
-        arma: null,
         assettocorsa: null,
         avorion: null,
         barotrauma: null,

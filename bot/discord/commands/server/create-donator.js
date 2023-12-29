@@ -47,7 +47,7 @@ exports.run = async (client, message, args) => {
                 .addField("Bots", "redbot", true)
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble", true)
-                .addField("SteamCMD", "Rust\nDaystodie\nArma\nAssettocorsa\nAvorion\nBarotrauma", true)
+                .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma", true)
                 .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX \nOpenX", true)
@@ -83,7 +83,6 @@ exports.run = async (client, message, args) => {
         postgres14: pServerCreatesettings.postgres14,
         postgres16: pServerCreatesettings.postgres16,
         daystodie: pServerCreatesettings.daystodie,
-        arma: pServerCreatesettings.arma,
         assettocorsa: pServerCreatesettings.assettocorsa,
         avorion: pServerCreatesettings.avorion,
         barotrauma: pServerCreatesettings.barotrauma,
@@ -171,7 +170,7 @@ exports.run = async (client, message, args) => {
                 .addField("Bots", "redbot", true)
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble", true)
-                .addField("SteamCMD", "Rust\nDaystodie\nArma\nAssettocorsa\nAvorion\nBarotrauma", true)
+                .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma", true)
                 .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX", true)

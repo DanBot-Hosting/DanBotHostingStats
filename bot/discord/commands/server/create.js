@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Bots:**__", "redbot", true)
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
-        //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nArma \nAssettocorsa \nAvorion \nBarotrauma", true)
+        //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
         .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
@@ -70,7 +70,6 @@ exports.run = async (client, message, args) => {
         postgres14: data.postgres14,
         postgres16: data.postgres16,
         //daystodie: data.daystodie,
-        //arma: data.arma,
         //assettocorsa: data.assettocorsa,
         //avorion: data.avorion,
         //barotrauma: data.barotrauma,
