@@ -3,8 +3,8 @@ createList.mumble = (serverName, userID) => ({
     user: userID,
     nest: 3,
     egg: 12,
-    docker_image: "quay.io/pterodactyl/core:glibc",
-    startup: `./murmur.x86 -fg`,
+    docker_image: "ghcr.io/parkervcp/yolks:voice_mumble",
+    startup: `mumble-server -fg -ini murmur.ini`,
     limits: {
         memory: 0,
         swap: -1,
@@ -14,7 +14,6 @@ createList.mumble = (serverName, userID) => ({
     },
     environment: {
         MAX_USERS: "100",
-        MUMBLE_VERSION: "1.3.1",
     },
     feature_limits: {
         databases: 2,
