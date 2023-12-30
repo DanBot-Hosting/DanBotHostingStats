@@ -8,7 +8,7 @@ let nstatus = {
         {
             name: "PNode 2",
             data: "pnode2",
-            maxCount: 5000,
+            maxCount: 6000,
         }
     ],
 
