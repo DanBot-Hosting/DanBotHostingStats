@@ -3,7 +3,7 @@ createList.bedrock = (serverName, userID) => ({
     user: userID,
     nest: 1,
     egg: 18,
-    docker_image: "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
+    docker_image: "ghcr.io/parkervcp/yolks:debian",
     startup: "./bedrock_server",
     limits: {
         memory: 2048,
@@ -15,6 +15,10 @@ createList.bedrock = (serverName, userID) => ({
     environment: {
         BEDROCK_VERSION: "latest",
         LD_LIBRARY_PATH: ".",
+        SERVERNAME: "Bedrock Dedicated Server",
+        GAMEMODE: "survival",
+        DIFFICULTY: "easy",
+        CHEATS: "false",
     },
     feature_limits: {
         databases: 2,
