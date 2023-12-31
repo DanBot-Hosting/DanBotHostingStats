@@ -6,7 +6,7 @@ createListPrem.altv = (serverName, userID) => ({
     docker_image: "ghcr.io/parkervcp/games:altv",
     startup: `./altv-server`,
     limits: {
-        memory: 4096,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,

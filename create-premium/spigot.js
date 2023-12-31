@@ -6,7 +6,7 @@ createListPrem.spigot = (serverName, userID) => ({
     docker_image: "ghcr.io/pterodactyl/yolks:java_17",
     startup: "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
     limits: {
-        memory: 4096,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,

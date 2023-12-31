@@ -6,7 +6,7 @@ createListPrem.samp = (serverName, userID) => ({
     docker_image: "quay.io/parkervcp/pterodactyl-images:game_samp",
     startup: `./samp03svr`,
     limits: {
-        memory: 4096,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,

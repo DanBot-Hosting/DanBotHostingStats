@@ -6,7 +6,7 @@ createListPrem.lavalink = (serverName, userID) => ({
     docker_image: "quay.io/parkervcp/pterodactyl-images:debian_openjdk-13",
     startup: `java -jar Lavalink.jar`,
     limits: {
-        memory: 1024,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,

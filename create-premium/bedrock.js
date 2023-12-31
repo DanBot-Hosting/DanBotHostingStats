@@ -6,7 +6,7 @@ createListPrem.bedrock = (serverName, userID) => ({
     docker_image: "ghcr.io/parkervcp/yolks:debian",
     startup: "./bedrock_server",
     limits: {
-        memory: 4096,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,

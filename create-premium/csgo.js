@@ -7,7 +7,7 @@ createListPrem.csgo = (serverName, userID) => ({
     startup:
         "./srcds_run -game csgo -console -port {{SERVER_PORT}} +ip 0.0.0.0 +map {{SRCDS_MAP}} -strictportbind -norestart +sv_setsteamaccount {{STEAM_ACC}}",
     limits: {
-        memory: 4096,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,

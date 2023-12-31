@@ -6,7 +6,7 @@ createListPrem.pocketminemp = (serverName, userID) => ({
     docker_image: "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
     startup: "./bin/php7/bin/php ./PocketMine-MP.phar --no-wizard --disable-ansi",
     limits: {
-        memory: 4096,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,

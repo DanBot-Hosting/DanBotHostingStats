@@ -7,7 +7,7 @@ createListPrem.daystodie = (serverName, userID) => ({
     startup:
         './7DaysToDieServer.x86_64 -configfile=serverconfig.xml -quit -batchmode -nographics -dedicated -ServerPort=${SERVER_PORT} -ServerMaxPlayerCount=${MAX_PLAYERS} -GameDifficulty=${GAME_DIFFICULTY} -ControlPanelEnabled=false -TelnetEnabled=true -TelnetPort=8081 -logfile logs/latest.log & echo -e "Checing on telnet connection" && until nc -z -v -w5 127.0.0.1 8081; do echo "Waiting for telnet connection..."; sleep 5; done && telnet -E 127.0.0.1 8081',
     limits: {
-        memory: 4096,
+        memory: 6144,
         swap: -1,
         disk: 0,
         io: 500,
