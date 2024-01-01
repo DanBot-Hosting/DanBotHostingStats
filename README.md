@@ -1,5 +1,5 @@
 # DBH Pterodactyl Bot
-This bot manages user creation, Server creation and general management of pterodactyl via discord
+This bot manages user creation, server creation and general management of Pterodactyl via Discord.
 
 ## Maintainers
 - **Dan**
