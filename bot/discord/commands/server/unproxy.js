@@ -1,7 +1,7 @@
 //Generates new token for France Proxy server.
-async function getFranceNewKey() {
+async function getUSNewKey() {
     const serverRes = await axios({
-        url: config.FRProxy.url + "/api/tokens",
+        url: config.USProxy.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -9,26 +9,8 @@ async function getFranceNewKey() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.FRProxy.email,
-            secret: config.FRProxy.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-
-//Generates new token for Canada Proxy server.
-async function getCanadaNewKey() {
-    const serverRes = await axios({
-        url: config.CAProxy.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.CAProxy.email,
-            secret: config.CAProxy.pass,
+            identity: config.USProxy.email,
+            secret: config.USProxy.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
@@ -94,18 +76,18 @@ exports.run = async (client, message, args) => {
             const domainData = userDomains.find((x) => x.domain === args[1].toLowerCase());
 
             //Checks which location the domain is located in.
-            if (domainData.location == "FR") {
+            if (domainData.location == "US") {
                 //Generates new token for France Proxy location.
-                config.FRProxy.authKey = await getFranceNewKey();
+                config.USProxy.authKey = await getUSNewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
-                    url: config.FRProxy.url + "/api/nginx/proxy-hosts",
+                    url: config.USProxy.url + "/api/nginx/proxy-hosts",
                     method: "GET",
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        Authorization: config.FRProxy.authKey,
+                        Authorization: config.USProxy.authKey,
                         "Content-Type": "application/json",
                     },
                 })
@@ -113,21 +95,21 @@ exports.run = async (client, message, args) => {
                         //Tries to find and delete a certificate.
                         axios({
                             url:
-                                config.FRProxy.url +
+                                config.USProxy.url +
                                 "/api/nginx/certificates/" +
                                 Response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
                             method: "DELETE",
                             followRedirect: true,
                             maxRedirects: 5,
                             headers: {
-                                Authorization: config.FRProxy.authKey,
+                                Authorization: config.USProxy.authKey,
                                 "Content-Type": "application/json",
                             },
                         }).then((Response2) => {
                             //Tries to find and delete the actual proxy.
                             axios({
                                 url:
-                                    config.FRProxy.url +
+                                    config.USProxy.url +
                                     "/api/nginx/proxy-hosts/" +
                                     Response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
                                         .id,
@@ -135,7 +117,7 @@ exports.run = async (client, message, args) => {
                                 followRedirect: true,
                                 maxRedirects: 5,
                                 headers: {
-                                    Authorization: config.FRProxy.authKey,
+                                    Authorization: config.USProxy.authKey,
                                     "Content-Type": "application/json",
                                 },
 
@@ -158,67 +140,11 @@ exports.run = async (client, message, args) => {
                         );
                         console.log(error);
                     });
-            } else if (domainData.location == "CA") {
-                config.CAProxy.authKey = await getCanadaNewKey();
-
-                //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
-                await axios({
-                    url: config.CAProxy.url + "/api/nginx/proxy-hosts",
-                    method: "GET",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: config.CAProxy.authKey,
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((response) => {
-                        axios({
-                            url:
-                                config.CAProxy.url +
-                                "/api/nginx/certificates/" +
-                                response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
-                            method: "DELETE",
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                Authorization: config.CAProxy.authKey,
-                                "Content-Type": "application/json",
-                            },
-                        }).then((response2) => {
-                            axios({
-                                url:
-                                    config.CAProxy.url +
-                                    "/api/nginx/proxy-hosts/" +
-                                    response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
-                                        .id,
-                                method: "DELETE",
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    Authorization: config.CAProxy.authKey,
-                                    "Content-Type": "application/json",
-                                },
-                            }).then((response3) => {
-                                userData.set(
-                                    message.author.id + ".domains",
-                                    userData
-                                        .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase())
-                                );
-
-                                message.reply("Unproxied domain `" + args[1] + "`.");
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
-                        );
-                        console.log(error);
-                    });
             } else if (domainData.location == "Donator") {
-                config.DonatorProxy.authKey = await getNewKeyDonator();
+                return message.reply(
+                    "Donator proxy is disabled"
+                );
+                //config.DonatorProxy.authKey = await getNewKeyDonator();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({

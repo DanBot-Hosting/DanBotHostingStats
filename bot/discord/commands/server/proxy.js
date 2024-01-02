@@ -231,6 +231,9 @@ exports.run = async (client, message, args) => {
                             }
                         });
                 } else if (dnsCheck.address == "5.196.239.158") {
+                    return message.reply(
+                        "Donator proxy is disabled"
+                    );
                     //Donator
                     message.reply("Domain found on Donator...");
                     axios({
