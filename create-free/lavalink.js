@@ -3,7 +3,7 @@ createList.lavalink = (serverName, userID) => ({
     user: userID,
     nest: 3,
     egg: 59,
-    docker_image: "quay.io/parkervcp/pterodactyl-images:debian_openjdk-13",
+    docker_image: "ghcr.io/parkervcp/yolks:java_17",
     startup: `java -jar Lavalink.jar`,
     limits: {
         memory: 2048,
@@ -12,7 +12,11 @@ createList.lavalink = (serverName, userID) => ({
         io: 500,
         cpu: 0,
     },
-    environment: {},
+    environment: {
+        VERSION: "latest",
+        GITHUB_PACKAGE: "lavalink-devs/Lavalink",
+        MATCH: "Lavalink.jar",
+    },
     feature_limits: {
         databases: 2,
         allocations: 1,
