@@ -1,9 +1,9 @@
 const axios = require("axios");
 const dns = require("dns");
 
-async function getNewKeyFR() {
+async function getNewKeyUS() {
     const serverRes = await axios({
-        url: config.FRProxy.url + "/api/tokens",
+        url: config.USProxy.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -11,51 +11,14 @@ async function getNewKeyFR() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.FRProxy.email,
-            secret: config.FRProxy.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-
-async function getNewKeyCA() {
-    const serverRes = await axios({
-        url: config.CAProxy.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.CAProxy.email,
-            secret: config.CAProxy.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-
-async function getNewKeyDonator() {
-    const serverRes = await axios({
-        url: config.DonatorProxy.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.DonatorProxy.email,
-            secret: config.DonatorProxy.pass,
+            identity: config.USProxy.email,
+            secret: config.USProxy.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
 
 exports.run = async (client, message, args) => {
-    return message.reply(
-        "This command is temporarily disabled.\nCheck for updates in <#898050443446464532> or <#898041862160527440>!"
-    );
 
     const embed = new Discord.MessageEmbed()
         .setTitle("**DanBot Hosting Proxy System**")
@@ -68,9 +31,7 @@ exports.run = async (client, message, args) => {
                 config.DiscordBot.Prefix +
                 "server list`\n\n" +
                 "You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:\n\n" +
-                "> `164.132.74.251` - [France] 🔴 Disabled\n" +
-                "> `192.95.42.75` - [Canada] 🔴 Disabled\n" +
-                "> `5.196.239.158` - [Donator Exclusive]\n\n" +
+                "> `69.30.249.53` - [US 1] 🟢 Enabled\n" +
                 "If you are using Cloudflare, make sure you are using **DNS only mode**, and disabling **always use HTTPS**.\n\n" +
                 "Donators can use the `*.only-fans.club` subdomains! Replace `<domain>` with the `your-subdomain.only-fans.club` to use it! Please note these domains are proxied through France, and will not work if France is disabled."
         )
@@ -120,14 +81,10 @@ exports.run = async (client, message, args) => {
             dns.lookup(args[1], options, (err, address, family) => res({ err, address, family }));
         });
 
-        if (!["164.132.74.251", "192.95.42.75", "5.196.239.158"].includes(dnsCheck.address)) {
+        if (!["69.30.249.53"].includes(dnsCheck.address)) {
             return message.reply(
-                "ERROR: You must have a DNS A Record pointing to `164.132.74.251` or `192.95.42.75` or `5.196.239.158`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it's still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)"
+                "ERROR: You must have a DNS A Record pointing to `69.30.249.53`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it's still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)"
             );
-        }
-
-        if (["164.132.74.251", "192.95.42.75"].includes(dnsCheck.address)) {
-            return message.reply("Canada and France Proxy locations have been disabled until further notice.");
         }
 
         if (
@@ -136,9 +93,9 @@ exports.run = async (client, message, args) => {
         )
             return message.reply("Sorry, this proxy location is only available for boosters and donators.");
 
-        //config.FRProxy.authKey = await getNewKeyFR();
+        config.USProxy.authKey = await getNewKeyUS();
         //config.CAProxy.authKey = await getNewKeyCA();
-        config.DonatorProxy.authKey = await getNewKeyDonator();
+        //config.DonatorProxy.authKey = await getNewKeyDonator();
 
         axios({
             url:
@@ -186,16 +143,16 @@ exports.run = async (client, message, args) => {
             }).then((response) => {
                 message.reply("Proxying your domain... This can take up to 30 seconds.");
 
-                if (dnsCheck.address == "164.132.74.251") {
-                    //France
-                    message.reply("Domain found on France...");
+                if (dnsCheck.address == "69.30.249.53") {
+                    //US 1
+                    message.reply("Domain found on US Proxy 1...");
                     axios({
-                        url: config.FRProxy.url + "/api/nginx/proxy-hosts",
+                        url: config.USProxy.url + "/api/nginx/proxy-hosts",
                         method: "POST",
                         followRedirect: true,
                         maxRedirects: 5,
                         headers: {
-                            Authorization: config.FRProxy.authKey,
+                            Authorization: config.USProxy.authKey,
                             "Content-Type": "application/json",
                         },
                         data: {
@@ -230,7 +187,7 @@ exports.run = async (client, message, args) => {
                                 {
                                     domain: args[1].toLowerCase(),
                                     serverID: args[2],
-                                    location: "FR",
+                                    location: "US",
                                 },
                             ]);
                         })
@@ -240,19 +197,19 @@ exports.run = async (client, message, args) => {
                                 //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
                                 //Ping and find the ID since it doesnt log when it fails
                                 axios({
-                                    url: config.FRProxy.url + "/api/nginx/proxy-hosts",
+                                    url: config.USProxy.url + "/api/nginx/proxy-hosts",
                                     method: "GET",
                                     followRedirect: true,
                                     maxRedirects: 5,
                                     headers: {
-                                        Authorization: config.FRProxy.authKey,
+                                        Authorization: config.USProxy.authKey,
                                         "Content-Type": "application/json",
                                     },
                                 }).then((response) => {
                                     //Now delete it
                                     axios({
                                         url:
-                                            config.FRProxy.url +
+                                            config.USProxy.url +
                                             "/api/nginx/proxy-hosts/" +
                                             ResponseAfterProxy.data.find(
                                                 (element) => element.domain_names[0] == args[1].toLowerCase()
@@ -261,93 +218,7 @@ exports.run = async (client, message, args) => {
                                         followRedirect: true,
                                         maxRedirects: 5,
                                         headers: {
-                                            Authorization: config.FRProxy.authKey,
-                                            "Content-Type": "application/json",
-                                        },
-                                    });
-                                });
-                            } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
-                                // Domain Already linked and/or other error
-                                message.reply(
-                                    "This domain has already been linked. If this is an error, please contact a staff member to fix this!"
-                                );
-                            }
-                        });
-                } else if (dnsCheck.address == "192.95.42.75") {
-                    //Canada
-                    message.reply("Domain found on Canada...");
-                    axios({
-                        url: config.CAProxy.url + "/api/nginx/proxy-hosts",
-                        method: "POST",
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            Authorization: config.CAProxy.authKey,
-                            "Content-Type": "application/json",
-                        },
-                        data: {
-                            domain_names: [args[1].toLowerCase()],
-                            forward_scheme: "http",
-                            forward_host: response.data.attributes.sftp_details.ip,
-                            forward_port: response.data.attributes.relationships.allocations.data[0].attributes.port,
-                            access_list_id: "0",
-                            certificate_id: "new",
-                            meta: {
-                                letsencrypt_email: "proxy-renew@danbot.host",
-                                letsencrypt_agree: true,
-                                dns_challenge: false,
-                            },
-                            advanced_config: "",
-                            locations: [],
-                            block_exploits: false,
-                            caching_enabled: false,
-                            allow_websocket_upgrade: true,
-                            http2_support: false,
-                            hsts_enabled: false,
-                            hsts_subdomains: false,
-                            ssl_forced: true,
-                        },
-                    })
-                        .then((ResponseAfterProxy) => {
-                            message.reply("Domain has been proxied, Its ID is: " + ResponseAfterProxy.data.id);
-                            let datalmao = userData.get(message.author.id).domains || [];
-                            userData.set(message.author.id + ".domains", [
-                                ...new Set(datalmao),
-                                {
-                                    domain: args[1].toLowerCase(),
-                                    serverID: args[2],
-                                    location: "CA",
-                                },
-                            ]);
-                        })
-                        .catch((ErrorAfterProxy) => {
-                            if (ErrorAfterProxy == "Error: Request failed with status code 500") {
-                                // Domain not pointing and/or other error
-                                //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
-                                //Ping and find the ID since it doesnt log when it fails
-                                axios({
-                                    url: config.CAProxy.url + "/api/nginx/proxy-hosts",
-                                    method: "GET",
-                                    followRedirect: true,
-                                    maxRedirects: 5,
-                                    headers: {
-                                        Authorization: config.CAProxy.authKey,
-                                        "Content-Type": "application/json",
-                                    },
-                                }).then((response) => {
-                                    //Now delete it
-                                    axios({
-                                        url:
-                                            config.CAProxy.url +
-                                            "/api/nginx/proxy-hosts/" +
-                                            ResponseAfterProxy.data.find(
-                                                (element) => element.domain_names[0] == args[1].toLowerCase()
-                                            ).id,
-                                        method: "DELETE",
-                                        followRedirect: true,
-                                        maxRedirects: 5,
-                                        headers: {
-                                            Authorization: config.CAProxy.authKey,
+                                            Authorization: config.USProxy.authKey,
                                             "Content-Type": "application/json",
                                         },
                                     });
