@@ -145,7 +145,7 @@ exports.run = async (client, message, args) => {
 
                 if (dnsCheck.address == "69.30.249.53") {
                     //US 1
-                    message.reply("Domain found on US Proxy 1...");
+                    message.reply("Domain found pointing towards US Proxy 1...");
                     axios({
                         url: config.USProxy.url + "/api/nginx/proxy-hosts",
                         method: "POST",
