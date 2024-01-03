@@ -1,10 +1,10 @@
 {
-  "name": "danbothosting",
-  "version": "1.0.4",
+  "name": "hostingstats",
+  "version": "1.0.0",
   "description": "Main bot for DanBot Hosting",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm install && node index.js"
   },
   "repository": {
     "type": "git",
