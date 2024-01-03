@@ -1,6 +1,6 @@
-async function getNewKeyFR() {
+async function getNewKeyUS() {
     const serverRes = await axios({
-        url: config.FRProxy.url + "/api/tokens",
+        url: config.USProxy.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -8,25 +8,8 @@ async function getNewKeyFR() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.FRProxy.email,
-            secret: config.FRProxy.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-
-async function getNewKeyCA() {
-    const serverRes = await axios({
-        url: config.CAProxy.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.CAProxy.email,
-            secret: config.CAProxy.pass,
+            identity: config.USProxy.email,
+            secret: config.USProxy.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
@@ -34,14 +17,9 @@ async function getNewKeyCA() {
 
 const proxyServers = [
     {
-        name: "FR",
-        getToken: getNewKeyFR,
-        url: config.FRProxy.url,
-    },
-    {
-        name: "CA",
-        getToken: getNewKeyCA,
-        url: config.CAProxy.url,
+        name: "US",
+        getToken: getNewKeyUS,
+        url: config.USProxy.url,
     },
 ];
 
@@ -50,10 +28,10 @@ exports.run = async (client, message, args) => {
 
     if (!args[1]) {
         return message.reply(
-            "Please provide a URL! WARNING: Do not use this command without checking the domain is not already linked!"
+            "Please provide a URL! WARNING: Do not use this command without checking the domain is not already linked! \n\n**This command should be used as a last resort. IF the domain is not linking**"
         );
     } else {
-        const replyMsg = await message.reply("Trying to fix proxy...");
+        const replyMsg = await message.reply("Trying to fix proxy... \n\n**This command should be used as a last resort. IF the domain is not linking**");
 
         let token;
         let using = false;
