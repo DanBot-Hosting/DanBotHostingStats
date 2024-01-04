@@ -87,7 +87,7 @@ exports.run = async (client, message, args) => {
 
             if (deletedObject) {
                 replyMsg.edit(
-                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}.\nDeleted proxy host.\nThe domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`
+                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}, deleted proxy host.\nThe domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`
                 );
             } else {
                 replyMsg.edit(
