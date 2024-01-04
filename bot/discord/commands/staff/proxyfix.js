@@ -28,20 +28,19 @@ exports.run = async (client, message, args) => {
 
     if (!args[1]) {
         return message.reply(
-            "Please provide a URL! WARNING: Do not use this command without checking the domain is not already linked! \n\n**This command should be used as a last resort. IF the domain is not linking**"
+            "Please provide a URL! WARNING: Do not use this command without checking the domain is not already linked! \n\n**This command should be used as a last resort if the domain is not linking.**"
         );
     } else {
-        const replyMsg = await message.reply("Trying to fix proxy... \n\n**This command should be used as a last resort. IF the domain is not linking**");
+        const replyMsg = await message.channel.send("**This command should be used as a last resort if the domain is not linking.**\nTrying to fix proxy...");
 
         let token;
         let using = false;
         let idOfProxy = null;
 
-        replyMsg.edit(`Trying to fix proxy...\nAuthenticated, Looking for proxy...`);
+        replyMsg.edit(`Trying to fix proxy...\nAuthenticated, looking for proxy host...`);
+
         for (let i = 0; i < proxyServers.length; i++) {
             const proxyServer = proxyServers[i];
-
-            message.reply(`Checking ${proxyServer.name}`);
 
             token = await proxyServer.getToken();
 
@@ -68,7 +67,7 @@ exports.run = async (client, message, args) => {
 
         if (!idOfProxy) {
             replyMsg.edit(
-                "Trying to fix proxy...\nAuthenticated\nDOMAIN_NOT_FOUND\nThis domain should work... did you do a typo?"
+                "Trying to fix proxy...\nAuthenticated\nDOMAIN_NOT_FOUND\nThis domain should work, did you make a typo?"
             );
         } else {
             replyMsg.edit(
@@ -88,11 +87,11 @@ exports.run = async (client, message, args) => {
 
             if (deletedObject) {
                 replyMsg.edit(
-                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}, attempting to delete...\nDomain should now work, please ensure there is a DNS record pointing to the DBH proxy and also cloudflare proxy is disabled`
+                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}.\nDeleted proxy host.\nThe domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`
                 );
             } else {
                 replyMsg.edit(
-                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}, attempting to delete...\nFailed to delete! Try again?`
+                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}, failed to delete! Try again?`
                 );
             }
         }
