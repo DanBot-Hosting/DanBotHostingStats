@@ -68,7 +68,7 @@ exports.run = async (client, message, args) => {
             //Invalid domain provided.
             if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
                 message.reply(
-                    "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!"
+                    "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, whereas `https://danbot.host/` is not valid domain!"
                 );
                 return;
             }
@@ -136,14 +136,12 @@ exports.run = async (client, message, args) => {
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more,\nif the bot says its currently linked try adding `-db` to the end of the command."
                         );
                         console.log(error);
                     });
             } else if (domainData.location == "Donator") {
-                return message.reply(
-                    "Donator proxy is disabled"
-                );
+                return message.reply("Donator proxy is disabled");
                 //config.DonatorProxy.authKey = await getNewKeyDonator();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
