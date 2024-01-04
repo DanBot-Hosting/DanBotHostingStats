@@ -19,7 +19,6 @@ async function getNewKeyUS() {
 }
 
 exports.run = async (client, message, args) => {
-
     const embed = new Discord.MessageEmbed()
         .setTitle("**DanBot Hosting Proxy System**")
         .setDescription(
@@ -67,7 +66,7 @@ exports.run = async (client, message, args) => {
         if (!/^[a-zA-Z0-9.-]+$/.test(args[1]) || args[1].length > 253) {
             //Check the provided domain is a valid domain
             return message.reply(
-                "That is not a valid domain! \nExample of domains:\nValid: danbot.host\nInvalid: <https://danbot.host/>"
+                "That is not a valid domain!\nFor example:\n- Valid: danbot.host\n- Invalid: <https://danbot.host/>"
             );
         }
 
@@ -83,7 +82,7 @@ exports.run = async (client, message, args) => {
 
         if (!["69.30.249.53"].includes(dnsCheck.address)) {
             return message.reply(
-                "ERROR: You must have a DNS A Record pointing to `69.30.249.53`! Also if you are using Cloudflare make sure the you are using DNS Only mode!\nIf you have done all of that and it's still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)"
+                "ERROR: You must have a DNS A Record pointing to `69.30.249.53`! Also if you are using Cloudflare make sure the you are using DNS only mode!\nIf you have done all of that and it's still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)"
             );
         }
 
@@ -126,7 +125,7 @@ exports.run = async (client, message, args) => {
             }
 
             if (use.extras.servers == null || use.extras.servers.find((x) => x.identifier === args[2]) == null) {
-                message.reply("Couldn't find that server in your server list. \nDo you own that server?");
+                message.reply("Couldn't find that server in your server list.\nDo you own that server?");
                 return;
             }
 
@@ -141,11 +140,11 @@ exports.run = async (client, message, args) => {
                     Accept: "Application/vnd.pterodactyl.v1+json",
                 },
             }).then((response) => {
-                message.reply("Proxying your domain... This can take up to 30 seconds.");
+                const replyMsg = await message.reply("Proxying your domain... this can take up to 30 seconds.");
 
                 if (dnsCheck.address == "69.30.249.53") {
                     //US 1
-                    message.reply("Domain found pointing towards US Proxy 1...");
+                    replyMsg.edit("Domain found pointing towards US Proxy 1...");
                     axios({
                         url: config.USProxy.url + "/api/nginx/proxy-hosts",
                         method: "POST",
@@ -180,7 +179,7 @@ exports.run = async (client, message, args) => {
                     })
                         .then((ResponseAfterProxy) => {
                             //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
-                            message.reply("Domain has been proxied, Its ID is: " + ResponseAfterProxy.data.id);
+                            replyMsg.edit("Domain has been proxied, its ID is: " + ResponseAfterProxy.data.id);
                             let datalmao = userData.get(message.author.id).domains || [];
                             userData.set(message.author.id + ".domains", [
                                 ...new Set(datalmao),
@@ -225,17 +224,15 @@ exports.run = async (client, message, args) => {
                                 });
                             } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
                                 // Domain Already linked and/or other error
-                                message.reply(
+                                replyMsg.edit(
                                     "This domain has already been linked. If this is an error, please contact a staff member to fix this!"
                                 );
                             }
                         });
                 } else if (dnsCheck.address == "5.196.239.158") {
-                    return message.reply(
-                        "Donator proxy is disabled"
-                    );
+                    return message.reply("Donator proxy is disabled");
                     //Donator
-                    message.reply("Domain found on Donator...");
+                    message.reply("Domain found on Donator Proxy 1...");
                     axios({
                         url: config.DonatorProxy.url + "/api/nginx/proxy-hosts",
                         method: "POST",
