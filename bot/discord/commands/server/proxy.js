@@ -139,7 +139,7 @@ exports.run = async (client, message, args) => {
                     "Content-Type": "application/json",
                     Accept: "Application/vnd.pterodactyl.v1+json",
                 },
-            }).then((response) => {
+            }).then(async (response) => {
                 const replyMsg = await message.reply("Proxying your domain... this can take up to 30 seconds.");
 
                 if (dnsCheck.address == "69.30.249.53") {
