@@ -3,8 +3,8 @@ createListPrem.forge = (serverName, userID) => ({
     user: userID,
     nest: 1,
     egg: 2,
-    docker_image: "quay.io/pterodactyl/core:java",
-    startup: "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
+    docker_image: "ghcr.io/pterodactyl/yolks:java_18",
+    startup: `java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true $( [[  ! -f unix_args.txt ]] && printf %s "-jar {{SERVER_JARFILE}}" || printf %s "@unix_args.txt" )`,
     limits: {
         memory: 6144,
         swap: -1,
@@ -16,7 +16,7 @@ createListPrem.forge = (serverName, userID) => ({
         SERVER_JARFILE: "server.jar",
         MC_VERSION: "latest",
         BUILD_TYPE: "recommended",
-        FORGE_VERSION: "1.16.3",
+        FORGE_VERSION: null,
     },
     feature_limits: {
         databases: 2,
