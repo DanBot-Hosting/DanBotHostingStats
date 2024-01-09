@@ -51,7 +51,7 @@ exports.run = async (client, message, args) => {
                 .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX \nOpenX", true)
-                .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
+                .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana \nrabbitmq", true)
                 // .addField("Storage", "Minio", true)
                 .setFooter("Example: DBH!server create-donator aio My AIO Server")
         );
@@ -99,7 +99,8 @@ exports.run = async (client, message, args) => {
         openx: pServerCreatesettings.openx,
         mariadb: pServerCreatesettings.mariadb,
         // minio: pServerCreatesettings.minio,
-        lavalink: pServerCreatesettings.lavalink
+        lavalink: pServerCreatesettings.lavalink,
+        rabbitmq: pServerCreatesettings.rabbitmq,
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {

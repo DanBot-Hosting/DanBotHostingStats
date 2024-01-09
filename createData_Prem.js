@@ -53,7 +53,8 @@ let data = (serverName, userID) => {
         openx: null,
         mariadb: null,
         // minio: null,
-        lavalink: null
+        lavalink: null,
+        rabbitmq: null,
     };
 
     for (let [name, filled] of Object.entries(createListPrem)) {

@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
         .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
-        .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana", true)
+        .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana \n rabbitmq", true)
         // .addField("__**Storage:**__", "Minio", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
 
@@ -86,6 +86,7 @@ exports.run = async (client, message, args) => {
         openx: data.openx,
         mariadb: data.mariadb,
         // minio: data.minio,
+        rabbitmq: data.rabbitmq,
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {
