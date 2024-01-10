@@ -73,6 +73,7 @@ module.exports = async (client, message) => {
             "898041896956469249", // web-dev
             "898041898835509328", // java
             "1056858054819336192", // node-bot-outages
+            "1192648696517640252", // bot-api
             "1138925759264739398", // vpn
             "938630088256286720", // vps-hosting
             "945031368675582023" // dans-birthday
