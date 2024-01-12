@@ -1,9 +1,9 @@
-// QnA command to have premade messages for the most common member questions
+// tag command to have premade messages for the most common member questions
 exports.run = async (client, message, args) => {
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(`You need to provide a valid tag.`)
-        .setFooter("Example: DBH!qa npm");
+        .setFooter("Example: DBH!tag npm");
 
     if (!args[1]) {
         await message.reply(helpEmbed);
