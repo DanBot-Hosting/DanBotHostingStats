@@ -5,7 +5,7 @@ exports.run = async (client, message, args) => {
         .setDescription(`You need to provide a valid tag.`)
         .setFooter("Example: DBH!tag npm");
 
-    if (!args[1]) {
+    if (!args[0]) {
         await message.reply(helpEmbed);
         return;
     }
