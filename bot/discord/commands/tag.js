@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
     }
 
     const embed = new Discord.MessageEmbed();
-    switch (args[1].toLowerCase()) {
+    switch (args[0].toLowerCase()) {
         case "command":
         case "commands":
             embed.setDescription(
