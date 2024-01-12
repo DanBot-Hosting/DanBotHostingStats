@@ -3,9 +3,9 @@ exports.run = async (client, message, args) => {
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(`You need to provide a valid tag.`)
-        .setFooter("Example: DBH!tag npm");
+        .setFooter("DBH!tag <tag>");
 
-    if (!args[1]) {
+    if (!args[0]) {
         await message.reply(helpEmbed);
         return;
     }
