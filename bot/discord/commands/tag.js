@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
         case "command":
         case "commands":
             embed.setDescription(
-                "Hey! Please only run your commands in <#898041850890440725> or <#898041866589700128>"
+                "Hey! Please only run your commands in <#898041850890440725>, <#898041866589700128> or <#898041878447013948>"
             );
             break;
         case "504":
