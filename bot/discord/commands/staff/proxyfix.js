@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
         let using = false;
         let idOfProxy = null;
 
-        replyMsg.edit(`Trying to fix proxy...\nAuthenticated, looking for proxy host...`);
+        replyMsg.edit(`Authenticated, looking for proxy host...`);
 
         for (let i = 0; i < proxyServers.length; i++) {
             const proxyServer = proxyServers[i];
@@ -67,11 +67,11 @@ exports.run = async (client, message, args) => {
 
         if (!idOfProxy) {
             replyMsg.edit(
-                "Trying to fix proxy...\nAuthenticated\nDOMAIN_NOT_FOUND\nThis domain should work, did you make a typo?"
+                "DOMAIN_NOT_FOUND\nThis domain should work, did you make a typo?"
             );
         } else {
             replyMsg.edit(
-                `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}, attempting to delete...`
+                `Found domain ${idOfProxy} on ${proxyServers[using].name}, attempting to delete...`
             );
 
             const deletedObject = await axios({
@@ -87,11 +87,11 @@ exports.run = async (client, message, args) => {
 
             if (deletedObject) {
                 replyMsg.edit(
-                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}, deleted proxy host.\nThe domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`
+                    `The domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`
                 );
             } else {
                 replyMsg.edit(
-                    `Trying to fix proxy...\nAuthenticated\nFound domain ${idOfProxy} on ${proxyServers[using].name}, failed to delete! Try again?`
+                    `Found domain ${idOfProxy} on ${proxyServers[using].name}, failed to delete! Try again?`
                 );
             }
         }
