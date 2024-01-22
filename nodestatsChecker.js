@@ -36,6 +36,12 @@ let stats = {
         IP: config.Nodes.PNode2,
         ID: "40",
         Location: pingLocals.UK,
+    },
+    pnode3: {
+        serverID: "150791a9",
+        IP: config.Nodes.PNode3,
+        ID: "43",
+        Location: pingLocals.UK,
     }
 };
 if (enabled.nodestatsChecker) {
