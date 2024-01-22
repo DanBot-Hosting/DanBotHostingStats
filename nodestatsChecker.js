@@ -106,7 +106,7 @@ if (enabled.nodestatsChecker) {
                         url: config.Pterodactyl.hosturl +
                             "/api/application/nodes/" +
                             data.ID +
-                            "/allocations?per_page=5000",
+                            "/allocations?per_page=9000",
                         method: "GET",
                         followRedirect: true,
                         maxRedirects: 5,
