@@ -9,13 +9,13 @@ Free Hosting forever!                                            /____/
 const axios = require("axios");
 
 global.gamingFREE = [14]; // Gaming nodes
-global.botswebdbFREE = [30, 32]; // Bots, Websites and Databases nodes
+global.botswebdbFREE = [30, 32, 35]; // Bots, Websites and Databases nodes
 global.storageFREE = [13]; // Storage nodes
 
 /*
 PNode 1  : 30
 PNode 2  : 32
-PNode 3  : 34
+PNode 3  : 35
 */
 
 let data = (serverName, userID) => {
