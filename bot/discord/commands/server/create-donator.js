@@ -41,13 +41,13 @@ exports.run = async (client, message, args) => {
         message.reply(
             new Discord.MessageEmbed()
                 .setColor("RED")
-                .addField("Minecraft", "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot", true)
+                .addField("Minecraft", "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot\nNukkit", true)
                 .addField("Grand Theft Auto", "alt:V\nmultitheftauto\nRage.MP\nSA-MP", true)
                 .addField("Languages", "NodeJS\nPython\nJava\naio\n Rust (use rustc to create)", true)
                 .addField("Bots", "redbot", true)
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble\nLavalink", true)
-                .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma", true)
+                .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma\nPalworld", true)
                 .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX \nOpenX", true)
@@ -101,7 +101,8 @@ exports.run = async (client, message, args) => {
         // minio: pServerCreatesettings.minio,
         lavalink: pServerCreatesettings.lavalink,
         rabbitmq: pServerCreatesettings.rabbitmq,
-        palworld: pServerCreatesettings.palworld
+        palworld: pServerCreatesettings.palworld,
+        nukkit: pServerCreatesettings.nukkit,
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
