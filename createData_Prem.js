@@ -55,6 +55,7 @@ let data = (serverName, userID) => {
         // minio: null,
         lavalink: null,
         rabbitmq: null,
+        palworld: null,
     };
 
     for (let [name, filled] of Object.entries(createListPrem)) {
