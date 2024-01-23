@@ -1,7 +1,7 @@
 const serverCreateSettings_Prem = require("../../../../createData_Prem");
 const axios = require("axios");
 
-exports.run = async (client, message, args) => {
+exports.run = async(client, message, args) => {
     let userP = userPrem.fetch(message.author.id) || {
         used: 0,
         donated: 0,
@@ -13,11 +13,11 @@ exports.run = async (client, message, args) => {
     if (consoleID == null) {
         message.reply(
             "Oh no, Seems like you do not have an account linked to your discord ID.\n" +
-                "If you have not made an account yet please check out `" +
-                config.DiscordBot.Prefix +
-                "user new` to create an account\nIf you already have an account link it using `" +
-                config.DiscordBot.Prefix +
-                "user link`"
+            "If you have not made an account yet please check out `" +
+            config.DiscordBot.Prefix +
+            "user new` to create an account\nIf you already have an account link it using `" +
+            config.DiscordBot.Prefix +
+            "user link`"
         );
         return;
     }
