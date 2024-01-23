@@ -101,6 +101,7 @@ exports.run = async (client, message, args) => {
         // minio: pServerCreatesettings.minio,
         lavalink: pServerCreatesettings.lavalink,
         rabbitmq: pServerCreatesettings.rabbitmq,
+        palworld: pServerCreatesettings.palworld
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
