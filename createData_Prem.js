@@ -57,6 +57,7 @@ let data = (serverName, userID) => {
         rabbitmq: null,
         palworld: null,
         nukkit: null,
+        curseforge: null,
     };
 
     for (let [name, filled] of Object.entries(createListPrem)) {

@@ -41,7 +41,7 @@ exports.run = async (client, message, args) => {
         message.reply(
             new Discord.MessageEmbed()
                 .setColor("RED")
-                .addField("Minecraft", "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot\nNukkit", true)
+                .addField("Minecraft", "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot\nNukkit\nCurseforge", true)
                 .addField("Grand Theft Auto", "alt:V\nmultitheftauto\nRage.MP\nSA-MP", true)
                 .addField("Languages", "NodeJS\nPython\nJava\naio\n Rust (use rustc to create)", true)
                 .addField("Bots", "redbot", true)
@@ -103,6 +103,7 @@ exports.run = async (client, message, args) => {
         rabbitmq: pServerCreatesettings.rabbitmq,
         palworld: pServerCreatesettings.palworld,
         nukkit: pServerCreatesettings.nukkit,
+        curseforge: pServerCreatesettings.curseforge,
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
