@@ -1,16 +1,13 @@
 const axios = require("axios");
-
 global.gamingPREM = [27]; // Gaming nodes
 global.botswebdbPREM = [26, 28]; // Bots, Websites and Databases nodes
 global.storagePREM = [13]; // Storage nodes
-
 /*
 Donator Nodes as followed:
 Dono-01  : 26
 Dono-02  : 27
 Dono-03  : 28
 */
-
 let data = (serverName, userID) => {
     let toReturn = {
         nginx: null,
@@ -59,16 +56,15 @@ let data = (serverName, userID) => {
         nukkit: null,
         curseforge: null,
     };
-
     for (let [name, filled] of Object.entries(createListPrem)) {
         toReturn[name] = filled(serverName, userID);
     }
     return toReturn;
 };
-
 let createServer = (data) => {
     return axios({
-        url: config.Pterodactyl.hosturl + "/api/application/servers",
+        url: config.Pterodactyl.hosturl +
+            "/api/application/servers",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -80,7 +76,6 @@ let createServer = (data) => {
         data: data,
     });
 };
-
 module.exports = {
     createParams: data,
     createServer: createServer,
