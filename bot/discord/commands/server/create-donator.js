@@ -47,7 +47,7 @@ exports.run = async (client, message, args) => {
                 .addField("Bots", "redbot", true)
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble\nLavalink", true)
-                .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma\nPalworld", true)
+                .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma\nPalworld\nSCPSL", true)
                 .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX \nOpenX", true)
@@ -104,6 +104,7 @@ exports.run = async (client, message, args) => {
         palworld: pServerCreatesettings.palworld,
         nukkit: pServerCreatesettings.nukkit,
         curseforge: pServerCreatesettings.curseforge,
+        scpsl: pServerCreatesettings.scpsl,
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
