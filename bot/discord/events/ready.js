@@ -88,43 +88,4 @@ module.exports = async (client) => {
             else messages.edit(embed);
         }, 15000);
     }
-
-    //Updating voice channels with proper counters.
-    setInterval(async () => {
-        let DBHGuild = client.guilds.cache.get("639477525927690240");
-
-        axios({
-            url: config.Pterodactyl.hosturl + "/api/application/servers",
-            method: "GET",
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                Authorization: "Bearer " + config.Pterodactyl.apikey,
-                "Content-Type": "application/json",
-                Accept: "Application/vnd.pterodactyl.v1+json",
-            },
-        }).then((response) => {
-            client.channels.cache.get("898041817503760444").edit({
-                name: `Servers Hosting: ${response.data.meta.pagination.total}`,
-                reason: "Server count update",
-            }).catch((error) => {});
-        }).catch((error) => {});
-
-        axios({
-            url: config.Pterodactyl.hosturl + "/api/application/users",
-            method: "GET",
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                Authorization: "Bearer " + config.Pterodactyl.apikey,
-                "Content-Type": "application/json",
-                Accept: "Application/vnd.pterodactyl.v1+json",
-            },
-        }).then((response) => {
-            client.channels.cache.get("898041820309778462").edit({
-                name: `Clients Hosting: ${response.data.meta.pagination.total}`,
-                reason: "Client count update",
-            }).catch((error) => {});
-        }).catch((error) => {});
-    }, 30000);
 };
