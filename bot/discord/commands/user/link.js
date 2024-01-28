@@ -1,5 +1,7 @@
 const axios = require("axios");
 exports.run = async (client, message, args) => {
+    return message.reply("This command is disabled!");
+    
     if (userData.get(message.author.id) == null) {
         const server = message.guild;
 
