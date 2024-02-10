@@ -61,6 +61,7 @@ let data = (serverName, userID) => {
         mariadb: null,
         // minio: null,
         rabbitmq: null,
+        bun: null,
     };
 
     for (let [name, filled] of Object.entries(createList)) {

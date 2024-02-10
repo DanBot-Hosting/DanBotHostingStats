@@ -43,7 +43,7 @@ exports.run = async(client, message, args) => {
                 .setColor("RED")
                 .addField("Minecraft", "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot\nNukkit\nCurseforge", true)
                 .addField("Grand Theft Auto", "alt:V\nmultitheftauto\nRage.MP\nSA-MP", true)
-                .addField("Languages", "NodeJS\nPython\nJava\naio\n Rust (use rustc to create)", true)
+                .addField("Languages", "NodeJS\nBun\nPython\nJava\naio\n Rust (use rustc to create)", true)
                 .addField("Bots", "redbot", true)
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble\nLavalink", true)
@@ -105,6 +105,7 @@ exports.run = async(client, message, args) => {
         nukkit: pServerCreatesettings.nukkit,
         curseforge: pServerCreatesettings.curseforge,
         scpsl: pServerCreatesettings.scpsl,
+        bun: pServerCreatesettings.bun,
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
@@ -172,7 +173,7 @@ exports.run = async(client, message, args) => {
                 .setColor("RED")
                 .addField("Minecraft", "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot", true)
                 .addField("Grand Theft Auto", "alt:V\nmultitheftauto\nRage.MP\nSA-MP", true)
-                .addField("Languages", "NodeJS\nPython\nJava\naio\n Rust (use rustc to create)", true)
+                .addField("Languages", "NodeJS\nBun\nPython\nJava\naio\n Rust (use rustc to create)", true)
                 .addField("Bots", "redbot", true)
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble", true)
