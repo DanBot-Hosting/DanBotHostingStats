@@ -10,7 +10,7 @@ createList.mongodb = (serverName, userID) => ({
         swap: -1,
         disk: 10240,
         io: 500,
-        cpu: 0,
+        cpu: 100,
     },
     environment: {
         MONGO_USER: "admin",

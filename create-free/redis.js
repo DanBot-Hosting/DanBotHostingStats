@@ -11,7 +11,7 @@ createList.redis = (serverName, userID) => ({
         swap: -1,
         disk: 10240,
         io: 500,
-        cpu: 0,
+        cpu: 100,
     },
     environment: {
         SERVER_PASSWORD: "P@55w0rd",
