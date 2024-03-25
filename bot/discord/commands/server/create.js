@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
         )
         //.addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
         //.addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
-        .addField("__**Languages:**__", "NodeJS \nPython \nJava \naio\n Rust (use rustc to create)", true)
+        .addField("__**Languages:**__", "NodeJS \nBun \nPython \nJava \naio\n Rust (use rustc to create)", true)
         .addField("__**Bots:**__", "redbot", true)
         //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
@@ -87,6 +87,7 @@ exports.run = async (client, message, args) => {
         mariadb: data.mariadb,
         // minio: data.minio,
         rabbitmq: data.rabbitmq,
+        bun: data.bun,
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {

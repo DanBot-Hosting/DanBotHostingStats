@@ -13,6 +13,6 @@ exports.run = (client, message, args) => {
         .setDescription(msg)
         .setTimestamp();
     const channel = client.channels.cache.get("960242064338092202");
-    channel.send(embed);
+    channel.send("<@&898041779696312320>", embed);
     message.reply("Changelog sent!");
 };

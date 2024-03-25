@@ -55,6 +55,7 @@ let data = (serverName, userID) => {
         palworld: null,
         nukkit: null,
         curseforge: null,
+        bun: null,
     };
     for (let [name, filled] of Object.entries(createListPrem)) {
         toReturn[name] = filled(serverName, userID);
