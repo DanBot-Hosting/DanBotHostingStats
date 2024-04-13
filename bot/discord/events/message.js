@@ -72,7 +72,8 @@ module.exports = async (client, message) => {
             "898041895987585024", // javascript
             "898041896956469249", // web-dev
             "898041898835509328", // java
-            "1056858054819336192", // node-bot-outages
+            "1056858054819336192", // report-outages
+            "1195633188597411882", // lavalink
             "1192648696517640252", // bot-api
             "1138925759264739398", // vpn
             "938630088256286720", // vps-hosting
