@@ -1,5 +1,7 @@
 const serverCreateSettings = require("../../../../createData");
 exports.run = async (client, message, args) => {
+return message.reply('Server creation is currently disabled')
+
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(
@@ -16,7 +18,7 @@ exports.run = async (client, message, args) => {
         .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste\n uptimekuma\n grafana \n rabbitmq", true)
-        // .addField("__**Storage:**__", "Minio", true)
+        .addField("__**Storage:**__", "storage", true)
         .setFooter("Example: DBH!server create NodeJS Testing Server");
 
     const serverName = message.content.split(" ").slice(3).join(" ") || "Untitled Server (settings -> server name)";
@@ -92,6 +94,7 @@ exports.run = async (client, message, args) => {
         // minio: data.minio,
         rabbitmq: data.rabbitmq,
         bun: data.bun,
+        storage: data.storage,
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {
