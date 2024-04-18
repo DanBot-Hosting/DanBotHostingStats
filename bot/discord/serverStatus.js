@@ -35,6 +35,14 @@ let nstatus = {
             maxCount: 3000,
         }
     ],
+    "Storage Nodes": [
+        {
+            name: "Storage-1",
+            data: "storage1",
+            location: "UK",
+            maxCount: 900,
+        }
+    ],
     "VPN Servers": [
         {
             name: "US 1",
