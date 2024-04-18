@@ -7,13 +7,9 @@ return message.reply('Server creation is currently disabled')
         .setDescription(
             `List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`
         )
-        //.addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
-        //.addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
         .addField("__**Languages:**__", "NodeJS \nBun \nPython \nJava \naio\n Rust (use rustc to create)", true)
         .addField("__**Bots:**__", "redbot", true)
-        //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
         .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
-        //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nAssettocorsa \nAvorion \nBarotrauma", true)
         .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
         .addField("__**Web Hosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
@@ -58,29 +54,12 @@ return message.reply('Server creation is currently disabled')
         python: data.python,
         aio: data.aio,
         java: data.java,
-        //paper: data.paper,
-        //forge: data.forge,
-        //"alt:v": data.altv,
-        //multitheftauto: data.multitheftauto,
-        //"sa-mp": data.samp,
-        //bedrock: data.bedrock,
-        //pocketminemp: data.pocketminemp,
-        //gmod: data.gmod,
-        //"cs:go": data.csgo,
-        //"ark:se": data.arkse,
         ts3: data.ts3,
         mumble: data.mumble,
-        //rust: data.rust,
         mongodb: data.mongodb,
         redis: data.redis,
         postgres14: data.postgres14,
         postgres16: data.postgres16,
-        //daystodie: data.daystodie,
-        //assettocorsa: data.assettocorsa,
-        //avorion: data.avorion,
-        //barotrauma: data.barotrauma,
-        //waterfall: data.waterfall,
-        //spigot: data.spigot,
         sharex: data.sharex,
         codeserver: data.codeserver,
         gitea: data.gitea,
@@ -91,7 +70,6 @@ return message.reply('Server creation is currently disabled')
         grafana: data.grafana,
         openx: data.openx,
         mariadb: data.mariadb,
-        // minio: data.minio,
         rabbitmq: data.rabbitmq,
         bun: data.bun,
         storage: data.storage,
