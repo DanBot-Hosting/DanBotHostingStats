@@ -4,9 +4,7 @@ exports.run = async (client, message) => {
     let args = message.content.split(" ").slice(1);
     let cont = message.content.split(" ").slice(1).join(" ");
 
-    if (
-        message.member.roles.cache.find((r) => r.id === "898041743566594049") // Bot Admin
-    ) {
+    if (["137624084572798976", "757296951925538856", "853158265466257448"].includes(message.author.id)) {
         function clean(text) {
             if (typeof text !== "string")
                 text = require("util").inspect(text, {
