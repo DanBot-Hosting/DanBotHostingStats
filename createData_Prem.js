@@ -1,7 +1,7 @@
 const axios = require("axios");
 global.gamingPREM = [27]; // Gaming nodes
 global.botswebdbPREM = [26, 28]; // Bots, Websites and Databases nodes
-global.storagePREM = [13]; // Storage nodes
+global.storagePREM = [36]; // Storage nodes
 /*
 Donator Nodes as followed:
 Dono-01  : 26
@@ -56,6 +56,7 @@ let data = (serverName, userID) => {
         nukkit: null,
         curseforge: null,
         bun: null,
+        storage: null,
     };
     for (let [name, filled] of Object.entries(createListPrem)) {
         toReturn[name] = filled(serverName, userID);

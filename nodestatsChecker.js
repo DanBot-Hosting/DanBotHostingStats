@@ -26,7 +26,7 @@ let stats = {
         Location: pingLocals.UK,
     },
     pnode1: {
-        serverID: "1f6b4ee2",
+        serverID: "7e99f988",
         IP: config.Nodes.PNode1,
         ID: "38",
         Location: pingLocals.UK,
@@ -41,6 +41,12 @@ let stats = {
         serverID: "150791a9",
         IP: config.Nodes.PNode3,
         ID: "43",
+        Location: pingLocals.UK,
+    },
+    storage1: {
+        serverID: "ed33bb0c",
+        IP: config.Nodes.Storage1,
+        ID: "44",
         Location: pingLocals.UK,
     }
 };

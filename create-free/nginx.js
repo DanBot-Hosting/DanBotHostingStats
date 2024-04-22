@@ -3,7 +3,7 @@ createList.nginx = (serverName, userID) => ({
     user: userID,
     nest: 14,
     egg: 48,
-    docker_image: "registry.gitlab.com/tenten8401/pterodactyl-nginx",
+    docker_image: "danbothosting/nginx",
     startup: `{{STARTUP_CMD}}`,
     limits: {
         memory: 0,

@@ -10,7 +10,7 @@ const axios = require("axios");
 
 global.gamingFREE = [14]; // Gaming nodes
 global.botswebdbFREE = [30, 32, 35]; // Bots, Websites and Databases nodes
-global.storageFREE = [13]; // Storage nodes
+global.storageFREE = [36]; // Storage nodes
 
 /*
 PNode 1  : 30
@@ -62,6 +62,7 @@ let data = (serverName, userID) => {
         // minio: null,
         rabbitmq: null,
         bun: null,
+        storage: null,
     };
 
     for (let [name, filled] of Object.entries(createList)) {

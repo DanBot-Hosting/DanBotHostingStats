@@ -35,6 +35,14 @@ let nstatus = {
             maxCount: 3000,
         }
     ],
+    "Storage Nodes": [
+        {
+            name: "Storage-1",
+            data: "storage1",
+            location: "UK",
+            maxCount: 900,
+        }
+    ],
     "VPN Servers": [
         {
             name: "US 1",
@@ -69,7 +77,7 @@ let nstatus = {
             data: "proxmox",
         },
         {
-            name: "VPN API",
+            name: "VPN API (DEV)",
             data: "vpnapi",
         },
     ],
@@ -85,17 +93,11 @@ let parse = async () => {
             let nodeData = nodeServers.get(d.data.toLowerCase());
             let ping = nodePing.fetch(d.data.toLowerCase());
             let serverUsage = d.data.toLowerCase().startsWith("node")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [${Math.round(
-                      Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
                 : "" || d.data.toLowerCase().includes("dono")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [${Math.round(
-                      Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
                 : "" || d.data.toLowerCase().startsWith("pnode")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount}) [${Math.round(
-                      Number.isNaN(ping.ping) ? 0 : ping.ping
-                  )}ms]`
+                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
                 : "";
 
             da =
