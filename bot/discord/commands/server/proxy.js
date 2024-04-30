@@ -1,9 +1,9 @@
 const axios = require("axios");
 const dns = require("dns");
 
-async function getNewKeyUS() {
+async function getNewKeyUS1() {
     const serverRes = await axios({
-        url: config.USProxy.url + "/api/tokens",
+        url: config.USProxy1.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -11,8 +11,56 @@ async function getNewKeyUS() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.USProxy.email,
-            secret: config.USProxy.pass,
+            identity: config.USProxy1.email,
+            secret: config.USProxy1.pass,
+        },
+    });
+    return "Bearer " + serverRes.data.token;
+}
+async function getNewKeyUS2() {
+    const serverRes = await axios({
+        url: config.USProxy2.url + "/api/tokens",
+        method: "POST",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: {
+            identity: config.USProxy2.email,
+            secret: config.USProxy2.pass,
+        },
+    });
+    return "Bearer " + serverRes.data.token;
+}
+async function getNewKeyUS3() {
+    const serverRes = await axios({
+        url: config.USProxy3.url + "/api/tokens",
+        method: "POST",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: {
+            identity: config.USProxy3.email,
+            secret: config.USProxy3.pass,
+        },
+    });
+    return "Bearer " + serverRes.data.token;
+}
+async function getNewKeyUS4() {
+    const serverRes = await axios({
+        url: config.USProxy4.url + "/api/tokens",
+        method: "POST",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: {
+            identity: config.USProxy4.email,
+            secret: config.USProxy4.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
@@ -30,21 +78,14 @@ exports.run = async (client, message, args) => {
                 config.DiscordBot.Prefix +
                 "server list`\n\n" +
                 "You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:\n\n" +
-                "> `69.30.249.53` - [US 1] 🟢 Enabled\n" +
+                "> `69.197.135.202` - [US 1] 🟢 Enabled\n" +
+                "> `69.197.135.203` - [US 2] 🟢 Enabled\n" +
+                "> `69.197.135.204` - [US 3] 🟢 Enabled\n" +
+                "> `69.197.135.205` - [US 4] 🟢 Enabled\n" +
                 "If you are using Cloudflare, make sure you are using **DNS only mode**, and disabling **always use HTTPS**.\n\n" +
                 "Donators can use the `*.only-fans.club` subdomains! Replace `<domain>` with the `your-subdomain.only-fans.club` to use it! Please note these domains are proxied through France, and will not work if France is disabled."
         )
         .setColor("BLUE");
-
-    /*
-        .setDescription('`' + config.DiscordBot.Prefix + 'server proxy <domain> <serverid>`' +
-            '\nMake sure to replace <domain> with your domain and <serverid> with the ID of your server. ' +
-            'You can find your server id by running `' + config.DiscordBot.Prefix + 'server list`' +
-            '\nYou can link your own domain by creating a DNS A Record pointing either \`164.132.74.251\` or \`192.95.42.75\`! [DISABLED]' +
-            '\nIf you are a donator, you have the option to use the donator proxy \`5.196.239.158\`! ' +
-            '\nIf you are using Cloudflare make sure the you are using DNS only mode!' +
-            '\nFor donators there is the free domain `*.only-fans.club`.');
-        */
 
     if (!args[1] || !args[2]) {
         await message.reply(embed);
@@ -80,19 +121,22 @@ exports.run = async (client, message, args) => {
             dns.lookup(args[1], options, (err, address, family) => res({ err, address, family }));
         });
 
-        if (!["69.30.249.53"].includes(dnsCheck.address)) {
+        if (!["69.197.135.202", "69.197.135.203", "69.197.135.204", "69.197.135.205"].includes(dnsCheck.address)) {
             return message.reply(
-                "ERROR: You must have a DNS A Record pointing to `69.30.249.53`! Also if you are using Cloudflare make sure the you are using DNS only mode!\nIf you have done all of that and it's still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)"
+                "ERROR: You must have a DNS A Record pointing to `69.197.135.202`, `69.197.135.203`, `69.197.135.204`, `69.197.135.205`! Also if you are using Cloudflare make sure the you are using DNS only mode!\nIf you have done all of that and it's still not working: Try again later, because sometimes DNS changes can take a while to update. (Can take up to 24 hours to update!)"
             );
         }
 
         if (
             !message.member.roles.cache.some((r) => ["898041754564046869", "710208090741539006"].includes(r.id)) &&
-            "5.196.239.158" == dnsCheck.address
+            "69.30.249.53" == dnsCheck.address
         )
             return message.reply("Sorry, this proxy location is only available for boosters and donators.");
 
-        config.USProxy.authKey = await getNewKeyUS();
+        config.USProxy1.authKey = await getNewKeyUS1();
+        config.USProxy2.authKey = await getNewKeyUS2();
+        config.USProxy3.authKey = await getNewKeyUS3();
+        config.USProxy4.authKey = await getNewKeyUS4();
         //config.CAProxy.authKey = await getNewKeyCA();
         //config.DonatorProxy.authKey = await getNewKeyDonator();
 
@@ -142,16 +186,16 @@ exports.run = async (client, message, args) => {
             }).then(async (response) => {
                 const replyMsg = await message.reply("Proxying your domain... this can take up to 30 seconds.");
 
-                if (dnsCheck.address == "69.30.249.53") {
+                if (dnsCheck.address == "69.197.135.202") {
                     //US 1
                     replyMsg.edit("Domain found pointing towards US Proxy 1...");
                     axios({
-                        url: config.USProxy.url + "/api/nginx/proxy-hosts",
+                        url: config.USProxy1.url + "/api/nginx/proxy-hosts",
                         method: "POST",
                         followRedirect: true,
                         maxRedirects: 5,
                         headers: {
-                            Authorization: config.USProxy.authKey,
+                            Authorization: config.USProxy1.authKey,
                             "Content-Type": "application/json",
                         },
                         data: {
@@ -186,7 +230,7 @@ exports.run = async (client, message, args) => {
                                 {
                                     domain: args[1].toLowerCase(),
                                     serverID: args[2],
-                                    location: "US",
+                                    location: "US1",
                                 },
                             ]);
                         })
@@ -196,19 +240,19 @@ exports.run = async (client, message, args) => {
                                 //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
                                 //Ping and find the ID since it doesnt log when it fails
                                 axios({
-                                    url: config.USProxy.url + "/api/nginx/proxy-hosts",
+                                    url: config.USProxy1.url + "/api/nginx/proxy-hosts",
                                     method: "GET",
                                     followRedirect: true,
                                     maxRedirects: 5,
                                     headers: {
-                                        Authorization: config.USProxy.authKey,
+                                        Authorization: config.USProxy1.authKey,
                                         "Content-Type": "application/json",
                                     },
                                 }).then((response) => {
                                     //Now delete it
                                     axios({
                                         url:
-                                            config.USProxy.url +
+                                            config.USProxy1.url +
                                             "/api/nginx/proxy-hosts/" +
                                             ResponseAfterProxy.data.find(
                                                 (element) => element.domain_names[0] == args[1].toLowerCase()
@@ -217,7 +261,268 @@ exports.run = async (client, message, args) => {
                                         followRedirect: true,
                                         maxRedirects: 5,
                                         headers: {
-                                            Authorization: config.USProxy.authKey,
+                                            Authorization: config.USProxy1.authKey,
+                                            "Content-Type": "application/json",
+                                        },
+                                    });
+                                });
+                            } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
+                                // Domain Already linked and/or other error
+                                replyMsg.edit(
+                                    "This domain has already been linked. If this is an error, please contact a staff member to fix this!"
+                                );
+                            }
+                        });
+                } else if (dnsCheck.address == "69.197.135.203") {
+                    //US 1
+                    replyMsg.edit("Domain found pointing towards US Proxy 2...");
+                    axios({
+                        url: config.USProxy2.url + "/api/nginx/proxy-hosts",
+                        method: "POST",
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            Authorization: config.USProxy2.authKey,
+                            "Content-Type": "application/json",
+                        },
+                        data: {
+                            domain_names: [args[1].toLowerCase()],
+                            forward_scheme: "http",
+                            forward_host: response.data.attributes.sftp_details.ip,
+                            forward_port: response.data.attributes.relationships.allocations.data[0].attributes.port,
+                            access_list_id: "0",
+                            certificate_id: "new",
+                            meta: {
+                                letsencrypt_email: "proxy-renew@danbot.host",
+                                letsencrypt_agree: true,
+                                dns_challenge: false,
+                            },
+                            advanced_config: "",
+                            locations: [],
+                            block_exploits: false,
+                            caching_enabled: false,
+                            allow_websocket_upgrade: true,
+                            http2_support: false,
+                            hsts_enabled: false,
+                            hsts_subdomains: false,
+                            ssl_forced: true,
+                        },
+                    })
+                        .then((ResponseAfterProxy) => {
+                            //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
+                            replyMsg.edit("Domain has been proxied, its ID is: " + ResponseAfterProxy.data.id);
+                            let datalmao = userData.get(message.author.id).domains || [];
+                            userData.set(message.author.id + ".domains", [
+                                ...new Set(datalmao),
+                                {
+                                    domain: args[1].toLowerCase(),
+                                    serverID: args[2],
+                                    location: "US2",
+                                },
+                            ]);
+                        })
+                        .catch((ErrorAfterProxy) => {
+                            if (ErrorAfterProxy == "Error: Request failed with status code 500") {
+                                // Domain not pointing and/or other error
+                                //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
+                                //Ping and find the ID since it doesnt log when it fails
+                                axios({
+                                    url: config.USProxy2.url + "/api/nginx/proxy-hosts",
+                                    method: "GET",
+                                    followRedirect: true,
+                                    maxRedirects: 5,
+                                    headers: {
+                                        Authorization: config.USProxy2.authKey,
+                                        "Content-Type": "application/json",
+                                    },
+                                }).then((response) => {
+                                    //Now delete it
+                                    axios({
+                                        url:
+                                            config.USProxy2.url +
+                                            "/api/nginx/proxy-hosts/" +
+                                            ResponseAfterProxy.data.find(
+                                                (element) => element.domain_names[0] == args[1].toLowerCase()
+                                            ).id,
+                                        method: "DELETE",
+                                        followRedirect: true,
+                                        maxRedirects: 5,
+                                        headers: {
+                                            Authorization: config.USProxy2.authKey,
+                                            "Content-Type": "application/json",
+                                        },
+                                    });
+                                });
+                            } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
+                                // Domain Already linked and/or other error
+                                replyMsg.edit(
+                                    "This domain has already been linked. If this is an error, please contact a staff member to fix this!"
+                                );
+                            }
+                        });
+                } else if (dnsCheck.address == "69.197.135.204") {
+                    //US 1
+                    replyMsg.edit("Domain found pointing towards US Proxy 3...");
+                    axios({
+                        url: config.USProxy3.url + "/api/nginx/proxy-hosts",
+                        method: "POST",
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            Authorization: config.USProxy3.authKey,
+                            "Content-Type": "application/json",
+                        },
+                        data: {
+                            domain_names: [args[1].toLowerCase()],
+                            forward_scheme: "http",
+                            forward_host: response.data.attributes.sftp_details.ip,
+                            forward_port: response.data.attributes.relationships.allocations.data[0].attributes.port,
+                            access_list_id: "0",
+                            certificate_id: "new",
+                            meta: {
+                                letsencrypt_email: "proxy-renew@danbot.host",
+                                letsencrypt_agree: true,
+                                dns_challenge: false,
+                            },
+                            advanced_config: "",
+                            locations: [],
+                            block_exploits: false,
+                            caching_enabled: false,
+                            allow_websocket_upgrade: true,
+                            http2_support: false,
+                            hsts_enabled: false,
+                            hsts_subdomains: false,
+                            ssl_forced: true,
+                        },
+                    })
+                        .then((ResponseAfterProxy) => {
+                            //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
+                            replyMsg.edit("Domain has been proxied, its ID is: " + ResponseAfterProxy.data.id);
+                            let datalmao = userData.get(message.author.id).domains || [];
+                            userData.set(message.author.id + ".domains", [
+                                ...new Set(datalmao),
+                                {
+                                    domain: args[1].toLowerCase(),
+                                    serverID: args[2],
+                                    location: "US3",
+                                },
+                            ]);
+                        })
+                        .catch((ErrorAfterProxy) => {
+                            if (ErrorAfterProxy == "Error: Request failed with status code 500") {
+                                // Domain not pointing and/or other error
+                                //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
+                                //Ping and find the ID since it doesnt log when it fails
+                                axios({
+                                    url: config.USProxy3.url + "/api/nginx/proxy-hosts",
+                                    method: "GET",
+                                    followRedirect: true,
+                                    maxRedirects: 5,
+                                    headers: {
+                                        Authorization: config.USProxy3.authKey,
+                                        "Content-Type": "application/json",
+                                    },
+                                }).then((response) => {
+                                    //Now delete it
+                                    axios({
+                                        url:
+                                            config.USProxy3.url +
+                                            "/api/nginx/proxy-hosts/" +
+                                            ResponseAfterProxy.data.find(
+                                                (element) => element.domain_names[0] == args[1].toLowerCase()
+                                            ).id,
+                                        method: "DELETE",
+                                        followRedirect: true,
+                                        maxRedirects: 5,
+                                        headers: {
+                                            Authorization: config.USProxy3.authKey,
+                                            "Content-Type": "application/json",
+                                        },
+                                    });
+                                });
+                            } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
+                                // Domain Already linked and/or other error
+                                replyMsg.edit(
+                                    "This domain has already been linked. If this is an error, please contact a staff member to fix this!"
+                                );
+                            }
+                        });
+                } else if (dnsCheck.address == "69.197.135.205") {
+                    //US 1
+                    replyMsg.edit("Domain found pointing towards US Proxy 4...");
+                    axios({
+                        url: config.USProxy4.url + "/api/nginx/proxy-hosts",
+                        method: "POST",
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            Authorization: config.USProxy4.authKey,
+                            "Content-Type": "application/json",
+                        },
+                        data: {
+                            domain_names: [args[1].toLowerCase()],
+                            forward_scheme: "http",
+                            forward_host: response.data.attributes.sftp_details.ip,
+                            forward_port: response.data.attributes.relationships.allocations.data[0].attributes.port,
+                            access_list_id: "0",
+                            certificate_id: "new",
+                            meta: {
+                                letsencrypt_email: "proxy-renew@danbot.host",
+                                letsencrypt_agree: true,
+                                dns_challenge: false,
+                            },
+                            advanced_config: "",
+                            locations: [],
+                            block_exploits: false,
+                            caching_enabled: false,
+                            allow_websocket_upgrade: true,
+                            http2_support: false,
+                            hsts_enabled: false,
+                            hsts_subdomains: false,
+                            ssl_forced: true,
+                        },
+                    })
+                        .then((ResponseAfterProxy) => {
+                            //console.log(chalk.blue('DEBUG: ' + chalk.white(ResponseAfterProxy))
+                            replyMsg.edit("Domain has been proxied, its ID is: " + ResponseAfterProxy.data.id);
+                            let datalmao = userData.get(message.author.id).domains || [];
+                            userData.set(message.author.id + ".domains", [
+                                ...new Set(datalmao),
+                                {
+                                    domain: args[1].toLowerCase(),
+                                    serverID: args[2],
+                                    location: "US4",
+                                },
+                            ]);
+                        })
+                        .catch((ErrorAfterProxy) => {
+                            if (ErrorAfterProxy == "Error: Request failed with status code 500") {
+                                // Domain not pointing and/or other error
+                                //Delete since it creates it without the SSL cert. Damn you nginx proxy manager
+                                //Ping and find the ID since it doesnt log when it fails
+                                axios({
+                                    url: config.USProxy4.url + "/api/nginx/proxy-hosts",
+                                    method: "GET",
+                                    followRedirect: true,
+                                    maxRedirects: 5,
+                                    headers: {
+                                        Authorization: config.USProxy4.authKey,
+                                        "Content-Type": "application/json",
+                                    },
+                                }).then((response) => {
+                                    //Now delete it
+                                    axios({
+                                        url:
+                                            config.USProxy4.url +
+                                            "/api/nginx/proxy-hosts/" +
+                                            ResponseAfterProxy.data.find(
+                                                (element) => element.domain_names[0] == args[1].toLowerCase()
+                                            ).id,
+                                        method: "DELETE",
+                                        followRedirect: true,
+                                        maxRedirects: 5,
+                                        headers: {
+                                            Authorization: config.USProxy4.authKey,
                                             "Content-Type": "application/json",
                                         },
                                     });
