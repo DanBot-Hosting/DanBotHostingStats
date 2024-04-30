@@ -1,9 +1,9 @@
 const axios = require("axios");
 const dns = require("dns");
 
-async function getNewKeyUS1() {
+async function getNewKey(proxyConfig) {
     const serverRes = await axios({
-        url: config.USProxy1.url + "/api/tokens",
+        url: proxyConfig.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -11,60 +11,17 @@ async function getNewKeyUS1() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.USProxy1.email,
-            secret: config.USProxy1.pass,
+            identity: proxyConfig.email,
+            secret: proxyConfig.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
-async function getNewKeyUS2() {
-    const serverRes = await axios({
-        url: config.USProxy2.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.USProxy2.email,
-            secret: config.USProxy2.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-async function getNewKeyUS3() {
-    const serverRes = await axios({
-        url: config.USProxy3.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.USProxy3.email,
-            secret: config.USProxy3.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-async function getNewKeyUS4() {
-    const serverRes = await axios({
-        url: config.USProxy4.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.USProxy4.email,
-            secret: config.USProxy4.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
+
+exports.getNewKeyUS1 = () => getNewKey(config.USProxy1);
+exports.getNewKeyUS2 = () => getNewKey(config.USProxy2);
+exports.getNewKeyUS3 = () => getNewKey(config.USProxy3);
+exports.getNewKeyUS4 = () => getNewKey(config.USProxy4);
 
 exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
