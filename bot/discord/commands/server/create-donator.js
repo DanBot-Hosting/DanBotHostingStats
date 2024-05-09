@@ -181,7 +181,7 @@ exports.run = async(client, message, args) => {
                 .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma", true)
                 .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
                 .addField("WebHosting", "Nginx", true)
-                .addField("Custom Eggs", "ShareX", true)
+                .addField("Custom Eggs", "ShareX\nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
                 .addField("Storage", "storage", true)
                 .setFooter("Example: DBH!server create-donator aio My AIO Server")
