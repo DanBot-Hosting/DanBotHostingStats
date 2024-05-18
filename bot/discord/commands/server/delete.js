@@ -91,7 +91,7 @@ exports.run = async (client, message, args) => {
                                             output.attributes.node === 31 || // Dono-02
                                             output.attributes.node === 34 || // Dono-01
                                             output.attributes.node === 33 || // Dono-03
-                                            output.attributes.node === 45 || // Dono-04
+                                            output.attributes.node === 45 // Dono-04
                                         )
                                             userPrem.set(
                                                 message.author.id + ".used",
