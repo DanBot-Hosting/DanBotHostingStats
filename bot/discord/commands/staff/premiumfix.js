@@ -1,4 +1,4 @@
-const premiumNodes = [34, 31, 33]; // Dono1, Dono2, Dono3
+const premiumNodes = [34, 31, 33, 45]; // Dono-01, Dono-02, Dono-03, Dono-04
 
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
