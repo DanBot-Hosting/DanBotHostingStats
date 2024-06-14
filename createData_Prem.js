@@ -57,6 +57,7 @@ let data = (serverName, userID) => {
         curseforge: null,
         bun: null,
         storage: null,
+        influxdb: null,
     };
     for (let [name, filled] of Object.entries(createListPrem)) {
         toReturn[name] = filled(serverName, userID);
