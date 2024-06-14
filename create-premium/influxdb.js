@@ -1,8 +1,8 @@
 createListPrem.influxdb = (serverName, userID) => ({
     name: serverName,
     user: userID,
-    nest: 19,
-    egg: 66,
+    nest: 12,
+    egg: 93,
     docker_image: "ghcr.io/parkervcp/yolks:debian",
     startup: `./influxd  --http-bind-address 0.0.0.0:{{SERVER_PORT}}`,
     limits: {
