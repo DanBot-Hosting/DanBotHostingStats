@@ -48,7 +48,7 @@ exports.run = async(client, message, args) => {
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble\nLavalink", true)
                 .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma\nPalworld\nSCPSL", true)
-                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
+                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB\nInfluxDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX \nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana \nrabbitmq", true)
@@ -107,6 +107,7 @@ exports.run = async(client, message, args) => {
         scpsl: pServerCreatesettings.scpsl,
         bun: pServerCreatesettings.bun,
         storage: pServerCreatesettings.storage,
+        influxdb: pServerCreatesettings.influxdb
     };
 
     if (Object.keys(types).includes(args[1].toLowerCase())) {
@@ -179,7 +180,7 @@ exports.run = async(client, message, args) => {
                 .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
                 .addField("Voice Servers", "TS3\nMumble", true)
                 .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma", true)
-                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB", true)
+                .addField("Databases", "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB\nInfluxDB", true)
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX\nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
