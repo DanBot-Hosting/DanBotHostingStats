@@ -1,13 +1,21 @@
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041743566594049")) return;
 
+    let userid =
+        args[1] == null
+            ? message.author.id
+            : args[1].match(/[0-9]{17,19}/).length == 0
+            ? args[1]
+            : args[1].match(/[0-9]{17,19}/)[0];
+
     if (args[1] == null) {
         message.reply("Please send a users discord ID to see if they are linked with an account on the host.");
     } else {
-        if (userData.get(args[1]) == null) {
+        if (userData.get(userid) == null) {
             message.reply("That account is not linked with a console account :sad:");
         } else {
-            console.log(userData.fetch(args[1]));
+            //console.log(userData.fetch(userid));
+
             let embed = new Discord.MessageEmbed()
                 .setColor(`GREEN`)
                 .addField(`__**Username**__`, userData.fetch(args[1] + ".username"))
