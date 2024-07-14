@@ -10,13 +10,6 @@ node_modules
 data
 config.json
 json.sqlite
-images
-start.bat
-eng.traineddata
-proxy
-animalAPI/dog/*
-animalAPI/cat/*
-yarn.lock
 
 Test/*
 
