@@ -4,7 +4,7 @@ createList.storage = (serverName, userID) => ({
     nest: 22,
     egg: 92,
     docker_image: "ghcr.io/parkervcp/yolks:alpine",
-    startup: `echo -e "\n\n\033[0;31mThere is no need to start this server. The SFTP service is always running. Feel free to stop the server now.\n\t\033[0;36m(Sub-users can be added via the Users tab to add/remove access to the share in real time)\n\n"`,
+    startup: `echo -e "\n\nThere is no need to start this server. The SFTP service is always running. Feel free to stop the server now.\n\t(Sub-users can be added via the Users tab to add/remove access to the share in real time)\n\n"`,
     limits: {
         memory: 0,
         swap: -1,
