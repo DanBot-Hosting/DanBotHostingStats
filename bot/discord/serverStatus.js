@@ -22,7 +22,7 @@ let nstatus = {
             name: "Dono-01",
             data: "dono01",
             location: "UK",
-            maxCount: 400,
+            maxCount: 500,
         },
         {
             name: "Dono-02",
@@ -33,6 +33,11 @@ let nstatus = {
             name: "Dono-03",
             data: "dono03",
             maxCount: 3000,
+        },
+        {
+            name: "Dono-04",
+            data: "dono04",
+            maxCount: 2000,
         }
     ],
     "Storage Nodes": [
