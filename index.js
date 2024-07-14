@@ -11,7 +11,6 @@ Free Hosting forever!                                            /____/
 //DIBSTER was here.
 
 global.config = require("./config.json");
-global.enabled = require("./enable.json");
 
 //New global cache system (Lazy way)
 global.users = [];

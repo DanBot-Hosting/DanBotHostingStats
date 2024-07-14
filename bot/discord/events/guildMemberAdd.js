@@ -1,6 +1,6 @@
 const humanizeDuration = require("humanize-duration");
 module.exports = async (client, member, guild) => {
-    if (enabled.Welcome) {
+    if (config.Enabled.Welcome) {
         if (Date.now() - member.user.createdAt < 863136000) {
             return;
         } else {

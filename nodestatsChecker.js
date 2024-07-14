@@ -50,7 +50,7 @@ let stats = {
         Location: pingLocals.UK,
     }
 };
-if (enabled.nodestatsChecker) {
+if (config.Enabled.nodestatsChecker) {
     console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled"));
     //Node status
     setInterval(() => {

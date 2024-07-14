@@ -74,7 +74,7 @@ module.exports = async (client) => {
     }, 15000);
 
     // Node status embed
-    if (enabled.NodeStats) {
+    if (config.Enabled.NodeStats) {
         let channel = client.channels.cache.get("898041845878247487");
         setInterval(async () => {
             let embed = await nstatus.getEmbed();
