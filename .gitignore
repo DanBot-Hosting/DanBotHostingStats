@@ -9,7 +9,6 @@ node_modules
 
 data
 config.json
-enable.json
 json.sqlite
 images
 start.bat
