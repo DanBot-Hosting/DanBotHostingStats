@@ -146,20 +146,20 @@ if (config.Enabled.nodestatsChecker) {
 
         setInterval(() => {
         // AU 1 VPN Server
-        ping
-            .ping(config.VPN.AU1, 22)
-            .then(() =>
-                nodeStatus.set("au1", {
-                    timestamp: Date.now(),
-                    status: true,
-                })
-            )
-            .catch((e) =>
-                nodeStatus.set("au1", {
-                    timestamp: Date.now(),
-                    status: false,
-                })
-            );
+        // ping
+        //     .ping(config.VPN.AU1, 22)
+        //     .then(() =>
+        //         nodeStatus.set("au1", {
+        //             timestamp: Date.now(),
+        //             status: true,
+        //         })
+        //     )
+        //     .catch((e) =>
+        //         nodeStatus.set("au1", {
+        //             timestamp: Date.now(),
+        //             status: false,
+        //         })
+        //     );
 
         // FR 1 VPN Server
         ping
