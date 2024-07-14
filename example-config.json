@@ -1,7 +1,5 @@
 {
   "join": false,
-  "Port": 1144,
-  "APIPort": 1145,
   "externalPassword": "",
   "db": "mongodb ",
 
@@ -53,7 +51,7 @@
             "member": "Member role ID",
             "client": "Client role ID",
             "bot": "Bot role ID",
-            "staff": "Staff role ID (Used for staff commands)"
+            "staff": "Staff role ID (Used for staff commands)",
             "mute": "898041752966021151"
     },
     "reactionRoles": {
