@@ -280,7 +280,7 @@ if (enabled.nodestatsChecker) {
                 );
             // VPN API
             ping
-                .ping(config.Services.vpnapi, 1110)
+                .ping(config.Services.vpnapi, 443)
                 .then(() =>
                     nodeStatus.set("vpnapi", {
                         timestamp: Date.now(),

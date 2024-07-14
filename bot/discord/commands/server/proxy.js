@@ -22,6 +22,7 @@ exports.getNewKeyUS1 = () => getNewKey(config.USProxy1);
 exports.getNewKeyUS2 = () => getNewKey(config.USProxy2);
 exports.getNewKeyUS3 = () => getNewKey(config.USProxy3);
 exports.getNewKeyUS4 = () => getNewKey(config.USProxy4);
+exports.DonatorProxy = () => getNewKey(config.DonatorProxy);
 
 exports.run = async (client, message, args) => {
     const embed = new Discord.MessageEmbed()
@@ -39,10 +40,11 @@ exports.run = async (client, message, args) => {
             > \`69.197.135.203\` - [US 2] 🟢 Enabled
             > \`69.197.135.204\` - [US 3] 🟢 Enabled
             > \`69.197.135.205\` - [US 4] 🟢 Enabled
+            > \`69.30.249.53\` - [Donator 1] 🟢 Enabled
 
             If you are using Cloudflare, make sure you are using **DNS only mode**, and disabling **always use HTTPS**.
 
-            Donators can use the \`*.only-fans.club\` subdomains! Replace \`<domain>\` with the \`your-subdomain.only-fans.club\` to use it! Please note these domains are proxied through France, and will not work if France is disabled.`
+            Donators can use the \`*.only-fans.club\` \`*.is-a-awesome.dev\` \`*.is-a-cool.dev\` subdomains! Replace \`<domain>\` with the \`your-subdomain.domainhere\` to use it!`
         )
         .setColor("BLUE");
 
@@ -56,15 +58,33 @@ exports.run = async (client, message, args) => {
             return message.reply("Sorry, only-fans.club subdomains are only available for boosters and donators.");
         }
     }
-
-    const linkalready = userData
-        .fetchAll()
-        .filter(
-            (users) => users.data.domains && users.data.domains.filter((x) => x.domain === args[1]).length != 0
-        );
-    if (linkalready[0]) {
-        return message.reply("Domain is already linked.");
+    
+    if (args[1].toLowerCase().includes("is-a-awesome.dev")) {
+        if (!message.member.roles.cache.some((r) => ["898041754564046869", "710208090741539006"].includes(r.id))) {
+            return message.reply("Sorry, is-a-awesome.dev subdomains are only available for boosters and donators.");
+        }
     }
+    
+    if (args[1].toLowerCase().includes("is-a-cool.dev")) {
+        if (!message.member.roles.cache.some((r) => ["898041754564046869", "710208090741539006"].includes(r.id))) {
+            return message.reply("Sorry, is-a-cool.dev subdomains are only available for boosters and donators.");
+        }
+    }
+
+const user = userData.get(message.author.id); 
+
+if (!user) {
+    return message.reply("User not found.");
+}
+
+const linkAlready = user.domains.some((x) => x.domain === args[1]);
+
+if (linkAlready) {
+    return message.reply("Domain is already linked.");
+} else {
+    //If no linked domains
+}
+
 
     if (!/^[a-zA-Z0-9.-]+$/.test(args[1])) {
         return message.reply("Invalid domain format.");
@@ -73,7 +93,7 @@ exports.run = async (client, message, args) => {
         dns.lookup(args[1], { family: 4, hints: dns.ADDRCONFIG | dns.V4MAPPED }, (err, address) => resolve({ err, address }));
     });
 
-    const validAddresses = ["69.197.135.202", "69.197.135.203", "69.197.135.204", "69.197.135.205"];
+    const validAddresses = ["69.197.135.202", "69.197.135.203", "69.197.135.204", "69.197.135.205", "69.30.249.53"];
     if (!validAddresses.includes(dnsCheck.address)) {
         return message.reply("ERROR: You must have a DNS A Record pointing to one of the following addresses: " + validAddresses.join(", "));
     }
@@ -82,7 +102,7 @@ exports.run = async (client, message, args) => {
         return message.reply("Sorry, this proxy location is only available for boosters and donators.");
     }
 
-    const proxies = [config.USProxy1, config.USProxy2, config.USProxy3, config.USProxy4];
+    const proxies = [config.USProxy1, config.USProxy2, config.USProxy3, config.USProxy4, config.DonatorProxy];
     for (let proxy of proxies) {
         proxy.authKey = await getNewKey(proxy);
     }
@@ -135,6 +155,9 @@ exports.run = async (client, message, args) => {
             } else if (dnsCheck.address == "69.197.135.205") {
                 replyMsg.edit("Domain found pointing towards US Proxy 4...");
                 proxyDomain(config.USProxy4, response, replyMsg, args, "US4");
+            } else if (dnsCheck.address == "69.30.249.53") {
+                replyMsg.edit("Domain found pointing towards US Donator Proxy 1...");
+                proxyDomain(config.DonatorProxy, response, replyMsg, args, "DonatorProxy");
             }
         });
 

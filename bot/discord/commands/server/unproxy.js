@@ -1,4 +1,5 @@
-async function getNewKeyUS1() {
+//Generates new token for France Proxy server.
+async function getUS1NewKey() {
     const serverRes = await axios({
         url: config.USProxy1.url + "/api/tokens",
         method: "POST",
@@ -14,7 +15,7 @@ async function getNewKeyUS1() {
     });
     return "Bearer " + serverRes.data.token;
 }
-async function getNewKeyUS2() {
+async function getUS2NewKey() {
     const serverRes = await axios({
         url: config.USProxy2.url + "/api/tokens",
         method: "POST",
@@ -30,7 +31,7 @@ async function getNewKeyUS2() {
     });
     return "Bearer " + serverRes.data.token;
 }
-async function getNewKeyUS3() {
+async function getUS3NewKey() {
     const serverRes = await axios({
         url: config.USProxy3.url + "/api/tokens",
         method: "POST",
@@ -46,7 +47,7 @@ async function getNewKeyUS3() {
     });
     return "Bearer " + serverRes.data.token;
 }
-async function getNewKeyUS4() {
+async function getUS4NewKey() {
     const serverRes = await axios({
         url: config.USProxy4.url + "/api/tokens",
         method: "POST",
@@ -62,8 +63,7 @@ async function getNewKeyUS4() {
     });
     return "Bearer " + serverRes.data.token;
 }
-
-async function getNewKeyDonator() {
+async function getUS5NewKey() {
     const serverRes = await axios({
         url: config.DonatorProxy.url + "/api/tokens",
         method: "POST",
@@ -79,6 +79,7 @@ async function getNewKeyDonator() {
     });
     return "Bearer " + serverRes.data.token;
 }
+
 
 exports.run = async (client, message, args) => {
     //No arguements were provided.
@@ -115,7 +116,7 @@ exports.run = async (client, message, args) => {
             //Invalid domain provided.
             if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
                 message.reply(
-                    "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, whereas `https://danbot.host/` is not valid domain!"
+                    "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!"
                 );
                 return;
             }
@@ -124,7 +125,8 @@ exports.run = async (client, message, args) => {
 
             //Checks which location the domain is located in.
             if (domainData.location == "US1") {
-                config.USProxy1.authKey = await getUSNewKey1();
+                //Generates new token for France Proxy location.
+                config.USProxy1.authKey = await getUS1NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
@@ -182,12 +184,13 @@ exports.run = async (client, message, args) => {
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more,\nif the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
                         );
                         console.log(error);
                     });
             } else if (domainData.location == "US2") {
-                config.USProxy2.authKey = await getUSNewKey2();
+                //Generates new token for France Proxy location.
+                config.USProxy2.authKey = await getUS2NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
@@ -245,12 +248,13 @@ exports.run = async (client, message, args) => {
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more,\nif the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
                         );
                         console.log(error);
                     });
             } else if (domainData.location == "US3") {
-                config.USProxy3.authKey = await getUSNewKey3();
+                //Generates new token for France Proxy location.
+                config.USProxy3.authKey = await getUS3NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
@@ -308,12 +312,13 @@ exports.run = async (client, message, args) => {
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more,\nif the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
                         );
                         console.log(error);
                     });
             } else if (domainData.location == "US4") {
-                config.USProxy4.authKey = await getUSNewKey4();
+                //Generates new token for France Proxy location.
+                config.USProxy4.authKey = await getUS4NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
@@ -371,13 +376,13 @@ exports.run = async (client, message, args) => {
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more,\nif the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
                         );
                         console.log(error);
                     });
-            } else if (domainData.location == "Donator") {
-                return message.reply("Donator proxy is disabled");
-                //config.DonatorProxy.authKey = await getNewKeyDonator();
+            } if (domainData.location == "DonatorProxy") {
+                //Generates new token for France Proxy location.
+                config.DonatorProxy.authKey = await getUS5NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
@@ -390,12 +395,13 @@ exports.run = async (client, message, args) => {
                         "Content-Type": "application/json",
                     },
                 })
-                    .then((response) => {
+                    .then((Response) => {
+                        //Tries to find and delete a certificate.
                         axios({
                             url:
                                 config.DonatorProxy.url +
                                 "/api/nginx/certificates/" +
-                                response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
+                                Response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
                             method: "DELETE",
                             followRedirect: true,
                             maxRedirects: 5,
@@ -403,12 +409,13 @@ exports.run = async (client, message, args) => {
                                 Authorization: config.DonatorProxy.authKey,
                                 "Content-Type": "application/json",
                             },
-                        }).then((response2) => {
+                        }).then((Response2) => {
+                            //Tries to find and delete the actual proxy.
                             axios({
                                 url:
                                     config.DonatorProxy.url +
                                     "/api/nginx/proxy-hosts/" +
-                                    response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
+                                    Response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
                                         .id,
                                 method: "DELETE",
                                 followRedirect: true,
@@ -417,6 +424,8 @@ exports.run = async (client, message, args) => {
                                     Authorization: config.DonatorProxy.authKey,
                                     "Content-Type": "application/json",
                                 },
+
+                                //Updates user database with the removed domain.
                             }).then((response3) => {
                                 userData.set(
                                     message.author.id + ".domains",
@@ -425,7 +434,7 @@ exports.run = async (client, message, args) => {
                                         .domains.filter((x) => x.domain != args[1].toLowerCase())
                                 );
 
-                                message.reply("Unproxied domain `" + args[1] + "`.");
+                                message.reply("Successfully unproxied the domain: `" + args[1] + "`");
                             });
                         });
                     })

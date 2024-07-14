@@ -10,7 +10,7 @@ createList.redbot = (serverName, userID) => ({
         swap: -1,
         disk: 10240,
         io: 500,
-        cpu: 100,
+        cpu: 0,
     },
     environment: {
         TOKEN: "FILL_THIS_OUT",

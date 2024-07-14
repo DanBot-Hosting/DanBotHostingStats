@@ -1,6 +1,6 @@
 const serverCreateSettings = require("../../../../createData");
 exports.run = async (client, message, args) => {
-return message.reply('Server creation is currently disabled')
+//return message.reply('server creation is disabled at the moment!')
 
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
