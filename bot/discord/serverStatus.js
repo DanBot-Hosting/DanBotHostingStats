@@ -3,17 +3,17 @@ let nstatus = {
         {
             name: "PNode 1",
             data: "pnode1",
-            maxCount: 6000,
+            maxCount: 8000,
         },
         {
             name: "PNode 2",
             data: "pnode2",
-            maxCount: 6000,
+            maxCount: 8000,
         },
         {
             name: "PNode 3",
             data: "pnode3",
-            maxCount: 5000,
+            maxCount: 7000,
         }
     ],
 
