@@ -45,7 +45,6 @@ global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline
 global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
 global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
-global.lastBotClaim = new db.table("lastBotClaim"); //lastBotClaim
 global.nodePing = new db.table("nodePing"); //Node ping response time
 
 global.client = new Discord.Client({
