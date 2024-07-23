@@ -80,8 +80,10 @@ if (config.Enabled.nodestatsChecker) {
                         ip: response.data.address,
                         ping: pingData,
                     });
-                }).catch((Error) => {
-                    //Handling errors? You mean just ignoring them of course.
+                }).catch((error) => {
+                    console.log(
+                        chalk.magenta("[NODE CHECKER] ") + chalk.red("Error: Unable to reach " + data.IP + " on port 22.")
+                    );
                 });
 
                 axios({
