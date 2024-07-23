@@ -12,7 +12,7 @@ async function getNewKeyFR() {
             secret: config.FRProxy.pass,
         },
     });
-    return "Bearer " + serverRes.data.token;
+    return "Bearer " + serverResFR.data.token;
 }
 
 async function getNewKeyCA() {
@@ -29,7 +29,7 @@ async function getNewKeyCA() {
             secret: config.CAProxy.pass,
         },
     });
-    return "Bearer " + serverRes.data.token;
+    return "Bearer " + serverResCA.data.token;
 }
 
 async function getNewKeyDono() {
@@ -46,7 +46,7 @@ async function getNewKeyDono() {
             secret: config.DonatorProxy.pass,
         },
     });
-    return "Bearer " + serverRes.data.token;
+    return "Bearer " + serverResDono.data.token;
 }
 
 const proxyServers = [
