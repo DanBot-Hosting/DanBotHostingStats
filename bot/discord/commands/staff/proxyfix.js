@@ -1,6 +1,6 @@
-async function getNewKeyUS() {
-    const serverRes = await axios({
-        url: config.USProxy.url + "/api/tokens",
+async function getNewKeyFR() {
+    const serverResFR = await axios({
+        url: config.FRProxy.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -8,8 +8,42 @@ async function getNewKeyUS() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.USProxy.email,
-            secret: config.USProxy.pass,
+            identity: config.FRProxy.email,
+            secret: config.FRProxy.pass,
+        },
+    });
+    return "Bearer " + serverRes.data.token;
+}
+
+async function getNewKeyCA() {
+    const serverResCA = await axios({
+        url: config.CAProxy.url + "/api/tokens",
+        method: "POST",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: {
+            identity: config.CAProxy.email,
+            secret: config.CAProxy.pass,
+        },
+    });
+    return "Bearer " + serverRes.data.token;
+}
+
+async function getNewKeyDono() {
+    const serverResDono = await axios({
+        url: config.DonatorProxy.url + "/api/tokens",
+        method: "POST",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: {
+            identity: config.DonatorProxy.email,
+            secret: config.DonatorProxy.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
@@ -17,9 +51,19 @@ async function getNewKeyUS() {
 
 const proxyServers = [
     {
-        name: "US",
-        getToken: getNewKeyUS,
-        url: config.USProxy.url,
+        name: "FR",
+        getToken: getNewKeyFR,
+        url: config.FRProxy.url,
+    },
+    {
+        name: "CA",
+        getToken: getNewKeyCA,
+        url: config.CAProxy.url,
+    },
+    {
+        name: "Donator",
+        getToken: getNewKeyDono,
+        url: config.DonoProxy.url,
     },
 ];
 
