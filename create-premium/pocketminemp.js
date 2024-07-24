@@ -3,7 +3,7 @@ createListPrem.pocketminemp = (serverName, userID) => ({
     user: userID,
     nest: 1,
     egg: 28,
-    docker_image: "quay.io/parkervcp/pterodactyl-images:base_ubuntu",
+    docker_image: "ghcr.io/parkervcp/yolks:debian",
     startup: "./bin/php7/bin/php ./PocketMine-MP.phar --no-wizard --disable-ansi",
     limits: {
         memory: 6144,
@@ -13,7 +13,7 @@ createListPrem.pocketminemp = (serverName, userID) => ({
         cpu: 0,
     },
     environment: {
-        PMMP_VERSION: "latest",
+        VERSION: "PM5",
     },
     feature_limits: {
         databases: 2,
