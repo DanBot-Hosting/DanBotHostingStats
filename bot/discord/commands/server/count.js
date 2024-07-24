@@ -1,11 +1,8 @@
 const axios = require("axios");
-const premiumNodes = [31, 33, 34, 35, 39];
 
 exports.run = async (client, message, args) => {
-    var arr = [];
-    let userid = args[1]?.match(/[0-9]{17,19}/)?.[0] || message.author.id;
-    let user = userPrem.fetch(userid);
-    if (!user) user = {};
+
+    let userId = args[1]?.match(/[0-9]{17,19}/)?.[0] || message.author.id; //The Discord User ID.
 
     axios({
         url:
@@ -22,16 +19,18 @@ exports.run = async (client, message, args) => {
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
     }).then((response) => {
-        const preoutput = response.data.attributes.relationships.servers.data;
+        const userServers = response.data.attributes.relationships.servers.data; //The user server data from the panel.
 
-        arr.push(...preoutput);
+        const premiumServers = userServers.filter((Server) => config.DonatorNodes.includes(Server.attributes.node)).length; //The amount of premium servers the user has.
 
-        const premiumServers = arr.filter((x) => premiumNodes.includes(x.attributes.node)).length;
-        setTimeout(() => {
-            const embed = new Discord.MessageEmbed()
-                .setDescription(`:free: ${arr.length - premiumServers} free server${arr.length - premiumServers === 1 ? "" : "s"}\n:money_with_wings: ${premiumServers} premium server${premiumServers === 1 ? "" : "s"}`);
-            message.reply(embed);
-        }, 1000);
-    })
-    .catch(() => message.reply("An error occurred while loading servers."));
+        const serverCountEmbed = new Discord.MessageEmbed()
+            .setDescription(`
+                :free: Free Server(s): ${userServers.length - premiumServers}\n:money_with_wings: Premium Server(s): ${premiumServers}
+            `);
+
+        message.channel.send(serverCountEmbed);
+
+    }).catch(() => {
+        message.reply("An error occurred while loading servers.");
+    });
 };
