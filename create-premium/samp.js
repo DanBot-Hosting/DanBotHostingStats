@@ -2,9 +2,9 @@ createListPrem.samp = (serverName, userID) => ({
     name: serverName,
     user: userID,
     nest: 9,
-    egg: 45,
-    docker_image: "quay.io/parkervcp/pterodactyl-images:game_samp",
-    startup: `./samp03svr`,
+    egg: 94,
+    docker_image: "ghcr.io/parkervcp/games:samp",
+    startup: `./omp-server`,
     limits: {
         memory: 6144,
         swap: -1,
@@ -17,7 +17,10 @@ createListPrem.samp = (serverName, userID) => ({
         allocations: 1,
         backups: 10,
     },
-    environment: {},
+    environment: {
+        RCON_PASSWORD: getPassword(),
+        VERSION: "latest",
+    },
     deploy: {
         locations: gamingPREM,
         dedicated_ip: false,
