@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
         url:
             "https://panel.danbot.host" +
             "/api/application/users/" +
-            userData.get(userid).consoleID +
+            userData.get(userId).consoleID +
             "?include=servers",
         method: "GET",
         followRedirect: true,
