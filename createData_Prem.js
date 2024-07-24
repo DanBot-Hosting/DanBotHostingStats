@@ -1,6 +1,6 @@
 const axios = require("axios");
 global.gamingPREM = [27]; // Gaming nodes
-global.botswebdbPREM = [26, 28]; // Bots, Websites and Databases nodes
+global.botswebdbPREM = [26]; // Bots, Websites and Databases nodes
 global.storagePREM = [36]; // Storage nodes
 /*
 Donator Nodes as followed:
