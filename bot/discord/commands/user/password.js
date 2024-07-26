@@ -48,7 +48,7 @@ exports.run = async (client, message, args) => {
         };
 
         //This Axios request updates the user account with the new password.
-        Axios({
+        axios({
             url: Configs.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
             method: "PATCH",
             followRedirect: true,
