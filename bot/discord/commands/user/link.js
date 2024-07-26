@@ -156,3 +156,5 @@ exports.run = async (client, message, args) => {
         await message.reply("This account is linked!", embed);
     }
 };
+
+exports.description = "Link your console account to your Discord account.";

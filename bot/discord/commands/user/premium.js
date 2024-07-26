@@ -18,3 +18,5 @@ exports.run = async (client, message, args) => {
 
     await message.reply(embed);
 };
+
+exports.description = "Shows the number of premium servers you have, and how many you have used.";

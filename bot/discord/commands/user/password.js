@@ -66,3 +66,5 @@ exports.run = async (client, message, args) => {
             });
     });
 };
+
+exports.description = "Resets the password for the linked console account.";

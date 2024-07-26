@@ -238,3 +238,5 @@ exports.run = async (client, message, args) => {
             }
         });
 };
+
+exports.description = "Create a new panel account.";

@@ -22,3 +22,5 @@ exports.run = async (client, message, args) => {
 
     await message.reply(Embed);
 };
+
+exports.description = "Shows the user commands under this category.";

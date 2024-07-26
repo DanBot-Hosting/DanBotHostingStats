@@ -21,3 +21,5 @@ exports.run = async (client, message, args) => {
         })
         .catch(console.error);
 };
+
+exports.description = "Shows the number of users a user has invited to the server";
