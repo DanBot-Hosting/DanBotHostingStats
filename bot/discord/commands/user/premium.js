@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
 
     const Embed = new Discord.MessageEmbed()
         .setColor("BLUE")
-        .addField("Premium servers used:", (userPremium.used || 0) + " out of " + parser.format(maxAmount) + " servers used.")
+        .addField("Premium Servers Used:", (userPremium.used || 0) + " out of " + parser.format(maxAmount) + " servers used.")
         .addField('Amount Donated:', `$${parser.format(userPremium.donated || 0)}.00`, true);
 
     await message.reply(Embed);
