@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
     };
 
     //This Axios requests gets the initial details of the user account.
-    Axios({
+    axios({
         url: Configs.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
         method: "GET",
         followRedirect: true,
