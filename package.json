@@ -4,7 +4,8 @@
   "description": "Main bot for DanBot Hosting",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && node index.js"
+    "start": "npm install && node index.js",
+    "econfig": "node generate-example-config.js"
   },
   "repository": {
     "type": "git",
