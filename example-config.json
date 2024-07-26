@@ -1,135 +1,159 @@
 {
-  "externalPassword": "",
-  "db": "mongodb ",
-
-  "FRProxy": {
-    "url": "https://fr1.proxy.danbot.host",
-    "authKey": "",
-    "email": "dan@danbot.host",
-    "pass": ""
-  },
-
-  "CAProxy": {
-    "url": "https://caproxy.danbot.host",
-    "authKey": "",
-    "email": "dan@danbot.host",
-    "pass": ""
-  },
-
-  "DonatorProxy": {
-    "url": "https://donoproxy.danbot.host",
-    "authKey": "",
-    "email": "dan@danbot.host",
-    "pass": ""
-  },
-  "Ping": {
-    "CA": "104.167.215.213:1105",
-    "UK": "128.254.225.55:1105"
-  },
-
-  "node7": {
-    "price": 0.5
-  },
-
-  "GoogleAPIKey": "UNUSED",
-
-  "DiscordBot": {
-        "Token": "Bot token",
-        "Prefix": "Bot Prefix",
-        "clientID": "Bot client ID",
-        "clientSecret": "Bot client secret",
-        "callbackURL": "callback url after logging into the site. should end with /api/callback",
-        "ownerID": "Owner ID (For owner only commands)",
-        "mainGuild": "Main guild the bot will be used in",
-        "mLogs": "Message logs channel ID",
-        "oLogs": "Other logs channel ID",
-        "modLogs": "Mod logs channel ID",
-        "requestsChannel": "Channel that request are in. This isnt used yet but will be soon",
-        "welcome": "Welcome channel ID",
-        "roles": {
-            "member": "Member role ID",
-            "client": "Client role ID",
-            "bot": "Bot role ID",
-            "staff": "Staff role ID (Used for staff commands)",
-            "mute": "898041752966021151"
+    "USProxy1": {
+        "url": "",
+        "authKey": "",
+        "email": "",
+        "pass": ""
     },
-    "reactionRoles": {
-      "898041838701781013": {
-        "918288000071381002": {
-          "📣": "898041778471592027",
-          "♻️": "795964657239326742"
+    "USProxy2": {
+        "url": "",
+        "authKey": "",
+        "email": "",
+        "pass": ""
+    },
+    "USProxy3": {
+        "url": "",
+        "authKey": "",
+        "email": "",
+        "pass": ""
+    },
+    "USProxy4": {
+        "url": "",
+        "authKey": "",
+        "email": "",
+        "pass": ""
+    },
+    "DonatorProxy": {
+        "url": "",
+        "authKey": "",
+        "email": "",
+        "pass": ""
+    },
+    "Ping": {
+        "UK1": "",
+        "CA": "",
+        "UK": ""
+    },
+    "node7": {
+        "price": ""
+    },
+    "DiscordBot": {
+        "Token": "",
+        "Prefix": "",
+        "clientID": "",
+        "clientSecret": "",
+        "callbackURL": "",
+        "ownerID": "",
+        "MainGuildId": "",
+        "mLogs": "",
+        "oLogs": "",
+        "modLogs": "",
+        "requestsChannel": "",
+        "welcome": "",
+        "roles": {
+            "member": "",
+            "client": "",
+            "bot": "",
+            "staff": ""
         },
-        "918240983362183211": {
-          "🕹️": "760207814546817085",
-          "🎥": "758020921939460166",
-          "🎉": "765865412725440522",
-          "❔": "767846121195175938",
-          "⌛": "745358424883200210"
-        },
-        "918242254018199633": {
-          "🐍": "731858574162002041",
-          "☕": "743142812257878027",
-          "🖲️": "731858559276679198",
-          "✨": "743142559043551363"
+        "Roles": {
+            "Owner": "",
+            "CoOwner": "",
+            "StaffManager": "",
+            "BotAdmin": "",
+            "Admin": "",
+            "Moderator": "",
+            "Helper": "",
+            "Staff": "",
+            "NewTicket": "",
+            "BetaTester": "",
+            "Booster": "",
+            "Donator": "",
+            "Client": "",
+            "Member": "",
+            "Bot": "",
+            "TicketBan": "",
+            "Announcements": "",
+            "Changelogs": "",
+            "Giveaways": "",
+            "Polls": "",
+            "GameNights": "",
+            "MovieNights": "",
+            "StaffUpdates": "",
+            "Others": ""
         }
-      },
-      "754441222424363088": {
-        "770046936957845514": {
-          "🔪": "772945148937109546"
-        }
-      }
-    }
-  },
-  "DB": {
-    "MongoDB": "mongodb - unused"
-  },
-  "Pterodactyl": {
-    "hosturl": "https://panel.danbot.host",
-    "apikey": "",
-    "apikeyclient": ""
-  },
-
-     "Email": {
-    "Host": "mail.danbot.host",
-    "Port": "587",
-    "User": "no-reply@danbot.host",
-    "Password": "",
-    "From": "no-reply@danbot.host"
-  },
-    
-  "Email2": {
-    "Host": "smtp.sendgrid.net",
-    "Port": "587",
-    "User": "apikey",
-    "Password": "",
-    "From": "noreply@danbot.host"
-  },
-
-  "Nodes": {
-      "PNode1": "",
-      "PNode2": "",
-      "PNode3": "",
-      "PNode4": "",
-      "Dono1": "",
-      "Dono2": "",
-      "Dono3": ""
-  },
-  "Servers": {
-      "KS-US-1": "",
-      "DE-EU-1": "",
-      "DE-EU-2": "",
-      "DE-EU-3": "",
-      "LO-UK-1": ""
-  },
-  "Tunnels": {
-      "US-1": "",
-      "UK-1": ""
-  },
-  "VPN": {
-      "US-1": "",
-      "UK-1": "",
-      "EU-1": "",
-      "AU-1": "",
-      "FR-1": ""
-  }
+    },
+    "DB": {
+        "MongoDB": ""
+    },
+    "Pterodactyl": {
+        "hosturl": "",
+        "apikey": "",
+        "apikeyclient": ""
+    },
+    "Email": {
+        "Host": "",
+        "Port": "",
+        "User": "",
+        "Password": "",
+        "From": ""
+    },
+    "Email2": {
+        "Host": "",
+        "Port": "",
+        "User": "",
+        "Password": "",
+        "From": ""
+    },
+    "Nodes": {
+        "PNode1": "",
+        "PNode2": "",
+        "PNode3": "",
+        "PNode4": "",
+        "Dono1": "",
+        "Dono2": "",
+        "Dono3": "",
+        "Dono4": "",
+        "Storage1": ""
+    },
+    "Servers": {
+        "US1": "",
+        "EU1": ""
+    },
+    "Tunnels": {
+        "US-1": "",
+        "UK-1": ""
+    },
+    "VPN": {
+        "US1": "",
+        "UK-1": "",
+        "EU-1": "",
+        "AU1": "",
+        "FR1": ""
+    },
+    "Services": {
+        "grafana": "",
+        "pterocore": "",
+        "pteropublic": "",
+        "vpnapi": ""
+    },
+    "BannedNames": [
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
+    "Enabled": {
+        "NodeStats": "",
+        "Welcome": "",
+        "nodestatsChecker": "",
+        "outageChecker": ""
+    },
+    "DonatorNodes": [
+        "",
+        "",
+        "",
+        ""
+    ]
 }
