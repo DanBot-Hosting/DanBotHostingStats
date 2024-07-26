@@ -7,9 +7,6 @@
 Free Hosting forever!                                            /____/
 */
 
-//3,000th commit to github!
-//DIBSTER was here.
-
 global.config = require("./config.json");
 
 //New global cache system (Lazy way)
@@ -55,8 +52,6 @@ global.client = new Discord.Client({
 });
 global.bot = client;
 
-global.pollPingLastUsed = 0;
-
 //Event handler
 fs.readdir("./bot/discord/events/", (err, files) => {
     files = files.filter((f) => f.endsWith(".js"));
@@ -98,26 +93,27 @@ global.getPassword = () => {
 //Bot login
 client.login(config.DiscordBot.Token);
 
-setInterval(async () => {
-    users.length = 0;
-    axios({
-        url: "https://panel.danbot.host/api/application/users?per_page=9999999999999",
-        method: "GET",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            Authorization: "Bearer " + config.Pterodactyl.apikey,
-            "Content-Type": "application/json",
-            Accept: "Application/vnd.pterodactyl.v1+json",
-        },
-    })
-        .then((resources) => {
-            users.push(...resources.data.data);
+setInterval(
+    async () => {
+        users.length = 0;
+        axios({
+            url: "https://panel.danbot.host/api/application/users?per_page=9999999999999",
+            method: "GET",
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                Authorization: "Bearer " + config.Pterodactyl.apikey,
+                "Content-Type": "application/json",
+                Accept: "Application/vnd.pterodactyl.v1+json",
+            },
         })
-        .catch((err) => {
-
-        });
-}, 10 * 60 * 1000);
+            .then((resources) => {
+                users.push(...resources.data.data);
+            })
+            .catch((err) => {});
+    },
+    10 * 60 * 1000,
+);
 
 process.on("unhandledRejection", (reason, p) => {
     console.log("[antiCrash] :: Unhandled Rejection/Catch");

@@ -9,14 +9,18 @@ exports.run = async (client, message, args) => {
         const replyMsg = await message.reply("Starting calculation...");
 
         try {
-            let selectedUser = client.users.cache.get(args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0]);
+            let selectedUser = client.users.cache.get(
+                args[1].match(/\d{17,19}/).length == 0 ? args[1] : args[1].match(/\d{17,19}/)[0],
+            );
             selectedUser = await selectedUser;
 
             const userAccount = userData.get(selectedUser.id);
 
             if (userAccount == null || userAccount.consoleID == null) {
                 if (selectedUser.id === message.author.id) {
-                    return message.reply(`You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`)
+                    return message.reply(
+                        `You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`,
+                    );
                 } else {
                     return message.reply("That user does not have a panel account linked.");
                 }
@@ -43,22 +47,31 @@ exports.run = async (client, message, args) => {
             let actualPremiumServersUsed = 0;
 
             for (let index = 0; index < preoutput.length; index++) {
-                if (premiumNodes.includes(preoutput[index].attributes.node)) ++actualPremiumServersUsed;
+                if (premiumNodes.includes(preoutput[index].attributes.node))
+                    ++actualPremiumServersUsed;
             }
 
             const userPremData = userPrem.get(selectedUser.id);
 
             const storedPremiumServersUsed = userPremData.used;
 
-            console.log({ actualPremiumServersUsed, storedPremiumServersUsed, userPremData, selectedUser });
+            console.log({
+                actualPremiumServersUsed,
+                storedPremiumServersUsed,
+                userPremData,
+                selectedUser,
+            });
 
             if (actualPremiumServersUsed != storedPremiumServersUsed) {
-                userPrem.set(selectedUser.id, { used: actualPremiumServersUsed, donated: userPremData.donated });
+                userPrem.set(selectedUser.id, {
+                    used: actualPremiumServersUsed,
+                    donated: userPremData.donated,
+                });
                 replyMsg.edit("That user's premium server count has been fixed!");
             } else {
                 replyMsg.edit("That user has the correct premium server count!");
             }
-        } catch(err) {
+        } catch (err) {
             replyMsg.edit(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
         }
     }

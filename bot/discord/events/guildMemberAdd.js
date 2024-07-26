@@ -1,4 +1,3 @@
-const humanizeDuration = require("humanize-duration");
 module.exports = async (client, member, guild) => {
     if (config.Enabled.Welcome) {
         if (Date.now() - member.user.createdAt < 863136000) {
@@ -11,7 +10,7 @@ module.exports = async (client, member, guild) => {
                 });
             }
 
-            if (!userData.get(member.id) == null) {
+            if (userData.get(member.id) !== null) {
                 member.roles.add(config.DiscordBot.roles.client);
             }
         }

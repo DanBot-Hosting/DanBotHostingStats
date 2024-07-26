@@ -49,7 +49,6 @@ let data = (serverName, userID) => {
         grafana: null,
         openx: null,
         mariadb: null,
-        // minio: null,
         lavalink: null,
         rabbitmq: null,
         palworld: null,
@@ -66,8 +65,7 @@ let data = (serverName, userID) => {
 };
 let createServer = (data) => {
     return axios({
-        url: config.Pterodactyl.hosturl +
-            "/api/application/servers",
+        url: config.Pterodactyl.hosturl + "/api/application/servers",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,

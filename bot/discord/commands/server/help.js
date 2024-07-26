@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
             config.DiscordBot.Prefix +
             "server count` \n Get Informations about a server type: `" +
             config.DiscordBot.Prefix +
-            "server docs <servertype>`"
+            "server docs <servertype>`",
     );
     await message.reply(embed);
 };

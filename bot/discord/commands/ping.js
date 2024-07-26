@@ -5,7 +5,7 @@ exports.run = async (client, message, args) => {
         .setColor("RED")
         .setTitle("DanBot Hosting - Ping")
         .setDescription(
-            `Bot Latency: ${Date.now() - message.createdTimestamp}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`
+            `Bot Latency: ${Date.now() - message.createdTimestamp}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`,
         )
         .setTimestamp();
     message.reply(embed);

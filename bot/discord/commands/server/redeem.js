@@ -19,8 +19,8 @@ exports.run = async (client, message, args) => {
         let now = Date.now();
         message.reply(
             `You have redeemed a code with ${code.balance} premium server(s), you now have ${Math.floor(
-                (oldBal + code.balance) / config.PremiumServerPrice
-            )}!`
+                (oldBal + code.balance) / config.PremiumServerPrice,
+            )}!`,
         );
         client.channels.cache
             .get("898041841939783732")
@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
                     code.balance +
                     " premium servers! *This code was redeemed in " +
                     humanizeDuration(now - code.createdAt) +
-                    "*"
+                    "*",
             );
 
         codes.delete(args[1]);
@@ -42,9 +42,11 @@ exports.run = async (client, message, args) => {
         setDonations(message.author.id, oldBal + code.balance);
 
         if (code.drop != null) {
-            let msg = await client.channels.cache.get(code.drop.message.channel).messages.fetch(code.drop.message.ID);
+            let msg = await client.channels.cache
+                .get(code.drop.message.channel)
+                .messages.fetch(code.drop.message.ID);
             let embed = msg.embeds[0].setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*Redeemed by ${message.member}*`
+                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*Redeemed by ${message.member}*`,
             );
             msg.edit(embed);
         }

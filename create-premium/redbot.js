@@ -4,7 +4,8 @@ createListPrem.redbot = (serverName, userID) => ({
     nest: 5,
     egg: 72,
     docker_image: "ghcr.io/parkervcp/yolks:bot_red",
-    startup: "PATH=$PATH:/home/container/.local/bin redbot pterodactyl --token {{TOKEN}} --prefix {{PREFIX}}",
+    startup:
+        "PATH=$PATH:/home/container/.local/bin redbot pterodactyl --token {{TOKEN}} --prefix {{PREFIX}}",
     limits: {
         memory: 0,
         swap: -1,

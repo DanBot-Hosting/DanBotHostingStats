@@ -17,7 +17,7 @@ createList.openx = (serverName, userID) => ({
         FILELENGTH: "8",
         PASSWORD: getPassword(),
         MAXUPLOAD: "1024",
-        AUTO_UPDATE: 0
+        AUTO_UPDATE: 0,
     },
     feature_limits: {
         databases: 2,
