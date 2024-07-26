@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
     let user = userPrem.fetch(userid);
     if (user == null) user = {};
 
-    let allowed = Math.floor((user.donated || 0) / config.node7.price);
+    let allowed = Math.floor((user.donated || 0) / config.PremiumServerPrice);
 
     const embed = new Discord.MessageEmbed()
         .setColor("BLUE")

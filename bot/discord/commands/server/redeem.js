@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
         let now = Date.now();
         message.reply(
             `You have redeemed a code with ${code.balance} premium server(s), you now have ${Math.floor(
-                (oldBal + code.balance) / config.node7.price
+                (oldBal + code.balance) / config.PremiumServerPrice
             )}!`
         );
         client.channels.cache

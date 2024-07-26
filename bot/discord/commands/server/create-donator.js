@@ -22,7 +22,7 @@ exports.run = async(client, message, args) => {
         return;
     }
 
-    let allowed = Math.floor(userP.donated / config.node7.price);
+    let allowed = Math.floor(userP.donated / config.PremiumServerPrice);
 
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(serverName, consoleID.consoleID);
 

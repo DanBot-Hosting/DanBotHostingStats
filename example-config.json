@@ -34,9 +34,7 @@
         "CA": "",
         "UK": ""
     },
-    "node7": {
-        "price": ""
-    },
+    "PremiumServerPrice": "",
     "DiscordBot": {
         "Token": "",
         "Prefix": "",
