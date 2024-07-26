@@ -73,9 +73,6 @@
             "Others": ""
         }
     },
-    "DB": {
-        "MongoDB": ""
-    },
     "Pterodactyl": {
         "hosturl": "",
         "apikey": "",
