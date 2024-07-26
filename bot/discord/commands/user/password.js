@@ -91,7 +91,7 @@ exports.run = async (client, message, args) => {
                 transport.sendMail(EmailMessage);
             })
             .catch((err) => {
-                message.reply(Error);
+                message.reply(err.message);
             });
     });
 };
