@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
     if (!args[1]) {
 
         message.reply(
-            "Channel is now locked. Only admins+ can post here \nUse `DBH!staff lockdown unlock` to unlock this channel"
+            "Channel is now locked. Only Administrator+ can post here. \n\n`DBH!staff lockdown unlock` to unlock this channel."
         );
 
         //Disabled sending messages for everyone in this channel.
