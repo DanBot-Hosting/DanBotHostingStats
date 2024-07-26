@@ -38,16 +38,8 @@
     "DiscordBot": {
         "Token": "",
         "Prefix": "",
-        "clientID": "",
-        "clientSecret": "",
-        "callbackURL": "",
-        "ownerID": "",
         "MainGuildId": "",
-        "mLogs": "",
-        "oLogs": "",
         "modLogs": "",
-        "requestsChannel": "",
-        "welcome": "",
         "roles": {
             "member": "",
             "client": "",
