@@ -8,7 +8,9 @@ exports.run = (client, message) => {
     const embed = new MessageEmbed()
         .setTitle("Your Linked Domains")
         .setDescription(
-            data.domains.map((domain, index) => `- ${domain.domain} (Server ID: ${domain.serverID})`).join("\n")
+            data.domains
+                .map((domain, index) => `- ${domain.domain} (Server ID: ${domain.serverID})`)
+                .join("\n"),
         )
         .setColor("BLUE");
     message.reply(embed);

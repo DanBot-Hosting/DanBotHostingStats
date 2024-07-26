@@ -1,4 +1,3 @@
-const cap = require("../util/cap");
 const { exec } = require("child_process");
 const nstatus = require("../serverStatus");
 
@@ -15,7 +14,9 @@ module.exports = async (client) => {
 
     checkNicks();
 
-    console.log(chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " has logged in!"));
+    console.log(
+        chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " has logged in!"),
+    );
 
     // Close create account channels after a hour
     guild.channels.cache
@@ -33,7 +34,9 @@ module.exports = async (client) => {
                 if (!response.includes("Already up to date.")) {
                     client.channels.cache
                         .get("898041843902742548")
-                        .send(`<t:${Date.now().toString().slice(0, -3)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``);
+                        .send(
+                            `<t:${Date.now().toString().slice(0, -3)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${response}\`\`\``,
+                        );
                     setTimeout(() => {
                         process.exit();
                     }, 1000);
@@ -47,24 +50,24 @@ module.exports = async (client) => {
         const activities = [
             {
                 text: "over DBH",
-                type: "WATCHING"
+                type: "WATCHING",
             },
             {
                 text: "free servers being created",
-                type: "WATCHING"
+                type: "WATCHING",
             },
             {
                 text: "over 15,000+ happy clients",
-                type: "WATCHING"
+                type: "WATCHING",
             },
             {
                 text: "with the ban hammer over abusers",
-                type: "PLAYING"
+                type: "PLAYING",
             },
             {
                 text: "powerful servers doing work",
-                type: "WATCHING"
-            }
+                type: "WATCHING",
+            },
         ];
 
         const activity = activities[Math.floor(Math.random() * activities.length)];

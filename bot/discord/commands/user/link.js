@@ -1,6 +1,5 @@
 const axios = require("axios");
 exports.run = async (client, message, args) => {
-        
     if (userData.get(message.author.id) == null) {
         const server = message.guild;
 
@@ -20,7 +19,9 @@ exports.run = async (client, message, args) => {
             .catch(console.error);
         message.reply(`Please check <#${channel.id}> to link your account.`);
 
-        let category = server.channels.cache.find((c) => c.id === "898041816367128616" && c.type === "category");
+        let category = server.channels.cache.find(
+            (c) => c.id === "898041816367128616" && c.type === "category",
+        );
         if (!category) throw new Error("Category channel does not exist");
 
         await channel.setParent(category.id);
@@ -36,24 +37,29 @@ exports.run = async (client, message, args) => {
                 .setColor(0x36393e)
                 .setDescription("Please enter your console email address")
                 .setFooter(
-                    "You can type 'cancel' to cancel the request \n**This will take a few seconds to find your account.**"
+                    "You can type 'cancel' to cancel the request \n**This will take a few seconds to find your account.**",
                 ),
         });
 
-        const collector = new Discord.MessageCollector(channel, (m) => m.author.id === message.author.id, {
-            time: 60000,
-            max: 1,
-        });
+        const collector = new Discord.MessageCollector(
+            channel,
+            (m) => m.author.id === message.author.id,
+            {
+                time: 60000,
+                max: 1,
+            },
+        );
         collector.on("collect", (messagecollected) => {
-
             if (messagecollected.content === "cancel") {
-                return msg.edit("Request to link your account canceled.", null).then(channel.delete());
+                return msg
+                    .edit("Request to link your account canceled.", null)
+                    .then(channel.delete());
             }
 
             //Find account then link
             setTimeout(async () => {
                 const consoleUser = users.find((usr) =>
-                    usr.attributes ? usr.attributes.email === messagecollected.content : false
+                    usr.attributes ? usr.attributes.email === messagecollected.content : false,
                 );
 
                 if (!consoleUser) {
@@ -67,7 +73,9 @@ exports.run = async (client, message, args) => {
                         let characters = "23456789";
                         let charactersLength = characters.length;
                         for (let i = 0; i < length; i++) {
-                            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                            result += characters.charAt(
+                                Math.floor(Math.random() * charactersLength),
+                            );
                         }
                         return result;
                     }
@@ -91,7 +99,7 @@ exports.run = async (client, message, args) => {
                             console.log(err);
                         } else {
                             channel.send(
-                                "Please check the email account for a verification code to complete linking. You have 2mins"
+                                "Please check the email account for a verification code to complete linking. You have 2mins",
                             );
 
                             const collector = new Discord.MessageCollector(
@@ -100,7 +108,7 @@ exports.run = async (client, message, args) => {
                                 {
                                     time: 120000,
                                     max: 2,
-                                }
+                                },
                             );
                             collector.on("collect", (message) => {
                                 if (message.content === code) {
@@ -118,25 +126,42 @@ exports.run = async (client, message, args) => {
 
                                     let embedstaff = new Discord.MessageEmbed()
                                         .setColor("Green")
-                                        .addField("__**Linked Discord account:**__", message.author.id)
-                                        .addField("__**Linked Console account email:**__", consoleUser.attributes.email)
-                                        .addField("__**Linked At: (TIME / DATE)**__", timestamp + " / " + datestamp)
-                                        .addField("__**Linked Console username:**__", consoleUser.attributes.username)
-                                        .addField("__**Linked Console ID:**__", consoleUser.attributes.id);
+                                        .addField(
+                                            "__**Linked Discord account:**__",
+                                            message.author.id,
+                                        )
+                                        .addField(
+                                            "__**Linked Console account email:**__",
+                                            consoleUser.attributes.email,
+                                        )
+                                        .addField(
+                                            "__**Linked At: (TIME / DATE)**__",
+                                            timestamp + " / " + datestamp,
+                                        )
+                                        .addField(
+                                            "__**Linked Console username:**__",
+                                            consoleUser.attributes.username,
+                                        )
+                                        .addField(
+                                            "__**Linked Console ID:**__",
+                                            consoleUser.attributes.id,
+                                        );
 
                                     channel.send("Account linked!").then(
                                         client.channels.cache
                                             .get("1168034234179539044")
                                             .send(
                                                 `<@${message.author.id}> linked their account. Heres some info: `,
-                                                embedstaff
+                                                embedstaff,
                                             ),
                                         setTimeout(() => {
                                             channel.delete();
-                                        }, 5000)
+                                        }, 5000),
                                     );
                                 } else {
-                                    channel.send("Code is incorrect. Linking cancelled!\n\nRemoving channel!");
+                                    channel.send(
+                                        "Code is incorrect. Linking cancelled!\n\nRemoving channel!",
+                                    );
                                     setTimeout(() => {
                                         channel.delete();
                                     }, 2000);
@@ -151,7 +176,10 @@ exports.run = async (client, message, args) => {
         let embed = new Discord.MessageEmbed()
             .setColor(`GREEN`)
             .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
-            .addField(`__**Linked Date (YYYY-MM-DD)**__`, userData.fetch(message.author.id + ".linkDate"))
+            .addField(
+                `__**Linked Date (YYYY-MM-DD)**__`,
+                userData.fetch(message.author.id + ".linkDate"),
+            )
             .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"));
         await message.reply("This account is linked!", embed);
     }

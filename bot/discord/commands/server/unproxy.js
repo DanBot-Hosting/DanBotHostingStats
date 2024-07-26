@@ -80,7 +80,6 @@ async function getUS5NewKey() {
     return "Bearer " + serverRes.data.token;
 }
 
-
 exports.run = async (client, message, args) => {
     //No arguements were provided.
     if (!args[1]) {
@@ -91,7 +90,7 @@ exports.run = async (client, message, args) => {
                 config.DiscordBot.Prefix +
                 "server unproxy <domain>`\nReplace <domain> with your domain. You can find a list with all your proxied domains by running `" +
                 config.DiscordBot.Prefix +
-                "domains`"
+                "domains`",
         );
         UnproxyEmbed.setTimestamp();
         UnproxyEmbed.setFooter("DanBot Hosting");
@@ -107,7 +106,7 @@ exports.run = async (client, message, args) => {
         if (args[2] == "-db") {
             userData.set(
                 message.author.id + ".domains",
-                userDomains.filter((x) => x.domain != args[1].toLowerCase())
+                userDomains.filter((x) => x.domain != args[1].toLowerCase()),
             );
             message.reply("Unlinked domain from the database.");
 
@@ -116,7 +115,7 @@ exports.run = async (client, message, args) => {
             //Invalid domain provided.
             if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
                 message.reply(
-                    "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!"
+                    "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!",
                 );
                 return;
             }
@@ -145,7 +144,9 @@ exports.run = async (client, message, args) => {
                             url:
                                 config.USProxy1.url +
                                 "/api/nginx/certificates/" +
-                                Response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
+                                Response.data.find(
+                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
+                                ).id,
                             method: "DELETE",
                             followRedirect: true,
                             maxRedirects: 5,
@@ -159,8 +160,10 @@ exports.run = async (client, message, args) => {
                                 url:
                                     config.USProxy1.url +
                                     "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
-                                        .id,
+                                    Response2.data.find(
+                                        (element) =>
+                                            element.domain_names[0] == args[1].toLowerCase(),
+                                    ).id,
                                 method: "DELETE",
                                 followRedirect: true,
                                 maxRedirects: 5,
@@ -175,16 +178,18 @@ exports.run = async (client, message, args) => {
                                     message.author.id + ".domains",
                                     userData
                                         .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase())
+                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
                                 );
 
-                                message.reply("Successfully unproxied the domain: `" + args[1] + "`");
+                                message.reply(
+                                    "Successfully unproxied the domain: `" + args[1] + "`",
+                                );
                             });
                         });
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
                         console.log(error);
                     });
@@ -209,7 +214,9 @@ exports.run = async (client, message, args) => {
                             url:
                                 config.USProxy2.url +
                                 "/api/nginx/certificates/" +
-                                Response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
+                                Response.data.find(
+                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
+                                ).id,
                             method: "DELETE",
                             followRedirect: true,
                             maxRedirects: 5,
@@ -223,8 +230,10 @@ exports.run = async (client, message, args) => {
                                 url:
                                     config.USProxy2.url +
                                     "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
-                                        .id,
+                                    Response2.data.find(
+                                        (element) =>
+                                            element.domain_names[0] == args[1].toLowerCase(),
+                                    ).id,
                                 method: "DELETE",
                                 followRedirect: true,
                                 maxRedirects: 5,
@@ -239,16 +248,18 @@ exports.run = async (client, message, args) => {
                                     message.author.id + ".domains",
                                     userData
                                         .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase())
+                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
                                 );
 
-                                message.reply("Successfully unproxied the domain: `" + args[1] + "`");
+                                message.reply(
+                                    "Successfully unproxied the domain: `" + args[1] + "`",
+                                );
                             });
                         });
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
                         console.log(error);
                     });
@@ -273,7 +284,9 @@ exports.run = async (client, message, args) => {
                             url:
                                 config.USProxy3.url +
                                 "/api/nginx/certificates/" +
-                                Response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
+                                Response.data.find(
+                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
+                                ).id,
                             method: "DELETE",
                             followRedirect: true,
                             maxRedirects: 5,
@@ -287,8 +300,10 @@ exports.run = async (client, message, args) => {
                                 url:
                                     config.USProxy3.url +
                                     "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
-                                        .id,
+                                    Response2.data.find(
+                                        (element) =>
+                                            element.domain_names[0] == args[1].toLowerCase(),
+                                    ).id,
                                 method: "DELETE",
                                 followRedirect: true,
                                 maxRedirects: 5,
@@ -303,16 +318,18 @@ exports.run = async (client, message, args) => {
                                     message.author.id + ".domains",
                                     userData
                                         .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase())
+                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
                                 );
 
-                                message.reply("Successfully unproxied the domain: `" + args[1] + "`");
+                                message.reply(
+                                    "Successfully unproxied the domain: `" + args[1] + "`",
+                                );
                             });
                         });
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
                         console.log(error);
                     });
@@ -337,7 +354,9 @@ exports.run = async (client, message, args) => {
                             url:
                                 config.USProxy4.url +
                                 "/api/nginx/certificates/" +
-                                Response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
+                                Response.data.find(
+                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
+                                ).id,
                             method: "DELETE",
                             followRedirect: true,
                             maxRedirects: 5,
@@ -351,8 +370,10 @@ exports.run = async (client, message, args) => {
                                 url:
                                     config.USProxy4.url +
                                     "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
-                                        .id,
+                                    Response2.data.find(
+                                        (element) =>
+                                            element.domain_names[0] == args[1].toLowerCase(),
+                                    ).id,
                                 method: "DELETE",
                                 followRedirect: true,
                                 maxRedirects: 5,
@@ -367,20 +388,23 @@ exports.run = async (client, message, args) => {
                                     message.author.id + ".domains",
                                     userData
                                         .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase())
+                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
                                 );
 
-                                message.reply("Successfully unproxied the domain: `" + args[1] + "`");
+                                message.reply(
+                                    "Successfully unproxied the domain: `" + args[1] + "`",
+                                );
                             });
                         });
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
                         console.log(error);
                     });
-            } if (domainData.location == "DonatorProxy") {
+            }
+            if (domainData.location == "DonatorProxy") {
                 //Generates new token for France Proxy location.
                 config.DonatorProxy.authKey = await getUS5NewKey();
 
@@ -401,7 +425,9 @@ exports.run = async (client, message, args) => {
                             url:
                                 config.DonatorProxy.url +
                                 "/api/nginx/certificates/" +
-                                Response.data.find((element) => element.domain_names[0] == args[1].toLowerCase()).id,
+                                Response.data.find(
+                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
+                                ).id,
                             method: "DELETE",
                             followRedirect: true,
                             maxRedirects: 5,
@@ -415,8 +441,10 @@ exports.run = async (client, message, args) => {
                                 url:
                                     config.DonatorProxy.url +
                                     "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find((element) => element.domain_names[0] == args[1].toLowerCase())
-                                        .id,
+                                    Response2.data.find(
+                                        (element) =>
+                                            element.domain_names[0] == args[1].toLowerCase(),
+                                    ).id,
                                 method: "DELETE",
                                 followRedirect: true,
                                 maxRedirects: 5,
@@ -431,16 +459,18 @@ exports.run = async (client, message, args) => {
                                     message.author.id + ".domains",
                                     userData
                                         .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase())
+                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
                                 );
 
-                                message.reply("Successfully unproxied the domain: `" + args[1] + "`");
+                                message.reply(
+                                    "Successfully unproxied the domain: `" + args[1] + "`",
+                                );
                             });
                         });
                     })
                     .catch((error) => {
                         message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command."
+                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
                         console.log(error);
                     });

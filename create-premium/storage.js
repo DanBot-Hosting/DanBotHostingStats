@@ -4,7 +4,8 @@ createListPrem.storage = (serverName, userID) => ({
     nest: 22,
     egg: 92,
     docker_image: "ghcr.io/parkervcp/yolks:alpine",
-    startup: 'echo -e "\n\n\033[0;31mThere is no need to start this server. The SFTP service is always running. Feel free to stop the server now.\n\t\033[0;36m(Sub-users can be added via the Users tab to add/remove access to the share in real time)\n\n"',
+    startup:
+        'echo -e "\n\n\033[0;31mThere is no need to start this server. The SFTP service is always running. Feel free to stop the server now.\n\t\033[0;36m(Sub-users can be added via the Users tab to add/remove access to the share in real time)\n\n"',
     limits: {
         memory: 0,
         swap: -1,
@@ -12,8 +13,7 @@ createListPrem.storage = (serverName, userID) => ({
         io: 500,
         cpu: 0,
     },
-    environment: {
-    },
+    environment: {},
     feature_limits: {
         databases: 0,
         allocations: 1,
@@ -26,4 +26,3 @@ createListPrem.storage = (serverName, userID) => ({
     },
     start_on_completion: false,
 });
-  

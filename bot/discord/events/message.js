@@ -4,10 +4,10 @@ module.exports = async (client, message) => {
     // Suggestions channels reactions
     const suggestionChannels = [
         "980595293768802327", // Staff Suggestions
-        "976371313901965373" // VPN Suggestions
+        "976371313901965373", // VPN Suggestions
     ];
 
-    if (suggestionChannels.some(channel => channel == message.channel.id)) {
+    if (suggestionChannels.some((channel) => channel == message.channel.id)) {
         if (!message.content.startsWith(">")) {
             await message.react("👍");
             await message.react("👎");
@@ -18,7 +18,7 @@ module.exports = async (client, message) => {
     const dmAllowedUsers = [
         "137624084572798976", // Dan
         "853158265466257448", // William
-        "757296951925538856" // DIBSTER
+        "757296951925538856", // DIBSTER
     ];
 
     if (message.channel.type === "dm") {
@@ -27,13 +27,15 @@ module.exports = async (client, message) => {
             const args = message.content.trim().split(/ +/g);
 
             try {
-                const msg = await client.channels.cache.get(args[0]).send(cap(message.content.split(" ").slice(1).join(" "), 2000));
+                const msg = await client.channels.cache
+                    .get(args[0])
+                    .send(cap(message.content.split(" ").slice(1).join(" "), 2000));
                 message.reply(msg.url);
-            } catch(err) {
+            } catch (err) {
                 message.channel.send(`\`\`\`${err.message}\`\`\``);
             }
-        };
-    };
+        }
+    }
 
     if (message.author.bot) return; // Stop bots from running commands
     if (message.channel.type === "dm") return; // Stop commands in DMs
@@ -47,46 +49,35 @@ module.exports = async (client, message) => {
 
     console.log(
         chalk.magenta("[DISCORD] ") +
-            chalk.yellow(`[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`)
+            chalk.yellow(
+                `[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`,
+            ),
     );
 
-    let actualExecutorId;
-
     try {
-        let blacklisted = [
-            "898041849783148585", // lounge
-            "898041854262648842", // thank-you-dan
-            "928029676209852517", // egg-bugs
-            "898041857550995506", // memes
-            "898041861040664576", // setups
-            "898041858666668092", // pets
-            "898041851729305621", // spam
-            "898041859681701948", // movie-night
-            "898041865616650240", // dono-lounge
-            "898041875192234054", // vps-chat
-            "898354771927400538", // beta-lounge
-            "976371313901965373", // vpn-suggestions
-            "964215219968696390", // vpn-bugs
-            "898041892279836692", // hosting
-            "898041894746066985", // python
-            "898041895987585024", // javascript
-            "898041896956469249", // web-dev
-            "898041898835509328", // java
-            "1056858054819336192", // report-outages
-            "1195633188597411882", // lavalink
-            "1056858054819336192", // node-bot-outages
-            "1192648696517640252", // bot-api
-            "1138925759264739398", // vpn
-            "938630088256286720", // vps-hosting
-            "945031368675582023" // dans-birthday
+        const allowedChannels = [
+            "898041850890440725", // #commands - Community
+            "898041866589700128", // #commands - Donators
+            "898041878447013948", // #commands - Beta Testers
+            "1217536336181854258", // #commands - Staff
+            "898041906599178240", // #private - Staff
+        ];
+
+        const allowedCategories = [
+            "1160713638743658577", // High Priority Tickets
+            "1160713549685989406", // Medium Priority Tickets
+            "1160710296986460171", // Low Priority Tickets
+            "1160716485065445406", // Unknown Priority Tickets
         ];
 
         // Channel checker
         if (
-            blacklisted.includes(message.channel.id) &&
+            !allowedChannels.includes(message.channel.id) &&
+            !allowedCategories.includes(message.channel.parentID) &&
             !message.member.roles.cache.find((x) => x.id === "898041751099539497") &&
             !message.member.roles.cache.find((x) => x.id === "898041743566594049")
-        ) return;
+        )
+            return;
 
         if (
             command === "server" ||
@@ -94,7 +85,6 @@ module.exports = async (client, message) => {
             command === "staff" ||
             command === "ticket"
         ) {
-            // Cooldown setting
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
                 await commandFile.run(client, message, args);

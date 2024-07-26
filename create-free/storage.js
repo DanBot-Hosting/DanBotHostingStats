@@ -12,8 +12,7 @@ createList.storage = (serverName, userID) => ({
         io: 500,
         cpu: 0,
     },
-    environment: {
-    },
+    environment: {},
     feature_limits: {
         databases: 0,
         allocations: 1,

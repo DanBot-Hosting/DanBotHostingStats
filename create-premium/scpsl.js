@@ -15,7 +15,7 @@ createListPrem.scpsl = (serverName, userID) => ({
     environment: {
         SRCDS_APPID: "996560",
         DOTNET_BUNDLE_EXTRACT_BASE_DIR: "./dotnet-bundle",
-        AUTO_UPDATE: 1
+        AUTO_UPDATE: 1,
     },
     feature_limits: {
         databases: 2,

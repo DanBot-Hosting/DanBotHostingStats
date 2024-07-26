@@ -1,19 +1,18 @@
 const Discord = require("discord.js");
 const axios = require("axios");
 
-const generatePassword = require('../../util/generatePassword.js');
-const Config = require('../../../../config.json')
+const generatePassword = require("../../util/generatePassword.js");
+const Config = require("../../../../config.json");
 
 /**
  * User password command. Resets the password for the linked console account.
- * 
- * @param {Discord.Client} client 
- * @param {Discord.Message} message 
- * @param {Array} args 
+ *
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
  * @returns void
  */
 exports.run = async (client, message, args) => {
-
     //Generates a 16 digit random password.
     const password = await generatePassword();
 
@@ -23,7 +22,7 @@ exports.run = async (client, message, args) => {
     if (userAccount == null) {
         message.channel.send("You do not have a console account linked with your discord account.");
         return;
-    };
+    }
 
     //This Axios requests gets the initial details of the user account.
     axios({
@@ -37,7 +36,6 @@ exports.run = async (client, message, args) => {
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
     }).then((Fetch) => {
-
         //This data object is used to update the user account with the new password.
         const data = {
             email: Fetch.data.attributes.email,
@@ -59,9 +57,8 @@ exports.run = async (client, message, args) => {
                 Accept: "Application/vnd.pterodactyl.v1+json",
             },
             data: data,
-
-        }).then((Response) => {
-
+        })
+            .then((Response) => {
                 const Embed = new Discord.MessageEmbed();
                 Embed.setColor("BLUE");
                 Embed.setTitle("Password Reset Success");
@@ -74,7 +71,9 @@ exports.run = async (client, message, args) => {
                 message.channel.send(Embed);
 
                 //Sends the user a direct message containing their new password.
-                client.users.cache.get(message.author.id).send(`New password for DanBot Hosting: ||**${data.password}**||`);
+                client.users.cache
+                    .get(message.author.id)
+                    .send(`New password for DanBot Hosting: ||**${data.password}**||`);
 
                 //Formatting the email message.
                 const EmailMessage = {

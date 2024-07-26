@@ -10,6 +10,5 @@ module.exports = async (client, oldMember, newMember) => {
         if (config.BannedNames.some((r) => displayName.includes(r))) {
             newMember.setNickname("Moderated Nickname");
         }
-
     }
 };

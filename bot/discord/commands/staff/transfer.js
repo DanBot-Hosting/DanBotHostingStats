@@ -1,6 +1,8 @@
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
-    let modlog = message.guild.channels.cache.find((channel) => channel.id === config.DiscordBot.modLogs);
+    let modlog = message.guild.channels.cache.find(
+        (channel) => channel.id === config.DiscordBot.modLogs,
+    );
 
     if (args.length < 3) {
         message.reply("usage: DBH!staff transfer <OLDUSERID> <NEWUSERID>.");
@@ -19,7 +21,7 @@ exports.run = async (client, message, args) => {
 
             if (!newData || old.consoleID != newData.consoleID) {
                 message.reply(
-                    "Both accounts should be linked to the same panel account in order for this command to work."
+                    "Both accounts should be linked to the same panel account in order for this command to work.",
                 );
                 return;
             }
