@@ -68,7 +68,7 @@ exports.run = async (client, message, args) => {
                 Embed.setDescription(
                     "The console account that is linked with the discord account has now been reset.\n" +
                     "Please check direct messages for the password. If you didn't recieve a message, you do not have direct messages enabled for this server.\n\n" +
-                    "An email has also been sent to your email connected "
+                    "An email has also been sent to your email connected to the console account."
                 );
 
                 message.channel.send(Embed);
