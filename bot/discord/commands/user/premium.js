@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const parser = new Intl.NumberFormat();
 
+const Config = require('../../../../config.json');
+
 /**
  * User premium command. Shows the user the number of premium servers they have, and how many they have used.
  * 
@@ -25,7 +27,7 @@ exports.run = async (client, message, args) => {
     if (userPremium == null) userPremium = {};
 
     //Takes amount donated and divides by the price of a premium server to determine max count.
-    const maxAmount = Math.floor((userPremium.donated || 0) / config.PremiumServerPrice);
+    const maxAmount = Math.floor((userPremium.donated || 0) / Config.PremiumServerPrice);
 
     const Embed = new Discord.MessageEmbed()
         .setColor("BLUE")

@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const axios = require("axios");
 
 const generatePassword = require('../../util/generatePassword.js');
-const Configs = require('../../../../config.json')
+const Config = require('../../../../config.json')
 
 /**
  * User password command. Resets the password for the linked console account.
@@ -27,12 +27,12 @@ exports.run = async (client, message, args) => {
 
     //This Axios requests gets the initial details of the user account.
     axios({
-        url: Configs.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
+        url: Config.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
         method: "GET",
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            Authorization: "Bearer " + Configs.Pterodactyl.apikey,
+            Authorization: "Bearer " + Config.Pterodactyl.apikey,
             "Content-Type": "application/json",
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
@@ -49,12 +49,12 @@ exports.run = async (client, message, args) => {
 
         //This Axios request updates the user account with the new password.
         axios({
-            url: Configs.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
+            url: Config.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
             method: "PATCH",
             followRedirect: true,
             maxRedirects: 5,
             headers: {
-                Authorization: "Bearer " + Configs.Pterodactyl.apikey,
+                Authorization: "Bearer " + Config.Pterodactyl.apikey,
                 "Content-Type": "application/json",
                 Accept: "Application/vnd.pterodactyl.v1+json",
             },
@@ -78,7 +78,7 @@ exports.run = async (client, message, args) => {
 
                 //Formatting the email message.
                 const EmailMessage = {
-                    from: Configs.Email.From,
+                    from: Config.Email.From,
                     to: data.email,
                     subject: "DanBot Hosting - Password reset via bot",
                     html:
