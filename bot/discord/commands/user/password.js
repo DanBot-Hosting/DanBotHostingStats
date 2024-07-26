@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Axios = require("axios");
+const axios = require("axios");
 
 const generatePassword = require('../../util/generatePassword.js');
 const Configs = require('../../../../config.json')
