@@ -76,53 +76,50 @@ exports.run = async (client, message, args) => {
             `Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`
         );
 
-        // Correct filter function for awaitMessages
-        const filter = (m) =>
-            m.author.id === message.author.id &&
-            m.content.toLowerCase() === "confirm";
+        // Collector for confirmation message
+        const collectorFilter = (m) => 
+            m.author.id === message.author.id && m.content.toLowerCase() === "confirm";
 
-        try {
-            const confirmation = await message.channel.awaitMessages({
-                filter,
-                max: 1,
-                time: 60000,
-                errors: ["time"],
-            });
+        const collector = message.channel.createMessageCollector({
+            filter: collectorFilter,
+            max: 1,
+            time: 60000,
+        });
 
-            if (!confirmation || !confirmation.size) {
-                confirmMsg.edit("Request cancelled or timed out.");
-                return;
-            }
-
-            confirmMsg.delete(); // Remove the confirmation message
-
+        collector.on('collect', async () => {
+            confirmMsg.delete(); 
             for (const server of serversToDelete) {
                 await msg.edit(`Deleting server ${server.attributes.name}...`);
-
-                // Delete server from Pterodactyl API
-                await axios({
-                    url: `${config.Pterodactyl.hosturl}/api/application/servers/${
-                        server.attributes.id
-                    }/force`,
-                    method: "DELETE",
-                    headers: {
-                        Authorization: `Bearer ${config.Pterodactyl.apikey}`,
-                    },
-                });
-
-                msg.edit(`Server ${server.attributes.name} deleted!`);
-
-                // (Optional) Decrement premium usage if applicable
-                // (Logic not fully shown here, depends on your implementation)
+                try {
+                    // Delete server from Pterodactyl API
+                    await axios({
+                        url: `${config.Pterodactyl.hosturl}/api/application/servers/${
+                            server.attributes.id
+                        }/force`,
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${config.Pterodactyl.apikey}`,
+                        },
+                    });
+    
+                    msg.edit(`Server ${server.attributes.name} deleted!`);
+                    // (Optional) Decrement premium usage if applicable
+                } catch (deletionError) {
+                    console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
+                    msg.edit(`Failed to delete server ${server.attributes.name}. Please try again later.`);
+                }
             }
-        } catch (err) {
-            console.error("Error during confirmation:", err);
-            confirmMsg.edit("An error occurred during confirmation.");
-        }
+        });
+
+        collector.on('end', (collected, reason) => {
+            if (reason === 'time') {
+                confirmMsg.edit('Request timed out.');
+            }
+        });
     } catch (err) {
-        console.error("Error deleting servers:", err);
+        console.error("Error fetching server details:", err);
         msg.edit(
-            "An error occurred while fetching server details or confirming deletion. Please try again later."
+            "An error occurred while fetching server details. Please try again later."
         );
     }
 };
