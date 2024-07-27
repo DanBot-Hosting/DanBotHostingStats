@@ -102,16 +102,6 @@ exports.run = async (client, message, args) => {
         //User domain data.
         const userDomains = await userData.get(message.author.id + ".domains");
 
-        //User wants to remove the domain from the database. No unproxy action.
-        if (args[2] == "-db") {
-            userData.set(
-                message.author.id + ".domains",
-                userDomains.filter((x) => x.domain != args[1].toLowerCase()),
-            );
-            message.reply("Unlinked domain from the database.");
-
-            //Doesn't want to remove from database, normal unproxy.
-        } else {
             //Invalid domain provided.
             if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
                 message.reply(
@@ -475,7 +465,6 @@ exports.run = async (client, message, args) => {
                         console.log(error);
                     });
             }
-        }
     }
 };
 
