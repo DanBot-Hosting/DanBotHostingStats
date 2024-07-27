@@ -1,12 +1,13 @@
 const axios = require("axios");
 const Discord = require("discord.js");
+const Config = require('../../../../config.json')
 
 exports.run = async (client, message, args) => {
     let user = message.author;
     let userID = message.author.id;
 
-    // Allow developers to lookup a user's server list
-    if (message.member.roles.cache.find((r) => r.id === "898041747597295667"))
+    // Allow Bot Admins to view other users' servers.
+    if (message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin))
         userID = args[1] || message.author.id;
 
     const userAccount = userData.get(userID);
@@ -14,7 +15,7 @@ exports.run = async (client, message, args) => {
     if (userAccount == null || userAccount.consoleID == null) {
         if (userID === message.author.id) {
             return message.reply(
-                `You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`,
+                `You do not have a panel account linked, please create or link an account.\n\`${Config.DiscordBot.Prefix}user new\` - Create an account\n\`${Config.DiscordBot.Prefix}user link\` - Link an account`,
             );
         } else {
             return message.reply("That user does not have a panel account linked.");
@@ -34,7 +35,7 @@ exports.run = async (client, message, args) => {
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            Authorization: `Bearer ${config.Pterodactyl.apikey}`,
+            Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
             "Content-Type": "application/json",
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
@@ -49,13 +50,11 @@ exports.run = async (client, message, args) => {
                     : `**${server.attributes.name}** (ID: \`${server.attributes.identifier}\`)`;
             };
 
-            const donoNodes = [34, 31, 33, 35, 39];
-
             const freeServers = arr
-                .filter((server) => !donoNodes.includes(server.attributes.node))
+                .filter((server) => !Config.DonatorNodes.includes(server.attributes.node))
                 .map(format);
             const donoServers = arr
-                .filter((server) => donoNodes.includes(server.attributes.node))
+                .filter((server) => Config.DonatorNodes.includes(server.attributes.node))
                 .map(format);
 
             if (arr.length == 0) {
