@@ -16,10 +16,7 @@ exports.run = async (client, message, args) => {
     Embed.setTitle("User Commands");
 
     fs.readdirSync(__dirname).forEach((File) => {
-        Embed.addField(
-            "`" + Config.DiscordBot.Prefix + "user " + File.split(".")[0] + "`",
-            require("./" + File).description,
-        );
+        Embed.addField("`" + Config.DiscordBot.Prefix + "user " + File.split(".")[0] + "`", require("./" + File).description);
     });
 
     await message.reply(Embed);
