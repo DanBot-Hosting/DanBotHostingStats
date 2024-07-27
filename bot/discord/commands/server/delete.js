@@ -41,22 +41,36 @@ exports.run = async (client, message, args) => {
             return;
         }
 
-        // Confirmation prompt with server names
-        const serverNames = serversToDelete.map(server => server.attributes.name.split("@").join("@​")).join(", ");
-        await msg.edit(`Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`);
+        // Confirmation (using reply for better UX)
+const confirmMsg = await message.reply(
+  `Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`
+);
 
+// Correct filter function for awaitMessages
+const filter = (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm';
 
-        const confirmation = await message.channel.awaitMessages({
-            filter: (m) => m.author.id === message.author.id && m.content === "confirm",
-            max: 1,
-            time: 60000,
-            errors: ['time'],
-        }).catch(() => null); 
+try {
+  const confirmation = await message.channel.awaitMessages({
+    filter,
+    max: 1,
+    time: 60000,
+    errors: ['time'],
+  });
 
-        if (!confirmation || !confirmation.size) {
-            msg.edit("Request cancelled or timed out.");
-            return;
-        }
+  if (!confirmation || !confirmation.size) {
+    confirmMsg.edit("Request cancelled or timed out.");
+    return;
+  }
+
+  confirmMsg.delete(); // Remove the confirmation message
+
+  for (const server of serversToDelete) {
+    // ... (rest of deletion logic remains the same)
+  }
+} catch (err) {
+  console.error("Error during confirmation:", err); 
+  confirmMsg.edit("An error occurred during confirmation.");
+} 
 
        for (const server of serversToDelete) {
             await msg.edit(`Deleting server ${server.attributes.name}...`);
