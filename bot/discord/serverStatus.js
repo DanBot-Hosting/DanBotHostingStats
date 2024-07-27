@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 let nstatus = {
     "Performance Nodes": [
         {
@@ -125,11 +127,15 @@ let getEmbed = async () => {
         desc = `${desc}***${title}***\n${d.join("\n")}\n\n`;
     }
 
-    let embed = new Discord.MessageEmbed()
-        .setTitle("DBH Service Status")
-        .setDescription(desc)
-        .setTimestamp();
-    return embed;
+    const Embed = new Discord.MessageEmbed();
+
+    Embed.setTitle("DBH Service Status");
+    Embed.setDescription(desc);
+    Embed.setTimestamp();
+    Embed.setColor("#7388d9");
+    Embed.setFooter("Last Updated");
+
+    return Embed;
 };
 
 module.exports = {
