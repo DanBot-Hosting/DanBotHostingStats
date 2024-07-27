@@ -79,12 +79,16 @@ exports.run = async (client, message, args) => {
                 const EmailMessage = {
                     from: Config.Email.From,
                     to: data.email,
-                    subject: "DanBot Hosting - Password reset via bot",
+                    subject: "DanBot Hosting - Password Reset From Discord Bot",
                     html:
-                        "Hello, the console account password for email: " +
-                        data.email +
-                        " was just reset. here is the new password" +
-                        data.password,
+                        "Hello " + data.first_name + ",\n\n" +
+                        "You have requested a password reset through the Discord bot.\n\n" + 
+                        "Panel Account Email:" + data.email + "\n" +
+                        "Panel Account Username:" + data.username + "\n" +
+                        "Panel Account Password:" + data.password + "\n" + 
+                        "Please keep this information safe and secure.\n\n" +
+
+                        "If you did not request this password reset, please contact support immediately through Discord."
                 };
 
                 transport.sendMail(EmailMessage);
