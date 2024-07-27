@@ -77,7 +77,7 @@ exports.run = async (client, message, args) => {
 
                 //Formatting the email message.
                 const EmailMessage = {
-                    from: Config.Email.From,
+                    from: Config.Email2.From,
                     to: data.email,
                     subject: "DanBot Hosting - Password reset via bot",
                     html:
