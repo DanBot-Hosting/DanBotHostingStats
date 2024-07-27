@@ -1,20 +1,28 @@
+const Discord = require("discord.js");
 const axios = require("axios");
 const humanizeDuration = require("humanize-duration");
 
-exports.run = async (client, message, args) => {
-    // ... (Cooldown handling remains the same) ...
+const Config = require('../../../../config.json');
 
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
+exports.run = async (client, message, args) => {
     // Get server IDs
     const serverIds = args
         .slice(1)
         .map((id) =>
-            id.replace("https://panel.danbot.host/server/", "").match(/[0-9a-z]+/i)?.[0]
+            id.replace(`${Config.Pterodactyl.hosturl}/server/`, "").match(/[0-9a-z]+/i)?.[0]
         )
         .filter(Boolean);
 
     if (serverIds.length === 0) {
         message.reply(
-            `Command format: \`${config.DiscordBot.Prefix}server delete <serverid1> <serverid2> ...\``
+            `Command format: \`${Config.DiscordBot.Prefix}server delete <SERVER_ID_1> <SERVER_ID_2> ...\``
         );
         return;
     }
@@ -24,12 +32,12 @@ exports.run = async (client, message, args) => {
     try {
         // Fetch user's servers from Pterodactyl API
         const response = await axios({
-            url: `https://panel.danbot.host/api/application/users/${userData.get(
+            url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData.get(
                 message.author.id
             ).consoleID}?include=servers`,
             method: "GET",
             headers: {
-                Authorization: `Bearer ${config.Pterodactyl.apikey}`,
+                Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                 "Content-Type": "application/json",
                 Accept: "Application/vnd.pterodactyl.v1+json",
             },
@@ -79,14 +87,22 @@ exports.run = async (client, message, args) => {
                 try {
                     // Delete server from Pterodactyl API
                     await axios({
-                        url: `${config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
+                        url: `${Config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
                         method: "DELETE",
                         headers: {
-                            Authorization: `Bearer ${config.Pterodactyl.apikey}`,
+                            Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                         },
-                    });
+                    }).then(() => {
+                        msg.edit(`Server ${server.attributes.name} deleted!`);
 
-                    msg.edit(`Server ${server.attributes.name} deleted!`);
+                        if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
+                            
+                            userPrem.set(
+                                message.author.id + ".used",
+                                userPrem.fetch(message.author.id).used - 1,
+                            );
+                        }
+                    });
                 } catch (deletionError) {
                     console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
                     msg.edit(`Failed to delete server ${server.attributes.name}. Please try again later.`);
@@ -98,11 +114,11 @@ exports.run = async (client, message, args) => {
         }
     } catch (err) {
         console.error("Error fetching server details:", err);
+
         msg.edit(
             "An error occurred while fetching server details. Please try again later."
         );
     }
 };
-
 
 exports.description = "Delete multiple servers. View this command for usage.";
