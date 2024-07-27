@@ -22,7 +22,7 @@ let nstatus = {
             name: "Dono-01",
             data: "dono01",
             location: "UK",
-            maxCount: 500,
+            maxCount: 1700,
         },
         {
             name: "Dono-02",
