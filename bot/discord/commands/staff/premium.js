@@ -5,6 +5,7 @@ exports.run = async (client, message, args) => {
             "737603315722092544",
             "459025800633647116",
             "853158265466257448",
+            "757296951925538856"
         ].includes(message.author.id)
     )
         return;
