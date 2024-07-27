@@ -115,3 +115,5 @@ exports.run = async (client, message, args) => {
         })
         .catch(() => message.reply("An error occurred while loading servers."));
 };
+
+exports.description = "Shows the servers a user has.";

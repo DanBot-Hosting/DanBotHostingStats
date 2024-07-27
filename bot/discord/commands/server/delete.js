@@ -125,3 +125,5 @@ exports.run = async (client, message, args) => {
         });
     }
 };
+
+exports.description = "Delete a server. View this command for usage.";

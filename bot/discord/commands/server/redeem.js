@@ -52,3 +52,5 @@ exports.run = async (client, message, args) => {
         }
     }
 };
+
+exports.description = "Redeem a premium server code. View commands for more info.";

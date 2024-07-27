@@ -234,3 +234,5 @@ exports.run = async (client, message, args) => {
         );
     }
 };
+
+exports.description = "Creates a donator server. View this command for usage.";

@@ -151,3 +151,5 @@ exports.run = async (client, message, args) => {
     const type = args[1].toLowerCase();
     createServerAndSendResponse(type, message);
 };
+
+exports.description = "Create a free server. View this command for usage.";

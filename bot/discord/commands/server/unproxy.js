@@ -478,3 +478,5 @@ exports.run = async (client, message, args) => {
         }
     }
 };
+
+exports.description = "Unproxies a domain from a server.";

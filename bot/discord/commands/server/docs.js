@@ -116,3 +116,5 @@ exports.run = async (client, message, args) => {
     }
     return message.reply(embed);
 };
+
+exports.description = "Shows information about a server type. View this command for usage.";

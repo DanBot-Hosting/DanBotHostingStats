@@ -321,3 +321,5 @@ exports.run = async (client, message, args) => {
             }
         });
 };
+
+exports.description = "Proxy a domain to a server. View this command for usage.";
