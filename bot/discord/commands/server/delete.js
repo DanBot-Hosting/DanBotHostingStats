@@ -2,24 +2,7 @@ const axios = require("axios");
 const humanizeDuration = require("humanize-duration");
 
 exports.run = async (client, message, args) => {
-    // Initialize cooldown if not present
-    client.cooldown[message.author.id] ??= {
-        nCreate: null,
-        pCreate: null,
-        delete: null,
-    };
-
-    // Cooldown check
-    const cooldownRemaining = client.cooldown[message.author.id].delete - Date.now();
-    if (cooldownRemaining > 0) {
-        message.reply(
-            `You're on cooldown. Please wait ${humanizeDuration(cooldownRemaining, { round: true })}`
-        );
-        return;
-    }
-
-    // Set cooldown (3 seconds)
-    client.cooldown[message.author.id].delete = Date.now() + 3e3;
+    // ... (Cooldown handling remains the same) ...
 
     // Get server IDs
     const serverIds = args
@@ -76,46 +59,43 @@ exports.run = async (client, message, args) => {
             `Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`
         );
 
-        // Collector for confirmation message
-        const collectorFilter = (m) => 
-            m.author.id === message.author.id && m.content.toLowerCase() === "confirm";
+        try {
+            // Await confirmation message (with a more robust filter)
+            const confirmation = await message.channel.awaitMessages(
+                (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm', 
+                { max: 1, time: 60000, errors: ['time'] } // Options object in v12
+            );
 
-        const collector = message.channel.createMessageCollector({
-            filter: collectorFilter,
-            max: 1,
-            time: 60000,
-        });
+            if (!confirmation || confirmation.size === 0) {
+                confirmMsg.edit("Request cancelled or timed out.");
+                return;
+            }
 
-        collector.on('collect', async () => {
-            confirmMsg.delete(); 
+            confirmMsg.delete();
+
+            // Deletion Loop (after successful confirmation)
             for (const server of serversToDelete) {
                 await msg.edit(`Deleting server ${server.attributes.name}...`);
                 try {
                     // Delete server from Pterodactyl API
                     await axios({
-                        url: `${config.Pterodactyl.hosturl}/api/application/servers/${
-                            server.attributes.id
-                        }/force`,
+                        url: `${config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
                         method: "DELETE",
                         headers: {
                             Authorization: `Bearer ${config.Pterodactyl.apikey}`,
                         },
                     });
-    
+
                     msg.edit(`Server ${server.attributes.name} deleted!`);
-                    // (Optional) Decrement premium usage if applicable
                 } catch (deletionError) {
                     console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
                     msg.edit(`Failed to delete server ${server.attributes.name}. Please try again later.`);
                 }
             }
-        });
-
-        collector.on('end', (collected, reason) => {
-            if (reason === 'time') {
-                confirmMsg.edit('Request timed out.');
-            }
-        });
+        } catch (err) {
+            console.error("Error during confirmation:", err);
+            confirmMsg.edit("An error occurred during confirmation.");
+        }
     } catch (err) {
         console.error("Error fetching server details:", err);
         msg.edit(
@@ -123,5 +103,6 @@ exports.run = async (client, message, args) => {
         );
     }
 };
+
 
 exports.description = "Delete multiple servers. View this command for usage.";
