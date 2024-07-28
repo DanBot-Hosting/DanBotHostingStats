@@ -1,7 +1,5 @@
 const serverCreateSettings = require("../../../../createData");
 exports.run = async (client, message, args) => {
-    //return message.reply('server creation is disabled at the moment!')
-
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(
@@ -51,12 +49,6 @@ exports.run = async (client, message, args) => {
     if (args[1] == "list") {
         await message.reply(helpEmbed);
         return;
-    }
-
-    if (args[1].toLowerCase() == "java") {
-        return message.reply(
-            'Free Java server creation has been temporarily disabled due to high amounts of abuse. If you are attempting to create a Java server for a "free" VPS, please be aware that this is against our terms of service and will get you banned.',
-        );
     }
 
     let types = {
