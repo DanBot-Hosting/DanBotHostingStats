@@ -1,5 +1,8 @@
 const serverCreateSettings = require("../../../../createData");
 exports.run = async (client, message, args) => {
+
+    return message.channel.send("Server creation is disabled. Do not ping staff.");
+
     let helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(
