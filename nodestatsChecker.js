@@ -1,59 +1,56 @@
 const axios = require("axios");
 const ping = require("ping-tcp-js");
 
-let pingLocals = {
-    UK: config.Ping.UK,
-    CA: config.Ping.CA,
-};
+const Config = require('./config.json');
 
 let stats = {
     dono01: {
         serverID: "bd9d3ad6",
         IP: config.Nodes.Dono1,
         ID: "34",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
     dono02: {
         serverID: "ca6dba5a",
         IP: config.Nodes.Dono2,
         ID: "31",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
     dono03: {
         serverID: "c23f92cb",
         IP: config.Nodes.Dono3,
         ID: "33",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
     dono04: {
         serverID: "c095a2cb",
         IP: config.Nodes.Dono4,
         ID: "46",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
     pnode1: {
         serverID: "7e99f988",
         IP: config.Nodes.PNode1,
         ID: "38",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
     pnode2: {
         serverID: "2358ca8e",
         IP: config.Nodes.PNode2,
         ID: "40",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
     pnode3: {
         serverID: "150791a9",
         IP: config.Nodes.PNode3,
         ID: "43",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
     storage1: {
         serverID: "ed33bb0c",
         IP: config.Nodes.Storage1,
         ID: "44",
-        Location: pingLocals.UK,
+        Location: Config.Ping.UK,
     },
 };
 if (config.Enabled.nodestatsChecker) {
@@ -158,22 +155,6 @@ if (config.Enabled.nodestatsChecker) {
     }, 10000);
 
     setInterval(() => {
-        // AU 1 VPN Server
-        // ping
-        //     .ping(config.VPN.AU1, 22)
-        //     .then(() =>
-        //         nodeStatus.set("au1", {
-        //             timestamp: Date.now(),
-        //             status: true,
-        //         })
-        //     )
-        //     .catch((e) =>
-        //         nodeStatus.set("au1", {
-        //             timestamp: Date.now(),
-        //             status: false,
-        //         })
-        //     );
-
         // FR 1 VPN Server
         ping.ping(config.VPN.FR1, 22)
             .then(() =>
