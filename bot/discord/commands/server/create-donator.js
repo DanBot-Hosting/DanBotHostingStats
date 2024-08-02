@@ -1,7 +1,18 @@
+const Discord = require('discord.js');
+
+const Config = require('../../../../config.json');
 const serverCreateSettings_Prem = require("../../../../createData_Prem");
 const axios = require("axios");
 
-exports.run = async(client, message, args) => {
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
+exports.run = async (client, message, args) => {
+
     let userP = userPrem.fetch(message.author.id) || {
         used: 0,
         donated: 0,
@@ -32,7 +43,7 @@ exports.run = async(client, message, args) => {
     }
 
     if (allowed - userP.used <= 0) {
-        message.reply("You are at your premium server limit");
+        message.reply("You are at your premium server limit.");
         return;
     }
 
