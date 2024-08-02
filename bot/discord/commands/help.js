@@ -11,7 +11,7 @@ const commands = {
         help: "Brings up this menu.",
     },
     Staff: {
-        staff: "See help for that command."
+        staff: "See help for that command.",
     },
     Owner: {
         eval: "Eval some code.",
@@ -31,18 +31,21 @@ let desc = (object) => {
 exports.run = async (client, message, args) => {
     let embed = new Discord.MessageEmbed()
         .setColor("BLUE")
-        .addField(`__**Users:**__ (${Object.entries(commands.Users).length})`, desc(commands.Users).join("\n"));
+        .addField(
+            `__**Users:**__ (${Object.entries(commands.Users).length})`,
+            desc(commands.Users).join("\n"),
+        );
 
     if (message.member.roles.cache.get("898041751099539497") != null)
         embed.addField(
             `__**Staff Commands:**__ (${Object.entries(commands.Staff).length})`,
-            desc(commands.Staff).join("\n")
+            desc(commands.Staff).join("\n"),
         );
 
     if (message.member.roles.cache.find((r) => r.id === "898041743566594049"))
         embed.addField(
             `__**Developer Commands:**__ (${Object.entries(commands.Owner).length})`,
-            desc(commands.Owner).join("\n")
+            desc(commands.Owner).join("\n"),
         );
 
     message.reply(embed);

@@ -32,7 +32,8 @@ exports.run = async (client, message, args) => {
         },
         {
             id: "username",
-            question: "What should your username be? (**Please don't use spaces or special characters**)", // The questions...
+            question:
+                "What should your username be? (**Please don't use spaces or special characters**)", // The questions...
             filter: (m) => m.author.id === message.author.id, // Filter to use...
             afterChecks: [
                 {
@@ -59,7 +60,9 @@ exports.run = async (client, message, args) => {
     ];
 
     // Locate the account creation category
-    let category = message.guild.channels.cache.find((c) => c.id === "898041816367128616" && c.type === "category");
+    let category = message.guild.channels.cache.find(
+        (c) => c.id === "898041816367128616" && c.type === "category",
+    );
 
     // if not found throw an error
     if (!category) throw new Error("Category channel does not exist");
@@ -152,7 +155,9 @@ exports.run = async (client, message, args) => {
         embed: msg.embeds[0]
             .setDescription(
                 "Attempting to create an account for you...\n\n>>> " +
-                    questions.map((question) => `**${question.id}:** ${question.value.toLowerCase()}`).join("\n")
+                    questions
+                        .map((question) => `**${question.id}:** ${question.value.toLowerCase()}`)
+                        .join("\n"),
             )
             .setFooter("")
             .setTimestamp(),
@@ -202,12 +207,14 @@ exports.run = async (client, message, args) => {
                             " \nEmail: " +
                             data.email +
                             " \nPassword: " +
-                            data.password
+                            data.password,
                     )
                     .setFooter("Please note: It is recommended that you change the password"),
             });
 
-            channel.send("**You have 30 minutes to keep note of this info before the channel is deleted.**");
+            channel.send(
+                "**You have 30 minutes to keep note of this info before the channel is deleted.**",
+            );
             message.guild.members.cache.get(message.author.id).roles.add("898041758527651850");
             setTimeout(function () {
                 channel.delete();
@@ -222,7 +229,8 @@ exports.run = async (client, message, args) => {
                         .setColor("RED")
                         .setTitle("An error has occured:")
                         .setDescription(
-                            "**ERRORS:**\n\n- " + errors.map((error) => error.detail.replace("\n", " ")).join("\n- ")
+                            "**ERRORS:**\n\n- " +
+                                errors.map((error) => error.detail.replace("\n", " ")).join("\n- "),
                         )
                         .setTimestamp()
                         .setFooter("Deleting in 30 seconds..."),

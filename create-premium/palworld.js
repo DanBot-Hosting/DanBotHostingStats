@@ -18,13 +18,13 @@ createListPrem.palworld = (serverName, userID) => ({
         backups: 10,
     },
     environment: {
-      SRCDS_APPID: "2394010",
-      AUTO_UPDATE: 1,
-      MAX_PLAYERS: 32,
-      SRV_NAME: "A Palword Server hosted on DanBot Hosting LTD",
-      SRV_PASSWORD: getPassword(),
-      ADMIN_PASSWORD: getPassword(),
-      PUBLIC_IP: "128.254.225.78"
+        SRCDS_APPID: "2394010",
+        AUTO_UPDATE: 1,
+        MAX_PLAYERS: 32,
+        SRV_NAME: "A Palword Server hosted on DanBot Hosting LTD",
+        SRV_PASSWORD: getPassword(),
+        ADMIN_PASSWORD: getPassword(),
+        PUBLIC_IP: "128.254.225.78",
     },
     deploy: {
         locations: gamingPREM,

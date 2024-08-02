@@ -1,121 +1,124 @@
+const Discord = require("discord.js");
 const axios = require("axios");
 const humanizeDuration = require("humanize-duration");
 
-exports.run = async (client, message, args) => {
-    if (client.cooldown[message.author.id] == null) {
-        client.cooldown[message.author.id] = {
-            nCreate: null,
-            pCreate: null,
-            delete: null,
-        };
-    }
+const Config = require('../../../../config.json');
 
-    if (client.cooldown[message.author.id].delete > Date.now()) {
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
+exports.run = async (client, message, args) => {
+    // Get server IDs
+    const serverIds = args
+        .slice(1)
+        .map((id) =>
+            id.replace(`${Config.Pterodactyl.hosturl}/server/`, "").match(/[0-9a-z]+/i)?.[0]
+        )
+        .filter(Boolean);
+
+    if (serverIds.length === 0) {
         message.reply(
-            `You're currently on cooldown, please wait ${humanizeDuration(
-                client.cooldown[message.author.id].delete - Date.now(),
-                { round: true }
-            )}`
+            `Command format: \`${Config.DiscordBot.Prefix}server delete <SERVER_ID_1> <SERVER_ID_2> ...\``
         );
         return;
     }
 
-    client.cooldown[message.author.id].delete = Date.now() + 3 * 1000;
+    const msg = await message.reply(`Checking servers...`);
 
-    if (!args[1]) {
-        message.reply("Command format: `" + config.DiscordBot.Prefix + "server delete <serverid>`");
-    } else {
-        if (args[1].match(/[0-9a-z]+/i) == null) return message.reply("Please only use English characters.");
-
-        args[1] = args[1].replace("https://panel.danbot.host/server/", "").match(/[0-9a-z]+/i)[0];
-
-        message.reply("Please wait while the server `" + args[1] + "` is checked.").then((msg) => {
-            axios({
-                url:
-                    "https://panel.danbot.host" +
-                    "/api/application/users/" +
-                    userData.get(message.author.id).consoleID +
-                    "?include=servers",
-                method: "GET",
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    Authorization: "Bearer " + config.Pterodactyl.apikey,
-                    "Content-Type": "application/json",
-                    Accept: "Application/vnd.pterodactyl.v1+json",
-                },
-            }).then(async (response) => {
-                const preoutput = response.data.attributes.relationships.servers.data;
-                const output = preoutput.find((srv) => (srv.attributes ? srv.attributes.identifier == args[1] : false));
-
-                if (!output) {
-                    msg.edit("I cannot find that server.");
-                } else {
-                    if (output.attributes.user === userData.get(message.author.id).consoleID) {
-                        msg.edit(
-                            "Are you sure you want to delete `" +
-                                output.attributes.name.split("@").join("@​") + // Uses an invisible character (U+200B) after the @
-                                "`?\nPlease type `confirm` to delete this server. You have 1 minute until this prompt will expire.\n\n**You can not restore the server once it has been deleted and/or its files**"
-                        );
-
-                        const collector = await message.channel.createMessageCollector(
-                            (m) => m.author.id === message.author.id,
-                            {
-                                time: 60000,
-                                max: 2,
-                            }
-                        );
-                        collector.on("collect", (message) => {
-                            if (message.content === "confirm") {
-                                message.delete();
-                                msg.edit("Working...");
-                                axios({
-                                    url:
-                                        config.Pterodactyl.hosturl +
-                                        "/api/application/servers/" +
-                                        output.attributes.id +
-                                        "/force",
-                                    method: "DELETE",
-                                    followRedirect: true,
-                                    maxRedirects: 5,
-                                    headers: {
-                                        Authorization: "Bearer " + config.Pterodactyl.apikey,
-                                        "Content-Type": "application/json",
-                                        Accept: "Application/vnd.pterodactyl.v1+json",
-                                    },
-                                })
-                                    .then((response) => {
-                                        msg.edit("Server deleted!");
-
-                                        if (
-                                            output.attributes.node === 31 || // Dono-02
-                                            output.attributes.node === 34 || // Dono-01
-                                            output.attributes.node === 33 || // Dono-03
-                                            output.attributes.node === 45 // Dono-04
-                                        )
-                                            userPrem.set(
-                                                message.author.id + ".used",
-                                                userPrem.fetch(message.author.id).used - 1
-                                            );
-
-                                        collector.stop();
-                                    })
-                                    .catch((err) => {
-                                        msg.edit("An error occurred with the Panel. Please try again later.");
-                                        collector.stop();
-                                    });
-                            } else {
-                                message.delete();
-                                msg.edit("Request cancelled!");
-                                collector.stop();
-                            }
-                        });
-                    } else {
-                        msg.edit("You do not own that server so you cannot delete it.");
-                    }
-                }
-            })
-            .catch(() => msg.edit("An error occurred while fetching that server."))
+    try {
+        // Fetch user's servers from Pterodactyl API
+        const response = await axios({
+            url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData.get(
+                message.author.id
+            ).consoleID}?include=servers`,
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                "Content-Type": "application/json",
+                Accept: "Application/vnd.pterodactyl.v1+json",
+            },
         });
+
+        const userServers = response.data.attributes.relationships.servers.data;
+
+        // Filter for valid and owned servers
+        const serversToDelete = userServers.filter(
+            (server) =>
+                serverIds.includes(server.attributes?.identifier) &&
+                server.attributes.user === userData.get(message.author.id).consoleID
+        );
+
+        if (serversToDelete.length === 0) {
+            msg.edit("No valid or owned servers found to delete.");
+            return;
+        }
+
+        // Construct serverNames inside the try block
+        const serverNames = serversToDelete
+            .map((server) => server.attributes.name.split("@").join("@​"))
+            .join(", ");
+
+        // Confirmation (using reply for better UX)
+        const confirmMsg = await message.reply(
+            `Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`
+        );
+
+        try {
+            // Await confirmation message (with a more robust filter)
+            const confirmation = await message.channel.awaitMessages(
+                (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm', 
+                { max: 1, time: 60000, errors: ['time'] } // Options object in v12
+            );
+
+            if (!confirmation || confirmation.size === 0) {
+                confirmMsg.edit("Request cancelled or timed out.");
+                return;
+            }
+
+            confirmMsg.delete();
+
+            // Deletion Loop (after successful confirmation)
+            for (const server of serversToDelete) {
+                await msg.edit(`Deleting server ${server.attributes.name}...`);
+                try {
+                    // Delete server from Pterodactyl API
+                    await axios({
+                        url: `${Config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                        },
+                    }).then(() => {
+                        msg.edit(`Server ${server.attributes.name} deleted!`);
+
+                        if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
+                            
+                            userPrem.set(
+                                message.author.id + ".used",
+                                userPrem.fetch(message.author.id).used - 1,
+                            );
+                        }
+                    });
+                } catch (deletionError) {
+                    console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
+                    msg.edit(`Failed to delete server ${server.attributes.name}. Please try again later.`);
+                }
+            }
+        } catch (err) {
+            console.error("Error during confirmation:", err);
+            confirmMsg.edit("An error occurred during confirmation.");
+        }
+    } catch (err) {
+        console.error("Error fetching server details:", err);
+
+        msg.edit(
+            "An error occurred while fetching server details. Please try again later."
+        );
     }
 };
+
+exports.description = "Delete multiple servers. View this command for usage.";

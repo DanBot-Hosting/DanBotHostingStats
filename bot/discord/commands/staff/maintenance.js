@@ -14,13 +14,15 @@ exports.run = async (client, message, args) => {
             if (Data.maintenance) {
                 const Result = await nodeStatus.set(`${args[1]}.maintenance`, false);
 
-                if (!Result) return message.reply(`Unable to put ${args[1]} out of maintainance mode.`);
+                if (!Result)
+                    return message.reply(`Unable to put ${args[1]} out of maintainance mode.`);
 
                 message.reply(`Successfully put ${args[1]} out of maintainance mode.`);
             } else if (Data.maintenance == false) {
                 const Result = await nodeStatus.set(`${args[1]}.maintenance`, true);
 
-                if (!Result) return message.reply(`Unable to put ${args[1]} into maintainance mode.`);
+                if (!Result)
+                    return message.reply(`Unable to put ${args[1]} into maintainance mode.`);
 
                 message.reply(`Successfully put ${args[1]} into maintainance mode.`);
             }

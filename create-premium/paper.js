@@ -4,7 +4,8 @@ createListPrem.paper = (serverName, userID) => ({
     nest: 1,
     egg: 3,
     docker_image: "ghcr.io/pterodactyl/yolks:java_17",
-    startup: "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
+    startup:
+        "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
     limits: {
         memory: 6144,
         swap: -1,
@@ -15,7 +16,8 @@ createListPrem.paper = (serverName, userID) => ({
     environment: {
         MINECRAFT_VERSION: "latest",
         SERVER_JARFILE: "server.jar",
-        DL_PATH: "https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/503/downloads/paper-1.16.5-503.jar",
+        DL_PATH:
+            "https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/503/downloads/paper-1.16.5-503.jar",
         BUILD_NUMBER: "latest",
     },
     feature_limits: {

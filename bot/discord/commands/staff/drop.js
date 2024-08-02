@@ -2,7 +2,12 @@ const ms = require("ms");
 const humanizeDuration = require("humanize-duration");
 
 exports.run = async (client, message, args) => {
-    if (!["137624084572798976", "737603315722092544", "405771597761216522"].includes(message.author.id)) return;
+    if (
+        !["137624084572798976", "737603315722092544", "405771597761216522"].includes(
+            message.author.id,
+        )
+    )
+        return;
     message.delete();
 
     if (args[1] == null) {
@@ -51,7 +56,7 @@ exports.run = async (client, message, args) => {
                 humanizeDuration(time, {
                     round: true,
                 }) +
-                "!"
+                "!",
         )
         .setTimestamp(moment + time);
 
@@ -61,7 +66,7 @@ exports.run = async (client, message, args) => {
                 humanizeDuration(time, {
                     round: true,
                 }) +
-                "!"
+                "!",
         ),
     });
 
@@ -79,8 +84,8 @@ exports.run = async (client, message, args) => {
                     humanizeDuration(time - time / 1.2, {
                         round: true,
                     }) +
-                    "!"
-            )
+                    "!",
+            ),
         );
     }, time / 1.2);
 
@@ -91,16 +96,16 @@ exports.run = async (client, message, args) => {
                     humanizeDuration(time / 2, {
                         round: true,
                     }) +
-                    "!"
-            )
+                    "!",
+            ),
         );
     }, time / 2);
 
     setTimeout(() => {
         msg.edit(
             embed.setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#898041850890440725>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`
-            )
+                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#898041850890440725>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`,
+            ),
         );
     }, time);
 };

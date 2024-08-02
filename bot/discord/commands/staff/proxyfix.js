@@ -72,10 +72,12 @@ exports.run = async (client, message, args) => {
 
     if (!args[1]) {
         return message.reply(
-            "Please provide a URL! WARNING: Do not use this command without checking the domain is not already linked! \n\n**This command should be used as a last resort if the domain is not linking.**"
+            "Please provide a URL! WARNING: Do not use this command without checking the domain is not already linked! \n\n**This command should be used as a last resort if the domain is not linking.**",
         );
     } else {
-        const replyMsg = await message.channel.send("**This command should be used as a last resort if the domain is not linking.**\nTrying to fix proxy...");
+        const replyMsg = await message.channel.send(
+            "**This command should be used as a last resort if the domain is not linking.**\nTrying to fix proxy...",
+        );
 
         let token;
         let using = false;
@@ -89,7 +91,8 @@ exports.run = async (client, message, args) => {
             token = await proxyServer.getToken();
 
             const listOfUrls = await axios({
-                url: proxyServer.url + "/api/nginx/proxy-hosts?expand=owner,access_list,certificate",
+                url:
+                    proxyServer.url + "/api/nginx/proxy-hosts?expand=owner,access_list,certificate",
                 method: "GET",
                 followRedirect: true,
                 maxRedirects: 5,
@@ -110,12 +113,10 @@ exports.run = async (client, message, args) => {
         }
 
         if (!idOfProxy) {
-            replyMsg.edit(
-                "DOMAIN_NOT_FOUND\nThis domain should work, did you make a typo?"
-            );
+            replyMsg.edit("DOMAIN_NOT_FOUND\nThis domain should work, did you make a typo?");
         } else {
             replyMsg.edit(
-                `Found domain ${idOfProxy} on ${proxyServers[using].name}, attempting to delete...`
+                `Found domain ${idOfProxy} on ${proxyServers[using].name}, attempting to delete...`,
             );
 
             const deletedObject = await axios({
@@ -131,11 +132,11 @@ exports.run = async (client, message, args) => {
 
             if (deletedObject) {
                 replyMsg.edit(
-                    `The domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`
+                    `The domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`,
                 );
             } else {
                 replyMsg.edit(
-                    `Found domain ${idOfProxy} on ${proxyServers[using].name}, failed to delete! Try again?`
+                    `Found domain ${idOfProxy} on ${proxyServers[using].name}, failed to delete! Try again?`,
                 );
             }
         }

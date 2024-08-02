@@ -1,6 +1,10 @@
 const exec = require("child_process").exec;
 exports.run = (client, message, args) => {
-    if (["137624084572798976", "757296951925538856", "853158265466257448"].includes(message.author.id)) {
+    if (
+        ["137624084572798976", "757296951925538856", "853158265466257448"].includes(
+            message.author.id,
+        )
+    ) {
         exec(`${args.join(" ")}`, (error, stdout) => {
             let response = error || stdout;
 

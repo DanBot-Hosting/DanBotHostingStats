@@ -2,7 +2,9 @@ exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041743566594049")) return;
 
     if (args[1] == null) {
-        message.reply("Please send a users discord ID to see if they are linked with an account on the host.");
+        message.reply(
+            "Please send a users discord ID to see if they are linked with an account on the host.",
+        );
     } else {
         if (userData.get(args[1]) == null) {
             message.reply("That account is not linked with a console account.");

@@ -7,9 +7,6 @@
 Free Hosting forever!                                            /____/
 */
 
-//3,000th commit to github!
-//DIBSTER was here.
-
 global.config = require("./config.json");
 
 global.fs = require("fs");
@@ -51,8 +48,6 @@ global.client = new Discord.Client({
     partials: ["MESSAGE", "CHANNEL", "REACTION"],
 });
 global.bot = client;
-
-global.pollPingLastUsed = 0;
 
 //Event handler
 fs.readdir("./bot/discord/events/", (err, files) => {

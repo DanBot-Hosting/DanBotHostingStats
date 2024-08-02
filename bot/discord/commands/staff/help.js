@@ -1,12 +1,15 @@
 let subcommands = {
     mods: {
-        premiumfix: ["Fixes a user's premium count if it's incorrect.", "<USER_ID || USER_MENTION>"],
+        premiumfix: [
+            "Fixes a user's premium count if it's incorrect.",
+            "<USER_ID || USER_MENTION>",
+        ],
         proxyfix: ["Attmpts to delete a proxy from one of the servers.", "<DOMAIN_NAME>"],
-        transfer: ["Transfer data from one user account to another.", "<OLDUSERID> <NEWUSERID>"]
+        transfer: ["Transfer data from one user account to another.", "<OLDUSERID> <NEWUSERID>"],
     },
     admin: {
         lockdown: ["Allows the channel to be locked or unlocked.", ""],
-        linked: ["Check the details for a user account.", ""]
+        linked: ["Check the details for a user account.", ""],
     },
     botdev: {
         linked: ["Shows if the users account is linked.", "<userid>"],
@@ -15,7 +18,10 @@ let subcommands = {
         changelog: ["Announce new changes to the changelog channel.", "<MESSAGE>"],
     },
     misc: {
-        premium: ["Set, add, or remove premium servers from a user.", "<set||add||remove> <user> <amount>"],
+        premium: [
+            "Set, add, or remove premium servers from a user.",
+            "<set||add||remove> <user> <amount>",
+        ],
         code: ["Create a code that is worth premium servers.", "<codename> <amount>"],
         drop: ["Drops a code within the channel within a certain time.", "<time> <code>"],
         help: ["Pulls up this help menu.", ""],
@@ -27,7 +33,7 @@ let desc = (object) => {
     let entries = Object.entries(object);
     for (const [subCommand, [desc, usage]] of entries) {
         description.push(
-            `**${subCommand}** - ${desc}\n (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`
+            `**${subCommand}** - ${desc}\n (\`${config.DiscordBot.Prefix + "staff " + subCommand + " " + usage}\`)`,
         );
     }
     return description;

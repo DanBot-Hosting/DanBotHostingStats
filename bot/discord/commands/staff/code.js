@@ -9,7 +9,12 @@ exports.run = async (client, message, args) => {
         return password;
     };
 
-    if (!["137624084572798976", "737603315722092544", "405771597761216522"].includes(message.author.id)) return;
+    if (
+        !["137624084572798976", "737603315722092544", "405771597761216522"].includes(
+            message.author.id,
+        )
+    )
+        return;
 
     if (args.length < 3) {
         message.reply("Usage: `DBH!staff code <name> <uses>");
@@ -37,7 +42,7 @@ exports.run = async (client, message, args) => {
             args[2] +
             "` premium servers. \n\nRedeem this with `DBH!server redeem " +
             code +
-            "`"
+            "`",
     );
 
     codes.set(code, {

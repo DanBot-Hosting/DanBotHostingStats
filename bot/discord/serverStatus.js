@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 let nstatus = {
     "Performance Nodes": [
         {
@@ -14,7 +16,7 @@ let nstatus = {
             name: "PNode 3",
             data: "pnode3",
             maxCount: 7000,
-        }
+        },
     ],
 
     "Donator Nodes": [
@@ -22,7 +24,7 @@ let nstatus = {
             name: "Dono-01",
             data: "dono01",
             location: "UK",
-            maxCount: 500,
+            maxCount: 1700,
         },
         {
             name: "Dono-02",
@@ -37,7 +39,7 @@ let nstatus = {
         {
             name: "Dono-04",
             data: "dono04",
-            maxCount: 2000,
+            maxCount: 500,
         }
     ],
     "Storage Nodes": [
@@ -46,7 +48,7 @@ let nstatus = {
             data: "storage1",
             location: "UK",
             maxCount: 900,
-        }
+        },
     ],
     "VPN Servers": [
         {
@@ -62,7 +64,7 @@ let nstatus = {
         {
             name: "EU 1",
             data: "vm-eu-1",
-        }
+        },
     ],
     "DBH Services": [
         {
@@ -100,19 +102,19 @@ let parse = async () => {
             let serverUsage = d.data.toLowerCase().startsWith("node")
                 ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
                 : "" || d.data.toLowerCase().includes("dono")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
-                : "" || d.data.toLowerCase().startsWith("pnode")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
-                : "";
+                  ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
+                  : "" || d.data.toLowerCase().startsWith("pnode")
+                    ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
+                    : "";
 
-            da =
-                da.maintenance
-                    ? `🟣 Maintenance ~ Returning Soon!`
-                    : da.status
-                    ? `🟢 Online ${serverUsage}`
-                    : da.is_vm_online == null
+            da = da.maintenance
+                ? `🟣 Maintenance ~ Returning Soon!`
+                : da.status
+                  ? `🟢 Online ${serverUsage}`
+                  : da.is_vm_online == null
                     ? "🔴 **Offline**"
-                    : (da.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") + ` **offline** ${serverUsage}`;
+                    : (da.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") +
+                      ` **offline** ${serverUsage}`;
 
             temp.push(`${d.name}: ${da}`);
         }
@@ -130,8 +132,15 @@ let getEmbed = async () => {
         desc = `${desc}***${title}***\n${d.join("\n")}\n\n`;
     }
 
-    let embed = new Discord.MessageEmbed().setTitle("DBH Service Status").setDescription(desc).setTimestamp();
-    return embed;
+    const Embed = new Discord.MessageEmbed();
+
+    Embed.setTitle("DBH Service Status");
+    Embed.setDescription(desc);
+    Embed.setTimestamp();
+    Embed.setColor("#7388d9");
+    Embed.setFooter("Last Updated");
+
+    return Embed;
 };
 
 module.exports = {
