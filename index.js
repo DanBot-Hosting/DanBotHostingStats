@@ -9,9 +9,6 @@ Free Hosting forever!                                            /____/
 
 global.config = require("./config.json");
 
-//New global cache system (Lazy way)
-global.users = [];
-
 global.fs = require("fs");
 global.chalk = require("chalk");
 const nodemailer = require("nodemailer");
@@ -61,6 +58,7 @@ fs.readdir("./bot/discord/events/", (err, files) => {
         delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
     });
 });
+
 global.createList = {};
 global.createListPrem = {};
 
@@ -90,44 +88,21 @@ global.getPassword = () => {
     return password;
 };
 
-//Bot login
 client.login(config.DiscordBot.Token);
 
-setInterval(
-    async () => {
-        users.length = 0;
-        axios({
-            url: "https://panel.danbot.host/api/application/users?per_page=9999999999999",
-            method: "GET",
-            followRedirect: true,
-            maxRedirects: 5,
-            headers: {
-                Authorization: "Bearer " + config.Pterodactyl.apikey,
-                "Content-Type": "application/json",
-                Accept: "Application/vnd.pterodactyl.v1+json",
-            },
-        })
-            .then((resources) => {
-                users.push(...resources.data.data);
-            })
-            .catch((err) => {});
-    },
-    10 * 60 * 1000,
-);
-
 process.on("unhandledRejection", (reason, p) => {
-    console.log("[antiCrash] :: Unhandled Rejection/Catch");
+    console.log("[AntiCrash] :: Unhandled Rejection/Catch");
     console.log(reason, p);
 });
 process.on("uncaughtException", (err, origin) => {
-    console.log("[antiCrash] :: Uncaught Exception/Catch");
+    console.log("[AntiCrash] :: Uncaught Exception/Catch");
     console.log(err, origin);
 });
 process.on("uncaughtExceptionMonitor", (err, origin) => {
-    console.log("[antiCrash] :: Uncaught Exception/Catch (MONITOR)");
+    console.log("[AntiCrash] :: Uncaught Exception/Catch (MONITOR)");
     console.log(err, origin);
 });
 process.on("multipleResolves", (type, promise, reason) => {
-    console.log("[antiCrash] :: Multiple Resolves");
+    console.log("[AntiCrash] :: Multiple Resolves");
     console.log(type, promise, reason);
 });

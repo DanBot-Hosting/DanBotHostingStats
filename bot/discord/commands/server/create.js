@@ -1,9 +1,20 @@
+const Discord = require('discord.js');
+
+const Config = require('../../../../config.json');
 const serverCreateSettings = require("../../../../createData");
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
 
     return message.channel.send("Server creation is disabled. Do not ping staff.");
 
-    let helpEmbed = new Discord.MessageEmbed()
+    const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(
             `List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`,
