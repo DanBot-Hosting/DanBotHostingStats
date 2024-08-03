@@ -55,7 +55,6 @@ let data = (serverName, userID) => {
         nukkit: null,
         curseforge: null,
         bun: null,
-        storage: null,
         influxdb: null,
     };
     for (let [name, filled] of Object.entries(createListPrem)) {

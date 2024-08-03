@@ -239,7 +239,6 @@ exports.run = async (client, message, args) => {
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX\nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
-                .addField("Storage", "storage", true)
                 .setFooter("Example: DBH!server create-donator aio My AIO Server"),
         );
     }
