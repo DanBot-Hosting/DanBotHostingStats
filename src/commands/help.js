@@ -1,37 +1,52 @@
 const fs = require('fs');
 const path = require('path');
 const Discord = require("discord.js");
+const Config = require('../../config.json');
 
-let getCommandDescriptions = (dir) => {
-    let categories = [];
-    let commands = [];
-    try {
-        const items = fs.readdirSync(dir);
-        items.forEach(item => {
-            const itemPath = path.join(dir, item);
-            if (fs.statSync(itemPath).isDirectory()) {
-                categories.push(`**${config.DiscordBot.Prefix}${item}** - Use ${config.DiscordBot.Prefix}${item} for more information.`);
-            } else if (item.endsWith('.js')) {
-                const command = require(itemPath);
-                commands.push({
-                    name: item.replace('.js', ''),
-                    description: command.description || "No description available."
-                });
-            }
-        });
-    } catch (error) {
-        console.error(`Error reading directory ${dir}:`, error);
-    }
-    return { categories, commands };
-};
-
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     let embed = new Discord.MessageEmbed()
         .setTitle("Commands:")
         .setColor("BLUE");
 
+    let categories = [];
+    let commands = [];
     const commandDir = path.join(__dirname);
-    const { categories, commands } = getCommandDescriptions(commandDir);
+    const memberRoles = message.member.roles.cache.map(role => role.id);
+
+    try {
+        // Reads all the items in the directory.
+        const items = fs.readdirSync(commandDir);
+
+        // Loops through each item in the directory.
+        items.forEach(item => {
+            const itemPath = path.join(commandDir, item);
+
+            // If the item is a directory, it's a sub command category.
+            if (fs.statSync(itemPath).isDirectory()) {
+                categories.push(`**${config.DiscordBot.Prefix}${item}** - Use ${config.DiscordBot.Prefix}${item} for more information.`);
+            // If the item is a JavaScript file, it's a command.
+            } else if (item.endsWith('.js')) {
+                const command = require(itemPath);
+
+                // Check role requirement
+                if (!command.roleRequirement || memberRoles.includes(command.roleRequirement)) {
+                    commands.push({
+                        name: item.replace('.js', ''),
+                        description: command.description || "No description available."
+                    });
+                }
+            }
+        });
+    } catch (error) {
+        console.error(`Error reading directory ${commandDir}:`, error);
+    }
 
     if (categories.length > 0) {
         categories.unshift('----------------------------------------------------------');
