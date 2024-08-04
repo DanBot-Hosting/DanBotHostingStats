@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const Config = require("../../../../config.json");
+const Config = require('../../../config.json');
 
 /**
  * User help command. Shows the user the commands under this category.

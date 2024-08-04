@@ -1,10 +1,8 @@
 module.exports = function () {
     const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    let password = "";
 
-    var password = "";
-
-    // Creating a 16 character password using the CAPSNUM string.
-    while (password.length < 16) {
+    for (let i = 0; i < 16; i++) {
         password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
     }
 

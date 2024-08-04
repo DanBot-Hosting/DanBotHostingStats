@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const axios = require("axios");
-const Config = require('../../../../config.json');
+const Config = require('../../../config.json');
 
 /**
  * 
