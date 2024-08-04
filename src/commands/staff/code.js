@@ -1,3 +1,13 @@
+const Discord = require("discord.js");
+const Config = require('../../../config.json');
+
+/**
+ * 
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     //Yes i stole this from the createData.js
     const CAPSNUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

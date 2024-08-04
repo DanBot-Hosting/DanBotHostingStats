@@ -10,7 +10,7 @@ const Config = require('../../../config.json');
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
+    if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Staff)) return;
 
     if (!args[1]) {
         return message.reply("Please specify a user!");

@@ -1,7 +1,17 @@
 const Discord = require("discord.js");
+const Config = require('../../../config.json');
+
+/**
+ * Staff Changelog command. Sends a message to the changelog channel.
+ * 
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = (client, message, args) => {
     // Check if user has the dev role
-    if (!message.member.roles.cache.find((r) => r.id === "898041747597295667")) return;
+    if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Developer)) return;
 
     if (!args[1]) return message.reply("Please provide a message!");
 

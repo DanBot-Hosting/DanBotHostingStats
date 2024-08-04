@@ -1,6 +1,17 @@
+const Discord = require("discord.js");
+const Config = require('../../../config.json');
+
+/**
+ * 
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
+
     //Checks if the user has the Bot System Administrator Role.
-    if (!message.member.roles.cache.find((r) => r.id === "898041743566594049")) return;
+    if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin)) return;
 
     //
     if (!args[1]) {

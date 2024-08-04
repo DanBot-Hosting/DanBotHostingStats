@@ -1,6 +1,16 @@
+const Discord = require("discord.js");
 const ms = require("ms");
 const humanizeDuration = require("humanize-duration");
 
+const Config = require('../../../config.json');
+
+/**
+ * 
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     if (
         !["137624084572798976", "737603315722092544", "405771597761216522"].includes(
