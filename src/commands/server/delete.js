@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const axios = require("axios");
 const humanizeDuration = require("humanize-duration");
 
-const Config = require('../../../../config.json');
+const Config = require('../../../config.json');
 
 /**
  * 

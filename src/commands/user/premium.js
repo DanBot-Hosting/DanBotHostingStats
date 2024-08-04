@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const parser = new Intl.NumberFormat();
 
-const Config = require("../../../../config.json");
+const Config = require('../../../config.json');
 
 /**
  * User premium command. Shows the user the number of premium servers they have, and how many they have used.

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
-const Config = require('../../../../config.json');
-const serverCreateSettings = require("../../../../createData");
+const Config = require('../../../config.json');
+const serverCreateSettings = require("../../../createData");
 
 /**
  * 

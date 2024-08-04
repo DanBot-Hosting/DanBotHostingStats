@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const axios = require("axios");
 
 const generatePassword = require("../../util/generatePassword.js");
-const Config = require("../../../../config.json");
+const Config = require('../../../config.json');
 
 /**
  * User password command. Resets the password for the linked console account.

@@ -1,6 +1,6 @@
 const axios = require("axios");
 const Discord = require("discord.js");
-const Config = require('../../../../config.json')
+const Config = require('../../../config.json');
 
 exports.run = async (client, message, args) => {
     let user = message.author;
@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
     var arr = [];
 
     axios({
-        url: `https://panel.danbot.host/api/application/users/${userAccount.consoleID}?include=servers`,
+        url: `https://${Config.Pterodactyl.hosturl}/api/application/users/${userAccount.consoleID}?include=servers`,
         method: "GET",
         followRedirect: true,
         maxRedirects: 5,

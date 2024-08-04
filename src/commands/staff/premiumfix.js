@@ -1,5 +1,14 @@
-const premiumNodes = [34, 31, 33, 45]; // Dono-01, Dono-02, Dono-03, Dono-04
+const Discord = require("discord.js");
+const Config = require('../../../config.json');
 
+/**
+ * Premium server count fix command. Locked to the staff.
+ *
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
 
@@ -19,7 +28,7 @@ exports.run = async (client, message, args) => {
             if (userAccount == null || userAccount.consoleID == null) {
                 if (selectedUser.id === message.author.id) {
                     return message.reply(
-                        `You do not have a panel account linked, please create or link an account.\n\`${config.DiscordBot.Prefix}user new\` - Create an account\n\`${config.DiscordBot.Prefix}user link\` - Link an account`,
+                        `You do not have a panel account linked, please create or link an account.\n\`${Config.DiscordBot.Prefix}user new\` - Create an account\n\`${Config.DiscordBot.Prefix}user link\` - Link an account`,
                     );
                 } else {
                     return message.reply("That user does not have a panel account linked.");
@@ -28,7 +37,7 @@ exports.run = async (client, message, args) => {
 
             const response = await axios({
                 url:
-                    "https://panel.danbot.host" +
+                    Config.Pterodactyl.hosturl +
                     "/api/application/users/" +
                     userData.get(selectedUser.id).consoleID +
                     "?include=servers",
@@ -36,7 +45,7 @@ exports.run = async (client, message, args) => {
                 followRedirect: true,
                 maxRedirects: 5,
                 headers: {
-                    Authorization: "Bearer " + config.Pterodactyl.apikey,
+                    Authorization: "Bearer " + Config.Pterodactyl.apikey,
                     "Content-Type": "application/json",
                     Accept: "Application/vnd.pterodactyl.v1+json",
                 },
@@ -47,7 +56,7 @@ exports.run = async (client, message, args) => {
             let actualPremiumServersUsed = 0;
 
             for (let index = 0; index < preoutput.length; index++) {
-                if (premiumNodes.includes(preoutput[index].attributes.node))
+                if (Config.DonatorNodes.includes(preoutput[index].attributes.node))
                     ++actualPremiumServersUsed;
             }
 

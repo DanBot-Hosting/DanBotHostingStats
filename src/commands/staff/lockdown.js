@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Configs = require("../../../../config.json");
+const Config = require('../../../config.json');
 
 /**
  * Server lockdown command. Locked to Administator(s), Co Owner(s), and Owner(s).

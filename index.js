@@ -50,7 +50,7 @@ global.client = new Discord.Client({
 global.bot = client;
 
 //Event handler
-fs.readdir("./bot/discord/events/", (err, files) => {
+fs.readdir("./src/events/", (err, files) => {
     files = files.filter((f) => f.endsWith(".js"));
     files.forEach((f) => {
         const event = require(`./bot/discord/events/${f}`);
