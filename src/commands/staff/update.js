@@ -16,6 +16,8 @@ exports.run = async (client, message, args) => {
     // Checks if the user has the Bot Administrator Role.
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin)) return;
 
+    console.log("Updating the bot from GitHub.");
+
     // Pulls the files from GitHub.
     exec(`git pull`, (error, stdout) => {
         let response = error || stdout;
