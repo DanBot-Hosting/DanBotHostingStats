@@ -18,3 +18,5 @@ exports.run = async (client, message, args) => {
         .setColor("GREEN");
     message.reply(embed);
 };
+
+exports.description = "Shows the bot's uptime, memory usage and API latency.";

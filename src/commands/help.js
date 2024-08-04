@@ -1,52 +1,58 @@
+const fs = require('fs');
+const path = require('path');
 const Discord = require("discord.js");
-const commands = {
-    Users: {
-        user: "See help for that command.",
-        server: "See help for that command.",
-        ping: "Shows the bots ping.",
-        ticket: "Create a ticket for help from the staff team!",
-        uptime: "Shows the bots uptime.",
-        domains: "Show all of your linked domains.",
-        links: "Show links to some DBH sites.",
-        help: "Brings up this menu.",
-    },
-    Staff: {
-        staff: "See help for that command.",
-    },
-    Owner: {
-        eval: "Eval some code.",
-        exec: "Run some system commands.",
-    },
-};
 
-let desc = (object) => {
-    let description = [];
-    let entries = Object.entries(object);
-    for (const [command, desc] of entries) {
-        description.push(`**${config.DiscordBot.Prefix}${command}** - ${desc}`);
+let getCommandDescriptions = (dir) => {
+    let categories = [];
+    let commands = [];
+    try {
+        const items = fs.readdirSync(dir);
+        items.forEach(item => {
+            const itemPath = path.join(dir, item);
+            if (fs.statSync(itemPath).isDirectory()) {
+                categories.push(`**${config.DiscordBot.Prefix}${item}** - Use ${config.DiscordBot.Prefix}${item} for more information.`);
+            } else if (item.endsWith('.js')) {
+                const command = require(itemPath);
+                commands.push({
+                    name: item.replace('.js', ''),
+                    description: command.description || "No description available."
+                });
+            }
+        });
+    } catch (error) {
+        console.error(`Error reading directory ${dir}:`, error);
     }
-    return description;
+    return { categories, commands };
 };
 
 exports.run = async (client, message, args) => {
     let embed = new Discord.MessageEmbed()
-        .setColor("BLUE")
-        .addField(
-            `__**Users:**__ (${Object.entries(commands.Users).length})`,
-            desc(commands.Users).join("\n"),
-        );
+        .setTitle("Commands:")
+        .setColor("BLUE");
 
-    if (message.member.roles.cache.get("898041751099539497") != null)
-        embed.addField(
-            `__**Staff Commands:**__ (${Object.entries(commands.Staff).length})`,
-            desc(commands.Staff).join("\n"),
-        );
+    const commandDir = path.join(__dirname);
+    const { categories, commands } = getCommandDescriptions(commandDir);
 
-    if (message.member.roles.cache.find((r) => r.id === "898041743566594049"))
+    if (categories.length > 0) {
+        categories.unshift('----------------------------------------------------------');
+        categories.push('----------------------------------------------------------');
+        embed.setDescription(categories.join("\n"));
+    } else {
+        embed.setDescription("No subcommands available.");
+    }
+
+    commands.forEach(command => {
         embed.addField(
-            `__**Developer Commands:**__ (${Object.entries(commands.Owner).length})`,
-            desc(commands.Owner).join("\n"),
+            `**${config.DiscordBot.Prefix}${command.name}**`,
+            command.description
         );
+    });
+
+    if (commands.length === 0) {
+        embed.addField("\u200B", "No commands available.");
+    }
 
     message.reply(embed);
 };
+
+exports.description = "Shows the commands available for the bot.";

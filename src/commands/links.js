@@ -11,3 +11,5 @@ exports.run = async (client, message, args) => {
 
     return message.reply(LinksEmbed);
 };
+
+exports.description = "Show links to DanBot Hosting services.";

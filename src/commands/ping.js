@@ -10,3 +10,5 @@ exports.run = async (client, message, args) => {
         .setTimestamp();
     message.reply(embed);
 };
+
+exports.description = "Shows the bot's latency.";

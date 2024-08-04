@@ -1,6 +1,15 @@
-// tag command to have premade messages for the most common member questions
+const Discord = require("discord.js");
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
-    let helpEmbed = new Discord.MessageEmbed()
+
+    const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(`You need to provide a valid tag.`)
         .setFooter("DBH!tag <tag>");
@@ -11,6 +20,7 @@ exports.run = async (client, message, args) => {
     }
 
     const embed = new Discord.MessageEmbed();
+
     switch (args[0].toLowerCase()) {
         case "command":
         case "commands":
@@ -33,7 +43,11 @@ exports.run = async (client, message, args) => {
         default:
             return message.reply(helpEmbed.setDescription("**I could not find this tag.**"));
     }
+
     embed.setFooter(`Requested by ${message.author.tag}`);
+
     message.delete();
     return message.channel.send(embed);
 };
+
+exports.description = "Displays tags for the users to use in FAQ questions.";
