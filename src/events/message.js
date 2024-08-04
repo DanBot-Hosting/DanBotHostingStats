@@ -1,6 +1,7 @@
 const cap = require("../util/cap");
 
 module.exports = async (client, message) => {
+
     // Suggestions channels reactions
     const suggestionChannels = [
         "980595293768802327", // Staff Suggestions

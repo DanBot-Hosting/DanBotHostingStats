@@ -1,5 +1,5 @@
 const axios = require('axios');
-const Config = require('../../../config.json');
+const Config = require('../../config.json');
 
 /**
  * Fetches user data from Pterodactyl.

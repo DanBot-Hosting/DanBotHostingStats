@@ -32,8 +32,6 @@ global.Discord = require("discord.js");
 global.fs = require("fs");
 global.moment = require("moment");
 global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
-global.settings = new db.table("settings"); //Admin settings
-global.webSettings = new db.table("webSettings"); //Web settings (forgot what this is even for)
 global.domains = new db.table("linkedDomains"); //Linked domains for unproxy and proxy cmd
 global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline nodes
 global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
@@ -53,9 +51,9 @@ global.bot = client;
 fs.readdir("./src/events/", (err, files) => {
     files = files.filter((f) => f.endsWith(".js"));
     files.forEach((f) => {
-        const event = require(`./bot/discord/events/${f}`);
+        const event = require(`./src/events/${f}`);
         client.on(f.split(".")[0], event.bind(null, client));
-        delete require.cache[require.resolve(`./bot/discord/events/${f}`)];
+        delete require.cache[require.resolve(`./src/events/${f}`)];
     });
 });
 
