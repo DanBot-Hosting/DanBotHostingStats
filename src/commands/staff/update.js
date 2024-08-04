@@ -1,6 +1,6 @@
 const cap = require("../../util/cap");
 const exec = require("child_process").exec;
-const Config = require('../../../../config.json');
+const Config = require('../../../config.json');
 
 /**
  * Update the bot from GitHub.
@@ -10,7 +10,6 @@ const Config = require('../../../../config.json');
  * @param {Array} args
  * @returns void
  */
-
 exports.run = async (client, message, args) => {
 
     // Checks if the user has the Bot Administrator Role.
