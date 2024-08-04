@@ -3,6 +3,9 @@ const path = require('path');
 const Discord = require("discord.js");
 const Config = require('../../config.json');
 
+
+exports.description = "Shows the commands available for the bot.";
+
 /**
  * 
  * @param {Discord.Client} client 
@@ -30,6 +33,9 @@ exports.run = async (client, message, args) => {
 
             // If the item is a directory, it's a sub command category.
             if (fs.statSync(itemPath).isDirectory()) {
+                if (item === 'staff' && !memberRoles.includes(Config.DiscordBot.Roles.Staff)) {
+                    return; // Skip this category if the user doesn't have the staff role
+                }
                 categories.push(`**${config.DiscordBot.Prefix}${item}** - Use ${config.DiscordBot.Prefix}${item} for more information.`);
             // If the item is a JavaScript file, it's a command.
             } else if (item.endsWith('.js')) {
@@ -49,8 +55,8 @@ exports.run = async (client, message, args) => {
     }
 
     if (categories.length > 0) {
-        categories.unshift('----------------------------------------------------------');
-        categories.push('----------------------------------------------------------');
+        categories.unshift('---------------------------------------------------------------');
+        categories.push('---------------------------------------------------------------');
         embed.setDescription(categories.join("\n"));
     } else {
         embed.setDescription("No subcommands available.");
@@ -69,5 +75,3 @@ exports.run = async (client, message, args) => {
 
     message.reply(embed);
 };
-
-exports.description = "Shows the commands available for the bot.";
