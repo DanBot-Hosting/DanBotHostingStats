@@ -1,12 +1,19 @@
+const Discord = require("discord.js");
+const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
+
+exports.description = "Add Premium servers to a user.";
+
+/**
+ * 
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     if (
-        ![
-            "137624084572798976",
-            "737603315722092544",
-            "459025800633647116",
-            "853158265466257448",
-            "757296951925538856"
-        ].includes(message.author.id)
+        !MiscConfigs.staffPremium.includes(message.author.id)
     )
         return;
 
@@ -23,11 +30,11 @@ exports.run = async (client, message, args) => {
             "Thanks <@" +
                 userid +
                 "> for donating! \nYou can now create donator servers using `" +
-                config.DiscordBot.Prefix +
+                Config.DiscordBot.Prefix +
                 "server create-donator`",
         );
         client.channels.cache
-            .get("898041841939783732")
+            .get(MiscConfigs.donations)
             .send("Thanks, <@" + userid + "> for donating $" + parser.format(amount));
     };
 
@@ -43,18 +50,17 @@ exports.run = async (client, message, args) => {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount);
 
-        await message.guild.members.cache.get(userid.id).roles.add("898041754564046869");
+        await message.guild.members.cache.get(userid.id).roles.add(Config.DiscordBot.Roles.Donator);
     }
 
     if (args[1].toLowerCase() === "set") {
         setDonations(userid, amount);
         sendMessage(userid, amount);
 
-        await message.guild.members.cache.get(userid.id).roles.add("898041754564046869");
+        await message.guild.members.cache.get(userid.id).roles.add(Config.DiscordBot.Roles.Donator);
     }
 
     if (args[1].toLowerCase() === "remove") {
         setDonations(userid, Math.max(0, oldBal - amount));
-        // sendMessage(userid, Math.max(0, oldBal - amount))
     }
 };
