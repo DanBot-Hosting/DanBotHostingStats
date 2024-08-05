@@ -26,9 +26,9 @@ module.exports = async (client) => {
         chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " has logged in!"),
     );
 
-    // Close create account channels after a hour
+    // Cloes all accounts channels that are older than 30 minutes.
     guild.channels.cache
-        .filter((x) => x.parentID === "898041816367128616" && Date.now() - x.createdAt > 1800000)
+        .filter((x) => x.parentID === MiscConfigs.accounts && Date.now() - x.createdAt > 30 * 60 * 1000)
         .forEach((x) => x.delete());
 
     //Initializing Cooldown
@@ -84,19 +84,20 @@ module.exports = async (client) => {
         });
     }, 15000);
 
-    // Node status embed
-    if (config.Enabled.NodeStats) {
-        let channel = client.channels.cache.get("898041845878247487");
-        setInterval(async () => {
-            let embed = await nstatus.getEmbed();
+    // Node Status Embed.
+    const channel = client.channels.cache.get(MiscConfigs.nodestatus);
 
-            let messages = await channel.messages.fetch({
-                limit: 10,
-            });
+    setInterval(async () => {
+        let embed = await nstatus.getEmbed();
 
-            messages = messages.filter((x) => x.author.id === client.user.id).last();
-            if (messages == null) channel.send(embed);
-            else messages.edit(embed);
-        }, 15000);
-    }
+        let messages = await channel.messages.fetch({
+            limit: 10,
+        });
+
+        messages = messages.filter((x) => x.author.id === client.user.id).last();
+        if (messages == null) channel.send(embed);
+        else messages.edit(embed);
+    }, 15000);
+
+
 };

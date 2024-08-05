@@ -54,7 +54,11 @@ const misc = {
 
     // Channels for different commands.
     changelogs: "960242064338092202",       //Staff - Changelogs.
-    github:     "898041843902742548"        //Staff - Update, Autopull
+    github:     "898041843902742548",       //Staff - Update, Autopull
+    nodestatus: "898041845878247487",       //General - Node Status
+
+    // Account purge category.
+    accounts: "898041816367128616",         //General - Account Creation Channels
 }
 
 module.exports = misc;
