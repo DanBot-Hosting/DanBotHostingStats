@@ -50,12 +50,6 @@ let nstatus = {
             maxCount: 900,
         },
     ],
-    "VPN Servers": [
-        {
-            name: "US 1",
-            data: "us1",
-        },
-    ],
     "Dedicated Servers (VPS/VM Hosts)": [
         {
             name: "US 1",
@@ -68,26 +62,10 @@ let nstatus = {
     ],
     "DBH Services": [
         {
-            name: "Grafana (Monitoring)",
-            data: "grafana",
-        },
-        {
             name: "Pterodactyl (Public)",
             data: "pterodactylpublic",
-        },
-        {
-            name: "Pterodactyl (Core)",
-            data: "pterodactylcore",
-        },
-        {
-            name: "Proxmox",
-            data: "proxmox",
-        },
-        {
-            name: "VPN API (DEV)",
-            data: "vpnapi",
-        },
-    ],
+        }
+    ]
 };
 
 let parse = async () => {
