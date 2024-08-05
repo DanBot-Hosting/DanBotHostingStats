@@ -52,3 +52,5 @@ const misc = {
         "1160716485065445406", // Unknown Priority Tickets
     ],
 }
+
+module.exports = misc;
