@@ -55,7 +55,6 @@ exports.run = async (client, message, args) => {
     }
 
     if (categories.length > 0) {
-        categories.unshift('``` ```');
         categories.push('``` ```');
         embed.setDescription(categories.join("\n"));
     } else {
