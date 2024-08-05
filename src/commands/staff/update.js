@@ -1,6 +1,8 @@
 const cap = require("../../util/cap");
 const exec = require("child_process").exec;
+
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
 
 /**
  * Update the bot from GitHub.
@@ -25,7 +27,7 @@ exports.run = async (client, message, args) => {
                 message.reply("All files are already up to date.");
             } else {
                 client.channels.cache
-                    .get("898041843902742548")
+                    .get(MiscConfigs.github)
                     .send(
                         `<t:${Date.now().toString().slice(0, -3)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``,
                     );

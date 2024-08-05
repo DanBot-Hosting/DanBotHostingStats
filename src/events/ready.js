@@ -2,7 +2,8 @@ const Discord = require("discord.js");
 const { exec } = require("child_process");
 
 const nstatus = require("../serverStatus");
-const Config = require('../../config.json')
+const Config = require('../../config.json');
+const MiscConfigs = require('../../config/misc-configs.js');
 
 /**
  * 
@@ -40,7 +41,7 @@ module.exports = async (client) => {
             if (!error) {
                 if (!response.includes("Already up to date.")) {
                     client.channels.cache
-                        .get("898041843902742548")
+                        .get(MiscConfigs.github)
                         .send(
                             `<t:${Date.now().toString().slice(0, -3)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${response}\`\`\``,
                         );

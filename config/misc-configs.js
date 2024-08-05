@@ -51,6 +51,10 @@ const misc = {
         "1160710296986460171", // Low Priority Tickets
         "1160716485065445406", // Unknown Priority Tickets
     ],
+
+    // Channels for different commands.
+    changelogs: "960242064338092202",       //Staff - Changelogs.
+    github:     "898041843902742548"        //Staff - Update, Autopull
 }
 
 module.exports = misc;
