@@ -155,36 +155,6 @@ if (config.Enabled.nodestatsChecker) {
     }, 10000);
 
     setInterval(() => {
-        // FR 1 VPN Server
-        ping.ping(config.VPN.FR1, 22)
-            .then(() =>
-                nodeStatus.set("fr1", {
-                    timestamp: Date.now(),
-                    status: true,
-                }),
-            )
-            .catch((e) =>
-                nodeStatus.set("fr1", {
-                    timestamp: Date.now(),
-                    status: false,
-                }),
-            );
-
-        // US 1 VPN Server
-        ping.ping(config.VPN.US1, 22)
-            .then(() =>
-                nodeStatus.set("us1", {
-                    timestamp: Date.now(),
-                    status: true,
-                }),
-            )
-            .catch((e) =>
-                nodeStatus.set("us1", {
-                    timestamp: Date.now(),
-                    status: false,
-                }),
-            );
-
         // US 1 - VM Host
         ping.ping(config.Servers.US1, 22)
             .then(() =>
@@ -214,34 +184,6 @@ if (config.Enabled.nodestatsChecker) {
                 }),
             );
 
-        // Proxmox
-        ping.ping(config.Servers.US1, 8006)
-            .then(() =>
-                nodeStatus.set("proxmox", {
-                    timestamp: Date.now(),
-                    status: true,
-                }),
-            )
-            .catch((e) =>
-                nodeStatus.set("proxmox", {
-                    timestamp: Date.now(),
-                    status: false,
-                }),
-            );
-        // Grafana
-        ping.ping(config.Services.grafana, 443)
-            .then(() =>
-                nodeStatus.set("grafana", {
-                    timestamp: Date.now(),
-                    status: true,
-                }),
-            )
-            .catch((e) =>
-                nodeStatus.set("grafana", {
-                    timestamp: Date.now(),
-                    status: false,
-                }),
-            );
         // Ptero - Public
         ping.ping(config.Services.pteropublic, 443)
             .then(() =>
@@ -252,34 +194,6 @@ if (config.Enabled.nodestatsChecker) {
             )
             .catch((e) =>
                 nodeStatus.set("pterodactylpublic", {
-                    timestamp: Date.now(),
-                    status: false,
-                }),
-            );
-        // Ptero - Core
-        ping.ping(config.Services.pterocore, 443)
-            .then(() =>
-                nodeStatus.set("pterodactylcore", {
-                    timestamp: Date.now(),
-                    status: true,
-                }),
-            )
-            .catch((e) =>
-                nodeStatus.set("pterodactylcore", {
-                    timestamp: Date.now(),
-                    status: false,
-                }),
-            );
-        // VPN API
-        ping.ping(config.Services.vpnapi, 443)
-            .then(() =>
-                nodeStatus.set("vpnapi", {
-                    timestamp: Date.now(),
-                    status: true,
-                }),
-            )
-            .catch((e) =>
-                nodeStatus.set("vpnapi", {
                     timestamp: Date.now(),
                     status: false,
                 }),
