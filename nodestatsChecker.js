@@ -6,54 +6,54 @@ const Config = require('./config.json');
 let stats = {
     dono01: {
         serverID: "bd9d3ad6",
-        IP: config.Nodes.Dono1,
+        IP: Config.Nodes.Dono1,
         ID: "34",
         Location: Config.Ping.UK,
     },
     dono02: {
         serverID: "ca6dba5a",
-        IP: config.Nodes.Dono2,
+        IP: Config.Nodes.Dono2,
         ID: "31",
         Location: Config.Ping.UK,
     },
     dono03: {
         serverID: "c23f92cb",
-        IP: config.Nodes.Dono3,
+        IP: Config.Nodes.Dono3,
         ID: "33",
         Location: Config.Ping.UK,
     },
     dono04: {
         serverID: "c095a2cb",
-        IP: config.Nodes.Dono4,
+        IP: Config.Nodes.Dono4,
         ID: "46",
         Location: Config.Ping.UK,
     },
     pnode1: {
         serverID: "7e99f988",
-        IP: config.Nodes.PNode1,
+        IP: Config.Nodes.PNode1,
         ID: "38",
         Location: Config.Ping.UK,
     },
     pnode2: {
         serverID: "2358ca8e",
-        IP: config.Nodes.PNode2,
+        IP: Config.Nodes.PNode2,
         ID: "40",
         Location: Config.Ping.UK,
     },
     pnode3: {
         serverID: "150791a9",
-        IP: config.Nodes.PNode3,
+        IP: Config.Nodes.PNode3,
         ID: "43",
         Location: Config.Ping.UK,
     },
     storage1: {
         serverID: "ed33bb0c",
-        IP: config.Nodes.Storage1,
+        IP: Config.Nodes.Storage1,
         ID: "44",
         Location: Config.Ping.UK,
     },
 };
-if (config.Enabled.nodestatsChecker) {
+if (Config.Enabled.nodestatsChecker) {
     console.log(chalk.magenta("[NODE CHECKER] ") + chalk.green("Enabled"));
     //Node status
     setInterval(() => {
@@ -88,7 +88,7 @@ if (config.Enabled.nodestatsChecker) {
 
                 axios({
                     url:
-                        config.Pterodactyl.hosturl +
+                        Config.Pterodactyl.hosturl +
                         "/api/client/servers/" +
                         data.serverID +
                         "/resources",
@@ -96,7 +96,7 @@ if (config.Enabled.nodestatsChecker) {
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        Authorization: "Bearer " + config.Pterodactyl.apikeyclient,
+                        Authorization: "Bearer " + Config.Pterodactyl.apikeyclient,
                         "Content-Type": "application/json",
                         Accept: "Application/vnd.pterodactyl.v1+json",
                     },
@@ -127,7 +127,7 @@ if (config.Enabled.nodestatsChecker) {
                 setTimeout(() => {
                     axios({
                         url:
-                            config.Pterodactyl.hosturl +
+                            Config.Pterodactyl.hosturl +
                             "/api/application/nodes/" +
                             data.ID +
                             "/allocations?per_page=9000",
@@ -135,7 +135,7 @@ if (config.Enabled.nodestatsChecker) {
                         followRedirect: true,
                         maxRedirects: 5,
                         headers: {
-                            Authorization: "Bearer " + config.Pterodactyl.apikey,
+                            Authorization: "Bearer " + Config.Pterodactyl.apikey,
                             "Content-Type": "application/json",
                             Accept: "Application/vnd.pterodactyl.v1+json",
                         },
@@ -156,7 +156,7 @@ if (config.Enabled.nodestatsChecker) {
 
     setInterval(() => {
         // US 1 - VM Host
-        ping.ping(config.Servers.US1, 22)
+        ping.ping(Config.Servers.US1, 22)
             .then(() =>
                 nodeStatus.set("vm-us-1", {
                     timestamp: Date.now(),
@@ -170,7 +170,7 @@ if (config.Enabled.nodestatsChecker) {
                 }),
             );
         // EU 1 - VM Host
-        ping.ping(config.Servers.EU1, 22)
+        ping.ping(Config.Servers.EU1, 22)
             .then(() =>
                 nodeStatus.set("vm-eu-1", {
                     timestamp: Date.now(),
@@ -185,7 +185,7 @@ if (config.Enabled.nodestatsChecker) {
             );
 
         // Ptero - Public
-        ping.ping(config.Services.pteropublic, 443)
+        ping.ping(Config.Services.pteropublic, 443)
             .then(() =>
                 nodeStatus.set("pterodactylpublic", {
                     timestamp: Date.now(),
