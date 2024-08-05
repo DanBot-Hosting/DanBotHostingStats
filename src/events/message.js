@@ -1,30 +1,32 @@
-const cap = require("../util/cap");
+const Discord = require("discord.js");
+const fs = require('fs');
+const path = require('path');
 
+const cap = require("../util/cap");
+const Config = require('../../config.json');
+const MiscConfigs = require('../../config/misc-configs.js');
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Mesage} message 
+ * @returns void
+ */
 module.exports = async (client, message) => {
 
-    // Suggestions channels reactions
-    const suggestionChannels = [
-        "980595293768802327", // Staff Suggestions
-        "976371313901965373", // VPN Suggestions
-    ];
-
-    if (suggestionChannels.some((channel) => channel == message.channel.id)) {
+    //Add reactions to suggestion channels.
+    if (MiscConfigs.suggestionChannels.some((channel) => channel == message.channel.id)) {
         if (!message.content.startsWith(">")) {
             await message.react("👍");
             await message.react("👎");
         }
     }
 
-    // Handles direct messages
-    const dmAllowedUsers = [
-        "137624084572798976", // Dan
-        "853158265466257448", // William
-        "757296951925538856", // DIBSTER
-    ];
 
+    // Staff that can invoke the bot for DMs.
     if (message.channel.type === "dm") {
         // Allow users to send messages on behalf of the bot if they are allowed
-        if (dmAllowedUsers.includes(message.author.id)) {
+        if (MiscConfigs.dmAllowedUsers.includes(message.author.id)) {
             const args = message.content.trim().split(/ +/g);
 
             try {
@@ -36,12 +38,12 @@ module.exports = async (client, message) => {
                 message.channel.send(`\`\`\`${err.message}\`\`\``);
             }
         }
-    }
+    };
 
-    if (message.author.bot) return; // Stop bots from running commands
-    if (message.channel.type === "dm") return; // Stop commands in DMs
+    if (message.author.bot) return; // Stop bots from running commands.
+    if (message.channel.type === "dm") return; // Stop commands in DMs.
 
-    const prefix = config.DiscordBot.Prefix;
+    const prefix = Config.DiscordBot.Prefix;
     if (!message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -56,36 +58,20 @@ module.exports = async (client, message) => {
     );
 
     try {
-        const allowedChannels = [
-            "898041850890440725", // #commands - Community
-            "898041866589700128", // #commands - Donators
-            "898041878447013948", // #commands - Beta Testers
-            "1217536336181854258", // #commands - Staff
-            "898041906599178240", // #private - Staff
-        ];
 
-        const allowedCategories = [
-            "1160713638743658577", // High Priority Tickets
-            "1160713549685989406", // Medium Priority Tickets
-            "1160710296986460171", // Low Priority Tickets
-            "1160716485065445406", // Unknown Priority Tickets
-        ];
-
-        // Channel checker
+        //Checks if the command is allowed in the channel or category.
+        //Staff bypass channel requirements.
         if (
-            !allowedChannels.includes(message.channel.id) &&
-            !allowedCategories.includes(message.channel.parentID) &&
-            !message.member.roles.cache.find((x) => x.id === "898041751099539497") &&
-            !message.member.roles.cache.find((x) => x.id === "898041743566594049")
-        )
-            return;
+            !MiscConfigs.allowedChannels.includes(message.channel.id) &&                            //Channel is not present in allowedChannels.
+            !MiscConfigs.allowedCategories.includes(message.channel.parentID) &&                    //Channel is not in allowed category.
+            !message.member.roles.cache.find((x) => x.id === Config.DiscordBot.Roles.Staff) &&      //Making sure the user isn't staff.
+            !message.member.roles.cache.find((x) => x.id === Config.DiscordBot.Roles.BotAdmin)      //Making sure the user isn't a bot Administrator.
+        ) return;
 
-        if (
-            command === "server" ||
-            command === "user" ||
-            command === "staff" ||
-            command === "ticket"
-        ) {
+        const categoriesPath = path.join(__dirname, '../commands');
+        const categories = fs.readdirSync(categoriesPath).filter(x => fs.statSync(path.join(categoriesPath, x)).isDirectory());
+
+        if (categories.includes(command)) {
             if (!args[0]) {
                 let commandFile = require(`../commands/${command}/help.js`);
                 await commandFile.run(client, message, args);

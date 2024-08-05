@@ -1,8 +1,15 @@
+const Discord = require("discord.js");
 const { exec } = require("child_process");
-const nstatus = require("../serverStatus");
 
+const nstatus = require("../serverStatus");
+const Config = require('../../config.json')
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ */
 module.exports = async (client) => {
-    let guild = client.guilds.cache.get("639477525927690240");
+    const guild = client.guilds.cache.get(Config.DiscordBot.MainGuildId);
 
     let checkNicks = () => {
         guild.members.cache
