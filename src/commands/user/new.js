@@ -1,14 +1,22 @@
+const Discord = require('discord.js');
 const axios = require("axios");
 const validator = require("validator");
+
+const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
+
+const generatePassword = require('../../util/generatePassword.js');
+
+exports.description = "Create a new panel account.";
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
-    let getPassword = () => {
-        const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        var password = "";
-        while (password.length < 10) {
-            password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
-        }
-        return password;
-    };
 
     if (userData.get(message.author.id) != null) {
         message.reply("You already have a `panel account` linked to your discord account");
@@ -61,7 +69,7 @@ exports.run = async (client, message, args) => {
 
     // Locate the account creation category
     let category = message.guild.channels.cache.find(
-        (c) => c.id === "898041816367128616" && c.type === "category",
+        (c) => c.id === MiscConfigs.accounts && c.type === "category",
     );
 
     // if not found throw an error
@@ -168,7 +176,7 @@ exports.run = async (client, message, args) => {
         email: questions.find((question) => question.id == "email").value.toLowerCase(),
         first_name: questions.find((question) => question.id == "username").value,
         last_name: ".",
-        password: getPassword(),
+        password: generatePassword(),
         root_admin: false,
         language: "en",
     };
@@ -215,7 +223,8 @@ exports.run = async (client, message, args) => {
             channel.send(
                 "**You have 30 minutes to keep note of this info before the channel is deleted.**",
             );
-            message.guild.members.cache.get(message.author.id).roles.add("898041758527651850");
+            message.guild.members.cache.get(message.author.id).roles.add(Config.DiscordBot.Roles.Client);
+
             setTimeout(function () {
                 channel.delete();
             }, 1800000);
@@ -246,5 +255,3 @@ exports.run = async (client, message, args) => {
             }
         });
 };
-
-exports.description = "Create a new panel account.";

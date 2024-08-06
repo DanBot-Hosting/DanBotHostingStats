@@ -1,7 +1,17 @@
 const axios = require("axios");
 const Discord = require("discord.js");
+
 const Config = require('../../../config.json');
 
+exports.description = "Shows the servers a user has.";
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     let user = message.author;
     let userID = message.author.id;
@@ -115,5 +125,3 @@ exports.run = async (client, message, args) => {
         })
         .catch(() => message.reply("An error occurred while loading servers."));
 };
-
-exports.description = "Shows the servers a user has.";
