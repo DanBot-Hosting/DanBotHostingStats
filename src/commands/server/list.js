@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
     var arr = [];
 
     axios({
-        url: `https://panel.danbot.host/api/application/users/${userAccount.consoleID}?include=servers`,
+        url: `${Config.Pterodactyl.hosturl}/api/application/users/${userAccount.consoleID}?include=servers`,
         method: "GET",
         followRedirect: true,
         maxRedirects: 5,
