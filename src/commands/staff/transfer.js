@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
+
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
 
 exports.description = "Transfers user account and balance to a new account.";
 
@@ -16,7 +18,7 @@ exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Staff)) return;
 
     const modlog = message.guild.channels.cache.find(
-        (channel) => channel.id === Config.DiscordBot.modLogs,
+        (channel) => channel.id === MiscConfigs.modLogs,
     );
 
     if (args.length < 3) {

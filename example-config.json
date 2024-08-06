@@ -30,30 +30,24 @@
         "pass": ""
     },
     "Ping": {
-        "UK1": "",
-        "CA": "",
         "UK": ""
     },
     "PremiumServerPrice": "",
     "DiscordBot": {
         "Token": "",
+        "ClientId": "",
         "Prefix": "",
         "MainGuildId": "",
-        "modLogs": "",
-        "roles": {
-            "member": "",
-            "client": "",
-            "bot": "",
-            "staff": ""
-        },
         "Roles": {
             "Owner": "",
             "CoOwner": "",
             "StaffManager": "",
+            "SystemAdmin": "",
             "BotAdmin": "",
             "Admin": "",
             "Moderator": "",
             "Helper": "",
+            "Developer": "",
             "Staff": "",
             "NewTicket": "",
             "BetaTester": "",
@@ -96,7 +90,6 @@
         "PNode1": "",
         "PNode2": "",
         "PNode3": "",
-        "PNode4": "",
         "Dono1": "",
         "Dono2": "",
         "Dono3": "",
@@ -124,12 +117,21 @@
         "pteropublic": "",
         "vpnapi": ""
     },
-    "BannedNames": ["", "", "", "", ""],
+    "BannedNames": [
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
     "Enabled": {
         "NodeStats": "",
-        "Welcome": "",
-        "nodestatsChecker": "",
-        "outageChecker": ""
+        "nodestatsChecker": ""
     },
-    "DonatorNodes": ["", "", "", ""]
+    "DonatorNodes": [
+        "",
+        "",
+        "",
+        ""
+    ]
 }
