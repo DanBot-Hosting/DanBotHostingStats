@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
+exports.description = "Staff Changelog command. Sends a message to the changelog channel.";
+
 /**
  * Staff Changelog command. Sends a message to the changelog channel.
  * 

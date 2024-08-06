@@ -1,5 +1,9 @@
 const Discord = require("discord.js");
+
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
+
+exports.description = "Create a code for premium servers.";
 
 /**
  * 
@@ -9,7 +13,16 @@ const Config = require('../../../config.json');
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    //Yes i stole this from the createData.js
+
+    // Make sure the user has the correct permissiosn.
+    if (
+        !MiscConfigs.codeDrops.includes(
+            message.author.id,
+        )
+    )
+        return;
+
+    // Generate a random code.
     const CAPSNUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     var codeGen = () => {
         var password = "";
@@ -19,29 +32,22 @@ exports.run = async (client, message, args) => {
         return password;
     };
 
-    if (
-        !["137624084572798976", "737603315722092544", "405771597761216522"].includes(
-            message.author.id,
-        )
-    )
-        return;
-
     if (args.length < 3) {
-        message.reply("Usage: `DBH!staff code <name> <uses>");
+        message.reply(`Usage: \`${Config.DiscordBot.Prefix}staff code <name> <uses>\``);
         return;
     }
 
     let balance = parseInt(args[2]);
 
     if (isNaN(balance)) {
-        message.reply("Uses must be a valid number");
+        message.reply("Uses must be a valid number.");
         return;
     }
 
     const code = args[1].toLowerCase() == "random" ? codeGen() : args[1];
 
     if (codes.get(code) != null) {
-        message.reply("A code with that name already exists");
+        message.reply("A code with that name already exists.");
         return;
     }
 
@@ -50,7 +56,7 @@ exports.run = async (client, message, args) => {
             code +
             "` with `" +
             args[2] +
-            "` premium servers. \n\nRedeem this with `DBH!server redeem " +
+            "` premium servers. \n\nRedeem this with `"+ Config.DiscordBot.Prefix +" server redeem " +
             code +
             "`",
     );

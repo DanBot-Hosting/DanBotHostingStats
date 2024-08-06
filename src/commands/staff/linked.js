@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
 
+exports.description = "Shows if an account is linked."
+
 /**
  * 
  * @param {Discord.Client} client
@@ -9,7 +11,7 @@ const Config = require('../../../config.json');
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find((r) => r.id ===Config.DiscordBot.Roles.BotAdmin)) return;
+    if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin)) return;
 
     if (args[1] == null) {
         message.reply(

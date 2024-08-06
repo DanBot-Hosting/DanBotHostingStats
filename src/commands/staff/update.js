@@ -4,6 +4,8 @@ const exec = require("child_process").exec;
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
+exports.description = "Updates the bot from GitHub. Locked to Bot Administrators.";
+
 /**
  * Update the bot from GitHub.
  *

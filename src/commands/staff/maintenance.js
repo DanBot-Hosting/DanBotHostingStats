@@ -13,7 +13,6 @@ exports.run = async (client, message, args) => {
     //Checks if the user has the Bot System Administrator Role.
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin)) return;
 
-    //
     if (!args[1]) {
         return message.reply("Please provide a Node to put into maintenance!");
     } else {
