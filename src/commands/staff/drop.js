@@ -115,7 +115,7 @@ exports.run = async (client, message, args) => {
     setTimeout(() => {
         msg.edit(
             embed.setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#898041850890440725>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`,
+                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#` + MiscConfigs.normalCommands + `>\n- Redeem the Premium Code: \`` + Config.DiscordBot.Prefix +`server redeem <CODE>\`\n\n*No one has redeemed the code yet!*`,
             ),
         );
     }, time);
