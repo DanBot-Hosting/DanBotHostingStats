@@ -56,6 +56,7 @@ const misc = {
     changelogs: "960242064338092202",       //Staff - Changelogs.
     github:     "898041843902742548",       //Staff - Update, Autopull
     nodestatus: "898041845878247487",       //General - Node Status
+    donations:  "898041841939783732",       //General - Donations
 
     // Account purge category.
     accounts: "898041816367128616",         //General - Account Creation Channels
