@@ -14,6 +14,11 @@ exports.run = async (client, message, args) => {
     let parser = new Intl.NumberFormat();
 
     let setDonations = (userid, amount) => {
+
+        if (userPrem.get(userid + ".used")){
+            userPrem.set(userid + ".used", 0);
+        }
+
         userPrem.set(userid + ".donated", amount);
     };
 
