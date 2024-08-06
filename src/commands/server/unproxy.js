@@ -181,7 +181,7 @@ exports.run = async (client, message, args) => {
                         message.reply(
                             "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
-                        console.log(error);
+                        console.error(error);
                     });
             } else if (domainData.location == "US2") {
                 //Generates new token for France Proxy location.
@@ -251,7 +251,7 @@ exports.run = async (client, message, args) => {
                         message.reply(
                             "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
-                        console.log(error);
+                        console.error(error);
                     });
             } else if (domainData.location == "US3") {
                 //Generates new token for France Proxy location.
@@ -321,7 +321,7 @@ exports.run = async (client, message, args) => {
                         message.reply(
                             "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
-                        console.log(error);
+                        console.error(error);
                     });
             } else if (domainData.location == "US4") {
                 //Generates new token for France Proxy location.
@@ -391,7 +391,7 @@ exports.run = async (client, message, args) => {
                         message.reply(
                             "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
-                        console.log(error);
+                        console.error(error);
                     });
             }
             if (domainData.location == "DonatorProxy") {
@@ -462,7 +462,7 @@ exports.run = async (client, message, args) => {
                         message.reply(
                             "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
                         );
-                        console.log(error);
+                        console.error(error);
                     });
             }
     }
