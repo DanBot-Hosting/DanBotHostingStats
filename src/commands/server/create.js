@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
     const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(
-            `List of servers: (use DBH!server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`,
+            `List of servers: (use ` + Config.DiscordBot.Prefix + `server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`,
         )
         .addField(
             "__**Languages:**__",

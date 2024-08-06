@@ -60,7 +60,9 @@ const misc = {
     donatorlogs: "898041923544162324",      //Staff - Donator Logs
     serverStatus: "898327108898684938",     //General - Server Status
     modLogs:    "898041830924462858",       //Staff - Mod Logs
-    normalCommands: "738532075476615288",   //General - Commands
+    normalCommands: "898041850890440725",   //General - Commands
+    donatorCommands: "898041866589700128",  //General - Donator Commands
+    betaCommands: "898041878447013948",     //General - Beta Commands
 
     // Account purge category.
     accounts: "898041816367128616",         //General - Account Creation Channels

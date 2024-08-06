@@ -1,5 +1,10 @@
 const Discord = require("discord.js");
 
+const Config = require('../../config.json');
+const MiscConfigs = require('../../config/misc-configs.js');
+
+exports.description = "Displays tags for the users to use in FAQ questions.";
+
 /**
  * 
  * @param {Discord.Client} client 
@@ -12,7 +17,7 @@ exports.run = async (client, message, args) => {
     const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(`You need to provide a valid tag.`)
-        .setFooter("DBH!tag <tag>");
+        .setFooter(Config.Discord.Prefix + "tag <tag>");
 
     if (!args[0]) {
         await message.reply(helpEmbed);
@@ -25,7 +30,7 @@ exports.run = async (client, message, args) => {
         case "command":
         case "commands":
             embed.setDescription(
-                "Hey! Please only run your commands in <#898041850890440725>, <#898041866589700128> or <#898041878447013948>",
+                "Hey! Please only run your commands in <#" + MiscConfigs.normalCommands + ">, <#" + MiscConfigs.donatorCommands + "> or <#" + MiscConfigs.betaCommands + ">",
             );
             break;
         case "504":
@@ -43,5 +48,3 @@ exports.run = async (client, message, args) => {
     message.delete();
     return message.channel.send(embed);
 };
-
-exports.description = "Displays tags for the users to use in FAQ questions.";
