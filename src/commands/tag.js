@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
     const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(`You need to provide a valid tag.`)
-        .setFooter(Config.Discord.Prefix + "tag <tag>");
+        .setFooter(Config.DiscordBot.Prefix + "tag <tag>");
 
     if (!args[0]) {
         await message.reply(helpEmbed);
