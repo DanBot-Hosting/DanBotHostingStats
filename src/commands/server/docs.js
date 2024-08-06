@@ -1,5 +1,19 @@
+const Discord = require("discord.js");
+const Config = require('../../../config.json');
+
+exports.description = "Shows information about a server type. View this command for usage.";
+
+/**
+ * Server docs command. Allows users to pull up information on a specific server type.
+ *
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
-    let helpEmbed = new Discord.MessageEmbed()
+
+    const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(`List of servers:\n`)
         //.addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
@@ -13,7 +27,7 @@ exports.run = async (client, message, args) => {
         .addField("__**WebHosting:**__", "Nginx", true)
         .addField("__**Custom Eggs:**__", "ShareX", true)
         .addField("__**Software:**__", "codeserver \ngitea \nhaste \nuptimekuma", true)
-        .setFooter("Example: DBH!server docs NodeJS");
+        .setFooter("Example: " + Config.DiscordBot.Prefix + "server docs NodeJS");
 
     if (!args[1]) {
         await message.reply(helpEmbed);
@@ -116,5 +130,3 @@ exports.run = async (client, message, args) => {
     }
     return message.reply(embed);
 };
-
-exports.description = "Shows information about a server type. View this command for usage.";

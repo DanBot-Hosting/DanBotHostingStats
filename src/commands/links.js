@@ -1,5 +1,12 @@
 const Discord = require("discord.js");
 
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     const LinksEmbed = new Discord.MessageEmbed()
         .setColor("BLUE")
@@ -11,3 +18,5 @@ exports.run = async (client, message, args) => {
 
     return message.reply(LinksEmbed);
 };
+
+exports.description = "Show links to DanBot Hosting services.";

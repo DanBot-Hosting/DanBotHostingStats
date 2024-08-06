@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 
 /**
  * 
+ * Displays the domains you have connected to your servers.
+ * 
  * @param {Discord.Client} client 
  * @param {Discord.Message} message 
  * @returns 
@@ -34,3 +36,5 @@ exports.run = (client, message) => {
         return message.reply(embed);
     }
 };
+
+exports.description = "Displays the domains you have connected to your servers.";

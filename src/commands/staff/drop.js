@@ -3,6 +3,7 @@ const ms = require("ms");
 const humanizeDuration = require("humanize-duration");
 
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
 
 /**
  * 
@@ -13,7 +14,7 @@ const Config = require('../../../config.json');
  */
 exports.run = async (client, message, args) => {
     if (
-        !["137624084572798976", "737603315722092544", "405771597761216522"].includes(
+        !MiscConfigs.codeDrops.includes(
             message.author.id,
         )
     )
@@ -114,7 +115,7 @@ exports.run = async (client, message, args) => {
     setTimeout(() => {
         msg.edit(
             embed.setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#898041850890440725>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*No one has redeemed the code yet!*`,
+                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#` + MiscConfigs.normalCommands + `>\n- Redeem the Premium Code: \`` + Config.DiscordBot.Prefix +`server redeem <CODE>\`\n\n*No one has redeemed the code yet!*`,
             ),
         );
     }, time);

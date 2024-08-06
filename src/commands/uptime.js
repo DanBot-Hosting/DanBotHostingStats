@@ -1,3 +1,14 @@
+const Discord = require("discord.js");
+
+exports.description = "Shows the bot's uptime, memory usage and API latency.";
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     const humanizeDuration = require("humanize-duration");
 

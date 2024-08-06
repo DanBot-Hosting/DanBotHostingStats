@@ -1,6 +1,9 @@
 const Discord = require("discord.js");
 const fs = require("fs");
+
 const Config = require('../../../config.json');
+
+exports.description = "Shows the server commands under this category.";
 
 /**
  * 
@@ -21,5 +24,3 @@ exports.run = async (client, message, args) => {
 
     await message.reply(Embed);
 };
-
-exports.description = "Shows the server commands under this category.";

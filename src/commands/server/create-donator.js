@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
 const serverCreateSettings_Prem = require("../../../createData_Prem");
 
 /**
@@ -25,15 +26,15 @@ exports.run = async (client, message, args) => {
         message.reply(
             "Oh no, Seems like you do not have an account linked to your discord ID.\n" +
                 "If you have not made an account yet please check out `" +
-                config.DiscordBot.Prefix +
+                Config.DiscordBot.Prefix +
                 "user new` to create an account\nIf you already have an account link it using `" +
-                config.DiscordBot.Prefix +
+                Config.DiscordBot.Prefix +
                 "user link`",
         );
         return;
     }
 
-    let allowed = Math.floor(userP.donated / config.PremiumServerPrice);
+    let allowed = Math.floor(userP.donated / Config.PremiumServerPrice);
 
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(
         serverName,
@@ -89,7 +90,7 @@ exports.run = async (client, message, args) => {
                     true,
                 )
                 .addField("Storage", "storage", true)
-                .setFooter("Example: DBH!server create-donator aio My AIO Server"),
+                .setFooter("Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server"),
         );
         return;
     }
@@ -157,14 +158,13 @@ exports.run = async (client, message, args) => {
                     .addField(`Created for user ID`, consoleID.consoleID)
                     .addField(`Server name`, serverName)
                     .addField(`Type`, args[1].toLowerCase())
-                    //.addField(`Node`, "Node 7 - Boosters/Donators")
                     .addField(
                         `__**WARNING**__`,
                         `Please do not host game servers on java or AIO servers. If you need a gameserver, You need to use Dono2. Slots are 1$ for 2 servers!`,
                     );
                 message.reply(embed);
 
-                let embed2 = new Discord.MessageEmbed()
+                const embed2 = new Discord.MessageEmbed()
                     .setTitle("New donator node server created!")
                     .addField("User:", message.author.id)
                     .addField(`Status`, response.statusText)
@@ -174,7 +174,8 @@ exports.run = async (client, message, args) => {
                     .setFooter(
                         "User has " + (userP.used + 1) + " out of a max " + allowed + " servers",
                     );
-                client.channels.cache.get("898041923544162324").send(embed2);
+
+                client.channels.cache.get(MiscConfigs.donatorlogs).send(embed2);
             })
             .catch((error) => {
                 if (error == "AxiosError: Request failed with status code 400") {
@@ -182,7 +183,7 @@ exports.run = async (client, message, args) => {
                         .setColor("RED")
                         .addField(
                             `__**Failed to create a new server**__`,
-                            `The Donator node(s) are currently full, Please check <#898327108898684938> for updates.\nIf there is no updates please alert one of the Panel admins (Dan)`,
+                            `The Donator node(s) are currently full, Please check <#` + MiscConfigs.serverStatus + `> for updates.\nIf there is no updates please alert a System Administrator (<@& ` + Config.DiscordBot.Roles.SystemAdmin + `>)`,
                         );
                     message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 504") {
@@ -190,7 +191,7 @@ exports.run = async (client, message, args) => {
                         .setColor("RED")
                         .addField(
                             `__**Failed to create a new server**__`,
-                            `The Donator node(s) are currently offline or having issues, You can check the status of the node in this channel: <#898327108898684938>`,
+                            `The Donator node(s) are currently offline or having issues, You can check the status of the node in this channel: <#` + MiscConfigs.serverStatus + `>`,
                         );
                     message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 429") {
@@ -239,7 +240,7 @@ exports.run = async (client, message, args) => {
                 .addField("WebHosting", "Nginx", true)
                 .addField("Custom Eggs", "ShareX\nOpenX", true)
                 .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
-                .setFooter("Example: DBH!server create-donator aio My AIO Server"),
+                .setFooter("Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server"),
         );
     }
 };

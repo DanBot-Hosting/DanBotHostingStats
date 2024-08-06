@@ -4,6 +4,8 @@ const Config = require('../../../config.json');
 
 /**
  * 
+ * Returns the amount of servers a user has.
+ * 
  * @param {Discord.Client} client 
  * @param {Discord.Message} message 
  * @param {Array} args 

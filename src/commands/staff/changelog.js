@@ -1,5 +1,8 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
+
+exports.description = "Staff Changelog command. Sends a message to the changelog channel.";
 
 /**
  * Staff Changelog command. Sends a message to the changelog channel.
@@ -10,7 +13,8 @@ const Config = require('../../../config.json');
  * @returns void
  */
 exports.run = (client, message, args) => {
-    // Check if user has the dev role
+
+    // Checks if the user has the Developer Role.
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Developer)) return;
 
     if (!args[1]) return message.reply("Please provide a message!");
@@ -26,7 +30,8 @@ exports.run = (client, message, args) => {
         )
         .setDescription(msg)
         .setTimestamp();
-    const channel = client.channels.cache.get("960242064338092202");
-    channel.send("<@&898041779696312320>", embed);
+    
+    const channel = client.channels.cache.get(MiscConfigs.changelogs);
+    channel.send(`<@&${Config.DiscordBot.Roles.Changelogs}>`, embed);
     message.reply("Changelog sent!");
 };

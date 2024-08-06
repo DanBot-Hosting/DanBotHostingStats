@@ -1,11 +1,28 @@
+const Discord = require("discord.js");
+
+const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
+
+exports.description = "Transfers user account and balance to a new account.";
+
+/**
+ * Transfers user account and balance to a new account.
+ *
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
-    let modlog = message.guild.channels.cache.find(
-        (channel) => channel.id === config.DiscordBot.modLogs,
+
+    if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Staff)) return;
+
+    const modlog = message.guild.channels.cache.find(
+        (channel) => channel.id === MiscConfigs.modLogs,
     );
 
     if (args.length < 3) {
-        message.reply("usage: DBH!staff transfer <OLDUSERID> <NEWUSERID>.");
+        message.reply("usage: " + Config.DiscordBot.Prefix + "staff transfer <OLDUSERID> <NEWUSERID>.");
     } else {
         let old = userData.get(args[1]);
 

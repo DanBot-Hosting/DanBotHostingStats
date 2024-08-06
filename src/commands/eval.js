@@ -1,5 +1,18 @@
-const fs = require("fs");
+const Discord = require("discord.js");
+const fs = require("fs");  
 
+const Config = require('../../config.json');
+
+exports.roleRequirement = Config.DiscordBot.Roles.BotAdmin;
+exports.description = "Evaluate JavaScript code.";
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message) => {
     let args = message.content.split(" ").slice(1);
     let cont = message.content.split(" ").slice(1).join(" ");

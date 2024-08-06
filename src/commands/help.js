@@ -1,52 +1,76 @@
+const fs = require('fs');
+const path = require('path');
 const Discord = require("discord.js");
-const commands = {
-    Users: {
-        user: "See help for that command.",
-        server: "See help for that command.",
-        ping: "Shows the bots ping.",
-        ticket: "Create a ticket for help from the staff team!",
-        uptime: "Shows the bots uptime.",
-        domains: "Show all of your linked domains.",
-        links: "Show links to some DBH sites.",
-        help: "Brings up this menu.",
-    },
-    Staff: {
-        staff: "See help for that command.",
-    },
-    Owner: {
-        eval: "Eval some code.",
-        exec: "Run some system commands.",
-    },
-};
+const Config = require('../../config.json');
 
-let desc = (object) => {
-    let description = [];
-    let entries = Object.entries(object);
-    for (const [command, desc] of entries) {
-        description.push(`**${config.DiscordBot.Prefix}${command}** - ${desc}`);
-    }
-    return description;
-};
 
+exports.description = "Shows the commands available for the bot.";
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     let embed = new Discord.MessageEmbed()
-        .setColor("BLUE")
-        .addField(
-            `__**Users:**__ (${Object.entries(commands.Users).length})`,
-            desc(commands.Users).join("\n"),
-        );
+        .setTitle("Commands:")
+        .setColor("BLUE");
 
-    if (message.member.roles.cache.get("898041751099539497") != null)
-        embed.addField(
-            `__**Staff Commands:**__ (${Object.entries(commands.Staff).length})`,
-            desc(commands.Staff).join("\n"),
-        );
+    let categories = [];
+    let commands = [];
+    const commandDir = path.join(__dirname);
+    const memberRoles = message.member.roles.cache.map(role => role.id);
 
-    if (message.member.roles.cache.find((r) => r.id === "898041743566594049"))
+    try {
+        // Reads all the items in the directory.
+        const items = fs.readdirSync(commandDir);
+
+        // Loops through each item in the directory.
+        items.forEach(item => {
+            const itemPath = path.join(commandDir, item);
+
+            // If the item is a directory, it's a sub command category.
+            if (fs.statSync(itemPath).isDirectory()) {
+                if (item === 'staff' && !memberRoles.includes(Config.DiscordBot.Roles.Staff)) {
+                    return; // Skip this category if the user doesn't have the staff role
+                }
+                categories.push(`**${config.DiscordBot.Prefix}${item}** - Use ${config.DiscordBot.Prefix}${item} for more information.`);
+            // If the item is a JavaScript file, it's a command.
+            } else if (item.endsWith('.js')) {
+                const command = require(itemPath);
+
+                // Check role requirement
+                if (!command.roleRequirement || memberRoles.includes(command.roleRequirement)) {
+                    commands.push({
+                        name: item.replace('.js', ''),
+                        description: command.description || "No description available."
+                    });
+                }
+            }
+        });
+    } catch (error) {
+        console.error(`Error reading directory ${commandDir}:`, error);
+    }
+
+    if (categories.length > 0) {
+        categories.push('``` ```');
+        embed.setDescription(categories.join("\n"));
+    } else {
+        embed.setDescription("No subcommands available.");
+    }
+
+    commands.forEach(command => {
         embed.addField(
-            `__**Developer Commands:**__ (${Object.entries(commands.Owner).length})`,
-            desc(commands.Owner).join("\n"),
+            `**${config.DiscordBot.Prefix}${command.name}**`,
+            command.description
         );
+    });
+
+    if (commands.length === 0) {
+        embed.addField("\u200B", "No commands available.");
+    }
 
     message.reply(embed);
 };

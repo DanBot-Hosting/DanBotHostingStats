@@ -1,12 +1,23 @@
+const Discord = require("discord.js");
 const humanizeDuration = require("humanize-duration");
 
+const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     let setDonations = (userid, amount) => {
         userPrem.set(userid + ".donated", amount);
     };
 
     if (!args[1]) {
-        message.reply("Usage is: `DBH!server redeem code`");
+        message.reply("Usage is: `" + Config.DiscordBot.Prefix + "server redeem code`");
     } else {
         let code = codes.get(args[1]);
 
@@ -19,11 +30,11 @@ exports.run = async (client, message, args) => {
         let now = Date.now();
         message.reply(
             `You have redeemed a code with ${code.balance} premium server(s), you now have ${Math.floor(
-                (oldBal + code.balance) / config.PremiumServerPrice,
+                (oldBal + code.balance) / Config.PremiumServerPrice,
             )}!`,
         );
         client.channels.cache
-            .get("898041841939783732")
+            .get(MiscConfigs.donations)
             .send(
                 "<@" +
                     message.author.id +
@@ -38,7 +49,8 @@ exports.run = async (client, message, args) => {
 
         codes.delete(args[1]);
 
-        message.member.roles.add("898041754564046869");
+        message.member.roles.add(Config.DiscordBot.Roles.Donator);
+
         setDonations(message.author.id, oldBal + code.balance);
 
         if (code.drop != null) {
@@ -46,7 +58,7 @@ exports.run = async (client, message, args) => {
                 .get(code.drop.message.channel)
                 .messages.fetch(code.drop.message.ID);
             let embed = msg.embeds[0].setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#738532075476615288>\n- Redeem the Premium Code: \`DBH!server redeem <Code>\`\n\n*Redeemed by ${message.member}*`,
+                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#` + MiscConfigs.normalCommands + `>\n- Redeem the Premium Code: \`` + Config.DiscordBot.Prefix + `server redeem <Code>\`\n\n*Redeemed by ${message.member}*`,
             );
             msg.edit(embed);
         }
