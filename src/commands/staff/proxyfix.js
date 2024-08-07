@@ -1,6 +1,6 @@
-async function getNewKeyFR() {
-    const serverResFR = await axios({
-        url: config.FRProxy.url + "/api/tokens",
+async function getNewKeyUS1() {
+    const serverRes = await axios({
+        url: config.USProxy1.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -8,16 +8,16 @@ async function getNewKeyFR() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.FRProxy.email,
-            secret: config.FRProxy.pass,
+            identity: config.USProxy1.email,
+            secret: config.USProxy1.pass,
         },
     });
-    return "Bearer " + serverResFR.data.token;
+    return "Bearer " + serverRes.data.token;
 }
 
-async function getNewKeyCA() {
-    const serverResCA = await axios({
-        url: config.CAProxy.url + "/api/tokens",
+async function getNewKeyUS2() {
+    const serverRes = await axios({
+        url: config.USProxy2.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -25,15 +25,49 @@ async function getNewKeyCA() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.CAProxy.email,
-            secret: config.CAProxy.pass,
+            identity: config.USProxy2.email,
+            secret: config.USProxy2.pass,
         },
     });
-    return "Bearer " + serverResCA.data.token;
+    return "Bearer " + serverRes.data.token;
 }
 
-async function getNewKeyDono() {
-    const serverResDono = await axios({
+async function getNewKeyUS3() {
+    const serverRes = await axios({
+        url: config.USProxy3.url + "/api/tokens",
+        method: "POST",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: {
+            identity: config.USProxy3.email,
+            secret: config.USProxy3.pass,
+        },
+    });
+    return "Bearer " + serverRes.data.token;
+}
+
+async function getNewKeyUS4() {
+    const serverRes = await axios({
+        url: config.USProxy4.url + "/api/tokens",
+        method: "POST",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: {
+            identity: config.USProxy4.email,
+            secret: config.USProxy4.pass,
+        },
+    });
+    return "Bearer " + serverRes.data.token;
+}
+
+async function DonatorProxy() {
+    const serverRes = await axios({
         url: config.DonatorProxy.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
@@ -46,24 +80,34 @@ async function getNewKeyDono() {
             secret: config.DonatorProxy.pass,
         },
     });
-    return "Bearer " + serverResDono.data.token;
+    return "Bearer " + serverRes.data.token;
 }
 
 const proxyServers = [
     {
-        name: "FR",
-        getToken: getNewKeyFR,
-        url: config.FRProxy.url,
+        name: "USProxy1",
+        getToken: getNewKeyUS1,
+        url: config.USProxy1.url,
     },
     {
-        name: "CA",
-        getToken: getNewKeyCA,
-        url: config.CAProxy.url,
+        name: "USProxy2",
+        getToken: getNewKeyUS2,
+        url: config.USProxy2.url,
+    },
+    {
+        name: "USProxy3",
+        getToken: getNewKeyUS3,
+        url: config.USProxy3.url,
+    },
+    {
+        name: "USProxy4",
+        getToken: getNewKeyUS4,
+        url: config.USProxy4.url,
     },
     {
         name: "Donator",
-        getToken: getNewKeyDono,
-        url: config.DonoProxy.url,
+        getToken: DonatorProxy,
+        url: config.DonatorProxy.url,
     },
 ];
 
