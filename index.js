@@ -89,18 +89,18 @@ global.getPassword = () => {
 client.login(config.DiscordBot.Token);
 
 process.on("unhandledRejection", (reason, p) => {
-    console.log("[AntiCrash] :: Unhandled Rejection/Catch");
-    console.log(reason, p);
+    console.error("[AntiCrash] :: Unhandled Rejection/Catch");
+    console.error(reason, p);
 });
 process.on("uncaughtException", (err, origin) => {
-    console.log("[AntiCrash] :: Uncaught Exception/Catch");
-    console.log(err, origin);
+    console.error("[AntiCrash] :: Uncaught Exception/Catch");
+    console.error(err, origin);
 });
 process.on("uncaughtExceptionMonitor", (err, origin) => {
-    console.log("[AntiCrash] :: Uncaught Exception/Catch (MONITOR)");
-    console.log(err, origin);
+    console.error("[AntiCrash] :: Uncaught Exception/Catch (MONITOR)");
+    console.error(err, origin);
 });
 process.on("multipleResolves", (type, promise, reason) => {
-    console.log("[AntiCrash] :: Multiple Resolves");
-    console.log(type, promise, reason);
+    console.error("[AntiCrash] :: Multiple Resolves");
+    console.error(type, promise, reason);
 });
