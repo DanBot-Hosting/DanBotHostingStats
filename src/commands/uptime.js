@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const humanizeDuration = require("humanize-duration");
 
 exports.description = "Shows the bot's uptime, memory usage and API latency.";
 
@@ -10,10 +11,10 @@ exports.description = "Shows the bot's uptime, memory usage and API latency.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    const humanizeDuration = require("humanize-duration");
 
-    let myDate = new Date(client.readyTimestamp);
-    const embed = new Discord.MessageEmbed()
+    const myDate = new Date(client.readyTimestamp);
+
+    const Embed = new Discord.MessageEmbed()
         .addField(
             ":white_check_mark: Uptime:",
             `**${humanizeDuration(client.uptime, { round: true })}**`,
@@ -27,5 +28,6 @@ exports.run = async (client, message, args) => {
         .addField("API latency:", client.ws.ping + "ms", true)
         .setFooter(`Ready Timestamp: ${myDate.toString()}`)
         .setColor("GREEN");
-    message.reply(embed);
+
+    message.channel.send(Embed);
 };
