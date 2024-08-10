@@ -1,6 +1,9 @@
-async function getNewKeyFR() {
-    const serverResFR = await axios({
-        url: config.FRProxy.url + "/api/tokens",
+const Discord = require('discord.js');
+const Config = require('../../../config.json');
+
+async function getNewKey(proxyConfig) {
+    const serverRes = await axios({
+        url: proxyConfig.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -8,67 +11,58 @@ async function getNewKeyFR() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.FRProxy.email,
-            secret: config.FRProxy.pass,
+            identity: proxyConfig.email,
+            secret: proxyConfig.pass,
         },
     });
-    return "Bearer " + serverResFR.data.token;
+    return "Bearer " + serverRes.data.token;
 }
 
-async function getNewKeyCA() {
-    const serverResCA = await axios({
-        url: config.CAProxy.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.CAProxy.email,
-            secret: config.CAProxy.pass,
-        },
-    });
-    return "Bearer " + serverResCA.data.token;
-}
-
-async function getNewKeyDono() {
-    const serverResDono = await axios({
-        url: config.DonatorProxy.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: config.DonatorProxy.email,
-            secret: config.DonatorProxy.pass,
-        },
-    });
-    return "Bearer " + serverResDono.data.token;
-}
+exports.getNewKeyUS1 = () => getNewKey(Config.USProxy1);
+exports.getNewKeyUS2 = () => getNewKey(Config.USProxy2);
+exports.getNewKeyUS3 = () => getNewKey(Config.USProxy3);
+exports.getNewKeyUS4 = () => getNewKey(Config.USProxy4);
+exports.DonatorProxy = () => getNewKey(Config.DonatorProxy);
 
 const proxyServers = [
     {
-        name: "FR",
-        getToken: getNewKeyFR,
-        url: config.FRProxy.url,
+        name: "US1",
+        getToken: getNewKeyUS1(),
+        url: Config.USProxy1.url,
     },
     {
-        name: "CA",
-        getToken: getNewKeyCA,
-        url: config.CAProxy.url,
+        name: "US2",
+        getToken: getNewKeyUS2(),
+        url: Config.USProxy2.url,
     },
     {
-        name: "Donator",
-        getToken: getNewKeyDono,
-        url: config.DonoProxy.url,
+        name: "US3",
+        getToken: getNewKeyUS3(),
+        url: Config.USProxy3.url,
+    },
+    {
+        name: "US4",
+        getToken: getNewKeyUS4(),
+        url: Config.USProxy4.url,
+    },
+    {
+        name: "DonatorProxy",
+        getToken: getNewKeyUS4(),
+        url: Config.DonatorProxy.url,
     },
 ];
 
+exports.description = "Removes a user domain manually.";
+
+/**
+ * 
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
+    if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot)) return;
 
     if (!args[1]) {
         return message.reply(
