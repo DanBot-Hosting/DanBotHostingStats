@@ -1,4 +1,8 @@
-let subcommands = {
+const Discord = require('discord.js');
+
+const Config = require('../../../config.json');
+
+const subcommands = {
     mods: {
         premiumfix: [
             "Fixes a user's premium count if it's incorrect.",
@@ -39,14 +43,25 @@ let desc = (object) => {
     return description;
 };
 
-exports.run = async (client, message, args) => {
-    if (!message.member.roles.cache.find((r) => r.id === "898041751099539497")) return;
+exports.description = "Shows staff commands."
 
-    let embed = new Discord.MessageEmbed()
+/**
+ * 
+ * @param {Discord.Client} client
+ * @param {Discord.Message} message
+ * @param {Array} args
+ * @returns void
+ */
+exports.run = async (client, message, args) => {
+
+    if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Staff)) return;
+
+    const embed = new Discord.MessageEmbed()
         .setColor("BLUE")
         .addField("**Moderator Commands:**", desc(subcommands.mods).join("\n"))
         .addField("**Administrator Commands:**", desc(subcommands.admin).join("\n"))
         .addField("**Bot Developer Commands:**", desc(subcommands.botdev).join("\n"))
         .addField("**Misc Commands:**", desc(subcommands.misc).join("\n"));
+        
     await message.reply(embed);
 };
