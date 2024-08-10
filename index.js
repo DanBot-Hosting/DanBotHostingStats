@@ -29,7 +29,6 @@ require("./nodestatsChecker");
 let db = require("quick.db");
 global.Discord = require("discord.js");
 
-global.fs = require("fs");
 global.moment = require("moment");
 global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
 global.domains = new db.table("linkedDomains"); //Linked domains for unproxy and proxy cmd
