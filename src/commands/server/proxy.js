@@ -1,5 +1,8 @@
+const Discord = require('discord.js');
 const axios = require("axios");
 const dns = require("dns");
+
+const Config = require('../../../config.json');
 
 async function getNewKey(proxyConfig) {
     const serverRes = await axios({
@@ -24,15 +27,25 @@ exports.getNewKeyUS3 = () => getNewKey(config.USProxy3);
 exports.getNewKeyUS4 = () => getNewKey(config.USProxy4);
 exports.DonatorProxy = () => getNewKey(config.DonatorProxy);
 
+exports.description = "Proxy a domain to a server. View this command for usage.";
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
+
     const embed = new Discord.MessageEmbed()
         .setTitle("**DanBot Hosting Proxy System**")
         .setDescription(
             `The DanBot Hosting proxy systems allows users to proxy their domains to their servers with simple commands.
 
-            The command format: \`${config.DiscordBot.Prefix}server proxy <domain> <serverId>\`
+            The command format: \`${Config.DiscordBot.Prefix}server proxy <domain> <serverId>\`
 
-            You can find your server ID by running the following command: \`${config.DiscordBot.Prefix}server list\`
+            You can find your server ID by running the following command: \`${Config.DiscordBot.Prefix}server list\`
 
             You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:
 
@@ -56,7 +69,7 @@ exports.run = async (client, message, args) => {
     if (args[1].toLowerCase().includes("only-fans.club")) {
         if (
             !message.member.roles.cache.some((r) =>
-                ["898041754564046869", "710208090741539006"].includes(r.id),
+                [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
             )
         ) {
             return message.reply(
@@ -68,7 +81,7 @@ exports.run = async (client, message, args) => {
     if (args[1].toLowerCase().includes("is-a-awesome.dev")) {
         if (
             !message.member.roles.cache.some((r) =>
-                ["898041754564046869", "710208090741539006"].includes(r.id),
+                [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
             )
         ) {
             return message.reply(
@@ -80,7 +93,7 @@ exports.run = async (client, message, args) => {
     if (args[1].toLowerCase().includes("is-a-cool.dev")) {
         if (
             !message.member.roles.cache.some((r) =>
-                ["898041754564046869", "710208090741539006"].includes(r.id),
+                [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
             )
         ) {
             return message.reply(
@@ -128,7 +141,7 @@ exports.run = async (client, message, args) => {
 
     if (
         !message.member.roles.cache.some((r) =>
-            ["898041754564046869", "710208090741539006"].includes(r.id),
+            [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
         ) &&
         "69.30.249.53" == dnsCheck.address
     ) {
@@ -321,5 +334,3 @@ exports.run = async (client, message, args) => {
             }
         });
 };
-
-exports.description = "Proxy a domain to a server. View this command for usage.";
