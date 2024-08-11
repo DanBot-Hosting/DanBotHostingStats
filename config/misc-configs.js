@@ -63,6 +63,7 @@ const misc = {
     normalCommands: "898041850890440725",   //General - Commands
     donatorCommands: "898041866589700128",  //General - Donator Commands
     betaCommands: "898041878447013948",     //General - Beta Commands
+    accountLinked: "1168034234179539044",   //Staff - Account Linked
 
     // Account purge category.
     accounts: "898041816367128616",         //General - Account Creation Channels

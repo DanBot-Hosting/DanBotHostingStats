@@ -1,5 +1,20 @@
+const Discord = require('discord.js');
 const axios = require("axios");
+
+const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
+
+exports.description = "Link your console account to your Discord account.";
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ */
 exports.run = async (client, message, args) => {
+
+    // The user does not have a panel account linked and would like to link one.
     if (userData.get(message.author.id) == null) {
         const server = message.guild;
 
@@ -20,8 +35,9 @@ exports.run = async (client, message, args) => {
         message.reply(`Please check <#${channel.id}> to link your account.`);
 
         let category = server.channels.cache.find(
-            (c) => c.id === "898041816367128616" && c.type === "category",
+            (c) => c.id === MiscConfigs.accounts && c.type === "category",
         );
+
         if (!category) throw new Error("Category channel does not exist");
 
         await channel.setParent(category.id);
@@ -149,14 +165,14 @@ exports.run = async (client, message, args) => {
 
                                     channel.send("Account linked!").then(
                                         client.channels.cache
-                                            .get("1168034234179539044")
+                                            .get(MiscConfigs.accountLinked)
                                             .send(
                                                 `<@${message.author.id}> linked their account. Heres some info: `,
                                                 embedstaff,
                                             ),
                                         setTimeout(() => {
                                             channel.delete();
-                                        }, 5000),
+                                        }, 5 * 1000),
                                     );
                                 } else {
                                     channel.send(
@@ -170,7 +186,7 @@ exports.run = async (client, message, args) => {
                         }
                     });
                 }
-            }, 10000);
+            }, 10 * 1000);
         });
     } else {
         let embed = new Discord.MessageEmbed()
@@ -184,5 +200,3 @@ exports.run = async (client, message, args) => {
         await message.reply("This account is linked!", embed);
     }
 };
-
-exports.description = "Link your console account to your Discord account.";
