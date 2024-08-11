@@ -182,12 +182,12 @@ exports.run = async (client, message, args) => {
     };
 
     axios({
-        url: config.Pterodactyl.hosturl + "/api/application/users",
+        url: Config.Pterodactyl.hosturl + "/api/application/users",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            Authorization: "Bearer " + config.Pterodactyl.apikey,
+            Authorization: "Bearer " + Config.Pterodactyl.apikey,
             "Content-Type": "application/json",
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
@@ -209,7 +209,7 @@ exports.run = async (client, message, args) => {
                     .setColor("GREEN")
                     .setDescription(
                         "URL: " +
-                            config.Pterodactyl.hosturl +
+                            Config.Pterodactyl.hosturl +
                             " \nUsername: " +
                             data.username +
                             " \nEmail: " +
