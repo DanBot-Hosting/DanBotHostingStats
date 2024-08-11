@@ -7,6 +7,8 @@
 Free Hosting forever!                                            /____/
 */
 
+
+// Added hardcoded ID 137624084572798976
 global.config = require("./config.json");
 
 global.fs = require("fs");
