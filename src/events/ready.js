@@ -1,12 +1,11 @@
 const Discord = require("discord.js");
 const { exec } = require("child_process");
 
-const nstatus = require("../serverStatus");
+const ServerStatus = require("../serverStatus.js");
 const Config = require('../../config.json');
 const MiscConfigs = require('../../config/misc-configs.js');
 
 /**
- * 
  * @param {Discord.Client} client 
  */
 module.exports = async (client) => {
@@ -84,20 +83,21 @@ module.exports = async (client) => {
         });
     }, 15000);
 
+    await ServerStatus.startNodeChecker(); //Start the Node Checker.
+
     // Node Status Embed.
     const channel = client.channels.cache.get(MiscConfigs.nodestatus);
 
     setInterval(async () => {
-        let embed = await nstatus.getEmbed();
+        const embed = await ServerStatus.getEmbed();
 
         let messages = await channel.messages.fetch({
             limit: 10,
         });
 
         messages = messages.filter((x) => x.author.id === client.user.id).last();
+
         if (messages == null) channel.send(embed);
         else messages.edit(embed);
-    }, 15000);
-
-
+    }, 15 * 1000);
 };

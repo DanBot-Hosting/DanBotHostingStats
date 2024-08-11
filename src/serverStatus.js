@@ -1,109 +1,164 @@
+const axios = require('axios');
+const ping = require('ping-tcp-js');
+const db = require('quick.db');
 const Discord = require('discord.js');
 
-let nstatus = {
-    "Performance Nodes": [
-        {
-            name: "PNode 1",
-            data: "pnode1",
-            maxCount: 8000,
-        },
-        {
-            name: "PNode 2",
-            data: "pnode2",
-            maxCount: 8000,
-        },
-        {
-            name: "PNode 3",
-            data: "pnode3",
-            maxCount: 7000,
-        },
-    ],
+const Config = require('../config.json');
+const Status = require('../config/status-configs.js');
 
-    "Donator Nodes": [
-        {
-            name: "Dono-01",
-            data: "dono01",
-            location: "UK",
-            maxCount: 1700,
-        },
-        {
-            name: "Dono-02",
-            data: "dono02",
-            maxCount: 600,
-        },
-        {
-            name: "Dono-03",
-            data: "dono03",
-            maxCount: 3000,
-        },
-        {
-            name: "Dono-04",
-            data: "dono04",
-            maxCount: 500,
-        }
-    ],
-    "Storage Nodes": [
-        {
-            name: "Storage-1",
-            data: "storage1",
-            location: "UK",
-            maxCount: 900,
-        },
-    ],
-    "Dedicated Servers (VPS/VM Hosts)": [
-        {
-            name: "US 1",
-            data: "vm-us-1",
-        },
-        {
-            name: "EU 1",
-            data: "vm-eu-1",
-        },
-    ],
-    "DBH Services": [
-        {
-            name: "Pterodactyl (Public)",
-            data: "pterodactylpublic",
-        }
-    ]
-};
+const nodeStatus = new db.table("nodeStatus"); //Status of the Node.
+const nodeServers = new db.table("nodeServers"); //Counts of servers on each Node.
 
-let parse = async () => {
-    let toRetun = {};
+function startNodeChecker() {
 
-    for (let [title, data] of Object.entries(nstatus)) {
+    if (Config.Enabled.nodestatsChecker == false) return console.log("[NODE CHECKER] Disabled");
+
+        console.log("[NODE CHECKER] Enabled");
+
+        setInterval(() => {
+            // For Node Status.
+            for (const [category, nodes] of Object.entries(Status.Nodes)) {
+                for (const [node, data] of Object.entries(nodes)) {
+                    setTimeout(() => {
+
+                            // Perform Pterodactyl Panel requests.
+                            axios({
+                                url: `${Config.Pterodactyl.hosturl}/api/client/servers/${data.serverID}/resources`,
+                                method: "GET",
+                                headers: {
+                                    Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
+                                    "Content-Type": "application/json",
+                                    Accept: "Application/vnd.pterodactyl.v1+json",
+                                },
+                            })
+                                .then((response) => {
+                                    // Node & Wings are online.
+                                    
+                                    nodeStatus.set(`${node}.timestamp`, Date.now());
+                                    nodeStatus.set(`${node}.status`, true);
+                                    nodeStatus.set(`${node}.is_vm_online`, true);
+                                })
+                                .catch((error) => {                                    
+                                    ping.ping(data.IP, 22)
+                                        .then(() => {
+                                            // Wings is offline, but Node is online.
+
+                                            nodeStatus.set(`${node}.timestamp`, Date.now());
+                                            nodeStatus.set(`${node}.status`, false);
+                                            nodeStatus.set(`${node}.is_vm_online`, true);
+                                        })
+                                        .catch((e) => {
+                                            // Node & Wings are offline.
+                                            
+                                            nodeStatus.set(`${node}.timestamp`, Date.now());
+                                            nodeStatus.set(`${node}.status`, false);
+                                            nodeStatus.set(`${node}.is_vm_online`, false);
+                                        });
+                                });
+
+                            //Sets the Node Allocation usage and amount of slots total.
+                            setTimeout(() => {
+                                axios({
+                                    url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}/allocations?per_page=9000`,
+                                    method: "GET",
+                                    headers: {
+                                        Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                                        "Content-Type": "application/json",
+                                        Accept: "Application/vnd.pterodactyl.v1+json",
+                                    },
+                                })
+                                    .then((response) => {
+                                        const serverCount = response.data.data.filter(m => m.attributes.assigned).length;
+
+                                        nodeServers.set(`${node}.servers`, serverCount);
+                                        nodeServers.set(`${node}.maxCount`, response.data.meta.pagination.total);
+                                    })
+                                    .catch((err) => {
+                                        console.error('[NODE CHECKER] Error fetching node servers.', err);
+                                    });
+                            }, 2000);
+                    }, 2000);
+                }
+            }
+
+            // Other Services.
+            for (const [category, services] of Object.entries(Status)) {
+                if (category !== "Nodes") {
+                    for (const [name, data] of Object.entries(services)) {
+
+                        setTimeout(() => {
+                            ping.ping(data.IP, 22)
+                                .then(() => {
+                                    nodeStatus.set(`${name}.timestamp`, Date.now());
+                                    nodeStatus.set(`${name}.status`, true);
+                                })
+                                .catch(() => {
+                                    nodeStatus.set(`${name}.timestamp`, Date.now());
+                                    nodeStatus.set(`${name}.status`, false);
+                                });
+                        }, 2000);
+                    }
+                }
+            }
+        }, 10000);
+}
+
+const parseStatus = () => {
+    let toReturn = {};
+
+    // Handle Nodes categories.
+    for (let [category, nodes] of Object.entries(Status.Nodes)) {
         let temp = [];
-        for (let d of data) {
-            let da = nodeStatus.get(d.data.toLowerCase());
-            let nodeData = nodeServers.get(d.data.toLowerCase());
-            let ping = nodePing.fetch(d.data.toLowerCase());
-            let serverUsage = d.data.toLowerCase().startsWith("node")
-                ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
-                : "" || d.data.toLowerCase().includes("dono")
-                  ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
-                  : "" || d.data.toLowerCase().startsWith("pnode")
-                    ? `(${!nodeData?.servers ? "N/A" : nodeData.servers} / ${d.maxCount})`
-                    : "";
+        for (let [nodeKey, data] of Object.entries(nodes)) {
 
-            da = da.maintenance
-                ? `🟣 Maintenance ~ Returning Soon!`
-                : da.status
-                  ? `🟢 Online ${serverUsage}`
-                  : da.is_vm_online == null
-                    ? "🔴 **Offline**"
-                    : (da.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") +
-                      ` **offline** ${serverUsage}`;
+            let nodeStatusData = nodeStatus.get(nodeKey.toLowerCase());
+            let nodeServerData = nodeServers.get(nodeKey.toLowerCase());
 
-            temp.push(`${d.name}: ${da}`);
+            let serverUsage = nodeServerData
+                ? `(${nodeServerData.servers} / ${nodeServerData.maxCount})`
+                : "";
+
+            let statusText;
+            if (nodeStatusData?.maintenance) {
+                statusText = `🟣 Maintenance ~ Returning Soon!`;
+            } else if (nodeStatusData?.status) {
+                statusText = `🟢 Online ${serverUsage}`;
+            } else {
+                if (nodeStatusData?.is_vm_online == null) {
+                    statusText = "🔴 **Offline**";
+                } else {
+                    statusText = (nodeStatusData.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") + 
+                        ` **offline** ${serverUsage}`;
+                }
+            }
+
+            temp.push(`${data.Name}: ${statusText}`);
         }
-
-        toRetun[title] = temp;
+        toReturn[category] = temp;
     }
-    return toRetun;
+
+    // Handle other categories.
+    for (let [category, services] of Object.entries(Status)) {
+        if (category !== "Nodes") {
+            let temp = [];
+            for (let [name, data] of Object.entries(services)) {
+
+                let serviceStatusData = nodeStatus.get(name.toLowerCase());
+
+                let statusText = serviceStatusData?.status ? "🟢 Online" : "🔴 **Offline**";
+
+                temp.push(`${data.name}: ${statusText}`);
+            }
+            toReturn[category] = temp;
+        }
+    }
+
+    return toReturn;
 };
 
-let getEmbed = async () => {
-    let status = await parse();
+
+const getEmbed = async () => {
+    let status = parseStatus();
     let desc = "";
 
     for (let [title, d] of Object.entries(status)) {
@@ -121,7 +176,4 @@ let getEmbed = async () => {
     return Embed;
 };
 
-module.exports = {
-    parse: parse,
-    getEmbed: getEmbed,
-};
+module.exports = { startNodeChecker, parseStatus, getEmbed };

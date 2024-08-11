@@ -22,9 +22,6 @@ global.transport = nodemailer.createTransport({
     },
 });
 
-// Initialising Node Checker
-require("./nodestatsChecker");
-
 //Discord Bot
 let db = require("quick.db");
 global.Discord = require("discord.js");
