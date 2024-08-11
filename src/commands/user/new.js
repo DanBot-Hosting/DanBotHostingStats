@@ -19,7 +19,7 @@ exports.description = "Create a new panel account.";
 exports.run = async (client, message, args) => {
 
     if (userData.get(message.author.id) != null) {
-        message.reply("You already have a `panel account` linked to your discord account");
+        message.reply("You already have a `panel account` linked to your discord account.");
         return;
     }
 
@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
         {
             id: "tos",
             question:
-                "https://docs.google.com/document/d/1BxGFRlH3TEMqfUWBPszsWYudbKmcbM5pkp7bTq4IbHg\nPlease read our TOS, do you accept? (**yes or no**)", // The questions...
+                "https://danbot.host/tos\nPlease read our TOS, do you accept? (**yes or no**)", // The questions...
             filter: (m) => m.author.id === message.author.id, // Filter to use...
             afterChecks: [
                 {
