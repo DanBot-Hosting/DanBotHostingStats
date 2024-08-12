@@ -1,7 +1,11 @@
+const Discord = requiore('discord.js');
+
+const Config = require('../../../config.json');
+
 //Generates new token for France Proxy server.
 async function getUS1NewKey() {
     const serverRes = await axios({
-        url: config.USProxy1.url + "/api/tokens",
+        url: Config.USProxy1.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -9,15 +13,15 @@ async function getUS1NewKey() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.USProxy1.email,
-            secret: config.USProxy1.pass,
+            identity: Config.USProxy1.email,
+            secret: Config.USProxy1.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
 async function getUS2NewKey() {
     const serverRes = await axios({
-        url: config.USProxy2.url + "/api/tokens",
+        url: Config.USProxy2.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -25,15 +29,15 @@ async function getUS2NewKey() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.USProxy2.email,
-            secret: config.USProxy2.pass,
+            identity: Config.USProxy2.email,
+            secret: Config.USProxy2.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
 async function getUS3NewKey() {
     const serverRes = await axios({
-        url: config.USProxy3.url + "/api/tokens",
+        url: Config.USProxy3.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -41,15 +45,15 @@ async function getUS3NewKey() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.USProxy3.email,
-            secret: config.USProxy3.pass,
+            identity: Config.USProxy3.email,
+            secret: Config.USProxy3.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
 async function getUS4NewKey() {
     const serverRes = await axios({
-        url: config.USProxy4.url + "/api/tokens",
+        url: Config.USProxy4.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -57,15 +61,15 @@ async function getUS4NewKey() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.USProxy4.email,
-            secret: config.USProxy4.pass,
+            identity: Config.USProxy4.email,
+            secret: Config.USProxy4.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
 async function getUS5NewKey() {
     const serverRes = await axios({
-        url: config.DonatorProxy.url + "/api/tokens",
+        url: Config.DonatorProxy.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -73,8 +77,8 @@ async function getUS5NewKey() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: config.DonatorProxy.email,
-            secret: config.DonatorProxy.pass,
+            identity: Config.DonatorProxy.email,
+            secret: Config.DonatorProxy.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
@@ -87,9 +91,9 @@ exports.run = async (client, message, args) => {
         UnproxyEmbed.setTitle("**How to remove a domain from a server:**");
         UnproxyEmbed.setDescription(
             "Command format: `" +
-                config.DiscordBot.Prefix +
+                Config.DiscordBot.Prefix +
                 "server unproxy <domain>`\nReplace <domain> with your domain. You can find a list with all your proxied domains by running `" +
-                config.DiscordBot.Prefix +
+                Config.DiscordBot.Prefix +
                 "domains`",
         );
         UnproxyEmbed.setTimestamp();
@@ -115,16 +119,16 @@ exports.run = async (client, message, args) => {
             //Checks which location the domain is located in.
             if (domainData.location == "US1") {
                 //Generates new token for France Proxy location.
-                config.USProxy1.authKey = await getUS1NewKey();
+                Config.USProxy1.authKey = await getUS1NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
-                    url: config.USProxy1.url + "/api/nginx/proxy-hosts",
+                    url: Config.USProxy1.url + "/api/nginx/proxy-hosts",
                     method: "GET",
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        Authorization: config.USProxy1.authKey,
+                        Authorization: Config.USProxy1.authKey,
                         "Content-Type": "application/json",
                     },
                 })
@@ -132,7 +136,7 @@ exports.run = async (client, message, args) => {
                         //Tries to find and delete a certificate.
                         axios({
                             url:
-                                config.USProxy1.url +
+                                Config.USProxy1.url +
                                 "/api/nginx/certificates/" +
                                 Response.data.find(
                                     (element) => element.domain_names[0] == args[1].toLowerCase(),
@@ -141,14 +145,14 @@ exports.run = async (client, message, args) => {
                             followRedirect: true,
                             maxRedirects: 5,
                             headers: {
-                                Authorization: config.USProxy1.authKey,
+                                Authorization: Config.USProxy1.authKey,
                                 "Content-Type": "application/json",
                             },
                         }).then((Response2) => {
                             //Tries to find and delete the actual proxy.
                             axios({
                                 url:
-                                    config.USProxy1.url +
+                                    Config.USProxy1.url +
                                     "/api/nginx/proxy-hosts/" +
                                     Response2.data.find(
                                         (element) =>
@@ -158,7 +162,7 @@ exports.run = async (client, message, args) => {
                                 followRedirect: true,
                                 maxRedirects: 5,
                                 headers: {
-                                    Authorization: config.USProxy1.authKey,
+                                    Authorization: Config.USProxy1.authKey,
                                     "Content-Type": "application/json",
                                 },
 
@@ -185,16 +189,16 @@ exports.run = async (client, message, args) => {
                     });
             } else if (domainData.location == "US2") {
                 //Generates new token for France Proxy location.
-                config.USProxy2.authKey = await getUS2NewKey();
+                Config.USProxy2.authKey = await getUS2NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
-                    url: config.USProxy2.url + "/api/nginx/proxy-hosts",
+                    url: Config.USProxy2.url + "/api/nginx/proxy-hosts",
                     method: "GET",
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        Authorization: config.USProxy2.authKey,
+                        Authorization: Config.USProxy2.authKey,
                         "Content-Type": "application/json",
                     },
                 })
@@ -202,7 +206,7 @@ exports.run = async (client, message, args) => {
                         //Tries to find and delete a certificate.
                         axios({
                             url:
-                                config.USProxy2.url +
+                                Config.USProxy2.url +
                                 "/api/nginx/certificates/" +
                                 Response.data.find(
                                     (element) => element.domain_names[0] == args[1].toLowerCase(),
@@ -211,14 +215,14 @@ exports.run = async (client, message, args) => {
                             followRedirect: true,
                             maxRedirects: 5,
                             headers: {
-                                Authorization: config.USProxy2.authKey,
+                                Authorization: Config.USProxy2.authKey,
                                 "Content-Type": "application/json",
                             },
                         }).then((Response2) => {
                             //Tries to find and delete the actual proxy.
                             axios({
                                 url:
-                                    config.USProxy2.url +
+                                    Config.USProxy2.url +
                                     "/api/nginx/proxy-hosts/" +
                                     Response2.data.find(
                                         (element) =>
@@ -228,7 +232,7 @@ exports.run = async (client, message, args) => {
                                 followRedirect: true,
                                 maxRedirects: 5,
                                 headers: {
-                                    Authorization: config.USProxy2.authKey,
+                                    Authorization: Config.USProxy2.authKey,
                                     "Content-Type": "application/json",
                                 },
 
@@ -255,16 +259,16 @@ exports.run = async (client, message, args) => {
                     });
             } else if (domainData.location == "US3") {
                 //Generates new token for France Proxy location.
-                config.USProxy3.authKey = await getUS3NewKey();
+                Config.USProxy3.authKey = await getUS3NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
-                    url: config.USProxy3.url + "/api/nginx/proxy-hosts",
+                    url: Config.USProxy3.url + "/api/nginx/proxy-hosts",
                     method: "GET",
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        Authorization: config.USProxy3.authKey,
+                        Authorization: Config.USProxy3.authKey,
                         "Content-Type": "application/json",
                     },
                 })
@@ -272,7 +276,7 @@ exports.run = async (client, message, args) => {
                         //Tries to find and delete a certificate.
                         axios({
                             url:
-                                config.USProxy3.url +
+                                Config.USProxy3.url +
                                 "/api/nginx/certificates/" +
                                 Response.data.find(
                                     (element) => element.domain_names[0] == args[1].toLowerCase(),
@@ -281,14 +285,14 @@ exports.run = async (client, message, args) => {
                             followRedirect: true,
                             maxRedirects: 5,
                             headers: {
-                                Authorization: config.USProxy3.authKey,
+                                Authorization: Config.USProxy3.authKey,
                                 "Content-Type": "application/json",
                             },
                         }).then((Response2) => {
                             //Tries to find and delete the actual proxy.
                             axios({
                                 url:
-                                    config.USProxy3.url +
+                                    Config.USProxy3.url +
                                     "/api/nginx/proxy-hosts/" +
                                     Response2.data.find(
                                         (element) =>
@@ -298,7 +302,7 @@ exports.run = async (client, message, args) => {
                                 followRedirect: true,
                                 maxRedirects: 5,
                                 headers: {
-                                    Authorization: config.USProxy3.authKey,
+                                    Authorization: Config.USProxy3.authKey,
                                     "Content-Type": "application/json",
                                 },
 
@@ -325,16 +329,16 @@ exports.run = async (client, message, args) => {
                     });
             } else if (domainData.location == "US4") {
                 //Generates new token for France Proxy location.
-                config.USProxy4.authKey = await getUS4NewKey();
+                Config.USProxy4.authKey = await getUS4NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
-                    url: config.USProxy4.url + "/api/nginx/proxy-hosts",
+                    url: Config.USProxy4.url + "/api/nginx/proxy-hosts",
                     method: "GET",
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        Authorization: config.USProxy4.authKey,
+                        Authorization: Config.USProxy4.authKey,
                         "Content-Type": "application/json",
                     },
                 })
@@ -342,7 +346,7 @@ exports.run = async (client, message, args) => {
                         //Tries to find and delete a certificate.
                         axios({
                             url:
-                                config.USProxy4.url +
+                                Config.USProxy4.url +
                                 "/api/nginx/certificates/" +
                                 Response.data.find(
                                     (element) => element.domain_names[0] == args[1].toLowerCase(),
@@ -351,14 +355,14 @@ exports.run = async (client, message, args) => {
                             followRedirect: true,
                             maxRedirects: 5,
                             headers: {
-                                Authorization: config.USProxy4.authKey,
+                                Authorization: Config.USProxy4.authKey,
                                 "Content-Type": "application/json",
                             },
                         }).then((Response2) => {
                             //Tries to find and delete the actual proxy.
                             axios({
                                 url:
-                                    config.USProxy4.url +
+                                    Config.USProxy4.url +
                                     "/api/nginx/proxy-hosts/" +
                                     Response2.data.find(
                                         (element) =>
@@ -368,7 +372,7 @@ exports.run = async (client, message, args) => {
                                 followRedirect: true,
                                 maxRedirects: 5,
                                 headers: {
-                                    Authorization: config.USProxy4.authKey,
+                                    Authorization: Config.USProxy4.authKey,
                                     "Content-Type": "application/json",
                                 },
 
@@ -396,16 +400,16 @@ exports.run = async (client, message, args) => {
             }
             if (domainData.location == "DonatorProxy") {
                 //Generates new token for France Proxy location.
-                config.DonatorProxy.authKey = await getUS5NewKey();
+                Config.DonatorProxy.authKey = await getUS5NewKey();
 
                 //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
                 await axios({
-                    url: config.DonatorProxy.url + "/api/nginx/proxy-hosts",
+                    url: Config.DonatorProxy.url + "/api/nginx/proxy-hosts",
                     method: "GET",
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
-                        Authorization: config.DonatorProxy.authKey,
+                        Authorization: Config.DonatorProxy.authKey,
                         "Content-Type": "application/json",
                     },
                 })
@@ -413,7 +417,7 @@ exports.run = async (client, message, args) => {
                         //Tries to find and delete a certificate.
                         axios({
                             url:
-                                config.DonatorProxy.url +
+                                Config.DonatorProxy.url +
                                 "/api/nginx/certificates/" +
                                 Response.data.find(
                                     (element) => element.domain_names[0] == args[1].toLowerCase(),
@@ -422,14 +426,14 @@ exports.run = async (client, message, args) => {
                             followRedirect: true,
                             maxRedirects: 5,
                             headers: {
-                                Authorization: config.DonatorProxy.authKey,
+                                Authorization: Config.DonatorProxy.authKey,
                                 "Content-Type": "application/json",
                             },
                         }).then((Response2) => {
                             //Tries to find and delete the actual proxy.
                             axios({
                                 url:
-                                    config.DonatorProxy.url +
+                                    Config.DonatorProxy.url +
                                     "/api/nginx/proxy-hosts/" +
                                     Response2.data.find(
                                         (element) =>
@@ -439,7 +443,7 @@ exports.run = async (client, message, args) => {
                                 followRedirect: true,
                                 maxRedirects: 5,
                                 headers: {
-                                    Authorization: config.DonatorProxy.authKey,
+                                    Authorization: Config.DonatorProxy.authKey,
                                     "Content-Type": "application/json",
                                 },
 

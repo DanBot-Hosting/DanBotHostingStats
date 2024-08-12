@@ -9,7 +9,7 @@ Free Hosting forever!                                            /____/
 
 global.config = require("./config.json");
 
-global.fs = require("fs");
+const fs = require("fs");
 global.chalk = require("chalk");
 const nodemailer = require("nodemailer");
 global.axios = require("axios");

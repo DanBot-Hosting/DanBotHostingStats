@@ -151,21 +151,21 @@ exports.run = async (client, message, args) => {
     }
 
     const proxies = [
-        config.USProxy1,
-        config.USProxy2,
-        config.USProxy3,
-        config.USProxy4,
-        config.DonatorProxy,
+        Config.USProxy1,
+        Config.USProxy2,
+        Config.USProxy3,
+        Config.USProxy4,
+        Config.DonatorProxy,
     ];
     for (let proxy of proxies) {
         proxy.authKey = await getNewKey(proxy);
     }
 
-    const url = `${config.Pterodactyl.hosturl}/api/application/users/${userData.get(message.author.id).consoleID}?include=servers`;
+    const url = `${Config.Pterodactyl.hosturl}/api/application/users/${userData.get(message.author.id).consoleID}?include=servers`;
     axios
         .get(url, {
             headers: {
-                Authorization: "Bearer " + config.Pterodactyl.apikey,
+                Authorization: "Bearer " + Config.Pterodactyl.apikey,
                 "Content-Type": "application/json",
                 Accept: "Application/vnd.pterodactyl.v1+json",
             },
@@ -189,12 +189,12 @@ exports.run = async (client, message, args) => {
             }
 
             const axiosConfig = {
-                url: `${config.Pterodactyl.hosturl}/api/client/servers/${args[2]}`,
+                url: `${Config.Pterodactyl.hosturl}/api/client/servers/${args[2]}`,
                 method: "GET",
                 followRedirect: true,
                 maxRedirects: 5,
                 headers: {
-                    Authorization: `Bearer ${config.Pterodactyl.apikeyclient}`,
+                    Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
                     "Content-Type": "application/json",
                     Accept: "Application/vnd.pterodactyl.v1+json",
                 },
@@ -207,19 +207,19 @@ exports.run = async (client, message, args) => {
 
                 if (dnsCheck.address == "69.197.135.202") {
                     replyMsg.edit("Domain found pointing towards US Proxy 1...");
-                    proxyDomain(config.USProxy1, response, replyMsg, args, "US1");
+                    proxyDomain(Config.USProxy1, response, replyMsg, args, "US1");
                 } else if (dnsCheck.address == "69.197.135.203") {
                     replyMsg.edit("Domain found pointing towards US Proxy 2...");
-                    proxyDomain(config.USProxy2, response, replyMsg, args, "US2");
+                    proxyDomain(Config.USProxy2, response, replyMsg, args, "US2");
                 } else if (dnsCheck.address == "69.197.135.204") {
                     replyMsg.edit("Domain found pointing towards US Proxy 3...");
-                    proxyDomain(config.USProxy3, response, replyMsg, args, "US3");
+                    proxyDomain(Config.USProxy3, response, replyMsg, args, "US3");
                 } else if (dnsCheck.address == "69.197.135.205") {
                     replyMsg.edit("Domain found pointing towards US Proxy 4...");
-                    proxyDomain(config.USProxy4, response, replyMsg, args, "US4");
+                    proxyDomain(Config.USProxy4, response, replyMsg, args, "US4");
                 } else if (dnsCheck.address == "69.30.249.53") {
                     replyMsg.edit("Domain found pointing towards US Donator Proxy 1...");
-                    proxyDomain(config.DonatorProxy, response, replyMsg, args, "DonatorProxy");
+                    proxyDomain(Config.DonatorProxy, response, replyMsg, args, "DonatorProxy");
                 }
             });
 
