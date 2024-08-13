@@ -89,7 +89,6 @@ exports.run = async (client, message, args) => {
                     "codeserver\ngitea\nhaste\n uptimekuma\n grafana \nrabbitmq",
                     true,
                 )
-                .addField("Storage", "storage", true)
                 .setFooter("Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server"),
         );
         return;
