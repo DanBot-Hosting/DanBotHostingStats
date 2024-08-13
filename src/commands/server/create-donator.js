@@ -141,7 +141,6 @@ exports.run = async (client, message, args) => {
         curseforge: pServerCreatesettings.curseforge,
         scpsl: pServerCreatesettings.scpsl,
         bun: pServerCreatesettings.bun,
-        storage: pServerCreatesettings.storage,
         influxdb: pServerCreatesettings.influxdb,
     };
 
