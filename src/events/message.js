@@ -9,7 +9,7 @@ const MiscConfigs = require('../../config/misc-configs.js');
 /**
  * 
  * @param {Discord.Client} client 
- * @param {Discord.Mesage} message 
+ * @param {Discord.Message} message 
  * @returns void
  */
 module.exports = async (client, message) => {
