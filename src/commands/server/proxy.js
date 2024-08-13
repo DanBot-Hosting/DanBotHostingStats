@@ -21,11 +21,11 @@ async function getNewKey(proxyConfig) {
     return "Bearer " + serverRes.data.token;
 }
 
-exports.getNewKeyUS1 = () => getNewKey(config.USProxy1);
-exports.getNewKeyUS2 = () => getNewKey(config.USProxy2);
-exports.getNewKeyUS3 = () => getNewKey(config.USProxy3);
-exports.getNewKeyUS4 = () => getNewKey(config.USProxy4);
-exports.DonatorProxy = () => getNewKey(config.DonatorProxy);
+exports.getNewKeyUS1 = () => getNewKey(Config.USProxy1);
+exports.getNewKeyUS2 = () => getNewKey(Config.USProxy2);
+exports.getNewKeyUS3 = () => getNewKey(Config.USProxy3);
+exports.getNewKeyUS4 = () => getNewKey(Config.USProxy4);
+exports.DonatorProxy = () => getNewKey(Config.DonatorProxy);
 
 exports.description = "Proxy a domain to a server. View this command for usage.";
 
