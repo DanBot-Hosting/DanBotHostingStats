@@ -1,11 +1,10 @@
-const Discord = requiore('discord.js');
+const Discord = require('discord.js');
 
 const Config = require('../../../config.json');
 
-//Generates new token for France Proxy server.
-async function getUS1NewKey() {
+async function getNewKey(proxyConfig) {
     const serverRes = await axios({
-        url: Config.USProxy1.url + "/api/tokens",
+        url: proxyConfig.url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -13,77 +12,26 @@ async function getUS1NewKey() {
             "Content-Type": "application/json",
         },
         data: {
-            identity: Config.USProxy1.email,
-            secret: Config.USProxy1.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-async function getUS2NewKey() {
-    const serverRes = await axios({
-        url: Config.USProxy2.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: Config.USProxy2.email,
-            secret: Config.USProxy2.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-async function getUS3NewKey() {
-    const serverRes = await axios({
-        url: Config.USProxy3.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: Config.USProxy3.email,
-            secret: Config.USProxy3.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-async function getUS4NewKey() {
-    const serverRes = await axios({
-        url: Config.USProxy4.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: Config.USProxy4.email,
-            secret: Config.USProxy4.pass,
-        },
-    });
-    return "Bearer " + serverRes.data.token;
-}
-async function getUS5NewKey() {
-    const serverRes = await axios({
-        url: Config.DonatorProxy.url + "/api/tokens",
-        method: "POST",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        data: {
-            identity: Config.DonatorProxy.email,
-            secret: Config.DonatorProxy.pass,
+            identity: proxyConfig.email,
+            secret: proxyConfig.pass,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
 
+exports.getNewKeyUS1 = () => getNewKey(Config.USProxy1);
+exports.getNewKeyUS2 = () => getNewKey(Config.USProxy2);
+exports.getNewKeyUS3 = () => getNewKey(Config.USProxy3);
+exports.getNewKeyUS4 = () => getNewKey(Config.USProxy4);
+exports.DonatorProxy = () => getNewKey(Config.DonatorProxy);
+
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array} args 
+ * @returns void
+ */
 exports.run = async (client, message, args) => {
     //No arguements were provided.
     if (!args[1]) {
