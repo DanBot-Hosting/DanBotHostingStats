@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
 
-exports.description = "Shows if an account is linked."
+exports.description = "Shows if an account is linked.";
 
 /**
  * 

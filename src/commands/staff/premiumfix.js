@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
 
+exports.description = "Fixes a user's premium count.";
+
 /**
  * Premium server count fix command. Locked to the staff.
  *

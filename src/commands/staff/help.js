@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const Config = require('../../../config.json');
 
-exports.description = "Shows staff commands."
+exports.description = "Shows staff commands.";
 
 /**
  * 
@@ -20,9 +20,9 @@ exports.run = async (client, message, args) => {
     Embed.setColor("BLUE");
     Embed.setTitle("Staff Commands");
 
-    fs.readdirSync(__dirname).forEach((File) => {
-        Embed.addField("`" + Config.DiscordBot.Prefix + "user " + File.split(".")[0] + "`", require("./" + File).description);
+    fs.readdirSync(__dirname).forEach(File => {
+        Embed.addField("`" + Config.DiscordBot.Prefix + "staff " + File.split(".")[0] + "`", require("./" + File).description);
     });
 
-    await message.reply(Embed);
+    message.channel.send(Embed);
 };

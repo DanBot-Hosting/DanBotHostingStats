@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
-const ms = require("ms");
 const humanizeDuration = require("humanize-duration");
 
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
+
+exports.description = "Drop a premium key.";
 
 /**
  * 
@@ -13,6 +14,9 @@ const MiscConfigs = require('../../../config/misc-configs.js');
  * @returns void
  */
 exports.run = async (client, message, args) => {
+
+    const ms = require("ms");
+
     if (
         !MiscConfigs.codeDrops.includes(
             message.author.id,

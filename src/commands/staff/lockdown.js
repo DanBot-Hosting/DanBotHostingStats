@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
 
+exports.description = "Server lockdown command. Locked to Administator(s), Co Owner(s), and Owner(s).";
+
 /**
  * Server lockdown command. Locked to Administator(s), Co Owner(s), and Owner(s).
  *

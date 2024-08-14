@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
 
+exports.description = "Put a Node in maintenance.";
+
 /**
  * 
  * @param {Discord.Client} client
