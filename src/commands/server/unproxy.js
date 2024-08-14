@@ -191,7 +191,7 @@ exports.run = async (client, message, args) => {
     
     //Domains from old proxies.
     } else if (domainData.Location == undefined || domainData.Location == "FR" || domainData.Location == "US") {
-        message.channel.send("This domain is from an old proxy system. Removing from your Database.");
+        message.channel.send("This domain is from an old proxy system. Removing from your database.");
         
         await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
             message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
