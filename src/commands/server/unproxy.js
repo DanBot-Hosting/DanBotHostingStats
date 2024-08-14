@@ -1,10 +1,13 @@
 const Discord = require('discord.js');
+const Axios = require('axios');
 
 const Config = require('../../../config.json');
+const Proxies = require('../../../config/proxy-configs.js').Proxies;
 
-async function getNewKey(proxyConfig) {
+//This function will generate a new token for the specified location.
+async function getToken(Url, Email, Password) {
     const serverRes = await axios({
-        url: proxyConfig.url + "/api/tokens",
+        url: Url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -12,18 +15,81 @@ async function getNewKey(proxyConfig) {
             "Content-Type": "application/json",
         },
         data: {
-            identity: proxyConfig.email,
-            secret: proxyConfig.pass,
+            identity: Email,
+            secret: Password,
         },
     });
+
     return "Bearer " + serverRes.data.token;
 }
 
-exports.getNewKeyUS1 = () => getNewKey(Config.USProxy1);
-exports.getNewKeyUS2 = () => getNewKey(Config.USProxy2);
-exports.getNewKeyUS3 = () => getNewKey(Config.USProxy3);
-exports.getNewKeyUS4 = () => getNewKey(Config.USProxy4);
-exports.DonatorProxy = () => getNewKey(Config.DonatorProxy);
+//This function will delete the certificate for a domain.
+async function deleteCertificate(Url, Token, Domain, ProxiesResponse){
+
+    return await axios({
+        url:
+            Url +
+            "/api/nginx/certificates/" +
+            ProxiesResponse.data.find(
+                (element) => element.domain_names[0] == Domain,
+            ).id,
+        method: "DELETE",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            Authorization: Token,
+            "Content-Type": "application/json",
+        },
+    });
+}
+
+//This function will delete a proxy for a domain.
+async function deleteProxy(Url, Token, Domain, ProxiesResponse){
+    return await axios({
+        url:
+        Url +
+            "/api/nginx/proxy-hosts/" +
+            ProxiesResponse.data.find(
+                (element) =>
+                    element.domain_names[0] == Domain,
+            ).id,
+        method: "DELETE",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            Authorization: Token,
+            "Content-Type": "application/json",
+        },
+    })
+}
+
+//This function requests all the certificates for a domain.
+async function getAllCertificates(Url, Token){
+    return await axios({
+        url: Url + "/api/nginx/certificates",
+        method: "GET",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            Authorization: Token,
+            "Content-Type": "application/json",
+        },
+    });
+}
+
+//Removes a domain from the user's database.
+async function deleteDomainDB(UserId, Domain){
+    userData.set(
+        UserId + ".domains",
+        userData
+            .get(UserId)
+            .domains.filter((x) => x.domain != Domain),
+    );
+
+    return true;
+}
+
+exports.description = "Unproxies a domain from a server.";
 
 /**
  * 
@@ -33,391 +99,94 @@ exports.DonatorProxy = () => getNewKey(Config.DonatorProxy);
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    //No arguements were provided.
-    if (!args[1]) {
-        const UnproxyEmbed = new Discord.MessageEmbed();
-        UnproxyEmbed.setTitle("**How to remove a domain from a server:**");
-        UnproxyEmbed.setDescription(
-            "Command format: `" +
-                Config.DiscordBot.Prefix +
-                "server unproxy <domain>`\nReplace <domain> with your domain. You can find a list with all your proxied domains by running `" +
-                Config.DiscordBot.Prefix +
-                "domains`",
+
+    const UnproxyEmbed = new Discord.MessageEmbed();
+    UnproxyEmbed.setTitle("**Unproxying Domain from DBH server:**");
+    UnproxyEmbed.setColor('BLUE')
+    UnproxyEmbed.setDescription(
+        "\n\nSyntax for Command: ```" +
+            Config.DiscordBot.Prefix +
+            "server unproxy <DOMAIN>```\n" + 
+            "- Replace `<DOMAIN>` with your domain. E.g. `example.danbot.host`\n" + 
+            "- You can find a list with all your proxied domains with: `" +
+            Config.DiscordBot.Prefix +
+            "user domains`",
+    );
+    UnproxyEmbed.setTimestamp();
+    UnproxyEmbed.setFooter("DanBot Hosting");
+
+    //No arguments were provided.
+    if(!args[1]) return await message.channel.send(UnproxyEmbed);
+
+    //User domain data.
+    const userDomains = await userData.get(message.author.id + ".domains");
+
+    //Invalid domain provided.
+    if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
+        message.reply(
+            "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!",
         );
-        UnproxyEmbed.setTimestamp();
-        UnproxyEmbed.setFooter("DanBot Hosting");
+        return;
+    }
 
-        await message.reply(UnproxyEmbed);
+    const domainData = userDomains.find((x) => x.domain === args[1].toLowerCase());
 
-        //Arguement was provided.
-    } else if (args[1]) {
-        //User domain data.
-        const userDomains = await userData.get(message.author.id + ".domains");
+    if (Proxies.map(x => x.dbLocation).includes(domainData.location)) {
 
-            //Invalid domain provided.
-            if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
-                message.reply(
-                    "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!",
-                );
-                return;
+        //This will contain the proxy information needed to continue.
+        const ProxyInformation = Proxies.find(x => x.dbLocation == domainData.location);
+
+        //Generate an new token for the specified location.
+        const ProxyToken = await getToken(ProxyInformation.url, ProxyInformation.email, ProxyInformation.pass);
+
+        // Gets a list of all the proxies.
+        await Axios({
+            url: ProxyInformation.url + "/api/nginx/proxy-hosts",
+            method: "GET",
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                Authorization: ProxyToken,
+                "Content-Type": "application/json",
+            }        
+        }).then(async (ProxiesResponse) => {
+
+            const ProxyFound = ProxiesResponse.data.find(Proxies => Proxies.domain_names[0] == domainData.domain);
+
+            const AllCertificates = await getAllCertificates(ProxyInformation.url, ProxyToken);
+            const CertificateFound = AllCertificates.data.find((element) => element.domain_names[0] == domainData.domain);
+
+            //If the certificate was found in the certificate list.
+            if (CertificateFound == undefined) {
+                await message.channel.send('[PROXY SYSTEM] Could not find the certificate for the domain. Skipping deletion of certificate.');
+            } else {
+                await message.channel.send('[PROXY SYSTEM] Found the certificate for the domain. Attempting to delete it.');
+
+                await deleteCertificate(ProxyInformation.url, ProxyToken, domainData.domain, ProxiesResponse).then(async (Response) => {
+                    await message.channel.send('[PROXY SYSTEM] Successfully removed the certificate for the domain.');
+                });
             }
 
-            const domainData = userDomains.find((x) => x.domain === args[1].toLowerCase());
+            // If the proxy was found in the proxy list.
+            if (ProxyFound == undefined) {
+                await messsage.channel.send('[PROXY SYSTEM] Could not find the domain in the proxy list. Removing it from user database.');
 
-            //Checks which location the domain is located in.
-            if (domainData.location == "US1") {
-                //Generates new token for France Proxy location.
-                Config.USProxy1.authKey = await getUS1NewKey();
+                await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
+                    message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
+                });
+            } else {
+                message.channel.send('[PROXY SYSTEM] Found the domain in the proxy list. Attempting to delete from proxy list.');
 
-                //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
-                await axios({
-                    url: Config.USProxy1.url + "/api/nginx/proxy-hosts",
-                    method: "GET",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: Config.USProxy1.authKey,
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((Response) => {
-                        //Tries to find and delete a certificate.
-                        axios({
-                            url:
-                                Config.USProxy1.url +
-                                "/api/nginx/certificates/" +
-                                Response.data.find(
-                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
-                                ).id,
-                            method: "DELETE",
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                Authorization: Config.USProxy1.authKey,
-                                "Content-Type": "application/json",
-                            },
-                        }).then((Response2) => {
-                            //Tries to find and delete the actual proxy.
-                            axios({
-                                url:
-                                    Config.USProxy1.url +
-                                    "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find(
-                                        (element) =>
-                                            element.domain_names[0] == args[1].toLowerCase(),
-                                    ).id,
-                                method: "DELETE",
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    Authorization: Config.USProxy1.authKey,
-                                    "Content-Type": "application/json",
-                                },
+                await deleteProxy(ProxyInformation.url, ProxyToken, domainData.domain, ProxiesResponse).then(async (Response) => {
+                    await message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the proxy list.');
 
-                                //Updates user database with the removed domain.
-                            }).then((response3) => {
-                                userData.set(
-                                    message.author.id + ".domains",
-                                    userData
-                                        .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
-                                );
-
-                                message.reply(
-                                    "Successfully unproxied the domain: `" + args[1] + "`",
-                                );
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
-                        );
-                        console.error(error);
+                    await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
+                        message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
                     });
-            } else if (domainData.location == "US2") {
-                //Generates new token for France Proxy location.
-                Config.USProxy2.authKey = await getUS2NewKey();
-
-                //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
-                await axios({
-                    url: Config.USProxy2.url + "/api/nginx/proxy-hosts",
-                    method: "GET",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: Config.USProxy2.authKey,
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((Response) => {
-                        //Tries to find and delete a certificate.
-                        axios({
-                            url:
-                                Config.USProxy2.url +
-                                "/api/nginx/certificates/" +
-                                Response.data.find(
-                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
-                                ).id,
-                            method: "DELETE",
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                Authorization: Config.USProxy2.authKey,
-                                "Content-Type": "application/json",
-                            },
-                        }).then((Response2) => {
-                            //Tries to find and delete the actual proxy.
-                            axios({
-                                url:
-                                    Config.USProxy2.url +
-                                    "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find(
-                                        (element) =>
-                                            element.domain_names[0] == args[1].toLowerCase(),
-                                    ).id,
-                                method: "DELETE",
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    Authorization: Config.USProxy2.authKey,
-                                    "Content-Type": "application/json",
-                                },
-
-                                //Updates user database with the removed domain.
-                            }).then((response3) => {
-                                userData.set(
-                                    message.author.id + ".domains",
-                                    userData
-                                        .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
-                                );
-
-                                message.reply(
-                                    "Successfully unproxied the domain: `" + args[1] + "`",
-                                );
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
-                        );
-                        console.error(error);
-                    });
-            } else if (domainData.location == "US3") {
-                //Generates new token for France Proxy location.
-                Config.USProxy3.authKey = await getUS3NewKey();
-
-                //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
-                await axios({
-                    url: Config.USProxy3.url + "/api/nginx/proxy-hosts",
-                    method: "GET",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: Config.USProxy3.authKey,
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((Response) => {
-                        //Tries to find and delete a certificate.
-                        axios({
-                            url:
-                                Config.USProxy3.url +
-                                "/api/nginx/certificates/" +
-                                Response.data.find(
-                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
-                                ).id,
-                            method: "DELETE",
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                Authorization: Config.USProxy3.authKey,
-                                "Content-Type": "application/json",
-                            },
-                        }).then((Response2) => {
-                            //Tries to find and delete the actual proxy.
-                            axios({
-                                url:
-                                    Config.USProxy3.url +
-                                    "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find(
-                                        (element) =>
-                                            element.domain_names[0] == args[1].toLowerCase(),
-                                    ).id,
-                                method: "DELETE",
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    Authorization: Config.USProxy3.authKey,
-                                    "Content-Type": "application/json",
-                                },
-
-                                //Updates user database with the removed domain.
-                            }).then((response3) => {
-                                userData.set(
-                                    message.author.id + ".domains",
-                                    userData
-                                        .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
-                                );
-
-                                message.reply(
-                                    "Successfully unproxied the domain: `" + args[1] + "`",
-                                );
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
-                        );
-                        console.error(error);
-                    });
-            } else if (domainData.location == "US4") {
-                //Generates new token for France Proxy location.
-                Config.USProxy4.authKey = await getUS4NewKey();
-
-                //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
-                await axios({
-                    url: Config.USProxy4.url + "/api/nginx/proxy-hosts",
-                    method: "GET",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: Config.USProxy4.authKey,
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((Response) => {
-                        //Tries to find and delete a certificate.
-                        axios({
-                            url:
-                                Config.USProxy4.url +
-                                "/api/nginx/certificates/" +
-                                Response.data.find(
-                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
-                                ).id,
-                            method: "DELETE",
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                Authorization: Config.USProxy4.authKey,
-                                "Content-Type": "application/json",
-                            },
-                        }).then((Response2) => {
-                            //Tries to find and delete the actual proxy.
-                            axios({
-                                url:
-                                    Config.USProxy4.url +
-                                    "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find(
-                                        (element) =>
-                                            element.domain_names[0] == args[1].toLowerCase(),
-                                    ).id,
-                                method: "DELETE",
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    Authorization: Config.USProxy4.authKey,
-                                    "Content-Type": "application/json",
-                                },
-
-                                //Updates user database with the removed domain.
-                            }).then((response3) => {
-                                userData.set(
-                                    message.author.id + ".domains",
-                                    userData
-                                        .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
-                                );
-
-                                message.reply(
-                                    "Successfully unproxied the domain: `" + args[1] + "`",
-                                );
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
-                        );
-                        console.error(error);
-                    });
+                });
             }
-            if (domainData.location == "DonatorProxy") {
-                //Generates new token for France Proxy location.
-                Config.DonatorProxy.authKey = await getUS5NewKey();
-
-                //Starts looking for the proxy data. Then deletes certificate. Then deletes the proxy host. Finally removes it from database.
-                await axios({
-                    url: Config.DonatorProxy.url + "/api/nginx/proxy-hosts",
-                    method: "GET",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: Config.DonatorProxy.authKey,
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((Response) => {
-                        //Tries to find and delete a certificate.
-                        axios({
-                            url:
-                                Config.DonatorProxy.url +
-                                "/api/nginx/certificates/" +
-                                Response.data.find(
-                                    (element) => element.domain_names[0] == args[1].toLowerCase(),
-                                ).id,
-                            method: "DELETE",
-                            followRedirect: true,
-                            maxRedirects: 5,
-                            headers: {
-                                Authorization: Config.DonatorProxy.authKey,
-                                "Content-Type": "application/json",
-                            },
-                        }).then((Response2) => {
-                            //Tries to find and delete the actual proxy.
-                            axios({
-                                url:
-                                    Config.DonatorProxy.url +
-                                    "/api/nginx/proxy-hosts/" +
-                                    Response2.data.find(
-                                        (element) =>
-                                            element.domain_names[0] == args[1].toLowerCase(),
-                                    ).id,
-                                method: "DELETE",
-                                followRedirect: true,
-                                maxRedirects: 5,
-                                headers: {
-                                    Authorization: Config.DonatorProxy.authKey,
-                                    "Content-Type": "application/json",
-                                },
-
-                                //Updates user database with the removed domain.
-                            }).then((response3) => {
-                                userData.set(
-                                    message.author.id + ".domains",
-                                    userData
-                                        .get(message.author.id)
-                                        .domains.filter((x) => x.domain != args[1].toLowerCase()),
-                                );
-
-                                message.reply(
-                                    "Successfully unproxied the domain: `" + args[1] + "`",
-                                );
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        message.reply(
-                            "There has been a error. Please contact Dan or try once more, \nIf the bot says its currently linked try adding `-db` to the end of the command.",
-                        );
-                        console.error(error);
-                    });
-            }
+        }).catch(Error => {
+            console.error("[PROXY SYSTEM ERROR]: " + Error);
+        });
     }
 };
-
-exports.description = "Unproxies a domain from a server.";

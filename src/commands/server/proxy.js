@@ -1,12 +1,15 @@
 const Discord = require('discord.js');
-const axios = require("axios");
+const Axios = require("axios");
 const dns = require("dns");
 
 const Config = require('../../../config.json');
+const Proxies = require('../../../config/proxy-configs.js').Proxies;
+const PremiumDomains = require('../../../config/proxy-configs.js').PremiumDomains;
+const getUserServers = require('../../util/getUserServers.js');
 
-async function getNewKey(proxyConfig) {
-    const serverRes = await axios({
-        url: proxyConfig.url + "/api/tokens",
+async function getToken(Url, Email, Password) {
+    const serverRes = await Axios({
+        url: Url + "/api/tokens",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
@@ -14,18 +17,25 @@ async function getNewKey(proxyConfig) {
             "Content-Type": "application/json",
         },
         data: {
-            identity: proxyConfig.email,
-            secret: proxyConfig.pass,
+            identity: Email,
+            secret: Password,
         },
     });
     return "Bearer " + serverRes.data.token;
 }
 
-exports.getNewKeyUS1 = () => getNewKey(Config.USProxy1);
-exports.getNewKeyUS2 = () => getNewKey(Config.USProxy2);
-exports.getNewKeyUS3 = () => getNewKey(Config.USProxy3);
-exports.getNewKeyUS4 = () => getNewKey(Config.USProxy4);
-exports.DonatorProxy = () => getNewKey(Config.DonatorProxy);
+async function getAllProxies(Url, Token) {
+    return await Axios({
+        url: Url + "/api/nginx/proxy-hosts",
+        method: "GET",
+        followRedirect: true,
+        maxRedirects: 5,
+        headers: {
+            Authorization: Token,
+            "Content-Type": "application/json",
+        }        
+    });
+}
 
 exports.description = "Proxy a domain to a server. View this command for usage.";
 
@@ -38,6 +48,9 @@ exports.description = "Proxy a domain to a server. View this command for usage."
  */
 exports.run = async (client, message, args) => {
 
+    const ProxyLocations = Proxies.map((Proxy) => `> \`${Proxy.ip}\` - [${Proxy.name}] 🟢 Enabled`).join('\n');
+    const PremiumDomainsList = PremiumDomains.map((domain) => `\`${domain}\``).join(', ');
+
     const embed = new Discord.MessageEmbed()
         .setTitle("**DanBot Hosting Proxy System**")
         .setDescription(
@@ -47,290 +60,240 @@ exports.run = async (client, message, args) => {
 
             You can find your server ID by running the following command: \`${Config.DiscordBot.Prefix}server list\`
 
-            You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:
+            You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:\n\n` +
 
-            > \`69.197.135.202\` - [US 1] 🟢 Enabled
-            > \`69.197.135.203\` - [US 2] 🟢 Enabled
-            > \`69.197.135.204\` - [US 3] 🟢 Enabled
-            > \`69.197.135.205\` - [US 4] 🟢 Enabled
-            > \`69.30.249.53\` - [Donator 1] 🟢 Enabled
+            ProxyLocations
 
-            If you are using Cloudflare, make sure you are using **DNS only mode**, and disabling **always use HTTPS**.
+            + `\n\nIf you are using Cloudflare, make sure you are using **DNS only mode**, and disabling **always use HTTPS**.
 
-            Donators can use the \`*.only-fans.club\` \`*.is-a-awesome.dev\` \`*.is-a-cool.dev\` subdomains! Replace \`<domain>\` with the \`your-subdomain.domainhere\` to use it!`,
+            Donators can use the ` + PremiumDomainsList + ` subdomains! Replace \`<domain>\` with the \`your-subdomain.domainhere\` to use it!`,
         )
         .setColor("BLUE");
 
+    // The user didn't provide enough arguments.
     if (!args[1] || !args[2]) {
-        await message.reply(embed);
+        await message.channel.send(embed);
         return;
     }
 
-    if (args[1].toLowerCase().includes("only-fans.club")) {
-        if (
-            !message.member.roles.cache.some((r) =>
-                [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
-            )
-        ) {
-            return message.reply(
-                "Sorry, only-fans.club subdomains are only available for boosters and donators.",
-            );
-        }
-    }
-
-    if (args[1].toLowerCase().includes("is-a-awesome.dev")) {
-        if (
-            !message.member.roles.cache.some((r) =>
-                [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
-            )
-        ) {
-            return message.reply(
-                "Sorry, is-a-awesome.dev subdomains are only available for boosters and donators.",
-            );
-        }
-    }
-
-    if (args[1].toLowerCase().includes("is-a-cool.dev")) {
-        if (
-            !message.member.roles.cache.some((r) =>
-                [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
-            )
-        ) {
-            return message.reply(
-                "Sorry, is-a-cool.dev subdomains are only available for boosters and donators.",
-            );
-        }
-    }
+    //The user is attempting to use a premium domain but doesn't have the correct roles.
+    if (PremiumDomains.some(domain => args[1].toLowerCase().includes(domain)) && !message.member.roles.cache.some(r => [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id))) {
+        return message.channel.send("Sorry, this domain is only available to donators and boosters.");
+        
+    };
 
     const user = userData.get(message.author.id);
 
     if (!user) {
-        return message.reply("User not found.");
+        return message.channel.send("User not found.");
     }
 
     const linkAlready = user.domains.some((x) => x.domain === args[1]);
 
-    if (linkAlready) {
-        return message.reply("Domain is already linked.");
-    } else {
-        //If no linked domains
+    if (linkAlready) return message.channel.send("You have already linked this domain.");
+
+    //Domain is not in the correct format.
+    if (!/^[a-zA-Z0-9.-]+$/.test(args[1])) {
+        return message.channel.send("Invalid domain format.");
     }
 
-    if (!/^[a-zA-Z0-9.-]+$/.test(args[1])) {
-        return message.reply("Invalid domain format.");
-    }
+    // Domain will not be DNS lookup to verify it's being pointed to a correct IP.
     const dnsCheck = await new Promise((resolve) => {
         dns.lookup(args[1], { family: 4, hints: dns.ADDRCONFIG | dns.V4MAPPED }, (err, address) =>
             resolve({ err, address }),
         );
     });
 
-    const validAddresses = [
-        "69.197.135.202",
-        "69.197.135.203",
-        "69.197.135.204",
-        "69.197.135.205",
-        "69.30.249.53",
-    ];
+    const validAddresses = Proxies.map((Proxy) => Proxy.ip);
+
     if (!validAddresses.includes(dnsCheck.address)) {
-        return message.reply(
+        return message.channel.send(
             "ERROR: You must have a DNS A Record pointing to one of the following addresses: " +
                 validAddresses.join(", "),
         );
     }
 
+    const PremiumProxiesIPs = Proxies.filter((Proxy) => Proxy.premiumOnly).map((Proxy) => Proxy.ip);
+
     if (
         !message.member.roles.cache.some((r) =>
             [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id),
-        ) &&
-        "69.30.249.53" == dnsCheck.address
+        ) && PremiumProxiesIPs.includes(dnsCheck.address)
     ) {
         return message.reply(
             "Sorry, this proxy location is only available for boosters and donators.",
         );
     }
 
-    const proxies = [
-        Config.USProxy1,
-        Config.USProxy2,
-        Config.USProxy3,
-        Config.USProxy4,
-        Config.DonatorProxy,
-    ];
-    for (let proxy of proxies) {
-        proxy.authKey = await getNewKey(proxy);
-    }
+    const UserServers = await getUserServers(userData.get(message.author.id).consoleID).then(async (PterodactylResponse) => {
+        PterodactylResponse = PterodactylResponse.attributes;
 
-    const url = `${Config.Pterodactyl.hosturl}/api/application/users/${userData.get(message.author.id).consoleID}?include=servers`;
-    axios
-        .get(url, {
+        if (PterodactylResponse.relationships) {
+            PterodactylResponse.extras = {};
+            for (let key in PterodactylResponse.relationships) {
+                PterodactylResponse.extras[key] = PterodactylResponse.relationships[key].data
+                    ? PterodactylResponse.relationships[key].data.map((a) => a.attributes)
+                    : PterodactylResponse.relationships[key];
+            }
+            delete PterodactylResponse.relationships;
+        }
+
+        if (!PterodactylResponse.extras.servers || !PterodactylResponse.extras.servers.find((x) => x.identifier === args[2])) {
+            return message.channel.send(
+                "Couldn't find that server in your server list.\nDo you own that server?",
+            );
+        }
+
+        const axiosConfig = {
+            url: `${Config.Pterodactyl.hosturl}/api/client/servers/${args[2]}`,
+            method: "GET",
+            followRedirect: true,
+            maxRedirects: 5,
             headers: {
-                Authorization: "Bearer " + Config.Pterodactyl.apikey,
+                Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
                 "Content-Type": "application/json",
                 Accept: "Application/vnd.pterodactyl.v1+json",
             },
-        })
-        .then((use) => {
-            use = use.data.attributes;
-            if (use.relationships) {
-                use.extras = {};
-                for (let key in use.relationships) {
-                    use.extras[key] = use.relationships[key].data
-                        ? use.relationships[key].data.map((a) => a.attributes)
-                        : use.relationships[key];
-                }
-                delete use.relationships;
+        };
+
+        Axios(axiosConfig).then(async (PterodactylServerResponse) => {
+            const replyMsg = await message.reply(
+                "Proxying your domain... this can take up to 30 seconds.",
+            );
+
+            const ProxyLocation = Proxies.find((Location) => Location.ip == dnsCheck.address);
+
+            //This in theory should never happen.
+            if(ProxyLocation == undefined) return message.channel.send("Woah, you discovered an error that shouldn't be possible. - DIBSTER.");
+
+            const Token = await getToken(ProxyLocation.url, ProxyLocation.email, ProxyLocation.pass);
+
+            const AllProxies = await getAllProxies(ProxyLocation.url, Token);
+
+            //It was found in the proxy already.
+            if (AllProxies.data.find(x => x.domain_names[0] == args[1].toLowerCase()) != undefined) {
+                return message.channel.send("This domain has already been proxied on this location. If you believe this to be an error, please contact a staff member.");
             }
 
-            if (!use.extras.servers || !use.extras.servers.find((x) => x.identifier === args[2])) {
-                return message.reply(
-                    "Couldn't find that server in your server list.\nDo you own that server?",
+            replyMsg.edit(`Domain found pointing towards ${ProxyLocation.name}...`);
+
+            proxyDomain(ProxyLocation, PterodactylServerResponse, replyMsg, args, Token);
+        });
+
+        function proxyDomain(ProxyLocation, response, replyMsg, args, token) {
+
+            const axiosProxyConfig = {
+                url: `${ProxyLocation.url}/api/nginx/proxy-hosts`,
+                method: "POST",
+                followRedirect: true,
+                maxRedirects: 5,
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+                data: {
+                    domain_names: [args[1].toLowerCase()],
+                    forward_scheme: "http",
+                    forward_host: response.data.attributes.sftp_details.ip,
+                    forward_port:
+                        response.data.attributes.relationships.allocations.data[0].attributes
+                            .port,
+                    access_list_id: "0",
+                    certificate_id: "new",
+                    meta: {
+                        letsencrypt_email: "proxy-renew@danbot.host",
+                        letsencrypt_agree: true,
+                        dns_challenge: false,
+                    },
+                    advanced_config: "",
+                    locations: [],
+                    block_exploits: false,
+                    caching_enabled: false,
+                    allow_websocket_upgrade: true,
+                    http2_support: false,
+                    hsts_enabled: false,
+                    hsts_subdomains: false,
+                    ssl_forced: true,
+                },
+            };
+
+            Axios(axiosProxyConfig).then((ResponseAfterProxy) => {
+                    replyMsg.edit(
+                        `Domain has been proxied:\n\n` +
+                        `ID: ${ResponseAfterProxy.data.id}\n` +
+                        `Location: ${ProxyLocation.name}`
+                    );
+                    
+                    const NewUserData = userData.get(message.author.id).domains || [];
+
+                    userData.set(`${message.author.id}.domains`, [
+                        ...new Set(NewUserData),
+                        {
+                            domain: args[1].toLowerCase(),
+                            serverID: args[2],
+                            location: ProxyLocation.dbLocation,
+                        },
+                    ]);
+                })
+                .catch((ErrorAfterProxy) => {
+                    handleProxyError(
+                        ErrorAfterProxy,
+                        replyMsg,
+                        args,
+                        ProxyLocation,
+                        ResponseAfterProxy,
+                        token
+                    );
+                });
+        }
+
+        function handleProxyError(
+            ErrorAfterProxy,
+            replyMsg,
+            args,
+            ProxyLocation,
+            ResponseAfterProxy,
+            token
+        ) {
+            if (ErrorAfterProxy == "Error: Request failed with status code 500") {
+                deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
+            } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
+                replyMsg.edit(
+                    "This domain has already been linked. If this is an error, please contact a staff member to fix this!",
                 );
             }
+        }
 
-            const axiosConfig = {
-                url: `${Config.Pterodactyl.hosturl}/api/client/servers/${args[2]}`,
+        function deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token) {
+            const axiosGetProxyConfig = {
+                url: `${ProxyLocation.url}/api/nginx/proxy-hosts`,
                 method: "GET",
                 followRedirect: true,
                 maxRedirects: 5,
                 headers: {
-                    Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
+                    Authorization: token,
                     "Content-Type": "application/json",
-                    Accept: "Application/vnd.pterodactyl.v1+json",
                 },
             };
 
-            axios(axiosConfig).then(async (response) => {
-                const replyMsg = await message.reply(
-                    "Proxying your domain... this can take up to 30 seconds.",
-                );
+            Axios(axiosGetProxyConfig).then((response) => {
+                const axiosDeleteProxyConfig = {
+                    url: `${ProxyLocation.url}/api/nginx/proxy-hosts/${
+                        ResponseAfterProxy.data.find(
+                            (element) => element.domain_names[0] == args[1].toLowerCase(),
+                        ).id
+                    }`,
+                    method: "DELETE",
+                    followRedirect: true,
+                    maxRedirects: 5,
+                    headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                    },
+                };
 
-                if (dnsCheck.address == "69.197.135.202") {
-                    replyMsg.edit("Domain found pointing towards US Proxy 1...");
-                    proxyDomain(Config.USProxy1, response, replyMsg, args, "US1");
-                } else if (dnsCheck.address == "69.197.135.203") {
-                    replyMsg.edit("Domain found pointing towards US Proxy 2...");
-                    proxyDomain(Config.USProxy2, response, replyMsg, args, "US2");
-                } else if (dnsCheck.address == "69.197.135.204") {
-                    replyMsg.edit("Domain found pointing towards US Proxy 3...");
-                    proxyDomain(Config.USProxy3, response, replyMsg, args, "US3");
-                } else if (dnsCheck.address == "69.197.135.205") {
-                    replyMsg.edit("Domain found pointing towards US Proxy 4...");
-                    proxyDomain(Config.USProxy4, response, replyMsg, args, "US4");
-                } else if (dnsCheck.address == "69.30.249.53") {
-                    replyMsg.edit("Domain found pointing towards US Donator Proxy 1...");
-                    proxyDomain(Config.DonatorProxy, response, replyMsg, args, "DonatorProxy");
-                }
+                Axios(axiosDeleteProxyConfig);
             });
-
-            function proxyDomain(proxyConfig, response, replyMsg, args, location) {
-                const axiosProxyConfig = {
-                    url: `${proxyConfig.url}/api/nginx/proxy-hosts`,
-                    method: "POST",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: proxyConfig.authKey,
-                        "Content-Type": "application/json",
-                    },
-                    data: {
-                        domain_names: [args[1].toLowerCase()],
-                        forward_scheme: "http",
-                        forward_host: response.data.attributes.sftp_details.ip,
-                        forward_port:
-                            response.data.attributes.relationships.allocations.data[0].attributes
-                                .port,
-                        access_list_id: "0",
-                        certificate_id: "new",
-                        meta: {
-                            letsencrypt_email: "proxy-renew@danbot.host",
-                            letsencrypt_agree: true,
-                            dns_challenge: false,
-                        },
-                        advanced_config: "",
-                        locations: [],
-                        block_exploits: false,
-                        caching_enabled: false,
-                        allow_websocket_upgrade: true,
-                        http2_support: false,
-                        hsts_enabled: false,
-                        hsts_subdomains: false,
-                        ssl_forced: true,
-                    },
-                };
-
-                axios(axiosProxyConfig)
-                    .then((ResponseAfterProxy) => {
-                        replyMsg.edit(
-                            `Domain has been proxied, its ID is: ${ResponseAfterProxy.data.id}`,
-                        );
-                        let datalmao = userData.get(message.author.id).domains || [];
-                        userData.set(`${message.author.id}.domains`, [
-                            ...new Set(datalmao),
-                            {
-                                domain: args[1].toLowerCase(),
-                                serverID: args[2],
-                                location: location,
-                            },
-                        ]);
-                    })
-                    .catch((ErrorAfterProxy) => {
-                        handleProxyError(
-                            ErrorAfterProxy,
-                            replyMsg,
-                            args,
-                            proxyConfig,
-                            ResponseAfterProxy,
-                        );
-                    });
-            }
-
-            function handleProxyError(
-                ErrorAfterProxy,
-                replyMsg,
-                args,
-                proxyConfig,
-                ResponseAfterProxy,
-            ) {
-                if (ErrorAfterProxy == "Error: Request failed with status code 500") {
-                    deleteFailedProxy(replyMsg, args, proxyConfig, ResponseAfterProxy);
-                } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
-                    replyMsg.edit(
-                        "This domain has already been linked. If this is an error, please contact a staff member to fix this!",
-                    );
-                }
-            }
-
-            function deleteFailedProxy(replyMsg, args, proxyConfig, ResponseAfterProxy) {
-                const axiosGetProxyConfig = {
-                    url: `${proxyConfig.url}/api/nginx/proxy-hosts`,
-                    method: "GET",
-                    followRedirect: true,
-                    maxRedirects: 5,
-                    headers: {
-                        Authorization: proxyConfig.authKey,
-                        "Content-Type": "application/json",
-                    },
-                };
-
-                axios(axiosGetProxyConfig).then((response) => {
-                    const axiosDeleteProxyConfig = {
-                        url: `${proxyConfig.url}/api/nginx/proxy-hosts/${
-                            ResponseAfterProxy.data.find(
-                                (element) => element.domain_names[0] == args[1].toLowerCase(),
-                            ).id
-                        }`,
-                        method: "DELETE",
-                        followRedirect: true,
-                        maxRedirects: 5,
-                        headers: {
-                            Authorization: proxyConfig.authKey,
-                            "Content-Type": "application/json",
-                        },
-                    };
-
-                    axios(axiosDeleteProxyConfig);
-                });
-            }
-        });
+        }
+    });
 };

@@ -73,8 +73,8 @@ function startNodeChecker() {
                                         nodeServers.set(`${node}.servers`, serverCount);
                                         nodeServers.set(`${node}.maxCount`, response.data.meta.pagination.total);
                                     })
-                                    .catch((err) => {
-                                        console.error('[NODE CHECKER] Error fetching node servers.', err);
+                                    .catch((Error) => {
+                                        console.error('[NODE CHECKER] Error fetching node servers.', Error.statusCode);
                                     });
                             }, 2000);
                     }, 2000);

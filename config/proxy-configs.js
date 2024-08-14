@@ -7,7 +7,8 @@ const Proxies = [
         url: Config.USProxy1.url,           //The URL for requests.
         ip: "69.197.135.202",               //The IP for the proxy.
         email: Config.USProxy1.email,       //The email for the Administrator Account.
-        pass: Config.USProxy1.pass          //The password for the Administrator Account.
+        pass: Config.USProxy1.pass,         //The password for the Administrator Account.
+        premiumOnly: false,                 //If the proxy is only available to premium users.
     },
     {
         name: "United States 2",
@@ -15,7 +16,8 @@ const Proxies = [
         url: Config.USProxy2.url,
         ip: "69.197.135.203",
         email: Config.USProxy2.email,
-        pass: Config.USProxy2.pass
+        pass: Config.USProxy2.pass,
+        premiumOnly: false
     },
     {
         name: "United States 3",
@@ -23,7 +25,8 @@ const Proxies = [
         url: Config.USProxy3.url,
         ip: "69.197.135.204",
         email: Config.USProxy3.email,
-        pass: Config.USProxy3.pass
+        pass: Config.USProxy3.pass,
+        premiumOnly: false
     },
     {
         name: "United States 4",
@@ -31,7 +34,8 @@ const Proxies = [
         url: Config.USProxy4.url,
         ip: "69.197.135.205",
         email: Config.USProxy4.email,
-        pass: Config.USProxy4.pass
+        pass: Config.USProxy4.pass,
+        premiumOnly: false
     },
     {
         name: "Donator 1",
@@ -39,9 +43,16 @@ const Proxies = [
         url: Config.DonatorProxy.url,
         ip: "69.30.249.53",
         email: Config.DonatorProxy.email,
-        pass: Config.DonatorProxy.pass
+        pass: Config.DonatorProxy.pass,
+        premiumOnly: false
     },
     
 ]
 
-module.exports = Proxies;
+const PremiumDomains = [
+    "only-fans.club",
+    "is-a-awesome.dev",
+    "is-a-cool.dev"
+]
+
+module.exports = { Proxies, PremiumDomains};

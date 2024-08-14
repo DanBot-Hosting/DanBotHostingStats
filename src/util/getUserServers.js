@@ -10,7 +10,7 @@ const Config = require('../../config.json');
 module.exports = async function(userId) {
     try {
         const response = await axios({
-            url: `https://${Config.Pterodactyl.hosturl}/api/application/users/${userId}?include=servers`,
+            url: `${Config.Pterodactyl.hosturl}/api/application/users/${userId}?include=servers`,
             method: "GET",
             followRedirect: true,
             maxRedirects: 5,
