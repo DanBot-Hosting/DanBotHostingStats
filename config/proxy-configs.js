@@ -44,7 +44,7 @@ const Proxies = [
         ip: "69.30.249.53",
         email: Config.DonatorProxy.email,
         pass: Config.DonatorProxy.pass,
-        premiumOnly: false
+        premiumOnly: true
     },
     
 ]
