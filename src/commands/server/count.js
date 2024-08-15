@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const axios = require("axios");
+
 const Config = require('../../../config.json');
+const getUserServers = require('../../util/getUserServers.js');
 
 exports.description = "Shows the amount of servers a user has.";
 
@@ -19,22 +21,7 @@ exports.run = async (client, message, args) => {
 
     if (user == null) return message.channel.send('User does not have account linked.');
 
-    axios({
-        url:
-            Config.Pterodactyl.hosturl +
-            "/api/application/users/" +
-            user.consoleID +
-            "?include=servers",
-        method: "GET",
-        followRedirect: true,
-        maxRedirects: 5,
-        headers: {
-            Authorization: "Bearer " + Config.Pterodactyl.apikey,
-            "Content-Type": "application/json",
-            Accept: "Application/vnd.pterodactyl.v1+json",
-        },
-    })
-        .then((response) => {
+    await getUserServers(user.consoleID).then(Response => {
             const userServers = response.data.attributes.relationships.servers.data; //The user server data from the panel.
 
             const premiumServers = userServers.filter((Server) => Config.DonatorNodes.includes(Server.attributes.node)).length; //The amount of premium servers the user has.
@@ -44,8 +31,7 @@ exports.run = async (client, message, args) => {
             `);
 
             message.channel.send(serverCountEmbed);
-        })
-        .catch(() => {
-            message.channel.send("An error occurred while loading servers.");
-        });
+    }).catch(() => {
+        message.channel.send("An error occurred while loading servers.");
+    });
 };
