@@ -66,13 +66,6 @@ exports.run = async (client, message, args) => {
 
             const storedPremiumServersUsed = userPremData.used;
 
-            console.log({
-                actualPremiumServersUsed,
-                storedPremiumServersUsed,
-                userPremData,
-                selectedUser,
-            });
-
             if (actualPremiumServersUsed != storedPremiumServersUsed) {
                 userPrem.set(selectedUser.id, {
                     used: actualPremiumServersUsed,
