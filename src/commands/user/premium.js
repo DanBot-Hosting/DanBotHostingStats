@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
               : args[1].match(/[0-9]{17,19}/)[0];
 
     //Gets the user's premium data.
-    const userPremium = userPrem.fetch(userId);
+    let userPremium = userPrem.fetch(userId);
 
     //If the user has no premium data, set it to an empty object.
     if (userPremium == null) userPremium = {};
