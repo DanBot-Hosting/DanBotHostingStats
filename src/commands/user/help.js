@@ -13,13 +13,13 @@ const Config = require('../../../config.json');
 exports.run = async (client, message, args) => {
     const Embed = new Discord.MessageEmbed();
     Embed.setColor("BLUE");
-    Embed.setTitle("User Commands");
+    Embed.setTitle("Komendy użytkownika");
 
     fs.readdirSync(__dirname).forEach((File) => {
-        Embed.addField("`" + Config.DiscordBot.Prefix + "user " + File.split(".")[0] + "`", require("./" + File).description);
+        Embed.addField("`" + Config.DiscordBot.Prefix + "nick " + File.split(".")[0] + "`", require("./" + File).description);
     });
 
     await message.reply(Embed);
 };
 
-exports.description = "Shows the user commands under this category.";
+exports.description = "Pokazuje komendy użytkownika w tej kategorii.";

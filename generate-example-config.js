@@ -22,11 +22,11 @@ function ClearValues(obj) {
 // Read the original config.json file
 fs.readFile("config.json", "utf8", (Error, Data) => {
     if (Error) {
-        console.error("Error reading config.json:", Error);
+        console.error("Wystąpił błąd przy rozpoznawaniu config.json:", Error);
         return;
     }
 
-    let ConfigData; //This stores the new configuration data.
+    let ConfigData; // This stores the new configuration data.
 
     try {
         ConfigData = JSON.parse(Data);
@@ -41,9 +41,9 @@ fs.readFile("config.json", "utf8", (Error, Data) => {
     // Write the cleared config data to example.config.json.
     fs.writeFile("example-config.json", JSON.stringify(ClearedConfigData, null, 4), (Error) => {
         if (Error) {
-            console.error("Error writing example.config.json:", Error);
+            console.error("Wystąpił błąd przy tworzeniu pliku example.config.json:", Error);
             return;
         }
-        console.log("[AUTOMATED] example-config.json has been created with cleared values.");
+        console.log("[SYSTEM] Plik konfiguracyjny został wygenerowany z pustymi polami.");
     });
 });

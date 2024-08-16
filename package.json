@@ -1,22 +1,12 @@
 {
-  "name": "hostingstats",
+  "name": "DinoBOT",
   "version": "1.0.0",
-  "description": "Main bot for DanBot Hosting",
+  "description": "Main bot for DinoHost.",
   "main": "index.js",
   "scripts": {
     "start": "npm install && node index.js",
     "econfig": "node generate-example-config.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DanBotHosting/DanBotHostingStats.git"
-  },
-  "author": "DanBot Hosting LTD",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/DanBotHosting/DanBotHostingStats/issues"
-  },
-  "homepage": "https://github.com/DanBotHosting/DanBotHostingStats#readme",
   "dependencies": {
     "axios": "^1.4.0",
     "better-sqlite3": "^8.5.0",

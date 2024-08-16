@@ -7,7 +7,7 @@ const MiscConfigs = require('../../../config/misc-configs.js');
 
 const generatePassword = require('../../util/generatePassword.js');
 
-exports.description = "Create a new panel account.";
+exports.description = "Tworzy nowe konto w panelu.";
 
 /**
  * 
@@ -19,7 +19,7 @@ exports.description = "Create a new panel account.";
 exports.run = async (client, message, args) => {
 
     if (userData.get(message.author.id) != null) {
-        message.reply("You already have a `panel account` linked to your discord account.");
+        message.reply("Posiadasz już `konto w panelu` podpięte do Discorda.");
         return;
     }
 
@@ -27,12 +27,12 @@ exports.run = async (client, message, args) => {
         {
             id: "tos",
             question:
-                "https://danbot.host/tos\nPlease read our TOS, do you accept? (**yes or no**)", // The questions...
+                "https://dinohost.pl/rules\nCzy akceptujesz nasz regulamin? (**TAK/NIE**)", // The questions...
             filter: (m) => m.author.id === message.author.id, // Filter to use...
             afterChecks: [
                 {
-                    check: (msg) => msg.toLowerCase() == "yes",
-                    errorMessage: "You must accept our TOS!",
+                    check: (msg) => msg.toLowerCase() == "tak",
+                    errorMessage: "Musisz zaakceptować nasz regulamin!",
                 },
             ],
             time: 1000 * 60 * 10, // how much time a user has to answer the question before it times out
@@ -41,12 +41,12 @@ exports.run = async (client, message, args) => {
         {
             id: "username",
             question:
-                "What should your username be? (**Please don't use spaces or special characters**)", // The questions...
+                "Nazwa użytkownika (**nie używaj spacji oraz specjalnych znaków**)", // The questions...
             filter: (m) => m.author.id === message.author.id, // Filter to use...
             afterChecks: [
                 {
                     check: (msg) => msg.trim().split(" ").length == 1,
-                    errorMessage: "username must not contain any spaces",
+                    errorMessage: "Nazwa nie może posiadać żadnych spacji.",
                 },
             ],
             time: 30000, // how much time a user has to answer the question before it times out
@@ -54,12 +54,12 @@ exports.run = async (client, message, args) => {
         },
         {
             id: "email",
-            question: "What's your email? *(must be a valid email)*",
+            question: "Adres email *(musi być poprawny)*",
             filter: (m) => m.author.id === message.author.id,
             afterChecks: [
                 {
                     check: (msg) => validator.isEmail(msg.toLowerCase().trim()),
-                    errorMessage: "The email must be valid.",
+                    errorMessage: "Adres email musi być poprawny.",
                 },
             ],
             time: 30000,
@@ -73,7 +73,7 @@ exports.run = async (client, message, args) => {
     );
 
     // if not found throw an error
-    if (!category) throw new Error("Category channel does not exist");
+    if (!category) throw new Error("Kategoria nie istnieje.");
 
     // Create the channel in which the user will use to create his account
     let channel = await message.guild.channels
@@ -99,9 +99,9 @@ exports.run = async (client, message, args) => {
     });
 
     // Tell the user to check the channel.
-    message.reply(`Please check <#${channel.id}> to create an account.`);
+    message.reply(`Sprawdź <#${channel.id}>, aby dokończyć rejstrację konta.`);
 
-    //Send the initial question.
+    // Send the initial question.
 
     let msg = null;
 
@@ -111,7 +111,7 @@ exports.run = async (client, message, args) => {
                 embed: new Discord.MessageEmbed()
                     .setColor(0x36393e)
                     .setDescription(question.question)
-                    .setFooter("You can type 'cancel' to cancel the request"),
+                    .setFooter("Napisz 'cancel', aby anulować."),
             });
         } else {
             msg.edit(message.member, {
@@ -126,7 +126,7 @@ exports.run = async (client, message, args) => {
                 errors: ["time"],
             })
             .catch((x) => {
-                channel.send("User failed to provide an input!\nAccount creation cancelled!");
+                channel.send("Użytkownik nie podał danych!\nRejstracja przerwana!");
                 setTimeout(() => {
                     channel.delete();
                 }, 5000);
@@ -139,7 +139,7 @@ exports.run = async (client, message, args) => {
 
         if (question.value == "cancel") {
             msg.delete();
-            channel.send("Cancelled!");
+            channel.send("Przerwano rejstrację konta!");
 
             setTimeout(() => {
                 channel.delete();
@@ -150,7 +150,7 @@ exports.run = async (client, message, args) => {
         for (const aftercheck of question.afterChecks) {
             if (aftercheck.check(question.value) == false) {
                 channel.send(aftercheck.errorMessage);
-                channel.send("Account creation cancelled!");
+                channel.send("Przerwano rejstrację konta!");
                 setTimeout(() => {
                     channel.delete();
                 }, 5000);
@@ -162,10 +162,10 @@ exports.run = async (client, message, args) => {
     msg.edit(message.member, {
         embed: msg.embeds[0]
             .setDescription(
-                "Attempting to create an account for you...\n\n>>> " +
-                    questions
-                        .map((question) => `**${question.id}:** ${question.value.toLowerCase()}`)
-                        .join("\n"),
+                "Tworzę konto dla Ciebie...\n\n>>> " +
+                questions
+                    .map((question) => `**${question.id}:** ${question.value.toLowerCase()}`)
+                    .join("\n"),
             )
             .setFooter("")
             .setTimestamp(),
@@ -204,24 +204,24 @@ exports.run = async (client, message, args) => {
                 domains: [],
             });
 
-            msg.edit("Hello! You created an new account, Here's the login information", {
+            msg.edit("Cześć! Utworzyłeś nowe konto w panelu , oto dane logowania:", {
                 embed: new Discord.MessageEmbed()
                     .setColor("GREEN")
                     .setDescription(
                         "URL: " +
-                            Config.Pterodactyl.hosturl +
-                            " \nUsername: " +
-                            data.username +
-                            " \nEmail: " +
-                            data.email +
-                            " \nPassword: " +
-                            data.password,
+                        Config.Pterodactyl.hosturl +
+                        " \nNazwa: " +
+                        data.username +
+                        " \nEmail: " +
+                        data.email +
+                        " \nHasło: " +
+                        data.password,
                     )
-                    .setFooter("Please note: It is recommended that you change the password"),
+                    .setFooter("Uwaga! Zaleca się jak najszybszą zmianę hasła."),
             });
 
             channel.send(
-                "**You have 30 minutes to keep note of this info before the channel is deleted.**",
+                "**Masz 30 minut na zapisanie tej informacji, zanim kanał zostanie usunięty.**",
             );
             message.guild.members.cache.get(message.author.id).roles.add(Config.DiscordBot.Roles.Client);
 
@@ -236,19 +236,19 @@ exports.run = async (client, message, args) => {
                 msg.edit("", {
                     embed: new Discord.MessageEmbed()
                         .setColor("RED")
-                        .setTitle("An error has occured:")
+                        .setTitle("Wystąpił błąd:")
                         .setDescription(
-                            "**ERRORS:**\n\n- " +
-                                errors.map((error) => error.detail.replace("\n", " ")).join("\n- "),
+                            "**BŁĘDY:**\n\n- " +
+                            errors.map((error) => error.detail.replace("\n", " ")).join("\n- "),
                         )
                         .setTimestamp()
-                        .setFooter("Deleting in 30 seconds..."),
+                        .setFooter("Usuwam kanał w ciągu 30 sekund..."),
                 });
                 setTimeout(function () {
                     channel.delete();
                 }, 30000);
             } else {
-                channel.send("An unexpected error has occured, please try again later...");
+                channel.send("Wystąpił nieoczekiwany błąd, spróbuj ponownie później...");
                 setTimeout(function () {
                     channel.delete();
                 }, 30000);

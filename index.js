@@ -1,12 +1,3 @@
-/*
-    ____              ____        __     __  __           __  _
-   / __ \____ _____  / __ )____  / /_   / / / /___  _____/ /_(_)___  ____ _
-  / / / / __ `/ __ \/ __  / __ \/ __/  / /_/ / __ \/ ___/ __/ / __ \/ __ `/
- / /_/ / /_/ / / / / /_/ / /_/ / /_   / __  / /_/ (__  ) /_/ / / / / /_/ /
-/_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
-Free Hosting forever!                                            /____/
-*/
-
 global.config = require("./config.json");
 
 const fs = require("fs");
@@ -22,17 +13,17 @@ global.transport = nodemailer.createTransport({
     },
 });
 
-//Discord Bot
+// Discord Bot
 let db = require("quick.db");
 global.Discord = require("discord.js");
 
 global.moment = require("moment");
-global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
-global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline nodes
-global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
-global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
-global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
-global.nodePing = new db.table("nodePing"); //Node ping response time
+global.userData = new db.table("userData"); // User data, Email, ConsoleID, Link time, Username, DiscordID
+global.nodeStatus = new db.table("nodeStatus"); // Node status. Online or offline nodes
+global.userPrem = new db.table("userPrem"); // Premium user data, Donated, Boosted, Total
+global.nodeServers = new db.table("nodeServers"); // Server count for node limits to stop nodes becoming overloaded
+global.codes = new db.table("redeemCodes"); // Premium server redeem codes...
+global.nodePing = new db.table("nodePing"); // Node ping response time
 
 global.client = new Discord.Client({
     restTimeOffset: 0,
@@ -42,7 +33,7 @@ global.client = new Discord.Client({
 });
 global.bot = client;
 
-//Event handler
+// Event handler
 fs.readdir("./src/events/", (err, files) => {
     files = files.filter((f) => f.endsWith(".js"));
     files.forEach((f) => {
@@ -55,7 +46,7 @@ fs.readdir("./src/events/", (err, files) => {
 global.createList = {};
 global.createListPrem = {};
 
-//Import all create server lists
+// Import all create server lists
 fs.readdir("./create-free/", (err, files) => {
     files = files.filter((f) => f.endsWith(".js"));
     files.forEach((f) => {
@@ -71,7 +62,7 @@ fs.readdir("./create-premium/", (err, files) => {
     });
 });
 
-//Global password gen
+// Global password gen
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 global.getPassword = () => {
     var password = "";

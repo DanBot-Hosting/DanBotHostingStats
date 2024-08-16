@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const humanizeDuration = require("humanize-duration");
 
-exports.description = "Shows the bot's uptime, memory usage and API latency.";
+exports.description = "Pokazuje czas działania bota, wykorzystanie pamięci i opóźnienie API.";
 
 /**
  * 
@@ -21,11 +21,11 @@ exports.run = async (client, message, args) => {
             true,
         )
         .addField(
-            "Memory usage:",
+            "Użycie pamięci:",
             Math.trunc(process.memoryUsage().heapUsed / 1024 / 1000) + "mb",
             true,
         )
-        .addField("API latency:", client.ws.ping + "ms", true)
+        .addField("Opóźnienie API:", client.ws.ping + "ms", true)
         .setFooter(`Ready Timestamp: ${myDate.toString()}`)
         .setColor("GREEN");
 

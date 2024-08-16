@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 const Config = require('../../config.json');
 
 
-exports.description = "Shows the commands available for the bot.";
+exports.description = "Pokazuje dotępne polecenia bota.";
 
 /**
  * 
@@ -15,7 +15,7 @@ exports.description = "Shows the commands available for the bot.";
  */
 exports.run = async (client, message, args) => {
     let embed = new Discord.MessageEmbed()
-        .setTitle("Commands:")
+        .setTitle("Komendy:")
         .setColor("BLUE");
 
     let categories = [];
@@ -36,8 +36,8 @@ exports.run = async (client, message, args) => {
                 if (item === 'staff' && !memberRoles.includes(Config.DiscordBot.Roles.Staff)) {
                     return; // Skip this category if the user doesn't have the staff role
                 }
-                categories.push(`**${config.DiscordBot.Prefix}${item}** - Use ${config.DiscordBot.Prefix}${item} for more information.`);
-            // If the item is a JavaScript file, it's a command.
+                categories.push(`**${config.DiscordBot.Prefix}${item}** - Użyj ${config.DiscordBot.Prefix}${item} po więcej informacji.`);
+                // If the item is a JavaScript file, it's a command.
             } else if (item.endsWith('.js')) {
                 const command = require(itemPath);
 
@@ -45,20 +45,20 @@ exports.run = async (client, message, args) => {
                 if (!command.roleRequirement || memberRoles.includes(command.roleRequirement)) {
                     commands.push({
                         name: item.replace('.js', ''),
-                        description: command.description || "No description available."
+                        description: command.description || "Brak opisu."
                     });
                 }
             }
         });
     } catch (error) {
-        console.error(`Error reading directory ${commandDir}:`, error);
+        console.error(`Wystąpił błąd w czytaniu katalogu ${commandDir}:`, error);
     }
 
     if (categories.length > 0) {
         categories.push('``` ```');
         embed.setDescription(categories.join("\n"));
     } else {
-        embed.setDescription("No subcommands available.");
+        embed.setDescription("Brak subkomend.");
     }
 
     commands.forEach(command => {
@@ -69,7 +69,7 @@ exports.run = async (client, message, args) => {
     });
 
     if (commands.length === 0) {
-        embed.addField("\u200B", "No commands available.");
+        embed.addField("\u200B", "Brak komend.");
     }
 
     message.reply(embed);

@@ -13,28 +13,28 @@ exports.run = (client, message) => {
     const data = userData.get(message.author.id);
 
     // Check if the user has an account.
-    if (!data) return message.reply("You do not have an account.");
+    if (!data) return message.reply("Nie posiadasz utworzonego konta.");
 
     // Check if the user has any domains.
-    if (!data.domains?.length) return message.reply("You do not have any domains.");
+    if (!data.domains?.length) return message.reply("Nie posiadasz żadnych domen.");
 
-    const description = data.domains.map(domain => `- ${domain.domain} (Server ID: ${domain.serverID})`).join("\n");
+    const description = data.domains.map(domain => `- ${domain.domain} (ID serwera: ${domain.serverID})`).join("\n");
 
     if (description.length > 4096) {
 
         // If description is greater than 4096 characters, send it as a file.
         const attachment = new Discord.MessageAttachment(Buffer.from(description), 'domains.txt');
-        return message.reply("Your domains list is too long to display here. Please see the attached file:", attachment);
+        return message.reply("Lista Twoich domen jest zbyt długa, aby ją tutaj wyświetlić. Zobacz załączony plik:", attachment);
     } else {
-            
+
         // If description is less than 4096 characters, send it as a message.
         const embed = new Discord.MessageEmbed()
             .setColor("BLUE")
-            .setTitle("Your Domains")
+            .setTitle("Twoje domeny:")
             .setDescription(description);
 
         return message.reply(embed);
     }
 };
 
-exports.description = "Displays the domains you have connected to your servers.";
+exports.description = "Wyświetla domeny podłączone do Twoich serwerów.";

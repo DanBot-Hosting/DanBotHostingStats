@@ -16,12 +16,12 @@ module.exports = async (client, oldMember, newMember) => {
 
         const displayName = newMember.displayName.toLowerCase();
 
-        //Hoisting usernames.
+        //H oisting usernames.
         if (displayName.match(/^[a-z0-9]/i) == null) {
-            return newMember.setNickname("I love Dan <3");
+            return newMember.setNickname("Kocham wojtoteke <3");
         };
 
-        //Banned usernames.
+        // Banned usernames.
         if (Config.BannedNames.some((r) => displayName.includes(r))) {
             newMember.setNickname("Moderated Nickname");
         };

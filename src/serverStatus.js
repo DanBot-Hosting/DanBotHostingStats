@@ -6,101 +6,101 @@ const Discord = require('discord.js');
 const Config = require('../config.json');
 const Status = require('../config/status-configs.js');
 
-const nodeStatus = new db.table("nodeStatus"); //Status of the Node.
-const nodeServers = new db.table("nodeServers"); //Counts of servers on each Node.
+const nodeStatus = new db.table("nodeStatus"); // Status of the Node.
+const nodeServers = new db.table("nodeServers"); // Counts of servers on each Node.
 
 function startNodeChecker() {
 
-    if (Config.Enabled.nodestatsChecker == false) return console.log("[NODE CHECKER] Disabled");
+    if (Config.Enabled.nodestatsChecker == false) return console.log("[STATUS] Wyłączony");
 
-        console.log("[NODE CHECKER] Enabled");
+    console.log("[STATUS] Włączony");
 
-        setInterval(() => {
-            // For Node Status.
-            for (const [category, nodes] of Object.entries(Status.Nodes)) {
-                for (const [node, data] of Object.entries(nodes)) {
-                    setTimeout(() => {
+    setInterval(() => {
+        // For Node Status.
+        for (const [category, nodes] of Object.entries(Status.Nodes)) {
+            for (const [node, data] of Object.entries(nodes)) {
+                setTimeout(() => {
 
-                            // Perform Pterodactyl Panel requests.
-                            axios({
-                                url: `${Config.Pterodactyl.hosturl}/api/client/servers/${data.serverID}/resources`,
-                                method: "GET",
-                                headers: {
-                                    Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
-                                    "Content-Type": "application/json",
-                                    Accept: "Application/vnd.pterodactyl.v1+json",
-                                },
-                            })
-                                .then((response) => {
-                                    // Node & Wings are online.
-                                    
+                    // Perform Pterodactyl Panel requests.
+                    axios({
+                        url: `${Config.Pterodactyl.hosturl}/api/client/servers/${data.serverID}/resources`,
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
+                            "Content-Type": "application/json",
+                            Accept: "Application/vnd.pterodactyl.v1+json",
+                        },
+                    })
+                        .then((response) => {
+                            // Node & Wings are online.
+
+                            nodeStatus.set(`${node}.timestamp`, Date.now());
+                            nodeStatus.set(`${node}.status`, true);
+                            nodeStatus.set(`${node}.is_vm_online`, true);
+                        })
+                        .catch((error) => {
+                            ping.ping(data.IP, 22)
+                                .then(() => {
+                                    // Wings is offline, but Node is online.
+
                                     nodeStatus.set(`${node}.timestamp`, Date.now());
-                                    nodeStatus.set(`${node}.status`, true);
+                                    nodeStatus.set(`${node}.status`, false);
                                     nodeStatus.set(`${node}.is_vm_online`, true);
                                 })
-                                .catch((error) => {                                    
-                                    ping.ping(data.IP, 22)
-                                        .then(() => {
-                                            // Wings is offline, but Node is online.
+                                .catch((e) => {
+                                    // Node & Wings are offline.
 
-                                            nodeStatus.set(`${node}.timestamp`, Date.now());
-                                            nodeStatus.set(`${node}.status`, false);
-                                            nodeStatus.set(`${node}.is_vm_online`, true);
-                                        })
-                                        .catch((e) => {
-                                            // Node & Wings are offline.
-                                            
-                                            nodeStatus.set(`${node}.timestamp`, Date.now());
-                                            nodeStatus.set(`${node}.status`, false);
-                                            nodeStatus.set(`${node}.is_vm_online`, false);
-                                        });
+                                    nodeStatus.set(`${node}.timestamp`, Date.now());
+                                    nodeStatus.set(`${node}.status`, false);
+                                    nodeStatus.set(`${node}.is_vm_online`, false);
                                 });
+                        });
 
-                            //Sets the Node Allocation usage and amount of slots total.
-                            setTimeout(() => {
-                                axios({
-                                    url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}/allocations?per_page=9000`,
-                                    method: "GET",
-                                    headers: {
-                                        Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
-                                        "Content-Type": "application/json",
-                                        Accept: "Application/vnd.pterodactyl.v1+json",
-                                    },
-                                })
-                                    .then((response) => {
-                                        const serverCount = response.data.data.filter(m => m.attributes.assigned).length;
+                    //Sets the Node Allocation usage and amount of slots total.
+                    setTimeout(() => {
+                        axios({
+                            url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}/allocations?per_page=9000`,
+                            method: "GET",
+                            headers: {
+                                Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                                "Content-Type": "application/json",
+                                Accept: "Application/vnd.pterodactyl.v1+json",
+                            },
+                        })
+                            .then((response) => {
+                                const serverCount = response.data.data.filter(m => m.attributes.assigned).length;
 
-                                        nodeServers.set(`${node}.servers`, serverCount);
-                                        nodeServers.set(`${node}.maxCount`, response.data.meta.pagination.total);
-                                    })
-                                    .catch((Error) => {
-                                        console.error('[NODE CHECKER] Error fetching node servers' + Error);
-                                    });
-                            }, 2000);
+                                nodeServers.set(`${node}.servers`, serverCount);
+                                nodeServers.set(`${node}.maxCount`, response.data.meta.pagination.total);
+                            })
+                            .catch((Error) => {
+                                console.error('[STATUS] Wystąpił błąd przay pobieraniu informacji:' + Error);
+                            });
+                    }, 2000);
+                }, 2000);
+            }
+        }
+
+        // Other Services.
+        for (const [category, services] of Object.entries(Status)) {
+            if (category !== "Nodes") {
+                for (const [name, data] of Object.entries(services)) {
+
+                    setTimeout(() => {
+                        ping.ping(data.IP, 22)
+                            .then(() => {
+                                nodeStatus.set(`${name}.timestamp`, Date.now());
+                                nodeStatus.set(`${name}.status`, true);
+                            })
+                            .catch(() => {
+                                nodeStatus.set(`${name}.timestamp`, Date.now());
+                                nodeStatus.set(`${name}.status`, false);
+                            });
                     }, 2000);
                 }
             }
-
-            // Other Services.
-            for (const [category, services] of Object.entries(Status)) {
-                if (category !== "Nodes") {
-                    for (const [name, data] of Object.entries(services)) {
-
-                        setTimeout(() => {
-                            ping.ping(data.IP, 22)
-                                .then(() => {
-                                    nodeStatus.set(`${name}.timestamp`, Date.now());
-                                    nodeStatus.set(`${name}.status`, true);
-                                })
-                                .catch(() => {
-                                    nodeStatus.set(`${name}.timestamp`, Date.now());
-                                    nodeStatus.set(`${name}.status`, false);
-                                });
-                        }, 2000);
-                    }
-                }
-            }
-        }, 10000);
+        }
+    }, 10000);
 }
 
 const parseStatus = () => {
@@ -120,14 +120,14 @@ const parseStatus = () => {
 
             let statusText;
             if (nodeStatusData?.maintenance) {
-                statusText = `🟣 Maintenance ~ Returning Soon!`;
+                statusText = `🟣 Przerwa techniczna ~ Wracamy niedługo!`;
             } else if (nodeStatusData?.status) {
                 statusText = `🟢 Online ${serverUsage}`;
             } else {
                 if (nodeStatusData?.is_vm_online == null) {
                     statusText = "🔴 **Offline**";
                 } else {
-                    statusText = (nodeStatusData.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") + 
+                    statusText = (nodeStatusData.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") +
                         ` **offline** ${serverUsage}`;
                 }
             }
@@ -167,11 +167,11 @@ const getEmbed = async () => {
 
     const Embed = new Discord.MessageEmbed();
 
-    Embed.setTitle("DBH Service Status");
+    Embed.setTitle("Status usług");
     Embed.setDescription(desc);
     Embed.setTimestamp();
     Embed.setColor("#7388d9");
-    Embed.setFooter("Last Updated");
+    Embed.setFooter("Zaktualizowano:");
 
     return Embed;
 };

@@ -10,7 +10,7 @@ const Discord = require("discord.js");
  */
 exports.run = async (client, message, args) => {
     userData.delete(message.author.id);
-    message.reply("You have unlinked this account!");
+    message.reply("Odlinkowano konto!");
 };
 
-exports.description = "Unlinks your account from a panel account.";
+exports.description = "Odlinkuj swoje konto z panelu.";

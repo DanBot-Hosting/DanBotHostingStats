@@ -16,27 +16,27 @@ exports.run = async (client, message, args) => {
         args[1] == null
             ? message.author.id
             : args[1].match(/[0-9]{17,19}/).length == 0
-              ? args[1]
-              : args[1].match(/[0-9]{17,19}/)[0];
+                ? args[1]
+                : args[1].match(/[0-9]{17,19}/)[0];
 
-    //Gets the user's premium data.
+    // Gets the user's premium data.
     let userPremium = userPrem.fetch(userId);
 
-    //If the user has no premium data, set it to an empty object.
+    // If the user has no premium data, set it to an empty object.
     if (userPremium == null) userPremium = {};
 
-    //Takes amount donated and divides by the price of a premium server to determine max count.
+    // Takes amount donated and divides by the price of a premium server to determine max count.
     const maxAmount = Math.floor((userPremium.donated || 0) / Config.PremiumServerPrice);
 
     const Embed = new Discord.MessageEmbed()
         .setColor("BLUE")
         .addField(
-            "Premium servers used:",
-            (userPremium.used || 0) + " out of " + parser.format(maxAmount) + " servers used.",
+            "Użyte serwery premium:",
+            (userPremium.used || 0) + " z " + parser.format(maxAmount) + " :)",
         )
         .addField("Amount Donated:", `$${parser.format(userPremium.donated || 0)}.00`, true);
 
     await message.reply(Embed);
 };
 
-exports.description = "Shows the number of premium servers you have, and how many you have used.";
+exports.description = "Pokazuje ile serwerów premium zostało użytych.";

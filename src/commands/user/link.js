@@ -4,7 +4,7 @@ const axios = require("axios");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
-exports.description = "Link your console account to your Discord account.";
+exports.description = "Połącz swoje konto w panelu z Discordem!";
 
 /**
  * 
@@ -32,13 +32,13 @@ exports.run = async (client, message, args) => {
                 },
             ])
             .catch(console.error);
-        message.reply(`Please check <#${channel.id}> to link your account.`);
+        message.reply(`Odwiedź kanał <#${channel.id}>, aby połączyć swoje konto.`);
 
         let category = server.channels.cache.find(
             (c) => c.id === MiscConfigs.accounts && c.type === "category",
         );
 
-        if (!category) throw new Error("Category channel does not exist");
+        if (!category) throw new Error("Kategoria nie została odnaleziona.");
 
         await channel.setParent(category.id);
 
@@ -51,9 +51,9 @@ exports.run = async (client, message, args) => {
         let msg = await channel.send(message.author, {
             embed: new Discord.MessageEmbed()
                 .setColor(0x36393e)
-                .setDescription("Please enter your console email address")
+                .setDescription("Podaj swój adres e-mail z panelu")
                 .setFooter(
-                    "You can type 'cancel' to cancel the request \n**This will take a few seconds to find your account.**",
+                    "Napisz 'cancel', aby anulować.\n**Wyszukuję konto w bazie danych.**",
                 ),
         });
 
@@ -68,18 +68,18 @@ exports.run = async (client, message, args) => {
         collector.on("collect", (messagecollected) => {
             if (messagecollected.content === "cancel") {
                 return msg
-                    .edit("Request to link your account canceled.", null)
+                    .edit("Łączenie konta zostało anulowane.", null)
                     .then(channel.delete());
             }
 
-            //Find account then link
+            // Find account then link
             setTimeout(async () => {
                 const consoleUser = users.find((usr) =>
                     usr.attributes ? usr.attributes.email === messagecollected.content : false,
                 );
 
                 if (!consoleUser) {
-                    channel.send("I can't find a user with that account! \nRemoving channel!");
+                    channel.send("Nie mogę znaleźć podanych danych w mojej bazie! \nUsuwam kanał!");
                     setTimeout(() => {
                         channel.delete();
                     }, 5000);
@@ -101,13 +101,13 @@ exports.run = async (client, message, args) => {
                     const emailmessage = {
                         from: config.Email.From,
                         to: messagecollected.content,
-                        subject: "DanBot Hosting - Someone tried to link their Discord account!",
+                        subject: "DinoHost - Łączenie konta z Discordem",
                         html:
-                            "Hello, " +
+                            "Witaj! " +
                             message.author.username +
                             " (ID: " +
                             message.author.id +
-                            ") just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: " +
+                            ") próbował połączyć swoje konto Discord z tym adresem e-mail w panelu. Oto kod weryfikacyjny, który jest potrzebny do połączenia: " +
                             code,
                     };
                     transport.sendMail(emailmessage, function (err, info) {
@@ -115,7 +115,7 @@ exports.run = async (client, message, args) => {
                             console.log(err);
                         } else {
                             channel.send(
-                                "Please check the email account for a verification code to complete linking. You have 2mins",
+                                "Sprawdź skrzynkę email, aby uzyskać kod weryfikacyjny potrzebny do połączenia Twojego konta. Masz 2 minuty",
                             );
 
                             const collector = new Discord.MessageCollector(
@@ -143,31 +143,31 @@ exports.run = async (client, message, args) => {
                                     let embedstaff = new Discord.MessageEmbed()
                                         .setColor("Green")
                                         .addField(
-                                            "__**Linked Discord account:**__",
+                                            "__**Nick z Discorda:**__",
                                             message.author.id,
                                         )
                                         .addField(
-                                            "__**Linked Console account email:**__",
+                                            "__**Adres email:**__",
                                             consoleUser.attributes.email,
                                         )
                                         .addField(
-                                            "__**Linked At: (TIME / DATE)**__",
+                                            "__**Czas:**__",
                                             timestamp + " / " + datestamp,
                                         )
                                         .addField(
-                                            "__**Linked Console username:**__",
+                                            "__**Nick z panelu:**__",
                                             consoleUser.attributes.username,
                                         )
                                         .addField(
-                                            "__**Linked Console ID:**__",
+                                            "__**ID użytkownika w panelu:**__",
                                             consoleUser.attributes.id,
                                         );
 
-                                    channel.send("Account linked!").then(
+                                    channel.send("Konto połączone!").then(
                                         client.channels.cache
                                             .get(MiscConfigs.accountLinked)
                                             .send(
-                                                `<@${message.author.id}> linked their account. Heres some info: `,
+                                                `<@${message.author.id}> połączył swoje konto. Oto kilka informacji: `,
                                                 embedstaff,
                                             ),
                                         setTimeout(() => {
@@ -176,7 +176,7 @@ exports.run = async (client, message, args) => {
                                     );
                                 } else {
                                     channel.send(
-                                        "Code is incorrect. Linking cancelled!\n\nRemoving channel!",
+                                        "Kod jest niepoprawny! Anulowano łączenie.\n\nUsuwam kanał...",
                                     );
                                     setTimeout(() => {
                                         channel.delete();
@@ -191,12 +191,12 @@ exports.run = async (client, message, args) => {
     } else {
         let embed = new Discord.MessageEmbed()
             .setColor(`GREEN`)
-            .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
+            .addField(`__**Nazwa użytkownika**__`, userData.fetch(message.author.id + ".username"))
             .addField(
-                `__**Linked Date (YYYY-MM-DD)**__`,
+                `__**Data (YYYY-MM-DD)**__`,
                 userData.fetch(message.author.id + ".linkDate"),
             )
-            .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"));
-        await message.reply("This account is linked!", embed);
+            .addField(`__**Czas**__`, userData.fetch(message.author.id + ".linkTime"));
+        await message.reply("Te konto jest już połączone!", embed);
     }
 };

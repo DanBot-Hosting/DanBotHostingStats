@@ -4,7 +4,7 @@ const exec = require("child_process").exec;
 const Config = require("../../config.json");
 
 exports.roleRequirement = Config.DiscordBot.Roles.BotAdmin;
-exports.description = "Runs terminal commands.";
+exports.description = "Wykonuje komendy w terminalu.";
 
 /**
  * 
@@ -15,14 +15,14 @@ exports.description = "Runs terminal commands.";
  */
 exports.run = (client, message, args) => {
     if (
-        ["137624084572798976", "757296951925538856", "853158265466257448"].includes(
+        ["286178186645995522", "836972435550896139", "1050456185637179412"].includes( // smutex, wojtoteka, fafik
             message.author.id,
         )
     ) {
         exec(`${args.join(" ")}`, (error, stdout) => {
             let response = error || stdout;
 
-            if (response.length > 4000) console.log(response), (response = "Output too long.");
+            if (response.length > 4000) console.log(response), (response = "Zbyt duża odpowiedź.");
 
             message.reply("", {
                 embed: new Discord.MessageEmbed()

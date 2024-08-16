@@ -7,7 +7,7 @@ const Config = require('../../config.json');
  * @param {BigInt} userId - The user ID to fetch data for.
  * @returns {Promise<Object>} - The response data.
  */
-module.exports = async function(userId) {
+module.exports = async function (userId) {
     try {
         const response = await axios({
             url: `${Config.Pterodactyl.hosturl}/api/application/users/${userId}?include=servers`,
@@ -22,7 +22,7 @@ module.exports = async function(userId) {
         });
         return response.data;
     } catch (error) {
-        console.error('[REQUEST] Error fetching user servers:', error);
+        console.error('[ZAPYTANIE] Wystąpił błąd przy pobieraniu informacji o serwerach:', error);
         throw error;
     }
 };

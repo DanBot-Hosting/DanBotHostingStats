@@ -15,14 +15,14 @@ module.exports = async (client) => {
         guild.members.cache
             .filter((member) => member.displayName.match(/^[a-z0-9]/i) == null)
             .forEach((x) => {
-                x.setNickname("I love Dan <3");
+                x.setNickname("Kocham Wojtoteke <3");
             });
     };
 
     checkNicks();
 
     console.log(
-        chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " has logged in!"),
+        chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " zalogował się!"),
     );
 
     // Cloes all accounts channels that are older than 30 minutes.
@@ -30,19 +30,19 @@ module.exports = async (client) => {
         .filter((x) => x.parentID === MiscConfigs.accounts && Date.now() - x.createdAt > 30 * 60 * 1000)
         .forEach((x) => x.delete());
 
-    //Initializing Cooldown
+    // Initializing Cooldown
     client.cooldown = {};
 
-    //Automatic 30second git pull.
+    // Automatic 30 second git pull.
     setInterval(() => {
         exec(`git pull`, (error, stdout) => {
             let response = error || stdout;
             if (!error) {
-                if (!response.includes("Already up to date.")) {
+                if (!response.includes("Brak aktualizacji!")) {
                     client.channels.cache
                         .get(MiscConfigs.github)
                         .send(
-                            `<t:${Date.now().toString().slice(0, -3)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${response}\`\`\``,
+                            `<t:${Date.now().toString().slice(0, -3)}:f> Automatyczna aktualizacja z GitHuba, pobieram pliki.\n\`\`\`${response}\`\`\``,
                         );
                     setTimeout(() => {
                         process.exit();
@@ -53,26 +53,26 @@ module.exports = async (client) => {
     }, 30000);
 
     setInterval(() => {
-        //Auto Activities List
+        // Auto Activities List
         const activities = [
             {
-                text: "over DBH",
+                text: "panel klienta",
                 type: "WATCHING",
             },
             {
-                text: "free servers being created",
+                text: "darmowe serwery",
                 type: "WATCHING",
             },
             {
-                text: "over 15,000+ happy clients",
+                text: "50+ zadowolonych klientów",
                 type: "WATCHING",
             },
             {
-                text: "with the ban hammer over abusers",
+                text: "Minecraft",
                 type: "PLAYING",
             },
             {
-                text: "powerful servers doing work",
+                text: "potężne serwery",
                 type: "WATCHING",
             },
         ];
@@ -83,7 +83,7 @@ module.exports = async (client) => {
         });
     }, 15000);
 
-    await ServerStatus.startNodeChecker(); //Start the Node Checker.
+    await ServerStatus.startNodeChecker(); // Start the Node Checker.
 
     // Node Status Embed.
     const channel = client.channels.cache.get(MiscConfigs.nodestatus);

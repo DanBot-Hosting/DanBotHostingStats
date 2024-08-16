@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const Config = require('../../config.json');
 const MiscConfigs = require('../../config/misc-configs.js');
 
-exports.description = "Displays tags for the users to use in FAQ questions.";
+exports.description = "Wyświetla tagi, których użytkownicy mogą używać odpowiadając na pytania FAQ.";
 
 /**
  * 
@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
 
     const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
-        .setDescription(`You need to provide a valid tag.`)
+        .setDescription(`Musisz podać prawidłowy tag.`)
         .setFooter(Config.DiscordBot.Prefix + "tag <tag>");
 
     if (!args[0]) {
@@ -30,20 +30,20 @@ exports.run = async (client, message, args) => {
         case "command":
         case "commands":
             embed.setDescription(
-                "Hey! Please only run your commands in <#" + MiscConfigs.normalCommands + ">, <#" + MiscConfigs.donatorCommands + "> or <#" + MiscConfigs.betaCommands + ">",
+                "Hej! Komend możesz używać tylko i wyłącznie na <#" + MiscConfigs.normalCommands + ">, <#" + MiscConfigs.donatorCommands + "> lub <#" + MiscConfigs.betaCommands + ">",
             );
             break;
         case "504":
             embed.setDescription(
-                "`Error 504` means that the wings are currently down. This is nothing you can change.\nPlease be patient and wait for Dan to fix it.",
+                "`Błąd 504` oznacza, że systemy są obecnie wyłączone. Nie możesz nic z tym zrobić.\nProszę być cierpliwym oraz poczekać, aż Smutex to naprawi.",
             );
             break;
 
         default:
-            return message.reply(helpEmbed.setDescription("**I could not find this tag.**"));
+            return message.reply(helpEmbed.setDescription("**Nie mogę znaleźć tego tagu.**"));
     }
 
-    embed.setFooter(`Requested by ${message.author.tag}`);
+    embed.setFooter(`Wywołane przez: ${message.author.tag}`);
 
     message.delete();
     return message.channel.send(embed);

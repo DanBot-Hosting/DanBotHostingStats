@@ -1,10 +1,10 @@
 const Discord = require("discord.js");
-const fs = require("fs");  
+const fs = require("fs");
 
 const Config = require('../../config.json');
 
 exports.roleRequirement = Config.DiscordBot.Roles.BotAdmin;
-exports.description = "Evaluate JavaScript code.";
+exports.description = "Wykonuje kod JavaScript..";
 
 /**
  * 
@@ -18,7 +18,7 @@ exports.run = async (client, message) => {
     let cont = message.content.split(" ").slice(1).join(" ");
 
     if (
-        ["137624084572798976", "757296951925538856", "853158265466257448"].includes(
+        ["286178186645995522", "836972435550896139", "1050456185637179412"].includes( // smutex, wojtoteka, fafik
             message.author.id,
         )
     ) {
@@ -39,7 +39,7 @@ exports.run = async (client, message) => {
                 .replace(rege2, "69");
             return text;
         }
-        message.reply("Evaluating...").then((msg) => {
+        message.reply("Wykonywanie...").then((msg) => {
             try {
                 let code = args.join(" ");
                 let evaled = eval(code);
@@ -51,38 +51,38 @@ exports.run = async (client, message) => {
                     try {
                         let evalcode1 = new Discord.MessageEmbed()
                             .setAuthor(
-                                `Eval by ${message.author.tag}`,
+                                `Wykonał: ${message.author.tag}`,
                                 `https://cdn.discordapp.com/emojis/314405560701419520.png`,
                             )
-                            .setDescription(`**Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+                            .setDescription(`**Wejście:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                             .addField(
                                 `\u200b`,
-                                `**Output:**\n\n\`\`\`js\nOutput too long, logged to ${__dirname}\\eval.txt\`\`\``,
+                                `**Wyjście:**\n\n\`\`\`js\nWyjście za duże, tworzę plik ${__dirname}\\eval.txt\`\`\``,
                                 true,
                             )
                             .setColor(0x00ff00)
                             .setFooter(
-                                `Node.js - Time taken: ${Date.now() - message.createdTimestamp} ms`,
+                                `Wykonano w: ${Date.now() - message.createdTimestamp} ms`,
                             );
                         msg.edit({
                             content: "",
                             embed: evalcode1,
                         }),
                             fs.writeFile(`eval.txt`, `${clean(evaled)}`),
-                            message.reply("Eval output", {
+                            message.reply("Wyjście", {
                                 files: ["eval.txt"],
                             });
                         return fs.writeFile(`eval.txt`, `${clean(evaled)}`);
                     } catch (err) {
                         let errorcode1 = new Discord.MessageEmbed()
                             .setAuthor(
-                                `Eval by ${message.author.tag}`,
+                                `Wykonał: ${message.author.tag}`,
                                 `https://cdn.discordapp.com/emojis/314405560701419520.png`,
                             )
-                            .setDescription(`**Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+                            .setDescription(`**Wejście:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                             .addField(
                                 `\u200b`,
-                                `**Output:**\n\n\`\`\`js\nOutput too long, logged to ${__dirname}\\eval.txt\`\`\``,
+                                `**Wyjście:**\n\n\`\`\`js\nWyjście za duże, tworzę plik ${__dirname}\\eval.txt\`\`\``,
                                 true,
                             )
                             .setColor(0xff0000)
@@ -99,10 +99,10 @@ exports.run = async (client, message) => {
                         `Eval by ${message.author.tag}`,
                         `https://cdn.discordapp.com/emojis/314405560701419520.png`,
                     )
-                    .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+                    .setDescription(`**:inbox_tray: Wejście:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                     .addField(
                         `\u200b`,
-                        `**:outbox_tray: Output:**\n\n\`\`\`js\n${clean(evaled)}\`\`\``,
+                        `**:outbox_tray: Wyjście:**\n\n\`\`\`js\n${clean(evaled)}\`\`\``,
                         true,
                     )
                     .setColor(0x00ff00)
@@ -110,17 +110,17 @@ exports.run = async (client, message) => {
                 msg.edit({
                     content: "",
                     embed: evalcode,
-                }).catch((e) => {});
+                }).catch((e) => { });
             } catch (err) {
                 let errorcode = new Discord.MessageEmbed()
                     .setAuthor(
-                        `Eval by ${message.author.tag}`,
+                        `Wykonał: ${message.author.tag}`,
                         `https://cdn.discordapp.com/emojis/314405560701419520.png`,
                     )
-                    .setDescription(`**:inbox_tray: Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+                    .setDescription(`**:inbox_tray: Wejście:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                     .addField(
                         `\u200b`,
-                        `**:outbox_tray: Output:**\`\`\`js\n${clean(err)}\`\`\``,
+                        `**:outbox_tray: Wyjście:**\`\`\`js\n${clean(err)}\`\`\``,
                         true,
                     )
                     .setColor(0xff0000)
@@ -128,7 +128,7 @@ exports.run = async (client, message) => {
                 msg.edit({
                     content: "",
                     embed: errorcode,
-                }).catch((e) => {});
+                }).catch((e) => { });
             }
         });
     } else {
@@ -148,10 +148,10 @@ exports.run = async (client, message) => {
                     message.author.tag,
                     `https://cdn.discordapp.com/emojis/314405560701419520.png`,
                 )
-                .setDescription(`:inbox_tray: **Input:**\n\n\`\`\`js\n${cont}\`\`\``, true)
+                .setDescription(`:inbox_tray: **Wejście:**\n\n\`\`\`js\n${cont}\`\`\``, true)
                 .addField(
                     `\u200b`,
-                    `:outbox_tray: **Output:**\`\`\`\n${randomResponse}\`\`\``,
+                    `:outbox_tray: **Wyjście:**\`\`\`\n${randomResponse}\`\`\``,
                     true,
                 )
                 .setColor(0xff0000)
@@ -159,7 +159,7 @@ exports.run = async (client, message) => {
             msg.edit({
                 content: "",
                 embed: errorcodefake,
-            }).catch((e) => {});
+            }).catch((e) => { });
         });
     }
 };
