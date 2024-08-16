@@ -15,7 +15,7 @@ module.exports = async (client) => {
         guild.members.cache
             .filter((member) => member.displayName.match(/^[a-z0-9]/i) == null)
             .forEach((x) => {
-                x.setNickname("Kocham Wojtoteke <3");
+                x.setNickname("Kocham wojtoteke <3");
             });
     };
 
