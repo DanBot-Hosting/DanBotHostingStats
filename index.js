@@ -28,7 +28,6 @@ global.Discord = require("discord.js");
 
 global.moment = require("moment");
 global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
-global.domains = new db.table("linkedDomains"); //Linked domains for unproxy and proxy cmd
 global.nodeStatus = new db.table("nodeStatus"); //Node status. Online or offline nodes
 global.userPrem = new db.table("userPrem"); //Premium user data, Donated, Boosted, Total
 global.nodeServers = new db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
