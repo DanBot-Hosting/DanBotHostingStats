@@ -1,10 +1,10 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
 
-exports.description = "Server lockdown command. Locked to Administator(s), Co Owner(s), and Owner(s).";
+exports.description = "Komenda do zablokowania serwera. Zarezerwowana dla Administratorów.";
 
 /**
- * Server lockdown command. Locked to Administator(s), Co Owner(s), and Owner(s).
+ * Komenda do zablokowania serwera. Zarezerwowana dla Administratorów, Współwłaścicieli i Właścicieli.
  *
  * @param {Discord.Client} client
  * @param {Discord.Message} message
@@ -12,35 +12,35 @@ exports.description = "Server lockdown command. Locked to Administator(s), Co Ow
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    //If user is not a Owner, CoOwner, or Admin, returns.
+    // Jeśli użytkownik nie jest Właścicielem, Współwłaścicielem lub Administratorem, zwraca.
     if (
         !message.member.roles.cache.find((Role) =>
             [
-                Configs.DiscordBot.Roles.Owner,
-                Configs.DiscordBot.Roles.CoOwner,
-                Configs.DiscordBot.Roles.Admin,
+                Config.DiscordBot.Roles.Owner,
+                Config.DiscordBot.Roles.CoOwner,
+                Config.DiscordBot.Roles.Admin,
             ].some((List) => List == Role.id),
         )
     )
         return;
 
-    //If no arguments are provided, locks the current channel.
+    // Jeśli nie podano argumentów, blokuje obecny kanał.
     if (!args[1]) {
         message.reply(
-            "Channel is now locked. Only Administrator+ can post here. \n\n`" + Config.DiscordBot.Prefix + "staff lockdown unlock` to unlock this channel.",
+            "Kanał jest teraz zablokowany. Tylko Administratorzy i wyżej mogą tutaj pisać. \n\n`" + Config.DiscordBot.Prefix + "staff lockdown unlock` aby odblokować ten kanał.",
         );
 
-        //Disabled sending messages for everyone in this channel.
-        message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
+        // Wyłącza możliwość wysyłania wiadomości dla wszystkich na tym kanale.
+        message.channel.updateOverwrite(Config.DiscordBot.MainGuildId, {
             SEND_MESSAGES: false,
         });
 
-        //If the second argument is unlock, unlocks the current channel.
+        // Jeśli drugi argument to unlock, odblokowuje obecny kanał.
     } else if (args[1].toLowerCase() === "unlock") {
-        message.reply("Channel is now unlocked. Everyone can now send messages here again!");
+        message.reply("Kanał jest teraz odblokowany. Teraz wszyscy mogą wysyłać wiadomości!");
 
-        //Enables sending messages for everyone in this channel.
-        message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
+        // Włącza możliwość wysyłania wiadomości dla wszystkich na tym kanale.
+        message.channel.updateOverwrite(Config.DiscordBot.MainGuildId, {
             SEND_MESSAGES: null,
         });
     }

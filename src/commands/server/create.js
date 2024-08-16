@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const Config = require('../../../config.json');
 const serverCreateSettings = require("../../../createData");
 
-exports.description = "Create a free server. View this command for usage.";
+exports.description = "Utwórz darmowy serwer. Zobacz tę komendę, aby uzyskać instrukcje.";
 
 /**
  * 
@@ -14,44 +14,45 @@ exports.description = "Create a free server. View this command for usage.";
  */
 exports.run = async (client, message, args) => {
 
-    return message.channel.send("Server creation is disabled. Do not ping staff.");
+    // Komunikat o wyłączeniu tworzenia serwera
+    return message.channel.send("Tworzenie serwera jest wyłączone. Nie pinguj personelu.");
 
     const helpEmbed = new Discord.MessageEmbed()
         .setColor("RED")
         .setDescription(
-            `List of servers: (use ` + Config.DiscordBot.Prefix + `server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`,
+            `Lista serwerów: (użyj ` + Config.DiscordBot.Prefix + `server create <typ> <nazwa>)\n\n*Proszę pamiętać, że niektóre węzły mogą mieć problemy z połączeniem z botem, co może prowadzić do błędów w tym procesie.*\n`,
         )
         .addField(
-            "__**Languages:**__",
-            "NodeJS \nBun \nPython \nJava \naio\n Rust (use rustc to create)",
+            "__**Języki:**__",
+            "NodeJS \nBun \nPython \nJava \naio\n Rust (użyj rustc do utworzenia)",
             true,
         )
-        .addField("__**Bots:**__", "redbot", true)
-        .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
-        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
-        .addField("__**Web Hosting:**__", "Nginx", true)
-        .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
+        .addField("__**Boty:**__", "redbot", true)
+        .addField("__**Serwery głosowe:**__", "TS3 \nMumble", true)
+        .addField("__**Bazy danych:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
+        .addField("__**Hosting WWW:**__", "Nginx", true)
+        .addField("__**Własne jaja:**__", "ShareX \nOpenX", true)
         .addField(
-            "__**Software:**__",
+            "__**Oprogramowanie:**__",
             "codeserver \ngitea \nhaste\n uptimekuma\n grafana \n rabbitmq",
             true,
         )
-        .addField("__**Storage:**__", "storage", true)
-        .setFooter("Example: " + Config.DiscordBot.Prefix + "server create NodeJS Testing Server");
+        .addField("__**Przechowywanie:**__", "storage", true)
+        .setFooter("Przykład: " + Config.DiscordBot.Prefix + "server create NodeJS Testing Server");
 
     const serverName =
         message.content.split(" ").slice(3).join(" ") ||
-        "Untitled Server (settings -> server name)";
+        "Nieprzypisany serwer (ustawienia -> nazwa serwera)";
     let consoleID = userData.get(message.author.id);
 
     if (consoleID == null) {
         message.reply(
-            "Oh no, Seems like you do not have an account linked to your discord ID.\n" +
-                "If you have not made an account yet please check out `" +
-                Config.DiscordBot.Prefix +
-                "user new` to create an account \nIf you already have an account link it using `" +
-                Config.DiscordBot.Prefix +
-                "user link`",
+            "O nie, wydaje się, że nie masz konta powiązanego z Twoim ID Discorda.\n" +
+            "Jeśli jeszcze nie utworzyłeś konta, sprawdź `" +
+            Config.DiscordBot.Prefix +
+            "user new`, aby utworzyć konto.\nJeśli już masz konto, połącz je używając `" +
+            Config.DiscordBot.Prefix +
+            "user link`",
         );
         return;
     }
@@ -106,14 +107,14 @@ exports.run = async (client, message, args) => {
                 let embed = new Discord.MessageEmbed()
                     .setColor(`GREEN`)
                     .addField(`__**Status:**__`, response.statusText)
-                    .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                    .addField(`__**Server name:**__`, serverName)
-                    .addField(`__**Type:**__`, type);
+                    .addField(`__**Utworzono dla ID użytkownika:**__`, consoleID.consoleID)
+                    .addField(`__**Nazwa serwera:**__`, serverName)
+                    .addField(`__**Typ:**__`, type);
 
                 if (type === "aio" || type === "java") {
                     embed.addField(
-                        `__**WARNING**__`,
-                        `Please do not host game servers on java or AIO servers. If you need a Game Server, use a Game Node. Slots are 1$ for` + (1 / Config.PremiumServerPrice) + ` servers!`,
+                        `__**OSTRZEŻENIE**__`,
+                        `Proszę nie hostować serwerów gier na serwerach java lub AIO. Jeśli potrzebujesz serwera gry, użyj węzła gry. Miejsca kosztują 1$ za` + (1 / Config.PremiumServerPrice) + ` serwery!`,
                     );
                 }
 
@@ -124,32 +125,32 @@ exports.run = async (client, message, args) => {
                     const embed = new Discord.MessageEmbed()
                         .setColor("RED")
                         .addField(
-                            `__**Failed to create a new server**__`,
-                            `The node is currently full, Please check ` + MiscConfigs.serverStatus + ` for updates. \nIf there is no updates please alert a System Administrator (<@& ` + Config.DiscordBot.Roles.SystemAdmin + `>)`,
+                            `__**Nie udało się utworzyć nowego serwera**__`,
+                            `Węzeł jest obecnie pełny, sprawdź ` + MiscConfigs.serverStatus + ` po aktualizacje. \nJeśli nie ma aktualizacji, powiadom administratora systemu (<@& ` + Config.DiscordBot.Roles.SystemAdmin + `>)`,
                         );
                     message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 504") {
                     const embed = new Discord.MessageEmbed()
                         .setColor("RED")
                         .addField(
-                            `__**Failed to create a new server**__`,
-                            `The node is currently offline or having issues, You can check the status of the node in this channel: <#` + MiscConfigs.serverStatus + `>`,
+                            `__**Nie udało się utworzyć nowego serwera**__`,
+                            `Węzeł jest obecnie offline lub ma problemy. Możesz sprawdzić status węzła na tym kanale: <#` + MiscConfigs.serverStatus + `>`,
                         );
                     message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 429") {
                     const embed = new Discord.MessageEmbed()
                         .setColor("RED")
                         .addField(
-                            `__**Failed to create a new server**__`,
-                            `Uh oh, This shouldn\'t happen, Try again in a minute or two.`,
+                            `__**Nie udało się utworzyć nowego serwera**__`,
+                            `Ups, coś poszło nie tak, spróbuj ponownie za minutę lub dwie.`,
                         );
                     message.reply(embed);
                 } else {
                     const embed = new Discord.MessageEmbed()
                         .setColor("RED")
                         .addField(
-                            `__**Failed to create a new server**__`,
-                            `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`,
+                            `__**Nie udało się utworzyć nowego serwera**__`,
+                            `Wystąpił inny problem. Jeśli to się powtarza, otwórz zgłoszenie i powiadom Smutexa.\nBłąd: ${error}`,
                         );
                     message.reply(embed);
                 }

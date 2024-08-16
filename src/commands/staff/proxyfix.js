@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const Config = require('../../../config.json');
 const Proxies = require('../../../config/proxy-configs.js').Proxies;
 
-//This function will generate a new token for the specified location.
+// Ta funkcja wygeneruje nowy token dla określonej lokalizacji.
 async function getToken(Url, Email, Password) {
     const serverRes = await axios({
         url: Url + "/api/tokens",
@@ -22,7 +22,7 @@ async function getToken(Url, Email, Password) {
     return "Bearer " + serverRes.data.token;
 }
 
-exports.description = "Removes a user domain manually.";
+exports.description = "Ręcznie usuwa domenę użytkownika.";
 
 /**
  * 
@@ -35,16 +35,16 @@ exports.run = async (client, message, args) => {
 
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Staff)) return;
 
-    if (!args[1]) return message.channel.send("Please provide a domain.\n\n" + "WARNING: Do not use this command without checking if the domain is not already linked!\n\n" + "**This command should be used as a last resort if the domain is not linking.**");
+    if (!args[1]) return message.channel.send("Proszę podać domenę.\n\n" + "OSTRZEŻENIE: Nie używaj tej komendy bez sprawdzenia, czy domena nie jest już powiązana!\n\n" + "**Ta komenda powinna być używana jako ostateczność, jeśli domena nie łączy się.**");
 
-    
-    const ReplyMessage = await message.channel.send("**This command should be used as a last resort if the domain is not linking.**\n\nTrying to fix proxy...");
+
+    const ReplyMessage = await message.channel.send("**Ta komenda powinna być używana jako ostateczność, jeśli domena nie łączy się.**\n\nPróbuję naprawić proxy...");
 
     let token;
     let using = false;
     let idOfProxy = null;
 
-    ReplyMessage.edit(`Authenticated, looking for proxy host...`);
+    ReplyMessage.edit(`Zautoryzowano, szukam hosta proxy...`);
 
     for (let i = 0; i < Proxies.length; i++) {
         const proxyServer = Proxies[i];
@@ -63,43 +63,43 @@ exports.run = async (client, message, args) => {
             },
         });
 
-            for (let index = 0; index < listOfUrls.data.length; index++) {
-                const proxyObject = listOfUrls.data[index];
-                if (proxyObject.domain_names.includes(args[1])) {
-                    idOfProxy = proxyObject.id;
-                    using = i;
-                    i = Proxies.length;
-                }
+        for (let index = 0; index < listOfUrls.data.length; index++) {
+            const proxyObject = listOfUrls.data[index];
+            if (proxyObject.domain_names.includes(args[1])) {
+                idOfProxy = proxyObject.id;
+                using = i;
+                i = Proxies.length;
             }
         }
+    }
 
-        if (!idOfProxy) {
-            ReplyMessage.edit("DOMAIN_NOT_FOUND\nThis domain should work, did you make a typo?");
+    if (!idOfProxy) {
+        ReplyMessage.edit("DOMENA_NIE_ZNALEZIONA\nTa domena powinna działać, czy zrobiłeś literówkę?");
+    } else {
+        ReplyMessage.edit(
+            `Znaleziono domenę ${idOfProxy} na ${Proxies[using].name}, próbuję usunąć...`,
+        );
+
+        const deletedObject = await axios({
+            url: Proxies[using].url + `/api/nginx/proxy-hosts/${idOfProxy}`,
+            method: "DELETE",
+            followRedirect: true,
+            maxRedirects: 5,
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (deletedObject) {
+            ReplyMessage.edit(
+                `Domena powinna teraz działać, upewnij się, że istnieje rekord DNS wskazujący na proxy DinoHost i Cloudflare proxy jest wyłączone, jeśli używasz Cloudflare.`,
+            );
         } else {
             ReplyMessage.edit(
-                `Found domain ${idOfProxy} on ${Proxies[using].name}, attempting to delete...`,
+                `Znaleziono domenę ${idOfProxy} na ${Proxies[using].name}, nie udało się jej usunąć! Spróbuj ponownie?`,
             );
-
-            const deletedObject = await axios({
-                url: Proxies[using].url + `/api/nginx/proxy-hosts/${idOfProxy}`,
-                method: "DELETE",
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            });
-
-            if (deletedObject) {
-                ReplyMessage.edit(
-                    `The domain should now work, please ensure there is a DNS record pointing to the DBH proxy and Cloudflare proxy is disabled if you are using Cloudflare.`,
-                );
-            } else {
-                ReplyMessage.edit(
-                    `Found domain ${idOfProxy} on ${Proxies[using].name}, failed to delete! Try again?`,
-                );
-            };
         }
-    
+    }
+
 };

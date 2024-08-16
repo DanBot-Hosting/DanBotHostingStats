@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
-exports.description = "Add Premium servers to a user.";
+exports.description = "Dodaje serwery Premium do użytkownika.";
 
 /**
  * 
@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
 
     let setDonations = (userid, amount) => {
 
-        if (userPrem.get(userid + ".used")){
+        if (userPrem.get(userid + ".used")) {
             userPrem.set(userid + ".used", 0);
         }
 
@@ -32,15 +32,15 @@ exports.run = async (client, message, args) => {
     let sendMessage = (userid, amount) => {
         message.delete();
         message.channel.send(
-            "Thanks <@" +
-                userid +
-                "> for donating! \nYou can now create donator servers using `" +
-                Config.DiscordBot.Prefix +
-                "server create-donator`",
+            "Dzięki <@" +
+            userid +
+            "> za darowiznę! \nTeraz możesz tworzyć serwery donatorów używając `" +
+            Config.DiscordBot.Prefix +
+            "server create-donator`",
         );
         client.channels.cache
             .get(MiscConfigs.donations)
-            .send("Thanks, <@" + userid + "> for donating $" + parser.format(amount));
+            .send("Dzięki, <@" + userid + "> za darowiznę $" + parser.format(amount));
     };
 
     let userid = message.guild.members.cache.get(

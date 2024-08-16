@@ -18,19 +18,19 @@ exports.run = async (client, message, args) => {
     };
 
     if (!args[1]) {
-        message.reply("Usage is: `" + Config.DiscordBot.Prefix + "server redeem code`");
+        message.reply("Użycie: `" + Config.DiscordBot.Prefix + "server redeem code`");
     } else {
         let code = codes.get(args[1]);
 
         if (code == null) {
-            message.reply("That code is invalid or expired");
+            message.reply("Ten kod jest nieważny lub wygasł");
             return;
         }
         let oldBal = userPrem.get(message.author.id + ".donated") || 0;
 
         let now = Date.now();
         message.reply(
-            `You have redeemed a code with ${code.balance} premium server(s), you now have ${Math.floor(
+            `Odebrałeś kod z ${code.balance} premium serwerami, teraz masz ${Math.floor(
                 (oldBal + code.balance) / Config.PremiumServerPrice,
             )}!`,
         );
@@ -38,14 +38,14 @@ exports.run = async (client, message, args) => {
             .get(MiscConfigs.donations)
             .send(
                 "<@" +
-                    message.author.id +
-                    ">, Redeemed code: " +
-                    args[1] +
-                    " it held " +
-                    code.balance +
-                    " premium servers! *This code was redeemed in " +
-                    humanizeDuration(now - code.createdAt) +
-                    "*",
+                message.author.id +
+                ">, Odebrano kod: " +
+                args[1] +
+                " miał " +
+                code.balance +
+                " premium serwerów! *Ten kod został odebrany w " +
+                humanizeDuration(now - code.createdAt) +
+                "*",
             );
 
         codes.delete(args[1]);
@@ -59,11 +59,11 @@ exports.run = async (client, message, args) => {
                 .get(code.drop.message.channel)
                 .messages.fetch(code.drop.message.ID);
             let embed = msg.embeds[0].setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#` + MiscConfigs.normalCommands + `>\n- Redeem the Premium Code: \`` + Config.DiscordBot.Prefix + `server redeem <Code>\`\n\n*Redeemed by ${message.member}*`,
+                `**ODEBRAJ TERAZ!**\nKod to: \`${code.code}\` \n**Kroki:** \n- Przejdź do <#` + MiscConfigs.normalCommands + `>\n- Odebranie Premium Kodu: \`` + Config.DiscordBot.Prefix + `server redeem <Kod>\`\n\n*Odebrał ${message.member}*`,
             );
             msg.edit(embed);
         }
     }
 };
 
-exports.description = "Redeem a premium server code. View commands for more info.";
+exports.description = "Odbierz kod premium serwera. Sprawdź komendy, aby uzyskać więcej informacji.";

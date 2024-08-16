@@ -4,7 +4,7 @@ const Axios = require('axios');
 const Config = require('../../../config.json');
 const Proxies = require('../../../config/proxy-configs.js').Proxies;
 
-//This function will generate a new token for the specified location.
+// Ta funkcja generuje nowy token dla określonej lokalizacji.
 async function getToken(Url, Email, Password) {
     const serverRes = await axios({
         url: Url + "/api/tokens",
@@ -23,9 +23,8 @@ async function getToken(Url, Email, Password) {
     return "Bearer " + serverRes.data.token;
 }
 
-//This function will delete the certificate for a domain.
-async function deleteCertificate(Url, Token, Domain, ProxiesResponse){
-
+// Ta funkcja usuwa certyfikat dla domeny.
+async function deleteCertificate(Url, Token, Domain, ProxiesResponse) {
     return await axios({
         url:
             Url +
@@ -43,11 +42,11 @@ async function deleteCertificate(Url, Token, Domain, ProxiesResponse){
     });
 }
 
-//This function will delete a proxy for a domain.
-async function deleteProxy(Url, Token, Domain, ProxiesResponse){
+// Ta funkcja usuwa proxy dla domeny.
+async function deleteProxy(Url, Token, Domain, ProxiesResponse) {
     return await axios({
         url:
-        Url +
+            Url +
             "/api/nginx/proxy-hosts/" +
             ProxiesResponse.data.find(
                 (element) =>
@@ -60,11 +59,11 @@ async function deleteProxy(Url, Token, Domain, ProxiesResponse){
             Authorization: Token,
             "Content-Type": "application/json",
         },
-    })
+    });
 }
 
-//This function requests all the certificates for a domain.
-async function getAllCertificates(Url, Token){
+// Ta funkcja pobiera wszystkie certyfikaty dla domeny.
+async function getAllCertificates(Url, Token) {
     return await axios({
         url: Url + "/api/nginx/certificates",
         method: "GET",
@@ -77,8 +76,8 @@ async function getAllCertificates(Url, Token){
     });
 }
 
-//Removes a domain from the user's database.
-async function deleteDomainDB(UserId, Domain){
+// Usuwa domenę z bazy danych użytkownika.
+async function deleteDomainDB(UserId, Domain) {
     userData.set(
         UserId + ".domains",
         userData
@@ -89,7 +88,7 @@ async function deleteDomainDB(UserId, Domain){
     return true;
 }
 
-exports.description = "Unproxies a domain from a server.";
+exports.description = "Usuwa proxy dla domeny z serwera.";
 
 /**
  * 
@@ -101,30 +100,30 @@ exports.description = "Unproxies a domain from a server.";
 exports.run = async (client, message, args) => {
 
     const UnproxyEmbed = new Discord.MessageEmbed();
-    UnproxyEmbed.setTitle("**Unproxying Domain from DBH server:**");
-    UnproxyEmbed.setColor('BLUE')
+    UnproxyEmbed.setTitle("**Usuwanie proxy domeny z serwera DBH:**");
+    UnproxyEmbed.setColor('BLUE');
     UnproxyEmbed.setDescription(
-        "\n\nSyntax for Command: ```" +
-            Config.DiscordBot.Prefix +
-            "server unproxy <DOMAIN>```\n" + 
-            "- Replace `<DOMAIN>` with your domain. E.g. `example.danbot.host`\n" + 
-            "- You can find a list with all your proxied domains with: `" +
-            Config.DiscordBot.Prefix +
-            "user domains`",
+        "\n\nSkładnia komendy: ```" +
+        Config.DiscordBot.Prefix +
+        "server unproxy <DOMAIN>```\n" +
+        "- Zamień `<DOMAIN>` na swoją domenę. Przykład: `example.danbot.host`\n" +
+        "- Listę wszystkich swoich proxowanych domen znajdziesz za pomocą: `" +
+        Config.DiscordBot.Prefix +
+        "user domains`",
     );
     UnproxyEmbed.setTimestamp();
     UnproxyEmbed.setFooter("DanBot Hosting");
 
-    //No arguments were provided.
-    if(!args[1]) return await message.channel.send(UnproxyEmbed);
+    // Jeśli nie podano argumentów.
+    if (!args[1]) return await message.channel.send(UnproxyEmbed);
 
-    //User domain data.
+    // Dane domeny użytkownika.
     const userDomains = await userData.get(message.author.id + ".domains");
 
-    //Invalid domain provided.
+    // Nieprawidłowa domena.
     if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
         message.reply(
-            "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!",
+            "Nie mogłem znaleźć tej domeny! Upewnij się, że wprowadziłeś prawidłową domenę. Prawidłowa domena to `danbot.host`, `https://danbot.host/` nie jest prawidłową domeną!",
         );
         return;
     }
@@ -133,13 +132,13 @@ exports.run = async (client, message, args) => {
 
     if (Proxies.map(x => x.dbLocation).includes(domainData.location)) {
 
-        //This will contain the proxy information needed to continue.
+        // Informacje o proxy potrzebne do kontynuacji.
         const ProxyInformation = Proxies.find(x => x.dbLocation == domainData.location);
 
-        //Generate an new token for the specified location.
+        // Generuje nowy token dla określonej lokalizacji.
         const ProxyToken = await getToken(ProxyInformation.url, ProxyInformation.email, ProxyInformation.pass);
 
-        // Gets a list of all the proxies.
+        // Pobiera listę wszystkich proxy.
         await Axios({
             url: ProxyInformation.url + "/api/nginx/proxy-hosts",
             method: "GET",
@@ -148,7 +147,7 @@ exports.run = async (client, message, args) => {
             headers: {
                 Authorization: ProxyToken,
                 "Content-Type": "application/json",
-            }        
+            }
         }).then(async (ProxiesResponse) => {
 
             const ProxyFound = ProxiesResponse.data.find(Proxies => Proxies.domain_names[0] == domainData.domain);
@@ -156,45 +155,45 @@ exports.run = async (client, message, args) => {
             const AllCertificates = await getAllCertificates(ProxyInformation.url, ProxyToken);
             const CertificateFound = AllCertificates.data.find((element) => element.domain_names[0] == domainData.domain);
 
-            //If the certificate was found in the certificate list.
+            // Jeśli znaleziono certyfikat na liście certyfikatów.
             if (CertificateFound == undefined) {
-                await message.channel.send('[PROXY SYSTEM] Could not find the certificate for the domain. Skipping deletion of certificate.');
+                await message.channel.send('[SYSTEM PROXY] Nie znaleziono certyfikatu dla domeny. Pomijam usunięcie certyfikatu.');
             } else {
-                await message.channel.send('[PROXY SYSTEM] Found the certificate for the domain. Attempting to delete it.');
+                await message.channel.send('[SYSTEM PROXY] Znaleziono certyfikat dla domeny. Próba jego usunięcia.');
 
                 await deleteCertificate(ProxyInformation.url, ProxyToken, domainData.domain, ProxiesResponse).then(async (Response) => {
-                    await message.channel.send('[PROXY SYSTEM] Successfully removed the certificate for the domain.');
+                    await message.channel.send('[SYSTEM PROXY] Pomyślnie usunięto certyfikat dla domeny.');
                 });
             }
 
-            // If the proxy was found in the proxy list.
+            // Jeśli proxy zostało znalezione na liście proxy.
             if (ProxyFound == undefined) {
-                await messsage.channel.send('[PROXY SYSTEM] Could not find the domain in the proxy list. Removing it from user database.');
+                await message.channel.send('[SYSTEM PROXY] Nie znaleziono domeny na liście proxy. Usuwam ją z bazy danych użytkownika.');
 
                 await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-                    message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
+                    message.channel.send('[SYSTEM PROXY] Pomyślnie usunięto domenę z bazy danych użytkownika.');
                 });
             } else {
-                message.channel.send('[PROXY SYSTEM] Found the domain in the proxy list. Attempting to delete from proxy list.');
+                message.channel.send('[SYSTEM PROXY] Znaleziono domenę na liście proxy. Próba usunięcia z listy proxy.');
 
                 await deleteProxy(ProxyInformation.url, ProxyToken, domainData.domain, ProxiesResponse).then(async (Response) => {
-                    await message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the proxy list.');
+                    await message.channel.send('[SYSTEM PROXY] Pomyślnie usunięto domenę z listy proxy.');
 
                     await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-                        message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
+                        message.channel.send('[SYSTEM PROXY] Pomyślnie usunięto domenę z bazy danych użytkownika.');
                     });
                 });
             }
         }).catch(Error => {
-            console.error("[PROXY SYSTEM ERROR]: " + Error);
+            console.error("[BŁĄD SYSTEMU PROXY]: " + Error);
         });
-    
-    //Domains from old proxies.
+
+        // Domeny z starych proxy.
     } else if (domainData.Location == undefined || domainData.Location == "FR" || domainData.Location == "US") {
-        message.channel.send("This domain is from an old proxy system. Removing from your database.");
-        
+        message.channel.send("Ta domena pochodzi z starego systemu proxy. Usuwam z bazy danych.");
+
         await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-            message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
+            message.channel.send('[SYSTEM PROXY] Pomyślnie usunięto domenę z bazy danych użytkownika.');
         });
     }
 };

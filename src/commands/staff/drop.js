@@ -4,7 +4,7 @@ const humanizeDuration = require("humanize-duration");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
-exports.description = "Drop a premium key.";
+exports.description = "Wydaje klucz premium.";
 
 /**
  * 
@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
     message.delete();
 
     if (args[1] == null) {
-        message.reply("ayo fam, you need to specify a time.");
+        message.reply("Ej, musisz określić czas.");
         return;
     }
 
@@ -57,31 +57,31 @@ exports.run = async (client, message, args) => {
     } else {
         code = codes.get(args[2]);
         if (code == null) {
-            message.reply("That's not a code you scammer");
+            message.reply("To nie jest kod, oszuście");
             return;
         }
     }
 
     const embed = new Discord.MessageEmbed()
-        .setAuthor("Key Drop!")
+        .setAuthor("Wydanie klucza!")
         .setColor("BLUE")
-        .setFooter(`Keydrop by ${message.author.username}`, bot.user.avatarURL)
+        .setFooter(`Klucz wydany przez ${message.author.username}`, bot.user.avatarURL)
         .setDescription(
-            "Dropping a premium key in: " +
-                humanizeDuration(time, {
-                    round: true,
-                }) +
-                "!",
+            "Wydanie klucza premium za: " +
+            humanizeDuration(time, {
+                round: true,
+            }) +
+            "!",
         )
         .setTimestamp(moment + time);
 
     let msg = await message.reply("", {
         embed: embed.setDescription(
-            "Dropping a premium key in: " +
-                humanizeDuration(time, {
-                    round: true,
-                }) +
-                "!",
+            "Wydanie klucza premium za: " +
+            humanizeDuration(time, {
+                round: true,
+            }) +
+            "!",
         ),
     });
 
@@ -95,11 +95,11 @@ exports.run = async (client, message, args) => {
     setTimeout(() => {
         msg.edit(
             embed.setDescription(
-                "Dropping a premium key in: " +
-                    humanizeDuration(time - time / 1.2, {
-                        round: true,
-                    }) +
-                    "!",
+                "Wydanie klucza premium za: " +
+                humanizeDuration(time - time / 1.2, {
+                    round: true,
+                }) +
+                "!",
             ),
         );
     }, time / 1.2);
@@ -107,11 +107,11 @@ exports.run = async (client, message, args) => {
     setTimeout(() => {
         msg.edit(
             embed.setDescription(
-                "Dropping a premium key in: " +
-                    humanizeDuration(time / 2, {
-                        round: true,
-                    }) +
-                    "!",
+                "Wydanie klucza premium za: " +
+                humanizeDuration(time / 2, {
+                    round: true,
+                }) +
+                "!",
             ),
         );
     }, time / 2);
@@ -119,7 +119,7 @@ exports.run = async (client, message, args) => {
     setTimeout(() => {
         msg.edit(
             embed.setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#` + MiscConfigs.normalCommands + `>\n- Redeem the Premium Code: \`` + Config.DiscordBot.Prefix +`server redeem <CODE>\`\n\n*No one has redeemed the code yet!*`,
+                `**ODEBRAĆ TERAZ!**\nKod to: \`${code.code}\` \n**Kroki:** \n- Przejdź do <#` + MiscConfigs.normalCommands + `>\n- Odbierz klucz premium: \`` + Config.DiscordBot.Prefix + `server redeem <CODE>\`\n\n*Nikt jeszcze nie odebrał kodu!*`,
             ),
         );
     }, time);

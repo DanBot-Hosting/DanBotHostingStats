@@ -33,11 +33,11 @@ async function getAllProxies(Url, Token) {
         headers: {
             Authorization: Token,
             "Content-Type": "application/json",
-        }        
+        }
     });
 }
 
-exports.description = "Proxy a domain to a server. View this command for usage.";
+exports.description = "Proxy'uj domenę do serwera. Sprawdź tę komendę, aby uzyskać więcej informacji.";
 
 /**
  * 
@@ -48,56 +48,56 @@ exports.description = "Proxy a domain to a server. View this command for usage."
  */
 exports.run = async (client, message, args) => {
 
-    const ProxyLocations = Proxies.map((Proxy) => `> \`${Proxy.ip}\` - [${Proxy.name}] 🟢 Enabled`).join('\n');
+    const ProxyLocations = Proxies.map((Proxy) => `> \`${Proxy.ip}\` - [${Proxy.name}] 🟢 Włączony`).join('\n');
     const PremiumDomainsList = PremiumDomains.map((domain) => `\`${domain}\``).join(', ');
 
     const embed = new Discord.MessageEmbed()
-        .setTitle("**DanBot Hosting Proxy System**")
+        .setTitle("**System Proxy DanBot Hosting**")
         .setDescription(
-            `The DanBot Hosting proxy systems allows users to proxy their domains to their servers with simple commands.
+            `System proxy DanBot Hosting pozwala użytkownikom na proxy'owanie ich domen do ich serwerów za pomocą prostych komend.
 
-            The command format: \`${Config.DiscordBot.Prefix}server proxy <domain> <serverId>\`
+            Format komendy: \`${Config.DiscordBot.Prefix}server proxy <domena> <serverId>\`
 
-            You can find your server ID by running the following command: \`${Config.DiscordBot.Prefix}server list\`
+            Możesz znaleźć ID swojego serwera, uruchamiając następującą komendę: \`${Config.DiscordBot.Prefix}server list\`
 
-            You can link a domain by first creating a DNS A record, pointed towards one of the following proxies:\n\n` +
+            Możesz powiązać domenę, najpierw tworząc rekord DNS A, wskazujący na jeden z poniższych proxy:\n\n` +
 
             ProxyLocations
 
-            + `\n\nIf you are using Cloudflare, make sure you are using **DNS only mode**, and disabling **always use HTTPS**.
+            + `\n\nJeśli używasz Cloudflare, upewnij się, że używasz **tylko trybu DNS** oraz wyłącz **zawsze używaj HTTPS**.
 
-            Donators can use the ` + PremiumDomainsList + ` subdomains! Replace \`<domain>\` with the \`your-subdomain.domainhere\` to use it!`,
+            Donatorzy mogą korzystać z subdomen ` + PremiumDomainsList + `! Zamień \`<domena>\` na \`your-subdomain.domainhere\`, aby z niej skorzystać!`,
         )
         .setColor("BLUE");
 
-    // The user didn't provide enough arguments.
+    // Użytkownik nie podał wystarczającej liczby argumentów.
     if (!args[1] || !args[2]) {
         await message.channel.send(embed);
         return;
     }
 
-    //The user is attempting to use a premium domain but doesn't have the correct roles.
+    // Użytkownik próbuje użyć domeny premium, ale nie ma odpowiednich ról.
     if (PremiumDomains.some(domain => args[1].toLowerCase().includes(domain)) && !message.member.roles.cache.some(r => [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id))) {
-        return message.channel.send("Sorry, this domain is only available to donators and boosters.");
-        
+        return message.channel.send("Przepraszam, ta domena jest dostępna tylko dla donatorów i boosterów.");
+
     };
 
     const user = userData.get(message.author.id);
 
     if (!user) {
-        return message.channel.send("User not found.");
+        return message.channel.send("Użytkownik nie znaleziony.");
     }
 
     const linkAlready = user.domains.some((x) => x.domain === args[1]);
 
-    if (linkAlready) return message.channel.send("You have already linked this domain.");
+    if (linkAlready) return message.channel.send("Ta domena jest już powiązana.");
 
-    //Domain is not in the correct format.
+    // Domena nie jest w poprawnym formacie.
     if (!/^[a-zA-Z0-9.-]+$/.test(args[1])) {
-        return message.channel.send("Invalid domain format.");
+        return message.channel.send("Niepoprawny format domeny.");
     }
 
-    // Domain will not be DNS lookup to verify it's being pointed to a correct IP.
+    // Domena nie jest sprawdzana przez DNS, aby zweryfikować, czy wskazuje na poprawny adres IP.
     const dnsCheck = await new Promise((resolve) => {
         dns.lookup(args[1], { family: 4, hints: dns.ADDRCONFIG | dns.V4MAPPED }, (err, address) =>
             resolve({ err, address }),
@@ -108,8 +108,8 @@ exports.run = async (client, message, args) => {
 
     if (!validAddresses.includes(dnsCheck.address)) {
         return message.channel.send(
-            "ERROR: You must have a DNS A Record pointing to one of the following addresses: " +
-                validAddresses.join(", "),
+            "BŁĄD: Musisz mieć rekord DNS A wskazujący na jeden z poniższych adresów: " +
+            validAddresses.join(", "),
         );
     }
 
@@ -121,7 +121,7 @@ exports.run = async (client, message, args) => {
         ) && PremiumProxiesIPs.includes(dnsCheck.address)
     ) {
         return message.reply(
-            "Sorry, this proxy location is only available for boosters and donators.",
+            "Przepraszam, ta lokalizacja proxy jest dostępna tylko dla boosterów i donatorów.",
         );
     }
 
@@ -140,7 +140,7 @@ exports.run = async (client, message, args) => {
 
         if (!PterodactylResponse.extras.servers || !PterodactylResponse.extras.servers.find((x) => x.identifier === args[2])) {
             return message.channel.send(
-                "Couldn't find that server in your server list.\nDo you own that server?",
+                "Nie znaleziono tego serwera na liście serwerów.\nCzy posiadasz ten serwer?",
             );
         }
 
@@ -158,24 +158,24 @@ exports.run = async (client, message, args) => {
 
         Axios(axiosConfig).then(async (PterodactylServerResponse) => {
             const replyMsg = await message.reply(
-                "Proxying your domain... this can take up to 30 seconds.",
+                "Proxoowanie Twojej domeny... Może to potrwać do 30 sekund.",
             );
 
             const ProxyLocation = Proxies.find((Location) => Location.ip == dnsCheck.address);
 
-            //This in theory should never happen.
-            if(ProxyLocation == undefined) return message.channel.send("Woah, you discovered an error that shouldn't be possible. - DIBSTER.");
+            //To teoretycznie nigdy nie powinno się zdarzyć.
+            if (ProxyLocation == undefined) return message.channel.send("Ojej, odkryłeś błąd, który nie powinien występować. ~ Smutex.");
 
             const Token = await getToken(ProxyLocation.url, ProxyLocation.email, ProxyLocation.pass);
 
             const AllProxies = await getAllProxies(ProxyLocation.url, Token);
 
-            //It was found in the proxy already.
+            //Zostało znalezione w proxy już.
             if (AllProxies.data.find(x => x.domain_names[0] == args[1].toLowerCase()) != undefined) {
-                return message.channel.send("This domain has already been proxied on this location. If you believe this to be an error, please contact a staff member.");
+                return message.channel.send("Ta domena została już proxied w tej lokalizacji. Jeśli uważasz, że to błąd, skontaktuj się z członkiem personelu.");
             }
 
-            replyMsg.edit(`Domain found pointing towards ${ProxyLocation.name}...`);
+            replyMsg.edit(`Domena znaleziona wskazująca na ${ProxyLocation.name}...`);
 
             proxyDomain(ProxyLocation, PterodactylServerResponse, replyMsg, args, Token);
         });
@@ -218,23 +218,23 @@ exports.run = async (client, message, args) => {
             };
 
             Axios(axiosProxyConfig).then((ResponseAfterProxy) => {
-                    replyMsg.edit(
-                        `Domain has been proxied:\n\n` +
-                        `ID: ${ResponseAfterProxy.data.id}\n` +
-                        `Location: ${ProxyLocation.name}`
-                    );
-                    
-                    const NewUserData = userData.get(message.author.id).domains || [];
+                replyMsg.edit(
+                    `Domena została proxied:\n\n` +
+                    `ID: ${ResponseAfterProxy.data.id}\n` +
+                    `Lokalizacja: ${ProxyLocation.name}`
+                );
 
-                    userData.set(`${message.author.id}.domains`, [
-                        ...new Set(NewUserData),
-                        {
-                            domain: args[1].toLowerCase(),
-                            serverID: args[2],
-                            location: ProxyLocation.dbLocation,
-                        },
-                    ]);
-                })
+                const NewUserData = userData.get(message.author.id).domains || [];
+
+                userData.set(`${message.author.id}.domains`, [
+                    ...new Set(NewUserData),
+                    {
+                        domain: args[1].toLowerCase(),
+                        serverID: args[2],
+                        location: ProxyLocation.dbLocation,
+                    },
+                ]);
+            })
                 .catch((ErrorAfterProxy) => {
                     handleProxyError(
                         ErrorAfterProxy,
@@ -259,7 +259,7 @@ exports.run = async (client, message, args) => {
                 deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
             } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
                 replyMsg.edit(
-                    "This domain has already been linked. If this is an error, please contact a staff member to fix this!",
+                    "Ta domena została już powiązana. Jeśli to błąd, skontaktuj się z Smutexem, aby to naprawić!",
                 );
             }
         }
@@ -278,11 +278,10 @@ exports.run = async (client, message, args) => {
 
             Axios(axiosGetProxyConfig).then((response) => {
                 const axiosDeleteProxyConfig = {
-                    url: `${ProxyLocation.url}/api/nginx/proxy-hosts/${
-                        ResponseAfterProxy.data.find(
-                            (element) => element.domain_names[0] == args[1].toLowerCase(),
-                        ).id
-                    }`,
+                    url: `${ProxyLocation.url}/api/nginx/proxy-hosts/${ResponseAfterProxy.data.find(
+                        (element) => element.domain_names[0] == args[1].toLowerCase(),
+                    ).id
+                        }`,
                     method: "DELETE",
                     followRedirect: true,
                     maxRedirects: 5,

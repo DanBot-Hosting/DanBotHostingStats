@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const Config = require('../../../config.json');
 
-exports.description = "Shows the server commands under this category.";
+exports.description = "Wyświetla komendy serwera w tej kategorii.";
 
 /**
  * 
@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
 
     const Embed = new Discord.MessageEmbed();
     Embed.setColor("BLUE");
-    Embed.setTitle("Server Commands");
+    Embed.setTitle("Komendy serwera");
 
     fs.readdirSync(__dirname).forEach((File) => {
         Embed.addField("`" + Config.DiscordBot.Prefix + "server " + File.split(".")[0] + "`", require("./" + File).description);

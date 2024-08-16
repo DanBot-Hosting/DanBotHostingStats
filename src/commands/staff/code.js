@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
-exports.description = "Create a code for premium servers.";
+exports.description = "Utwórz kod dla serwerów premium.";
 
 /**
  * 
@@ -14,7 +14,7 @@ exports.description = "Create a code for premium servers.";
  */
 exports.run = async (client, message, args) => {
 
-    // Make sure the user has the correct permissiosn.
+    // Upewnij się, że użytkownik ma odpowiednie uprawnienia.
     if (
         !MiscConfigs.codeDrops.includes(
             message.author.id,
@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
     )
         return;
 
-    // Generate a random code.
+    // Generuj losowy kod.
     const CAPSNUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     var codeGen = () => {
         var password = "";
@@ -33,32 +33,32 @@ exports.run = async (client, message, args) => {
     };
 
     if (args.length < 3) {
-        message.reply(`Usage: \`${Config.DiscordBot.Prefix}staff code <name> <uses>\``);
+        message.reply(`Użycie: \`${Config.DiscordBot.Prefix}staff code <nazwa> <ilość>\``);
         return;
     }
 
     let balance = parseInt(args[2]);
 
     if (isNaN(balance)) {
-        message.reply("Uses must be a valid number.");
+        message.reply("Ilość musi być prawidłową liczbą.");
         return;
     }
 
     const code = args[1].toLowerCase() == "random" ? codeGen() : args[1];
 
     if (codes.get(code) != null) {
-        message.reply("A code with that name already exists.");
+        message.reply("Kod o tej nazwie już istnieje.");
         return;
     }
 
     message.reply(
-        "Created code: `" +
-            code +
-            "` with `" +
-            args[2] +
-            "` premium servers. \n\nRedeem this with `"+ Config.DiscordBot.Prefix +" server redeem " +
-            code +
-            "`",
+        "Utworzono kod: `" +
+        code +
+        "` z `" +
+        args[2] +
+        "` serwerami premium. \n\nOdbierz ten kod, używając `" + Config.DiscordBot.Prefix + " server redeem " +
+        code +
+        "`",
     );
 
     codes.set(code, {

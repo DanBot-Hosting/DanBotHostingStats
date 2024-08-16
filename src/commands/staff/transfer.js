@@ -3,10 +3,10 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
-exports.description = "Transfers user account and balance to a new account.";
+exports.description = "Przenosi konto użytkownika i jego saldo na nowe konto.";
 
 /**
- * Transfers user account and balance to a new account.
+ * Przenosi konto użytkownika i saldo na nowe konto.
  *
  * @param {Discord.Client} client
  * @param {Discord.Message} message
@@ -22,15 +22,15 @@ exports.run = async (client, message, args) => {
     );
 
     if (args.length < 3) {
-        message.reply("usage: " + Config.DiscordBot.Prefix + "staff transfer <OLDUSERID> <NEWUSERID>.");
+        message.reply("Użycie: " + Config.DiscordBot.Prefix + "staff transfer <OLDUSERID> <NEWUSERID>.");
     } else {
         let old = userData.get(args[1]);
 
         if (old == null) {
-            message.reply("That account is not linked with a console account :sad:");
+            message.reply("To konto nie jest powiązane z kontem konsolowym :sad:");
         } else {
             if (!message.guild.members.cache.get(args[2])) {
-                message.reply("Couldn't find a user with the ID: " + args[2]);
+                message.reply("Nie można znaleźć użytkownika o ID: " + args[2]);
                 return;
             }
 
@@ -38,7 +38,7 @@ exports.run = async (client, message, args) => {
 
             if (!newData || old.consoleID != newData.consoleID) {
                 message.reply(
-                    "Both accounts should be linked to the same panel account in order for this command to work.",
+                    "Oba konta muszą być powiązane z tym samym kontem panelu, aby ta komenda działała.",
                 );
                 return;
             }
@@ -54,21 +54,21 @@ exports.run = async (client, message, args) => {
 
             userPrem.set(args[2], {
                 used: used + newM.used,
-                donated: donated + newM.used,
+                donated: donated + newM.donated,
             });
 
             userPrem.delete(args[1]);
 
-            message.reply("Done!");
+            message.reply("Gotowe!");
 
             if (modlog) {
                 modlog.send({
                     embed: new Discord.MessageEmbed()
-                        .setTitle("Premium Balance Transfer")
-                        .addField("From:", args[1], true)
-                        .addField("to:", args[2], true)
-                        .setDescription(`Added ${donated} credits and ${used} used`)
-                        .setFooter("Executed by: " + message.author.tag),
+                        .setTitle("Transfer salda Premium")
+                        .addField("Od:", args[1], true)
+                        .addField("Do:", args[2], true)
+                        .setDescription(`Dodano ${donated} kredytów i ${used} użytych`)
+                        .setFooter("Wykonane przez: " + message.author.tag),
                 });
             }
         }

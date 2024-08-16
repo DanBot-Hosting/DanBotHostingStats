@@ -2,10 +2,10 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
-exports.description = "Staff Changelog command. Sends a message to the changelog channel.";
+exports.description = "Komenda do dziennika zmian dla personelu. Wysyła wiadomość do kanału dziennika zmian.";
 
 /**
- * Staff Changelog command. Sends a message to the changelog channel.
+ * Komenda do dziennika zmian dla personelu. Wysyła wiadomość do kanału dziennika zmian.
  * 
  * @param {Discord.Client} client
  * @param {Discord.Message} message
@@ -14,10 +14,10 @@ exports.description = "Staff Changelog command. Sends a message to the changelog
  */
 exports.run = (client, message, args) => {
 
-    // Checks if the user has the Developer Role.
+    // Sprawdza, czy użytkownik ma rolę dewelopera.
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Developer)) return;
 
-    if (!args[1]) return message.reply("Please provide a message!");
+    if (!args[1]) return message.reply("Proszę podać wiadomość!");
 
     const msg = message.content.split(" ").slice(2).join(" ");
 
@@ -30,8 +30,8 @@ exports.run = (client, message, args) => {
         )
         .setDescription(msg)
         .setTimestamp();
-    
+
     const channel = client.channels.cache.get(MiscConfigs.changelogs);
     channel.send(`<@&${Config.DiscordBot.Roles.Changelogs}>`, embed);
-    message.reply("Changelog sent!");
+    message.reply("Dziennik zmian został wysłany!");
 };

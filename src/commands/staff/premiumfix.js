@@ -1,10 +1,10 @@
 const Discord = require("discord.js");
 const Config = require('../../../config.json');
 
-exports.description = "Fixes a user's premium count.";
+exports.description = "Poprawia liczbę serwerów premium użytkownika.";
 
 /**
- * Premium server count fix command. Locked to the staff.
+ * Komenda do naprawy liczby serwerów premium. Zablokowana dla personelu.
  *
  * @param {Discord.Client} client
  * @param {Discord.Message} message
@@ -15,9 +15,9 @@ exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Staff)) return;
 
     if (!args[1]) {
-        return message.reply("Please specify a user!");
+        return message.reply("Proszę podać użytkownika!");
     } else {
-        const replyMsg = await message.reply("Starting calculation...");
+        const replyMsg = await message.reply("Rozpoczynam obliczenia...");
 
         try {
             let selectedUser = client.users.cache.get(
@@ -30,10 +30,10 @@ exports.run = async (client, message, args) => {
             if (userAccount == null || userAccount.consoleID == null) {
                 if (selectedUser.id === message.author.id) {
                     return message.reply(
-                        `You do not have a panel account linked, please create or link an account.\n\`${Config.DiscordBot.Prefix}user new\` - Create an account\n\`${Config.DiscordBot.Prefix}user link\` - Link an account`,
+                        `Nie masz powiązanego konta w panelu, proszę utworzyć lub powiązać konto.\n\`${Config.DiscordBot.Prefix}user new\` - Utwórz konto\n\`${Config.DiscordBot.Prefix}user link\` - Powiąż konto`,
                     );
                 } else {
-                    return message.reply("That user does not have a panel account linked.");
+                    return message.reply("Ten użytkownik nie ma powiązanego konta panelu.");
                 }
             }
 
@@ -71,12 +71,12 @@ exports.run = async (client, message, args) => {
                     used: actualPremiumServersUsed,
                     donated: userPremData.donated,
                 });
-                replyMsg.edit("That user's premium server count has been fixed!");
+                replyMsg.edit("Liczba serwerów premium dla tego użytkownika została naprawiona!");
             } else {
-                replyMsg.edit("That user has the correct premium server count!");
+                replyMsg.edit("Ten użytkownik ma poprawną liczbę serwerów premium!");
             }
         } catch (err) {
-            replyMsg.edit(`<:No:768256005426511912> An error occurred\n\`\`\`${err.message}\`\`\``);
+            replyMsg.edit(`<:No:768256005426511912> Wystąpił błąd\n\`\`\`${err.message}\`\`\``);
         }
     }
 };

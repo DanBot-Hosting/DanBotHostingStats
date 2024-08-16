@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 
 const Config = require('../../../config.json');
 
-exports.description = "Shows the servers a user has.";
+exports.description = "Wyświetla serwery, które ma użytkownik.";
 
 /**
  * 
@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
     let user = message.author;
     let userID = message.author.id;
 
-    // Allow Bot Admins to view other users' servers.
+    // Zezwól adminom bota na przeglądanie serwerów innych użytkowników.
     if (message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin))
         userID = args[1] || message.author.id;
 
@@ -25,10 +25,10 @@ exports.run = async (client, message, args) => {
     if (userAccount == null || userAccount.consoleID == null) {
         if (userID === message.author.id) {
             return message.reply(
-                `You do not have a panel account linked, please create or link an account.\n\`${Config.DiscordBot.Prefix}user new\` - Create an account\n\`${Config.DiscordBot.Prefix}user link\` - Link an account`,
+                `Nie masz powiązanego konta panelu, proszę utworzyć lub powiązać konto.\n\`${Config.DiscordBot.Prefix}user new\` - Utwórz konto\n\`${Config.DiscordBot.Prefix}user link\` - Powiąż konto`,
             );
         } else {
-            return message.reply("That user does not have a panel account linked.");
+            return message.reply("Ten użytkownik nie ma powiązanego konta panelu.");
         }
     }
 
@@ -36,7 +36,7 @@ exports.run = async (client, message, args) => {
         user = client.users.cache.get(userID);
     }
 
-    // List servers
+    // Lista serwerów
     var arr = [];
 
     axios({
@@ -69,15 +69,15 @@ exports.run = async (client, message, args) => {
 
             if (arr.length == 0) {
                 message.reply(
-                    `${userID === message.author.id ? "You do" : "That user does"} not have any servers.`,
+                    `${userID === message.author.id ? "Nie masz" : "Ten użytkownik nie ma"} żadnych serwerów.`,
                 );
             } else if (arr.length > 70) {
                 message.reply(
-                    `${userID === message.author.id ? "You have" : "That user has"} too many servers to display!`,
+                    `${userID === message.author.id ? "Masz" : "Ten użytkownik ma"} zbyt wiele serwerów do wyświetlenia!`,
                 );
             } else if (freeServers.length + donoServers.length > 20) {
                 const serverListEmbed = new Discord.MessageEmbed().setTitle(
-                    `Server List (${arr.length})`,
+                    `Lista serwerów (${arr.length})`,
                 );
 
                 if (userID !== message.author.id)
@@ -88,7 +88,7 @@ exports.run = async (client, message, args) => {
                     );
                 if (freeServers.length > 0)
                     serverListEmbed.addField(
-                        `:free: Free (${freeServers.length})`,
+                        `:free: Darmowe (${freeServers.length})`,
                         freeServers.join(", "),
                     );
                 if (donoServers.length > 0)
@@ -100,7 +100,7 @@ exports.run = async (client, message, args) => {
                 message.reply(serverListEmbed);
             } else {
                 const serverListEmbed = new Discord.MessageEmbed().setTitle(
-                    `Server List (${arr.length})`,
+                    `Lista serwerów (${arr.length})`,
                 );
 
                 if (userID !== message.author.id)
@@ -111,7 +111,7 @@ exports.run = async (client, message, args) => {
                     );
                 if (freeServers.length > 0)
                     serverListEmbed.addField(
-                        `:free: Free (${freeServers.length})`,
+                        `:free: Darmowe (${freeServers.length})`,
                         freeServers.join("\n"),
                     );
                 if (donoServers.length > 0)
@@ -123,5 +123,5 @@ exports.run = async (client, message, args) => {
                 message.reply(serverListEmbed);
             }
         })
-        .catch(() => message.reply("An error occurred while loading servers."));
+        .catch(() => message.reply("Wystąpił błąd podczas ładowania serwerów."));
 };

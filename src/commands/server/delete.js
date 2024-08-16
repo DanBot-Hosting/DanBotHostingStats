@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const axios = require("axios");
-const humanizeDuration = require("humanize-duration");
 
 const Config = require('../../../config.json');
 
@@ -12,7 +11,7 @@ const Config = require('../../../config.json');
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    // Get server IDs
+    // Pobierz identyfikatory serwerów z argumentów komendy
     const serverIds = args
         .slice(1)
         .map((id) =>
@@ -21,16 +20,16 @@ exports.run = async (client, message, args) => {
         .filter(Boolean);
 
     if (serverIds.length === 0) {
-        message.reply(
-            `Command format: \`${Config.DiscordBot.Prefix}server delete <SERVER_ID_1> <SERVER_ID_2> ...\``
+        await message.reply(
+            `Format komendy: \`${Config.DiscordBot.Prefix}server delete <SERVER_ID_1> <SERVER_ID_2> ...\``
         );
         return;
     }
 
-    const msg = await message.reply(`Checking servers...`);
+    const msg = await message.reply("Sprawdzam serwery...");
 
     try {
-        // Fetch user's servers from Pterodactyl API
+        // Pobierz serwery użytkownika z API Pterodactyla
         const response = await axios({
             url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData.get(
                 message.author.id
@@ -45,7 +44,7 @@ exports.run = async (client, message, args) => {
 
         const userServers = response.data.attributes.relationships.servers.data;
 
-        // Filter for valid and owned servers
+        // Filtruj serwery, które są ważne i są własnością użytkownika
         const serversToDelete = userServers.filter(
             (server) =>
                 serverIds.includes(server.attributes?.identifier) &&
@@ -53,39 +52,39 @@ exports.run = async (client, message, args) => {
         );
 
         if (serversToDelete.length === 0) {
-            msg.edit("No valid or owned servers found to delete.");
+            msg.edit("Nie znaleziono ważnych lub posiadanych serwerów do usunięcia.");
             return;
         }
 
-        // Construct serverNames inside the try block
+        // Skonstruuj listę nazw serwerów
         const serverNames = serversToDelete
             .map((server) => server.attributes.name.split("@").join("@​"))
             .join(", ");
 
-        // Confirmation (using reply for better UX)
+        // Potwierdzenie (używając odpowiedzi dla lepszej obsługi użytkownika)
         const confirmMsg = await message.reply(
-            `Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`
+            `Usunąć te serwery: ${serverNames}?\nNapisz \`confirm\` w ciągu 1 minuty.`
         );
 
         try {
-            // Await confirmation message (with a more robust filter)
+            // Oczekiwanie na wiadomość potwierdzającą (z bardziej solidnym filtrem)
             const confirmation = await message.channel.awaitMessages(
-                (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm', 
-                { max: 1, time: 60000, errors: ['time'] } // Options object in v12
+                (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm',
+                { max: 1, time: 60000, errors: ['time'] }
             );
 
-            if (!confirmation || confirmation.size === 0) {
-                confirmMsg.edit("Request cancelled or timed out.");
+            if (confirmation.size === 0) {
+                confirmMsg.edit("Żądanie anulowane lub czas minął.");
                 return;
             }
 
             confirmMsg.delete();
 
-            // Deletion Loop (after successful confirmation)
+            // Pętla usuwania (po pomyślnym potwierdzeniu)
             for (const server of serversToDelete) {
-                await msg.edit(`Deleting server ${server.attributes.name}...`);
+                await msg.edit(`Usuwam serwer ${server.attributes.name}...`);
                 try {
-                    // Delete server from Pterodactyl API
+                    // Usuń serwer z API Pterodactyla
                     await axios({
                         url: `${Config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
                         method: "DELETE",
@@ -93,10 +92,9 @@ exports.run = async (client, message, args) => {
                             Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                         },
                     }).then(() => {
-                        msg.edit(`Server ${server.attributes.name} deleted!`);
+                        msg.edit(`Serwer ${server.attributes.name} usunięty!`);
 
                         if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
-                            
                             userPrem.set(
                                 message.author.id + ".used",
                                 userPrem.fetch(message.author.id).used - 1,
@@ -104,21 +102,21 @@ exports.run = async (client, message, args) => {
                         }
                     });
                 } catch (deletionError) {
-                    console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
-                    msg.edit(`Failed to delete server ${server.attributes.name}. Please try again later.`);
+                    console.error(`Błąd podczas usuwania serwera ${server.attributes.name}:`, deletionError);
+                    msg.edit(`Nie udało się usunąć serwera ${server.attributes.name}. Proszę spróbować ponownie później.`);
                 }
             }
         } catch (err) {
-            console.error("Error during confirmation:", err);
-            confirmMsg.edit("An error occurred during confirmation.");
+            console.error("Błąd podczas potwierdzania:", err);
+            confirmMsg.edit("Wystąpił błąd podczas potwierdzania.");
         }
     } catch (err) {
-        console.error("Error fetching server details:", err);
+        console.error("Błąd podczas pobierania szczegółów serwera:", err);
 
         msg.edit(
-            "An error occurred while fetching server details. Please try again later."
+            "Wystąpił błąd podczas pobierania szczegółów serwera. Proszę spróbować ponownie później."
         );
     }
 };
 
-exports.description = "Delete multiple servers. View this command for usage.";
+exports.description = "Usuń wiele serwerów. Zobacz tę komendę, aby uzyskać instrukcje.";
