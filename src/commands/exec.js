@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const exec = require("child_process").exec;
 
 const Config = require("../../config.json");
+const MiscConfigs = require('../../config/misc-configs.js');
 
 exports.roleRequirement = Config.DiscordBot.Roles.BotAdmin;
 exports.description = "Runs terminal commands.";
@@ -15,7 +16,7 @@ exports.description = "Runs terminal commands.";
  */
 exports.run = (client, message, args) => {
     if (
-        ["137624084572798976", "757296951925538856", "853158265466257448"].includes(
+        MiscConfigs.botCommands.includes(
             message.author.id,
         )
     ) {

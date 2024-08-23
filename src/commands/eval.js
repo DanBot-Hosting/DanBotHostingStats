@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const fs = require("fs");  
 
 const Config = require('../../config.json');
+const MiscConfigs = require('../../config/misc-configs.js');
 
 exports.roleRequirement = Config.DiscordBot.Roles.BotAdmin;
 exports.description = "Evaluate JavaScript code.";
@@ -18,7 +19,7 @@ exports.run = async (client, message) => {
     let cont = message.content.split(" ").slice(1).join(" ");
 
     if (
-        ["137624084572798976", "757296951925538856", "853158265466257448"].includes(
+        MiscConfigs.botCommands.includes(
             message.author.id,
         )
     ) {
