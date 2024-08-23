@@ -6,6 +6,8 @@ const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
 const generatePassword = require('../../util/generatePassword.js');
+const generateCode = require('../../util/generateCode.js');
+const sendMail = require('../../util/sendEmail.js');
 
 exports.description = "Create a new panel account.";
 
@@ -46,7 +48,7 @@ exports.run = async (client, message, args) => {
             afterChecks: [
                 {
                     check: (msg) => msg.trim().split(" ").length == 1,
-                    errorMessage: "username must not contain any spaces",
+                    errorMessage: "Username must not contain any spaces.",
                 },
             ],
             time: 30000, // how much time a user has to answer the question before it times out
@@ -101,7 +103,7 @@ exports.run = async (client, message, args) => {
     // Tell the user to check the channel.
     message.reply(`Please check <#${channel.id}> to create an account.`);
 
-    //Send the initial question.
+    // Send the initial question.
 
     let msg = null;
 
@@ -157,6 +159,26 @@ exports.run = async (client, message, args) => {
                 return;
             }
         }
+
+        // If the question is the email question, send the verification code
+        if (question.id === "email") {
+            const verificationCode = generateCode().toString();
+            await sendMail(question.value, "Your Verification Code", `<p>Your verification code is: <b>${verificationCode}</b></p>`);
+
+            questions.push({
+                id: "verification",
+                question: "Please enter the 10-digit verification code sent to your email:",
+                filter: (m) => m.author.id === message.author.id,
+                afterChecks: [
+                    {
+                        check: (msg) => msg === verificationCode,
+                        errorMessage: "Invalid verification code. Account creation cancelled.",
+                    },
+                ],
+                time: 1000 * 60 * 10, // 10 minutes
+                value: null,
+            });
+        }
     }
 
     msg.edit(message.member, {
@@ -204,7 +226,7 @@ exports.run = async (client, message, args) => {
                 domains: [],
             });
 
-            msg.edit("Hello! You created an new account, Here's the login information", {
+            msg.edit("Hello! You created a new account, Here's the login information", {
                 embed: new Discord.MessageEmbed()
                     .setColor("GREEN")
                     .setDescription(
@@ -236,7 +258,7 @@ exports.run = async (client, message, args) => {
                 msg.edit("", {
                     embed: new Discord.MessageEmbed()
                         .setColor("RED")
-                        .setTitle("An error has occured:")
+                        .setTitle("An error has occurred:")
                         .setDescription(
                             "**ERRORS:**\n\n- " +
                                 errors.map((error) => error.detail.replace("\n", " ")).join("\n- "),
@@ -248,7 +270,7 @@ exports.run = async (client, message, args) => {
                     channel.delete();
                 }, 30000);
             } else {
-                channel.send("An unexpected error has occured, please try again later...");
+                channel.send("An unexpected error has occurred, please try again later...");
                 setTimeout(function () {
                     channel.delete();
                 }, 30000);
