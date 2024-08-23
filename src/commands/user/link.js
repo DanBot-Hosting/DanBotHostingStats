@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
-const axios = require("axios");
 
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
+
+const getUser = require("../../util/getUser.js");
 
 exports.description = "Link your console account to your Discord account.";
 
@@ -74,7 +75,10 @@ exports.run = async (client, message, args) => {
 
             //Find account then link
             setTimeout(async () => {
-                const consoleUser = users.find((usr) =>
+                
+                const users = await getUser(messagecollected.content);
+
+                const consoleUser = users.data.find((usr) =>
                     usr.attributes ? usr.attributes.email === messagecollected.content : false,
                 );
 
