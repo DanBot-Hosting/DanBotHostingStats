@@ -73,7 +73,7 @@ exports.run = async (client, message, args) => {
                 //Sends the user a direct message containing their new password.
                 client.users.cache
                     .get(message.author.id)
-                    .send(`New password for DanBot Hosting: ||**${data.password}**||`);
+                    .send(`New password for DanBot Hosting: ||**${data.password}**||`).catch((Error) => console.error("[PASSWORD RESET] User does not have direct messages enabled."));
 
                 //Formatting the email message.
                 const EmailMessage = {
@@ -96,7 +96,11 @@ exports.run = async (client, message, args) => {
             .catch((err) => {
                 message.reply(err.message);
             });
-    });
+    }).catch((Error) => {
+        if(Error.statusCode == 404) {
+            message.channel.send("The account linked to your Discord account does not exist.\n\nUnlink your account using `" + Config.DiscordBot.Prefix + "user unlink` command.");
+        };
+    })
 };
 
 exports.description = "Resets the password for the linked console account.";
