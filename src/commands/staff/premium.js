@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
 
     let setDonations = (userid, amount) => {
 
-        if (userPrem.get(userid + ".used")){
+        if (isNaN(userPrem.get(userid + ".used"))){
             userPrem.set(userid + ".used", 0);
         }
 
