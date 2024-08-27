@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         donated: 0,
     };
 
-    return message.channel.send("Server creation is disabled. Do not ping staff.");
+    //return message.channel.send("Server creation is disabled. Do not ping staff.");
 
     const serverName =
         message.content.split(" ").slice(3).join(" ") ||
