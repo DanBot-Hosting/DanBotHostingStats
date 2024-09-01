@@ -1,4 +1,3 @@
-const axios = require('axios');
 const nodemailer = require("nodemailer");
 
 const Config = require('../../config.json');

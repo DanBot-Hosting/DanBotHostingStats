@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createList.redis = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -14,7 +16,7 @@ createList.redis = (serverName, userID) => ({
         cpu: 0,
     },
     environment: {
-        SERVER_PASSWORD: "P@55w0rd",
+        SERVER_PASSWORD: generatePassword(),
     },
     feature_limits: {
         databases: 2,

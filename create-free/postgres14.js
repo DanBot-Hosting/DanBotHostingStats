@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createList.postgres14 = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -13,7 +15,7 @@ createList.postgres14 = (serverName, userID) => ({
         cpu: 0,
     },
     environment: {
-        PGPASSWORD: getPassword(),
+        PGPASSWORD: generatePassword(),
         PGUSER: "pterodactyl",
     },
     feature_limits: {
