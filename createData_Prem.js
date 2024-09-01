@@ -1,4 +1,6 @@
 const axios = require("axios");
+const Config = require('./config.json');
+
 global.gamingPREM = [27]; // Gaming nodes
 global.botswebdbPREM = [26]; // Bots, Websites and Databases nodes
 global.storagePREM = [36]; // Storage nodes
@@ -64,12 +66,12 @@ let data = (serverName, userID) => {
 };
 let createServer = (data) => {
     return axios({
-        url: config.Pterodactyl.hosturl + "/api/application/servers",
+        url: Config.Pterodactyl.hosturl + "/api/application/servers",
         method: "POST",
         followRedirect: true,
         maxRedirects: 5,
         headers: {
-            Authorization: "Bearer " + config.Pterodactyl.apikey,
+            Authorization: "Bearer " + Config.Pterodactyl.apikey,
             "Content-Type": "application/json",
             Accept: "Application/vnd.pterodactyl.v1+json",
         },

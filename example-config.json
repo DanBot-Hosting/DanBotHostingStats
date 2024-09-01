@@ -29,9 +29,6 @@
         "email": "",
         "pass": ""
     },
-    "Ping": {
-        "UK": ""
-    },
     "PremiumServerPrice": "",
     "DiscordBot": {
         "Token": "",
@@ -98,24 +95,14 @@
     },
     "Servers": {
         "US1": "",
+        "US2": "",
         "EU1": ""
     },
-    "Tunnels": {
-        "US-1": "",
-        "UK-1": ""
-    },
-    "VPN": {
-        "US1": "",
-        "UK-1": "",
-        "EU-1": "",
-        "AU1": "",
-        "FR1": ""
-    },
     "Services": {
-        "grafana": "",
-        "pterocore": "",
-        "pteropublic": "",
-        "vpnapi": ""
+        "pteropublic": ""
+    },
+    "Ping": {
+        "UK": ""
     },
     "BannedNames": [
         "",
@@ -125,7 +112,6 @@
         ""
     ],
     "Enabled": {
-        "NodeStats": "",
         "nodestatsChecker": ""
     },
     "DonatorNodes": [
