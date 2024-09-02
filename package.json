@@ -21,7 +21,7 @@
     "axios": "^1.4.0",
     "better-sqlite3": "^8.5.0",
     "chalk": "^3.0.0",
-    "discord.js": "^14.15.3",
+    "discord.js": "^14.16.0",
     "humanize-duration": "^3.28.0",
     "moment": "^2.29.4",
     "mongoose": "^8.5.3",

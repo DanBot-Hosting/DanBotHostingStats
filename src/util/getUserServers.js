@@ -20,8 +20,7 @@ module.exports = async function(userId) {
             headers: {
                 Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                 "Content-Type": "application/json",
-                Accept: "Application/vnd.pterodactyl.v1+json",
-                "danbot-hosting-internal-header": `dibster-mM2tcUziaqUuoUDYtuvoiTUyQKhRjp`
+                Accept: "Application/vnd.pterodactyl.v1+json"
             },
         });
         return response.data;
