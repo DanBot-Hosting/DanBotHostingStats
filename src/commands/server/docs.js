@@ -13,33 +13,35 @@ exports.description = "Shows information about a server type. View this command 
  */
 exports.run = async (client, message, args) => {
 
-    const helpEmbed = new Discord.MessageEmbed()
-        .setColor("RED")
+    const helpEmbed = new Discord.EmbedBuilder()
+        .setColor("Red")
         .setDescription(`List of servers:\n`)
-        //.addField("__**Minecraft:**__", "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", true)
-        //.addField("__**Grand Theft Auto:**__", "alt:V \nmultitheftauto \nRage.MP \nSA-MP", true)
-        .addField("__**Languages:**__", "NodeJS \nBun \nPython \nJava \naio \nrustc", true)
-        .addField("__**Bots:**__", "redbot", true)
-        //.addField("__**Source Engine:**__", "GMod \nCS:GO \nARK:SE", true)
-        .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
-        //.addField("__**SteamCMD:**__", "Rust \nDaystodie \nAssettocorsa \nAvorion \nBarotrauma", true)
-        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
-        .addField("__**WebHosting:**__", "Nginx", true)
-        .addField("__**Custom Eggs:**__", "ShareX", true)
-        .addField("__**Software:**__", "codeserver \ngitea \nhaste \nuptimekuma", true)
-        .setFooter("Example: " + Config.DiscordBot.Prefix + "server docs NodeJS");
+        .addFields(
+            { name: "__**Languages:**__", value: "NodeJS \nPython \nJava \naio \nrustc", inline: true },
+            { name: "__**Bots:**__", value: "redbot", inline: true },
+            { name: "__**Voice Servers**__", value: "TS3 \nMumble", inline: true },
+            { name: "__**Databases:**__", value: "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", inline: true },
+            { name: "__**WebHosting:**__", value: "Nginx", inline: true },
+            { name: "__**Custom Eggs:**__", value: "ShareX", inline: true },
+            { name: "__**Software:**__", value: "codeserver \ngitea \nhaste \nuptimekuma", inline: true }
+            //{ name: "__**MineCraft:**__", value: "Forge \nPaper \nBedrock \nPocketmineMP \nWaterfall \nSpigot", inline: true },
+            //{ name: "__**Grand Theft Auto:**__", value: "alt:V \nmultitheftauto \nRage.MP \nSA-MP", inline: true },
+            //{ name: "__**Source Engine:**__", value: "GMod \nCS:GO \nARK:SE", inline: true },
+            //{ name: "__**SteamCMD:**__", value: "Rust \nDaystodie \nAssettocorsa \nAvorion \nBarotrauma", inline: true }
+        )
+        .setFooter({text: "Example: " + Config.DiscordBot.Prefix + "server docs NodeJS"});
 
     if (!args[1]) {
-        await message.reply(helpEmbed);
+        await message.reply({embeds:[helpEmbed]});
         return;
     }
 
     if (args[1] == "list") {
-        await message.reply(helpEmbed);
+        await message.reply({embeds:[helpEmbed]});
         return;
     }
 
-    const embed = new Discord.MessageEmbed();
+    const embed = new Discord.EmbedBuilder();
     switch (args[1].toLowerCase()) {
         case "aio":
             embed.setDescription(
@@ -124,9 +126,8 @@ exports.run = async (client, message, args) => {
             );
             break;
         default:
-            return message.reply(
-                helpEmbed.setDescription("**This server type does not exist. Here is a list.**"),
-            );
+            return message.reply({ embeds: [helpEmbed.setDescription("**This server type does not exist. Here is a list.**")]});
     }
-    return message.reply(embed);
+
+    return message.reply({embeds: [embed]});
 };

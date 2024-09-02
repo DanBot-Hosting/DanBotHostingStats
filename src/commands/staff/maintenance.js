@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin)) return;
 
     if (!args[1]) {
-        return message.reply("Please provide a Node to put into maintenance!");
+        return await message.reply("Please provide a Node to put into maintenance!");
     } else {
         const Data = nodeStatus.get(args[1].toLowerCase());
 
@@ -27,16 +27,16 @@ exports.run = async (client, message, args) => {
                 const Result = await nodeStatus.set(`${args[1]}.maintenance`, false);
 
                 if (!Result)
-                    return message.reply(`Unable to put ${args[1]} out of maintainance mode.`);
+                    return message.reply(`Unable to put ${args[1]} out of maintenance mode.`);
 
-                message.reply(`Successfully put ${args[1]} out of maintainance mode.`);
+                message.reply(`Successfully put ${args[1]} out of maintenance mode.`);
             } else if (Data.maintenance == false) {
                 const Result = await nodeStatus.set(`${args[1]}.maintenance`, true);
 
                 if (!Result)
-                    return message.reply(`Unable to put ${args[1]} into maintainance mode.`);
+                    return message.reply(`Unable to put ${args[1]} into maintenance mode.`);
 
-                message.reply(`Successfully put ${args[1]} into maintainance mode.`);
+                message.reply(`Successfully put ${args[1]} into maintenance mode.`);
             }
         }
     }

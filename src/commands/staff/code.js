@@ -3,6 +3,8 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
+const generatePassword = require('../../util/generatePassword.js');
+
 exports.description = "Create a code for premium servers.";
 
 /**
@@ -19,18 +21,7 @@ exports.run = async (client, message, args) => {
         !MiscConfigs.codeDrops.includes(
             message.author.id,
         )
-    )
-        return;
-
-    // Generate a random code.
-    const CAPSNUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    var codeGen = () => {
-        var password = "";
-        while (password.length < 16) {
-            password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
-        }
-        return password;
-    };
+    ) return;
 
     if (args.length < 3) {
         message.reply(`Usage: \`${Config.DiscordBot.Prefix}staff code <name> <uses>\``);
@@ -44,7 +35,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    const code = args[1].toLowerCase() == "random" ? codeGen() : args[1];
+    const code = args[1].toLowerCase() == "random" ? generatePassword() : args[1];
 
     if (codes.get(code) != null) {
         message.reply("A code with that name already exists.");
@@ -56,7 +47,7 @@ exports.run = async (client, message, args) => {
             code +
             "` with `" +
             args[2] +
-            "` premium servers. \n\nRedeem this with `"+ Config.DiscordBot.Prefix +" server redeem " +
+            "` premium servers. \n\nRedeem this with `"+ Config.DiscordBot.Prefix + "server redeem " +
             code +
             "`",
     );

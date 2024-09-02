@@ -13,7 +13,8 @@ const misc = {
     codeDrops: [
         "137624084572798976", //Dan
         "737603315722092544", //Sarah
-        "405771597761216522"  //Mike
+        "405771597761216522", //Mike
+        "757296951925538856", //DIBSTER
     ],
 
     //Staff who can run eval and exec.

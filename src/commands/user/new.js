@@ -29,12 +29,12 @@ exports.run = async (client, message, args) => {
         {
             id: "tos",
             question:
-                "https://danbot.host/tos\nPlease read our TOS, do you accept? (**yes or no**)", // The questions...
+                "https://danbot.host/tos\nPlease read our Terms of Service, do you accept? (**yes or no**)", // The questions...
             filter: (m) => m.author.id === message.author.id, // Filter to use...
             afterChecks: [
                 {
                     check: (msg) => msg.toLowerCase() == "yes",
-                    errorMessage: "You must accept our TOS!",
+                    errorMessage: "You must accept our Terms of Service!",
                 },
             ],
             time: 1000 * 60 * 10, // how much time a user has to answer the question before it times out
@@ -69,89 +69,97 @@ exports.run = async (client, message, args) => {
         },
     ];
 
-    // Locate the account creation category
-    let category = message.guild.channels.cache.find(
-        (c) => c.id === MiscConfigs.accounts && c.type === "category",
-    );
+    server = message.guild;
 
-    // if not found throw an error
-    if (!category) throw new Error("Category channel does not exist");
+    // Locate the account creation category
+    const category = server.channels.cache.find((c) => c.id === MiscConfigs.accounts && c.type === Discord.ChannelType.GuildCategory);
+
+    if (!category) throw new Error("Category channel does not exist.");
 
     // Create the channel in which the user will use to create his account
-    let channel = await message.guild.channels
-        .create(message.author.tag, {
-            parent: category.id,
-            permissionOverwrites: [
-                {
-                    id: message.author.id,
-                    allow: ["VIEW_CHANNEL", "SEND_MESSAGES", "READ_MESSAGE_HISTORY"],
-                },
-                {
-                    id: message.guild.id,
-                    deny: 0x400,
-                },
-            ],
-        })
-        .catch(console.error);
-
-    channel.updateOverwrite(message.author, {
-        VIEW_CHANNEL: true,
-        SEND_MESSAGES: true,
-        READ_MESSAGE_HISTORY: true,
+    const channel = await server.channels.create({
+        name: message.author.username,
+        type: Discord.ChannelType.GuildText,
+        permissionOverwrites: [
+            {
+                id: message.author.id,
+                allow: [Discord.PermissionFlagsBits.ViewChannel, Discord.PermissionFlagsBits.SendMessages, Discord.PermissionFlagsBits.ReadMessageHistory]
+            },
+            {
+                id: server.id,
+                deny: [Discord.PermissionFlagsBits.ViewChannel]
+            }
+        ],
+        reason: "User creating their account."
     });
+
+    await channel.setParent(category, { lockPermissions: false });
 
     // Tell the user to check the channel.
     message.reply(`Please check <#${channel.id}> to create an account.`);
 
     // Send the initial question.
-
     let msg = null;
+
+    ///////////////////// Below is the converted Discord V14 Code //////////////
 
     for (const question of questions) {
         if (msg == null) {
-            msg = await channel.send(message.member, {
-                embed: new Discord.MessageEmbed()
-                    .setColor(0x36393e)
-                    .setDescription(question.question)
-                    .setFooter("You can type 'cancel' to cancel the request"),
+            msg = await channel.send({
+                content: message.member.toString(),
+                embeds: [
+                    new Discord.EmbedBuilder()
+                        .setColor("Green")
+                        .setDescription(question.question)
+                        .setFooter({
+                            text: "You can type 'cancel' to cancel the request.",
+                            iconURL: client.user.avatarURL(),
+                        })
+                        .setTimestamp(),
+                ],
             });
         } else {
-            msg.edit(message.member, {
-                embed: msg.embeds[0].setDescription(question.question),
+            await msg.edit({
+                content: message.member.toString(),
+                embeds: [
+                    new Discord.EmbedBuilder(msg.embeds[0])
+                        .setDescription(question.question)
+                ],
             });
         }
 
-        let awaitMessages = await channel
-            .awaitMessages(question.filter, {
+        let collectedMessages;
+        try {
+            collectedMessages = await channel.awaitMessages({
+                filter: question.filter,
                 max: 1,
                 time: question.time,
-                errors: ["time"],
-            })
-            .catch((x) => {
-                channel.send("User failed to provide an input!\nAccount creation cancelled!");
-                setTimeout(() => {
-                    channel.delete();
-                }, 5000);
-                return;
+                errors: ['time']
             });
-        // Log the value...
-        question.value = awaitMessages.first().content.trim();
-
-        await awaitMessages.first().delete();
-
-        if (question.value == "cancel") {
-            msg.delete();
-            channel.send("Cancelled!");
-
+        } catch (error) {
+            channel.send("User failed to provide an input!\nAccount creation cancelled!");
             setTimeout(() => {
                 channel.delete();
             }, 5000);
             return;
         }
 
-        for (const aftercheck of question.afterChecks) {
-            if (aftercheck.check(question.value) == false) {
-                channel.send(aftercheck.errorMessage);
+        question.value = collectedMessages.first().content.trim();
+
+        await collectedMessages.first().delete();
+
+        if (question.value.toLowerCase() === "cancel") {
+            msg.delete();
+            channel.send("Cancelled!");
+            setTimeout(() => {
+                channel.delete();
+            }, 5000);
+            return;
+        }
+
+        for (const afterCheck of question.afterChecks) {
+            if (!afterCheck.check(question.value)) {
+                channel.send(afterCheck.errorMessage);
                 channel.send("Account creation cancelled!");
                 setTimeout(() => {
                     channel.delete();
@@ -160,7 +168,6 @@ exports.run = async (client, message, args) => {
             }
         }
 
-        // If the question is the email question, send the verification code
         if (question.id === "email") {
             const verificationCode = generateCode().toString();
             await sendMail(question.value, "Your Verification Code", `<p>Your verification code is: <b>${verificationCode}</b></p>`);
@@ -181,16 +188,19 @@ exports.run = async (client, message, args) => {
         }
     }
 
-    msg.edit(message.member, {
-        embed: msg.embeds[0]
-            .setDescription(
-                "Attempting to create an account for you...\n\n>>> " +
+    await msg.edit({
+        content: message.member.toString(),
+        embeds: [
+            new Discord.EmbedBuilder(msg.embeds[0])
+                .setDescription(
+                    "Attempting to create an account for you...\n\n>>> " +
                     questions
                         .map((question) => `**${question.id}:** ${question.value.toLowerCase()}`)
-                        .join("\n"),
-            )
-            .setFooter("")
-            .setTimestamp(),
+                        .join("\n")
+                )
+                .setFooter(null)
+                .setTimestamp(),
+        ],
     });
 
     const data = {
@@ -226,20 +236,29 @@ exports.run = async (client, message, args) => {
                 domains: [],
             });
 
-            msg.edit("Hello! You created a new account, Here's the login information", {
-                embed: new Discord.MessageEmbed()
-                    .setColor("GREEN")
-                    .setDescription(
-                        "URL: " +
+            msg.edit({
+                content: message.member.toString(),
+                embeds: [
+                    new Discord.EmbedBuilder()
+                        .setTitle("Account Created! Account Information:")
+                        .setColor("Green")
+                        .setDescription(
+                            "Panel URL: " +
                             Config.Pterodactyl.hosturl +
-                            " \nUsername: " +
+                            "\nUsername: `" +
                             data.username +
-                            " \nEmail: " +
+                            "\n`Email: `" +
                             data.email +
-                            " \nPassword: " +
-                            data.password,
-                    )
-                    .setFooter("Please note: It is recommended that you change the password"),
+                            "\n`Password: `" +
+                            data.password +
+                            "`"
+                        )
+                        .setFooter({
+                            text: "Please note: It is recommended that you change the password.",
+                            iconURL: client.user.avatarURL(),
+                        })
+                        .setTimestamp(),
+                ],
             });
 
             channel.send(
@@ -247,31 +266,35 @@ exports.run = async (client, message, args) => {
             );
             message.guild.members.cache.get(message.author.id).roles.add(Config.DiscordBot.Roles.Client);
 
-            setTimeout(function () {
+            setTimeout(() => {
                 channel.delete();
             }, 1800000);
         })
         .catch((err) => {
-            let errors = err.response.data.errors;
-
+            const errors = err.response?.data?.errors;
             if (errors) {
-                msg.edit("", {
-                    embed: new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .setTitle("An error has occurred:")
-                        .setDescription(
-                            "**ERRORS:**\n\n- " +
-                                errors.map((error) => error.detail.replace("\n", " ")).join("\n- "),
-                        )
-                        .setTimestamp()
-                        .setFooter("Deleting in 30 seconds..."),
+                msg.edit({
+                    content: '',
+                    embeds: [
+                        new Discord.EmbedBuilder()
+                            .setColor("Red")
+                            .setTitle("An error has occurred:")
+                            .setDescription(
+                                "**ERRORS:**\n\n- " +
+                                errors.map((error) => error.detail.replace("\n", " ")).join("\n- ")
+                            )
+                            .setTimestamp()
+                            .setFooter({
+                                text: "Deleting in 30 seconds...",
+                            }),
+                    ],
                 });
-                setTimeout(function () {
+                setTimeout(() => {
                     channel.delete();
                 }, 30000);
             } else {
                 channel.send("An unexpected error has occurred, please try again later...");
-                setTimeout(function () {
+                setTimeout(() => {
                     channel.delete();
                 }, 30000);
             }

@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createListPrem.palworld = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -22,8 +24,8 @@ createListPrem.palworld = (serverName, userID) => ({
         AUTO_UPDATE: 1,
         MAX_PLAYERS: 32,
         SRV_NAME: "A Palword Server hosted on DanBot Hosting LTD",
-        SRV_PASSWORD: getPassword(),
-        ADMIN_PASSWORD: getPassword(),
+        SRV_PASSWORD: generatePassword(),
+        ADMIN_PASSWORD: generatePassword(),
         PUBLIC_IP: "128.254.225.78",
     },
     deploy: {

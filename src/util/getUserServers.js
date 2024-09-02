@@ -9,6 +9,9 @@ const Config = require('../../config.json');
  */
 module.exports = async function(userId) {
     try {
+
+        const Secret = Config.Secret2;
+
         const response = await axios({
             url: `${Config.Pterodactyl.hosturl}/api/application/users/${userId}?include=servers`,
             method: "GET",
@@ -18,6 +21,7 @@ module.exports = async function(userId) {
                 Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                 "Content-Type": "application/json",
                 Accept: "Application/vnd.pterodactyl.v1+json",
+                "danbot-hosting-internal-header": `dibster-mM2tcUziaqUuoUDYtuvoiTUyQKhRjp`
             },
         });
         return response.data;

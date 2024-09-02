@@ -76,52 +76,62 @@ exports.run = async (client, message, args) => {
                     `${userID === message.author.id ? "You have" : "That user has"} too many servers to display!`,
                 );
             } else if (freeServers.length + donoServers.length > 20) {
-                const serverListEmbed = new Discord.MessageEmbed().setTitle(
+                const serverListEmbed = new Discord.EmbedBuilder().setTitle(
                     `Server List (${arr.length})`,
                 );
 
-                if (userID !== message.author.id)
-                    serverListEmbed.setAuthor(
-                        user.tag,
-                        user.displayAvatarURL({ format: "png", dynamic: true }),
-                        `https://discord.com/users/${user.id}`,
-                    );
+                if (userID !== message.author.id) serverListEmbed.setAuthor({
+                    name: user.tag,
+                    iconURL: user.displayAvatarURL({ format: "png", dynamic: true }),
+                    url: `https://discord.com/users/${user.id}` 
+                });
+
                 if (freeServers.length > 0)
-                    serverListEmbed.addField(
-                        `:free: Free (${freeServers.length})`,
-                        freeServers.join(", "),
+                    serverListEmbed.addFields(
+                        {
+                            name: `:free: Free (${freeServers.length})`,
+                            value: freeServers.join("\n")
+                        }
                     );
                 if (donoServers.length > 0)
-                    serverListEmbed.addField(
-                        `:money_with_wings: Premium (${donoServers.length})`,
-                        donoServers.join(", "),
+                    serverListEmbed.addFields(
+                        {
+                            name: `:money_with_wings: Premium (${donoServers.length})`,
+                            value: donoServers.join("\n")
+                        }
                     );
 
-                message.reply(serverListEmbed);
+                message.reply({embeds: [serverListEmbed]});
             } else {
-                const serverListEmbed = new Discord.MessageEmbed().setTitle(
+                const serverListEmbed = new Discord.EmbedBuilder().setTitle(
                     `Server List (${arr.length})`,
                 );
 
                 if (userID !== message.author.id)
-                    serverListEmbed.setAuthor(
-                        user.tag,
-                        user.displayAvatarURL({ format: "png", dynamic: true }),
-                        `https://discord.com/users/${user.id}`,
-                    );
+                    serverListEmbed.setAuthor({
+                        name: user.tag,
+                        iconURL: user.displayAvatarURL({ format: "png", dynamic: true }),
+                        url: `https://discord.com/users/${user.id}`
+                    });
                 if (freeServers.length > 0)
-                    serverListEmbed.addField(
-                        `:free: Free (${freeServers.length})`,
-                        freeServers.join("\n"),
-                    );
+                    serverListEmbed.addFields(
+                        {
+                            name: `:free: Free (${freeServers.length})`,
+                            value: freeServers.join("\n")
+                        }
+                    )
                 if (donoServers.length > 0)
-                    serverListEmbed.addField(
-                        `:money_with_wings: Premium (${donoServers.length})`,
-                        donoServers.join("\n"),
+                    serverListEmbed.addFields(
+                        {
+                            name: `:money_with_wings: Premium (${donoServers.length})`,
+                            value: donoServers.join("\n")
+                        }
                     );
 
-                message.reply(serverListEmbed);
+                message.reply({embeds: [serverListEmbed]});
             }
         })
-        .catch(() => message.reply("An error occurred while loading servers."));
+        .catch((Error) => {
+            message.reply("An error occurred while loading servers.")
+        });
 };

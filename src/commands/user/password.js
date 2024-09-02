@@ -4,6 +4,8 @@ const axios = require("axios");
 const generatePassword = require("../../util/generatePassword.js");
 const Config = require('../../../config.json');
 
+exports.description = "Resets the password for the linked console account.";
+
 /**
  * User password command. Resets the password for the linked console account.
  *
@@ -20,7 +22,7 @@ exports.run = async (client, message, args) => {
     const userAccount = userData.get(message.author.id);
 
     if (userAccount == null) {
-        message.channel.send("You do not have a console account linked with your discord account.");
+        message.reply("You do not have a console account linked with your discord account.");
         return;
     }
 
@@ -59,8 +61,8 @@ exports.run = async (client, message, args) => {
             data: data,
         })
             .then((Response) => {
-                const Embed = new Discord.MessageEmbed();
-                Embed.setColor("BLUE");
+                const Embed = new Discord.EmbedBuilder();
+                Embed.setColor("Blue");
                 Embed.setTitle("Password Reset Success");
                 Embed.setDescription(
                     "The console account that is linked with the discord account has now been reset.\n" +
@@ -68,7 +70,7 @@ exports.run = async (client, message, args) => {
                     "An email has also been sent to your email connected to the console account."
                 );
 
-                message.channel.send(Embed);
+                message.reply({embeds: [Embed]});
 
                 //Sends the user a direct message containing their new password.
                 client.users.cache
@@ -94,7 +96,7 @@ exports.run = async (client, message, args) => {
                 transport.sendMail(EmailMessage);
             })
             .catch((err) => {
-                message.reply(err.message);
+                console.error(err.message);
             });
     }).catch((Error) => {
         if(Error.statusCode == 404) {
@@ -102,5 +104,3 @@ exports.run = async (client, message, args) => {
         };
     })
 };
-
-exports.description = "Resets the password for the linked console account.";

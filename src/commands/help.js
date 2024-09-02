@@ -14,9 +14,9 @@ exports.description = "Shows the commands available for the bot.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    let embed = new Discord.MessageEmbed()
+    let embed = new Discord.EmbedBuilder()
         .setTitle("Commands:")
-        .setColor("BLUE");
+        .setColor("Blue");
 
     let categories = [];
     let commands = [];
@@ -36,7 +36,7 @@ exports.run = async (client, message, args) => {
                 if (item === 'staff' && !memberRoles.includes(Config.DiscordBot.Roles.Staff)) {
                     return; // Skip this category if the user doesn't have the staff role
                 }
-                categories.push(`**${config.DiscordBot.Prefix}${item}** - Use ${config.DiscordBot.Prefix}${item} for more information.`);
+                categories.push(`**${Config.DiscordBot.Prefix}${item}** - Use ${Config.DiscordBot.Prefix}${item} for more information.`);
             // If the item is a JavaScript file, it's a command.
             } else if (item.endsWith('.js')) {
                 const command = require(itemPath);
@@ -62,15 +62,16 @@ exports.run = async (client, message, args) => {
     }
 
     commands.forEach(command => {
-        embed.addField(
-            `**${config.DiscordBot.Prefix}${command.name}**`,
-            command.description
+        embed.addFields(
+            { name: `**${Config.DiscordBot.Prefix}${command.name}**`, value: command.description}
         );
     });
 
     if (commands.length === 0) {
-        embed.addField("\u200B", "No commands available.");
+        embed.addFields(
+            { name: "\u200B", value: "No commands available."}
+        );
     }
 
-    message.reply(embed);
+    message.reply({ embeds: [embed] });
 };

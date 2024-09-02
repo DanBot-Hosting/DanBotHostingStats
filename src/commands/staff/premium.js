@@ -17,7 +17,8 @@ exports.run = async (client, message, args) => {
     )
         return;
 
-    if (args.length < 4) return;
+    if (args.length < 4) return message.reply("You didn't provide enough arguements.");
+
     let parser = new Intl.NumberFormat();
 
     let setDonations = (userid, amount) => {
@@ -29,7 +30,7 @@ exports.run = async (client, message, args) => {
         userPrem.set(userid + ".donated", amount);
     };
 
-    let sendMessage = (userid, amount) => {
+    let sendMessage = async (userid, amount) => {
         message.delete();
         message.channel.send(
             "Thanks <@" +

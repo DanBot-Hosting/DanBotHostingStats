@@ -24,11 +24,11 @@ module.exports = async (client, member, guild) => {
 
     //If the user has a console account linked, give them the client role.
     if (userData.get(member.id) !== null) {
-        member.roles.add(Config.DiscordBot.Roles.Client);
+        await member.roles.add(Config.DiscordBot.Roles.Client);
     };
 
     //If the user has donated before, gives them the donator role.
     if(userPrem.get(`${member.id}.donated`) > 0){
-        member.roles.add(Config.DiscordBot.Roles.Donator);
+        await member.roles.add(Config.DiscordBot.Roles.Donator);
     }
 };

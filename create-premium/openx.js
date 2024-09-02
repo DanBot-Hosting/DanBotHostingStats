@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createListPrem.openx = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -15,7 +17,7 @@ createListPrem.openx = (serverName, userID) => ({
     },
     environment: {
         FILELENGTH: "8",
-        PASSWORD: getPassword(),
+        PASSWORD: generatePassword(),
         MAXUPLOAD: "1024",
         AUTO_UPDATE: 0,
     },

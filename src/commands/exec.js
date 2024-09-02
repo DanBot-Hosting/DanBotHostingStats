@@ -20,17 +20,20 @@ exports.run = (client, message, args) => {
             message.author.id,
         )
     ) {
+
+        if (args.length == 0) return message.reply({ content: "Please provide a command to run."});
+
         exec(`${args.join(" ")}`, (error, stdout) => {
             let response = error || stdout;
 
             if (response.length > 4000) console.log(response), (response = "Output too long.");
 
-            message.reply("", {
-                embed: new Discord.MessageEmbed()
-                    .setDescription("```" + response + "```")
-                    .setTimestamp()
-                    .setColor("RANDOM"),
-            });
+            const Embed = new Discord.EmbedBuilder()
+                .setDescription("```" + response + "```")
+                .setTimestamp()
+                .setColor("Blurple")
+
+            message.reply({embeds: [Embed]});
         });
     }
 };

@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 const Config = require('../../config.json');
 
 /**
- * Fetches user data from Pterodactyl.
+ * Sends an email to a specified address.
  * 
  * @param {BigInt} address - The user ID to fetch data for.
  * @param {String} subject - The email subject.

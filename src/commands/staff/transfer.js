@@ -63,12 +63,22 @@ exports.run = async (client, message, args) => {
 
             if (modlog) {
                 modlog.send({
-                    embed: new Discord.MessageEmbed()
+                    embeds: new Discord.EmbedBuilder()
                         .setTitle("Premium Balance Transfer")
-                        .addField("From:", args[1], true)
-                        .addField("to:", args[2], true)
-                        .setDescription(`Added ${donated} credits and ${used} used`)
-                        .setFooter("Executed by: " + message.author.tag),
+                        .addFields(
+                            {
+                                name: "From:",
+                                value: args[1],
+                                inline: true
+                            },
+                            {
+                                name: "To:",
+                                value: args[2],
+                                inline: true
+                            }
+                        )
+                        .setDescription(`Added ${donated} credits and ${used} used.`)
+                        .setFooter({ text: "Executed by: " + message.author.tag}),
                 });
             }
         }

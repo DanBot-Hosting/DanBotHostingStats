@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const Axios = require('axios');
 
 const Config = require('../../../config.json');
 const Proxies = require('../../../config/proxy-configs.js').Proxies;
@@ -51,7 +52,7 @@ exports.run = async (client, message, args) => {
 
         token = await getToken(proxyServer.url, proxyServer.email, proxyServer.pass);
 
-        const listOfUrls = await axios({
+        const listOfUrls = await Axios({
             url:
                 proxyServer.url + "/api/nginx/proxy-hosts?expand=owner,access_list,certificate",
             method: "GET",
@@ -80,7 +81,7 @@ exports.run = async (client, message, args) => {
                 `Found domain ${idOfProxy} on ${Proxies[using].name}, attempting to delete...`,
             );
 
-            const deletedObject = await axios({
+            const deletedObject = await Axios({
                 url: Proxies[using].url + `/api/nginx/proxy-hosts/${idOfProxy}`,
                 method: "DELETE",
                 followRedirect: true,

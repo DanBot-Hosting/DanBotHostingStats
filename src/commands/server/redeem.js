@@ -58,10 +58,11 @@ exports.run = async (client, message, args) => {
             let msg = await client.channels.cache
                 .get(code.drop.message.channel)
                 .messages.fetch(code.drop.message.ID);
+                
             let embed = msg.embeds[0].setDescription(
                 `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#` + MiscConfigs.normalCommands + `>\n- Redeem the Premium Code: \`` + Config.DiscordBot.Prefix + `server redeem <Code>\`\n\n*Redeemed by ${message.member}*`,
             );
-            msg.edit(embed);
+            msg.edit({embeds: [embed]});
         }
     }
 };

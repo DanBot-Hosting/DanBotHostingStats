@@ -11,12 +11,13 @@ exports.description = "Shows the bot's latency.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    const embed = new Discord.MessageEmbed()
-        .setColor("RED")
+    const Embed = new Discord.EmbedBuilder()
+        .setColor("Red")
         .setTitle("DanBot Hosting - Ping")
         .setDescription(
             `Bot Latency: ${Date.now() - message.createdTimestamp}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`,
         )
         .setTimestamp();
-    message.reply(embed);
+
+    message.reply({embeds: [Embed]});
 };

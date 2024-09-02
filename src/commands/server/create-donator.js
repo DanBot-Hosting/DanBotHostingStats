@@ -4,6 +4,8 @@ const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 const serverCreateSettings_Prem = require("../../../createData_Prem");
 
+exports.description = "Creates a donator server. View this command for usage.";
+
 /**
  * 
  * @param {Discord.Client} client 
@@ -55,43 +57,77 @@ exports.run = async (client, message, args) => {
         return;
     }
 
+    const HelpEmbed = new Discord.EmbedBuilder();
+    HelpEmbed.setColor("Red")
+    HelpEmbed.addFields(
+        {
+            name: "Minecraft",
+            value: "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot",
+            inline: true,
+        },
+        {
+            name: "Grand Theft Auto",
+            value: "alt:V\nmultitheftauto\nRage.MP\nSA-MP",
+            inline: true,
+        },
+        {
+            name: "Languages",
+            value: "NodeJS\nBun\nPython\nJava\naio\n Rust (use rustc to create)",
+            inline: true,
+        },
+        {
+            name: "Bots",
+            value: "redbot",
+            inline: true,
+        },
+        {
+            name: "Source Engine",
+            value: "GMod\nCS:GO\nARK:SE",
+            inline: true,
+        },
+        {
+            name: "Voice Servers",
+            value: "TS3\nMumble",
+            inline: true,
+        },
+        {
+            name: "SteamCMD",
+            value: "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma",
+            inline: true,
+        },
+        {
+            name: "Databases",
+            value: "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB\nInfluxDB",
+            inline: true,
+        },
+        {
+            name: "WebHosting",
+            value: "Nginx",
+            inline: true,
+        },
+        {
+            name: "Custom Eggs",
+            value: "ShareX\nOpenX",
+            inline: true,
+        },
+        {
+            name: "Software",
+            value: "codeserver\ngitea\nhaste\n uptimekuma\n grafana",
+            inline: true,
+        }
+    )
+    HelpEmbed.setFooter({ text: "Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server", iconURL: client.user.displayAvatarURL() })
+    HelpEmbed.setTimestamp();
+    
+
     //Do server creation things
     if (!args[1]) {
         message.reply(
-            new Discord.MessageEmbed()
-                .setColor("RED")
-                .addField(
-                    "Minecraft",
-                    "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot\nNukkit\nCurseforge",
-                    true,
-                )
-                .addField("Grand Theft Auto", "alt:V\nmultitheftauto\nRage.MP\nSA-MP", true)
-                .addField(
-                    "Languages",
-                    "NodeJS\nBun\nPython\nJava\naio\n Rust (use rustc to create)",
-                    true,
-                )
-                .addField("Bots", "redbot", true)
-                .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
-                .addField("Voice Servers", "TS3\nMumble\nLavalink", true)
-                .addField(
-                    "SteamCMD",
-                    "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma\nPalworld\nSCPSL",
-                    true,
-                )
-                .addField(
-                    "Databases",
-                    "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB\nInfluxDB",
-                    true,
-                )
-                .addField("WebHosting", "Nginx", true)
-                .addField("Custom Eggs", "ShareX \nOpenX", true)
-                .addField(
-                    "Software",
-                    "codeserver\ngitea\nhaste\n uptimekuma\n grafana \nrabbitmq",
-                    true,
-                )
-                .setFooter("Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server"),
+            {
+                embeds: [
+                    HelpEmbed
+                ]
+            }
         );
         return;
     }
@@ -152,97 +188,126 @@ exports.run = async (client, message, args) => {
             .then((response) => {
                 userPrem.set(message.author.id + ".used", userP.used + 1);
 
-                let embed = new Discord.MessageEmbed()
-                    .setColor(`GREEN`)
-                    .addField(`Status`, response.statusText)
-                    .addField(`Created for user ID`, consoleID.consoleID)
-                    .addField(`Server name`, serverName)
-                    .addField(`Type`, args[1].toLowerCase())
-                    .addField(
-                        `__**WARNING**__`,
-                        `Please do not host game servers on java or AIO servers. If you need a gameserver, You need to use Dono2. Slots are 1$ for 2 servers!`,
-                    );
-                message.reply(embed);
+                let embed = new Discord.EmbedBuilder()
+                    .setColor(`Green`)
+                    .addFields(
+                        {
+                            name: `Status`,
+                            value: response.statusText.toString(),
+                            inline: false
+                        },
+                        {
+                            name: `Created for user ID`,
+                            value: consoleID.consoleID.toString(),
+                            inline: false
+                        },
+                        {
+                            name: `Server name`,
+                            value: serverName.toString(),
+                            inline: false
+                        },
+                        {
+                            name: `Type`,
+                            value: args[1].toLowerCase(),
+                            inline: false
+                        },
+                        {
+                            name: `__**WARNING**__`,
+                            value: `Please do not host game servers on java or AIO servers. If you need a gameserver, You need to use Dono2. Slots are 1$ for 2 servers!`,
+                            inline: false
+                        }
+                    )
+                message.reply({embeds: [embed]});
 
-                const embed2 = new Discord.MessageEmbed()
+                const embed2 = new Discord.EmbedBuilder()
                     .setTitle("New donator node server created!")
-                    .addField("User:", message.author.id)
-                    .addField(`Status`, response.statusText)
-                    .addField(`Created for user ID`, consoleID.consoleID)
-                    .addField(`Server name`, serverName)
-                    .addField(`Type`, args[1].toLowerCase())
+                    .setColor("Green")
+                    .addFields(
+                        {
+                            name: "User:",
+                            value: message.author.id.toString(),
+                            inline: false
+                        },
+                        {
+                            name: `Status`,
+                            value: response.statusText.toString(),
+                            inline: false
+                        },
+                        {
+                            name: `Created for user ID`,
+                            value: consoleID.consoleID.toString(),
+                            inline: false
+                        },
+                        {
+                            name: `Server name`,
+                            value: serverName.toString(),
+                            inline: false
+                        },
+                        {
+                            name: `Type`,
+                            value: args[1].toLowerCase().toString(),
+                            inline: false
+                        }
+                    )
+                    .setTimestamp()
                     .setFooter(
-                        "User has " + (userP.used + 1) + " out of a max " + allowed + " servers",
+                        {
+                            text: "User has " + (userP.used + 1) + " out of a max " + allowed + " servers",
+                            iconURL: client.user.displayAvatarURL()
+                        }
                     );
 
-                client.channels.cache.get(MiscConfigs.donatorlogs).send(embed2);
+                client.channels.cache.get(MiscConfigs.donatorlogs).send({embeds: [embed2]});
             })
-            .catch((error) => {
+            .catch(async (error) => {
+                const embed = new Discord.EmbedBuilder()
+                .setColor("Red")
+
                 if (error == "AxiosError: Request failed with status code 400") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `The Donator node(s) are currently full, Please check <#` + MiscConfigs.serverStatus + `> for updates.\nIf there is no updates please alert a System Administrator (<@& ` + Config.DiscordBot.Roles.SystemAdmin + `>)`,
+                    embed.addFields(
+                            {
+                                name: `__**Failed to create a new server**__`,
+                                value: `The Donator node(s) are currently full, Please check <#` + MiscConfigs.serverStatus + `> for updates.\nIf there is no updates please alert a System Administrator (<@& ` + Config.DiscordBot.Roles.SystemAdmin + `>)`,
+                            }
                         );
-                    message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 504") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `The Donator node(s) are currently offline or having issues, You can check the status of the node in this channel: <#` + MiscConfigs.serverStatus + `>`,
-                        );
-                    message.reply(embed);
+
+                    embed.addFields(
+                        {
+                            name: `__**Failed to create a new server**__`,
+                            value: `The Donator node(s) are currently offline or having issues, You can check the status of the node in this channel: <#` + MiscConfigs.serverStatus + `>`,
+                        }
+                    )
                 } else if (error == "AxiosError: Request failed with status code 429") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `Uh oh, This shouldn\'t happen, Try again.`,
-                        );
-                    message.reply(embed);
+
+                    embed.addFields(
+                            {
+                                name: `__**Failed to create a new server**__`,
+                                value: `You are being rate limited, Please wait a few minutes and try again.`,
+                            }
+                        )
                 } else {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`,
-                        );
-                    message.reply(embed);
+
+                    embed.addFields(
+                            {
+                                name: `__**Failed to create a new server**__`,
+                                value: `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`,
+                            }
+                        )
                 }
+
+                console.log(error);
+
+                await message.reply({embeds: [embed]});
             });
         return;
     } else {
-        message.reply(
-            new Discord.MessageEmbed()
-                .setColor("RED")
-                .addField(
-                    "Minecraft",
-                    "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot",
-                    true,
-                )
-                .addField("Grand Theft Auto", "alt:V\nmultitheftauto\nRage.MP\nSA-MP", true)
-                .addField(
-                    "Languages",
-                    "NodeJS\nBun\nPython\nJava\naio\n Rust (use rustc to create)",
-                    true,
-                )
-                .addField("Bots", "redbot", true)
-                .addField("Source Engine", "GMod\nCS:GO\nARK:SE", true)
-                .addField("Voice Servers", "TS3\nMumble", true)
-                .addField("SteamCMD", "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma", true)
-                .addField(
-                    "Databases",
-                    "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB\nInfluxDB",
-                    true,
-                )
-                .addField("WebHosting", "Nginx", true)
-                .addField("Custom Eggs", "ShareX\nOpenX", true)
-                .addField("Software", "codeserver\ngitea\nhaste\n uptimekuma\n grafana", true)
-                .setFooter("Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server"),
+        await message.reply(
+            {
+                embeds: [
+                    HelpEmbed
+                ]
+            }
         );
     }
 };
-
-exports.description = "Creates a donator server. View this command for usage.";

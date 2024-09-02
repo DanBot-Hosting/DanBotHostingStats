@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createListPrem.samp = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -18,7 +20,7 @@ createListPrem.samp = (serverName, userID) => ({
         backups: 10,
     },
     environment: {
-        RCON_PASSWORD: getPassword(),
+        RCON_PASSWORD: generatePassword(),
         VERSION: "latest",
     },
     deploy: {

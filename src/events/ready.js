@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const Chalk = require("chalk");
 const { exec } = require("child_process");
 
 const ServerStatus = require("../serverStatus.js");
@@ -22,7 +23,7 @@ module.exports = async (client) => {
     checkNicks();
 
     console.log(
-        chalk.magenta("[DISCORD] ") + chalk.green(client.user.username + " has logged in!"),
+        Chalk.magenta("[DISCORD] ") + Chalk.green(client.user.username + " has logged in!"),
     );
 
     // Cloes all accounts channels that are older than 30 minutes.
@@ -85,19 +86,22 @@ module.exports = async (client) => {
 
     await ServerStatus.startNodeChecker(); //Start the Node Checker.
 
-    // Node Status Embed.
-    const channel = client.channels.cache.get(MiscConfigs.nodestatus);
+    if (Config.Enabled.nodestatsChecker == true) {
 
-    setInterval(async () => {
-        const embed = await ServerStatus.getEmbed();
+        // Node Status Embed.
+        const channel = client.channels.cache.get(MiscConfigs.nodestatus);
 
-        let messages = await channel.messages.fetch({
-            limit: 10,
-        });
+        setInterval(async () => {
+            const embed = await ServerStatus.getEmbed();
 
-        messages = messages.filter((x) => x.author.id === client.user.id).last();
+            let messages = await channel.messages.fetch({
+                limit: 10,
+            });
 
-        if (messages == null) channel.send(embed);
-        else messages.edit(embed);
-    }, 15 * 1000);
+            messages = messages.filter((x) => x.author.id === client.user.id).last();
+
+            if (messages == null) channel.send({embeds: [embed]});
+            else messages.edit({embeds: [embed]});
+        }, 15 * 1000);
+    }
 };

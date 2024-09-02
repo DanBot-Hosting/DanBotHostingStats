@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
 const serverCreateSettings = require("../../../createData");
 
 exports.description = "Create a free server. View this command for usage.";
@@ -14,30 +15,56 @@ exports.description = "Create a free server. View this command for usage.";
  */
 exports.run = async (client, message, args) => {
 
-    return message.channel.send("Server creation is disabled. Do not ping staff.");
+    //return message.channel.send("Server creation is disabled. Do not ping staff.");
 
-    const helpEmbed = new Discord.MessageEmbed()
-        .setColor("RED")
+    const helpEmbed = new Discord.EmbedBuilder()
+        .setColor("Red")
         .setDescription(
             `List of servers: (use ` + Config.DiscordBot.Prefix + `server create <type> <name>)\n\n*Please note that some nodes might be having trouble connecting to the bot which may lead into this process giving out an error.*\n`,
         )
-        .addField(
-            "__**Languages:**__",
-            "NodeJS \nBun \nPython \nJava \naio\n Rust (use rustc to create)",
-            true,
+        .addFields(
+            {
+                name: "__**Languages:**__",
+                value: "NodeJS \nBun \nPython \nJava \naio\n Rust (use rustc to create)",
+                inline: true
+            },
+            {
+                name: "__**Bots:**__",
+                value: "redbot",
+                inline: true
+            },
+            {
+                name: "__**Voice Servers:**__",
+                value: "TS3 \nMumble",
+                inline: true
+            },
+            {
+                name: "__**Databases:**__",
+                value: "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB",
+                inline: true
+            },
+            {
+                name: "__**Web Hosting:**__",
+                value: "Nginx",
+                inline: true
+            },
+            {
+                name: "__**Custom Eggs:**__",
+                value: "ShareX \nOpenX",
+                inline: true
+            },
+            {
+                name: "__**Software:**__",
+                value: "codeserver \ngitea \nhaste\n uptimekuma\n grafana \n rabbitmq",
+                inline: true
+            },
+            {
+                name: "__**Storage:**__",
+                value: "storage",
+                inline: true
+            }
         )
-        .addField("__**Bots:**__", "redbot", true)
-        .addField("__**Voice Servers:**__", "TS3 \nMumble", true)
-        .addField("__**Databases:**__", "MongoDB \nRedis \nPostgres14 \nPostgres16 \nMariaDB", true)
-        .addField("__**Web Hosting:**__", "Nginx", true)
-        .addField("__**Custom Eggs:**__", "ShareX \nOpenX", true)
-        .addField(
-            "__**Software:**__",
-            "codeserver \ngitea \nhaste\n uptimekuma\n grafana \n rabbitmq",
-            true,
-        )
-        .addField("__**Storage:**__", "storage", true)
-        .setFooter("Example: " + Config.DiscordBot.Prefix + "server create NodeJS Testing Server");
+        .setFooter({text: "Example: " + Config.DiscordBot.Prefix + "server create NodeJS Testing Server", iconURL: client.user.avatarURL()});
 
     const serverName =
         message.content.split(" ").slice(3).join(" ") ||
@@ -58,12 +85,12 @@ exports.run = async (client, message, args) => {
     let data = serverCreateSettings.createParams(serverName, consoleID.consoleID);
 
     if (!args[1]) {
-        await message.reply(helpEmbed);
+        await message.reply({embeds: [helpEmbed]});
         return;
     }
 
     if (args[1] == "list") {
-        await message.reply(helpEmbed);
+        await message.reply({embeds: [helpEmbed]});
         return;
     }
 
@@ -96,63 +123,85 @@ exports.run = async (client, message, args) => {
     };
 
     if (!Object.keys(types).includes(args[1].toLowerCase())) {
-        return message.reply(helpEmbed);
+        return message.reply({embeds: [helpEmbed]});
     }
 
     function createServerAndSendResponse(type, message) {
         serverCreateSettings
             .createServer(types[type])
             .then((response) => {
-                let embed = new Discord.MessageEmbed()
-                    .setColor(`GREEN`)
-                    .addField(`__**Status:**__`, response.statusText)
-                    .addField(`__**Created for user ID:**__`, consoleID.consoleID)
-                    .addField(`__**Server name:**__`, serverName)
-                    .addField(`__**Type:**__`, type);
+                const embed = new Discord.EmbedBuilder()
+                    .setColor(`Green`)
+                    .addFields(
+                        {
+                            name: "__**Status:**__",
+                            value: response.statusText.toString(),
+                            inline: false,
+                        },
+                        {
+                            name: "__**Created for user ID:**__",
+                            value: consoleID.consoleID.toString(),
+                            inline: false,
+                        },
+                        {
+                            name: "__**Server name:**__",
+                            value: serverName.toString(),
+                            inline: false,
+                        },
+                        {
+                            name: "__**Type:**__",
+                            value: type.toString(),
+                            inline: false,
+                        }
+                    )
 
                 if (type === "aio" || type === "java") {
-                    embed.addField(
-                        `__**WARNING**__`,
-                        `Please do not host game servers on java or AIO servers. If you need a Game Server, use a Game Node. Slots are 1$ for` + (1 / Config.PremiumServerPrice) + ` servers!`,
+                    embed.addFields(
+                        {
+                            name: "__**WARNING**__",
+                            value: `Please do not host game servers on java or AIO servers. If you need a Game Server, use a Game Node. Slots are 1$ for` + (1 / Config.PremiumServerPrice) + ` servers!`,
+                        }
                     );
                 }
 
-                message.reply(embed);
+                message.reply({embeds: [embed]});
             })
-            .catch((error) => {
+            .catch(async (error) => {
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Red")
+
+
                 if (error == "AxiosError: Request failed with status code 400") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `The node is currently full, Please check ` + MiscConfigs.serverStatus + ` for updates. \nIf there is no updates please alert a System Administrator (<@& ` + Config.DiscordBot.Roles.SystemAdmin + `>)`,
+                        embed.addFields(
+                            {
+                                name: `__**Failed to create a new server**__`,
+                                value: `The node is currently full, Please check ` + MiscConfigs.serverStatus + ` for updates. \nIf there is no updates please alert a System Administrator (<@& ` + Config.DiscordBot.Roles.SystemAdmin + `>)`
+                            }
                         );
-                    message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 504") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `The node is currently offline or having issues, You can check the status of the node in this channel: <#` + MiscConfigs.serverStatus + `>`,
+                        embed.addFields(
+                            {
+                                name: `__**Failed to create a new server**__`,
+                                value: `The node is currently offline or having issues, You can check the status of the node in this channel: <#` + MiscConfigs.serverStatus + `>`
+                            }
                         );
-                    message.reply(embed);
                 } else if (error == "AxiosError: Request failed with status code 429") {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `Uh oh, This shouldn\'t happen, Try again in a minute or two.`,
+                        embed.addField(
+                            {
+                                name: `__**Failed to create a new server**__`,
+                                value: `You are being rate limited, Please wait a few minutes and try again.`
+                            }
                         );
-                    message.reply(embed);
                 } else {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RED")
-                        .addField(
-                            `__**Failed to create a new server**__`,
-                            `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`,
+                        embed.addField(
+                            {
+                                name: `__**Failed to create a new server**__`,
+                                value: `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`
+                            }
                         );
-                    message.reply(embed);
                 }
+
+                await message.reply({embeds: [embed]});
             });
     }
 
