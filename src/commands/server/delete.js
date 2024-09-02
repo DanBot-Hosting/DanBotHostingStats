@@ -12,6 +12,9 @@ const Config = require('../../../config.json');
  * @returns void
  */
 exports.run = async (client, message, args) => {
+
+    return message.reply("Server creation is disabled, do not ping staff.");
+
     // Get server IDs
     const serverIds = args
         .slice(1)
