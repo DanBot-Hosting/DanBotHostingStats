@@ -1,4 +1,6 @@
 const Discord = require("discord.js");
+const Axios = require("axios");
+
 const Config = require('../../../config.json');
 
 exports.description = "Fixes a user's premium count.";
@@ -37,7 +39,7 @@ exports.run = async (client, message, args) => {
                 }
             }
 
-            const response = await axios({
+            const response = await Axios({
                 url:
                     Config.Pterodactyl.hosturl +
                     "/api/application/users/" +

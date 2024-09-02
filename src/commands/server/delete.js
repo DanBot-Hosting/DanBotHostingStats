@@ -63,24 +63,27 @@ exports.run = async (client, message, args) => {
             .join(", ");
 
         // Confirmation (using reply for better UX)
-        const confirmMsg = await message.reply(
+        const confirmMsg = await msg.edit(
             `Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`
         );
 
         try {
             // Await confirmation message (with a more robust filter)
-            const confirmation = await message.channel.awaitMessages(
-                (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm', 
-                { max: 1, time: 60000, errors: ['time'] } // Options object in v12
-            );
-
+            const confirmation = await message.channel.awaitMessages({
+                filter: (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm',
+                max: 1,
+                time: 60000,
+                errors: ['time']
+            });
+        
             if (!confirmation || confirmation.size === 0) {
                 confirmMsg.edit("Request cancelled or timed out.");
                 return;
             }
 
-            confirmMsg.delete();
-
+            const confirmMessage = confirmation.first();
+            await confirmMessage.delete();
+            
             // Deletion Loop (after successful confirmation)
             for (const server of serversToDelete) {
                 await msg.edit(`Deleting server ${server.attributes.name}...`);

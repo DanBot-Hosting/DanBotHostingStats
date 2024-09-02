@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createListPrem.assettocorsa = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -18,7 +20,7 @@ createListPrem.assettocorsa = (serverName, userID) => ({
         STEAM_AUTH: null,
         HOSTNAME: "DBH hosted Assetto Corsa server.",
         PASSWORD: null,
-        ADMIN_PASSWORD: getPassword(),
+        ADMIN_PASSWORD: generatePassword(),
         HTTP_PORT: "8081",
     },
     feature_limits: {

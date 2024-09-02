@@ -4,6 +4,8 @@ const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
 const getUser = require("../../util/getUser.js");
+const generateCode = require("../../util/generateCode.js");
+const sendEmail = require("../../util/sendEmail.js");
 
 exports.description = "Link your console account to your Discord account.";
 
@@ -16,191 +18,261 @@ exports.description = "Link your console account to your Discord account.";
 exports.run = async (client, message, args) => {
 
     // The user does not have a panel account linked and would like to link one.
-    if (userData.get(message.author.id) == null) {
+    if (userData.get(message.author.id) != null) {
+        const AlreadyLinkedEmbed = new Discord.EmbedBuilder()
+        .setColor(`Green`)
+        .addFields(
+            { name: `**__Username__**`, value: userData.fetch(message.author.id + ".username") },
+            { name: `**__Linked Date (YYYY-MM-DD)__**`, value: userData.fetch(message.author.id + ".linkDate") },
+            { name: `**__Linked Time__**`, value: userData.fetch(message.author.id + ".linkTime") },
+        )
+        .setTimestamp()
+        .setFooter({text: client.user.username, iconUrl: client.user.avatarURL()});
+
+        message.reply({content: "This account is linked!", embeds: [AlreadyLinkedEmbed]});
+    } else {
         const server = message.guild;
 
-        let channel = await server.channels
-            .create(message.author.tag, "text", [
+        const channel = await server.channels.create({
+            name: message.author.username,
+            type: Discord.ChannelType.GuildText,
+            permissionOverwrites: [
                 {
-                    type: "role",
-                    id: message.guild.id,
-                    deny: 0x400,
-                },
-                {
-                    type: "user",
                     id: message.author.id,
-                    deny: 1024,
+                    allow: [Discord.PermissionFlagsBits.ViewChannel, Discord.PermissionFlagsBits.SendMessages, Discord.PermissionFlagsBits.ReadMessageHistory]
                 },
-            ])
-            .catch(console.error);
+                {
+                    id: server.id,
+                    deny: [Discord.PermissionFlagsBits.ViewChannel]
+                }
+            ],
+            reason: "User linking their account."
+        });
+
         message.reply(`Please check <#${channel.id}> to link your account.`);
 
-        let category = server.channels.cache.find(
-            (c) => c.id === MiscConfigs.accounts && c.type === "category",
-        );
+        const category = server.channels.cache.find((c) => c.id === MiscConfigs.accounts && c.type === Discord.ChannelType.GuildCategory);
 
         if (!category) throw new Error("Category channel does not exist");
 
-        await channel.setParent(category.id);
+        await channel.setParent(category, { lockPermissions: false });
 
-        channel.updateOverwrite(message.author, {
-            VIEW_CHANNEL: true,
-            SEND_MESSAGES: true,
-            READ_MESSAGE_HISTORY: true,
-        });
-
-        let msg = await channel.send(message.author, {
-            embed: new Discord.MessageEmbed()
-                .setColor(0x36393e)
-                .setDescription("Please enter your console email address")
-                .setFooter(
-                    "You can type 'cancel' to cancel the request \n**This will take a few seconds to find your account.**",
-                ),
-        });
-
-        const collector = new Discord.MessageCollector(
-            channel,
-            (m) => m.author.id === message.author.id,
-            {
-                time: 60000,
-                max: 1,
-            },
+        const InitialEmbed = new Discord.EmbedBuilder()
+        .setColor("Blue")
+        .setTitle("Please enter your account email address:")
+        .setDescription("You have 2 minutes to respond.\n\nThis will take a few seconds to find your account.")
+        .setFooter(
+            { text: "You can type 'cancel' to cancel the request.", iconURL: client.user.avatarURL() }
         );
-        collector.on("collect", (messagecollected) => {
-            if (messagecollected.content === "cancel") {
-                return msg
-                    .edit("Request to link your account canceled.", null)
-                    .then(channel.delete());
+
+        const msg = await channel.send({content: message.author.toString(), embeds: [InitialEmbed]});
+
+        const EmailCollector = new Discord.MessageCollector(
+            msg.channel,
+            {
+                "max": 1, //Collect 1 message max.
+                "time": 2 * 60 * 1000, //Gives the user 2 minutes to respond.
+                "idle": 2 * 60 * 1000, //If the user is idle for 2 minutes, the collector will end.
+                "filter": (m) => m.author.id === message.author.id, //Only collect messages from the initial command user.
+            }
+        );
+
+        EmailCollector.on("collect", async (MessageCollected) => {
+
+            await MessageCollected.delete();
+
+            if (MessageCollected.content.toLocaleLowerCase() === "cancel") {
+
+                const CancelEmbed = new Discord.EmbedBuilder();
+                CancelEmbed.setColor("Red");
+                CancelEmbed.setDescription("Request to link your account canceled.");
+                CancelEmbed.setTimestamp();
+                CancelEmbed.setFooter({text: "This channel will be deleted in 10 seconds."});
+
+                await msg.edit({content: "You cancelled this request.", embeds: [CancelEmbed]}); //Edits the message to show the user the ticket was cancelled.
+
+                //Stops the collector.
+                await EmailCollector.stop();
+
+                setTimeout(async () => {
+                    //Deletes the channel after 10 seconds.
+                    await channel.delete("User cancelled the request.");
+
+                }, 10 * 1000); 
+            } else {
+                await EmailCollector.stop();
+            }
+        });
+
+        EmailCollector.once("end", async (MessageCollected, Reason) => {
+
+            if(MessageCollected.size > 0 && MessageCollected.first().content.toLocaleLowerCase() === "cancel") return; //Already being handled.
+            
+            const CancelEmbed = new Discord.EmbedBuilder();
+            CancelEmbed.setColor("Red");
+            CancelEmbed.setDescription("Request to link your account canceled.");
+            CancelEmbed.setTimestamp();
+            CancelEmbed.setFooter({text: "This channel will be deleted in 10 seconds."});
+
+            // No messages were collected.
+            if(MessageCollected.size === 0) {
+                await msg.edit({ content: "You did not provide an email address in time.", embeds: [CancelEmbed] });
+
+                setTimeout(async () => {
+                    await msg.channel.delete("User did not provide an email address in time.");
+                }, 10 * 1000);
+            };
+
+            // A single message was collected.
+            if (MessageCollected.size == 1) {
+                const Email = MessageCollected.first().content;
+
+                await EmailVerification(Email);
+            }
+        });
+
+        // Now we process the email verification.
+        async function EmailVerification(Email) {
+            const Users = await getUser(Email);
+            
+            const User = Users.data.find((usr) =>
+                usr.attributes ? usr.attributes.email === Email : false,
+            );
+
+            const Code = generateCode(10);
+
+            //This will not send the verification code, that's it.
+            if (!User) {
+                message.guild.channels.cache.get(MiscConfigs.accountLinked).send(`User ${message.author.username} (${message.author.id}) tried to link their account but the email was not found in the database.`);
+            } else {
+                await sendEmail(
+                    Email, 
+                    "DanBot Hosting - Account Linking Verification",
+                    `Hello, ${message.author.username} (ID: ${message.author.id}) just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: ${Code}`
+                );
             }
 
-            //Find account then link
-            setTimeout(async () => {
-                
-                const users = await getUser(messagecollected.content);
+            const VerificationEmbed = new Discord.EmbedBuilder();
+            VerificationEmbed.setColor("Blurple");
+            VerificationEmbed.setDescription("If an account exists, a code was sent to your email address. You have 10 minutes to provide a code.");
+            VerificationEmbed.setFooter({text: "You can type 'cancel' to cancel the request.", iconURL: await client.user.avatarURL({extension: 'png'})});
+            VerificationEmbed.setTimestamp();
 
-                const consoleUser = users.data.find((usr) =>
-                    usr.attributes ? usr.attributes.email === messagecollected.content : false,
-                );
+            await msg.edit({content: msg.content.toString(), embeds: [VerificationEmbed]});
 
-                if (!consoleUser) {
-                    channel.send("I can't find a user with that account! \nRemoving channel!");
-                    setTimeout(() => {
-                        channel.delete();
-                    }, 5000);
-                } else {
-                    function codegen(length) {
-                        let result = "";
-                        let characters = "23456789";
-                        let charactersLength = characters.length;
-                        for (let i = 0; i < length; i++) {
-                            result += characters.charAt(
-                                Math.floor(Math.random() * charactersLength),
-                            );
-                        }
-                        return result;
-                    }
-
-                    const code = codegen(10);
-
-                    const emailmessage = {
-                        from: config.Email.From,
-                        to: messagecollected.content,
-                        subject: "DanBot Hosting - Someone tried to link their Discord account!",
-                        html:
-                            "Hello, " +
-                            message.author.username +
-                            " (ID: " +
-                            message.author.id +
-                            ") just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: " +
-                            code,
-                    };
-                    transport.sendMail(emailmessage, function (err, info) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            channel.send(
-                                "Please check the email account for a verification code to complete linking. You have 2mins",
-                            );
-
-                            const collector = new Discord.MessageCollector(
-                                channel,
-                                (m) => m.author.id === message.author.id,
-                                {
-                                    time: 120000,
-                                    max: 2,
-                                },
-                            );
-                            collector.on("collect", (message) => {
-                                if (message.content === code) {
-                                    const timestamp = `${moment().format("HH:mm:ss")}`;
-                                    const datestamp = `${moment().format("DD-MM-YYYY")}`;
-                                    userData.set(`${message.author.id}`, {
-                                        discordID: message.author.id,
-                                        consoleID: consoleUser.attributes.id,
-                                        email: consoleUser.attributes.email,
-                                        username: consoleUser.attributes.username,
-                                        linkTime: timestamp,
-                                        linkDate: datestamp,
-                                        domains: [],
-                                    });
-
-                                    let embedstaff = new Discord.MessageEmbed()
-                                        .setColor("Green")
-                                        .addField(
-                                            "__**Linked Discord account:**__",
-                                            message.author.id,
-                                        )
-                                        .addField(
-                                            "__**Linked Console account email:**__",
-                                            consoleUser.attributes.email,
-                                        )
-                                        .addField(
-                                            "__**Linked At: (TIME / DATE)**__",
-                                            timestamp + " / " + datestamp,
-                                        )
-                                        .addField(
-                                            "__**Linked Console username:**__",
-                                            consoleUser.attributes.username,
-                                        )
-                                        .addField(
-                                            "__**Linked Console ID:**__",
-                                            consoleUser.attributes.id,
-                                        );
-
-                                    channel.send("Account linked!").then(
-                                        client.channels.cache
-                                            .get(MiscConfigs.accountLinked)
-                                            .send(
-                                                `<@${message.author.id}> linked their account. Heres some info: `,
-                                                embedstaff,
-                                            ),
-                                        setTimeout(() => {
-                                            channel.delete();
-                                        }, 5 * 1000),
-                                    );
-                                } else {
-                                    channel.send(
-                                        "Code is incorrect. Linking cancelled!\n\nRemoving channel!",
-                                    );
-                                    setTimeout(() => {
-                                        channel.delete();
-                                    }, 2000);
-                                }
-                            });
-                        }
-                    });
+            const VerificationCollector = new Discord.MessageCollector(
+                msg.channel,
+                {
+                    "max": 1, //Collect 1 message max.
+                    "time": 10 * 60 * 1000, //Gives the user 10 minutes to respond.
+                    "idle": 10 * 60 * 1000, //If the user is idle for 10 minutes, the collector will end.
+                    "filter": (m) => m.author.id === message.author.id, //Only collect messages from the initial command user.
                 }
-            }, 10 * 1000);
-        });
-    } else {
-        let embed = new Discord.MessageEmbed()
-            .setColor(`GREEN`)
-            .addField(`__**Username**__`, userData.fetch(message.author.id + ".username"))
-            .addField(
-                `__**Linked Date (YYYY-MM-DD)**__`,
-                userData.fetch(message.author.id + ".linkDate"),
-            )
-            .addField(`__**Linked Time**__`, userData.fetch(message.author.id + ".linkTime"));
-        await message.reply("This account is linked!", embed);
+            );
+
+            VerificationCollector.on("collect", async (MessageCollected) => {
+
+                await MessageCollected.delete();
+
+                if (MessageCollected.content.toLocaleLowerCase() === "cancel") {
+        
+                    const CancelEmbed = new Discord.EmbedBuilder();
+                    CancelEmbed.setColor("Red");
+                    CancelEmbed.setDescription("Request to link your account canceled.");
+                    CancelEmbed.setTimestamp();
+                    CancelEmbed.setFooter({text: "This channel will be deleted in 10 seconds."});
+        
+                    await msg.edit({content: "You cancelled this request.", embeds: [CancelEmbed]}); //Edits the message to show the user the ticket was cancelled.
+        
+                    //Stops the collector.
+                    await VerificationCollector.stop();
+        
+                    setTimeout(async () => {
+                        //Deletes the channel after 10 seconds.
+                        await channel.delete("User cancelled the request.");
+        
+                    }, 10 * 1000); 
+                } else {
+                    VerificationCollector.stop();
+                }        
+            });
+
+            VerificationCollector.once("end", async (MessageCollected, Reason) => {
+
+                if(MessageCollected.size > 0 && MessageCollected.first().content.toLocaleLowerCase() === "cancel") return; //Already being handled.
+
+                const CancelEmbed = new Discord.EmbedBuilder();
+                CancelEmbed.setColor("Red");
+                CancelEmbed.setDescription("Request to link your account canceled.");
+                CancelEmbed.setTimestamp();
+                CancelEmbed.setFooter({text: "This channel will be deleted in 10 seconds."});
+
+                // No messages were collected.
+                if(MessageCollected.size === 0) {
+                    msg.edit({ content: "You did not provide an verification in time.", embed: CancelEmbed });
+                };
+
+                // A single message was collected.
+                if (MessageCollected.size == 1) {
+                    const ResponseCode = MessageCollected.first().content;
+
+                    if (Code === ResponseCode) {
+                        const timestamp = `${moment().format("HH:mm:ss")}`;
+                        const datestamp = `${moment().format("DD-MM-YYYY")}`;
+
+                        userData.set(`${message.author.id}`, {
+                            discordID: message.author.id,
+                            consoleID: User.attributes.id,
+                            email: User.attributes.email,
+                            username: User.attributes.username,
+                            linkTime: timestamp,
+                            linkDate: datestamp,
+                            domains: [],
+                            epochTime: (Date.now() / 1000)
+                        });
+
+                        const StaffLogs = new Discord.EmbedBuilder();
+                        StaffLogs.setColor("Green");
+                        StaffLogs.setTitle("Account Linked:");
+                        StaffLogs.addFields(
+                            { name: "**Linked Discord Account:**", value: `${message.author.toString()} - (${message.author.id})`, inline: false },
+                            { name: `**Linked Console account email:**`, value: "`" + User.attributes.email + "`", inline: false },
+                            { name: `**Linked At: (TIME / DATE)**`, value: `${timestamp} / ${datestamp}`, inline: false },
+                            { name: `**Linked Console ID:**`, value: `${User.attributes.id}`, inline: false },
+                            { name: `**Linked Time [BETA]**`, value: `<t:${Math.floor(Date.now() / 1000)}:F> (<t:${Math.floor(Date.now() / 1000)}:R>)`, inline: false }
+                        ); 
+
+                        const FinalEmbed = new Discord.EmbedBuilder();
+                        FinalEmbed.setColor("Green");
+                        FinalEmbed.setDescription("**Account linked! Channel deleting in 10 seconds.**");
+                        FinalEmbed.setTimestamp();
+                        FinalEmbed.setFooter({text: client.user.username, iconURL: await client.user.avatarURL({extension: 'png'})});
+
+                        await msg.edit({embeds: [FinalEmbed]}).then(async () => {
+                            await client.channels.cache.get(MiscConfigs.accountLinked).send({content: `<@${message.author.id}> linked their account. Here's some info: `, embeds: [StaffLogs]});
+
+                            //Deletes the channel after 10 seconds.
+                            setTimeout(async () => {
+                                await channel.delete();
+                            }, 10 * 1000)
+                        });
+
+                    } else {
+                        const InvalidEmbed = new Discord.EmbedBuilder();
+                        InvalidEmbed.setColor("Red");
+                        InvalidEmbed.setDescription("The code you provided is incorrect. Account linking cancelled.");
+                        InvalidEmbed.setTimestamp();
+                        InvalidEmbed.setFooter({text: "This channel will be deleted in 10 seconds."});
+
+                        msg.edit({content: "The code you provided is incorrect.", embeds: [InvalidEmbed]});
+
+                        //Deletes the channel after 10 seconds.
+                        setTimeout(async () => {
+                            await channel.delete();
+                        }, 10 * 1000)
+                    }
+                }
+            });
+        }
     }
-};
+}

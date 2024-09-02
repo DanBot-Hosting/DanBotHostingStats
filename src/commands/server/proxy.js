@@ -51,7 +51,7 @@ exports.run = async (client, message, args) => {
     const ProxyLocations = Proxies.map((Proxy) => `> \`${Proxy.ip}\` - [${Proxy.name}] 🟢 Enabled`).join('\n');
     const PremiumDomainsList = PremiumDomains.map((domain) => `\`${domain}\``).join(', ');
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
         .setTitle("**DanBot Hosting Proxy System**")
         .setDescription(
             `The DanBot Hosting proxy systems allows users to proxy their domains to their servers with simple commands.
@@ -68,11 +68,11 @@ exports.run = async (client, message, args) => {
 
             Donators can use the ` + PremiumDomainsList + ` subdomains! Replace \`<domain>\` with the \`your-subdomain.domainhere\` to use it!`,
         )
-        .setColor("BLUE");
+        .setColor("Blue");
 
     // The user didn't provide enough arguments.
     if (!args[1] || !args[2]) {
-        await message.channel.send(embed);
+        await message.channel.send({embeds: [embed]});
         return;
     }
 

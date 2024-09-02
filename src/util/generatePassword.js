@@ -1,3 +1,9 @@
+/**
+ * Generates a random 16 character password.
+ * 
+ * @returns {String}
+ */
+
 module.exports = function () {
     const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     let password = "";

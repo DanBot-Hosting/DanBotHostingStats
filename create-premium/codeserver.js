@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createListPrem.codeserver = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -13,7 +15,7 @@ createListPrem.codeserver = (serverName, userID) => ({
         cpu: 0,
     },
     environment: {
-        PASSWORD: getPassword(),
+        PASSWORD: generatePassword(),
         VERSION: "latest",
     },
     feature_limits: {

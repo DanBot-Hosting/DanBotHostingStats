@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const Config = require('../../../config.json');
 
+exports.description = "Shows the user commands under this category.";
+
 /**
  * User help command. Shows the user the commands under this category.
  *
@@ -11,15 +13,16 @@ const Config = require('../../../config.json');
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    const Embed = new Discord.MessageEmbed();
-    Embed.setColor("BLUE");
+    const Embed = new Discord.EmbedBuilder();
+    Embed.setColor("Blue");
     Embed.setTitle("User Commands");
 
     fs.readdirSync(__dirname).forEach((File) => {
-        Embed.addField("`" + Config.DiscordBot.Prefix + "user " + File.split(".")[0] + "`", require("./" + File).description);
+        Embed.addFields({
+            name: "`" + Config.DiscordBot.Prefix + "user " + File.split(".")[0] + "`",
+            value: require("./" + File).description
+        });
     });
 
-    await message.reply(Embed);
+    await message.reply({embeds: [Embed]});
 };
-
-exports.description = "Shows the user commands under this category.";

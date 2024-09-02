@@ -16,13 +16,19 @@ exports.run = async (client, message, args) => {
 
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.Staff)) return;
 
-    const Embed = new Discord.MessageEmbed();
-    Embed.setColor("BLUE");
+    const Embed = new Discord.EmbedBuilder();
+    Embed.setColor("Blue");
     Embed.setTitle("Staff Commands");
 
     fs.readdirSync(__dirname).forEach(File => {
-        Embed.addField("`" + Config.DiscordBot.Prefix + "staff " + File.split(".")[0] + "`", require("./" + File).description);
+
+        console.log(File);
+
+        Embed.addFields({
+            name: "`" + Config.DiscordBot.Prefix + "staff " + File.split(".")[0] + "`",
+            value: require("./" + File).description
+        });
     });
 
-    message.channel.send(Embed);
+    message.reply(Embed);
 };

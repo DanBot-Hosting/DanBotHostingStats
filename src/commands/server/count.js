@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const axios = require("axios");
 
 const Config = require('../../../config.json');
 const getUserServers = require('../../util/getUserServers.js');
@@ -26,12 +25,17 @@ exports.run = async (client, message, args) => {
 
             const premiumServers = userServers.filter((Server) => Config.DonatorNodes.includes(Server.attributes.node)).length; //The amount of premium servers the user has.
 
-            const serverCountEmbed = new Discord.MessageEmbed().setDescription(`
-                :free: Free Server(s): ${userServers.length - premiumServers}\n:money_with_wings: Premium Server(s): ${premiumServers}
-            `);
+            const serverCountEmbed = new Discord.EmbedBuilder()
+                .setTitle(`Server Count:`)
+                .setDescription(`
+                    :free: Free Server(s): ${userServers.length - premiumServers}\n:money_with_wings: Premium Server(s): ${premiumServers}
+                `)
+                .setColor("Blurple")
+                .setFooter({text: `Requested by ${message.author.tag}`, iconURL: message.author.displayAvatarURL()})
+                .setTimestamp();
 
-            message.channel.send(serverCountEmbed);
-    }).catch(() => {
-        message.channel.send("An error occurred while loading servers.");
+            message.reply({embeds: [serverCountEmbed]});
+    }).catch((Error) => {
+        message.reply("An error occurred while loading servers.");
     });
 };

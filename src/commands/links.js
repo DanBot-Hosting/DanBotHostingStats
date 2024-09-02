@@ -8,15 +8,18 @@ const Discord = require("discord.js");
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    const LinksEmbed = new Discord.MessageEmbed()
-        .setColor("BLUE")
-        .addField("Website", "[danbot.host](https://danbot.host)", true)
-        .addField("Panel", "[panel.danbot.host](https://panel.danbot.host)", true)
-        .addField("Service Status", "[service.danbot.host](https://service.danbot.host)", true)
-        .addField("Uptime Site", "[uptime.danbot.host](https://uptime.danbot.host)", true)
-        .addField("Portal", "[danbot.app](https://danbot.app)", true);
+    const LinksEmbed = new Discord.EmbedBuilder()
+        .setColor("Blue")
 
-    return message.reply(LinksEmbed);
+        .addFields(
+            {name: "Website", value: "[danbot.host](https://danbot.host)", inline: true},
+            {name: "Panel", value: "[panel.danbot.host](https://panel.danbot.host)", inline: true},
+            {name: "Service Status", value: "[service.danbot.host](https://service.danbot.host)", inline: true},
+            {name: "Uptime Site", value: "[uptime.danbot.host](https://uptime.danbot.host)", inline: true},
+            {name: "Portal", value: "[danbot.app](https://danbot.app)", inline: true}
+        )
+
+    return message.reply({embeds: [LinksEmbed]});
 };
 
 exports.description = "Show links to DanBot Hosting services.";

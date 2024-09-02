@@ -35,6 +35,8 @@ exports.run = async (client, message, args) => {
             SEND_MESSAGES: false,
         });
 
+        message.channel
+
         //If the second argument is unlock, unlocks the current channel.
     } else if (args[1].toLowerCase() === "unlock") {
         message.reply("Channel is now unlocked. Everyone can now send messages here again!");

@@ -7,24 +7,13 @@
 Free Hosting forever!                                            /____/
 */
 
-global.config = require("./config.json");
+const Config = require("./config.json");
 
 const fs = require("fs");
-global.chalk = require("chalk");
-const nodemailer = require("nodemailer");
-global.axios = require("axios");
-global.transport = nodemailer.createTransport({
-    host: config.Email.Host,
-    port: config.Email.Port,
-    auth: {
-        user: config.Email.User,
-        pass: config.Email.Password,
-    },
-});
 
 //Discord Bot
-let db = require("quick.db");
-global.Discord = require("discord.js");
+const db = require("quick.db");
+const Discord = require("discord.js");
 
 global.moment = require("moment");
 global.userData = new db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
@@ -34,13 +23,34 @@ global.nodeServers = new db.table("nodeServers"); //Server count for node limits
 global.codes = new db.table("redeemCodes"); //Premium server redeem codes...
 global.nodePing = new db.table("nodePing"); //Node ping response time
 
-global.client = new Discord.Client({
-    restTimeOffset: 0,
-    disableMentions: "everyone",
-    restWsBridgetimeout: 100,
-    partials: ["MESSAGE", "CHANNEL", "REACTION"],
+const client = new Discord.Client({
+    intents: [
+        Discord.GatewayIntentBits.Guilds,
+        Discord.GatewayIntentBits.GuildMembers,
+        Discord.GatewayIntentBits.GuildModeration,
+        Discord.GatewayIntentBits.GuildEmojisAndStickers,
+        Discord.GatewayIntentBits.GuildIntegrations,
+        Discord.GatewayIntentBits.GuildWebhooks,
+        Discord.GatewayIntentBits.GuildInvites,
+        Discord.GatewayIntentBits.GuildVoiceStates,
+        Discord.GatewayIntentBits.GuildPresences,
+        Discord.GatewayIntentBits.GuildMessages,
+        Discord.GatewayIntentBits.GuildMessageReactions,
+        Discord.GatewayIntentBits.GuildMessageTyping,
+        Discord.GatewayIntentBits.DirectMessages,
+        Discord.GatewayIntentBits.DirectMessageReactions,
+        Discord.GatewayIntentBits.DirectMessageTyping,
+        Discord.GatewayIntentBits.MessageContent,
+        Discord.GatewayIntentBits.GuildScheduledEvents,
+        Discord.GatewayIntentBits.AutoModerationConfiguration,
+        Discord.GatewayIntentBits.AutoModerationExecution
+    ],
+    partials: [
+        Discord.Partials.Channel,
+        Discord.Partials.Message,
+        Discord.Partials.Reaction
+    ]
 });
-global.bot = client;
 
 //Event handler
 fs.readdir("./src/events/", (err, files) => {
@@ -71,7 +81,6 @@ fs.readdir("./create-premium/", (err, files) => {
     });
 });
 
-//Global password gen
 const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 global.getPassword = () => {
     var password = "";
@@ -81,21 +90,4 @@ global.getPassword = () => {
     return password;
 };
 
-client.login(config.DiscordBot.Token);
-
-process.on("unhandledRejection", (reason, p) => {
-    console.error("[AntiCrash] :: Unhandled Rejection/Catch");
-    console.error(reason, p);
-});
-process.on("uncaughtException", (err, origin) => {
-    console.error("[AntiCrash] :: Uncaught Exception/Catch");
-    console.error(err, origin);
-});
-process.on("uncaughtExceptionMonitor", (err, origin) => {
-    console.error("[AntiCrash] :: Uncaught Exception/Catch (MONITOR)");
-    console.error(err, origin);
-});
-process.on("multipleResolves", (type, promise, reason) => {
-    console.error("[AntiCrash] :: Multiple Resolves");
-    console.error(type, promise, reason);
-});
+client.login(Config.DiscordBot.Token);

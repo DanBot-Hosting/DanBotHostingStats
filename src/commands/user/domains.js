@@ -23,17 +23,22 @@ exports.run = (client, message) => {
     if (description.length > 4096) {
 
         // If description is greater than 4096 characters, send it as a file.
-        const attachment = new Discord.MessageAttachment(Buffer.from(description), 'domains.txt');
-        return message.reply("Your domains list is too long to display here. Please see the attached file:", attachment);
+        const Attachment = new Discord.MessageAttachment(Buffer.from(description), 'domains.txt');
+        return message.reply(
+            {
+                content: "Your domains list is too long to display here. Please see the attached file:",
+                files: [Attachment]
+            }
+        );
     } else {
             
         // If description is less than 4096 characters, send it as a message.
-        const embed = new Discord.MessageEmbed()
-            .setColor("BLUE")
+        const Embed = new Discord.EmbedBuilder()
+            .setColor("Blue")
             .setTitle("Your Domains")
             .setDescription(description);
 
-        return message.reply(embed);
+        return message.reply({embeds: [Embed]});
     }
 };
 

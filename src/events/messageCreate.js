@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const Chalk = require("chalk");
 const fs = require('fs');
 const path = require('path');
 
@@ -14,7 +15,7 @@ const MiscConfigs = require('../../config/misc-configs.js');
  */
 module.exports = async (client, message) => {
 
-    //Add reactions to suggestion channels.
+    // Add reactions to suggestion channels.
     if (MiscConfigs.suggestionChannels.some((channel) => channel == message.channel.id)) {
         if (!message.content.startsWith(">")) {
             await message.react("👍");
@@ -22,9 +23,8 @@ module.exports = async (client, message) => {
         }
     }
 
-
     // Staff that can invoke the bot for DMs.
-    if (message.channel.type === "dm") {
+    if (message.channel.type === Discord.ChannelType.DM) {
         // Allow users to send messages on behalf of the bot if they are allowed
         if (MiscConfigs.dmAllowedUsers.includes(message.author.id)) {
             const args = message.content.trim().split(/ +/g);
@@ -35,13 +35,13 @@ module.exports = async (client, message) => {
                     .send(cap(message.content.split(" ").slice(1).join(" "), 2000));
                 message.reply(msg.url);
             } catch (err) {
-                message.channel.send(`\`\`\`${err.message}\`\`\``);
+                message.channel.send({content: `\`\`\`${err.message}\`\`\``});
             }
         }
     };
 
     if (message.author.bot) return; // Stop bots from running commands.
-    if (message.channel.type === "dm") return; // Stop commands in DMs.
+    if (message.channel.type === Discord.ChannelType.DM) return; // Stop commands in DMs.
 
     const prefix = Config.DiscordBot.Prefix;
     if (!message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
@@ -51,8 +51,8 @@ module.exports = async (client, message) => {
     const command = args.shift().toLowerCase();
 
     console.log(
-        chalk.magenta("[DISCORD] ") +
-            chalk.yellow(
+        Chalk.magenta("[DISCORD] ") +
+            Chalk.yellow(
                 `[${message.author.username}] [${message.author.id}] >> ${prefix}${command} ${commandargs}`,
             ),
     );

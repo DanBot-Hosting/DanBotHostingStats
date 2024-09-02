@@ -6,7 +6,7 @@ const Proxies = require('../../../config/proxy-configs.js').Proxies;
 
 //This function will generate a new token for the specified location.
 async function getToken(Url, Email, Password) {
-    const serverRes = await axios({
+    const serverRes = await Axios({
         url: Url + "/api/tokens",
         method: "POST",
         followRedirect: true,
@@ -24,15 +24,13 @@ async function getToken(Url, Email, Password) {
 }
 
 //This function will delete the certificate for a domain.
-async function deleteCertificate(Url, Token, Domain, ProxiesResponse){
+async function deleteCertificate(Url, Token, Domain, CertificateId){
 
-    return await axios({
+    return await Axios({
         url:
             Url +
             "/api/nginx/certificates/" +
-            ProxiesResponse.data.find(
-                (element) => element.domain_names[0] == Domain,
-            ).id,
+            CertificateId,
         method: "DELETE",
         followRedirect: true,
         maxRedirects: 5,
@@ -45,9 +43,8 @@ async function deleteCertificate(Url, Token, Domain, ProxiesResponse){
 
 //This function will delete a proxy for a domain.
 async function deleteProxy(Url, Token, Domain, ProxiesResponse){
-    return await axios({
-        url:
-        Url +
+    return await Axios({
+        url: Url +
             "/api/nginx/proxy-hosts/" +
             ProxiesResponse.data.find(
                 (element) =>
@@ -65,7 +62,7 @@ async function deleteProxy(Url, Token, Domain, ProxiesResponse){
 
 //This function requests all the certificates for a domain.
 async function getAllCertificates(Url, Token){
-    return await axios({
+    return await Axios({
         url: Url + "/api/nginx/certificates",
         method: "GET",
         followRedirect: true,
@@ -100,9 +97,9 @@ exports.description = "Unproxies a domain from a server.";
  */
 exports.run = async (client, message, args) => {
 
-    const UnproxyEmbed = new Discord.MessageEmbed();
+    const UnproxyEmbed = new Discord.EmbedBuilder();
     UnproxyEmbed.setTitle("**Unproxying Domain from DBH server:**");
-    UnproxyEmbed.setColor('BLUE')
+    UnproxyEmbed.setColor('Blue')
     UnproxyEmbed.setDescription(
         "\n\nSyntax for Command: ```" +
             Config.DiscordBot.Prefix +
@@ -113,10 +110,10 @@ exports.run = async (client, message, args) => {
             "user domains`",
     );
     UnproxyEmbed.setTimestamp();
-    UnproxyEmbed.setFooter("DanBot Hosting");
+    UnproxyEmbed.setFooter({ text: client.user.displayName, icon: client.user.displayAvatarURL() });
 
     //No arguments were provided.
-    if(!args[1]) return await message.channel.send(UnproxyEmbed);
+    if(!args[1]) return await message.reply({embeds: [UnproxyEmbed]});
 
     //User domain data.
     const userDomains = await userData.get(message.author.id + ".domains");
@@ -162,7 +159,7 @@ exports.run = async (client, message, args) => {
             } else {
                 await message.channel.send('[PROXY SYSTEM] Found the certificate for the domain. Attempting to delete it.');
 
-                await deleteCertificate(ProxyInformation.url, ProxyToken, domainData.domain, ProxiesResponse).then(async (Response) => {
+                await deleteCertificate(ProxyInformation.url, ProxyToken, domainData.domain, CertificateFound.id).then(async (Response) => {
                     await message.channel.send('[PROXY SYSTEM] Successfully removed the certificate for the domain.');
                 });
             }
@@ -186,12 +183,14 @@ exports.run = async (client, message, args) => {
                 });
             }
         }).catch(Error => {
+            console.log(Error.code);
+
             console.error("[PROXY SYSTEM ERROR]: " + Error);
         });
     
     //Domains from old proxies.
     } else if (domainData.Location == undefined || domainData.Location == "FR" || domainData.Location == "US") {
-        message.channel.send("This domain is from an old proxy system. Removing from your database.");
+        message.channel.send("[PROXY SYSTEM] This domain is from an old proxy system. Removing from your database.");
         
         await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
             message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');

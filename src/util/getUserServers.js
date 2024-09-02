@@ -9,6 +9,9 @@ const Config = require('../../config.json');
  */
 module.exports = async function(userId) {
     try {
+
+        const Secret = Config.Secret2;
+
         const response = await axios({
             url: `${Config.Pterodactyl.hosturl}/api/application/users/${userId}?include=servers`,
             method: "GET",
@@ -17,7 +20,7 @@ module.exports = async function(userId) {
             headers: {
                 Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                 "Content-Type": "application/json",
-                Accept: "Application/vnd.pterodactyl.v1+json",
+                Accept: "Application/vnd.pterodactyl.v1+json"
             },
         });
         return response.data;

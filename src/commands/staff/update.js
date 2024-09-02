@@ -22,19 +22,19 @@ exports.run = async (client, message, args) => {
     console.log("Updating the bot from GitHub.");
 
     // Pulls the files from GitHub.
-    exec(`git pull`, (error, stdout) => {
+    exec(`git pull`, async (error, stdout) => {
         let response = error || stdout;
         if (!error) {
             if (response.includes("Already up to date.")) {
-                message.reply("All files are already up to date.");
+                await message.reply("All files are already up to date.");
             } else {
-                client.channels.cache
+                await client.channels.cache
                     .get(MiscConfigs.github)
                     .send(
                         `<t:${Date.now().toString().slice(0, -3)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``,
                     );
 
-                message.reply("Pulling files from GitHub.");
+                await message.reply("Pulling files from GitHub.");
                 setTimeout(() => {
                     process.exit();
                 }, 1000);

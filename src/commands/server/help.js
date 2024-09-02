@@ -14,13 +14,13 @@ exports.description = "Shows the server commands under this category.";
  */
 exports.run = async (client, message, args) => {
 
-    const Embed = new Discord.MessageEmbed();
-    Embed.setColor("BLUE");
+    const Embed = new Discord.EmbedBuilder();
+    Embed.setColor("Blue");
     Embed.setTitle("Server Commands");
 
     fs.readdirSync(__dirname).forEach((File) => {
-        Embed.addField("`" + Config.DiscordBot.Prefix + "server " + File.split(".")[0] + "`", require("./" + File).description);
+        Embed.addFields({ name: "`" + Config.DiscordBot.Prefix + "server " + File.split(".")[0] + "`", value: require("./" + File).description, inline: false });
     });
 
-    await message.reply(Embed);
+    await message.reply({embeds: [Embed]});
 };

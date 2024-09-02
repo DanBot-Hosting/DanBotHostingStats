@@ -4,30 +4,25 @@ const humanizeDuration = require("humanize-duration");
 exports.description = "Shows the bot's uptime, memory usage and API latency.";
 
 /**
- * 
- * @param {Discord.Client} client 
- * @param {Discord.Message} message 
- * @param {Array} args 
- * @returns void
- */
+     * 
+     * @param {Discord.Client} client 
+     * @param {Discord.Message} message 
+     * @param {Array} args 
+     * @returns void
+     */
+
 exports.run = async (client, message, args) => {
 
     const myDate = new Date(client.readyTimestamp);
 
-    const Embed = new Discord.MessageEmbed()
-        .addField(
-            ":white_check_mark: Uptime:",
-            `**${humanizeDuration(client.uptime, { round: true })}**`,
-            true,
+    const embed = new Discord.EmbedBuilder()
+        .addFields(
+            { name: ":white_check_mark: Uptime:", value: `**${humanizeDuration(client.uptime, { round: true })}**`, inline: true },
+            { name: "Memory usage:", value: `${Math.trunc(process.memoryUsage().heapUsed / 1024 / 1000)}mb`, inline: true },
+            { name: "API latency:", value: `${client.ws.ping}ms`, inline: true }
         )
-        .addField(
-            "Memory usage:",
-            Math.trunc(process.memoryUsage().heapUsed / 1024 / 1000) + "mb",
-            true,
-        )
-        .addField("API latency:", client.ws.ping + "ms", true)
-        .setFooter(`Ready Timestamp: ${myDate.toString()}`)
-        .setColor("GREEN");
+        .setFooter({text: `Ready Timestamp: ${myDate.toString()}`})
+        .setColor("Green");
 
-    message.channel.send(Embed);
+    message.reply({ embeds: [embed] });
 };

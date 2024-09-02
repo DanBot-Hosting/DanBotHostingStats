@@ -14,37 +14,40 @@ exports.description = "Displays tags for the users to use in FAQ questions.";
  */
 exports.run = async (client, message, args) => {
 
-    const helpEmbed = new Discord.MessageEmbed()
-        .setColor("RED")
+    const HelpEmbed = new Discord.EmbedBuilder()
+        .setColor("Red")
         .setDescription(`You need to provide a valid tag.`)
-        .setFooter(Config.DiscordBot.Prefix + "tag <tag>");
+        .setFooter({text: Config.DiscordBot.Prefix + "tag <tag>"});
 
     if (!args[0]) {
-        await message.reply(helpEmbed);
+        await message.reply({embeds: [HelpEmbed]});
         return;
     }
 
-    const embed = new Discord.MessageEmbed();
+    const Embed = new Discord.EmbedBuilder();
 
     switch (args[0].toLowerCase()) {
         case "command":
         case "commands":
-            embed.setDescription(
+            Embed.setDescription(
                 "Hey! Please only run your commands in <#" + MiscConfigs.normalCommands + ">, <#" + MiscConfigs.donatorCommands + "> or <#" + MiscConfigs.betaCommands + ">",
             );
             break;
         case "504":
-            embed.setDescription(
+            Embed.setDescription(
                 "`Error 504` means that the wings are currently down. This is nothing you can change.\nPlease be patient and wait for Dan to fix it.",
             );
             break;
 
         default:
-            return message.reply(helpEmbed.setDescription("**I could not find this tag.**"));
+            HelpEmbed.setDescription("**I could not find this tag.**")
+            return message.reply({embeds: [HelpEmbed]});
     }
 
-    embed.setFooter(`Requested by ${message.author.tag}`);
+    Embed.setFooter({text: `Requested by ${message.author.globalName} (${message.author.username})`});
+    Embed.setColor("Blurple");
+    Embed.setTimestamp();
 
     message.delete();
-    return message.channel.send(embed);
+    return message.reply({embeds: [Embed]});
 };
