@@ -22,13 +22,11 @@ exports.run = async (client, message, args) => {
 
     fs.readdirSync(__dirname).forEach(File => {
 
-        console.log(File);
-
         Embed.addFields({
             name: "`" + Config.DiscordBot.Prefix + "staff " + File.split(".")[0] + "`",
             value: require("./" + File).description
         });
     });
 
-    message.reply(Embed);
+    message.reply({ embeds: [Embed]});
 };
