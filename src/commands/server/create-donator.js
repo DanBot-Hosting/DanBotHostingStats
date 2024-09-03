@@ -299,8 +299,6 @@ exports.run = async (client, message, args) => {
                         )
                 }
 
-                console.log(error);
-
                 await message.reply({embeds: [embed]});
             });
         return;
