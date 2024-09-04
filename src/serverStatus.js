@@ -11,11 +11,6 @@ const nodeStatus = new db.table("nodeStatus"); //Status of the Node.
 const nodeServers = new db.table("nodeServers"); //Counts of servers on each Node.
 
 function startNodeChecker() {
-
-    if (Config.Enabled.nodestatsChecker == false) return console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.redBright("Disabled"));
-
-    console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.greenBright("Enabled"));
-
     setInterval(() => {
         // For Node Status.
         for (const [category, nodes] of Object.entries(Status.Nodes)) {
@@ -101,7 +96,7 @@ function startNodeChecker() {
                 }
             }
         }
-    }, 10000);
+    }, 10 * 1000);
 }
 
 const parseStatus = () => {

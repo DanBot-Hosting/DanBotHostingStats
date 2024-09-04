@@ -54,39 +54,18 @@ module.exports = async (client) => {
     }, 30000);
 
     setInterval(() => {
-        //Auto Activities List
-        const activities = [
-            {
-                text: "over DBH",
-                type: "WATCHING",
-            },
-            {
-                text: "free servers being created",
-                type: "WATCHING",
-            },
-            {
-                text: "over 15,000+ happy clients",
-                type: "WATCHING",
-            },
-            {
-                text: "with the ban hammer over abusers",
-                type: "PLAYING",
-            },
-            {
-                text: "powerful servers doing work",
-                type: "WATCHING",
-            },
-        ];
-
-        const activity = activities[Math.floor(Math.random() * activities.length)];
-        client.user.setActivity(activity.text, {
-            type: activity.type,
-        });
-    }, 15000);
-
-    await ServerStatus.startNodeChecker(); //Start the Node Checker.
+        client.user.setActivity({
+            name: "over DBH",
+            type: "WATCHING",
+            url: "https://danbot.host"
+        })
+    }, 1000 * 60 * 60 * 24);
 
     if (Config.Enabled.nodestatsChecker == true) {
+
+        await ServerStatus.startNodeChecker(); //Start the Node Checker.
+
+        console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.greenBright("Enabled"));
 
         // Node Status Embed.
         const channel = client.channels.cache.get(MiscConfigs.nodestatus);
@@ -103,5 +82,7 @@ module.exports = async (client) => {
             if (messages == null) channel.send({embeds: [embed]});
             else messages.edit({embeds: [embed]});
         }, 15 * 1000);
+    } else {
+        console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.redBright("Disabled"));
     }
 };
