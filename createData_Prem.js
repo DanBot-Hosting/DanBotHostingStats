@@ -2,7 +2,7 @@ const axios = require("axios");
 const Config = require('./config.json');
 
 global.gamingPREM = [27]; // Gaming nodes
-global.botswebdbPREM = [26]; // Bots, Websites and Databases nodes
+global.botswebdbPREM = [40]; // Bots, Websites and Databases nodes
 global.storagePREM = [36]; // Storage nodes
 /*
 Donator Nodes as followed:
