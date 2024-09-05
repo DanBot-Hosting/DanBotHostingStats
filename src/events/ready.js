@@ -59,7 +59,7 @@ module.exports = async (client) => {
             type: "WATCHING",
             url: "https://danbot.host"
         })
-    }, 1000 * 60 * 60 * 24);
+    }, 1000 * 60);
 
     if (Config.Enabled.nodestatsChecker == true) {
 
