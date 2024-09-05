@@ -2,7 +2,9 @@ const Discord = require("discord.js");
 const axios = require("axios");
 
 const generatePassword = require("../../util/generatePassword.js");
+const sendMail = require('../../util/sendEmail.js');
 const Config = require('../../../config.json');
+
 
 exports.description = "Resets the password for the linked console account.";
 
@@ -60,7 +62,7 @@ exports.run = async (client, message, args) => {
             },
             data: data,
         })
-            .then((Response) => {
+            .then(async (Response) => {
                 const Embed = new Discord.EmbedBuilder();
                 Embed.setColor("Blue");
                 Embed.setTitle("Password Reset Success");
@@ -93,9 +95,10 @@ exports.run = async (client, message, args) => {
                         "If you did not request this password reset, please contact support immediately through Discord."
                 };
 
-                transport.sendMail(EmailMessage);
-            })
-            .catch((err) => {
+                await sendMail(data.email, "DanBot Hosting - Password Reset From Discord Bot", EmailMessage.html).catch((Error) => {            
+                    console.error("[PASSWORD RESET] Email could not be sent.");
+                });
+            }).catch((err) => {
                 console.error(err.message);
             });
     }).catch((Error) => {
