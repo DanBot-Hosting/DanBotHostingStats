@@ -54,11 +54,10 @@ module.exports = async (client) => {
     }, 30000);
 
     setInterval(() => {
-        client.user.setActivity({
-            name: "over DBH",
-            type: "WATCHING",
-            url: "https://danbot.host"
-        })
+        client.user.setPresence({
+            activities: [{ name: 'over DBH', type: Discord.ActivityType.Watching }],
+            status: 'online',
+        });
     }, 1000 * 60);
 
     if (Config.Enabled.nodestatsChecker == true) {
