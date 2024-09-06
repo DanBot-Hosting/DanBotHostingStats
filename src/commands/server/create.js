@@ -175,7 +175,7 @@ exports.run = async (client, message, args) => {
                         embed.addFields(
                             {
                                 name: `__**Failed to create a new server**__`,
-                                value: `The node is currently full, Please check ` + MiscConfigs.serverStatus + ` for updates. \nIf there is no updates please alert a System Administrator ( <@& ` + Config.DiscordBot.Roles.SystemAdmin + `> )`
+                                value: `The node is currently full, Please check ` + MiscConfigs.serverStatus + ` for updates. \nIf there is no updates please alert a System Administrator (<@&` + Config.DiscordBot.Roles.SystemAdmin + `>)`
                             }
                         );
                 } else if (error == "AxiosError: Request failed with status code 504") {
