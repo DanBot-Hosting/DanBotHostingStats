@@ -180,7 +180,7 @@ exports.run = async (client, message, args) => {
                     await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the domain from the proxy list.');
 
                     await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-                        await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the domain from the user database.');
+                        await ProxyMessage.edit(ProxyMessage.content + '\n\n[PROXY SYSTEM] ✅ Successfully removed the domain from the user database.');
                     });
                 });
             }
@@ -193,7 +193,7 @@ exports.run = async (client, message, args) => {
         const ProxyMessage = await message.channel.send("[PROXY SYSTEM] This domain is from an old proxy system. Removing from your database.");
         
         await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-            await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the domain from the user database.');
+            await ProxyMessage.edit(ProxyMessage.content + '\n\n[PROXY SYSTEM] ✅ Successfully removed the domain from the user database.');
         });
     }
 };
