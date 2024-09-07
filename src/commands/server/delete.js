@@ -1,8 +1,8 @@
-const Discord = require("discord.js");
-const axios = require("axios");
-const humanizeDuration = require("humanize-duration");
-
+const Discord = require('discord.js');
+const axios = require('axios');
 const Config = require('../../../config.json');
+
+exports.description = "Delete multiple servers. View this command for usage.";
 
 /**
  * 
@@ -13,7 +13,7 @@ const Config = require('../../../config.json');
  */
 exports.run = async (client, message, args) => {
 
-    // Get server IDs
+    // Retrive the server IDs.
     const serverIds = args
         .slice(1)
         .map((id) =>
@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    const msg = await message.reply(`Checking servers...`);
+    const DeleteMessage = await message.reply(`Checking servers...`);
 
     try {
         // Fetch user's servers from Pterodactyl API
@@ -54,75 +54,86 @@ exports.run = async (client, message, args) => {
         );
 
         if (serversToDelete.length === 0) {
-            msg.edit("No valid or owned servers found to delete.");
+            DeleteMessage.edit("No valid or owned servers found to delete.");
             return;
         }
 
-        // Construct serverNames inside the try block
+        // Construct server names inside the try block
         const serverNames = serversToDelete
             .map((server) => server.attributes.name.split("@").join("@​"))
             .join(", ");
 
-        // Confirmation (using reply for better UX)
-        const confirmMsg = await msg.edit(
-            `Delete these servers: ${serverNames}?\nType \`confirm\` within 1 minute.`
-        );
+        // Buttons for confirmation and cancellation
+        const row = new Discord.ActionRowBuilder()
+            .addComponents(
+                new Discord.ButtonBuilder()
+                    .setCustomId('confirm')
+                    .setLabel('Confirm')
+                    .setStyle(Discord.ButtonStyle.Danger),
+                new Discord.ButtonBuilder()
+                    .setCustomId('cancel')
+                    .setLabel('Cancel')
+                    .setStyle(Discord.ButtonStyle.Secondary)
+            );
 
-        try {
-            // Await confirmation message (with a more robust filter)
-            const confirmation = await message.channel.awaitMessages({
-                filter: (m) => m.author.id === message.author.id && m.content.toLowerCase() === 'confirm',
-                max: 1,
-                time: 60000,
-                errors: ['time']
-            });
-        
-            if (!confirmation || confirmation.size === 0) {
-                confirmMsg.edit("Request cancelled or timed out.");
+        const ConfirmMessage = await DeleteMessage.edit({
+            content: `Delete these servers: ${serverNames}?\nPlease choose an option:`,
+            components: [row]
+        });
+
+        // Create button interaction collector.
+        const Collector = ConfirmMessage.createMessageComponentCollector({
+            componentType: Discord.ComponentType.Button,
+            time: 60 * 1000,
+            filter: (Interaction) => Interaction.user.id === message.author.id
+        });
+
+        Collector.on('collect', async (interaction) => {
+            if (interaction.user.id !== message.author.id) {
+                await interaction.reply({ content: "You can't interact with this button.", ephemeral: true });
                 return;
             }
 
-            const confirmMessage = confirmation.first();
-            await confirmMessage.delete();
-            
-            // Deletion Loop (after successful confirmation)
-            for (const server of serversToDelete) {
-                await msg.edit(`Deleting server ${server.attributes.name}...`);
-                try {
-                    // Delete server from Pterodactyl API
-                    await axios({
-                        url: `${Config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
-                        method: "DELETE",
-                        headers: {
-                            Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
-                        },
-                    }).then(() => {
-                        msg.edit(`Server ${server.attributes.name} deleted!`);
+            if (interaction.customId === 'confirm') {
+                await interaction.update({ content: `Deleting servers...`, components: [] });
+                
+                // Deletion Loop (after successful confirmation).
+                for (const server of serversToDelete) {
+                    try {
+                        await axios({
+                            url: `${Config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
+                            method: "DELETE",
+                            headers: {
+                                Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                            },
+                        });
+                        await message.channel.send(`Server ${server.attributes.name} deleted!`);
 
+                        // Adjust user usage if it's a donator node.
                         if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
-                            
                             userPrem.set(
                                 message.author.id + ".used",
-                                userPrem.fetch(message.author.id).used - 1,
+                                userPrem.fetch(message.author.id).used - 1
                             );
                         }
-                    });
-                } catch (deletionError) {
-                    console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
-                    msg.edit(`Failed to delete server ${server.attributes.name}. Please try again later.`);
+                    } catch (deletionError) {
+                        console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
+                        await message.channel.send(`Failed to delete server ${server.attributes.name}. Please try again later.`);
+                    }
                 }
+            } else if (interaction.customId === 'cancel') {
+                await interaction.update({ content: 'Server deletion cancelled.', components: [] });
             }
-        } catch (err) {
-            console.error("Error during confirmation:", err);
-            confirmMsg.edit("An error occurred during confirmation.");
-        }
+        });
+
+        Collector.on('end', (collected, reason) => {
+            if (reason === 'time') {
+                ConfirmMessage.edit({ content: 'Server deletion timed out.', components: [] });
+            }
+        });
+
     } catch (err) {
         console.error("Error fetching server details:", err);
-
-        msg.edit(
-            "An error occurred while fetching server details. Please try again later."
-        );
+        DeleteMessage.edit("An error occurred while fetching server details. Please try again later.");
     }
 };
-
-exports.description = "Delete multiple servers. View this command for usage.";
