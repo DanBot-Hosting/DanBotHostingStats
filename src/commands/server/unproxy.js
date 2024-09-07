@@ -24,7 +24,7 @@ async function getToken(Url, Email, Password) {
 }
 
 //This function will delete the certificate for a domain.
-async function deleteCertificate(Url, Token, Domain, CertificateId){
+async function deleteCertificate(Url, Token, CertificateId){
 
     return await Axios({
         url:
@@ -153,47 +153,47 @@ exports.run = async (client, message, args) => {
             const AllCertificates = await getAllCertificates(ProxyInformation.url, ProxyToken);
             const CertificateFound = AllCertificates.data.find((element) => element.domain_names[0] == domainData.domain);
 
+            const ProxyMessage = await message.channel.send('[PROXY SYSTEM] Attempting to unproxy the domain.');
+
             //If the certificate was found in the certificate list.
             if (CertificateFound == undefined) {
-                await message.channel.send('[PROXY SYSTEM] Could not find the certificate for the domain. Skipping deletion of certificate.');
+                await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Could not find the certificate for the domain. Skipping deletion of certificate.');
             } else {
-                await message.channel.send('[PROXY SYSTEM] Found the certificate for the domain. Attempting to delete it.');
+                await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Found the certificate for the domain. Attempting to delete it.');
 
-                await deleteCertificate(ProxyInformation.url, ProxyToken, domainData.domain, CertificateFound.id).then(async (Response) => {
-                    await message.channel.send('[PROXY SYSTEM] Successfully removed the certificate for the domain.');
+                await deleteCertificate(ProxyInformation.url, ProxyToken, CertificateFound.id).then(async (Response) => {
+                    await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the certificate for the domain.');
                 });
             }
 
             // If the proxy was found in the proxy list.
             if (ProxyFound == undefined) {
-                await messsage.channel.send('[PROXY SYSTEM] Could not find the domain in the proxy list. Removing it from user database.');
+                await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Could not find the domain in the proxy list. Removing it from user database.');
 
                 await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-                    message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
+                    await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the domain from the user database.');
                 });
             } else {
-                message.channel.send('[PROXY SYSTEM] Found the domain in the proxy list. Attempting to delete from proxy list.');
+                await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Found the domain in the proxy list. Attempting to delete from proxy list.');
 
                 await deleteProxy(ProxyInformation.url, ProxyToken, domainData.domain, ProxiesResponse).then(async (Response) => {
-                    await message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the proxy list.');
+                    await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the domain from the proxy list.');
 
                     await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-                        message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
+                        await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the domain from the user database.');
                     });
                 });
             }
         }).catch(Error => {
-            console.log(Error.code);
-
             console.error("[PROXY SYSTEM ERROR]: " + Error);
         });
     
     //Domains from old proxies.
     } else if (domainData.Location == undefined || domainData.Location == "FR" || domainData.Location == "US") {
-        message.channel.send("[PROXY SYSTEM] This domain is from an old proxy system. Removing from your database.");
+        const ProxyMessage = await message.channel.send("[PROXY SYSTEM] This domain is from an old proxy system. Removing from your database.");
         
         await deleteDomainDB(message.author.id, domainData.domain).then(async (Response) => {
-            message.channel.send('[PROXY SYSTEM] Successfully removed the domain from the user database.');
+            await ProxyMessage.edit(ProxyMessage.content + '\n[PROXY SYSTEM] Successfully removed the domain from the user database.');
         });
     }
 };
