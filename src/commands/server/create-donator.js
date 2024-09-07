@@ -263,43 +263,34 @@ exports.run = async (client, message, args) => {
                 client.channels.cache.get(MiscConfigs.donatorlogs).send({embeds: [embed2]});
             })
             .catch(async (error) => {
-                const embed = new Discord.EmbedBuilder()
-                .setColor("Red")
+                const ErrorEmbed = new Discord.EmbedBuilder()
+                    .setColor("Red")
+                    .setTimestamp()
+                    .setFooter({'text': "Command Executed By: " + message.author.username + ` (${message.author.id})`, "iconURL": message.author.avatarURL()})
+
 
                 if (error == "AxiosError: Request failed with status code 400") {
-                    embed.addFields(
-                            {
-                                name: `__**Failed to create a new server**__`,
-                                value: `The Donator node(s) are currently full, Please check <#` + MiscConfigs.serverStatus + `> for updates.\nIf there is no updates please alert a System Administrator (<@&` + Config.DiscordBot.Roles.SystemAdmin + `>)`,
-                            }
-                        );
+
+                        ErrorEmbed.setTitle("Error: Failed to Create a New Server")
+                        ErrorEmbed.setDescription("The Node is currently full, Please check " + MiscConfigs.serverStatus + " for updates. \nIf there is no updates please alert a System Administrator (<@&" + Config.DiscordBot.Roles.SystemAdmin + ">)")
+
                 } else if (error == "AxiosError: Request failed with status code 504") {
 
-                    embed.addFields(
-                        {
-                            name: `__**Failed to create a new server**__`,
-                            value: `The Donator node(s) are currently offline or having issues, You can check the status of the node in this channel: <#` + MiscConfigs.serverStatus + `>`,
-                        }
-                    )
+                        ErrorEmbed.setTitle("Error: Failed to Create a New Server")
+                        ErrorEmbed.setDescription("The Node is currently offline or having issues, You can check the status of the node in this channel: <#" + MiscConfigs.serverStatus + ">")
+
                 } else if (error == "AxiosError: Request failed with status code 429") {
 
-                    embed.addFields(
-                            {
-                                name: `__**Failed to create a new server**__`,
-                                value: `You are being rate limited, Please wait a few minutes and try again.`,
-                            }
-                        )
+                        ErrorEmbed.setTitle("Error: Failed to Create a New Server");
+                        ErrorEmbed.setDescription("You are being rate limited, Please wait a few minutes and try again.");
+            
                 } else {
 
-                    embed.addFields(
-                            {
-                                name: `__**Failed to create a new server**__`,
-                                value: `Some other issue happened. If this continues please open a ticket and report this to a bot admin. Please share this info with them: \nError: ${error}`,
-                            }
-                        )
+                        ErrorEmbed.setTitle("Error: Failed to Create a New Server");
+                        ErrorEmbed.setDescription(`Some other issue happened. If this continues please open a ticket and report this to a <@&${Config.DiscordBot.Roles.BotAdmin}> Please share this info with them: \n\n` + "```Error: " + error + "```");
                 }
 
-                await message.reply({embeds: [embed]});
+                await message.reply({embeds: [ErrorEmbed]});
             });
         return;
     } else {
