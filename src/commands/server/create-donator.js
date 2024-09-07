@@ -272,7 +272,7 @@ exports.run = async (client, message, args) => {
                 if (error == "AxiosError: Request failed with status code 400") {
 
                         ErrorEmbed.setTitle("Error: Failed to Create a New Server")
-                        ErrorEmbed.setDescription("The Node is currently full, Please check " + MiscConfigs.serverStatus + " for updates. \nIf there is no updates please alert a System Administrator (<@&" + Config.DiscordBot.Roles.SystemAdmin + ">)")
+                        ErrorEmbed.setDescription("The Node is currently full, Please check " + "<#" + MiscConfigs.serverStatus + ">" + " for updates. \nIf there is no updates please alert a System Administrator (<@&" + Config.DiscordBot.Roles.SystemAdmin + ">)")
 
                 } else if (error == "AxiosError: Request failed with status code 504") {
 
