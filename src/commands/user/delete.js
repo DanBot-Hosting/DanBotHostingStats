@@ -100,11 +100,6 @@ exports.run = async (client, message, args) => {
                 // Delete the user's premium if they have one.
                 userData.delete(message.author.id);
 
-                // Delete the user's premium if they have one.
-                if (userPrem != null) {
-                    userPrem.delete(message.author.id);
-                }
-
                 await Interaction.followUp({
                     content: "Your panel account and all associated servers have been successfully deleted.",
                     ephemeral: true
