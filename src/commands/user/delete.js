@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
     const ConfirmEmbed = new Discord.EmbedBuilder()
         .setTitle("Delete Panel Account")
         .setColor("Red")
-        .setDescription("Are you sure you want to delete your account? This action is **irreversible** and will delete all associated servers.\n\nAlso note that you may have other data associated with your account that will not be deleted with this command. Please open a ticket if you'd like a full data deletion.")
+        .setDescription("Are you sure you want to delete your account? This action is **irreversible** and will delete all associated servers.\n\n**Also note that you may have other data associated with your account that will not be deleted with this command. Please open a ticket if you'd like a full data deletion.**")
         .setFooter({ text: "Please confirm within 30 seconds.", iconURL: client.user.avatarURL()})
         .setTimestamp();
 
