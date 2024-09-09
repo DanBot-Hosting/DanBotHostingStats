@@ -1,9 +1,15 @@
 const Discord = require('discord.js');
 const Axios = require("axios");
+const Config = require('../../../config.json');
 
 const deleteServer = require('../../util/deleteServer.js');
 
-const Config = require('../../../config.json');
+// In-memory storage for pending deletions
+const pendingDeletions = new Map(); // userId -> { deletionTime, reminderSent }
+
+// Time constants
+const ONE_DAY = 24 * 60 * 60 * 1000;
+const REMINDER_TIME = 23 * ONE_DAY; // 7 days before the 30-day deletion
 
 exports.description = "Delete your panel account and your account data on the bot.";
 
@@ -15,8 +21,6 @@ exports.description = "Delete your panel account and your account data on the bo
  * @returns void
  */
 exports.run = async (client, message, args) => {
-
-    // Check if the user has a linked panel account
     const UserAccount = userData.get(message.author.id);
 
     if (!UserAccount) {
@@ -24,7 +28,6 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    // Create the initial confirmation embed
     const ConfirmEmbed = new Discord.EmbedBuilder()
         .setTitle("Delete Panel Account")
         .setColor("Red")
@@ -32,7 +35,6 @@ exports.run = async (client, message, args) => {
         .setFooter({ text: "Please confirm within 30 seconds.", iconURL: client.user.avatarURL()})
         .setTimestamp();
 
-    // Create the button for confirmation
     const Row = new Discord.ActionRowBuilder().addComponents(
         new Discord.ButtonBuilder()
             .setCustomId('confirmDelete')
@@ -44,10 +46,8 @@ exports.run = async (client, message, args) => {
             .setStyle(Discord.ButtonStyle.Secondary)
     );
 
-    // Send the confirmation message with buttons.
     const MessageReply = await message.reply({ embeds: [ConfirmEmbed], components: [Row] });
 
-    // Create a collector for the buttons.
     const Collector = await MessageReply.createMessageComponentCollector({
         time: 30 * 1000,
         filter: (Interaction) => Interaction.user.id === message.author.id
@@ -55,22 +55,121 @@ exports.run = async (client, message, args) => {
 
     Collector.on('collect', async (Interaction) => {
         if (Interaction.customId === 'confirmDelete') {
-            await Interaction.update({ content: "Deleting your panel account...", components: [] });
+            await Interaction.update({ content: "Deletion request confirmed. You will receive a reminder one week before the account is deleted.", components: [] });
 
-            try {
-                await Axios({
-                    url: `${Config.Pterodactyl.hosturl}/api/application/users/${UserAccount.consoleID}?include=servers`,
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
-                        "Content-Type": "application/json",
-                        Accept: "Application/vnd.pterodactyl.v1+json"
-                    },
-                }).then(async (Response) => {
+            const deletionTime = Date.now() + 30 * ONE_DAY;
+            pendingDeletions.set(message.author.id, { deletionTime, reminderSent: false });
 
-                    // Delete all servers associated with the account.
+            // Set up reminder check
+            setTimeout(async () => {
+                if (pendingDeletions.has(message.author.id)) {
+                    const user = await client.users.fetch(message.author.id);
+                    if (user) {
+                        user.send("Reminder: Your panel account will be deleted in one week. If you wish to keep your account, please contact the staff.");
+                    }
+                    pendingDeletions.set(message.author.id, { ...pendingDeletions.get(message.author.id), reminderSent: true });
+                }
+            }, REMINDER_TIME);
+
+            // Set up final deletion
+            setTimeout(async () => {
+                if (pendingDeletions.has(message.author.id)) {
+                    const UserAccount = userData.get(message.author.id);
+                    if (UserAccount) {
+                        try {
+                            const response = await Axios({
+                                url: `${Config.Pterodactyl.hosturl}/api/application/users/${UserAccount.consoleID}?include=servers`,
+                                method: "GET",
+                                headers: {
+                                    Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                                    "Content-Type": "application/json",
+                                    Accept: "Application/vnd.pterodactyl.v1+json"
+                                },
+                            });
+
+                            await Promise.all(
+                                response.data.attributes.relationships.servers.data.map((Server, index) => {
+                                    return new Promise((resolve) => {
+                                        setTimeout(async () => {
+                                            try {
+                                                await Axios(deleteServer(`/api/application/servers/${Server.attributes.id}/force`));
+                                                resolve();
+                                            } catch (Error) {
+                                                console.log(Error);
+                                                resolve();
+                                            }
+                                        }, 500 * (index + 1));
+                                    });
+                                })
+                            );
+
+                            await Axios({
+                                url: `${Config.Pterodactyl.hosturl}/api/application/users/${UserAccount.consoleID}`,
+                                method: "DELETE",
+                                headers: {
+                                    Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                                    "Content-Type": "application/json",
+                                    Accept: "Application/vnd.pterodactyl.v1+json"
+                                },
+                            });
+
+                            userData.delete(message.author.id);
+
+                            const user = await client.users.fetch(message.author.id);
+                            if (user) {
+                                user.send("Your panel account and all associated servers have been successfully deleted.");
+                            }
+                        } catch (err) {
+                            console.log(err);
+                            const user = await client.users.fetch(message.author.id);
+                            if (user) {
+                                user.send("An error occurred while deleting your account. Please contact support.");
+                            }
+                        }
+                        pendingDeletions.delete(message.author.id);
+                    }
+                }
+            }, 30 * ONE_DAY);
+        } else if (Interaction.customId === 'cancelDelete') {
+            await Interaction.update({ content: "Account deletion cancelled.", components: [] });
+        }
+    });
+
+    Collector.on('end', (collected, reason) => {
+        if (reason === 'time') {
+            MessageReply.edit({ content: "No response. Account deletion cancelled.", components: [] });
+        }
+    });
+};
+
+// Periodic check to handle deletions and reminders
+setInterval(async () => {
+    const now = Date.now();
+    for (const [userId, { deletionTime, reminderSent }] of pendingDeletions.entries()) {
+        if (!reminderSent && now >= deletionTime - REMINDER_TIME) {
+            const user = await client.users.fetch(userId);
+            if (user) {
+                user.send("Reminder: Your panel account will be deleted in one week. If you wish to keep your account, please contact the staff.");
+            }
+            pendingDeletions.set(userId, { deletionTime, reminderSent: true });
+        }
+
+        if (now >= deletionTime) {
+            const UserAccount = userData.get(userId);
+            if (UserAccount) {
+                try {
+                    const response = await Axios({
+                        url: `${Config.Pterodactyl.hosturl}/api/application/users/${UserAccount.consoleID}?include=servers`,
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                            "Content-Type": "application/json",
+                            Accept: "Application/vnd.pterodactyl.v1+json"
+                        },
+                    });
+
                     await Promise.all(
-                        Response.data.attributes.relationships.servers.data.map((Server, index) => {
+                        response.data.attributes.relationships.servers.data.map((Server, index) => {
                             return new Promise((resolve) => {
                                 setTimeout(async () => {
                                     try {
@@ -85,7 +184,6 @@ exports.run = async (client, message, args) => {
                         })
                     );
 
-                    // Delete the account.
                     await Axios({
                         url: `${Config.Pterodactyl.hosturl}/api/application/users/${UserAccount.consoleID}`,
                         method: "DELETE",
@@ -94,36 +192,23 @@ exports.run = async (client, message, args) => {
                             "Content-Type": "application/json",
                             Accept: "Application/vnd.pterodactyl.v1+json"
                         },
-                    })
-                });
+                    });
 
-                // Delete the user's premium if they have one.
-                userData.delete(message.author.id);
+                    userData.delete(userId);
 
-                await Interaction.followUp({
-                    content: "Your panel account and all associated servers have been successfully deleted.",
-                    ephemeral: true
-                });
-
-                MessageReply.edit({ content: "Your panel account and all associated servers have been successfully deleted.", embeds: [], components: [] });
-
-            } catch (err) {
-                console.log(err);
-
-                await Interaction.followUp({
-                    content: "An error occurred while deleting your account. Please try again later.",
-                    ephemeral: true
-                });
+                    const user = await client.users.fetch(userId);
+                    if (user) {
+                        user.send("Your panel account and all associated servers have been successfully deleted.");
+                    }
+                } catch (err) {
+                    console.log(err);
+                    const user = await client.users.fetch(userId);
+                    if (user) {
+                        user.send("An error occurred while deleting your account. Please contact support.");
+                    }
+                }
+                pendingDeletions.delete(userId);
             }
-
-        } else if (Interaction.customId === 'cancelDelete') {
-            await Interaction.update({ content: "Account deletion cancelled.", components: [] });
         }
-    });
-
-    Collector.on('end', (collected, reason) => {
-        if (reason === 'time') {
-            MessageReply.edit({ content: "No response. Account deletion cancelled.", components: [] });
-        }
-    });
-};
+    }
+}, ONE_DAY);
