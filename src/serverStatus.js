@@ -16,7 +16,6 @@ function startNodeChecker() {
         for (const [category, nodes] of Object.entries(Status.Nodes)) {
             for (const [node, data] of Object.entries(nodes)) {
                 setTimeout(() => {
-
                         // Perform Pterodactyl Panel requests.
                         axios({
                             url: `${Config.Pterodactyl.hosturl}/api/client/servers/${data.serverID}/resources`,
@@ -96,7 +95,7 @@ function startNodeChecker() {
                 }
             }
         }
-    }, 10 * 1000);
+    }, 30 * 1000);
 }
 
 const parseStatus = () => {
