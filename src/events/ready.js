@@ -28,10 +28,10 @@ module.exports = async (client) => {
 
     // Cloes all accounts channels that are older than 30 minutes.
     guild.channels.cache
-        .filter((x) => x.parentID === MiscConfigs.accounts && Date.now() - x.createdAt > 30 * 60 * 1000)
-        .forEach((x) => x.delete());
+    .filter((x) => x.parentId === MiscConfigs.accounts && Date.now() - x.createdAt.getTime() > 30 * 60 * 1000)
+    .forEach((x) => x.delete());
 
-    //Initializing Cooldown
+    //Initializing the cooldown.
     client.cooldown = {};
 
     //Automatic 30second git pull.
