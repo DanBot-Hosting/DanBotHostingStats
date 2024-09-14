@@ -84,7 +84,7 @@ exports.run = async (client, message, args) => {
         // Create button interaction collector.
         const Collector = ConfirmMessage.createMessageComponentCollector({
             componentType: Discord.ComponentType.Button,
-            time: 5 * 1000,
+            time: 30 * 1000,
             filter: (Interaction) => Interaction.user.id === message.author.id
         });
 
