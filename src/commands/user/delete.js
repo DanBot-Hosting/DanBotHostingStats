@@ -117,13 +117,16 @@ exports.run = async (client, message, args) => {
             }
 
         } else if (Interaction.customId === 'cancelDelete') {
-            await Interaction.update({ content: "Account deletion cancelled.", components: [] });
+            await Interaction.update({ content: "Account deletion cancelled.", components: [], embeds: [] });
+
+            Collector.stop('cancelled');
         }
     });
 
     Collector.on('end', (collected, reason) => {
+
         if (reason === 'time') {
-            MessageReply.edit({ content: "No response. Account deletion cancelled.", components: [] });
+            MessageReply.edit({ content: "No response. Account deletion cancelled.", components: [], embeds: [] });
         }
     });
 };

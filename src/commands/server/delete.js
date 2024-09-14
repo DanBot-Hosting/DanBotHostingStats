@@ -84,7 +84,7 @@ exports.run = async (client, message, args) => {
         // Create button interaction collector.
         const Collector = ConfirmMessage.createMessageComponentCollector({
             componentType: Discord.ComponentType.Button,
-            time: 60 * 1000,
+            time: 5 * 1000,
             filter: (Interaction) => Interaction.user.id === message.author.id
         });
 
@@ -107,9 +107,10 @@ exports.run = async (client, message, args) => {
                                 Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                             },
                         });
-                        await message.channel.send(`Server ${server.attributes.name} deleted!`);
 
-                        // Adjust user usage if it's a donator node.
+                        await interaction.update({content: `Server ${server.attributes.name} deleted!`});
+
+                        // Adjust user usage if it's a Donator Node.
                         if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
                             userPrem.set(
                                 message.author.id + ".used",
@@ -118,11 +119,13 @@ exports.run = async (client, message, args) => {
                         }
                     } catch (deletionError) {
                         console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
-                        await message.channel.send(`Failed to delete server ${server.attributes.name}. Please try again later.`);
+                        await interaction.update({content: `Server(s) failed to delete.`});
                     }
                 }
             } else if (interaction.customId === 'cancel') {
                 await interaction.update({ content: 'Server deletion cancelled.', components: [] });
+
+                Collector.stop('cancelled');
             }
         });
 

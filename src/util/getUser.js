@@ -22,7 +22,14 @@ module.exports = async function(email) {
         });
         return response.data;
     } catch (error) {
-        console.error('[REQUEST] Error fetching user:', error);
+
+        if (error.response) {
+            console.error('[REQUEST] Error fetching user: ' + error.response.status);
+        } else if (error.request) {
+            console.error('[REQUEST] Error fetching user: ' + error.request);
+        } else {
+            console.error('[REQUEST] Error fetching user: ' + error.message);
+        }
 
         throw error;
     }

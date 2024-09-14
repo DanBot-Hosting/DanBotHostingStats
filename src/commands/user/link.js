@@ -133,14 +133,37 @@ exports.run = async (client, message, args) => {
 
         // Now we process the email verification.
         async function EmailVerification(Email) {
-            const Users = await getUser(Email);
+
+            let Users = null;
+
+            try {
+                Users = await getUser(Email);
+            } catch (Error) {
+                // Do Nothing.
+            }
+
+            // Panel was not able to return such data.
+            if (Users == null){
+                const ErrorEmbed = new Discord.EmbedBuilder();
+                ErrorEmbed.setColor("Red");
+                ErrorEmbed.setDescription("An error occurred while fetching your account. Please try again later.");
+                ErrorEmbed.setTimestamp();
+                ErrorEmbed.setFooter({text: "This channel will be deleted in 10 seconds."});
+
+                await msg.edit({content: "An error occurred while fetching your account.", embeds: [ErrorEmbed]});
+
+                setTimeout(async () => {
+                    await channel.delete("An error occurred while fetching the account.");
+                }, 10 * 1000);
+                return;
+            }
             
             const User = Users.data.find((usr) =>
                 usr.attributes ? usr.attributes.email === Email : false,
             );
 
             const Code = generateCode(10);
-
+            
             //This will not send the verification code, that's it.
             if (!User) {
                 message.guild.channels.cache.get(MiscConfigs.accountLinked).send(`User ${message.author.username} (${message.author.id}) tried to link their account but the email was not found in the database.`);
