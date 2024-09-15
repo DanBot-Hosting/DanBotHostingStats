@@ -89,14 +89,11 @@ exports.run = async (client, message, args) => {
         });
 
         Collector.on('collect', async (interaction) => {
-            if (interaction.user.id !== message.author.id) {
-                await interaction.reply({ content: "You can't interact with this button.", ephemeral: true });
-                return;
-            }
-
             if (interaction.customId === 'confirm') {
                 await interaction.update({ content: `Deleting servers...`, components: [] });
-                
+        
+                let deletionResults = '';
+        
                 // Deletion Loop (after successful confirmation).
                 for (const server of serversToDelete) {
                     try {
@@ -107,9 +104,9 @@ exports.run = async (client, message, args) => {
                                 Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
                             },
                         });
-
-                        await interaction.update({content: `Server ${server.attributes.name} deleted!`});
-
+        
+                        deletionResults += `Server ${server.attributes.name} deleted!\n`;
+        
                         // Adjust user usage if it's a Donator Node.
                         if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
                             userPrem.set(
@@ -118,13 +115,15 @@ exports.run = async (client, message, args) => {
                             );
                         }
                     } catch (deletionError) {
-                        console.error(`Error deleting server ${server.attributes.name}:`, deletionError);
-                        await interaction.update({content: `Server(s) failed to delete.`});
+                        console.error(`Error deleting server:`, deletionError);
+                        deletionResults += `Failed to delete server ${server.attributes.name}.\n`;
                     }
                 }
+        
+                await interaction.editReply({ content: deletionResults });
+        
             } else if (interaction.customId === 'cancel') {
-                await interaction.update({ content: 'Server deletion cancelled.', components: [] });
-
+                await interaction.editReply({ content: 'Server deletion cancelled.', components: [] });
                 Collector.stop('cancelled');
             }
         });

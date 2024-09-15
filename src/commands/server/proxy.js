@@ -236,6 +236,9 @@ exports.run = async (client, message, args) => {
                     ]);
                 })
                 .catch((ErrorAfterProxy) => {
+
+                    if(ResponseAfterProxy == undefined) ResponseAfterProxy = null;
+
                     handleProxyError(
                         ErrorAfterProxy,
                         replyMsg,
@@ -255,7 +258,7 @@ exports.run = async (client, message, args) => {
             ResponseAfterProxy,
             token
         ) {
-            if (ErrorAfterProxy == "Error: Request failed with status code 500") {
+            if (ErrorAfterProxy == "Error: Request failed with status code 500" && ResponseAfterProxy != null) {
                 deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
             } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
                 replyMsg.edit(
