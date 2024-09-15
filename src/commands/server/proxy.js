@@ -296,6 +296,8 @@ exports.run = async (client, message, args) => {
                 };
 
                 Axios(axiosDeleteProxyConfig);
+            }).catch((Error) => {
+                console.log("[PROXY SYSTEM] ERROR: " + Errror.statusCode);
             });
         }
     });
