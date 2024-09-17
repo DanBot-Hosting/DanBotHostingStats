@@ -290,7 +290,8 @@ exports.run = async (client, message, args) => {
                         ErrorEmbed.setDescription(`Some other issue happened. If this continues please open a ticket and report this to a <@&${Config.DiscordBot.Roles.BotAdmin}> Please share this info with them: \n\n` + "```Error: " + error + "```");
                 }
 
-                await message.reply({embeds: [ErrorEmbed]});
+                //Catch statement added incase of message being deleted before response is sent.
+                await message.reply({embeds: [ErrorEmbed]}).catch(Error => {});
             });
         return;
     } else {
