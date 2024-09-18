@@ -170,7 +170,9 @@ exports.run = async (client, message, args) => {
 
         if (question.id === "email") {
             const verificationCode = generateCode().toString();
-            await sendMail(question.value, "Your Verification Code", `<p>Your verification code is: <b>${verificationCode}</b></p>`);
+            await sendMail(question.value, "Your Verification Code", `<p>Your verification code is: <b>${verificationCode}</b></p>`).catch((Error) => {            
+                    console.error("[USER CREATION] Email could not be sent.");
+                });
 
             questions.push({
                 id: "verification",
