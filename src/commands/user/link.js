@@ -173,7 +173,7 @@ exports.run = async (client, message, args) => {
                     "DanBot Hosting - Account Linking Verification",
                     `Hello, ${message.author.username} (ID: ${message.author.id}) just tried to link their Discord account with this console email address. Here is a verification code that is needed to link: ${Code}`
                 ).catch((Error) => {            
-                    console.error("[PASSWORD RESET] Email could not be sent.");
+                    console.error("[ACCOUNT LINKING] Email could not be sent.");
                 });
             }
 
