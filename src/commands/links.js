@@ -15,8 +15,7 @@ exports.run = async (client, message, args) => {
             {name: "Website", value: "[danbot.host](https://danbot.host)", inline: true},
             {name: "Panel", value: "[panel.danbot.host](https://panel.danbot.host)", inline: true},
             {name: "Service Status", value: "[service.danbot.host](https://service.danbot.host)", inline: true},
-            {name: "Uptime Site", value: "[uptime.danbot.host](https://uptime.danbot.host)", inline: true},
-            {name: "Portal", value: "[danbot.app](https://danbot.app)", inline: true}
+            {name: "Uptime Site", value: "[uptime.danbot.host](https://uptime.danbot.host)", inline: true}
         )
 
     return message.reply({embeds: [LinksEmbed]});
