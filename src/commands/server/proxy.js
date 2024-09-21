@@ -125,7 +125,7 @@ exports.run = async (client, message, args) => {
         );
     }
 
-    const UserServers = await getUserServers(userData.get(message.author.id).consoleID).then(async (PterodactylResponse) => {
+    await getUserServers(userData.get(message.author.id).consoleID).then(async (PterodactylResponse) => {
         PterodactylResponse = PterodactylResponse.attributes;
 
         if (PterodactylResponse.relationships) {
