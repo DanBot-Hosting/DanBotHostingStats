@@ -73,16 +73,6 @@ const Status = {
                 name: "United States 1",
                 IP: Config.Servers.US1,
                 Location: Config.Ping.UK
-            },
-            us2: {
-                name: "United States 2",
-                IP: Config.Servers.US2,
-                Location: Config.Ping.UK
-            },
-            eu1: {
-                name: "Europe 1",
-                IP: Config.Servers.EU1,
-                Location: Config.Ping.UK
             }
         },
 
