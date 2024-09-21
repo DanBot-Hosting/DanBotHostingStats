@@ -62,9 +62,9 @@ module.exports = async (client) => {
 
     if (Config.Enabled.nodestatsChecker == true) {
 
-        await ServerStatus.startNodeChecker(); //Start the Node Checker.
-
         console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.greenBright("Enabled"));
+
+        await ServerStatus.startNodeChecker(); //Start the Node Checker.
 
         // Node Status Embed.
         const channel = client.channels.cache.get(MiscConfigs.nodestatus);
@@ -80,7 +80,7 @@ module.exports = async (client) => {
 
             if (messages == null) channel.send({embeds: [embed]});
             else messages.edit({embeds: [embed]});
-        }, 15 * 1000);
+        }, 30 * 1000);
     } else {
         console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.redBright("Disabled"));
     }
