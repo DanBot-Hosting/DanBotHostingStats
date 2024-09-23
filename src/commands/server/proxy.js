@@ -247,7 +247,7 @@ exports.run = async (client, message, args) => {
                         replyMsg,
                         args,
                         ProxyLocation,
-                        ResponseAfterProxy,
+                        ResponseAfterProxy1,
                         token
                     );
                 });
