@@ -217,7 +217,11 @@ exports.run = async (client, message, args) => {
                 },
             };
 
+            let ResponseAfterProxy1 = null;
+            
             Axios(axiosProxyConfig).then((ResponseAfterProxy) => {
+                    ResponseAfterProxy1 = ResponseAfterProxy;
+                
                     replyMsg.edit(
                         `Domain has been proxied:\n\n` +
                         `ID: ${ResponseAfterProxy.data.id}\n` +
@@ -236,10 +240,7 @@ exports.run = async (client, message, args) => {
                     ]);
                 })
                 .catch((ErrorAfterProxy) => {
-
-                    console.error("[SERVER PROXY]: " + ` ${args.join(",")}\n` +  ErrorAfterProxy);
-
-                    if(ResponseAfterProxy == undefined) ResponseAfterProxy = null;
+                    console.error("[SERVER PROXY]: " + `${args.join(",")}\n` +  ErrorAfterProxy);
 
                     handleProxyError(
                         ErrorAfterProxy,
@@ -265,6 +266,10 @@ exports.run = async (client, message, args) => {
             } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
                 replyMsg.edit(
                     "This domain has already been linked. If this is an error, please contact a staff member to fix this!",
+                );
+            } else {
+                replyMsg.edit(
+                    "An unknown issue has occurred."
                 );
             }
         }
