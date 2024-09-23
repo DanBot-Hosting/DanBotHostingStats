@@ -237,7 +237,7 @@ exports.run = async (client, message, args) => {
                 })
                 .catch((ErrorAfterProxy) => {
 
-                    console.error("[SERVER PROXY]: " + ` ${args.join("\n")} ` +  ErrorAfterProxy);
+                    console.error("[SERVER PROXY]: " + ` ${args.join(",")}\n` +  ErrorAfterProxy);
 
                     if(ResponseAfterProxy == undefined) ResponseAfterProxy = null;
 
