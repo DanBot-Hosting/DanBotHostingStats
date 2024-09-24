@@ -121,6 +121,8 @@ exports.run = async (client, message, args) => {
                 }
         
                 await interaction.editReply({ content: deletionResults });
+
+                Collector.stop('complete');
         
             } else if (interaction.customId === 'cancel') {
                 await interaction.editReply({ content: 'Server deletion cancelled.', components: [] });
