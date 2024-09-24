@@ -6,7 +6,7 @@ const Proxies = require('../../../config/proxy-configs.js').Proxies;
 
 //This function will generate a new token for the specified location.
 async function getToken(Url, Email, Password) {
-    const serverRes = await axios({
+    const serverRes = await Axios({
         url: Url + "/api/tokens",
         method: "POST",
         followRedirect: true,
@@ -62,6 +62,8 @@ exports.run = async (client, message, args) => {
                 Authorization: token,
                 "Content-Type": "application/json",
             },
+        }).catch((Error) => {
+            console.error("[STAFF PROXYFIX] Error: " + Error);
         });
 
             for (let index = 0; index < listOfUrls.data.length; index++) {

@@ -239,10 +239,13 @@ exports.run = async (client, message, args) => {
                         },
                     ]);
                 })
-                .catch((ErrorAfterProxy) => {
-                    console.error("[SERVER PROXY]: " + `${args.join(",")}\n` +  ErrorAfterProxy);
+                .catch(async (ErrorAfterProxy) => {
 
-                    handleProxyError(
+                    if (ErrorAfterProxy.response) {
+                        console.log("[SERVER PROXY]: " + ErrorAfterProxy.response.data.error.message);
+                    }
+
+                    await handleProxyError(
                         ErrorAfterProxy,
                         replyMsg,
                         args,
@@ -253,7 +256,7 @@ exports.run = async (client, message, args) => {
                 });
         }
 
-        function handleProxyError(
+        async function handleProxyError(
             ErrorAfterProxy,
             replyMsg,
             args,
@@ -261,39 +264,32 @@ exports.run = async (client, message, args) => {
             ResponseAfterProxy,
             token
         ) {
-            if (ErrorAfterProxy == "Error: Request failed with status code 500" && ResponseAfterProxy != null) {
-                deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
-            } else if (ErrorAfterProxy == "Error: Request failed with status code 400") {
+
+            if (ErrorAfterProxy.response.status == 500) {
+                await replyMsg.edit(
+                    replyMsg.content + "\nAn internal server error has occurred. Attempting to delete failed proxy."
+                );
+
+                await deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
+            } else if (ErrorAfterProxy.response.status == 400) {
                 replyMsg.edit(
-                    "This domain has already been linked. If this is an error, please contact a staff member to fix this!",
+                    "This domain has already been linked. If this is an error, please contact a staff member to fix this."
                 );
             } else {
                 replyMsg.edit(
-                    "An unknown issue has occurred."
+                    "An unknown issue has occurred. Please contact a staff member."
                 );
             }
         }
 
-        function deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token) {
-            const axiosGetProxyConfig = {
-                url: `${ProxyLocation.url}/api/nginx/proxy-hosts`,
-                method: "GET",
-                followRedirect: true,
-                maxRedirects: 5,
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            };
+        async function deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token) {
 
-            Axios(axiosGetProxyConfig).then((response) => {
-                const axiosDeleteProxyConfig = {
-                    url: `${ProxyLocation.url}/api/nginx/proxy-hosts/${
-                        ResponseAfterProxy.data.find(
-                            (element) => element.domain_names[0] == args[1].toLowerCase(),
-                        ).id
-                    }`,
-                    method: "DELETE",
+            if (ResponseAfterProxy == null) {
+                return await replyMsg.edit(replyMsg.content + "\n\nFailed to delete the proxy. You must have a staff member to manually fix this.");
+            } else {
+                const axiosGetProxyConfig = {
+                    url: `${ProxyLocation.url}/api/nginx/proxy-hosts`,
+                    method: "GET",
                     followRedirect: true,
                     maxRedirects: 5,
                     headers: {
@@ -301,11 +297,28 @@ exports.run = async (client, message, args) => {
                         "Content-Type": "application/json",
                     },
                 };
-
-                Axios(axiosDeleteProxyConfig);
-            }).catch((Error) => {
-                console.log("[PROXY SYSTEM] ERROR: " + Errror.statusCode);
-            });
+    
+                Axios(axiosGetProxyConfig).then((response) => {
+                    const axiosDeleteProxyConfig = {
+                        url: `${ProxyLocation.url}/api/nginx/proxy-hosts/${
+                            ResponseAfterProxy.data.find(
+                                (element) => element.domain_names[0] == args[1].toLowerCase(),
+                            ).id
+                        }`,
+                        method: "DELETE",
+                        followRedirect: true,
+                        maxRedirects: 5,
+                        headers: {
+                            Authorization: token,
+                            "Content-Type": "application/json",
+                        },
+                    };
+    
+                    Axios(axiosDeleteProxyConfig);
+                }).catch((Error) => {
+                    console.error("[SERVER PROXY]: " + Error);
+                });
+            }
         }
     });
 };
