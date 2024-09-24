@@ -273,11 +273,11 @@ exports.run = async (client, message, args) => {
                 await deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
             } else if (ErrorAfterProxy.response.status == 400) {
                 replyMsg.edit(
-                    "This domain has already been linked. If this is an error, please contact a staff member to fix this."
+                    replyMsg.content + "\nThis domain has already been linked. If this is an error, please contact a staff member to fix this."
                 );
             } else {
                 replyMsg.edit(
-                    "An unknown issue has occurred. Please contact a staff member."
+                    replyMsg.content + "\nAn unknown issue has occurred. Please contact a staff member."
                 );
             }
         }
