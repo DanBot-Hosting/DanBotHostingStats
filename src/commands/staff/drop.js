@@ -26,7 +26,7 @@ exports.run = async (client, message, args) => {
         return;
     }
     
-    message.delete();
+    await message.delete();
 
     // Manual time parsing function
     const parseTime = (timeStr) => {
@@ -73,14 +73,15 @@ exports.run = async (client, message, args) => {
             createdAt: moment + time,
         });
     } else {
-        code = codes.get(args[2]);
-        if (code == null) {
-            message.reply("That's not a code you scammer");
-            return;
-        }
+        code = codes.set(args[2], {
+            code: args[2],
+            createdBy: message.author.id,
+            balance: 1,
+            createdAt: moment + time,
+        });
     }
 
-    const embed = new Discord.EmbedBuilder()
+    const Embed = new Discord.EmbedBuilder()
         .setAuthor({ name: "Premium Key Drop!", iconURL: client.user.avatarURL() })
         .setColor("Blue")
         .setFooter({ text: `Keydrop by ${message.author.username}`, value: client.user.avatarURL(), iconURL: message.author.avatarURL() })
@@ -91,7 +92,7 @@ exports.run = async (client, message, args) => {
         )
         .setTimestamp(moment + time);
 
-    const msg = await message.reply({ embeds: [embed] });
+    const msg = await message.channel.send({ embeds: [Embed] });
 
     codes.set(code.code + ".drop", {
         message: {
@@ -100,10 +101,10 @@ exports.run = async (client, message, args) => {
         },
     });
 
-    setTimeout(() => {
-        msg.edit(
+    setTimeout(async () => {
+        await msg.edit(
             {
-                embeds: [embed.setDescription(
+                embeds: [Embed.setDescription(
                     `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#${MiscConfigs.normalCommands}>\n- Redeem the Premium Code: \`${Config.DiscordBot.Prefix}server redeem <CODE>\`\n\n*No one has redeemed the code yet!*`,
                 )]
             }

@@ -55,14 +55,17 @@ exports.run = async (client, message, args) => {
         setDonations(message.author.id, oldBal + code.balance);
 
         if (code.drop != null) {
-            let msg = await client.channels.cache
-                .get(code.drop.message.channel)
-                .messages.fetch(code.drop.message.ID);
-                
-            let embed = msg.embeds[0].setDescription(
-                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#` + MiscConfigs.normalCommands + `>\n- Redeem the Premium Code: \`` + Config.DiscordBot.Prefix + `server redeem <Code>\`\n\n*Redeemed by ${message.member}*`,
+            const msg = await client.channels.cache.get(code.drop.message.channel).messages.fetch(code.drop.message.ID).catch((Error) => {});
+
+            const embed = msg.embeds[0]
+                ? Discord.EmbedBuilder.from(msg.embeds[0])
+                : new Discord.EmbedBuilder();
+
+            embed.setDescription(
+                `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#${MiscConfigs.normalCommands}>\n- Redeem the Premium Code: \`${Config.DiscordBot.Prefix}server redeem <Code>\`\n\n*Redeemed by ${message.member}*`
             );
-            msg.edit({embeds: [embed]});
+
+            await msg.edit({ embeds: [embed] });
         }
     }
 };
