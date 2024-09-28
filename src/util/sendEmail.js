@@ -12,17 +12,20 @@ const Config = require('../../config.json');
  */
 module.exports = async function(address, subject, body) {
     try {
+
+        const Email = Config.Email2;
+
         const transport = nodemailer.createTransport({
-            host: Config.Email.Host,
-            port: Config.Email.Port,
+            host: Email.Host,
+            port: Email.Port,
             auth: {
-                user: Config.Email.User,
-                pass: Config.Email.Password,
+                user: Email.User,
+                pass: Email.Password,
             },
         });
 
         const Res = await transport.sendMail({
-            from: Config.Email.From,
+            from: Email.From,
             to: address,
             subject: subject,
             html: body,
