@@ -14,8 +14,6 @@ json.sqlite
 Test/*
 
 # Bunch of files from the bot that needs to be dealt with eventually.
-data.json
 install.sh
-test.js
 package-lock.json
 .bashrc

@@ -242,7 +242,7 @@ exports.run = async (client, message, args) => {
                 .catch(async (ErrorAfterProxy) => {
 
                     if (ErrorAfterProxy.response) {
-                        console.log("[SERVER PROXY]: " + ErrorAfterProxy.response.data.error.message);
+                        console.log("[SERVER PROXY - PROXYING & CERTIFICATE]: " + ErrorAfterProxy.response.data.error.message + " - " + ErrorAfterProxy.response.status);
                     }
 
                     await handleProxyError(
@@ -264,7 +264,6 @@ exports.run = async (client, message, args) => {
             ResponseAfterProxy,
             token
         ) {
-
             if (ErrorAfterProxy.response.status == 500) {
                 await replyMsg.edit(
                     replyMsg.content + "\nAn internal server error has occurred. Attempting to delete failed proxy."
@@ -284,9 +283,15 @@ exports.run = async (client, message, args) => {
 
         async function deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token) {
 
-            if (ResponseAfterProxy == null) {
-                return await replyMsg.edit(replyMsg.content + "\n\nFailed to delete the proxy. You must have a staff member to manually fix this.");
-            } else {
+            //Requesting all proxies from the failed location.
+            await getAllProxies(ProxyLocation.url, token).then(async (response) => {
+
+                //Finding the domain ID of the failed proxy.
+                const Domain = response.data.find(m => m.domain_names[0] == args[1].toLowerCase());
+
+                //If the bot was not able to find the fail proxy by it's ID.
+                if (Domain == undefined) return await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.");
+
                 const axiosGetProxyConfig = {
                     url: `${ProxyLocation.url}/api/nginx/proxy-hosts`,
                     method: "GET",
@@ -298,13 +303,9 @@ exports.run = async (client, message, args) => {
                     },
                 };
     
-                Axios(axiosGetProxyConfig).then((response) => {
+                await Axios(axiosGetProxyConfig).then(async (response) => {
                     const axiosDeleteProxyConfig = {
-                        url: `${ProxyLocation.url}/api/nginx/proxy-hosts/${
-                            ResponseAfterProxy.data.find(
-                                (element) => element.domain_names[0] == args[1].toLowerCase(),
-                            ).id
-                        }`,
+                        url: `${ProxyLocation.url}/api/nginx/proxy-hosts/${Domain.id}`,
                         method: "DELETE",
                         followRedirect: true,
                         maxRedirects: 5,
@@ -314,11 +315,17 @@ exports.run = async (client, message, args) => {
                         },
                     };
     
-                    Axios(axiosDeleteProxyConfig);
-                }).catch((Error) => {
-                    console.error("[SERVER PROXY]: " + Error);
+                    await Axios(axiosDeleteProxyConfig);
+                }).then(async (Response) => {
+                    await replyMsg.edit(replyMsg.content + "\n\nAutomatically deleted failed proxy.");
+                }).catch(async (Error) => {
+                    console.error("[SERVER PROXY - DELETION OF FAILED PROXY]: " + Error);
+
+                    await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.");
                 });
-            }
+            }).catch(async (Error) => {
+                await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.");
+            });
         }
     });
 };
