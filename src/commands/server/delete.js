@@ -109,7 +109,7 @@ exports.run = async (client, message, args) => {
         
                         // Adjust user usage if it's a Donator Node.
                         if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
-                            userPrem.set(message.author.id + ".used", userPrem.used - 1);
+                            await userPrem.subtract(`${message.author.id}.used`, 1);
                         }
                     } catch (deletionError) {
                         deletionResults += `Failed to delete server ${server.attributes.name}.\n`;
