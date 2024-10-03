@@ -15,6 +15,7 @@ const misc = {
         "737603315722092544", //Sarah
         "405771597761216522", //Mike
         "757296951925538856", //DIBSTER
+        "853158265466257448" //William
     ],
 
     //Staff who can run eval and exec.
