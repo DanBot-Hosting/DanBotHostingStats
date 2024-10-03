@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
+exports.roleRequirement = Config.DiscordBot.Roles.BotAdmin;
 exports.description = "Shows if an account is linked.";
 
 /**
