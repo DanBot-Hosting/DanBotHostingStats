@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
 
     const helpEmbed = new Discord.EmbedBuilder()
         .setColor("Red")
-        .setDescription(`List of servers:\n`)
+        .setDescription(`Check out [DBH Docs Site](https://docs.danbot.host) to also find more docs on server types!\n\nList of servers:\n`)
         .addFields(
             { name: "__**Languages:**__", value: "NodeJS \nPython \nJava \naio \nrustc", inline: true },
             { name: "__**Bots:**__", value: "redbot", inline: true },
