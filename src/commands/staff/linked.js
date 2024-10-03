@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
 
-exports.roleRequirement = Config.DiscordBot.Roles.BotAdmin;
 exports.description = "Shows if an account is linked.";
 
 /**
@@ -13,7 +12,7 @@ exports.description = "Shows if an account is linked.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    if (MiscConfigs.botCommands.includes(message.author.id)) return;
+    if (!MiscConfigs.botCommands.includes(message.author.id)) return;
 
     if (args[1] == null) {
         await message.reply(
