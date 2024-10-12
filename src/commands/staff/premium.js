@@ -16,17 +16,26 @@ exports.run = async (client, message, args) => {
         !MiscConfigs.staffPremium.includes(message.author.id)
     )
         return;
+    
 
-    if (args.length < 4) return message.reply("You didn't provide enough arguements.");
+    if (args.length < 4) return message.reply("You didn't provide enough arguments.");
+
+    let userid = message.guild.members.cache.get(
+        args[2].match(/[0-9]{17,19}/).length == 0 ? args[2] : args[2].match(/[0-9]{17,19}/)[0],
+    );
 
     let parser = new Intl.NumberFormat();
 
+    const userPremium = userPrem.get(userid);
+
+    if(userPremium === null) {
+        userPrem.set(userid, {
+            donated: 0,
+            used: 0
+        });
+    };
+
     let setDonations = (userid, amount) => {
-
-        if (isNaN(userPrem.get(userid + ".used"))){
-            userPrem.set(userid + ".used", 0);
-        }
-
         userPrem.set(userid + ".donated", amount);
     };
 
@@ -44,9 +53,6 @@ exports.run = async (client, message, args) => {
             .send("Thanks, <@" + userid + "> for donating $" + parser.format(amount));
     };
 
-    let userid = message.guild.members.cache.get(
-        args[2].match(/[0-9]{17,19}/).length == 0 ? args[2] : args[2].match(/[0-9]{17,19}/)[0],
-    );
     let amount = Number.parseInt(args[3]);
     if (isNaN(amount)) return;
 
