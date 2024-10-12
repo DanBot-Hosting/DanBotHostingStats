@@ -15,7 +15,7 @@ exports.description = "Create a free server. View this command for usage.";
  */
 exports.run = async (client, message, args) => {
 
-    return message.channel.send("Server creation is disabled. Do not ping staff.");
+    return message.channel.send("Server creation is disabled. Do not ping staff. See this announcement: https://discord.com/channels/639477525927690240/898050443446464532/1280611305400569856");
 
     const helpEmbed = new Discord.EmbedBuilder()
         .setColor("Red")
