@@ -21,6 +21,7 @@ createListPrem.gmod = (serverName, userID) => ({
         GAMEMODE: "sandbox",
         MAX_PLAYERS: "32",
         TICKRATE: "22",
+        LUA_REFRESH: "0"
     },
     feature_limits: {
         databases: 2,
