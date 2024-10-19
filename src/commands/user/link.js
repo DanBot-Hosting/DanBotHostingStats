@@ -18,13 +18,14 @@ exports.description = "Link your console account to your Discord account.";
 exports.run = async (client, message, args) => {
 
     // The user does not have a panel account linked and would like to link one.
-    if (userData.get(message.author.id) != null) {
+    if (await userData.get(message.author.id) != null) {
+        console.log(await userData.get(message.author.id))
         const AlreadyLinkedEmbed = new Discord.EmbedBuilder()
         .setColor(`Green`)
         .addFields(
-            { name: `**__Username__**`, value: userData.fetch(message.author.id + ".username") },
-            { name: `**__Linked Date (YYYY-MM-DD)__**`, value: userData.fetch(message.author.id + ".linkDate") },
-            { name: `**__Linked Time__**`, value: userData.fetch(message.author.id + ".linkTime") },
+            { name: `**__Username__**`, value: await userData.get(message.author.id + ".username") },
+            { name: `**__Linked Date (YYYY-MM-DD)__**`, value: await userData.get(message.author.id + ".linkDate") },
+            { name: `**__Linked Time__**`, value: await userData.get(message.author.id + ".linkTime") },
         )
         .setTimestamp()
         .setFooter({text: client.user.username, iconUrl: client.user.avatarURL()});
@@ -245,7 +246,7 @@ exports.run = async (client, message, args) => {
                         const timestamp = `${moment().format("HH:mm:ss")}`;
                         const datestamp = `${moment().format("DD-MM-YYYY")}`;
 
-                        userData.set(`${message.author.id}`, {
+                        await userData.set(`${message.author.id}`, {
                             discordID: message.author.id,
                             consoleID: User.attributes.id,
                             email: User.attributes.email,

@@ -12,21 +12,21 @@ const MiscConfigs = require('../../../config/misc-configs.js');
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    let setDonations = (userid, amount) => {
-        userPrem.set(userid + ".used", userPrem.get(userid + ".used") || 0);
-        userPrem.set(userid + ".donated", amount);
+    let setDonations = async (userid, amount) => {
+        await userPrem.set(userid + ".used", userPrem.get(userid + ".used") || 0);
+        await userPrem.set(userid + ".donated", amount);
     };
 
     if (!args[1]) {
         message.reply("Usage is: `" + Config.DiscordBot.Prefix + "server redeem code`");
     } else {
-        let code = codes.get(args[1]);
+        let code = await codes.get(args[1]);
 
         if (code == null) {
             message.reply("That code is invalid or expired");
             return;
         }
-        let oldBal = userPrem.get(message.author.id + ".donated") || 0;
+        let oldBal = await userPrem.get(message.author.id + ".donated") || 0;
 
         let now = Date.now();
         message.reply(
@@ -48,11 +48,11 @@ exports.run = async (client, message, args) => {
                     "*",
             );
 
-        codes.delete(args[1]);
+        await codes.delete(args[1]);
 
         message.member.roles.add(Config.DiscordBot.Roles.Donator);
 
-        setDonations(message.author.id, oldBal + code.balance);
+        await setDonations(message.author.id, oldBal + code.balance);
 
         if (code.drop != null) {
             const msg = await client.channels.cache.get(code.drop.message.channel).messages.fetch(code.drop.message.ID).catch((Error) => {});

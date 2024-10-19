@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
 
     const code = args[1].toLowerCase() == "random" ? generatePassword() : args[1];
 
-    if (codes.get(code) != null) {
+    if (await codes.get(code) != null) {
         message.reply("A code with that name already exists.");
         return;
     }
@@ -52,7 +52,7 @@ exports.run = async (client, message, args) => {
             "`",
     );
 
-    codes.set(code, {
+    await codes.set(code, {
         code: code,
         createdBy: message.author.id,
         balance: balance,

@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
             );
             selectedUser = await selectedUser;
 
-            const userAccount = userData.get(selectedUser.id);
+            const userAccount = await userData.get(selectedUser.id);
 
             if (userAccount == null || userAccount.consoleID == null) {
                 if (selectedUser.id === message.author.id) {
@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
                 url:
                     Config.Pterodactyl.hosturl +
                     "/api/application/users/" +
-                    userData.get(selectedUser.id).consoleID +
+                    await userData.get(selectedUser.id).consoleID +
                     "?include=servers",
                 method: "GET",
                 followRedirect: true,
@@ -64,12 +64,12 @@ exports.run = async (client, message, args) => {
                     ++actualPremiumServersUsed;
             }
 
-            const userPremData = userPrem.get(selectedUser.id);
+            const userPremData = await userPrem.get(selectedUser.id);
 
             const storedPremiumServersUsed = userPremData.used;
 
             if (actualPremiumServersUsed != storedPremiumServersUsed) {
-                userPrem.set(selectedUser.id, {
+                await userPrem.set(selectedUser.id, {
                     used: actualPremiumServersUsed,
                     donated: userPremData.donated,
                 });

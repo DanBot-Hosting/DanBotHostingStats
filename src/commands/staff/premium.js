@@ -21,13 +21,13 @@ exports.run = async (client, message, args) => {
 
     let parser = new Intl.NumberFormat();
 
-    let setDonations = (userid, amount) => {
+    let setDonations = async (userid, amount) => {
 
-        if (userPrem.get(userid + ".used") == null){
-            userPrem.set(userid + ".used", 0);
+        if (await userPrem.get(userid + ".used") == null) {
+            await userPrem.set(userid + ".used", 0);
         }
 
-        userPrem.set(userid + ".donated", amount);
+        await userPrem.set(userid + ".donated", amount);
     };
 
     let sendMessage = async (userid, amount) => {
@@ -51,7 +51,7 @@ exports.run = async (client, message, args) => {
     let amount = Number.parseInt(args[3]);
     if (isNaN(amount)) return;
 
-    let oldBal = userPrem.get(userid + ".donated") || 0;
+    let oldBal = await userPrem.get(userid + ".donated") || 0;
 
     if (args[1].toLowerCase() === "add") {
         setDonations(userid, amount + oldBal);

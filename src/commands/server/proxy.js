@@ -82,7 +82,7 @@ exports.run = async (client, message, args) => {
         
     };
 
-    const user = userData.get(message.author.id);
+    const user = await userData.get(message.author.id);
 
     if (!user) {
         return message.channel.send("User not found.");
@@ -125,7 +125,7 @@ exports.run = async (client, message, args) => {
         );
     }
 
-    await getUserServers(userData.get(message.author.id).consoleID).then(async (PterodactylResponse) => {
+    await getUserServers(await userData.get(message.author.id).consoleID).then(async (PterodactylResponse) => {
         PterodactylResponse = PterodactylResponse.attributes;
 
         if (PterodactylResponse.relationships) {
@@ -219,26 +219,26 @@ exports.run = async (client, message, args) => {
 
             let ResponseAfterProxy1 = null;
             
-            Axios(axiosProxyConfig).then((ResponseAfterProxy) => {
-                    ResponseAfterProxy1 = ResponseAfterProxy;
-                
-                    replyMsg.edit(
-                        `Domain has been proxied:\n\n` +
-                        `ID: ${ResponseAfterProxy.data.id}\n` +
-                        `Location: ${ProxyLocation.name}`
-                    );
-                    
-                    const NewUserData = userData.get(message.author.id).domains || [];
+            Axios(axiosProxyConfig).then(async (ResponseAfterProxy) => {
+                ResponseAfterProxy1 = ResponseAfterProxy;
 
-                    userData.set(`${message.author.id}.domains`, [
-                        ...new Set(NewUserData),
-                        {
-                            domain: args[1].toLowerCase(),
-                            serverID: args[2],
-                            location: ProxyLocation.dbLocation,
-                        },
-                    ]);
-                })
+                replyMsg.edit(
+                    `Domain has been proxied:\n\n` +
+                    `ID: ${ResponseAfterProxy.data.id}\n` +
+                    `Location: ${ProxyLocation.name}`
+                );
+
+                const NewUserData = await userData.get(message.author.id).domains || [];
+
+                await userData.set(`${message.author.id}.domains`, [
+                    ...new Set(NewUserData),
+                    {
+                        domain: args[1].toLowerCase(),
+                        serverID: args[2],
+                        location: ProxyLocation.dbLocation,
+                    },
+                ]);
+            })
                 .catch(async (ErrorAfterProxy) => {
 
                     if (ErrorAfterProxy.response) {

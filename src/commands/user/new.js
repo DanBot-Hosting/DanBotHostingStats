@@ -227,8 +227,8 @@ exports.run = async (client, message, args) => {
         },
         data: data,
     })
-        .then((user) => {
-            userData.set(`${message.author.id}`, {
+        .then(async (user) => {
+            await userData.set(`${message.author.id}`, {
                 discordID: message.author.id,
                 consoleID: user.data.attributes.id,
                 email: user.data.attributes.email,

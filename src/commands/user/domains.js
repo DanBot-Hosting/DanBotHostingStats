@@ -8,9 +8,9 @@ const Discord = require("discord.js");
  * @param {Discord.Message} message 
  * @returns 
  */
-exports.run = (client, message) => {
+exports.run = async (client, message) => {
     // Request user data.
-    const data = userData.get(message.author.id);
+    const data = await userData.get(message.author.id);
 
     // Check if the user has an account.
     if (!data) return message.reply("You do not have an account.");
@@ -31,7 +31,7 @@ exports.run = (client, message) => {
             }
         );
     } else {
-            
+
         // If description is less than 4096 characters, send it as a message.
         const Embed = new Discord.EmbedBuilder()
             .setColor("Blue")

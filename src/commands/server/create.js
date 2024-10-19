@@ -69,7 +69,7 @@ exports.run = async (client, message, args) => {
     const serverName =
         message.content.split(" ").slice(3).join(" ") ||
         "Untitled Server (settings -> server name)";
-    let consoleID = userData.get(message.author.id);
+    let consoleID = await userData.get(message.author.id);
 
     if (consoleID == null) {
         message.reply(

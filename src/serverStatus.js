@@ -7,9 +7,6 @@ const Chalk = require('chalk');
 const Config = require('../config.json');
 const Status = require('../config/status-configs.js');
 
-const nodeStatus = new db.table("nodeStatus"); //Status of the Node.
-const nodeServers = new db.table("nodeServers"); //Counts of servers on each Node.
-
 function startNodeChecker() {
     setInterval(() => {
         // For Node Status.
@@ -26,28 +23,27 @@ function startNodeChecker() {
                                 Accept: "Application/vnd.pterodactyl.v1+json",
                             },
                         })
-                            .then((response) => {
+                            .then(async (response) => {
                                 // Node & Wings are online.
-                                
-                                nodeStatus.set(`${node}.timestamp`, Date.now());
-                                nodeStatus.set(`${node}.status`, true);
-                                nodeStatus.set(`${node}.is_vm_online`, true);
+                                await nodeStatus.push(`${node}.timestamp`, Date.now());
+                                await nodeStatus.push(`${node}.status`, true);  // Assuming node is online based on response
+                                await nodeStatus.push(`${node}.is_vm_online`, true);  // Set is_vm_online to true
                             })
-                            .catch((error) => {                                    
+                            .catch((error) => {
                                 ping.ping(data.IP, 22)
-                                    .then(() => {
+                                    .then(async () => {
                                         // Wings is offline, but Node is online.
 
-                                        nodeStatus.set(`${node}.timestamp`, Date.now());
-                                        nodeStatus.set(`${node}.status`, false);
-                                        nodeStatus.set(`${node}.is_vm_online`, true);
+                                        await nodeStatus.set(`${node}.timestamp`, Date.now());
+                                        await nodeStatus.set(`${node}.status`, false);  // Assuming node is online based on response
+                                        await nodeStatus.set(`${node}.is_vm_online`, true);  // Set is_vm_online to true
                                     })
-                                    .catch((e) => {
+                                    .catch(async (e) => {
                                         // Node & Wings are offline.
-                                        
-                                        nodeStatus.set(`${node}.timestamp`, Date.now());
-                                        nodeStatus.set(`${node}.status`, false);
-                                        nodeStatus.set(`${node}.is_vm_online`, false);
+
+                                        await nodeStatus.set(`${node}.timestamp`, Date.now());
+                                        await nodeStatus.set(`${node}.status`, false);  // Assuming node is online based on response
+                                        await nodeStatus.set(`${node}.is_vm_online`, false);  // Set is_vm_online to true
                                     });
                             });
 
@@ -62,11 +58,13 @@ function startNodeChecker() {
                                     Accept: "Application/vnd.pterodactyl.v1+json",
                                 },
                             })
-                                .then((response) => {
+                                .then(async (response) => {
                                     const serverCount = response.data.data.filter(m => m.attributes.assigned).length;
 
-                                    nodeServers.set(`${node}.servers`, serverCount);
-                                    nodeServers.set(`${node}.maxCount`, response.data.meta.pagination.total);
+                                    await nodeServers.set(`${node}`, {
+                                        servers: serverCount,
+                                        maxCount: response.data.meta.pagination.total
+                                    })
                                 })
                                 .catch((Error) => {
                                     // No need for additional debugs anymore.
@@ -84,13 +82,13 @@ function startNodeChecker() {
 
                     setTimeout(() => {
                         ping.ping(data.IP, 22)
-                            .then(() => {
-                                nodeStatus.set(`${name}.timestamp`, Date.now());
-                                nodeStatus.set(`${name}.status`, true);
+                            .then(async () => {
+                                await nodeStatus.set(`${name}.timestamp`, Date.now());
+                                await nodeStatus.set(`${name}.status`, true);
                             })
-                            .catch(() => {
-                                nodeStatus.set(`${name}.timestamp`, Date.now());
-                                nodeStatus.set(`${name}.status`, false);
+                            .catch(async () => {
+                                await nodeStatus.set(`${name}.timestamp`, Date.now());
+                                await nodeStatus.set(`${name}.status`, false);
                             });
                     }, 2000);
                 }
@@ -99,7 +97,7 @@ function startNodeChecker() {
     }, 30 * 1000);
 }
 
-const parseStatus = () => {
+const parseStatus = async () => {
     let toReturn = {};
 
     // Handle Nodes categories.
@@ -107,10 +105,12 @@ const parseStatus = () => {
         let temp = [];
         for (let [nodeKey, data] of Object.entries(nodes)) {
 
-            let nodeStatusData = nodeStatus.get(nodeKey.toLowerCase());
-            let nodeServerData = nodeServers.get(nodeKey.toLowerCase());
+            const nodeStatusData = await nodeStatus.get(nodeKey.toLowerCase());
+            const nodeServerData = await nodeServers.get(nodeKey.toLowerCase());
+            //console.log(nodeStatusData)
+            //console.log(nodeServerData)
 
-            let serverUsage = nodeServerData
+            let serverUsage = await nodeServerData
                 ? `(${nodeServerData.servers} / ${nodeServerData.maxCount})`
                 : "";
 
@@ -120,10 +120,10 @@ const parseStatus = () => {
             } else if (nodeStatusData?.status) {
                 statusText = `🟢 Online ${serverUsage}`;
             } else {
-                if (nodeStatusData?.is_vm_online == null) {
+                if (nodeStatusData?.online == null) {
                     statusText = "🔴 **Offline**";
                 } else {
-                    statusText = (nodeStatusData.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") + 
+                    statusText = (nodeStatusData.online ? "🟠 **Wings**" : "🔴 **System**") +
                         ` **offline** ${serverUsage}`;
                 }
             }
@@ -139,7 +139,7 @@ const parseStatus = () => {
             let temp = [];
             for (let [name, data] of Object.entries(services)) {
 
-                let serviceStatusData = nodeStatus.get(name.toLowerCase());
+                let serviceStatusData = await nodeStatus.get(name.toLowerCase());
 
                 let statusText = serviceStatusData?.status ? "🟢 Online" : "🔴 **Offline**";
 
@@ -154,7 +154,7 @@ const parseStatus = () => {
 
 
 const getEmbed = async () => {
-    let status = parseStatus();
+    const status = await parseStatus();
     let desc = "";
 
     for (let [title, d] of Object.entries(status)) {

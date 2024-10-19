@@ -66,14 +66,14 @@ exports.run = async (client, message, args) => {
     if (!args[2]) {
         const random = generatePassword();
 
-        code = codes.set(random, {
+        code = await codes.set(random, {
             code: random,
             createdBy: message.author.id,
             balance: 1,
             createdAt: moment + time,
         });
     } else {
-        code = codes.set(args[2], {
+        code = await codes.set(args[2], {
             code: args[2],
             createdBy: message.author.id,
             balance: 1,
@@ -94,7 +94,7 @@ exports.run = async (client, message, args) => {
 
     const msg = await message.channel.send({ embeds: [Embed] });
 
-    codes.set(code.code + ".drop", {
+    await codes.set(code.code + ".drop", {
         message: {
             ID: msg.id,
             channel: msg.channel.id,
