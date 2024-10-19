@@ -11,6 +11,6 @@ exports.description = "Unlinks your account from a panel account.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    userData.delete(message.author.id);
+    await userData.delete(message.author.id);
     message.reply("You have unlinked this account!");
 };

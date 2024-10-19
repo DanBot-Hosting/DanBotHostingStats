@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
 
     //return message.channel.send("Server creation is disabled. Do not ping staff.");
     
-    let userP = userPrem.fetch(message.author.id) || {
+    let userP = await userPrem.get(message.author.id) || {
         used: 0,
         donated: 0,
     };
@@ -27,7 +27,7 @@ exports.run = async (client, message, args) => {
     const serverName =
         message.content.split(" ").slice(3).join(" ") ||
         "Untitled Server (settings -> server name)";
-    let consoleID = userData.get(message.author.id);
+    let consoleID = await userData.get(message.author.id);
 
     if (consoleID == null) {
         message.reply(
@@ -188,8 +188,8 @@ exports.run = async (client, message, args) => {
     if (Object.keys(types).includes(args[1].toLowerCase())) {
         serverCreateSettings_Prem
             .createServer(types[args[1].toLowerCase()])
-            .then((response) => {
-                userPrem.set(message.author.id + ".used", userP.used + 1);
+            .then(async (response) => {
+                await userPrem.set(message.author.id + ".used", userP.used + 1);
 
                 let embed = new Discord.EmbedBuilder()
                     .setColor(`Green`)

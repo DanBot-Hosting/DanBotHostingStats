@@ -76,9 +76,9 @@ async function getAllCertificates(Url, Token){
 
 //Removes a domain from the user's database.
 async function deleteDomainDB(UserId, Domain){
-    userData.set(
+    await userData.set(
         UserId + ".domains",
-        userData
+        await userData
             .get(UserId)
             .domains.filter((x) => x.domain != Domain),
     );
@@ -126,7 +126,7 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    const domainData = userDomains.find((x) => x.domain === args[1].toLowerCase());
+    const domainData = await userDomains.find((x) => x.domain === args[1].toLowerCase());
 
     if (Proxies.map(x => x.dbLocation).includes(domainData.location)) {
 
