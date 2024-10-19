@@ -120,10 +120,10 @@ const parseStatus = async () => {
             } else if (nodeStatusData?.status) {
                 statusText = `🟢 Online ${serverUsage}`;
             } else {
-                if (nodeStatusData?.online == null) {
+                if (nodeStatusData?.is_vm_online == null) {
                     statusText = "🔴 **Offline**";
                 } else {
-                    statusText = (nodeStatusData.online ? "🟠 **Wings**" : "🔴 **System**") +
+                    statusText = (nodeStatusData.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") +
                         ` **offline** ${serverUsage}`;
                 }
             }
