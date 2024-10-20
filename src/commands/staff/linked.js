@@ -24,9 +24,13 @@ exports.run = async (client, message, args) => {
             await message.reply("That account is not linked with a console account.");
         } else {
 
-            const userData2 = await userData.get(args[1]);
+            var userData2 = await userData.get(args[1]);
 
-            console.log(typeof userData2);
+            if(typeof userData2 == "string"){
+                userData2 = JSON.parse(userData2);
+
+                console.log(userData2);
+            };
             
             const Embed = new Discord.EmbedBuilder()
                 .setColor(`Green`)
