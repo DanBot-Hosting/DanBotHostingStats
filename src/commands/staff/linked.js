@@ -23,15 +23,18 @@ exports.run = async (client, message, args) => {
         if (userData.get(args[1]) == null) {
             await message.reply("That account is not linked with a console account.");
         } else {
+
+            const userData2 = await userData.get(args[1]);
+            
             const Embed = new Discord.EmbedBuilder()
                 .setColor(`Green`)
                 .addFields(
-                    { name: "__**Username**__", value: userData.get(args[1] + ".username"), inline: false },
-                    { name: "__**Email**__", value: userData.get(args[1] + ".email"), inline: false },
-                    { name: "__**Discord ID**__", value: userData.get(args[1] + ".discordID").toString(), inline: false },
-                    { name: "__**Console ID**__", value: userData.get(args[1] + ".consoleID").toString(), inline: false },
-                    { name: "__**Date (YYYY/MM/DD)**__", value: userData.get(args[1] + ".linkDate"), inline: false },
-                    { name: "__**Time**__", value: userData.get(args[1] + ".linkTime"), inline: false },
+                    { name: "__**Username**__", value: userData2.username.toString(), inline: false },
+                    { name: "__**Email**__", value: userData2.email.toString(), inline: false },
+                    { name: "__**Discord ID**__", value: userData2.discordID.toString(), inline: false },
+                    { name: "__**Console ID**__", value: userData2.consoleID.toString(), inline: false },
+                    { name: "__**Date (YYYY/MM/DD)**__", value: userData2.consoleID.linkDate.toString(), inline: false },
+                    { name: "__**Time**__", value: userData2.linkTime.toString(), inline: false },
                 )
                 .setTimestamp()
                 .setFooter({ text: client.user.displayName, iconURL: client.user.avatarURL() });
