@@ -13,7 +13,7 @@ const MiscConfigs = require('../../../config/misc-configs.js');
  */
 exports.run = async (client, message, args) => {
     let setDonations = async (userid, amount) => {
-        await userPrem.set(userid + ".used", userPrem.get(userid + ".used") || 0);
+        await userPrem.set(userid + ".used", await userPrem.get(userid + ".used") || 0);
         await userPrem.set(userid + ".donated", amount);
     };
 
