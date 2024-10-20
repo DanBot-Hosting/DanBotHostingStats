@@ -26,12 +26,12 @@ exports.run = async (client, message, args) => {
             const Embed = new Discord.EmbedBuilder()
                 .setColor(`Green`)
                 .addFields(
-                    { name: "__**Username**__", value: userData.fetch(args[1] + ".username"), inline: false },
-                    { name: "__**Email**__", value: userData.fetch(args[1] + ".email"), inline: false },
-                    { name: "__**Discord ID**__", value: userData.fetch(args[1] + ".discordID").toString(), inline: false },
-                    { name: "__**Console ID**__", value: userData.fetch(args[1] + ".consoleID").toString(), inline: false },
-                    { name: "__**Date (YYYY/MM/DD)**__", value: userData.fetch(args[1] + ".linkDate"), inline: false },
-                    { name: "__**Time**__", value: userData.fetch(args[1] + ".linkTime"), inline: false },
+                    { name: "__**Username**__", value: userData.get(args[1] + ".username"), inline: false },
+                    { name: "__**Email**__", value: userData.get(args[1] + ".email"), inline: false },
+                    { name: "__**Discord ID**__", value: userData.get(args[1] + ".discordID").toString(), inline: false },
+                    { name: "__**Console ID**__", value: userData.get(args[1] + ".consoleID").toString(), inline: false },
+                    { name: "__**Date (YYYY/MM/DD)**__", value: userData.get(args[1] + ".linkDate"), inline: false },
+                    { name: "__**Time**__", value: userData.get(args[1] + ".linkTime"), inline: false },
                 )
                 .setTimestamp()
                 .setFooter({ text: client.user.displayName, iconURL: client.user.avatarURL() });
