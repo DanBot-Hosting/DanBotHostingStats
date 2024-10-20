@@ -1,96 +1,91 @@
 const axios = require('axios');
 const ping = require('ping-tcp-js');
-const db = require('quick.db');
 const Discord = require('discord.js');
-const Chalk = require('chalk');
-
 const Config = require('../config.json');
 const Status = require('../config/status-configs.js');
 
-function startNodeChecker() {
-    setInterval(() => {
-        // For Node Status.
-        for (const [category, nodes] of Object.entries(Status.Nodes)) {
+const safePromise = async (promise) => {
+    try {
+        const rp = await promise;
+
+        return [rp, null];
+    } catch (e) {
+        return [null, e];
+    }
+};
+
+const startNodeChecker = () => {
+    setInterval(async () => {
+        for (const [, nodes] of Object.entries(Status.Nodes)) {
             for (const [node, data] of Object.entries(nodes)) {
-                setTimeout(() => {
-                        // Perform Pterodactyl Panel requests.
-                        axios({
-                            url: `${Config.Pterodactyl.hosturl}/api/client/servers/${data.serverID}/resources`,
-                            method: "GET",
-                            headers: {
-                                Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
-                                "Content-Type": "application/json",
-                                Accept: "Application/vnd.pterodactyl.v1+json",
-                            },
-                        })
-                            .then(async (response) => {
-                                // Node & Wings are online.
-                                await nodeStatus.push(`${node}.timestamp`, Date.now());
-                                await nodeStatus.push(`${node}.status`, true);  // Assuming node is online based on response
-                                await nodeStatus.push(`${node}.is_vm_online`, true);  // Set is_vm_online to true
-                            })
-                            .catch((error) => {
-                                ping.ping(data.IP, 22)
-                                    .then(async () => {
-                                        // Wings is offline, but Node is online.
 
-                                        await nodeStatus.set(`${node}.timestamp`, Date.now());
-                                        await nodeStatus.set(`${node}.status`, false);  // Assuming node is online based on response
-                                        await nodeStatus.set(`${node}.is_vm_online`, true);  // Set is_vm_online to true
-                                    })
-                                    .catch(async (e) => {
-                                        // Node & Wings are offline.
+                const [, fetchError] = await safePromise(axios({
+                    url: `${Config.Pterodactyl.hosturl}/api/client/servers/${data.serverID}/resources`,
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
+                        "Content-Type": "application/json",
+                        Accept: "Application/vnd.pterodactyl.v1+json",
+                    },
+                }));
 
-                                        await nodeStatus.set(`${node}.timestamp`, Date.now());
-                                        await nodeStatus.set(`${node}.status`, false);  // Assuming node is online based on response
-                                        await nodeStatus.set(`${node}.is_vm_online`, false);  // Set is_vm_online to true
-                                    });
-                            });
+                if (fetchError) {
+                    const [, pingError] = await safePromise(ping.ping(data.IP, 22));
 
-                        //Sets the Node Allocation usage and amount of slots total.
-                        setTimeout(() => {
-                            axios({
-                                url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}/allocations?per_page=9000`,
-                                method: "GET",
-                                headers: {
-                                    Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
-                                    "Content-Type": "application/json",
-                                    Accept: "Application/vnd.pterodactyl.v1+json",
-                                },
-                            })
-                                .then(async (response) => {
-                                    const serverCount = response.data.data.filter(m => m.attributes.assigned).length;
+                    if (pingError) {
+                        await nodeStatus.set(`${node}.timestamp`, Date.now());
+                        await nodeStatus.set(`${node}.status`, false);
+                        await nodeStatus.set(`${node}.is_vm_online`, false);
 
-                                    await nodeServers.set(`${node}`, {
-                                        servers: serverCount,
-                                        maxCount: response.data.meta.pagination.total
-                                    })
-                                })
-                                .catch((Error) => {
-                                    // No need for additional debugs anymore.
-                                    //console.error('[NODE CHECKER] Error fetching node servers | ' + Error);
-                                });
-                        }, 2000);
-                }, 2000);
+                        continue;
+                    }
+
+                    await nodeStatus.set(`${node}.timestamp`, Date.now());
+                    await nodeStatus.set(`${node}.status`, false);
+                    await nodeStatus.set(`${node}.is_vm_online`, true);
+                } else {
+                    await nodeStatus.set(`${node}.timestamp`, Date.now());
+                    await nodeStatus.set(`${node}.status`, true);
+                    await nodeStatus.set(`${node}.is_vm_online`, true);
+                }
+
+                const [serverCountRes, serverCountError] = await safePromise(axios({
+                    url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}/allocations?per_page=9000`,
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                        "Content-Type": "application/json",
+                        Accept: "Application/vnd.pterodactyl.v1+json",
+                    },
+                }));
+
+                if (serverCountError || !serverCountRes) {
+                    continue;
+                }
+
+                const serverCount = serverCountRes.data.data.filter(m => m.attributes.assigned).length;
+
+                await nodeServers.set(`${node}`, {
+                    servers: serverCount,
+                    maxCount: serverCountRes.data.meta.pagination.total
+                });
             }
         }
 
-        // Other Services.
         for (const [category, services] of Object.entries(Status)) {
             if (category !== "Nodes") {
                 for (const [name, data] of Object.entries(services)) {
+                    const [, error] = await safePromise(ping.ping(data.IP, 22));
 
-                    setTimeout(() => {
-                        ping.ping(data.IP, 22)
-                            .then(async () => {
-                                await nodeStatus.set(`${name}.timestamp`, Date.now());
-                                await nodeStatus.set(`${name}.status`, true);
-                            })
-                            .catch(async () => {
-                                await nodeStatus.set(`${name}.timestamp`, Date.now());
-                                await nodeStatus.set(`${name}.status`, false);
-                            });
-                    }, 2000);
+                    if (error) {
+                        await nodeStatus.set(`${name}.timestamp`, Date.now());
+                        await nodeStatus.set(`${name}.status`, false);
+
+                        continue;
+                    }
+
+                    await nodeStatus.set(`${name}.timestamp`, Date.now());
+                    await nodeStatus.set(`${name}.status`, true);
                 }
             }
         }
@@ -98,34 +93,32 @@ function startNodeChecker() {
 }
 
 const parseStatus = async () => {
-    let toReturn = {};
+    const toReturn = {};
 
     // Handle Nodes categories.
-    for (let [category, nodes] of Object.entries(Status.Nodes)) {
-        let temp = [];
-        for (let [nodeKey, data] of Object.entries(nodes)) {
+    for (const [category, nodes] of Object.entries(Status.Nodes)) {
+        const temp = [];
+        for (const [nodeKey, data] of Object.entries(nodes)) {
 
             const nodeStatusData = await nodeStatus.get(nodeKey.toLowerCase());
             const nodeServerData = await nodeServers.get(nodeKey.toLowerCase());
             //console.log(nodeStatusData)
             //console.log(nodeServerData)
 
-            let serverUsage = await nodeServerData
+            const serverUsage = await nodeServerData
                 ? `(${nodeServerData.servers} / ${nodeServerData.maxCount})`
                 : "";
 
             let statusText;
             if (nodeStatusData?.maintenance) {
-                statusText = `🟣 Maintenance ~ Returning Soon!`;
+                statusText = `ðŸŸ£ Maintenance ~ Returning Soon!`;
             } else if (nodeStatusData?.status) {
-                statusText = `🟢 Online ${serverUsage}`;
+                statusText = `ðŸŸ¢ Online ${serverUsage}`;
+            } else if (nodeStatusData?.is_vm_online == null) {
+                statusText = "ðŸ”´ **Offline**";
             } else {
-                if (nodeStatusData?.is_vm_online == null) {
-                    statusText = "🔴 **Offline**";
-                } else {
-                    statusText = (nodeStatusData.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") +
-                        ` **offline** ${serverUsage}`;
-                }
+                statusText = (nodeStatusData.is_vm_online ? "ðŸŸ  **Wings**" : "ðŸ”´ **System**") +
+                    ` **offline** ${serverUsage}`;
             }
 
             temp.push(`${data.Name}: ${statusText}`);
@@ -134,14 +127,14 @@ const parseStatus = async () => {
     }
 
     // Handle other categories.
-    for (let [category, services] of Object.entries(Status)) {
+    for (const [category, services] of Object.entries(Status)) {
         if (category !== "Nodes") {
-            let temp = [];
-            for (let [name, data] of Object.entries(services)) {
+            const temp = [];
+            for (const [name, data] of Object.entries(services)) {
 
-                let serviceStatusData = await nodeStatus.get(name.toLowerCase());
+                const serviceStatusData = await nodeStatus.get(name.toLowerCase());
 
-                let statusText = serviceStatusData?.status ? "🟢 Online" : "🔴 **Offline**";
+                const statusText = serviceStatusData?.status ? "ðŸŸ¢ Online" : "ðŸ”´ **Offline**";
 
                 temp.push(`${data.name}: ${statusText}`);
             }
@@ -157,19 +150,19 @@ const getEmbed = async () => {
     const status = await parseStatus();
     let desc = "";
 
-    for (let [title, d] of Object.entries(status)) {
+    for (const [title, d] of Object.entries(status)) {
         desc = `${desc}***${title}***\n${d.join("\n")}\n\n`;
     }
 
-    const Embed = new Discord.EmbedBuilder();
+    const embed = new Discord.EmbedBuilder();
 
-    Embed.setTitle("DBH Service Status");
-    Embed.setDescription(desc);
-    Embed.setTimestamp();
-    Embed.setColor("#7388d9");
-    Embed.setFooter({ text: "Last Updated" });
+    embed.setTitle("DBH Service Status");
+    embed.setDescription(desc);
+    embed.setTimestamp();
+    embed.setColor("#7388d9");
+    embed.setFooter({ text: "Last Updated" });
 
-    return Embed;
+    return embed;
 };
 
 module.exports = { startNodeChecker, parseStatus, getEmbed };
