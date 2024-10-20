@@ -25,6 +25,8 @@ exports.run = async (client, message, args) => {
         } else {
 
             const userData2 = await userData.get(args[1]);
+
+            console.log(userData2);
             
             const Embed = new Discord.EmbedBuilder()
                 .setColor(`Green`)
