@@ -111,13 +111,13 @@ const parseStatus = async () => {
 
             let statusText;
             if (nodeStatusData?.maintenance) {
-                statusText = `ðŸŸ£ Maintenance ~ Returning Soon!`;
+                statusText = `🟣 Maintenance ~ Returning Soon!`;
             } else if (nodeStatusData?.status) {
-                statusText = `ðŸŸ¢ Online ${serverUsage}`;
+                statusText = `🟢 Online ${serverUsage}`;
             } else if (nodeStatusData?.is_vm_online == null) {
-                statusText = "ðŸ”´ **Offline**";
+                statusText = "🔴 **Offline**";
             } else {
-                statusText = (nodeStatusData.is_vm_online ? "ðŸŸ  **Wings**" : "ðŸ”´ **System**") +
+                statusText = (nodeStatusData.is_vm_online ? "🟠 **Wings**" : "🔴 **System**") +
                     ` **offline** ${serverUsage}`;
             }
 
@@ -134,7 +134,7 @@ const parseStatus = async () => {
 
                 const serviceStatusData = await nodeStatus.get(name.toLowerCase());
 
-                const statusText = serviceStatusData?.status ? "ðŸŸ¢ Online" : "ðŸ”´ **Offline**";
+                const statusText = serviceStatusData?.status ? "🟢 Online" : "🔴 **Offline**";
 
                 temp.push(`${data.name}: ${statusText}`);
             }
