@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
                     { name: "__**Email**__", value: userData2.email.toString(), inline: false },
                     { name: "__**Discord ID**__", value: userData2.discordID.toString(), inline: false },
                     { name: "__**Console ID**__", value: userData2.consoleID.toString(), inline: false },
-                    { name: "__**Date (YYYY/MM/DD)**__", value: userData2.consoleID.linkDate.toString(), inline: false },
+                    { name: "__**Date (YYYY/MM/DD)**__", value: userData2.consoleID.toString(), inline: false },
                     { name: "__**Time**__", value: userData2.linkTime.toString(), inline: false },
                 )
                 .setTimestamp()
