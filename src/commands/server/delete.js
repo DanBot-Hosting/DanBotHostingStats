@@ -32,10 +32,10 @@ exports.run = async (client, message, args) => {
 
     try {
         // Fetch user's servers from Pterodactyl API
+        const userData2 = await userData.get(message.author.id);
+        
         const response = await axios({
-            url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData.get(
-                message.author.id
-            ).consoleID}?include=servers`,
+            url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData2.consoleID}?include=servers`,
             method: "GET",
             headers: {
                 Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
@@ -50,7 +50,7 @@ exports.run = async (client, message, args) => {
         const serversToDelete = userServers.filter(
             (server) =>
                 serverIds.includes(server.attributes?.identifier) &&
-                server.attributes.user === userData.get(message.author.id).consoleID
+                server.attributes.user === userData2.consoleID
         );
 
         if (serversToDelete.length === 0) {
