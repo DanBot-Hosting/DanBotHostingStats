@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
     if (message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin))
         userID = args[1] || message.author.id;
 
-    const userAccount = userData.get(userID);
+    const userAccount = await userData.get(userID);
 
     if (userAccount == null || userAccount.consoleID == null) {
         if (userID === message.author.id) {
