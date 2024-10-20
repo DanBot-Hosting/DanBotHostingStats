@@ -125,7 +125,7 @@ exports.run = async (client, message, args) => {
         );
     }
 
-    await getUserServers(await userData.get(message.author.id).consoleID).then(async (PterodactylResponse) => {
+    await getUserServers(await user.consoleID).then(async (PterodactylResponse) => {
         PterodactylResponse = PterodactylResponse.attributes;
 
         if (PterodactylResponse.relationships) {
