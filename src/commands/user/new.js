@@ -20,7 +20,9 @@ exports.description = "Create a new panel account.";
  */
 exports.run = async (client, message, args) => {
 
-    if (userData.get(message.author.id) != null) {
+    const userAccount = await userData.get(message.author.id);
+    
+    if (userAccount != null) {
         message.reply("You already have a `panel account` linked to your discord account.");
         return;
     }
