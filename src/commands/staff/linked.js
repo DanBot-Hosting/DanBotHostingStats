@@ -29,6 +29,8 @@ exports.run = async (client, message, args) => {
             if(typeof userAccount == "string"){
                 userAccount = JSON.parse(userAccount);
 
+                await userData.set(args[1], userAccount);
+                
                 console.log(userAccount);
             };
             
