@@ -93,6 +93,7 @@ exports.run = async (client, message, args) => {
                 await interaction.update({ content: `Deleting servers...`, components: [] });
         
                 let deletionResults = '';
+                let serverCounter = 1;
         
                 // Deletion Loop (after successful confirmation).
                 for (const server of serversToDelete) {
@@ -105,12 +106,14 @@ exports.run = async (client, message, args) => {
                             },
                         });
         
-                        deletionResults += `Server ${server.attributes.name} deleted!\n`;
+                        deletionResults += `Server #${serverCounter} deleted!\n`;
         
                         // Adjust user usage if it's a Donator Node.
                         if (Config.DonatorNodes.find(x => x === server.attributes.node)) {
                             await userPrem.sub(`${message.author.id}.used`, 1);
                         }
+
+                        serverCounter++;
                     } catch (deletionError) {
                         deletionResults += `Failed to delete server ${server.attributes.name}.\n`;
                     }
