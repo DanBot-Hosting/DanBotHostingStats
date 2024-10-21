@@ -20,27 +20,27 @@ exports.run = async (client, message, args) => {
             "Please send a users discord ID to see if they are linked with an account on the host.",
         );
     } else {
-        if (userData.get(args[1]) == null) {
+        var userAccount = await userData.get(args[1]);
+        
+        if (userAccount == null) {
             await message.reply("That account is not linked with a console account.");
         } else {
 
-            var userData2 = await userData.get(args[1]);
+            if(typeof userAccount == "string"){
+                userAccount = JSON.parse(userAccount);
 
-            if(typeof userData2 == "string"){
-                userData2 = JSON.parse(userData2);
-
-                console.log(userData2);
+                console.log(userAccount);
             };
             
             const Embed = new Discord.EmbedBuilder()
                 .setColor(`Green`)
                 .addFields(
-                    { name: "__**Username**__", value: userData2.username.toString(), inline: false },
-                    { name: "__**Email**__", value: userData2.email.toString(), inline: false },
-                    { name: "__**Discord ID**__", value: userData2.discordID.toString(), inline: false },
-                    { name: "__**Console ID**__", value: userData2.consoleID.toString(), inline: false },
-                    { name: "__**Date (YYYY/MM/DD)**__", value: userData2.linkDate.toString(), inline: false },
-                    { name: "__**Time**__", value: userData2.linkTime.toString(), inline: false },
+                    { name: "__**Username**__", value: userAccount.username.toString(), inline: false },
+                    { name: "__**Email**__", value: userAccount.email.toString(), inline: false },
+                    { name: "__**Discord ID**__", value: userAccount.discordID.toString(), inline: false },
+                    { name: "__**Console ID**__", value: userAccount.consoleID.toString(), inline: false },
+                    { name: "__**Date (YYYY/MM/DD)**__", value: userAccount.linkDate.toString(), inline: false },
+                    { name: "__**Time**__", value: userAccount.linkTime.toString(), inline: false },
                 )
                 .setTimestamp()
                 .setFooter({ text: client.user.displayName, iconURL: client.user.avatarURL() });
