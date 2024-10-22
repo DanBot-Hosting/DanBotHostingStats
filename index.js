@@ -24,7 +24,9 @@ Free Hosting forever!                                            /____/
         database: Config.database.db,
     });
 
-    await mysqlDriver.connect();
+    await mysqlDriver.connect().then(async () => {
+        await require('./test.js');
+    });
     const db = new QuickDB({ driver: mysqlDriver });
 
     global.moment = require("moment");
@@ -105,6 +107,4 @@ Free Hosting forever!                                            /____/
     };
 
     client.login(Config.DiscordBot.Token);
-
-    require('./test.js');
 })();

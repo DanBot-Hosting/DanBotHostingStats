@@ -1,5 +1,5 @@
-(async () => {
-    const userAccounts = await userData.all();
+;(async () => {
+    const users = await userData;
 
-    console.log(userAccounts);
+    console.log(users);
 })();
