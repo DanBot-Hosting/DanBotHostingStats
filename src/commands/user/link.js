@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
 
     // The user does not have a panel account linked and would like to link one.
     if (await userData.get(message.author.id) != null) {
-        console.log(await userData.get(message.author.id))
+
         const AlreadyLinkedEmbed = new Discord.EmbedBuilder()
         .setColor(`Green`)
         .addFields(

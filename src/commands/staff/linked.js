@@ -30,8 +30,8 @@ exports.run = async (client, message, args) => {
                 userAccount = JSON.parse(userAccount);
 
                 await userData.set(args[1], userAccount);
-                
-                console.log(userAccount);
+
+                await message.channel.send("The user account was not in the correct format.");
             };
             
             const Embed = new Discord.EmbedBuilder()
