@@ -228,10 +228,12 @@ exports.run = async (client, message, args) => {
                     `Location: ${ProxyLocation.name}`
                 );
 
-                const NewUserData = await userData.get(message.author.id).domains || [];
+                let userAccount = await userData.get(message.author.id);
+
+                if(userAccount.domains == undefined) userAccount.domains = [];
 
                 await userData.set(`${message.author.id}.domains`, [
-                    ...new Set(NewUserData),
+                    ...new Set(userAccount.domains),
                     {
                         domain: args[1].toLowerCase(),
                         serverID: args[2],
