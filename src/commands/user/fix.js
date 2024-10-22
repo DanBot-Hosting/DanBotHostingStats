@@ -30,6 +30,8 @@ exports.run = async (client, message) => {
         } catch (Error) {
             return await message.reply("Unable to automatically fix your account. Please contact the support team.");
         }
+    } else {
+        return await message.reply("Your account is already in the correct format.");
     }
 };
 
