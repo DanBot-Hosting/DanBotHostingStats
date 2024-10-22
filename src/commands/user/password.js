@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const axios = require("axios");
+const Axios = require("axios");
 
 const generatePassword = require("../../util/generatePassword.js");
 const sendMail = require('../../util/sendEmail.js');
@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
     const password = await generatePassword();
 
     //Gets the user's data.
-    const userAccount = userData.get(message.author.id);
+    const userAccount = await userData.get(message.author.id);
 
     if (userAccount == null) {
         message.reply("You do not have a console account linked with your discord account.");
@@ -29,7 +29,7 @@ exports.run = async (client, message, args) => {
     }
 
     //This Axios requests gets the initial details of the user account.
-    axios({
+    await Axios({
         url: Config.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
         method: "GET",
         followRedirect: true,
@@ -50,7 +50,7 @@ exports.run = async (client, message, args) => {
         };
 
         //This Axios request updates the user account with the new password.
-        axios({
+        Axios({
             url: Config.Pterodactyl.hosturl + "/api/application/users/" + userAccount.consoleID,
             method: "PATCH",
             followRedirect: true,
