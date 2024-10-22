@@ -96,7 +96,7 @@ exports.run = async (client, message, args) => {
                 };
 
                 await sendMail(data.email, "DanBot Hosting - Password Reset From Discord Bot", EmailMessage.html).catch((Error) => {            
-                    console.error("[PASSWORD RESET] Email could not be sent.");
+                    console.log("[PASSWORD RESET] Email could not be sent.");
                 });
             }).catch((err) => {
                 console.error(err.message);
