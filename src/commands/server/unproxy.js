@@ -76,11 +76,11 @@ async function getAllCertificates(Url, Token){
 
 //Removes a domain from the user's database.
 async function deleteDomainDB(UserId, Domain){
+    const userAccount = await userData.get(UserId);
+    
     await userData.set(
         UserId + ".domains",
-        await userData
-            .get(UserId)
-            .domains.filter((x) => x.domain != Domain),
+        userAccount.domains.filter((x) => x.domain != Domain)
     );
 
     return true;
