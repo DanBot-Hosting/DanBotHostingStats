@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const axios = require('axios');
+const Axios = require('axios');
 const Config = require('../../../config.json');
 
 exports.description = "Delete multiple servers. View this command for usage.";
@@ -34,7 +34,7 @@ exports.run = async (client, message, args) => {
         // Fetch user's servers from Pterodactyl API
         const userData2 = await userData.get(message.author.id);
         
-        const response = await axios({
+        const response = await Axios({
             url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData2.consoleID}?include=servers`,
             method: "GET",
             headers: {
@@ -98,7 +98,7 @@ exports.run = async (client, message, args) => {
                 // Deletion Loop (after successful confirmation).
                 for (const server of serversToDelete) {
                     try {
-                        await axios({
+                        await Axios({
                             url: `${Config.Pterodactyl.hosturl}/api/application/servers/${server.attributes.id}/force`,
                             method: "DELETE",
                             headers: {
