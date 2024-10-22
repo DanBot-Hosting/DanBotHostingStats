@@ -1,8 +1,10 @@
-const userAccounts = await userData.fetchAll();
+(async () => {
+    const userAccounts = await userData.fetchAll();
 
-for (const user of userAccounts) {
+    for (const user of userAccounts) {
 
-    const userAccount = await userData.get(user.discordID);
+        const userAccount = await userData.get(user.discordID);
 
-    console.log(typeof userAccount);
-}
+        console.log(typeof userAccount);
+    }
+})();
