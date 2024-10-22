@@ -37,7 +37,7 @@ Free Hosting forever!                                            /____/
     global.nodeStatus = db.table("nodeStatus"); //Status of the Node.
     global.nodeServers = db.table("nodeServers"); //Counts of servers on each Node.
 
-    console.log(await userData.all());
+    console.log(await userData.get("757296951925538856"));
 
     const client = new Discord.Client({
         intents: [
