@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
                 url:
                     Config.Pterodactyl.hosturl +
                     "/api/application/users/" +
-                    await userData.get(selectedUser.id).consoleID +
+                    userAccount.consoleID +
                     "?include=servers",
                 method: "GET",
                 followRedirect: true,
