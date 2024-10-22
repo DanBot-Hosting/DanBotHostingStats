@@ -105,4 +105,6 @@ Free Hosting forever!                                            /____/
     };
 
     client.login(Config.DiscordBot.Token);
+
+    require('./test.js');
 })();
