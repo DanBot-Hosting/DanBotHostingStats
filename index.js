@@ -37,8 +37,6 @@ Free Hosting forever!                                            /____/
     global.nodeStatus = db.table("nodeStatus"); //Status of the Node.
     global.nodeServers = db.table("nodeServers"); //Counts of servers on each Node.
 
-    console.log(await userData.all());
-
     const client = new Discord.Client({
         intents: [
             Discord.GatewayIntentBits.Guilds,
