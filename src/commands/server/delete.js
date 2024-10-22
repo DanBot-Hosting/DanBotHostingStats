@@ -14,12 +14,14 @@ exports.description = "Delete multiple servers. View this command for usage.";
 exports.run = async (client, message, args) => {
 
     // Retrive the server IDs.
-    const serverIds = args
-        .slice(1)
-        .map((id) =>
-            id.replace(`${Config.Pterodactyl.hosturl}/server/`, "").match(/[0-9a-z]+/i)?.[0]
-        )
-        .filter(Boolean);
+    const serverIds = [...new Set(
+        args
+            .slice(1)
+            .map((id) =>
+                id.replace(`${Config.Pterodactyl.hosturl}/server/`, "").match(/[0-9a-z]+/i)?.[0]
+            )
+            .filter(Boolean)
+    )];    
 
     if (serverIds.length === 0) {
         message.reply(
