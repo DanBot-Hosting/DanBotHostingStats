@@ -1,5 +1,5 @@
 (async () => {
-    const userAccounts = await userData.fetchAll();
+    const userAccounts = await userData.all();
 
     for (const user of userAccounts) {
 
