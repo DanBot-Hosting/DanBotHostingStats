@@ -24,9 +24,7 @@ Free Hosting forever!                                            /____/
         database: Config.database.db,
     });
 
-    await mysqlDriver.connect().then(async () => {
-        await require('./test.js');
-    });
+    await mysqlDriver.connect();
     const db = new QuickDB({ driver: mysqlDriver });
 
     global.moment = require("moment");
@@ -38,6 +36,8 @@ Free Hosting forever!                                            /____/
     global.nodePing = db.table("nodePing"); //Node ping response time
     global.nodeStatus = db.table("nodeStatus"); //Status of the Node.
     global.nodeServers = db.table("nodeServers"); //Counts of servers on each Node.
+
+    await require('./test.js');
 
     const client = new Discord.Client({
         intents: [
