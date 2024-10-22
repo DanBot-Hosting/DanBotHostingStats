@@ -24,8 +24,11 @@ exports.run = async (client, message) => {
 
         // Update the user data.
         await userData.set(message.author.id, userAccount);
+
+        // Notify the user.
+        return await message.reply("Your account has been fixed.");
         } catch (Error) {
-            return message.reply("Unable to automatically fix your account. Please contact the support team.");
+            return await message.reply("Unable to automatically fix your account. Please contact the support team.");
         }
     }
 };
