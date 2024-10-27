@@ -17,7 +17,7 @@ exports.description = "Delete your panel account and your account data on the bo
 exports.run = async (client, message, args) => {
 
     // Check if the user has a linked panel account
-    const UserAccount = userData.get(message.author.id);
+    const UserAccount = await userData.get(message.author.id);
 
     if (!UserAccount) {
         message.reply("You don't have a linked `panel account` to delete.");
