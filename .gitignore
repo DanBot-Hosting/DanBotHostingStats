@@ -17,3 +17,5 @@ Test/*
 install.sh
 package-lock.json
 .bashrc
+
+.history
