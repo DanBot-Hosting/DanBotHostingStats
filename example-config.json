@@ -30,6 +30,13 @@
         "pass": ""
     },
     "PremiumServerPrice": "",
+    "database": {
+        "host": "",
+        "port": "",
+        "user": "",
+        "pass": "",
+        "db": ""
+    },
     "DiscordBot": {
         "Token": "",
         "ClientId": "",
