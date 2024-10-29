@@ -42,13 +42,12 @@ module.exports = async (client) => {
         try {
             const { stdout, stderr } = await execPromise('git pull');
             
-            // Filter the response to remove hint messages
             const cleanedResponse = (stderr || stdout)
                 .split('\n')
-                .filter(line => !line.startsWith("hint:"))
+                .filter(line => !line.startsWith("hint:") && !line.match(/^From\s+/))
                 .join('\n');
     
-            if (!stdout.includes("Already up to date.")) {
+            if (!stdout.includes("Already up to date.") && cleanedResponse.trim()) {
                 await client.channels.cache
                     .get(MiscConfigs.github)
                     .send(
@@ -61,7 +60,7 @@ module.exports = async (client) => {
         } catch (error) {
             console.error(`Error with git pull: ${error.message}`);
         }
-    }, 30 * 1000);
+    }, 30000);
 
     setInterval(() => {
         client.user.setPresence({
