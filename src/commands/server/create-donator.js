@@ -14,19 +14,16 @@ exports.description = "Creates a donator server. View this command for usage.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-
-    //return message.channel.send("Server creation is disabled. Do not ping staff.");
     
     let userP = await userPrem.get(message.author.id) || {
         used: 0,
         donated: 0,
     };
 
-    //return message.channel.send("Server creation is disabled. Do not ping staff.");
-
     const serverName =
         message.content.split(" ").slice(3).join(" ") ||
         "Untitled Server (settings -> server name)";
+
     let consoleID = await userData.get(message.author.id);
 
     if (consoleID == null) {
@@ -40,6 +37,11 @@ exports.run = async (client, message, args) => {
         );
         return;
     }
+
+    // If the user account is in string format.
+    if (typeof consoleID == "string") {
+        await message.reply("Your account is not in the correct format. Please run `" + Config.DiscordBot.Prefix + "user fix` and try again.");
+    };
 
     let allowed = Math.floor(userP.donated / Config.PremiumServerPrice);
 

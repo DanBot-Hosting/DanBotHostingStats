@@ -20,6 +20,11 @@ exports.run = async (client, message, args) => {
 
     if (user == null) return message.channel.send('User does not have account linked.');
 
+    // If the user account is in string format.
+    if (typeof user == "string") {
+        await message.reply("Your account is not in the correct format. Please run `" + Config.DiscordBot.Prefix + "user fix` and try again.");
+    };
+
     await getUserServers(user.consoleID).then(Response => {
             const userServers = Response.attributes.relationships.servers.data; //The user server data from the panel.
 

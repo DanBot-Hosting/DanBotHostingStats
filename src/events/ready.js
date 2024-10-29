@@ -1,6 +1,9 @@
 const Discord = require("discord.js");
 const Chalk = require("chalk");
 const { exec } = require("child_process");
+const Util = require('util');
+const execPromise = Util.promisify(exec);
+
 
 const ServerStatus = require("../serverStatus.js");
 const Config = require('../../config.json');
@@ -34,23 +37,25 @@ module.exports = async (client) => {
     //Initializing the cooldown.
     client.cooldown = {};
 
-    //Automatic 30second git pull.
-    setInterval(() => {
-        exec(`git pull`, (error, stdout) => {
-            let response = error || stdout;
-            if (!error) {
-                if (!response.includes("Already up to date.")) {
-                    client.channels.cache
-                        .get(MiscConfigs.github)
-                        .send(
-                            `<t:${Date.now().toString().slice(0, -3)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${response}\`\`\``,
-                        );
-                    setTimeout(() => {
-                        process.exit();
-                    }, 1000);
-                }
+    //Automatic GitHub Update (30 seconds intervals).
+    setInterval(async () => {
+        try {
+            const { stdout, stderr } = await execPromise('git pull');
+            const response = stderr || stdout;
+            
+            if (!response.includes("Already up to date.")) {
+                await client.channels.cache
+                    .get(MiscConfigs.github)
+                    .send(
+                        `<t:${Math.floor(Date.now() / 1000)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${response}\`\`\``,
+                    );
+                setTimeout(() => {
+                    process.exit();
+                }, 1000);
             }
-        });
+        } catch (error) {
+            console.error(`[GITHUB AUTO PULL]: ${error.message}`);
+        }
     }, 30000);
 
     setInterval(() => {

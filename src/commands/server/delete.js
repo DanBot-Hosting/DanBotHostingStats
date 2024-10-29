@@ -13,6 +13,16 @@ exports.description = "Delete multiple servers. View this command for usage.";
  */
 exports.run = async (client, message, args) => {
 
+    // Fetch user's servers from Pterodactyl API.
+    const user = await userData.get(message.author.id);
+
+    if (user == null) return message.channel.send('User does not have account linked.');
+    
+    // If the user account is in string format.
+    if (typeof user == "string") {
+        await message.reply("Your account is not in the correct format. Please run `" + Config.DiscordBot.Prefix + "user fix` and try again.");
+    };
+
     // Retrive the server IDs.
     const serverIds = [...new Set(
         args
@@ -33,15 +43,8 @@ exports.run = async (client, message, args) => {
     const DeleteMessage = await message.reply(`Checking servers...`);
 
     try {
-        // Fetch user's servers from Pterodactyl API
-        const userData2 = await userData.get(message.author.id);
-
-        if(userData2 == null){
-            return await message.reply(`You do not have an account linked.`);
-        }
-        
         const response = await Axios({
-            url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData2.consoleID}?include=servers`,
+            url: `${Config.Pterodactyl.hosturl}/api/application/users/${user.consoleID}?include=servers`,
             method: "GET",
             headers: {
                 Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
@@ -56,7 +59,7 @@ exports.run = async (client, message, args) => {
         const serversToDelete = userServers.filter(
             (server) =>
                 serverIds.includes(server.attributes?.identifier) &&
-                server.attributes.user === userData2.consoleID
+                server.attributes.user === user.consoleID
         );
 
         if (serversToDelete.length === 0) {
