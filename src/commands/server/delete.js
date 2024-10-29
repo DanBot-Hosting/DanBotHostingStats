@@ -35,6 +35,10 @@ exports.run = async (client, message, args) => {
     try {
         // Fetch user's servers from Pterodactyl API
         const userData2 = await userData.get(message.author.id);
+
+        if(userData2 == null){
+            return await message.reply(`You do not have an account linked.`);
+        }
         
         const response = await Axios({
             url: `${Config.Pterodactyl.hosturl}/api/application/users/${userData2.consoleID}?include=servers`,
