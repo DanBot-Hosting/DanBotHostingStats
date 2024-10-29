@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
 
     let userId = args[1]?.match(/[0-9]{17,19}/)?.[0] || message.author.id; //The Discord User ID.
 
-    const user = userData.get(userId);
+    const user = await userData.get(userId);
 
     if (user == null) return message.channel.send('User does not have account linked.');
 
