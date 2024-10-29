@@ -40,18 +40,13 @@ module.exports = async (client) => {
     //Automatic GitHub Update (30 seconds intervals).
     setInterval(async () => {
         try {
-            const { stdout, stderr } = await execPromise('git pull');
-            
-            const cleanedResponse = (stderr || stdout)
-                .split('\n')
-                .filter(line => !line.startsWith("hint:") && !line.match(/^From\s+/))
-                .join('\n');
-    
-            if (!stdout.includes("Already up to date.") && cleanedResponse.trim()) {
+            const { stdout } = await execPromise('git pull');
+                
+            if (!stdout.includes("Already up to date.")) {
                 await client.channels.cache
                     .get(MiscConfigs.github)
                     .send(
-                        `<t:${Math.floor(Date.now() / 1000)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${cleanedResponse}\`\`\``,
+                        `<t:${Math.floor(Date.now() / 1000)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${stdout}\`\`\``,
                     );
                 setTimeout(() => {
                     process.exit();
