@@ -1,5 +1,7 @@
 const cap = require("../../util/cap");
 const exec = require("child_process").exec;
+const Util = require('util');
+const execPromise = Util.promisify(exec);
 
 const Config = require('../../../config.json');
 const MiscConfigs = require('../../../config/misc-configs.js');
@@ -21,24 +23,26 @@ exports.run = async (client, message, args) => {
 
     console.log("Updating the bot from GitHub.");
 
-    // Pulls the files from GitHub.
-    exec(`git pull`, async (error, stdout) => {
-        let response = error || stdout;
-        if (!error) {
-            if (response.includes("Already up to date.")) {
-                await message.reply("All files are already up to date.");
-            } else {
-                await client.channels.cache
-                    .get(MiscConfigs.github)
-                    .send(
-                        `<t:${Date.now().toString().slice(0, -3)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${cap(response, 1900)}\`\`\``,
-                    );
+        //Automatic GitHub Update (30 seconds intervals).
+        setInterval(async () => {
+            try {
+                const { stdout } = await execPromise('git pull');
+                    
+                if (!stdout.includes("Already up to date.")) {
+                    await client.channels.cache
+                        .get(MiscConfigs.github)
+                        .send(
+                            `<t:${Math.floor(Date.now() / 1000)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${stdout}\`\`\``,
+                        );
 
-                await message.reply("Pulling files from GitHub.");
-                setTimeout(() => {
-                    process.exit();
-                }, 1000);
+                    await message.reply("Pulling files from GitHub.");
+
+                    setTimeout(() => {
+                        process.exit();
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error(`Error with git pull: ${error.message}`);
             }
-        }
-    });
+        }, 30000);
 };
