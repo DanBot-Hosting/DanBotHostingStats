@@ -41,22 +41,27 @@ module.exports = async (client) => {
     setInterval(async () => {
         try {
             const { stdout, stderr } = await execPromise('git pull');
-            const response = stderr || stdout;
             
-            if (!response.includes("Already up to date.")) {
+            // Filter the response to remove hint messages
+            const cleanedResponse = (stderr || stdout)
+                .split('\n')
+                .filter(line => !line.startsWith("hint:"))
+                .join('\n');
+    
+            if (!stdout.includes("Already up to date.")) {
                 await client.channels.cache
                     .get(MiscConfigs.github)
                     .send(
-                        `<t:${Math.floor(Date.now() / 1000)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${response}\`\`\``,
+                        `<t:${Math.floor(Date.now() / 1000)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${cleanedResponse}\`\`\``,
                     );
                 setTimeout(() => {
                     process.exit();
                 }, 1000);
             }
         } catch (error) {
-            console.error(`[GITHUB AUTO PULL]: ${error.message}`);
+            console.error(`Error with git pull: ${error.message}`);
         }
-    }, 30000);
+    }, 30 * 1000);
 
     setInterval(() => {
         client.user.setPresence({
