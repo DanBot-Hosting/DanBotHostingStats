@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
     if (!args[1]) {
         return await message.reply("Please provide a Node to put into maintenance!");
     } else {
-        const Data = nodeStatus.get(args[1].toLowerCase());
+        const Data = await nodeStatus.get(args[1].toLowerCase());
 
         if (Data == null) {
             return message.reply("Invalid Node provided. Please provide a valid Node DB name.");
