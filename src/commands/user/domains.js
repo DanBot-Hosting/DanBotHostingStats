@@ -13,18 +13,18 @@ exports.run = async (client, message) => {
     const data = await userData.get(message.author.id);
 
     // Check if the user has an account.
-    if (!data) return message.reply("You do not have an account.");
+    if (!data) return await message.reply("You do not have an account.");
 
     // Check if the user has any domains.
-    if (!data.domains?.length) return message.reply("You do not have any domains.");
+    if (!data.domains?.length) return await message.reply("You do not have any domains.");
 
     const description = data.domains.map(domain => `- ${domain.domain} (Server ID: ${domain.serverID})`).join("\n");
 
     if (description.length > 4096) {
 
         // If description is greater than 4096 characters, send it as a file.
-        const Attachment = new Discord.MessageAttachment(Buffer.from(description), 'domains.txt');
-        return message.reply(
+        const Attachment = new Discord.AttachmentBuilder(Buffer.from(description), { name: 'domains.txt'});
+        return await message.reply(
             {
                 content: "Your domains list is too long to display here. Please see the attached file:",
                 files: [Attachment]
