@@ -13,4 +13,4 @@ This bot manages user creation, server creation and general management of Pterod
     - GitHub: [wdhdev](https://github.com/wdhdev)
 
 
-# E
+#
