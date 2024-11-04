@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const cap = require("../../util/cap");
 const exec = require("child_process").exec;
 const Util = require('util');
@@ -21,7 +22,6 @@ exports.run = async (client, message, args) => {
     // Checks if the user has the Bot Administrator Role.
     if (!message.member.roles.cache.find((r) => r.id === Config.DiscordBot.Roles.BotAdmin)) return;
 
-    //Automatic GitHub Update (30 seconds intervals).
     try {
         const { stdout } = await execPromise('git pull');
             
@@ -29,14 +29,14 @@ exports.run = async (client, message, args) => {
             await client.channels.cache
                 .get(MiscConfigs.github)
                 .send(
-                    `<t:${Math.floor(Date.now() / 1000)}:f> Automatic update from GitHub, pulling files.\n\`\`\`${stdout}\`\`\``,
+                    `<t:${Math.floor(Date.now() / 1000)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${stdout}\`\`\``,
                 );
 
             await message.reply("Pulling files from GitHub.");
 
-            setTimeout(() => {
-                process.exit();
-            }, 1000);
+            setTimeout(async () => {
+                await process.exit();
+            }, 5000);
         } else {
             await message.reply("Discord bot is already up to date.");
         }
