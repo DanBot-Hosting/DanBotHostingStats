@@ -29,13 +29,13 @@ exports.run = async (client, message, args) => {
             await client.channels.cache
                 .get(MiscConfigs.github)
                 .send(
-                    `<t:${Math.floor(Date.now() / 1000)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${stdout}\`\`\``,
+                    `<t:${Math.floor(Date.now() / 1000)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${stdout}\`\`\``
                 );
 
             await message.reply("Pulling files from GitHub.");
 
-            setTimeout(async () => {
-                await process.exit();
+            setTimeout(() => {
+                process.exit();
             }, 5000);
         } else {
             await message.reply("Discord bot is already up to date.");
