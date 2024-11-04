@@ -26,13 +26,14 @@ exports.run = async (client, message, args) => {
         const { stdout } = await execPromise('git pull');
             
         if (!stdout.includes("Already up to date.")) {
+
+            await message.reply("Pulling files from GitHub.");
+
             await client.channels.cache
                 .get(MiscConfigs.github)
                 .send(
                     `<t:${Math.floor(Date.now() / 1000)}:f> Update requested by <@${message.author.id}>, pulling files.\n\`\`\`${stdout}\`\`\``
                 );
-
-            await message.reply("Pulling files from GitHub.");
 
             setTimeout(() => {
                 process.exit();
