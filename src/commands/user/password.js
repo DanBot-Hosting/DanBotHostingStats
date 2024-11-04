@@ -77,7 +77,7 @@ exports.run = async (client, message, args) => {
                 //Sends the user a direct message containing their new password.
                 client.users.cache
                     .get(message.author.id)
-                    .send(`New password for DanBot Hosting: ||**${data.password}**||`).catch((Error) => console.error("[PASSWORD RESET] User does not have direct messages enabled."));
+                    .send(`New password for DanBot Hosting: ||**${data.password}**||`).catch((Error) => console.log("[PASSWORD RESET] User does not have direct messages enabled."));
 
                 //Formatting the email message.
                 const EmailMessage = {
