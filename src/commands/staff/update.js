@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
 
             setTimeout(() => {
                 process.exit();
-            }, 5000);
+            }, 10 * 1000);
         } else {
             await message.reply("Discord bot is already up to date.");
         }
