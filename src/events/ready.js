@@ -50,12 +50,12 @@ module.exports = async (client) => {
                     );
                 setTimeout(() => {
                     process.exit();
-                }, 1000);
+                }, 5000);
             }
         } catch (error) {
             console.error(`Error with git pull: ${error.message}`);
         }
-    }, 30000);
+    }, 30 * 1000);
 
     setInterval(() => {
         client.user.setPresence({
