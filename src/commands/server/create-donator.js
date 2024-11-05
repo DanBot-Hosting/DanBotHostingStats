@@ -38,11 +38,6 @@ exports.run = async (client, message, args) => {
         return;
     }
 
-    // If the user account is in string format.
-    if (typeof consoleID == "string") {
-        await message.reply("Your account is not in the correct format. Please run `" + Config.DiscordBot.Prefix + "user fix` and try again.");
-    };
-
     let allowed = Math.floor(userP.donated / Config.PremiumServerPrice);
 
     let pServerCreatesettings = serverCreateSettings_Prem.createParams(

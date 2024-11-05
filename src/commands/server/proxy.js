@@ -87,12 +87,7 @@ exports.run = async (client, message, args) => {
     if (!user) {
         return message.channel.send("User not found.");
     }
-
-    // If the user account is in string format.
-    if (typeof user == "string") {
-        await message.reply("Your account is not in the correct format. Please run `" + Config.DiscordBot.Prefix + "user fix` and try again.");
-    };
-
+    
     const linkAlready = user.domains.some((x) => x.domain === args[1]);
 
     if (linkAlready) return message.channel.send("You have already linked this domain.");

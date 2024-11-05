@@ -32,11 +32,6 @@ exports.run = async (client, message, args) => {
         }
     }
 
-    // If the user account is in string format.
-    if (typeof userAccount == "string") {
-        await message.reply("Your account is not in the correct format. Please run `" + Config.DiscordBot.Prefix + "user fix` and try again.");
-    };
-
     if (userID !== message.author.id) {
         user = client.users.cache.get(userID);
     }
