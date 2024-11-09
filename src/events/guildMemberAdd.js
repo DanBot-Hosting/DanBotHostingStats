@@ -14,21 +14,24 @@ module.exports = async (client, member, guild) => {
     // If the user is a bot, returns.
     if (member.user.bot) return;
 
+    const userAccount = await userData.get(member.id);
+    const userPremium = await userPrem.get(member.id);
+
     // If user didn't have a object in user premium, creates one.
-    if (userPrem.get(member.id) == null) {
-        userPrem.set(member.id, {
+    if (userPremium == null) {
+        await userPrem.set(member.id, {
             used: 0,
             donated: 0,
         });
     }
 
     //If the user has a console account linked, give them the client role.
-    if (userData.get(member.id) !== null) {
-        await member.roles.add(Config.DiscordBot.Roles.Client);
+    if (userAccount !== null) {
+        await member.roles.add(Config.DiscordBot.Roles.Client).catch((Error) => {});
     };
 
     //If the user has donated before, gives them the donator role.
-    if(userPrem.get(`${member.id}.donated`) > 0){
-        await member.roles.add(Config.DiscordBot.Roles.Donator);
+    if(userAccount.donated > 0){
+        await member.roles.add(Config.DiscordBot.Roles.Donator).catch((Error) => {});
     }
 };
