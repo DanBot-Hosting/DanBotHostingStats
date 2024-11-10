@@ -31,7 +31,7 @@ module.exports = async (client, member, guild) => {
     };
 
     //If the user has donated before, gives them the donator role.
-    if(userAccount.donated > 0){
+    if(userPremium.donated > 0){
         await member.roles.add(Config.DiscordBot.Roles.Donator).catch((Error) => {});
     }
 };
