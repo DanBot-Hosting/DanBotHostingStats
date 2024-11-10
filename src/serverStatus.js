@@ -67,7 +67,7 @@ const startNodeChecker = () => {
 
                 await nodeServers.set(`${node}`, {
                     servers: serverCount,
-                    maxCount: serverCountRes.data.meta.pagination.total
+                    maxCount: data.maxLimit
                 });
             }
         }
