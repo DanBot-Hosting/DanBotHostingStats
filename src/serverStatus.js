@@ -50,7 +50,7 @@ const startNodeChecker = () => {
                 }
 
                 const [serverCountRes, serverCountError] = await safePromise(axios({
-                    url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}/allocations?per_page=9000`,
+                    url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}?include=servers`,
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
@@ -63,7 +63,7 @@ const startNodeChecker = () => {
                     continue;
                 }
 
-                const serverCount = serverCountRes.data.data.filter(m => m.attributes.assigned).length;
+                const serverCount = serverCountRes.data.attributes.relationships.servers.data.length;
 
                 await nodeServers.set(`${node}`, {
                     servers: serverCount,
