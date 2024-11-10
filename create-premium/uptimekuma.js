@@ -20,7 +20,7 @@ createListPrem.uptimekuma = (serverName, userID) => ({
     },
     feature_limits: {
         databases: 2,
-        allocations: 1,
+        allocations: 5,
         backups: 10,
     },
     deploy: {
