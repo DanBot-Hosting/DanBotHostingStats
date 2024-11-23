@@ -98,7 +98,7 @@ exports.run = async (client, message, args) => {
                 });
 
                 // Delete the user's premium if they have one.
-                userData.delete(message.author.id);
+                await userData.delete(message.author.id);
 
                 await Interaction.followUp({
                     content: "Your panel account and all associated servers have been successfully deleted.",
@@ -107,6 +107,8 @@ exports.run = async (client, message, args) => {
 
                 MessageReply.edit({ content: "Your panel account and all associated servers have been successfully deleted.", embeds: [], components: [] });
 
+                Collector.stop('completed');
+
             } catch (err) {
                 console.log(err);
 
@@ -114,6 +116,8 @@ exports.run = async (client, message, args) => {
                     content: "An error occurred while deleting your account. Please try again later.",
                     ephemeral: true
                 });
+
+                Collector.stop('errored');
             }
 
         } else if (Interaction.customId === 'cancelDelete') {
@@ -124,7 +128,6 @@ exports.run = async (client, message, args) => {
     });
 
     Collector.on('end', (collected, reason) => {
-
         if (reason === 'time') {
             MessageReply.edit({ content: "No response. Account deletion cancelled.", components: [], embeds: [] });
         }
