@@ -1,9 +1,13 @@
 const axios = require("axios");
 const Config = require('./config.json');
+const fs = require("fs");
 
-global.gamingPREM = [27]; // Gaming nodes
-global.botswebdbPREM = [40]; // Bots, Websites and Databases nodes
-global.storagePREM = [36]; // Storage nodes
+global.gamingPREM = [27]; // Donator Gaming Node Locations.
+global.botswebdbPREM = [40]; // Donator Bot, Website, Databases Node Locations.
+global.storagePREM = [36]; // Donator Storage Node Locations.
+
+global.createList = {};
+global.createListPrem = {};
 
 /*
 Donator Nodes as followed:
@@ -84,8 +88,26 @@ let createServer = (data) => {
     });
 };
 
+function initialStart() {
+    fs.readdir("./create-free/", (err, files) => {
+        files = files.filter((f) => f.endsWith(".js"));
+        files.forEach((f) => {
+            require(`./create-free/${f}`);
+        });
+    });
+
+    fs.readdir("./create-premium/", (err, files) => {
+        files = files.filter((f) => f.endsWith(".js"));
+        files.forEach((f) => {
+            delete require.cache[require.resolve(`./create-premium/${f}`)];
+            require(`./create-premium/${f}`);
+        });
+    });
+}
+
 module.exports = {
     createParams: data,
     createServer: createServer,
     serverTypes: serverTypes,
+    initialStart: initialStart
 };

@@ -76,25 +76,6 @@ Free Hosting forever!                                            /____/
         });
     });
 
-    global.createList = {};
-    global.createListPrem = {};
-
-//Import all create server lists
-    fs.readdir("./create-free/", (err, files) => {
-        files = files.filter((f) => f.endsWith(".js"));
-        files.forEach((f) => {
-            require(`./create-free/${f}`);
-        });
-    });
-
-    fs.readdir("./create-premium/", (err, files) => {
-        files = files.filter((f) => f.endsWith(".js"));
-        files.forEach((f) => {
-            delete require.cache[require.resolve(`./create-premium/${f}`)];
-            require(`./create-premium/${f}`);
-        });
-    });
-
     const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     global.getPassword = () => {
         var password = "";
