@@ -111,8 +111,25 @@ exports.run = async (client, message, args) => {
                 .setTimestamp()
                 .setFooter({ text: "Command Executed By: " + message.author.username + ` (${message.author.id})`, iconURL: message.author.avatarURL() });
 
-
             await message.reply({ embeds: [Embed] });
+
+            
+            const CreationLog = new Discord.EmbedBuilder()
+                .setTitle("New donator node server created!")
+                .setColor("Green")
+                .addFields(
+                    { name: "User:", value: message.author.id.toString(), inline: false },
+                    { name: `Status`, value: response.statusText.toString(), inline: false},
+                    { name: `Created for user ID`, value: consoleID.consoleID.toString(), inline: false},
+                    { name: `Server name`, value: serverName.toString(), inline: false },
+                    { name: `Type`, value: args[1].toLowerCase().toString(), inline: false }
+                )
+                .setTimestamp()
+                .setFooter(
+                    { text: "User has " + (userP.used + 1) + " out of a max " + allowed + " servers", iconURL: client.user.displayAvatarURL() }
+                );
+
+            await client.channels.cache.get(MiscConfigs.donatorlogs).send({embeds: [CreationLog]});
         })
         .catch(async (Error) => {
             const ErrorEmbed = new Discord.EmbedBuilder()
