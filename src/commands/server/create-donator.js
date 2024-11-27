@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const Config = require('../../../config.json');
+
 const PremiumCreation = require("../../../createData_Prem");
+const MiscConfigs = require("../../../config/misc-configs.js");
 
 exports.description = "Creates a donator server. View this command for usage.";
 
@@ -19,7 +21,7 @@ exports.run = async (client, message, args) => {
     };
 
     // Removes all the other arguments, and joins the strings, then limits it to 150 characters.
-    const serverName = message.content.split(" ").slice(3).join(" ").slice(0, 150) + (message.content.split(" ").slice(3).join(" ").length > 150 ? "..." : "") || "Untitled Server (settings -> server name)";
+    const ServerName = message.content.split(" ").slice(3).join(" ").slice(0, 150) + (message.content.split(" ").slice(3).join(" ").length > 150 ? "..." : "") || "Untitled Server (settings -> server name)";
 
     const userAccount = await userData.get(message.author.id);
 
@@ -36,76 +38,37 @@ exports.run = async (client, message, args) => {
 
     const allowed = Math.floor(UserPremium.donated / Config.PremiumServerPrice);
 
-    const HelpEmbed = new Discord.EmbedBuilder();
-    HelpEmbed.setColor("Red")
-    HelpEmbed.addFields(
-        {
-            name: "Minecraft",
-            value: "Forge\nPaper\nBedrock\nPocketmineMP\nWaterfall\nSpigot",
-            inline: true,
-        },
-        {
-            name: "Grand Theft Auto",
-            value: "alt:V\nmultitheftauto\nRage.MP\nSA-MP",
-            inline: true,
-        },
-        {
-            name: "Languages",
-            value: "NodeJS\nBun\nPython\nJava\naio\n Rust (use rustc to create)",
-            inline: true,
-        },
-        {
-            name: "Bots",
-            value: "redbot",
-            inline: true,
-        },
-        {
-            name: "Source Engine",
-            value: "GMod\nCS:GO\nARK:SE",
-            inline: true,
-        },
-        {
-            name: "Voice Servers",
-            value: "TS3\nMumble",
-            inline: true,
-        },
-        {
-            name: "SteamCMD",
-            value: "Rust\nDaystodie\nAssettocorsa\nAvorion\nBarotrauma",
-            inline: true,
-        },
-        {
-            name: "Databases",
-            value: "MongoDB\nRedis\nPostgres14\nPostgres16\nMariaDB\nInfluxDB",
-            inline: true,
-        },
-        {
-            name: "WebHosting",
-            value: "Nginx",
-            inline: true,
-        },
-        {
-            name: "Custom Eggs",
-            value: "ShareX\nOpenX",
-            inline: true,
-        },
-        {
-            name: "Software",
-            value: "codeserver\ngitea\nhaste\n uptimekuma\n grafana",
-            inline: true,
+    function GenerateHelpEmbed(Servers) {
+        const grouped = {};
+      
+        for (const [key, value] of Object.entries(Servers)) {
+            if (value.isDisabled) continue;
+            if (!grouped[value.subCategory]) grouped[value.subCategory] = [];
+            grouped[value.subCategory].push(key);
+        };
+      
+        const HelpEmbed = new Discord.EmbedBuilder()
+          .setTitle('DanBot Hosting')
+          .setColor("Red")
+          .setFooter({ text: "Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server", iconURL: client.user.displayAvatarURL() })
+          .setTimestamp();
+      
+        for (const [category, items] of Object.entries(grouped)) {
+            HelpEmbed.addFields({
+                name: category,
+                value: items.join('\n'),
+                inline: true
+            });
         }
-    )
-    HelpEmbed.setFooter({ text: "Example: " + Config.DiscordBot.Prefix + "server create-donator aio My AIO Server", iconURL: client.user.displayAvatarURL() })
-    HelpEmbed.setTimestamp();
+      
+        return HelpEmbed;
+    };
+      
+    const HelpEmbed = GenerateHelpEmbed(PremiumCreation.serverTypes);
     
     if (!args[1]) {
         return await message.reply({ embeds: [HelpEmbed] });
     };
-
-    const ServerCreationSettings = PremiumCreation.createParams(
-        serverName,
-        userAccount.consoleID,
-    );
 
     if (allowed === 0) {
         return await message.reply("You do not have enough donations to create a server.");
@@ -114,10 +77,20 @@ exports.run = async (client, message, args) => {
     const ServerType = args[1].toLowerCase();
 
     if (!Object.keys(PremiumCreation.serverTypes).includes(ServerType)) {
-        return await message.reply("Invalid server type.");
-    }
+        return await message.reply({ embeds: [HelpEmbed] });
+    };
 
-    PremiumCreation.createServer(ServerCreationSettings[ServerType])
+    if (PremiumCreation.serverTypes[ServerType].isDisabled) {
+        return await message.reply("This server type is currently disabled.");
+    };
+
+    const ServerCreationSettings = PremiumCreation.createParams(
+        ServerName,
+        ServerType,
+        userAccount.consoleID
+    );
+
+    PremiumCreation.createServer(ServerCreationSettings)
         .then(async (Response) => {
 
             await userPrem.add(`${message.author.id}.used`, 1);
@@ -145,11 +118,31 @@ exports.run = async (client, message, args) => {
             const ErrorEmbed = new Discord.EmbedBuilder()
                 .setColor("Red")
                 .setTimestamp()
-                .setFooter({ text: "Command Executed By: " + message.author.username + ` (${message.author.id})`, iconURL: message.author.avatarURL() });
+                .setFooter({'text': "Command Executed By: " + message.author.username + ` (${message.author.id})`, "iconURL": message.author.avatarURL()})
 
-            ErrorEmbed.setTitle("Error: Failed to Create a New Server");
-            ErrorEmbed.setDescription(`Some other issue happened. If this continues please open a ticket and report this to a <@&${Config.DiscordBot.Roles.BotAdmin}> Please share this info with them: \n\n` + "```Error: " + Error + "```");
 
-            await message.reply({ embeds: [ErrorEmbed] });
+            if (Error == "AxiosError: Request failed with status code 400") {
+
+                    ErrorEmbed.setTitle("Error: Failed to Create a New Server")
+                    ErrorEmbed.setDescription("The Node is currently full, Please check <#" + MiscConfigs.serverStatus + "> for updates.\n\nIf there is no updates please alert a System Administrator (<@&" + Config.DiscordBot.Roles.SystemAdmin + ">)")
+
+            } else if (Error == "AxiosError: Request failed with status code 504") {
+
+                    ErrorEmbed.setTitle("Error: Failed to Create a New Server")
+                    ErrorEmbed.setDescription("The Node is currently offline or having issues, You can check the status of the node in this channel: <#" + MiscConfigs.serverStatus + ">")
+
+            } else if (Error == "AxiosError: Request failed with status code 429") {
+
+                    ErrorEmbed.setTitle("Error: Failed to Create a New Server");
+                    ErrorEmbed.setDescription("You are being rate limited, Please wait a few minutes and try again.");
+        
+            } else {
+
+                    ErrorEmbed.setTitle("Error: Failed to Create a New Server");
+                    ErrorEmbed.setDescription(`Some other issue happened. If this continues please open a ticket and report this to a <@&${Config.DiscordBot.Roles.BotAdmin}> Please share this info with them: \n\n` + "```Error: " + Error + "```");
+            }
+
+            //Catch statement added incase of message being deleted before response is sent.
+            await message.reply({embeds: [ErrorEmbed]}).catch(Error => {});
         });
 };

@@ -1,79 +1,19 @@
 const axios = require("axios");
 const Config = require('./config.json');
 const fs = require("fs");
+const path = require("path");
 
 global.gamingPREM = [27]; // Donator Gaming Node Locations.
 global.botswebdbPREM = [40]; // Donator Bot, Website, Databases Node Locations.
 global.storagePREM = [36]; // Donator Storage Node Locations.
 
-global.createList = {};
-global.createListPrem = {};
+let ServerTypes = {};
 
-/*
-Donator Nodes as followed:
-Dono-01  : 26
-Dono-02  : 27
-Dono-03  : 28
-*/
-
-const serverTypes = {
-    nginx: null,
-    nodejs: null,
-    python: null,
-    aio: null,
-    storage: null,
-    java: null,
-    paper: null,
-    forge: null,
-    altv: null,
-    multitheftauto: null,
-    samp: null,
-    bedrock: null,
-    pocketminemp: null,
-    gmod: null,
-    csgo: null,
-    arkse: null,
-    ts3: null,
-    mumble: null,
-    rust: null,
-    mongodb: null,
-    redis: null,
-    postgres14: null,
-    postgres16: null,
-    daystodie: null,
-    assettocorsa: null,
-    avorion: null,
-    barotrauma: null,
-    waterfall: null,
-    spigot: null,
-    sharex: null,
-    codeserver: null,
-    gitea: null,
-    haste: null,
-    uptimekuma: null,
-    rustc: null,
-    redbot: null,
-    grafana: null,
-    openx: null,
-    mariadb: null,
-    lavalink: null,
-    rabbitmq: null,
-    palworld: null,
-    nukkit: null,
-    curseforge: null,
-    bun: null,
-    influxdb: null,
+const createParams = (ServerName, ServerType, UserID) => {
+    return ServerTypes[ServerType].createServer(ServerName, UserID);
 };
 
-let data = (serverName, userID) => {
-    let toReturn = {};
-    for (let [name, filled] of Object.entries(createListPrem)) {
-        toReturn[name] = filled(serverName, userID);
-    }
-    return toReturn;
-};
-
-let createServer = (data) => {
+const createServer = (ServerData) => {
     return axios({
         url: Config.Pterodactyl.hosturl + "/api/application/servers",
         method: "POST",
@@ -84,30 +24,29 @@ let createServer = (data) => {
             "Content-Type": "application/json",
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
-        data: data,
+        data: ServerData,
     });
 };
 
-function initialStart() {
-    fs.readdir("./create-free/", (err, files) => {
-        files = files.filter((f) => f.endsWith(".js"));
-        files.forEach((f) => {
-            require(`./create-free/${f}`);
-        });
-    });
+async function initialStart() {
+    try {
+        const files = (await fs.promises.readdir("./create-premium/")).filter((f) => f.endsWith(".js"));
 
-    fs.readdir("./create-premium/", (err, files) => {
-        files = files.filter((f) => f.endsWith(".js"));
-        files.forEach((f) => {
-            delete require.cache[require.resolve(`./create-premium/${f}`)];
-            require(`./create-premium/${f}`);
-        });
-    });
+        for (const file of files) {
+            const fullPath = path.resolve("./create-premium/", file);
+            delete require.cache[require.resolve(fullPath)];
+            const module = require(fullPath);
+
+            ServerTypes[file.replace(".js", "")] = module;
+        }
+    } catch (Error) {
+        console.error("Error reading files:", Error);
+    }
 }
 
 module.exports = {
-    createParams: data,
-    createServer: createServer,
-    serverTypes: serverTypes,
-    initialStart: initialStart
+    serverTypes: ServerTypes,   //Types of servers property.
+    createParams: createParams, //Create server parameters with server name and user ID.
+    createServer: createServer, //Create server function.
+    initialStart: initialStart  //Initial start function.
 };

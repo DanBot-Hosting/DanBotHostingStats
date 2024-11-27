@@ -1,3 +1,5 @@
+const generatePassword = require('../src/util/generatePassword.js');
+
 createList.mongodb = (serverName, userID) => ({
     name: serverName,
     user: userID,
@@ -15,7 +17,7 @@ createList.mongodb = (serverName, userID) => ({
     },
     environment: {
         MONGO_USER: "admin",
-        MONGO_USER_PASS: getPassword(),
+        MONGO_USER_PASS: generatePassword(),
     },
     feature_limits: {
         databases: 2,
