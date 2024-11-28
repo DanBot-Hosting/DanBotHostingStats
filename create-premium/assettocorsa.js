@@ -2,7 +2,7 @@ const generatePassword = require('../src/util/generatePassword.js');
 
 module.exports = {
     isGameServer: true,
-    isDisabled: false,
+    isDisabled: true,
     subCategory: "SteamCMD",
     createServer: createServer
 }
