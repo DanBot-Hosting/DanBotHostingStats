@@ -1,7 +1,7 @@
 module.exports = {
     isGameServer: true,
-    isDisabled: false,
-    subCategory: "Software",
+    isDisabled: true,
+    subCategory: "Minecraft",
     createServer: createServer
 }
 

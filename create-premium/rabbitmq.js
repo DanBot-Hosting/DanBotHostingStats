@@ -1,6 +1,6 @@
 module.exports = {
     isGameServer: false,
-    isDisabled: false,
+    isDisabled: true,
     subCategory: "Software",
     createServer: createServer
 }

@@ -105,7 +105,7 @@ exports.run = async (client, message, args) => {
                     { name: "__**Status:**__", value: Response.statusText.toString(), inline: true },
                     { name: "__**User ID:**__", value: userAccount.consoleID.toString(), inline: true },
                     { name: "__**Type:**__", value: ServerType.toString(), inline: true },
-                    { name: "__**Server Name:**__", value: serverName.toString(), inline: false },
+                    { name: "__**Server Name:**__", value: ServerName.toString(), inline: false },
                     { name: "__**Slots Used:**__", value: `(` + UserPremiumNew.used + ` slots / ` + allowed + ` slots)`, inline: false }
                 )
                 .setTimestamp()
@@ -119,19 +119,22 @@ exports.run = async (client, message, args) => {
                 .setColor("Green")
                 .addFields(
                     { name: "User:", value: message.author.id.toString(), inline: false },
-                    { name: `Status`, value: response.statusText.toString(), inline: false},
-                    { name: `Created for user ID`, value: consoleID.consoleID.toString(), inline: false},
-                    { name: `Server name`, value: serverName.toString(), inline: false },
+                    { name: `Status`, value: Response.statusText.toString(), inline: false},
+                    { name: `Created for user ID`, value: userAccount.consoleID.toString(), inline: false},
+                    { name: `Server name`, value: ServerName.toString(), inline: false },
                     { name: `Type`, value: args[1].toLowerCase().toString(), inline: false }
                 )
                 .setTimestamp()
                 .setFooter(
-                    { text: "User has " + (userP.used + 1) + " out of a max " + allowed + " servers", iconURL: client.user.displayAvatarURL() }
+                    { text: "User has " + (UserPremiumNew.used) + " out of a max " + allowed + " servers", iconURL: client.user.displayAvatarURL() }
                 );
 
             await client.channels.cache.get(MiscConfigs.donatorlogs).send({embeds: [CreationLog]});
         })
         .catch(async (Error) => {
+
+            console.error(Error.response);
+
             const ErrorEmbed = new Discord.EmbedBuilder()
                 .setColor("Red")
                 .setTimestamp()

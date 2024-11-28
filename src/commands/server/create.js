@@ -88,7 +88,7 @@ exports.run = async (client, message, args) => {
                     { name: "__**Status:**__", value: Response.statusText.toString(), inline: true },
                     { name: "__**User ID:**__", value: userAccount.consoleID.toString(), inline: true },
                     { name: "__**Type:**__", value: ServerType.toString(), inline: true },
-                    { name: "__**Server Name:**__", value: serverName.toString(), inline: false }
+                    { name: "__**Server Name:**__", value: ServerName.toString(), inline: false }
                 )
                 .setTimestamp()
                 .setFooter({ text: "Command Executed By: " + message.author.username + ` (${message.author.id})`, iconURL: message.author.avatarURL() });

@@ -24,7 +24,7 @@ function createServer(ServerName, UserID){
             cpu: 0,
         },
         environment: {
-            SERVER_PASSWORD: "P@55w0rd",
+            SERVER_PASSWORD: generatePassword(),
         },
         feature_limits: {
             databases: 2,

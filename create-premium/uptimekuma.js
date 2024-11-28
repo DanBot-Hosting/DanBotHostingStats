@@ -7,8 +7,8 @@ module.exports = {
 
 function createServer(ServerName, UserID){
     return {
-        name: serverName,
-        user: userID,
+        name: ServerName,
+        user: UserID,
         nest: 19,
         egg: 70,
         docker_image: "ghcr.io/parkervcp/apps:uptimekuma",
