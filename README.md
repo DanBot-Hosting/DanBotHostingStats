@@ -8,6 +8,3 @@ This bot manages user creation, server creation and general management of Pterod
 - **DIBSTER**
     - Email: dibster@danbot.host
     - GitHub: [DEV-DIBSTER](https://github.com/DEV-DIBSTER)
-- **William**
-    - Email: william@danbot.host
-    - GitHub: [wdhdev](https://github.com/wdhdev)
