@@ -1,6 +1,6 @@
 module.exports = {
     isGameServer: true,
-    isDisabled: false,
+    isDisabled: true,
     subCategory: "Grand Theft Auto",
     createServer: createServer
 }
