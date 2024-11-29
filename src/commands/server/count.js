@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
 
     if (userAccount == null) return message.channel.send('User does not have account linked.');
 
-    await getUserServers(user.consoleID).then(async (Response) => {
+    await getUserServers(userAccount.consoleID).then(async (Response) => {
             const userServers = Response.attributes.relationships.servers.data; //The user server data from the panel.
 
             const premiumServers = userServers.filter((Server) => Config.DonatorNodes.includes(Server.attributes.node)).length; //The amount of premium servers the user has.
