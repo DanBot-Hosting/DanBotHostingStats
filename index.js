@@ -6,16 +6,15 @@
 /_____/\__,_/_/ /_/_____/\____/\__/  /_/ /_/\____/____/\__/_/_/ /_/\__, /
 Free Hosting forever!                                            /____/
 */
-(async () => {
 
-    const Config = require("./config.json");
-
+;(async () => {
     const fs = require("fs");
-
-//Discord Bot
     const { QuickDB, MySQLDriver } = require("quick.db");
     const Discord = require("discord.js");
 
+    const Config = require("./config.json");
+
+    //Starting MySQL Database, and global tables.
     const mysqlDriver = new MySQLDriver({
         host: Config.database.host,
         port: Config.database.port,
@@ -37,6 +36,7 @@ Free Hosting forever!                                            /____/
     global.nodeStatus = db.table("nodeStatus"); //Status of the Node.
     global.nodeServers = db.table("nodeServers"); //Counts of servers on each Node.
 
+    //Discord Bot:
     const client = new Discord.Client({
         intents: [
             Discord.GatewayIntentBits.Guilds,
@@ -66,7 +66,7 @@ Free Hosting forever!                                            /____/
         ]
     });
 
-//Event handler
+    //Event Handler.
     fs.readdir("./src/events/", (err, files) => {
         files = files.filter((f) => f.endsWith(".js"));
         files.forEach((f) => {
@@ -76,33 +76,8 @@ Free Hosting forever!                                            /____/
         });
     });
 
-    global.createList = {};
-    global.createListPrem = {};
-
-//Import all create server lists
-    fs.readdir("./create-free/", (err, files) => {
-        files = files.filter((f) => f.endsWith(".js"));
-        files.forEach((f) => {
-            require(`./create-free/${f}`);
-        });
-    });
-
-    fs.readdir("./create-premium/", (err, files) => {
-        files = files.filter((f) => f.endsWith(".js"));
-        files.forEach((f) => {
-            delete require.cache[require.resolve(`./create-premium/${f}`)];
-            require(`./create-premium/${f}`);
-        });
-    });
-
-    const CAPSNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    global.getPassword = () => {
-        var password = "";
-        while (password.length < 16) {
-            password += CAPSNUM[Math.floor(Math.random() * CAPSNUM.length)];
-        }
-        return password;
-    };
+    await require('./createData_Prem.js').initialStart();
+    await require('./createData.js').initialStart();
 
     client.login(Config.DiscordBot.Token);
 })();

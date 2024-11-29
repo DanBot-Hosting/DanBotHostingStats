@@ -14,18 +14,16 @@ exports.description = "Shows the amount of servers a user has.";
  */
 exports.run = async (client, message, args) => {
 
-    let userId = args[1]?.match(/[0-9]{17,19}/)?.[0] || message.author.id; //The Discord User ID.
+    const UserId =
+    args[1] && args[1].match(/[0-9]{17,19}/)
+        ? args[1].match(/[0-9]{17,19}/)[0]
+        : message.author.id;
 
-    const user = await userData.get(userId);
+    const userAccount = await userData.get(UserId);
 
-    if (user == null) return message.channel.send('User does not have account linked.');
+    if (userAccount == null) return message.channel.send('User does not have account linked.');
 
-    // If the user account is in string format.
-    if (typeof user == "string") {
-        await message.reply("Your account is not in the correct format. Please run `" + Config.DiscordBot.Prefix + "user fix` and try again.");
-    };
-
-    await getUserServers(user.consoleID).then(Response => {
+    await getUserServers(user.consoleID).then(async (Response) => {
             const userServers = Response.attributes.relationships.servers.data; //The user server data from the panel.
 
             const premiumServers = userServers.filter((Server) => Config.DonatorNodes.includes(Server.attributes.node)).length; //The amount of premium servers the user has.
@@ -39,8 +37,8 @@ exports.run = async (client, message, args) => {
                 .setFooter({text: `Requested by ${message.author.tag}`, iconURL: message.author.displayAvatarURL()})
                 .setTimestamp();
 
-            message.reply({embeds: [serverCountEmbed]});
-    }).catch((Error) => {
-        message.reply("An error occurred while loading servers.");
+            await message.reply({embeds: [serverCountEmbed]});
+    }).catch(async (Error) => {
+        await message.reply("An error occurred while loading servers.");
     });
 };

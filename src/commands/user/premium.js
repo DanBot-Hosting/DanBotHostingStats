@@ -15,17 +15,18 @@ exports.description = "Shows the number of premium servers you have, and how man
  */
 exports.run = async (client, message, args) => {
     const userId =
-        args[1] == null
-            ? message.author.id
-            : args[1].match(/[0-9]{17,19}/).length == 0
-              ? args[1]
-              : args[1].match(/[0-9]{17,19}/)[0];
+        args[1] && args[1].match(/[0-9]{17,19}/)
+            ? args[1].match(/[0-9]{17,19}/)[0]
+            : message.author.id;
 
     //Gets the user's premium data.
     let userPremium = await userPrem.get(userId);
 
     //If the user has no premium data, set it to an empty object.
-    if (userPremium == null) userPremium = {};
+    if (userPremium == null) await userPrem.set(userId, {
+        used: 0,
+        donated: 0
+    });
 
     //Takes amount donated and divides by the price of a premium server to determine max count.
     const maxAmount = Math.floor((userPremium.donated || 0) / Config.PremiumServerPrice);
