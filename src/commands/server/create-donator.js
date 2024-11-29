@@ -132,9 +132,6 @@ exports.run = async (client, message, args) => {
             await client.channels.cache.get(MiscConfigs.donatorlogs).send({embeds: [CreationLog]});
         })
         .catch(async (Error) => {
-
-            console.error(Error.response);
-
             const ErrorEmbed = new Discord.EmbedBuilder()
                 .setColor("Red")
                 .setTimestamp()
