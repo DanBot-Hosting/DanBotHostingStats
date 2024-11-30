@@ -4,7 +4,6 @@ const misc = {
         "137624084572798976", //Dan
         "737603315722092544", //Sarah
         "459025800633647116", //Avix
-        "853158265466257448", //William
         "757296951925538856", //DIBSTER
         "405771597761216522"  //Mike
     ],
@@ -14,15 +13,13 @@ const misc = {
         "137624084572798976", //Dan
         "737603315722092544", //Sarah
         "405771597761216522", //Mike
-        "757296951925538856", //DIBSTER
-        "853158265466257448" //William
+        "757296951925538856"  //DIBSTER
     ],
 
     //Staff who can run eval and exec.
     botCommands: [
         "137624084572798976", //Dan
-        "757296951925538856", //DIBSTER
-        "853158265466257448"  //William
+        "757296951925538856"  //DIBSTER
     ],
 
     // Channels where the bot reacts with up and down.
@@ -34,8 +31,7 @@ const misc = {
     // Staff that can DM the bot.
     dmAllowedUsers: [
         "137624084572798976", // Dan
-        "853158265466257448", // William
-        "757296951925538856", // DIBSTER
+        "757296951925538856"  // DIBSTER
     ],
 
     // Channels where users can run the bot commands.
