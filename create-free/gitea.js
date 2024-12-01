@@ -23,6 +23,7 @@ function createServer(ServerName, UserID){
         environment: {
             DISABLE_SSH: "true",
             SSH_PORT: "2020",
+            VERSION: "latest"
         },
         feature_limits: {
             databases: 2,
