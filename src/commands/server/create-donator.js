@@ -109,7 +109,7 @@ exports.run = async (client, message, args) => {
                     { name: "__**User ID:**__", value: userAccount.consoleID.toString(), inline: true },
                     { name: "__**Type:**__", value: ServerType.toString(), inline: true },
                     { name: "__**Server Name:**__", value: ServerName.toString(), inline: false },
-                    { name: "__**Slots Used:**__", value: `(` + UserPremiumNew.used + ` slots / ` + allowed + ` slots)`, inline: false }
+                    { name: "__**Slots Used:**__", value: `(` + UserPremiumNew.used + ` slots / ` + (UserPremium.donated / Config.PremiumServerPrice) + ` slots)`, inline: false }
                 )
                 .setTimestamp()
                 .setFooter({ text: "Command Executed By: " + message.author.username + ` (${message.author.id})`, iconURL: message.author.avatarURL() });
@@ -129,7 +129,7 @@ exports.run = async (client, message, args) => {
                 )
                 .setTimestamp()
                 .setFooter(
-                    { text: "User has " + (UserPremiumNew.used) + " out of a max " + allowed + " servers", iconURL: client.user.displayAvatarURL() }
+                    { text: "User has " + (UserPremiumNew.used) + " out of a max " + (UserPremium.donated / Config.PremiumServerPrice) + " servers", iconURL: client.user.displayAvatarURL() }
                 );
 
             await client.channels.cache.get(MiscConfigs.donatorlogs).send({embeds: [CreationLog]});
