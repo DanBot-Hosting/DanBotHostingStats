@@ -15,9 +15,12 @@ exports.description = "Creates a donator server. View this command for usage.";
  */
 exports.run = async (client, message, args) => {
 
-    const UserPremium = await userPrem.get(message.author.id) || {
-        used: 0,
-        donated: 0,
+    const UserPremium = await userPrem.get(message.author.id);
+
+    if (UserPremium == null) {
+        await userPrem.set(message.author.id, {donated: 0, used: 0});
+
+        return await message.reply("Retry the command.");
     };
 
     // Removes all the other arguments, and joins the strings, then limits it to 150 characters.
