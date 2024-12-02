@@ -13,7 +13,7 @@ const Config = require('../../config.json');
 module.exports = async function(address, subject, body) {
     try {
 
-        const Email = Config.Email2;
+        const Email = Config.Email;
 
         const transport = nodemailer.createTransport({
             host: Email.Host,
