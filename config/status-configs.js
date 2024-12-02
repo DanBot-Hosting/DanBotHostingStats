@@ -54,6 +54,13 @@ const Status = {
                     IP: Config.Nodes.Dono4,
                     ID: "46",
                     Location: Config.Ping.UK
+                },
+                dono05: {
+                    Name: "Dono-05",
+                    serverID: "1ba2236c",
+                    IP: Config.Nodes.Dono5,
+                    ID: "47",
+                    Location: Config.Ping.UK
                 }
             },
     
