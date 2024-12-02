@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
         );
     }
 
-    const allowed = Math.floor(UserPremium.donated / Config.PremiumServerPrice);
+    const allowed = ((UserPremium.donated / Config.PremiumServerPrice) - UserPremium.used);
 
     function GenerateHelpEmbed(Servers) {
         const grouped = {};
