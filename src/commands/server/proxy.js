@@ -178,6 +178,9 @@ exports.run = async (client, message, args) => {
             replyMsg.edit(`Domain found pointing towards ${ProxyLocation.name}...`);
 
             proxyDomain(ProxyLocation, PterodactylServerResponse, replyMsg, args, Token);
+        }).catch(async (Error) => {
+            console.error("[SERVER PROXY - GETTING SERVER]: " + Error);
+            return message.channel.send("An error occurred while fetching your server. Please try again later.");
         });
 
         function proxyDomain(ProxyLocation, response, replyMsg, args, token) {
@@ -329,5 +332,8 @@ exports.run = async (client, message, args) => {
                 await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.");
             });
         }
+    }).catch(async (Error) => {
+        console.error("[SERVER PROXY - GETTING USER SERVERS]: " + Error);
+        return message.channel.send("An error occurred while fetching your servers. Please try again later.");
     });
 };

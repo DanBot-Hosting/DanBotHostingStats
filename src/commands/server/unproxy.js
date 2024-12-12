@@ -184,8 +184,9 @@ exports.run = async (client, message, args) => {
                     });
                 });
             }
-        }).catch(Error => {
+        }).catch(async (Error) => {
             console.error("[PROXY SYSTEM ERROR]: " + Error);
+            await message.reply("[PROXY SYSTEM] An error occurred while trying to unproxy the domain. Please try again later.");
         });
     
     //Domains from old proxies.
