@@ -199,8 +199,7 @@ exports.run = async (client, message, args) => {
                     forward_scheme: "http",
                     forward_host: response.data.attributes.sftp_details.ip,
                     forward_port:
-                        response.data.attributes.relationships.allocations.data[0].attributes
-                            .port,
+                        response.data.attributes.relationships.allocations.data.find(m => m.attributes.is_default).attributes.port,
                     access_list_id: "0",
                     certificate_id: "new",
                     meta: {
