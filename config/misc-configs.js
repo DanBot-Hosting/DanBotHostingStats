@@ -19,7 +19,8 @@ const misc = {
     //Staff who can run eval and exec.
     botCommands: [
         "137624084572798976", //Dan
-        "757296951925538856"  //DIBSTER
+        "757296951925538856",  //DIBSTER
+        "405771597761216522", //Mike
     ],
 
     // Channels where the bot reacts with up and down.
