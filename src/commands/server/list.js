@@ -1,4 +1,4 @@
-const axios = require("axios");
+const Axios = require("axios");
 const Discord = require("discord.js");
 
 const Config = require('../../../config.json');
@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
     // List servers
     var arr = [];
 
-    axios({
+    await Axios({
         url: `${Config.Pterodactyl.hosturl}/api/application/users/${userAccount.consoleID}?include=servers`,
         method: "GET",
         followRedirect: true,
@@ -49,89 +49,70 @@ exports.run = async (client, message, args) => {
             "Content-Type": "application/json",
             Accept: "Application/vnd.pterodactyl.v1+json",
         },
-    })
-        .then((response) => {
-            const preoutput = response.data.attributes.relationships.servers.data;
-            arr.push(...preoutput);
-
-            const format = (server) => {
-                return arr.length > 20
-                    ? `\`${server.attributes.identifier}\``
-                    : `**${server.attributes.name}** (ID: \`${server.attributes.identifier}\`)`;
-            };
-
-            const freeServers = arr
-                .filter((server) => !Config.DonatorNodes.includes(server.attributes.node))
-                .map(format);
-            const donoServers = arr
-                .filter((server) => Config.DonatorNodes.includes(server.attributes.node))
-                .map(format);
-
-            if (arr.length == 0) {
-                message.reply(
-                    `${userID === message.author.id ? "You do" : "That user does"} not have any servers.`,
-                );
-            } else if (arr.length > 70) {
-                message.reply(
-                    `${userID === message.author.id ? "You have" : "That user has"} too many servers to display!`,
-                );
-            } else if (freeServers.length + donoServers.length > 20) {
-                const serverListEmbed = new Discord.EmbedBuilder().setTitle(
-                    `Server List (${arr.length})`,
-                );
-
-                if (userID !== message.author.id) serverListEmbed.setAuthor({
-                    name: user.tag,
-                    iconURL: user.displayAvatarURL({ format: "png", dynamic: true }),
-                    url: `https://discord.com/users/${user.id}` 
+    }).then(async (Response) => {
+        const preoutput = Response.data.attributes.relationships.servers.data;
+        arr.push(...preoutput);
+        
+        const format = (server) =>
+            arr.length > 20
+                ? `\`${server.attributes.identifier}\``
+                : `**${server.attributes.name}** (ID: \`${server.attributes.identifier}\`)`;
+        
+        const freeServers = arr
+            .filter((server) => !Config.DonatorNodes.includes(server.attributes.node))
+            .map(format);
+        const donoServers = arr
+            .filter((server) => Config.DonatorNodes.includes(server.attributes.node))
+            .map(format);
+        
+        if (arr.length === 0) {
+            message.reply(
+                `${userID === message.author.id ? "You do" : "That user does"} not have any servers.`
+            );
+        } else {
+            let embedContent = ``;
+        
+            if (freeServers.length > 0)
+                embedContent += `:free: **Free (${freeServers.length})**\n${freeServers.join("\n")}\n\n`;
+            if (donoServers.length > 0)
+                embedContent += `:money_with_wings: **Premium (${donoServers.length})**\n${donoServers.join("\n")}\n\n`;
+        
+            // This checks to see if the content length exceeds Discord's character limit.
+            if (embedContent.length > 4096) {
+                const fileContent = `${embedContent}`.replace(/\*\*|\n\n/g, "");
+                const attachment = new Discord.AttachmentBuilder(Buffer.from(fileContent), {
+                    name: "server_list.txt",
                 });
-
-                if (freeServers.length > 0)
-                    serverListEmbed.addFields(
-                        {
-                            name: `:free: Free (${freeServers.length})`,
-                            value: freeServers.join("\n")
-                        }
-                    );
-                if (donoServers.length > 0)
-                    serverListEmbed.addFields(
-                        {
-                            name: `:money_with_wings: Premium (${donoServers.length})`,
-                            value: donoServers.join("\n")
-                        }
-                    );
-
-                message.reply({embeds: [serverListEmbed]});
+        
+                await message.reply({
+                    content: `${userID === message.author.id ? "Your" : "Their"} server list exceeds Discord's character limit. Here is the list:`,
+                    files: [attachment],
+                });
             } else {
-                const serverListEmbed = new Discord.EmbedBuilder().setTitle(
-                    `Server List (${arr.length})`,
-                );
-
-                if (userID !== message.author.id)
+                const serverListEmbed = new Discord.EmbedBuilder()
+                    .setTitle(`Server List (${arr.length})`)
+                    .setColor('Blue')
+                    .setDescription(embedContent)
+                    .setTimestamp()
+                    .setFooter({ text: "Command Executed By: " + message.author.username + ` (${message.author.id})`, iconURL: message.author.avatarURL() });
+        
+                if (userID !== message.author.id) {
                     serverListEmbed.setAuthor({
                         name: user.tag,
                         iconURL: user.displayAvatarURL({ format: "png", dynamic: true }),
-                        url: `https://discord.com/users/${user.id}`
+                        url: `https://discord.com/users/${user.id}`,
                     });
-                if (freeServers.length > 0)
-                    serverListEmbed.addFields(
-                        {
-                            name: `:free: Free (${freeServers.length})`,
-                            value: freeServers.join("\n")
-                        }
-                    )
-                if (donoServers.length > 0)
-                    serverListEmbed.addFields(
-                        {
-                            name: `:money_with_wings: Premium (${donoServers.length})`,
-                            value: donoServers.join("\n")
-                        }
-                    );
-
-                message.reply({embeds: [serverListEmbed]});
+                }
+        
+                await message.reply({ embeds: [serverListEmbed] });
             }
+        }
         })
-        .catch((Error) => {
-            message.reply("An error occurred while loading servers.")
+        .catch(async (Error) => {
+            if (Error.response.status >= 500) {
+                return await message.reply("A timeout error occured while loading servers. Please try again later.");
+            } else {
+                return await message.reply("An error occurred while loading servers. Please try again later.");
+            }
         });
 };
