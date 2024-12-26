@@ -108,6 +108,6 @@ exports.run = async (client, message, args) => {
                     `**REDEEM NOW!**\nThe code is: \`${code.code}\` \n**Steps:** \n- Navigate to <#${MiscConfigs.normalCommands}>\n- Redeem the Premium Code: \`${Config.DiscordBot.Prefix}server redeem <CODE>\`\n\n*No one has redeemed the code yet!*`,
                 )]
             }
-        );
+        ).catch(async (Error) => {});
     }, time);
 };
