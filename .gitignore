@@ -17,3 +17,4 @@ Test/*
 install.sh
 package-lock.json
 .bashrc
+start.sh
