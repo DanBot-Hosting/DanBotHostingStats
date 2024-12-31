@@ -11,9 +11,6 @@ Free Hosting forever!                                            /____/
     const fs = require("fs");
     const { QuickDB, MySQLDriver } = require("quick.db");
     const Discord = require("discord.js");
-    const Sentry = require("@sentry/node");
-    const { nodeProfilingIntegration } = require("@sentry/profiling-node");
- 
 
     const Config = require("./config.json");
 
@@ -38,17 +35,6 @@ Free Hosting forever!                                            /____/
     global.nodePing = db.table("nodePing"); //Node ping response time
     global.nodeStatus = db.table("nodeStatus"); //Status of the Node.
     global.nodeServers = db.table("nodeServers"); //Counts of servers on each Node.
-
-    //Sentry.io Error Tracking.
-    await Sentry.init({
-        dsn: Config.SentryLogging.dsn,
-        integrations: [
-          nodeProfilingIntegration(),
-        ],
-        tracesSampleRate: 1.0, //  Capture 100% of the transactions.
-    });
-
-    process.on("unhandledRejection", (Error) => Sentry.captureException(Error));
 
     //Discord Bot:
     const client = new Discord.Client({
@@ -90,7 +76,6 @@ Free Hosting forever!                                            /____/
         });
     });
 
-    //Server Creation:
     await require('./createData_Prem.js').initialStart();
     await require('./createData.js').initialStart();
 
