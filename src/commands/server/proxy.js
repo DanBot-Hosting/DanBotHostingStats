@@ -72,29 +72,29 @@ exports.run = async (client, message, args) => {
 
     // The user didn't provide enough arguments.
     if (!args[1] || !args[2]) {
-        await message.channel.send({embeds: [embed]});
+        await message.channel.send({embeds: [embed]}).catch((Error) => {});
         return;
     }
 
     //The user is attempting to use a premium domain but doesn't have the correct roles.
     if (PremiumDomains.some(domain => args[1].toLowerCase().includes(domain)) && !message.member.roles.cache.some(r => [Config.DiscordBot.Roles.Donator, Config.DiscordBot.Roles.Booster].includes(r.id))) {
-        return message.channel.send("Sorry, this domain is only available to donators and boosters.");
+        return message.channel.send("Sorry, this domain is only available to donators and boosters.").catch((Error) => {});
         
     };
 
     const user = await userData.get(message.author.id);
 
     if (!user) {
-        return message.channel.send("User not found.");
+        return message.channel.send("User not found.").catch((Error) => {});
     }
     
     const linkAlready = user.domains.some((x) => x.domain === args[1]);
 
-    if (linkAlready) return message.channel.send("You have already linked this domain.");
+    if (linkAlready) return message.channel.send("You have already linked this domain.").catch((Error) => {});
 
     //Domain is not in the correct format.
     if (!/^[a-zA-Z0-9.-]+$/.test(args[1])) {
-        return message.channel.send("Invalid domain format.");
+        return message.channel.send("Invalid domain format.").catch((Error) => {});
     }
 
     // Domain will not be DNS lookup to verify it's being pointed to a correct IP.
@@ -110,7 +110,7 @@ exports.run = async (client, message, args) => {
         return message.channel.send(
             "ERROR: You must have a DNS A Record pointing to one of the following addresses: " +
                 validAddresses.join(", "),
-        );
+        ).catch((Error) => {});
     }
 
     const PremiumProxiesIPs = Proxies.filter((Proxy) => Proxy.premiumOnly).map((Proxy) => Proxy.ip);
@@ -122,7 +122,7 @@ exports.run = async (client, message, args) => {
     ) {
         return message.reply(
             "Sorry, this proxy location is only available for boosters and donators.",
-        );
+        ).catch((Error) => {});
     }
 
     await getUserServers(await user.consoleID).then(async (PterodactylResponse) => {
@@ -141,7 +141,7 @@ exports.run = async (client, message, args) => {
         if (!PterodactylResponse.extras.servers || !PterodactylResponse.extras.servers.find((x) => x.identifier === args[2])) {
             return message.channel.send(
                 "Couldn't find that server in your server list.\nDo you own that server?",
-            );
+            ).catch((Error) => {});
         }
 
         const axiosConfig = {
@@ -159,12 +159,12 @@ exports.run = async (client, message, args) => {
         Axios(axiosConfig).then(async (PterodactylServerResponse) => {
             const replyMsg = await message.reply(
                 "Proxying your domain... this can take up to 30 seconds.",
-            );
+            ).catch((Error) => {});
 
             const ProxyLocation = Proxies.find((Location) => Location.ip == dnsCheck.address);
 
             //This in theory should never happen.
-            if(ProxyLocation == undefined) return message.channel.send("Woah, you discovered an error that shouldn't be possible. - DIBSTER.");
+            if(ProxyLocation == undefined) return message.channel.send("Woah, you discovered an error that shouldn't be possible. - DIBSTER.").catch((Error) => {});
 
             const Token = await getToken(ProxyLocation.url, ProxyLocation.email, ProxyLocation.pass);
 
@@ -172,15 +172,15 @@ exports.run = async (client, message, args) => {
 
             //It was found in the proxy already.
             if (AllProxies.data.find(x => x.domain_names[0] == args[1].toLowerCase()) != undefined) {
-                return message.channel.send("This domain has already been proxied on this location. If you believe this to be an error, please contact a staff member.");
+                return message.channel.send("This domain has already been proxied on this location. If you believe this to be an error, please contact a staff member.").catch((Error) => {});
             }
 
-            replyMsg.edit(`Domain found pointing towards ${ProxyLocation.name}...`);
+            replyMsg.edit(`Domain found pointing towards ${ProxyLocation.name}...`).catch((Error) => {});
 
             proxyDomain(ProxyLocation, PterodactylServerResponse, replyMsg, args, Token);
         }).catch(async (Error) => {
             console.error("[SERVER PROXY - GETTING SERVER]: " + Error);
-            return message.channel.send("An error occurred while fetching your server. Please try again later.");
+            return message.channel.send("An error occurred while fetching your server. Please try again later.").catch((Error) => {});
         });
 
         function proxyDomain(ProxyLocation, response, replyMsg, args, token) {
@@ -228,7 +228,7 @@ exports.run = async (client, message, args) => {
                     `Domain has been proxied:\n\n` +
                     `ID: ${ResponseAfterProxy.data.id}\n` +
                     `Location: ${ProxyLocation.name}`
-                );
+                ).catch((Error) => {});
 
                 let userAccount = await userData.get(message.author.id);
 
@@ -271,17 +271,17 @@ exports.run = async (client, message, args) => {
             if (ErrorAfterProxy.response.status == 500) {
                 await replyMsg.edit(
                     replyMsg.content + "\nAn internal server error has occurred. Attempting to delete failed proxy."
-                );
+                ).catch((Error) => {});
 
                 await deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
             } else if (ErrorAfterProxy.response.status == 400) {
                 await replyMsg.edit(
                     replyMsg.content + "\nThis domain has already been linked. If this is an error, please contact a staff member to fix this."
-                );
+                ).catch((Error) => {});
             } else {
                 await replyMsg.edit(
                     replyMsg.content + "\nAn unknown issue has occurred. Please contact a staff member."
-                );
+                ).catch((Error) => {});
             }
         }
 
@@ -321,14 +321,14 @@ exports.run = async (client, message, args) => {
     
                     await Axios(axiosDeleteProxyConfig);
                 }).then(async (Response) => {
-                    await replyMsg.edit(replyMsg.content + "\n\nAutomatically deleted failed proxy.");
+                    await replyMsg.edit(replyMsg.content + "\n\nAutomatically deleted failed proxy.").catch((Error) => {});
                 }).catch(async (Error) => {
                     console.error("[SERVER PROXY - DELETION OF FAILED PROXY]: " + Error);
 
-                    await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.");
+                    await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.").catch((Error) => {});
                 });
             }).catch(async (Error) => {
-                await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.");
+                await replyMsg.edit(replyMsg.content + "\n\nUnable to delete proxy automatically. You must have a staff member to manually fix this.").catch((Error) => {});
             });
         }
     }).catch(async (Error) => {
