@@ -16,9 +16,9 @@ exports.run = async (client, message, args) => {
     if (
         !message.member.roles.cache.find((Role) =>
             [
-                Configs.DiscordBot.Roles.Owner,
-                Configs.DiscordBot.Roles.CoOwner,
-                Configs.DiscordBot.Roles.Admin,
+                Config.DiscordBot.Roles.Owner,
+                Config.DiscordBot.Roles.CoOwner,
+                Config.DiscordBot.Roles.Admin,
             ].some((List) => List == Role.id),
         )
     )
@@ -26,23 +26,21 @@ exports.run = async (client, message, args) => {
 
     //If no arguments are provided, locks the current channel.
     if (!args[1]) {
-        message.reply(
+        await message.reply(
             "Channel is now locked. Only Administrator+ can post here. \n\n`" + Config.DiscordBot.Prefix + "staff lockdown unlock` to unlock this channel.",
         );
 
         //Disabled sending messages for everyone in this channel.
-        message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
+        await message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
             SEND_MESSAGES: false,
         });
 
-        message.channel
-
         //If the second argument is unlock, unlocks the current channel.
     } else if (args[1].toLowerCase() === "unlock") {
-        message.reply("Channel is now unlocked. Everyone can now send messages here again!");
+        await message.reply("Channel is now unlocked. Everyone can now send messages here again!");
 
         //Enables sending messages for everyone in this channel.
-        message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
+        await message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
             SEND_MESSAGES: null,
         });
     }
