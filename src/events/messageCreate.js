@@ -6,6 +6,7 @@ const path = require('path');
 const cap = require("../util/cap");
 const Config = require('../../config.json');
 const MiscConfigs = require('../../config/misc-configs.js');
+const { Sentry } = require('../../index.js');
 
 /**
  * 
@@ -59,13 +60,13 @@ module.exports = async (client, message) => {
 
     try {
 
-        //Checks if the command is allowed in the channel or category.
-        //Staff bypass channel requirements.
+        // Checks if the command is allowed in the channel or category.
+        // Staff bypass channel requirements.
         if (
-            !MiscConfigs.allowedChannels.includes(message.channel.id) &&                            //Channel is not present in allowedChannels.
-            !MiscConfigs.allowedCategories.includes(message.channel.parentID) &&                    //Channel is not in allowed category.
-            !message.member.roles.cache.find((x) => x.id === Config.DiscordBot.Roles.Staff) &&      //Making sure the user isn't staff.
-            !message.member.roles.cache.find((x) => x.id === Config.DiscordBot.Roles.BotAdmin)      //Making sure the user isn't a bot Administrator.
+            !MiscConfigs.allowedChannels.includes(message.channel.id) &&                            // Channel is not present in allowedChannels.
+            !MiscConfigs.allowedCategories.includes(message.channel.parentID) &&                    // Channel is not in allowed category.
+            !message.member.roles.cache.find((x) => x.id === Config.DiscordBot.Roles.Staff) &&      // Making sure the user isn't staff.
+            !message.member.roles.cache.find((x) => x.id === Config.DiscordBot.Roles.BotAdmin)      // Making sure the user isn't a bot Administrator.
         ) return;
 
         const categoriesPath = path.join(__dirname, '../commands');
@@ -73,19 +74,32 @@ module.exports = async (client, message) => {
 
         if (categories.includes(command)) {
             if (!args[0]) {
-                let commandFile = require(`../commands/${command}/help.js`);
-                await commandFile.run(client, message, args);
+                const helpFilePath = path.join(__dirname, `../commands/${command}/help.js`);
+                if (fs.existsSync(helpFilePath)) {
+                    let commandFile = require(helpFilePath);
+                    await commandFile.run(client, message, args);
+                } else {
+                    message.reply("Help command not found.");
+                }
             } else {
-                let commandFile = require(`../commands/${command}/${args[0]}.js`);
-                await commandFile.run(client, message, args);
+                const commandFilePath = path.join(__dirname, `../commands/${command}/${args[0]}.js`);
+                if (fs.existsSync(commandFilePath)) {
+                    let commandFile = require(commandFilePath);
+                    await commandFile.run(client, message, args);
+                } else {
+                    message.reply("Sub-command not found.");
+                }
             }
         } else {
-            let commandFile = require(`../commands/${command}.js`);
-            await commandFile.run(client, message, args);
+            const commandFilePath = path.join(__dirname, `../commands/${command}.js`);
+            if (fs.existsSync(commandFilePath)) {
+                let commandFile = require(commandFilePath);
+                await commandFile.run(client, message, args);
+            } else {
+                await message.reply("Command not found.").catch(Error => {});
+            }
         }
     } catch (Error) {
-        if (!Error.message.startsWith("Cannot find module")) {
-            console.log("Error loading module:", Error);
-        }
+        Sentry.captureException(Error);
     }
 };

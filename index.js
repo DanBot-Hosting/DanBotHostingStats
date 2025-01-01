@@ -33,7 +33,6 @@ Free Hosting forever!                                            /____/
     global.userData = db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
     global.nodeStatus = db.table("nodeStatus"); //Node status. Online or offline nodes
     global.userPrem = db.table("userPrem"); //Premium user data, Donated, Boosted, Total
-    global.nodeServers = db.table("nodeServers"); //Server count for node limits to stop nodes becoming overloaded
     global.codes = db.table("redeemCodes"); //Premium server redeem codes...
     global.nodePing = db.table("nodePing"); //Node ping response time
     global.nodeStatus = db.table("nodeStatus"); //Status of the Node.
@@ -47,6 +46,8 @@ Free Hosting forever!                                            /____/
         ],
         tracesSampleRate: 1.0, //  Capture 100% of the transactions.
     });
+
+    module.exports.Sentry = Sentry;
 
     process.on("unhandledRejection", (Error) => Sentry.captureException(Error));
 
