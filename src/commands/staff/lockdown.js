@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
         );
 
         //Disabled sending messages for everyone in this channel.
-        await message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
+        await message.channel.updateOverwrite(Config.DiscordBot.MainGuildId, {
             SEND_MESSAGES: false,
         });
 
@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
         await message.reply("Channel is now unlocked. Everyone can now send messages here again!");
 
         //Enables sending messages for everyone in this channel.
-        await message.channel.updateOverwrite(Configs.DiscordBot.MainGuildId, {
+        await message.channel.updateOverwrite(Config.DiscordBot.MainGuildId, {
             SEND_MESSAGES: null,
         });
     }
