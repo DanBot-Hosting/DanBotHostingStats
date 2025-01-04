@@ -25,6 +25,8 @@ exports.run = async (client, message, args) => {
 
     if(UserPremium.donated == NaN) {
         await userPrem.set(`${message.author.id}.donated`, 0);
+
+        return await message.reply("Retry the command.");
     };
 
     // Removes all the other arguments, and joins the strings, then limits it to 150 characters.
