@@ -52,11 +52,7 @@ module.exports = async (client) => {
                     process.exit();
                 }, 5000);
             }
-        } catch (error) {
-            // Since these are just network issues, I can safely ignore them.
-            if (!error.message.includes('gnutls_handshake() failed')) {
-                console.error(`Error with git pull: ${error.message}`);
-            }
+        } catch (Error) {
         }
     }, 30 * 1000);
     
