@@ -41,7 +41,7 @@ module.exports = async (client) => {
     setInterval(async () => {
         try {
             const { stdout } = await execPromise('git pull');
-                
+    
             if (!stdout.includes("Already up to date.")) {
                 await client.channels.cache
                     .get(MiscConfigs.github)
@@ -53,10 +53,13 @@ module.exports = async (client) => {
                 }, 5000);
             }
         } catch (error) {
-            console.error(`Error with git pull: ${error.message}`);
+            // Since these are just network issues, I can safely ignore them.
+            if (!error.message.includes('gnutls_handshake() failed')) {
+                console.error(`Error with git pull: ${error.message}`);
+            }
         }
     }, 30 * 1000);
-
+    
     setInterval(() => {
         client.user.setPresence({
             activities: [{ name: 'over DBH', type: Discord.ActivityType.Watching }],
