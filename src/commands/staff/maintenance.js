@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
         const Data = await nodeStatus.get(args[1].toLowerCase());
 
         if (Data == null) {
-            return message.reply("Invalid Node provided. Please provide a valid Node DB name.");
+            return await message.reply("Invalid Node provided. Please provide a valid Node DB name.");
         } else {
             if (Data.maintenance) {
                 const Result = await nodeStatus.set(`${args[1]}.maintenance`, false);
@@ -29,14 +29,21 @@ exports.run = async (client, message, args) => {
                 if (!Result)
                     return message.reply(`Unable to put ${args[1]} out of maintenance mode.`);
 
-                message.reply(`Successfully put ${args[1]} out of maintenance mode.`);
+                await message.reply(`Successfully put ${args[1]} out of maintenance mode.`);
             } else if (Data.maintenance == false) {
                 const Result = await nodeStatus.set(`${args[1]}.maintenance`, true);
 
                 if (!Result)
                     return message.reply(`Unable to put ${args[1]} into maintenance mode.`);
 
-                message.reply(`Successfully put ${args[1]} into maintenance mode.`);
+                await message.reply(`Successfully put ${args[1]} into maintenance mode.`);
+            } else if (Data.maintenance == null) {
+                const Result = await nodeStatus.set(`${args[1]}.maintenance`, false);
+
+                if (!Result)
+                    return message.reply(`Unable to put ${args[1]} out of maintenance mode (FIRST).`);
+
+                await message.reply(`Successfully put ${args[1]} into maintenance mode (FIRST).`);
             }
         }
     }
