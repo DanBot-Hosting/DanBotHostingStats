@@ -18,7 +18,8 @@ exports.run = async (client, message, args) => {
     const UserPremium = await userPrem.get(message.author.id);
 
     if (UserPremium == null) {
-        await userPrem.set(`${message.author.id}`, {donated: 0, used: 0});
+        await userPrem.set(`${message.author.id}.donated`, 0);
+        await userPrem.set(`${message.author.id}.used`, 0);
 
         return await message.reply("Retry the command.");
     };
