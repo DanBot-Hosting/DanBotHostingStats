@@ -19,10 +19,8 @@ module.exports = async (client, member, guild) => {
 
     // If user didn't have a object in user premium, creates one.
     if (userPremium == null) {
-        await userPrem.set(member.id, {
-            used: 0,
-            donated: 0,
-        });
+        await userPrem.set(`${member.id}.used`, 0);
+        await userPrem.set(`${member.id}.donated`, 0);
     }
 
     //If the user has a console account linked, give them the client role.
