@@ -23,10 +23,14 @@ exports.run = async (client, message, args) => {
     let userPremium = await userPrem.get(userId);
 
     //If the user has no premium data, set it to an empty object.
-    if (userPremium == null) await userPrem.set(userId, {
-        used: 0,
-        donated: 0
-    });
+    if (userPremium == null) {
+        await userPrem.set(userId, {
+            used: 0,
+            donated: 0
+        });
+
+        return await message.reply("Retry the command.");
+    };
 
     //Takes amount donated and divides by the price of a premium server to determine max count.
     const maxAmount = Math.floor((userPremium.donated || 0) / Config.PremiumServerPrice);

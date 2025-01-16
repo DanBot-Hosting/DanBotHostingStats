@@ -31,17 +31,23 @@ exports.run = async (client, message, args) => {
         );
 
         //Disabled sending messages for everyone in this channel.
-        await message.channel.updateOverwrite(Config.DiscordBot.MainGuildId, {
-            SEND_MESSAGES: false,
-        });
+        await message.channel.permissionOverwrites.set([
+            {
+                id: Config.DiscordBot.MainGuildId,
+                deny: [Discord.PermissionFlagsBits.SendMessages]
+            }
+        ], 'Lockdown command.');
 
         //If the second argument is unlock, unlocks the current channel.
     } else if (args[1].toLowerCase() === "unlock") {
         await message.reply("Channel is now unlocked. Everyone can now send messages here again!");
 
         //Enables sending messages for everyone in this channel.
-        await message.channel.updateOverwrite(Config.DiscordBot.MainGuildId, {
-            SEND_MESSAGES: null,
-        });
+        await message.channel.permissionOverwrites.set([
+            {
+                id: Config.DiscordBot.MainGuildId,
+                allow: [Discord.PermissionFlagsBits.SendMessages]
+            }
+        ], 'Lockdown command.');
     }
 };
