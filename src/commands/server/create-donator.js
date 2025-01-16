@@ -17,15 +17,9 @@ exports.run = async (client, message, args) => {
 
     const UserPremium = await userPrem.get(message.author.id);
 
-    if (UserPremium == null) {
+    if (UserPremium == null || (UserPremium.donated == NaN)) {
         await userPrem.set(`${message.author.id}.donated`, 0);
         await userPrem.set(`${message.author.id}.used`, 0);
-
-        return await message.reply("Retry the command.");
-    };
-
-    if(UserPremium.donated == NaN) {
-        await userPrem.set(`${message.author.id}.donated`, 0);
 
         return await message.reply("Retry the command.");
     };
@@ -80,7 +74,7 @@ exports.run = async (client, message, args) => {
         return await message.reply({ embeds: [HelpEmbed] });
     };
 
-    if (allowed === 0) {
+    if (allowed <= 0) {
         return await message.reply("You do not have enough donations to create a server.");
     }
 
