@@ -57,11 +57,7 @@ Free Hosting forever!                                            /____/
             Discord.GatewayIntentBits.Guilds,
             Discord.GatewayIntentBits.GuildMembers,
             Discord.GatewayIntentBits.GuildModeration,
-            Discord.GatewayIntentBits.GuildEmojisAndStickers,
             Discord.GatewayIntentBits.GuildIntegrations,
-            Discord.GatewayIntentBits.GuildWebhooks,
-            Discord.GatewayIntentBits.GuildInvites,
-            Discord.GatewayIntentBits.GuildVoiceStates,
             Discord.GatewayIntentBits.GuildPresences,
             Discord.GatewayIntentBits.GuildMessages,
             Discord.GatewayIntentBits.GuildMessageReactions,
@@ -69,10 +65,7 @@ Free Hosting forever!                                            /____/
             Discord.GatewayIntentBits.DirectMessages,
             Discord.GatewayIntentBits.DirectMessageReactions,
             Discord.GatewayIntentBits.DirectMessageTyping,
-            Discord.GatewayIntentBits.MessageContent,
-            Discord.GatewayIntentBits.GuildScheduledEvents,
-            Discord.GatewayIntentBits.AutoModerationConfiguration,
-            Discord.GatewayIntentBits.AutoModerationExecution
+            Discord.GatewayIntentBits.MessageContent
         ],
         partials: [
             Discord.Partials.Channel,
