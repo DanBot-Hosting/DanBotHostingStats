@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
             "Please send a users discord ID to see if they are linked with an account on the host.",
         );
     } else {
-        var userAccount = await userData.get(args[1]);
+        var userAccount = await userData.get(args[1].replace("<@", "").replace(">", "").replace("!", ""));
         
         if (userAccount == null) {
             await message.reply("That account is not linked with a console account.");
