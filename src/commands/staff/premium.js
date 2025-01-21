@@ -57,14 +57,14 @@ exports.run = async (client, message, args) => {
         setDonations(userid, amount + oldBal);
         sendMessage(userid, amount);
 
-        await message.guild.members.cache.get(userid).roles.add(Config.DiscordBot.Roles.Donator);
+        await message.member.roles.add(Config.DiscordBot.Roles.Donator);
     }
 
     if (args[1].toLowerCase() === "set") {
         setDonations(userid, amount);
         sendMessage(userid, amount);
 
-        await message.guild.members.cache.get(userid).roles.add(Config.DiscordBot.Roles.Donator);
+        await message.member.roles.add(Config.DiscordBot.Roles.Donator);
     }
 
     if (args[1].toLowerCase() === "remove") {
