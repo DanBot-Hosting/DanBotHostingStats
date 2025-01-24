@@ -24,6 +24,12 @@ exports.run = async (client, message, args) => {
         return await message.reply("Retry the command.");
     };
 
+    if(UserPremium.used < 0) {
+        await userPrem.set(`${message.author.id}.used`, 0); 
+
+        return await message.reply("Retry the command.");
+    };
+
     // Removes all the other arguments, and joins the strings, then limits it to 150 characters.
     const ServerName = message.content.split(" ").slice(3).join(" ").slice(0, 150) + (message.content.split(" ").slice(3).join(" ").length > 150 ? "..." : "") || "Untitled Server (settings -> server name)";
 
