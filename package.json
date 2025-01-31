@@ -28,7 +28,7 @@
     "mysql2": "^3.11.3",
     "nodemailer": "^6.9.3",
     "path": "^0.12.7",
-    "ping-tcp-js": "^1.5.0",
+    "ping-tcp-js": "^2.0.0",
     "quick.db": "^9.1.7",
     "validator": "^13.9.0"
   }
