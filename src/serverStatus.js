@@ -30,7 +30,7 @@ const startNodeChecker = () => {
                 }));
 
                 if (fetchError) {
-                    const [, pingError] = await safePromise(ping.ping(data.IP, 22));
+                    const [, pingError] = await safePromise(ping.ping({ host: data.IP, port: 22 }));
 
                     if (pingError) {
                         await nodeStatus.set(`${node}.timestamp`, Date.now());
@@ -75,7 +75,7 @@ const startNodeChecker = () => {
         for (const [category, services] of Object.entries(Status)) {
             if (category !== "Nodes") {
                 for (const [name, data] of Object.entries(services)) {
-                    const [, error] = await safePromise(ping.ping(data.IP, 22));
+                    const [, error] = await safePromise(ping.ping({ host: data.IP, port: 22}));
 
                     if (error) {
                         await nodeStatus.set(`${name}.timestamp`, Date.now());
@@ -102,8 +102,6 @@ const parseStatus = async () => {
 
             const nodeStatusData = await nodeStatus.get(nodeKey.toLowerCase());
             const nodeServerData = await nodeServers.get(nodeKey.toLowerCase());
-            //console.log(nodeStatusData)
-            //console.log(nodeServerData)
 
             const serverUsage = await nodeServerData
                 ? `(${nodeServerData.servers} / ${nodeServerData.maxCount})`
