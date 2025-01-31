@@ -46,6 +46,11 @@ exports.run = async (client, message, args) => {
         );
     }
 
+    // This check is to help donators that joined back but do not have the role.
+    if(UserPremium.donated > 0){
+        await message.member.roles.add(Config.DiscordBot.Roles.Donator).catch((Error) => {});
+    };
+
     const allowed = ((UserPremium.donated / Config.PremiumServerPrice) - Math.abs(UserPremium.used));
 
     function GenerateHelpEmbed(Servers) {
