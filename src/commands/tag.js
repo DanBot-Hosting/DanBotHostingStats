@@ -48,6 +48,6 @@ exports.run = async (client, message, args) => {
     Embed.setColor("Blurple");
     Embed.setTimestamp();
 
-    message.delete();
-    return message.reply({embeds: [Embed]});
+    await message.delete();
+    return await message.channel.send({embeds: [Embed]});
 };
