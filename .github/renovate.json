@@ -1,4 +1,6 @@
 {
+    "separateMajorMinor": true,
+    "separateMinorPatch": false,
     "packageRules": [
         {
             "groupName": "all minor and patch dependencies",
@@ -10,9 +12,7 @@
         {
             "matchPackagePatterns": ["*"],
             "matchUpdateTypes": ["major"],
-            "separatePatchReleases": false,
-            "separateMinorReleases": false,
-            "separateMajorReleases": true,
+            "groupName": null,
             "assigneesFromCodeOwners": true
         }
     ]
