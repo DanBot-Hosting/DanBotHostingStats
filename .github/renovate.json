@@ -1,15 +1,19 @@
 {
     "packageRules": [
         {
-            "groupName": "all non-major dependencies",
+            "groupName": "all minor and patch dependencies",
             "groupSlug": "all-minor-patch",
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "matchUpdateTypes": [
-                "minor",
-                "patch"
-            ]
+            "matchPackagePatterns": ["*"],
+            "matchUpdateTypes": ["minor", "patch"],
+            "assigneesFromCodeOwners": true
+        },
+        {
+            "matchPackagePatterns": ["*"],
+            "matchUpdateTypes": ["major"],
+            "separatePatchReleases": false,
+            "separateMinorReleases": false,
+            "separateMajorReleases": true,
+            "assigneesFromCodeOwners": true
         }
     ]
 }
