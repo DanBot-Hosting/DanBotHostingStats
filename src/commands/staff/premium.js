@@ -44,30 +44,35 @@ exports.run = async (client, message, args) => {
             .send("Thanks, <@" + userid + "> for donating $" + parser.format(amount));
     };
 
-    let userid = message.guild.members.cache.get(
-        args[2].match(/[0-9]{17,19}/).length == 0 ? args[2] : args[2].match(/[0-9]{17,19}/)[0],
-    );
-    
+    let userid = args[2].match(/[0-9]{17,19}/) ? args[2].match(/[0-9]{17,19}/)[0] : args[2];
+
     let amount = Number.parseInt(args[3]);
     if (isNaN(amount)) return;
 
-    let oldBal = await userPrem.get(userid + ".donated") || 0;
+    let userPremium = await userPrem.get(userid);
+    let oldBal = userPremium ? userPremium.donated || 0 : 0;
 
     if (args[1].toLowerCase() === "add") {
-        setDonations(userid, amount + oldBal);
+        await setDonations(userid, amount + oldBal);
         sendMessage(userid, amount);
 
-        await message.member.roles.add(Config.DiscordBot.Roles.Donator);
+
+        const user = await client.users.fetch(userid);
+        const member = await message.guild.members.fetch(userid);
+        await member.roles.add(Config.DiscordBot.Roles.Donator);
+
     }
 
     if (args[1].toLowerCase() === "set") {
-        setDonations(userid, amount);
+        await setDonations(userid, amount);
         sendMessage(userid, amount);
 
-        await message.member.roles.add(Config.DiscordBot.Roles.Donator);
+        const user = await client.users.fetch(userid);
+        const member = await message.guild.members.fetch(userid);
+        await member.roles.add(Config.DiscordBot.Roles.Donator);
     }
 
     if (args[1].toLowerCase() === "remove") {
-        setDonations(userid, Math.max(0, oldBal - amount));
+        await setDonations(userid, Math.max(0, oldBal - amount));
     }
 };
