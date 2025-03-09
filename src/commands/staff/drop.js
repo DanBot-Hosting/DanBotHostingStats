@@ -16,25 +16,32 @@ exports.description = "Drop a premium key.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-
     if (!MiscConfigs.codeDrops.includes(message.author.id)) {
         return;
     }
 
     if (args[1] == null) {
-        message.reply("You need to specify a time.");
+        message.reply("You need to specify a time (format: number + unit, e.g., 5m, 2h, 1d).");
         return;
     }
-    
-    await message.delete();
 
     // Manual time parsing function
     const parseTime = (timeStr) => {
-        const timeValue = parseInt(timeStr.slice(0, -1));
-        const timeUnit = timeStr.slice(-1).toLowerCase();
-        
-        let multiplier;
+        const timeRegex = /^(\d+)([dhms])$/i;
+        const match = timeStr.match(timeRegex);
 
+        if (!match) {
+            throw new Error('Invalid time format. Use format: number + unit (e.g., 5m, 2h, 1d)');
+        }
+
+        const timeValue = parseInt(match[1]);
+        const timeUnit = match[2].toLowerCase();
+
+        if (timeValue <= 0) {
+            throw new Error('Time value must be positive');
+        }
+
+        let multiplier;
         switch (timeUnit) {
             case 'd':
                 multiplier = 86400000; // days to milliseconds
@@ -49,19 +56,40 @@ exports.run = async (client, message, args) => {
                 multiplier = 1000; // seconds to milliseconds
                 break;
             default:
-                multiplier = 60000; // default to minutes if no valid unit is provided
-                break;
+                throw new Error('Invalid time unit. Use s, m, h, or d');
         }
 
-        return timeValue * multiplier;
+        const totalMs = timeValue * multiplier;
+        const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
+
+        if (totalMs > oneWeekMs) {
+            throw new Error('Time cannot exceed 1 week duration.');
+        }
+
+        return totalMs;
     };
 
-    const time = parseTime(args[1]) || 300000; // Default to 5 minutes if parsing fails
+    let time;
+    try {
+        time = parseTime(args[1]);
+    } catch (error) {
+        message.reply(error.message);
+        return;
+    }
+
+    await message.delete();
 
     let code;
 
     const moment = Date.now();
     const epochInSeconds = Math.floor(Date.now() / 1000) + (time / 1000);
+
+    // Add timestamp validation
+    const maxTimestamp = 8640000000000000;
+    if ((moment + time) > maxTimestamp) {
+        message.reply("The specified time results in an invalid timestamp. Please use a shorter duration.");
+        return;
+    }
 
     if (!args[2]) {
         const random = generatePassword();
