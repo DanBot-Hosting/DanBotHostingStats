@@ -118,9 +118,15 @@ exports.run = async (client, message, args) => {
     //User domain data.
     const userDomains = await userData.get(message.author.id + ".domains");
 
+    //User has no domains.
+    if (userDomains == null || userDomains.length == 0) {
+        await message.reply("You have no domains proxied.");
+        return;
+    }
+
     //Invalid domain provided.
     if (userDomains.find((x) => x.domain === args[1].toLowerCase()) == null) {
-        message.reply(
+        await message.reply(
             "I could not find this domain! Please make sure you have entered a valid domain. A valid domain is `danbot.host`, `https://danbot.host/` is not valid domain!",
         );
         return;
