@@ -54,8 +54,26 @@ exports.run = async (client, message, args) => {
     });
 
     Collector.on('collect', async (Interaction) => {
+        // Immediately disable all buttons to prevent multiple clicks.
+        const DisabledRow = new Discord.ActionRowBuilder().addComponents(
+            new Discord.ButtonBuilder()
+                .setCustomId('confirmDelete')
+                .setLabel('Confirm Deletion')
+                .setStyle(Discord.ButtonStyle.Danger)
+                .setDisabled(true),
+            new Discord.ButtonBuilder()
+                .setCustomId('cancelDelete')
+                .setLabel('Cancel')
+                .setStyle(Discord.ButtonStyle.Secondary)
+                .setDisabled(true)
+        );
+        
+        // Update the message with disabled buttons first.
+        await Interaction.update({ components: [DisabledRow] });
+
         if (Interaction.customId === 'confirmDelete') {
-            await Interaction.update({ content: "Deleting your panel account...", components: [] });
+            // Update content after disabling buttons.
+            await MessageReply.edit({ content: "Deleting your panel account...", embeds: [] });
 
             try {
                 await Axios({
@@ -100,29 +118,30 @@ exports.run = async (client, message, args) => {
                 // Delete the user's premium if they have one.
                 await userData.delete(message.author.id);
 
-                await Interaction.followUp({
-                    content: "Your panel account and all associated servers have been successfully deleted.",
-                    ephemeral: true
+                // Use MessageReply.edit instead of Interaction.followUp
+                await MessageReply.edit({ 
+                    content: "Your panel account and all associated servers have been successfully deleted.", 
+                    embeds: [], 
+                    components: [] 
                 });
-
-                MessageReply.edit({ content: "Your panel account and all associated servers have been successfully deleted.", embeds: [], components: [] });
 
                 Collector.stop('completed');
 
             } catch (err) {
                 console.log(err);
 
-                await Interaction.followUp({
-                    content: "An error occurred while deleting your account. Please try again later.",
-                    ephemeral: true
+                // Use MessageReply.edit instead of Interaction.followUp
+                await MessageReply.edit({ 
+                    content: "An error occurred while deleting your account. Please try again later.", 
+                    embeds: [], 
+                    components: [] 
                 });
 
                 Collector.stop('errored');
             }
 
         } else if (Interaction.customId === 'cancelDelete') {
-            await Interaction.update({ content: "Account deletion cancelled.", components: [], embeds: [] });
-
+            await MessageReply.edit({ content: "Account deletion cancelled.", embeds: [] });
             Collector.stop('cancelled');
         }
     });
