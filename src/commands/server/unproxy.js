@@ -3,6 +3,7 @@ const Axios = require('axios');
 
 const Config = require('../../../config.json');
 const Proxies = require('../../../config/proxy-configs.js').Proxies;
+const MiscConfigs = require('../../../config/misc-configs.js');
 
 //This function will generate a new token for the specified location.
 async function getToken(Url, Email, Password) {
@@ -140,7 +141,20 @@ exports.run = async (client, message, args) => {
         const ProxyInformation = Proxies.find(x => x.dbLocation == domainData.location);
 
         //Generate an new token for the specified location.
-        const ProxyToken = await getToken(ProxyInformation.url, ProxyInformation.email, ProxyInformation.pass);
+        const ProxyToken = await getToken(ProxyInformation.url, ProxyInformation.email, ProxyInformation.pass).catch(async (Error) => {
+
+            // If the command fails, that means the proxy server is likely down.
+            if(Error.code === "ECONNABORTED" ||  Error.code === "ETIMEDOUT") {
+                await message.reply("[PROXY SYSTEM] The proxy server is currently down. Please try again later. Watch <#" + MiscConfigs.serverStatus + "> for more information.");
+                return;
+            } else {
+                await message.reply("[PROXY SYSTEM] An error occurred while trying to unproxy the domain. Please try again later.");
+                return;
+            }
+        });
+
+        // Returns as there is no proxy token, therefore no requests can be executed.
+        if (!ProxyToken) return;
 
         // Gets a list of all the proxies.
         await Axios({
