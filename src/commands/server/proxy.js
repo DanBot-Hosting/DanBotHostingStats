@@ -3,6 +3,7 @@ const Axios = require("axios");
 const dns = require("dns");
 
 const Config = require('../../../config.json');
+const MiscConfigs = require('../../../config/misc-configs.js');
 const Proxies = require('../../../config/proxy-configs.js').Proxies;
 const PremiumDomains = require('../../../config/proxy-configs.js').PremiumDomains;
 const getUserServers = require('../../util/getUserServers.js');
