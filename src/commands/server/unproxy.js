@@ -11,6 +11,7 @@ async function getToken(Url, Email, Password) {
         url: Url + "/api/tokens",
         method: "POST",
         followRedirect: true,
+        timeout: 15 * 1000,
         maxRedirects: 5,
         headers: {
             "Content-Type": "application/json",
