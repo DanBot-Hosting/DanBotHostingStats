@@ -281,7 +281,14 @@ exports.run = async (client, message, args) => {
             ResponseAfterProxy,
             token
         ) {
-            if (ErrorAfterProxy.response.status == 500) {
+            // If no response was acknowledged from the request.
+            if(!ErrorAfterProxy.response){
+                await replyMsg.edit(
+                    replyMsg.content + "\nAn internal server error has occurred. Attempting to delete failed proxy."
+                ).catch((Error) => {});
+
+                await deleteFailedProxy(replyMsg, args, ProxyLocation, ResponseAfterProxy, token);
+            } else if (ErrorAfterProxy.response.status == 500) {
                 await replyMsg.edit(
                     replyMsg.content + "\nAn internal server error has occurred. Attempting to delete failed proxy."
                 ).catch((Error) => {});
