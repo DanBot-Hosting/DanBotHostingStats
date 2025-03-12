@@ -166,7 +166,18 @@ exports.run = async (client, message, args) => {
             //This in theory should never happen.
             if(ProxyLocation == undefined) return message.channel.send("Woah, you discovered an error that shouldn't be possible. - DIBSTER.").catch((Error) => {});
 
-            const Token = await getToken(ProxyLocation.url, ProxyLocation.email, ProxyLocation.pass);
+            const Token = await getToken(ProxyLocation.url, ProxyLocation.email, ProxyLocation.pass).catch(async (Error) => {
+                // If the command fails, that means the proxy server is likely down.
+                if(Error.code === "ECONNABORTED" ||  Error.code === "ETIMEDOUT") {
+                    await message.reply("[PROXY SYSTEM] The proxy server is currently down. Please try again later. Watch <#" + MiscConfigs.serverStatus + "> for more information.");
+                    return;
+                } else {
+                    await message.reply("[PROXY SYSTEM] An error occurred while trying to unproxy the domain. Please try again later.");
+                    return;
+                };
+            });
+
+            if(!Token) return;
 
             const AllProxies = await getAllProxies(ProxyLocation.url, Token);
 
