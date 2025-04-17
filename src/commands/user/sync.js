@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
         .setTimestamp()
        .setFooter({ text: 'Command Executed by ' + message.author.username + " (" + message.author.id + ")", iconURL: message.author.displayAvatarURL() });
 
-    const syncMessage = await message.reply({ embeds: [syncEmbed], flags: Discord.MessageFlags.Ephemeral });
+    const syncMessage = await message.reply({ embeds: [syncEmbed] });
 
     try {
         // Get current panel data for the user
@@ -52,13 +52,13 @@ exports.run = async (client, message, args) => {
         // Check if email has changed:
         if (panelUser.email !== userAccount.email) {
             await userData.set(`${message.author.id}.email`, panelUser.email);
-            changes.push(`Email updated from \`${userAccount.email}\` to \`${panelUser.email}\``);
+            changes.push(`Email updated.`);
         }
 
         // Check if username has changed
         if (panelUser.username !== userAccount.username) {
             await userData.set(`${message.author.id}.username`, panelUser.username);
-            changes.push(`Username updated from \`${userAccount.username}\` to \`${panelUser.username}\``);
+            changes.push(`Username updated.`);
         }
 
         // Update the embed based on changes:
