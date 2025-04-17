@@ -27,9 +27,10 @@ exports.run = async (client, message, args) => {
         .setTitle('Account Sync')
         .setColor('Blue')
         .setDescription('Syncing your account information with the panel...')
-        .setTimestamp();
+        .setTimestamp()
+       .setFooter({ text: 'Command Executed by ' + message.author.username + " (" + message.author.id + ")", iconURL: message.author.displayAvatarURL() });
 
-    const syncMessage = await message.reply({ embeds: [syncEmbed] });
+    const syncMessage = await message.reply({ embeds: [syncEmbed], flags: Discord.MessageFlags.Ephemeral });
 
     try {
         // Get current panel data for the user
