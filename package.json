@@ -1,5 +1,5 @@
 {
-  "name": "hostingstats",
+  "name": "@danbot-hosting/mainbot",
   "version": "1.0.0",
   "description": "Main bot for DanBot Hosting",
   "main": "index.js",
@@ -26,7 +26,7 @@
     "humanize-duration": "^3.28.0",
     "moment": "^2.29.4",
     "mysql2": "^3.11.3",
-    "nodemailer": "^6.9.3",
+    "nodemailer": "^6.10.1",
     "path": "^0.12.7",
     "ping-tcp-js": "^2.0.4",
     "quick.db": "^9.1.7",
