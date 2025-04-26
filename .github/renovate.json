@@ -1,20 +1,18 @@
 {
-  "separateMajorMinor": true,
-  "separateMinorPatch": false,
-  "packageRules": [
-    {
-      "groupName": "all minor and patch dependencies",
-      "groupSlug": "all-minor-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "assigneesFromCodeOwners": true,
-      "rangeStrategy": "widen"
-    },
-    {
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["major"],
-      "groupName": null,
-      "assigneesFromCodeOwners": true
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":automergeStableNonMajor"
+    ],
+    "npm": {
+        "packageRules": [
+            {
+                "matchUpdateTypes": [
+                    "minor",
+                    "patch"
+                ],
+                "groupName": "all non-major dependencies"
+            }
+        ]
     }
-  ]
 }
