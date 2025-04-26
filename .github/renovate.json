@@ -11,7 +11,8 @@
                     "minor",
                     "patch"
                 ],
-                "groupName": "all non-major dependencies"
+                "groupName": "all non-major dependencies",
+                "versioningStrategy": "widen" 
             }
         ]
     }
