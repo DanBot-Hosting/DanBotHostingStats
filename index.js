@@ -18,16 +18,24 @@ Free Hosting forever!                                            /____/
     const Config = require("./config.json");
 
     //Starting MySQL Database, and global tables.
-    const mysqlDriver = new MySQLDriver({
-        host: Config.database.host,
-        port: Config.database.port,
-        user: Config.database.user,
-        password: Config.database.pass,
-        database: Config.database.db,
-    });
+    let MySqlDriver;
+    try {
+        MySqlDriver = new MySQLDriver({
+            host: Config.database.host,
+            port: Config.database.port,
+            user: Config.database.user,
+            password: Config.database.pass,
+            database: Config.database.db,
+        });
 
-    await mysqlDriver.connect();
-    const db = new QuickDB({ driver: mysqlDriver });
+        await MySqlDriver.connect();
+    } catch (Error) {
+        console.error("Failed to connect to the MySQL database. Please check your database connection settings or ensure the remote DB is online.");
+        console.error(Error);
+        process.exit(0);
+    }
+    
+    const db = new QuickDB({ driver: MySqlDriver });
 
     global.moment = require("moment");
     global.userData = db.table("userData"); //User data, Email, ConsoleID, Link time, Username, DiscordID
