@@ -169,6 +169,7 @@ exports.run = async (client, message, args) => {
             if(ProxyLocation == undefined) return message.channel.send("Woah, you discovered an error that shouldn't be possible. - DIBSTER.").catch((Error) => {});
 
             const Token = await getToken(ProxyLocation.url, ProxyLocation.email, ProxyLocation.pass).catch(async (Error) => {
+
                 // If the command fails, that means the proxy server is likely down.
                 if(Error.code === "ECONNABORTED" ||  Error.code === "ETIMEDOUT") {
                     await message.reply("[PROXY SYSTEM] The proxy server is currently down. Please try again later. Watch <#" + MiscConfigs.serverStatus + "> for more information.");
@@ -202,6 +203,7 @@ exports.run = async (client, message, args) => {
                 url: `${ProxyLocation.url}/api/nginx/proxy-hosts`,
                 method: "POST",
                 followRedirect: true,
+                timeout: 30 * 1000,
                 maxRedirects: 5,
                 headers: {
                     Authorization: token,
@@ -283,6 +285,7 @@ exports.run = async (client, message, args) => {
         ) {
             // If no response was acknowledged from the request.
             if(!ErrorAfterProxy.response){
+
                 await replyMsg.edit(
                     replyMsg.content + "\nAn internal server error has occurred. Attempting to delete failed proxy."
                 ).catch((Error) => {});
