@@ -5,11 +5,11 @@ const Status = {
             "Performance Nodes": {
                 pnode1: {
                     Name: "PNode 1",
-                    serverID: "7e99f988",
+                    serverID: "2dadcc36",
                     IP: Config.Nodes.PNode1,
                     ID: "38",
                     Location: Config.Ping.UK,
-                    MaxLimit: 8000
+                    MaxLimit: 1000
                 },
                 pnode2: {
                     Name: "PNode 2",
