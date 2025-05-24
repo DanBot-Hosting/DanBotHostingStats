@@ -19,6 +19,7 @@ exports.description = "Create a new panel account.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
+    return message.reply("Please note: at this time creating new users is no longer supported via the bot. An announcement is soon to come");
 
     const userAccount = await userData.get(message.author.id);
     
