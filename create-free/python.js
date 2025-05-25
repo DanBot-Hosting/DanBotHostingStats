@@ -15,11 +15,11 @@ function createServer(ServerName, UserID){
         startup:
             'if [[ ! -z "{{PY_PACKAGES}}" ]]; then pip install -U --prefix .local {{PY_PACKAGES}}; fi; if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then pip install -U --prefix .local -r ${REQUIREMENTS_FILE}; fi; ${STARTUP_CMD}',
         limits: {
-            memory: 0,
+            memory: 1024,
             swap: -1,
-            disk: 10240,
+            disk: 5120,
             io: 500,
-            cpu: 0,
+            cpu: 100,
         },
         environment: {
             REQUIREMENTS_FILE: "requirements.txt",

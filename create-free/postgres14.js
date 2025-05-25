@@ -16,11 +16,11 @@ function createServer(ServerName, UserID){
         docker_image: "ghcr.io/parkervcp/yolks:postgres_14",
         startup: `postgres  -D /home/container/postgres_db/`,
         limits: {
-            memory: 0,
+            memory: 1024,
             swap: -1,
-            disk: 10240,
+            disk: 5120,
             io: 500,
-            cpu: 0,
+            cpu: 100,
         },
         environment: {
             PGPASSWORD: generatePassword(),

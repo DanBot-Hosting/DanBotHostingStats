@@ -15,11 +15,11 @@ function createServer(ServerName, UserID){
         startup:
             "PATH=$PATH:/home/container/.local/bin redbot pterodactyl --token {{TOKEN}} --prefix {{PREFIX}}",
         limits: {
-            memory: 0,
+            memory: 1024,
             swap: -1,
-            disk: 10240,
+            disk: 5120,
             io: 500,
-            cpu: 0,
+            cpu: 100,
         },
         environment: {
             TOKEN: "FILL_THIS_OUT",

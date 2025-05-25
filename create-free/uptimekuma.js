@@ -15,11 +15,11 @@ function createServer(ServerName, UserID){
         startup:
             'if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then npm run setup; fi; /usr/local/bin/node /home/container/server/server.js --port={{SERVER_PORT}}',
         limits: {
-            memory: 0,
+            memory: 1024,
             swap: -1,
-            disk: 10240,
+            disk: 5120,
             io: 500,
-            cpu: 0,
+            cpu: 100,
         },
         environment: {
             GIT_ADDRESS: "https://github.com/louislam/uptime-kuma",

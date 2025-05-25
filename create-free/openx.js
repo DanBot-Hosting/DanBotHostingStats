@@ -17,11 +17,11 @@ function createServer(ServerName, UserID){
         startup:
             'if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == "1" ]]; then git pull; fi; /usr/local/bin/node /home/container/Src/index.js',
         limits: {
-            memory: 0,
+            memory: 1024,
             swap: -1,
-            disk: 10240,
+            disk: 5120,
             io: 500,
-            cpu: 0,
+            cpu: 100,
         },
         environment: {
             FILELENGTH: "8",

@@ -14,11 +14,11 @@ function createServer(ServerName, UserID){
         docker_image: "ghcr.io/parkervcp/yolks:voice_mumble",
         startup: `mumble-server -fg -ini murmur.ini`,
         limits: {
-            memory: 0,
+            memory: 1024,
             swap: -1,
-            disk: 10240,
+            disk: 5120,
             io: 500,
-            cpu: 0,
+            cpu: 100,
         },
         environment: {
             MAX_USERS: "100",
