@@ -61,26 +61,6 @@ const Status = {
                     ID: "46",
                     Location: Config.Ping.UK,
                     MaxLimit: 200
-                },
-                dono05: {
-                    Name: "Dono-05",
-                    serverID: "1ba2236c",
-                    IP: Config.Nodes.Dono5,
-                    ID: "47",
-                    Location: Config.Ping.UK,
-                    MaxLimit: 2000
-                }
-            },
-    
-            "Storage Nodes": {
-                storage1: {
-                    Name: "Storage-1",
-                    serverID: "ed33bb0c",
-                    IP: Config.Nodes.Storage1,
-                    ID: "44",
-                    Location: Config.Ping.UK,
-                    MaxLimit: 1000
-                    
                 }
             }
         },
