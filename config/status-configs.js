@@ -83,10 +83,30 @@ const Status = {
             }
         },
 
-        "DBH Services": {
+        "Misc": {
             pterodactylPublic: {
                 name: "Pterodactyl (Public)",
                 IP: Config.Services.pteropublic,
+                Location: Config.Ping.UK
+            },
+            billingPanel: {
+                name: "Billing Panel",
+                IP: Config.Services.billingpanel,
+                Location: Config.Ping.UK
+            },
+            mailService: {
+                name: "Mail Service",
+                IP: Config.Services.mailserver,
+                Location: Config.Ping.UK
+            },
+            vpsPanel: {
+                name: "VPS Panel (New)",
+                IP: Config.Services.vpspanel,
+                Location: Config.Ping.UK
+            },
+            vpsPanelOld: {
+                name: "VPS Panel (Old)",
+                IP: Config.Services.vpspanelold,
                 Location: Config.Ping.UK
             }
         }
