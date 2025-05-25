@@ -65,10 +65,20 @@ const Status = {
             }
         },
 
-        "Dedicated Servers (VPS/VM Hosts)": {
+        "VPS Hosting": {
             us1: {
                 name: "United States 1",
                 IP: Config.Servers.US1,
+                Location: Config.Ping.UK
+            },
+            us2: {
+                name: "United States 2",
+                IP: Config.Servers.US2,
+                Location: Config.Ping.UK
+            },
+            pus1: {
+                name: "Ryzen - United States 1",
+                IP: Config.Servers.PUS1,
                 Location: Config.Ping.UK
             }
         },
