@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const Config = require('../../../config.json');
+const MiscConfigs = require("../../../config/misc-configs.js");
 const Creation = require("../../../createData.js");
+
 
 exports.description = "Create a free server. View this command for usage.";
 
