@@ -19,7 +19,7 @@ exports.description = "Create a new panel account.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
-    return message.reply("User account creation is now disabled via the bot. Do not create a ticket. See this announcement: https://discord.com/channels/639477525927690240/898050443446464532/1376647936884080742");
+    //return message.reply("User account creation is now disabled via the bot. Do not create a ticket. See this announcement: https://discord.com/channels/639477525927690240/898050443446464532/1376647936884080742");
 
     const userAccount = await userData.get(message.author.id);
     
