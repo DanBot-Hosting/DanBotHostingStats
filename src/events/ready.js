@@ -77,7 +77,7 @@ module.exports = async (client) => {
 
             let messages = await channel.messages.fetch({
                 limit: 10,
-            });
+            }).catch((Error) => {});
 
             messages = messages.filter((x) => x.author.id === client.user.id).last();
 
