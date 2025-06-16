@@ -1,21 +1,31 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "rangeStrategy": "bump",
-  "separateMajorMinor": true,
-  "separateMinorPatch": false,
-  "packageRules": [
-    {
-      "groupName": "all minor and patch dependencies",
-      "groupSlug": "all-minor-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "assigneesFromCodeOwners": true
-    },
-    {
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["major"],
-      "groupName": null,
-      "assigneesFromCodeOwners": true
-    }
-  ]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:recommended",
+		"group:allNonMajor",
+		":automergeStableNonMajor",
+		":semanticCommits",
+		":disableRateLimiting",
+		":prImmediately"
+	],
+	"reviewers": ["DEV-DIBSTER"],
+	"automergeStrategy": "squash",
+	"npm": {
+		"postUpdateOptions": ["yarnDedupeHighest"],
+		"rangeStrategy": "bump",
+		"packageRules": [
+			{
+				"matchUpdateTypes": ["patch"],
+				"matchCurrentVersion": "/^0\\./",
+				"automerge": true,
+				"platformAutomerge": true
+			},
+			{
+				"matchUpdateTypes": ["minor", "patch"],
+				"matchCurrentVersion": ">=1.0.0",
+				"automerge": true,
+				"platformAutomerge": true
+			}
+		]
+	}
 }
