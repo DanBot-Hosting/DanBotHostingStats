@@ -34,9 +34,6 @@ module.exports = async (client) => {
     .filter((x) => x.parentId === MiscConfigs.accounts && Date.now() - x.createdAt.getTime() > 30 * 60 * 1000)
     .forEach((x) => x.delete());
 
-    //Initializing the cooldown.
-    client.cooldown = {};
-
     //Automatic GitHub Update (30 seconds intervals).
     setInterval(async () => {
         try {
