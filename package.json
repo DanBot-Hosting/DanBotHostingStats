@@ -22,7 +22,7 @@
     "@sentry/profiling-node": "^9.32.0",
     "axios": "^1.10.0",
     "chalk": "^4.1.2",
-    "discord.js": "^14.20.0",
+    "discord.js": "^14.21.0",
     "humanize-duration": "^3.33.0",
     "moment": "^2.30.1",
     "mysql2": "^3.14.1",
