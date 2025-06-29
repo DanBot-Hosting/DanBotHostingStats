@@ -49,6 +49,7 @@ exports.description = "Proxy a domain to a server. View this command for usage."
  * @returns void
  */
 exports.run = async (client, message, args) => {
+    return message.reply("This command has been permanently disabled. you can now proxy via domains tab");
 
     const ProxyLocations = Proxies.map((Proxy) => `> \`${Proxy.ip}\` - [${Proxy.name}] 🟢 Enabled`).join('\n');
     const PremiumDomainsList = PremiumDomains.map((domain) => `\`${domain}\``).join(', ');
