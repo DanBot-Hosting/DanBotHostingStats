@@ -10,22 +10,6 @@ const Status = {
                     ID: "38",
                     Location: Config.Ping.UK,
                     MaxLimit: 1000
-                },
-                pnode2: {
-                    Name: "PNode 2",
-                    serverID: "2358ca8e",
-                    IP: Config.Nodes.PNode2,
-                    ID: "40",
-                    Location: Config.Ping.UK,
-                    MaxLimit: 7000
-                },
-                pnode3: {
-                    Name: "PNode 3",
-                    serverID: "150791a9",
-                    IP: Config.Nodes.PNode3,
-                    ID: "43",
-                    Location: Config.Ping.UK,
-                    MaxLimit: 8000
                 }
             },
 
