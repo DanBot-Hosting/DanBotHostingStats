@@ -109,7 +109,7 @@ exports.run = async (client, message, args) => {
         }
         })
         .catch(async (Error) => {
-            if (Error.response.status >= 500) {
+            if (Error.response?.status >= 500) {
                 return await message.reply("A timeout error occured while loading servers. Please try again later.");
             } else {
                 return await message.reply("An error occurred while loading servers. Please try again later.");
