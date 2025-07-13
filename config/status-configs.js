@@ -50,11 +50,6 @@ const Status = {
         },
 
         "VPS Hosting": {
-            us1: {
-                name: "United States 1",
-                IP: Config.Servers.US1,
-                Location: Config.Ping.UK
-            },
             us2: {
                 name: "United States 2",
                 IP: Config.Servers.US2,
@@ -84,13 +79,8 @@ const Status = {
                 Location: Config.Ping.UK
             },
             vpsPanel: {
-                name: "VPS Panel (New)",
+                name: "VPS Panel",
                 IP: Config.Services.vpspanel,
-                Location: Config.Ping.UK
-            },
-            vpsPanelOld: {
-                name: "VPS Panel (Old)",
-                IP: Config.Services.vpspanelold,
                 Location: Config.Ping.UK
             }
         }
