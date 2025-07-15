@@ -1,31 +1,6 @@
 {
-    "USProxy1": {
-        "url": "",
-        "authKey": "",
-        "email": "",
-        "pass": ""
-    },
-    "USProxy2": {
-        "url": "",
-        "authKey": "",
-        "email": "",
-        "pass": ""
-    },
-    "USProxy3": {
-        "url": "",
-        "authKey": "",
-        "email": "",
-        "pass": ""
-    },
-    "USProxy4": {
-        "url": "",
-        "authKey": "",
-        "email": "",
-        "pass": ""
-    },
     "DonatorProxy": {
         "url": "",
-        "authKey": "",
         "email": "",
         "pass": ""
     },
@@ -92,24 +67,20 @@
     },
     "Nodes": {
         "PNode1": "",
-        "PNode2": "",
-        "PNode3": "",
         "Dono1": "",
         "Dono2": "",
         "Dono3": "",
-        "Dono4": "",
-        "Storage1": ""
+        "Dono4": ""
     },
     "Servers": {
-        "US1": "",
         "US2": "",
-        "EU1": ""
+        "PUS1": ""
     },
     "Services": {
-        "pteropublic": ""
-    },
-    "Ping": {
-        "UK": ""
+        "pteropublic": "",
+        "billingpanel": "",
+        "mailserver": "",
+        "vpspanel": ""
     },
     "BannedNames": [
         "",
@@ -126,5 +97,9 @@
         "",
         "",
         ""
-    ]
+    ],
+    "SentryLogging": {
+        "dsn": "",
+        "environment": ""
+    }
 }

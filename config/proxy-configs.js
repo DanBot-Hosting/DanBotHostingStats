@@ -19,4 +19,4 @@ const PremiumDomains = [
     "is-a-cool.dev"
 ]
 
-module.exports = { Proxies, PremiumDomains};
+module.exports = { Proxies, PremiumDomains };
