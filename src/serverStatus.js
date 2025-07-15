@@ -19,15 +19,7 @@ const startNodeChecker = () => {
         for (const [, nodes] of Object.entries(Status.Nodes)) {
             for (const [node, data] of Object.entries(nodes)) {
 
-                const [, fetchError] = await safePromise(axios({
-                    url: `${Config.Pterodactyl.hosturl}/api/client/servers/${data.serverID}/resources`,
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${Config.Pterodactyl.apikeyclient}`,
-                        "Content-Type": "application/json",
-                        Accept: "Application/vnd.pterodactyl.v1+json",
-                    },
-                }));
+                const [, fetchError] = await safePromise(ping.ping({ host: data.IP, port: 8080 }));
 
                 if (fetchError) {
                     const [, pingError] = await safePromise(ping.ping({ host: data.IP, port: 22 }));
