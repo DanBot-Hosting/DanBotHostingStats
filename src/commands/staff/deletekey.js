@@ -22,7 +22,7 @@ exports.run = async (client, message, args) => {
     const codeToDelete = args[1];
 
     try {
-        // If the user wants to delete all teh codes.
+        // If the user wants to delete all the codes.
         if(codeToDelete == "all"){
             await codes.deleteAll().catch(() => {});
     
