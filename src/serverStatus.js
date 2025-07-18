@@ -45,9 +45,9 @@ const startNodeChecker = () => {
                     url: `${Config.Pterodactyl.hosturl}/api/application/nodes/${data.ID}?include=servers`,
                     method: "GET",
                     headers: {
-                        Authorization: `Bearer ${Config.Pterodactyl.apikey}`,
+                        "Authorization": `Bearer ${Config.Pterodactyl.apikey}`,
                         "Content-Type": "application/json",
-                        Accept: "Application/vnd.pterodactyl.v1+json",
+                        "Accept": "Application/vnd.pterodactyl.v1+json",
                     },
                 }));
 
