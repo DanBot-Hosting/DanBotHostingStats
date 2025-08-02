@@ -69,18 +69,22 @@ module.exports = async (client) => {
         // Node Status Embed.
         const channel = client.channels.cache.get(MiscConfigs.nodestatus);
 
-        setInterval(async () => {
-            const embed = await ServerStatus.getEmbed();
+        try {
+            setInterval(async () => {
+                const embed = await ServerStatus.getEmbed();
 
-            let messages = await channel.messages.fetch({
-                limit: 10,
-            }).catch((Error) => {});
+                let messages = await channel.messages.fetch({
+                    limit: 10,
+                }).catch((Error) => {});
 
-            messages = messages.filter((x) => x.author.id === client.user.id).last();
+                messages = messages.filter((x) => x.author.id === client.user.id).last();
 
-            if (messages == null) channel.send({embeds: [embed]});
-            else messages.edit({embeds: [embed]});
-        }, 30 * 1000);
+                if (messages == null) channel.send({embeds: [embed]});
+                else messages.edit({embeds: [embed]});
+            }, 30 * 1000);
+        } catch (Error) {
+            console.error(Chalk.red("[NODE CHECKER] ") + Chalk.redBright("Error while sending embed: " + Error.message));
+        }
     } else {
         console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.redBright("Disabled"));
     }
