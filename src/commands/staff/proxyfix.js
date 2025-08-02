@@ -18,6 +18,8 @@ async function getToken(Url, Email, Password) {
             identity: Email,
             secret: Password,
         },
+    }).catch((Error) => {
+        console.error("[STAFF PROXYFIX] Error: " + Error);
     });
 
     return "Bearer " + serverRes.data.token;
