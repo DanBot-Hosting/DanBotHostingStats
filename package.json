@@ -19,7 +19,7 @@
   "homepage": "https://github.com/DanBotHosting/DanBotHostingStats#readme",
   "dependencies": {
     "@sentry/node": "^10.1.0",
-    "@sentry/profiling-node": "^9.44.2",
+    "@sentry/profiling-node": "^10.1.0",
     "axios": "^1.11.0",
     "chalk": "^4.1.2",
     "discord.js": "^14.21.0",
