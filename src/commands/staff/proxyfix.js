@@ -55,8 +55,7 @@ exports.run = async (client, message, args) => {
         token = await getToken(proxyServer.url, proxyServer.email, proxyServer.pass);
 
         const listOfUrls = await Axios({
-            url:
-                proxyServer.url + "/api/nginx/proxy-hosts?expand=owner,access_list,certificate",
+            url: proxyServer.url + "/api/nginx/proxy-hosts?expand=owner,access_list,certificate",
             method: "GET",
             followRedirect: true,
             maxRedirects: 5,
