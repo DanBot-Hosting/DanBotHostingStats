@@ -14,6 +14,7 @@ exports.description = "Creates a donator server. View this command for usage.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
+    //return message.channel.send("Server creation is disabled. Do not ping staff.");
 
     const UserPremium = await userPrem.get(message.author.id);
 
