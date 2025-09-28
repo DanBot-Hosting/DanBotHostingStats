@@ -16,7 +16,8 @@ exports.run = async (client, message, args) => {
             {name: "Panel", value: "[panel.danbot.host](https://panel.danbot.host)", inline: true},
             {name: "Service Status", value: "[service.danbot.host](https://service.danbot.host)", inline: true},
             {name: "Docs Site", value: "[docs.danbot.host](https://docs.danbot.host)", inline: true},
-            {name: "Billing Site", value: "[billing.danbot.host](https://billing.danbot.host)", inline: true}
+            {name: "Billing Site", value: "[billing.danbot.host](https://billing.danbot.host)", inline: true},
+            {name: "VPS Management Panel", value: "[vps.danbot.cloud](https://vps.danbot.cloud)", inline: true}
         )
 
     return message.reply({embeds: [LinksEmbed]});
