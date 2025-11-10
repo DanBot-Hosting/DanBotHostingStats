@@ -18,18 +18,18 @@
   },
   "homepage": "https://github.com/DanBotHosting/DanBotHostingStats#readme",
   "dependencies": {
-    "@sentry/node": "^10.18.0",
-    "@sentry/profiling-node": "^10.18.0",
-    "axios": "^1.12.2",
+    "@sentry/node": "^10.24.0",
+    "@sentry/profiling-node": "^10.24.0",
+    "axios": "^1.13.2",
     "chalk": "^4.1.2",
-    "discord.js": "^14.23.0",
+    "discord.js": "^14.24.2",
     "humanize-duration": "^3.33.1",
     "moment": "^2.30.1",
-    "mysql2": "^3.15.2",
-    "nodemailer": "^7.0.9",
+    "mysql2": "^3.15.3",
+    "nodemailer": "^7.0.10",
     "path": "^0.12.7",
     "ping-tcp-js": "^2.0.4",
     "quick.db": "^9.1.7",
-    "validator": "^13.15.15"
+    "validator": "^13.15.22"
   }
 }
