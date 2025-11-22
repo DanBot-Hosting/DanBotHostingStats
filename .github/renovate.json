@@ -5,6 +5,12 @@
   "separateMinorPatch": false,
   "packageRules": [
     {
+      "matchPackageNames": [
+        "chalk"
+      ],
+      "enabled": false
+    },
+    {
       "groupName": "all minor and patch dependencies",
       "groupSlug": "all-minor-patch",
       "matchPackagePatterns": ["*"],
