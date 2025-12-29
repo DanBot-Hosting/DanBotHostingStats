@@ -9,7 +9,7 @@ const Status = {
                     IP: Config.Nodes.PNode1,
                     ID: "38",
                     Location: Config.Ping.UK,
-                    MaxLimit: 1000
+                    MaxLimit: 450
                 }
             },
 
