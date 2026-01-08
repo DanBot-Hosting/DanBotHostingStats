@@ -46,6 +46,17 @@ const Status = {
                     Location: Config.Ping.UK,
                     MaxLimit: 200
                 }
+            },
+
+            "Private Nodes": {
+                privatenode1: {
+                    Name: "Private Node 1",
+                    serverID: "e0a6b98f",
+                    IP: Config.Nodes.PrivateNode1,
+                    ID: "50",
+                    Location: Config.Ping.UK,
+                    MaxLimit: 100
+                }
             }
         },
 
