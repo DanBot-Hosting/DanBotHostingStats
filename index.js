@@ -87,6 +87,7 @@ Free Hosting forever!                                            /____/
     //Server Creation:
     await require('./createData_Prem.js').initialStart();
     await require('./createData.js').initialStart();
+    await require('./createData_Private.js').initialStart();
 
     client.login(Config.DiscordBot.Token);
 })();
