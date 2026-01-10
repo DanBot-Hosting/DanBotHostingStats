@@ -71,7 +71,14 @@ Free Hosting forever!                                            /____/
             Discord.Partials.Channel,
             Discord.Partials.Message,
             Discord.Partials.Reaction
-        ]
+        ],
+        presence: {
+            activities: [
+                {
+                    name: "Managing DanBot Hosting"
+                }
+            ]
+        }
     });
 
     //Event Handler.

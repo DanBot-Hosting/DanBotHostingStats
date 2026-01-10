@@ -53,13 +53,6 @@ module.exports = async (client) => {
         }
     }, 30 * 1000);
     
-    setInterval(() => {
-        client.user.setPresence({
-            activities: [{ name: 'over DBH', type: Discord.ActivityType.Watching }],
-            status: 'online',
-        });
-    }, 1000 * 60);
-
     if (Config.Enabled.nodestatsChecker == true) {
 
         console.log(Chalk.magenta("[NODE CHECKER] ") + Chalk.greenBright("Enabled"));
