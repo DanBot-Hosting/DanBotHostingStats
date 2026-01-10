@@ -12,7 +12,7 @@ Free Hosting forever!                                            /____/
     const { QuickDB, MySQLDriver } = require("quick.db");
     const Discord = require("discord.js");
     const Sentry = require("@sentry/node");
-    const { nodeProfilingIntegration } = require("@sentry/profiling-node");
+    //const { nodeProfilingIntegration } = require("@sentry/profiling-node");
  
 
     const Config = require("./config.json");
@@ -41,9 +41,9 @@ Free Hosting forever!                                            /____/
     //Sentry.io Error Tracking.
     await Sentry.init({
         dsn: Config.SentryLogging.dsn,
-        integrations: [
-          nodeProfilingIntegration(),
-        ],
+        // integrations: [
+        //   nodeProfilingIntegration(),
+        // ],
         tracesSampleRate: 1.0, //  Capture 100% of the transactions.
     });
 
